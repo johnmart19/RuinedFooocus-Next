@@ -1,0 +1,40 @@
+Simple prompts sometimes give better results.
+Setting Image Number to 0 will generate infinite images.
+Combine simple prompts with styles for instant great results.
+The Flufferize style will magically improve your prompt.
+Optional local-chat enhancement retains your prompt and adds compatible rendering details.
+Easily apply LoRAs in Models > LoRAs.
+Auto Negative Prompt will automatically apply a negative prompt for you.
+Gain ultimate power in the Image tools tab!
+Image to image can be found in the Image tools tab.
+Inpainting can be found in the Image tools tab.
+ControlNet can be found in the Image tools tab.
+Upscaling is in Generation > Size and upscale.
+Remove the background of an image with RemBG in the Image tools tab.
+Preview four prompt variations alongside your original in Prompt tools > Prompt variations.
+Need inspiration? Use One Button in the Prompt tools tab to autogenerate a prompt for you!
+Creating art? Use the Artify styles!
+Can't decide your style? Choose "Style: Pick Random"!
+Check the full generation settings in the Details tab.
+Slideshow while generating? Open it from the Image browser, or open Last image in the Details tab.
+RuinedFooocus supports wildcards, type __ to bring up the wildcard helper.
+One Button Prompt has some build in wildcards, they all start with __onebutton
+`__onebuttonmale:gandalf__` is something that actually works.
+Type `__onebuttonfemale:harley quinn__` for infinite harley variants.
+In the \settings\ folder, you can set all standard settings on startup.
+Type what you don't want to see in the Negative Prompt box.
+Use --- to add multiple prompts.
+Choose "Custom..." in many places to create and save your own settings.
+Type `search:` in the prompt to find images generated today.
+No seed is better than any other, except -1, which is random.
+One Button's Prompt format Auto matches your checkpoint: anime tags for Illustrious/Pony, natural language for Flux and Qwen.
+Download new models from civitai or huggingface.
+RuinedFooocus is automatically updated on startup.
+Add `LoRA keywords` as a style to automatically add all neccesary keywords for each loaded LoRa.
+Words at the start of the prompt are considered more important.
+Adding `(parentheses)` makes words have more weight.
+A good starting prompt structure is: type of image, a subject, lighting, atmosphere
+Adding an artist to a prompt heavily influences the outcome.
+Some words can have a big impact on the outcome. Be creative and vary things up.
+You can type nonsense words, and it will still work. Mostly.
+Some models are very specific in what they can and can't generate.

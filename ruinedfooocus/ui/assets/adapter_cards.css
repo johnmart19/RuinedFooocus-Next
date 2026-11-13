@@ -1,0 +1,120 @@
+.adapter-card-heading {
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+.adapter-card-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-block-end: 0.5rem;
+}
+.adapter-card-pager[hidden] {
+  display: none;
+}
+.adapter-card-pager button {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: var(--rf-action-height, 44px);
+  padding: 0.4rem 0.65rem;
+  color: var(--button-secondary-text-color, var(--body-text-color));
+  background: var(--button-secondary-background-fill);
+  border: 1px solid var(--border-color-primary);
+  border-radius: var(--input-radius);
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.adapter-card-pager button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.adapter-card-pager button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.adapter-card-pager span {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.adapter-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
+  gap: 0.6rem;
+  align-items: stretch;
+  justify-content: start;
+  max-height: min(70dvh, 46rem);
+  overflow: auto;
+  padding: 0.25rem;
+}
+.adapter-card {
+  display: grid;
+  min-width: 0;
+  width: 100%;
+  min-height: var(--rf-action-height, 44px);
+  gap: 0.4rem;
+  cursor: pointer;
+  text-align: left;
+  color: var(--body-text-color);
+  background: var(--input-background-fill);
+  border: 1px solid var(--border-color-primary);
+  border-radius: var(--block-radius, var(--input-radius));
+  padding: 0 0 0.5rem;
+  overflow: hidden;
+  align-content: start;
+}
+.adapter-card > :not(.adapter-card-media) {
+  padding-inline: 0.625rem;
+}
+.adapter-card:hover {
+  border-color: var(--body-text-color-subdued);
+}
+.adapter-card[draggable="true"] {
+  cursor: grab;
+}
+.adapter-card:focus-visible,
+.adapter-card[aria-pressed="true"] {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+.adapter-card-media {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--background-fill-secondary);
+  color: var(--body-text-color-subdued);
+}
+.adapter-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  /* Fill the frame; portraits keep their top, where the subject usually is. */
+  object-fit: cover;
+  object-position: center 20%;
+  pointer-events: none;
+}
+.adapter-card-name {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.adapter-card-badge,
+.adapter-card-default,
+.adapter-card-empty {
+  color: var(--body-text-color-subdued);
+  font-size: 0.8em;
+}
+.adapter-drop-zone {
+  border: 1px dashed var(--border-color-primary);
+  border-radius: var(--input-radius);
+  min-height: 3rem;
+}
+.adapter-drag-over {
+  border-color: var(--color-accent);
+}

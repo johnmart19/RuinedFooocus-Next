@@ -1,0 +1,33 @@
+{
+  "id": "ui-composition",
+  "subject": "Compose complete Create Editor Chat Library Models Settings and bootstrap interfaces",
+  "requires": ["execution-composition", "validation-tools"],
+  "tests": [
+    "test_action_contract_owner_boundaries.py",
+    "test_backend_updates.py",
+    "test_bootstrap_package_contract.py",
+    "test_checkpoint_selection_lane.py",
+    "test_comfy_runtime.py",
+    "test_component_profiles.py",
+    "test_editor_workspace_events.py",
+    "test_effective_image_plan.py",
+    "test_generation_defaults.py",
+    "test_gpu_support_matrix.py",
+    "test_gradio_frontend.py",
+    "test_html_templates.py",
+    "test_image_compute.py",
+    "test_image_shift_defaults.py",
+    "test_layout_progress_targets.py",
+    "test_localization.py",
+    "test_model_profiles.py",
+    "test_navigation_shell.py",
+    "test_onnx_installer.py",
+    "test_package_plan.py",
+    "test_profile_transactions.py",
+    "test_prompt_formats.py",
+    "test_resolution_settings.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

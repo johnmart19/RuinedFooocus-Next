@@ -1,0 +1,994 @@
+/* Application-owned IDs keep the layout independent of Gradio's generated IDs.
+   The navigation tabs and their sibling shared image stage inherit one contract.
+   :is() retains the original ID specificity without overriding native visibility. */
+:is(#app-tabs, #image-stage) {
+  --rf-space: 0.5rem;
+  --rf-action-height: max(44px, 2.75rem);
+  --rf-inline-control-height: max(32px, 2rem);
+  --rf-action-width: 8rem;
+  --rf-preview-height: clamp(12rem, 45dvh, 36rem);
+  --rf-chat-height: clamp(360px, 68dvh, 840px);
+  --rf-gallery-height: clamp(360px, 68dvh, 840px);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+#app-title {
+  margin: 0;
+  padding: 0;
+}
+:is(#app-tabs, #image-stage) .gr-group .block {
+  border-width: var(--block-border-width, 1px);
+  border-color: var(--block-border-color);
+}
+#app-title h1 {
+  margin: 0 0 4px;
+  font-size: clamp(1rem, 1vw, 1.375rem);
+  line-height: 1.3;
+}
+:is(#app-tabs, #image-stage) > .tab-wrapper .tab-container {
+  gap: 2px;
+}
+:is(#app-tabs, #image-stage) > .tab-wrapper [role="tab"] {
+  min-height: var(--rf-action-height);
+}
+#generation-layout,
+#browser-layout {
+  align-items: start;
+  gap: 1rem;
+}
+#generation-workspace,
+#generation-controls,
+#browser-images,
+#browser-controls,
+#chat-conversation,
+#chat-controls {
+  min-width: 0 !important;
+}
+#prompt-row {
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#prompt-row > :first-child {
+  min-inline-size: min(100%, 12rem) !important;
+}
+:is(#app-tabs, #image-stage) #prompt-actions {
+  /* A scaled Gradio column can leave less room than the Generate label needs.
+     Size from its contents, wrapping the action below a usable prompt instead. */
+  flex: 0 1 max-content !important;
+  min-inline-size: min(100%, 7.5rem) !important;
+  max-inline-size: 100%;
+}
+:is(#app-tabs, #image-stage) #prompt-actions button {
+  min-height: 2.75rem;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+#main_view,
+#inpaint_view {
+  min-width: 0;
+}
+#main_view img,
+#image-tool-input img {
+  object-fit: contain;
+}
+#hint-container {
+  max-height: 150px;
+  overflow: auto;
+}
+#settings-layout {
+  display: block !important;
+  min-width: 0;
+}
+#settings-content {
+  width: 100%;
+  max-width: 96rem;
+  min-width: 0;
+  margin-inline: auto;
+}
+#settings-actions {
+  margin-block-start: 1rem;
+}
+:is(#app-tabs, #image-stage) #settings-actions {
+  align-items: flex-end;
+}
+:is(#app-tabs, #image-stage) #settings-actions > :not(button) {
+  flex: 1 1 12rem !important;
+  min-width: min(100%, 12rem) !important;
+  max-width: 100%;
+  align-self: flex-end;
+  height: auto;
+}
+:is(#app-tabs, #image-stage) #settings-actions > button {
+  flex: 0 1 auto !important;
+  align-self: flex-end;
+  max-width: 100%;
+  height: auto;
+}
+#settings-search,
+#settings-search-results {
+  min-width: 0;
+  max-width: 100%;
+  min-height: 0;
+  margin-block-end: 0;
+}
+#settings-search-results {
+  padding-block: 0;
+}
+#settings-search-results:has(ul:empty):has([role="status"]:empty) {
+  display: none;
+}
+#settings-search-results [role="status"]:empty {
+  display: none;
+}
+#settings-search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--rf-space);
+}
+#settings-search-results button {
+  width: 100%;
+  min-height: var(--rf-action-height);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color-primary);
+  border-radius: var(--button-large-radius);
+  background: var(--button-secondary-background-fill);
+  color: var(--body-text-color);
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#settings-profile-state dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+#settings-profile-state dt {
+  grid-row: 1;
+  font-size: var(--text-sm);
+  color: var(--body-text-color-subdued);
+}
+#settings-profile-state dd {
+  grid-row: 2;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#settings-profile-state[data-dirty="true"] [role="status"] {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+#hardware-support {
+  /* The table scrolls itself. A second scrollbar on its collapsed accordion
+     exposes Gradio's hidden loading overlay at narrow widths. */
+  overflow: visible !important;
+}
+#prompt-tools .gr-accordion,
+#settings-layout .gr-accordion {
+  /* Hidden loading overlays otherwise add a scrollbar to collapsed accordions.
+     Keep the wrapper visible so dropdown menus can extend beyond its bounds. */
+  overflow: visible !important;
+}
+.rf-folder-picker {
+  min-width: 0;
+}
+.rf-folder-picker .row > button {
+  align-self: start;
+}
+#browser-metadata textarea {
+  overflow-wrap: anywhere;
+}
+#browser-pagination {
+  display: grid !important;
+  grid-template-columns: minmax(0, auto) minmax(3.5rem, 4.5rem) max-content minmax(0, auto);
+  justify-content: start;
+  align-items: center;
+  gap: 0.5rem;
+}
+#browser-pagination > .form:has(#browser-page) {
+  min-width: 0 !important;
+  background: transparent;
+}
+#browser-page {
+  min-width: 0 !important;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+#browser-pagination > button {
+  min-width: 0 !important;
+}
+#browser-page-total {
+  min-width: 0 !important;
+  padding: 0;
+}
+#browser-image-count {
+  padding: 0.25rem 0;
+  color: var(--body-text-color-subdued);
+}
+/* An overview of complete thumbnails, independent of the viewport's width.
+   Keep Gradio's selected-image preview and its containment behavior. */
+#output-browser {
+  height: auto !important;
+  min-height: 0;
+}
+#output-browser .gallery-container {
+  height: auto;
+}
+#output-browser .grid-wrap {
+  height: auto !important;
+  min-height: 0;
+  max-height: var(--rf-gallery-height);
+  overflow-y: auto;
+}
+#output-browser .gallery-container:has(> .preview) {
+  height: var(--rf-gallery-height);
+}
+#output-browser .grid-container {
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, clamp(128px, 12vw, 192px)), 1fr)
+  ) !important;
+  grid-template-rows: none !important;
+  grid-auto-rows: auto;
+}
+#output-browser .thumbnail-item {
+  height: auto;
+  aspect-ratio: 1;
+}
+#browser-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 26rem);
+}
+@media (max-width: 70rem) {
+  #browser-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+#checkpoint-tools {
+  gap: 8px;
+  padding: 6px;
+}
+#checkpoint-tools .row {
+  gap: 8px;
+}
+#style-selection button {
+  border-radius: var(--button-small-radius);
+}
+#style-selection .token-remove {
+  background: transparent;
+  color: var(--body-text-color);
+  box-shadow: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+  width: 24px;
+  height: 24px;
+}
+#style-selection .token-remove:hover {
+  background: var(--button-secondary-background-fill-hover);
+}
+
+#chat-layout {
+  --chat-width: calc(100% - clamp(300px, 28vw, 480px) - 26px);
+  gap: 8px;
+  align-items: start;
+}
+#chat-local-models {
+  background: var(--block-background-fill);
+}
+#chat-model-source .wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+#chat-model-source label {
+  flex: 1;
+  min-width: 0;
+  min-height: 2.75rem;
+  box-sizing: border-box;
+  justify-content: center;
+}
+#chat-model-source label span {
+  margin: 0;
+}
+#chat-model-source label input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+#chat-model-source label.selected,
+#chat-model-source label.selected:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+#chat-model-source label:not(.selected):hover {
+  background: var(--button-secondary-background-fill-hover);
+}
+#chat-model-source label:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+:is(#app-tabs, #image-stage) .rf-actions,
+#chat-controls .rf-chat-actions,
+#chat-message-actions,
+#chat-model-actions,
+#prompt-tools .rf-prompt-actions,
+#browser-actions,
+#one-button-actions,
+#settings-actions,
+#model-catalogue-actions {
+  flex-wrap: wrap;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  align-items: stretch;
+  gap: var(--rf-space) !important;
+  background: transparent;
+}
+:is(#app-tabs, #image-stage) .rf-actions > button,
+#chat-controls .rf-chat-actions button,
+#chat-message-actions button,
+#chat-model-actions button,
+#prompt-tools .rf-prompt-actions button,
+#browser-actions button,
+#one-button-actions button {
+  flex: 1 1 var(--rf-action-width) !important;
+  min-width: 0 !important;
+  max-inline-size: 100%;
+  height: auto;
+  min-height: var(--rf-action-height);
+  padding: 0.5rem 0.75rem;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  border-radius: var(--button-large-radius);
+}
+:is(#app-tabs, #image-stage) .rf-actions-compact > button,
+:is(#app-tabs, #image-stage) #model-catalogue-actions > button {
+  flex: 0 1 auto !important;
+  max-inline-size: 100%;
+}
+/* A filter keeps a readable cell and moves below its neighbors when needed.
+   Native Gradio form wrappers use flex too, so both levels share the minimum. */
+:is(#app-tabs, #image-stage) .rf-filters {
+  flex-wrap: wrap;
+  gap: var(--rf-space);
+  min-inline-size: 0;
+}
+:is(#app-tabs, #image-stage) .rf-filters > *,
+:is(#app-tabs, #image-stage) .rf-filters > .form > * {
+  flex: 1 1 12rem !important;
+  min-inline-size: min(100%, 12rem) !important;
+  max-inline-size: 100%;
+}
+:is(#app-tabs, #image-stage) .rf-filters > .form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rf-space);
+}
+#chat-avatar {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+#chat-messages .message {
+  max-width: 100%;
+}
+#chat-messages .prose {
+  max-width: none;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+#chat-messages pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+}
+#chat-messages pre code {
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+#chat-divider {
+  align-self: stretch;
+  padding: 0;
+  width: 10px !important;
+  min-width: 10px !important;
+  min-height: 120px;
+  position: relative;
+}
+#chat-divider .html-container,
+#chat-divider .prose {
+  width: 100%;
+  height: 100%;
+}
+#chat-divider [role="separator"] {
+  position: absolute;
+  inset: 0;
+  cursor: col-resize;
+  border-radius: 5px;
+  background: var(--border-color-primary);
+  touch-action: none;
+}
+#chat-divider [role="separator"]:hover,
+#chat-divider [role="separator"]:focus-visible {
+  background: var(--color-accent);
+  outline: 2px solid var(--color-accent);
+}
+textarea {
+  resize: vertical;
+}
+.loader-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.loader-container progress {
+  appearance: none;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--background-fill-secondary);
+  width: 100%;
+}
+.progress-container {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+.loader-container progress::-webkit-progress-bar {
+  background: var(--background-fill-secondary);
+}
+.loader-container progress::-webkit-progress-value {
+  background: var(--color-accent);
+}
+.loader-container progress::-moz-progress-bar {
+  background: var(--color-accent);
+}
+.loader-container > span {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#progress-bar > .generating,
+.hint-container > .generating {
+  display: none !important;
+}
+#progress-bar {
+  min-height: 26px;
+}
+.json-container {
+  max-height: 60dvh;
+  overflow: auto !important;
+}
+.refresh_button {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+.element1 {
+  opacity: 0.01;
+}
+#inpaint_sketch {
+  overflow: auto;
+  background: var(--panel-background-fill);
+}
+
+@media (min-width: 1001px) {
+  #chat-layout:has(#chat-divider) {
+    display: grid;
+    grid-template-columns: minmax(0, var(--chat-width)) 10px minmax(280px, 1fr);
+  }
+}
+@media (max-width: 1000px) {
+  :is(#app-tabs, #image-stage) {
+    --rf-preview-height: clamp(12rem, 40dvh, 30rem);
+    --rf-chat-height: clamp(300px, 56dvh, 680px);
+    --rf-gallery-height: clamp(300px, 60dvh, 680px);
+  }
+  #generation-layout,
+  #browser-layout,
+  #chat-layout {
+    flex-direction: column;
+  }
+  #generation-workspace,
+  #generation-controls,
+  #browser-images,
+  #browser-controls,
+  #chat-conversation,
+  #chat-controls {
+    width: 100%;
+    flex-basis: auto !important;
+  }
+  #chat-divider {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  :is(#app-tabs, #image-stage) > .tab-wrapper .tab-container {
+    gap: 0;
+  }
+  :is(#app-tabs, #image-stage) > .tab-wrapper [role="tab"] {
+    padding: 8px 7px;
+    font-size: var(--text-md);
+    min-height: 2.75rem;
+  }
+  :is(#app-tabs, #image-stage) #prompt-row {
+    /* A native Row can retain a horizontal flex direction on phones. */
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :is(#app-tabs, #image-stage) #prompt-row > :first-child {
+    min-inline-size: 0 !important;
+  }
+  :is(#app-tabs, #image-stage) #prompt-actions {
+    width: 100%;
+    flex: 1 1 100% !important;
+    min-inline-size: 0 !important;
+  }
+  #browser-pagination {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 4.5rem) minmax(0, 1fr);
+  }
+  #browser-pagination > :first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #browser-pagination > .form:has(#browser-page),
+  #browser-pagination > #browser-page {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  #browser-pagination > button:last-child {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  #browser-page-total {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    text-align: center;
+  }
+  #settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Avoid iOS focus zoom without disabling the user's pinch zoom. */
+  :is(#app-tabs, #image-stage) input,
+  :is(#app-tabs, #image-stage) textarea,
+  :is(#app-tabs, #image-stage) select {
+    font-size: max(1rem, var(--text-md));
+  }
+}
+
+/* The concise component inventory fits the Create sidebar. */
+#model-components-panel,
+#model-component-inventory {
+  min-width: 0 !important;
+  max-width: 100%;
+}
+#model-component-inventory {
+  overflow-x: auto;
+}
+#model-component-inventory table {
+  min-width: 24rem;
+  width: 100%;
+}
+#model-component-inventory th {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+#model-component-inventory td {
+  overflow-wrap: anywhere;
+}
+
+/* Typography is rem-based, so it follows the fluid root size, browser preferences and zoom.
+   Scoped to the whole container so the footer, toasts and dialogs scale too. */
+.gradio-container,
+:is(#app-tabs, #image-stage) {
+  --text-xxs: 0.75rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-xxl: 1.625rem;
+  --body-text-size: var(--text-md);
+  --input-text-size: var(--text-md);
+  --prose-text-size: var(--text-md);
+  --chatbot-text-size: var(--text-md);
+  --block-label-text-size: var(--text-sm);
+  --block-info-text-size: var(--text-sm);
+  --block-title-text-size: var(--text-md);
+  --section-header-text-size: var(--text-md);
+  --checkbox-label-text-size: var(--text-md);
+  --button-small-text-size: var(--text-sm);
+  --button-medium-text-size: var(--text-md);
+  --button-large-text-size: var(--text-md);
+  font-size: var(--text-md);
+}
+:is(#app-tabs, #image-stage) [role="tab"] {
+  min-height: 2.75rem;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+/* Wrapped tab bars: Gradio draws row dividers every fixed 32px, which cuts through
+   taller (rem-sized) tabs. Each tab draws its own divider instead. */
+:is(#app-tabs, #image-stage) .tab-container.wrap {
+  background: none;
+}
+:is(#app-tabs, #image-stage) .tab-container.wrap > [role="tab"] {
+  box-shadow: inset 0 -1px var(--border-color-primary);
+}
+/* Side-column tab bars wrap at most widths; equal cells keep wrapped rows aligned
+   and leave a leftover tab in one cell instead of stretching it across a row. */
+#generation-controls .tab-container.wrap,
+#browser-controls .tab-container.wrap,
+#chat-controls .tab-container.wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.5rem), 1fr));
+}
+#generation-controls .tab-container.wrap > [role="tab"],
+#browser-controls .tab-container.wrap > [role="tab"],
+#chat-controls .tab-container.wrap > [role="tab"] {
+  justify-content: center;
+}
+/* break-word keeps whole words in min-content sizing, so flex columns cannot
+   squeeze a button until a label like "Generate" splits mid-word. */
+:is(#app-tabs, #image-stage) button,
+:is(#app-tabs, #image-stage) label {
+  overflow-wrap: break-word;
+}
+:is(#app-tabs, #image-stage) .prose {
+  overflow-wrap: anywhere;
+}
+:is(#app-tabs, #image-stage) input,
+:is(#app-tabs, #image-stage) textarea {
+  line-height: 1.5;
+}
+/* Gradio slider values otherwise keep 22px inputs inside a 24px clipped box. */
+:is(#app-tabs, #image-stage) .tab-like-container {
+  height: auto;
+  min-height: var(--rf-inline-control-height);
+  overflow: visible;
+}
+:is(#app-tabs, #image-stage) .tab-like-container input[type="number"],
+:is(#app-tabs, #image-stage) .tab-like-container button {
+  height: auto;
+  min-height: max(var(--rf-inline-control-height), calc(1.5em + 0.5rem));
+}
+:is(#app-tabs, #image-stage) .tab-like-container button {
+  min-width: var(--rf-inline-control-height);
+}
+#generation-layout {
+  /* Both cells need readable space. A scaled inspector must wrap instead of
+     consuming the image column or extending beyond the working area. */
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+#generation-workspace {
+  flex: 5 1 0 !important;
+  min-inline-size: min(100%, 24rem) !important;
+}
+#generation-controls {
+  flex: 2 1 0 !important;
+  min-inline-size: min(100%, 18rem) !important;
+}
+#generation-controls,
+#generation-workspace {
+  width: 100%;
+}
+@media (max-width: 600px) {
+  :is(#app-tabs, #image-stage) {
+    --rf-preview-height: clamp(10rem, 35dvh, 24rem);
+  }
+}
+@media (max-height: 30rem) and (orientation: landscape) {
+  :is(#app-tabs, #image-stage) {
+    --rf-preview-height: clamp(8rem, 40dvh, 14rem);
+  }
+}
+@media (pointer: coarse) {
+  :is(#app-tabs, #image-stage) {
+    --rf-inline-control-height: var(--rf-action-height);
+  }
+}
+
+/* Gradio renders Markdown inside groups with no padding, flush against the edges. */
+:is(#app-tabs, #image-stage) .styler > .block:has(> div > .prose > .md) {
+  padding: var(--block-padding);
+}
+/* Text buttons in a component's top-corner panel (e.g. Refresh chatbots) sit on its
+   label row inside the block, not over the top edge of the component above. */
+:is(#app-tabs, #image-stage) .block > .icon-button-wrapper.top-panel:has(> .custom-button) {
+  top: calc(var(--block-padding) * 0.5);
+  right: var(--block-padding);
+}
+
+#generation-controls .grid-container,
+#models-panel .grid-container {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)) !important;
+  grid-template-rows: none !important;
+  grid-auto-rows: auto;
+  align-content: start;
+  align-items: start;
+}
+/* Gradio's auto-height galleries otherwise reserve 320–450px even for one card.
+   The grid owns the only vertical scroll area once a collection grows. */
+#generation-controls .gallery-container,
+#models-panel .gallery-container {
+  height: auto;
+}
+#generation-controls .grid-wrap,
+#models-panel .grid-wrap {
+  height: auto !important;
+  min-height: 0;
+  max-height: clamp(14rem, 50dvh, 30rem);
+  overflow-y: auto;
+}
+#generation-controls .gallery-item,
+#models-panel .gallery-item {
+  min-width: 0;
+  height: auto;
+}
+/* Model names remain readable instead of being ellipsized over the artwork. */
+#generation-controls .thumbnail-item,
+#models-panel .thumbnail-item {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: auto;
+  vertical-align: top;
+  display: flex;
+  flex-direction: column;
+}
+#generation-controls .thumbnail-item img,
+#models-panel .thumbnail-item img {
+  width: 100%;
+  height: 8rem;
+  object-fit: contain;
+}
+#generation-controls .caption-label,
+#models-panel .caption-label {
+  position: static;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+  padding: 0.5rem;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+/* Details tab links: a plain list with icons beside the text. */
+#model-gallery .caption-label {
+  white-space: pre-line;
+}
+#output-browser .caption,
+#output-browser .caption-label {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 1.5em;
+}
+#output-browser.rf-library-pending {
+  pointer-events: none;
+}
+#output-browser.rf-library-pending button {
+  visibility: hidden;
+}
+
+.rf-style-choices .wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+}
+.rf-style-choices label {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+#details-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+#details-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 1.5rem;
+}
+#details-links img {
+  flex: none;
+}
+/* The bundled icons are white; darken them on the light theme so they stay visible. */
+body:not(.dark) #details-links img {
+  filter: invert(1);
+}
+
+/* Touch screens: Gradio's accordion headers and icon toolbars are about 20px tall.
+   Give them at least WCAG 2.2's 24px target size, and 44px headers on phones. */
+:is(#app-tabs, #image-stage) button.label-wrap,
+:is(#app-tabs, #image-stage) label:has(> input[type="checkbox"]) {
+  min-height: 1.5rem;
+}
+@media (pointer: coarse), (max-width: 600px) {
+  :is(#app-tabs, #image-stage) button.label-wrap {
+    min-height: 2.75rem;
+  }
+  :is(#app-tabs, #image-stage) .icon-button-wrapper .icon-button,
+  :is(#app-tabs, #image-stage) .source-selection .icon {
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+}
+/* Keep the rotating decorative arrow square instead of stretching to the touch height. */
+:is(#app-tabs, #image-stage) button.label-wrap {
+  align-items: center;
+}
+:is(#app-tabs, #image-stage) button.label-wrap > .icon {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
+
+/* Textarea autosizing uses pixel heights. A line-based floor also follows a
+   browser font change, the app text-size setting and translated placeholders. */
+:is(#app-tabs, #image-stage) textarea {
+  box-sizing: border-box;
+  min-height: calc(1lh + 1rem + 2px) !important;
+}
+#prompt-row textarea {
+  min-height: calc(3lh + 1rem + 2px) !important;
+}
+#chat-message-input textarea {
+  min-height: calc(2lh + 1rem + 2px) !important;
+}
+:is(#app-tabs, #image-stage) input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+:is(#app-tabs, #image-stage) select {
+  box-sizing: border-box;
+  min-height: calc(1.5em + 0.75rem + 2px);
+}
+/* Native DOM order is label/help, value/reset, then track. Let the value wrap
+   below a readable label when the available width or font size needs it. */
+:is(#app-tabs, #image-stage) .block:has(input[type="range"]) .head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--rf-space);
+}
+:is(#app-tabs, #image-stage) .block:has(input[type="range"]) .head > label {
+  flex: 1 1 12rem;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+}
+:is(#app-tabs, #image-stage) .block:has(input[type="range"]) .head > .tab-like-container {
+  flex: 0 1 auto;
+  margin: 0;
+  margin-inline-start: auto;
+  max-width: 100%;
+}
+:is(#app-tabs, #image-stage) .slider_input_container {
+  min-width: 0;
+}
+:is(#app-tabs, #image-stage) input[type="range"] {
+  min-width: 0;
+  min-height: 44px;
+}
+
+/* A wrapped action owns a readable cell. Align/stretch grows its neighbors to
+   the tallest label instead of clipping it or reducing the font size. */
+:is(#app-tabs, #image-stage) button.lg,
+:is(#app-tabs, #image-stage) button.sm,
+:is(#app-tabs, #image-stage) button.md,
+#settings-actions button,
+.rf-folder-picker .row > button,
+#browser-actions button {
+  min-height: var(--rf-action-height);
+  height: auto;
+  white-space: normal;
+  line-height: 1.5;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.rf-folder-picker .row > button {
+  flex: 1 1 var(--rf-action-width) !important;
+  min-width: 0 !important;
+  align-self: stretch;
+}
+:is(#app-tabs, #image-stage) .row:has(> button.lg, > button.md, > button.sm) {
+  align-items: stretch;
+}
+:is(#app-tabs, #image-stage) button:focus-visible,
+:is(#app-tabs, #image-stage) a:focus-visible,
+:is(#app-tabs, #image-stage) summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Scaled uploader help must reserve space above the source toolbar. */
+:is(#app-tabs, #image-stage) .block:has(.upload-container):has(.source-selection) {
+  min-height: calc(6lh + 3rem);
+}
+:is(#app-tabs, #image-stage) .block:has(.source-selection) .upload-container {
+  min-height: calc(6lh + 3rem);
+  padding-bottom: 3rem;
+  box-sizing: border-box;
+}
+:is(#app-tabs, #image-stage) .source-selection {
+  min-height: var(--rf-action-height);
+  flex-wrap: wrap;
+}
+:is(#app-tabs, #image-stage) .source-selection .icon,
+:is(#app-tabs, #image-stage) .icon-button-wrapper .custom-button {
+  min-height: var(--rf-action-height);
+  height: auto;
+  white-space: normal;
+}
+
+/* Technical evidence keeps useful column widths inside its own horizontal
+   viewport instead of breaking labels into one-letter fragments. */
+.rf-technical-table {
+  min-width: 0;
+  max-width: 100%;
+}
+.rf-technical-table .virtual-table-viewport {
+  overflow-x: auto;
+}
+.rf-technical-table .header-table,
+.rf-technical-table .virtual-body,
+.rf-technical-table .virtual-row {
+  min-width: 40rem;
+}
+.rf-technical-table .cell-wrap,
+.rf-technical-table .header-cell {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+#details-links a {
+  min-height: var(--rf-action-height);
+}
+@media (max-width: 70rem) {
+  #chat-layout:has(#chat-divider) {
+    display: flex;
+    flex-direction: column;
+  }
+  #chat-divider {
+    display: none;
+  }
+}
+/* The native CSS scoper preserves ordinary rules but drops container queries.
+   The splitter observes actual available space and font size for this class. */
+#chat-layout.rf-chat-stacked:has(#chat-divider) {
+  display: flex;
+  flex-direction: column;
+}
+#chat-layout.rf-chat-stacked > #chat-conversation,
+#chat-layout.rf-chat-stacked > #chat-controls {
+  width: 100%;
+  flex-basis: auto !important;
+}
+#chat-layout.rf-chat-stacked > #chat-divider {
+  display: none;
+}
+#chat-layout.rf-chat-stacked > #chat-controls {
+  position: static;
+  max-block-size: none;
+  overflow: visible;
+  padding-inline-end: 0;
+}
+@media (max-width: 600px) {
+  :is(#app-tabs, #image-stage) .gr-accordion .gr-accordion {
+    --block-padding: 0.5rem;
+  }
+}

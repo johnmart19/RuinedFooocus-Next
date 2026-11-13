@@ -1,0 +1,79 @@
+/* Neutral surfaces for the Default theme. The browser adds rf-themed while
+   another theme is active, so that theme keeps its own colours. */
+.gradio-container:not(.rf-themed) {
+  --rf-sidebar-fill: #fafaf9;
+  --rf-hover: #efefed;
+  --rf-selected: #e7e7e4;
+  --rf-track: #efefed;
+  --body-background-fill: #f4f4f2;
+  --background-fill-primary: #ffffff;
+  --background-fill-secondary: #f4f4f2;
+  --block-background-fill: #ffffff;
+  --panel-background-fill: #ffffff;
+  --block-border-color: #e2e2df;
+  --border-color-primary: #e2e2df;
+  --input-background-fill: #fafaf9;
+  --input-border-color: #d9d9d5;
+  --button-secondary-background-fill: #ececea;
+  --button-secondary-background-fill-hover: #e2e2df;
+  --button-secondary-border-color: #e2e2df;
+  --button-secondary-text-color: #1c1c1a;
+  --checkbox-label-background-fill: transparent;
+  --checkbox-label-background-fill-hover: #efefed;
+  --checkbox-label-background-fill-selected: #e7e7e4;
+  --checkbox-label-text-color-selected: #1c1c1a;
+  --checkbox-label-border-color: #d9d9d5;
+  --checkbox-label-border-color-selected: #c2410c;
+  --button-cancel-background-fill: transparent;
+  --button-cancel-background-fill-hover: #fdecec;
+  --button-cancel-border-color: #dc8a8a;
+  --button-cancel-text-color: #b42318;
+  --button-cancel-text-color-hover: #b42318;
+  --block-label-background-fill: #f4f4f2;
+}
+.dark .gradio-container:not(.rf-themed) {
+  --rf-sidebar-fill: #1b1b1b;
+  --rf-hover: #262626;
+  --rf-selected: #2e2e2e;
+  --rf-track: #1b1b1b;
+  --body-background-fill: #141414;
+  --background-fill-primary: #141414;
+  --background-fill-secondary: #1b1b1b;
+  --block-background-fill: #1e1e1e;
+  --panel-background-fill: #1e1e1e;
+  --block-border-color: #2e2e2e;
+  --border-color-primary: #2e2e2e;
+  --input-background-fill: #262626;
+  --input-border-color: #353535;
+  --input-background-fill-focus: #2b2b2b;
+  --button-secondary-background-fill: #2e2e2e;
+  --button-secondary-background-fill-hover: #3a3a3a;
+  --button-secondary-border-color: #353535;
+  --button-secondary-text-color: #ededed;
+  --checkbox-label-background-fill: transparent;
+  --checkbox-label-background-fill-hover: #262626;
+  --checkbox-label-background-fill-selected: #2e2e2e;
+  --checkbox-label-text-color-selected: #ededed;
+  --checkbox-label-border-color: #353535;
+  --checkbox-label-border-color-selected: #c2410c;
+  --button-cancel-background-fill: transparent;
+  --button-cancel-background-fill-hover: #3a1f1f;
+  --button-cancel-border-color: #7a3535;
+  --button-cancel-text-color: #f0a0a0;
+  --button-cancel-text-color-hover: #f0a0a0;
+  --block-label-background-fill: #262626;
+  --block-label-border-color: #2e2e2e;
+  --body-text-color: #ededed;
+  --body-text-color-subdued: #a8a8a8;
+  --block-info-text-color: #a8a8a8;
+  --block-title-text-color: #dcdcdc;
+  --block-label-text-color: #dcdcdc;
+  --table-even-background-fill: #1e1e1e;
+  --table-odd-background-fill: #232323;
+  --checkbox-background-color: #262626;
+  --checkbox-border-color: #454545;
+}
+body.dark,
+.dark .gradio-container:not(.rf-themed) {
+  background: #141414;
+}
