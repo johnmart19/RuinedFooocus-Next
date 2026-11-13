@@ -1,0 +1,8 @@
+{
+  "id": "llama-installer",
+  "subject": "Acquire build and update the native llama runtime",
+  "requires": ["cuda-installer", "rocm-installer"],
+  "tests": ["test_wsl_llama_bridge.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
