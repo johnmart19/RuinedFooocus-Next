@@ -1,0 +1,15 @@
+ruinedfooocus/backends/vendor/**
+ruinedfooocus/resources/prompt_presets/**
+ruinedfooocus/features/prompting/one_button/csvfiles/**
+ruinedfooocus/features/prompting/one_button/userfiles/**
+wildcards/**
+wildcards_official/**
+models/**
+outputs/**
+settings/**
+cache/**
+tmp/**
+repositories/**
+venv/**
+**/node_modules/**
+tools/format/package-lock.json

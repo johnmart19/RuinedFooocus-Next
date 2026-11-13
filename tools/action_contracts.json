@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "scope": "Reviewed source ownership and required operation boundaries; source mapping does not certify live callback reachability or browser delivery.",
+  "groups": [
+    {
+      "id": "create-compute",
+      "sources": ["ruinedfooocus/ui/app.py"],
+      "callbacks": "generate_clicked|stop_clicked",
+      "work": "Captured image/tool request or job-scoped Stop; GPU work is deferred to the serial native worker.",
+      "resource_owner": "app/async_worker.py JobRegistry + resource_lifecycle.py compute:shared and model/artifact leases",
+      "persistence": "Worker owns completed output and metadata publication; UI inputs are captured before native admission.",
+      "cancellation": "Authenticated bound task ID; cooperative native interrupt and owner cleanup. Stop stays queue-free.",
+      "acceptance": "Lifecycle CPU callers verified; live GPU lifecycle and browser delivery remain separate acceptance."
+    },
+    {
+      "id": "create-persisted-defaults",
+      "sources": ["ruinedfooocus/ui/app.py"],
+      "callbacks": "ratio_save_click|ratio_delete_click|save_checkpoint_override|reset_checkpoint_override|save_current_defaults",
+      "work": "Local custom resolution, model-default or profile mutation.",
+      "resource_owner": "resolution_settings.py, performance_settings.py and core/settings.py owning profile/resource",
+      "persistence": "Owning configuration transaction and config_io.save_json atomic replace; no native model mutation.",
+      "cancellation": "Short mutation completes atomically; later explicit save wins. No rollback of another caller's committed profile.",
+      "acceptance": "Profile/default CPU suites cover transaction callers; simultaneous browser profile saves require acceptance."
+    },
+    {
+      "id": "create-local-controls-navigation",
+      "sources": ["ruinedfooocus/ui/app.py", "ruinedfooocus/ui/settings_navigation.py"],
+      "work": "Navigation, localization dispatch, captured upload/metadata/preset, model/size/default projection and preview timers.",
+      "resource_owner": "Per-browser Gradio controls/draft; shared model catalogue read snapshots owned by features/models",
+      "persistence": "Local control updates only except explicit feature-owned actions; original image paths and metadata remain authoritative.",
+      "cancellation": "Short reads must not await compute; delayed model projections need latest selection fencing. Localization helpers expand at app composition.",
+      "acceptance": "Source mapped; model/default delayed-result and all-control loading rows require browser acceptance; no GPU permission."
+    },
+    {
+      "id": "chat-compute",
+      "sources": ["ruinedfooocus/features/chat/ui.py"],
+      "callbacks": "submit_with_attachments|use_model|unload_model",
+      "work": "Captured Chat load/unload/reply and optional image-tool handoff.",
+      "resource_owner": "Request-owned JobRegistry, ChatModelSession and serialized compute:shared admission",
+      "persistence": "Session conversation/draft; completed image output only through worker. Model transfer completion never selects another model.",
+      "cancellation": "Bound reply/download handles and attachment-turn cancellation; native cleanup remains request-owned.",
+      "acceptance": "Chat/lifecycle CPU contracts exist; real Chat-to-image-to-Chat and browser delivery are separate root acceptance."
+    },
+    {
+      "id": "chat-preparation",
+      "sources": ["ruinedfooocus/features/chat/ui.py"],
+      "callbacks": "download_model|cancel_model_download|import_gguf|confirm_remove|local_model_action",
+      "work": "Captured model acquisition, local import/remove or folder selection; independent of native compute.",
+      "resource_owner": "ChatModelSession subscriptions, PreparationService destination single-flight and artifact read/write leases",
+      "persistence": "Verified no-clobber artifact promotion; imported/removal paths validated by their native owner.",
+      "cancellation": "Subscriber cancellation never cancels another subscriber; selection revision rejects stale activation.",
+      "acceptance": "Preparation queue and Chat callers verified on CPU; browser download A/use installed B remains explicit acceptance."
+    },
+    {
+      "id": "chat-assistant-profiles",
+      "sources": ["ruinedfooocus/features/chat/ui.py"],
+      "callbacks": "save_assistant_draft|save_as=True|save_startup_assistant|confirm_assistant_delete",
+      "work": "Explicit assistant profile save, startup selection and confirmed deletion.",
+      "resource_owner": "features/chat/assistants.py profile revision/transaction and per-browser editor draft",
+      "persistence": "Atomic versioned assistant save/delete; stale edit detection belongs to the assistant repository.",
+      "cancellation": "Editor Cancel discards only that draft; started atomic save is a short operation.",
+      "acceptance": "Assistant transaction CPU suites exist; simultaneous editor browser acceptance pending."
+    },
+    {
+      "id": "chat-runtime-inspection",
+      "sources": ["ruinedfooocus/features/chat/ui_runtime_info.py"],
+      "work": "Explicit bounded installed-runtime metadata inspection, respecting global CPU authority; independent of native model execution.",
+      "resource_owner": "Per-browser RuntimeInfoSession token, two-slot chat-runtime-inspection callback lane, bounded PreparationAdmission and owned bounded_subprocess child/job cleanup",
+      "persistence": "Read-only installed version/device report; prior successful display remains on cancellation/failure. No profile, model or runtime installation mutation.",
+      "cancellation": "Queue-free Cancel targets the queued Gradio refresh event and signals a running session child; subprocess deadlines/output caps and owned process-tree cleanup remain authoritative.",
+      "acceptance": "Runtime owner supplies CPU child/caller/queued-cancel proofs; W05 performs no runtime/device probe or model execution."
+    },
+    {
+      "id": "chat-local-selection-context",
+      "sources": [
+        "ruinedfooocus/features/chat/ui*.py",
+        "ruinedfooocus/features/chat/attachment_ui.py",
+        "ruinedfooocus/features/chat/llama_file_picker.py"
+      ],
+      "work": "Model search/selection, reasoning/vision/context display, assistant draft, attachment capture/clear and bounded RAG settings.",
+      "resource_owner": "Per-session model/conversation/attachment identity; RAG manifest/index and embedding preparation owners",
+      "persistence": "Only explicit RAG/profile save writes; attachment corpus retained per owned request/session and cleaned by that owner.",
+      "cancellation": "Selected model/request revisions and attachment turn events reject changed sources. CPU parser/runtime subprocess deadlines owned by Chat.",
+      "acceptance": "Source groups mapped; extraction limits, delayed search, two-session and live delivery tracked by Chat acceptance."
+    },
+    {
+      "id": "library-view-selection",
+      "sources": ["ruinedfooocus/features/gallery/ui.py"],
+      "work": "Browse/search/page, incremental refresh/cancel, metadata selection and source-preserving handoffs.",
+      "resource_owner": "LatestUIRequests authenticated view/selection channels; two-worker/eight-slot preparation; SQLite per-database writer",
+      "persistence": "WAL previous complete snapshot; changed-file parse and atomic fenced commit. Original images are retained.",
+      "cancellation": "Queue-free acknowledgement; cooperative per-file cancellation; _view_version/_selection_version checked by source actions.",
+      "acceptance": "Real SQLite and installed Gradio callback races verified on CPU; transport paint timing requires browser evidence."
+    },
+    {
+      "id": "library-editing",
+      "sources": ["ruinedfooocus/features/gallery/ui_editing.py"],
+      "work": "Library source adoption into Create and source-preserving editing draft capture.",
+      "resource_owner": "Versioned selected source and ordinary Create typed request/draft builders",
+      "persistence": "Only session control changes until the explicit worker action; source identity/dimensions/alpha remain immutable inputs.",
+      "cancellation": "Reject changed selection/view before source activation; generation Stop uses its owning job.",
+      "acceptance": "Library action and draft CPU checks exist; direct edit browser delivery and final generation remain separate."
+    },
+    {
+      "id": "editor-workspace-source-history",
+      "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
+      "callbacks": "open_chat$|open_current$|open_library$|^partial\\(history,",
+      "work": "Open an authenticated current source or completed Chat/Gallery result, or move through owned image history; no implicit generation.",
+      "resource_owner": "EditorWorkspace LatestUIRequests channel, EditorSessionStore authenticated owner/revision and PreparationService artifact read leases; Gallery draft publication also uses its prompt fence",
+      "persistence": "New source adoption copies bounded original pixels/files into owned editor artifacts and atomically records the session manifest; undo/redo/reopen changes only that owned history. Library prompt/setup publication preserves a newer edited draft.",
+      "cancellation": "Source/history intent signals only the bound task, versions its channel and rejects superseded publication. Staged failed inputs unwind their own copies; missing/changed source or stale history requires reopening the current owned artifact.",
+      "acceptance": "Registered source sites and installed-Gradio Editor/Chat/Gallery CPU callers are covered separately from rendered browser delivery, real-model output and device qualification. Loop bindings are source sites, not a runtime action count."
+    },
+    {
+      "id": "editor-workspace-mask-capture",
+      "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
+      "callbacks": "adopt_mask$",
+      "work": "Bind an explicitly uploaded exact-frame selection mask to the current owned image revision.",
+      "resource_owner": "EditorSessionStore authenticated session/source/revision and bounded EditorWorkspace staged input capture with PreparationService artifact lease",
+      "persistence": "Copy the uploaded mask into an owned artifact and atomically bind its source/frame identity; original upload and source image remain intact. Failed staging deletes only its own new input copy.",
+      "cancellation": "A stale, absent or replaced source fails before mask binding. Changing image intent invalidates pending worker publication; the mask itself does not start native compute or cancel another session.",
+      "acceptance": "Exact-frame and owned-source CPU contracts cover mask adoption and later worker handoff; rendered brush/upload delivery and generated visual results remain separate."
+    },
+    {
+      "id": "editor-workspace-readiness",
+      "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
+      "callbacks": "preview_readiness$",
+      "work": "Capture the selected image action and report its current local source/model/component readiness without enqueueing native compute or acquiring missing models.",
+      "resource_owner": "Authenticated EditorSessionStore request ticket and image_preparation capture/readiness owners; short file reads use their normal source/component contracts",
+      "persistence": "Request capture may stage an explicitly selected background or painted mask as an owned artifact. The finally path cancels the temporary request ticket; no generated result is adopted into image history.",
+      "cancellation": "Temporary editor request is cancelled in finally on both success and failure. Missing/changed image, mask or components require a new explicit selection; readiness does not control another worker or subscription.",
+      "acceptance": "Source-bound readiness/capture CPU checks do not certify downloads, native execution, visual quality or browser paint."
+    },
+    {
+      "id": "editor-workspace-result-selection",
+      "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
+      "callbacks": "use_result_as_selection$",
+      "work": "Explicitly attach a completed proven grayscale mask result to its retained original image and switch to inpainting.",
+      "resource_owner": "LatestUIRequests authenticated Editor channel and EditorSessionStore owner/revision/result/source-frame validation",
+      "persistence": "Lossless RGB8-to-L8 mask extraction and original-source restoration publish in one owned manifest transaction; original RGB, alpha, metadata and mask-result history remain intact. Precision masks/sources require an explicit working copy.",
+      "cancellation": "A pending operation, stale revision, foreign owner, changed artifact, wrong frame or unproven result is rejected before source restoration. Only the bound task is signalled by the shared source-action fence.",
+      "acceptance": "Actual Gradio event, source preservation and stale/foreign/wrong-frame CPU cases verified; browser delivery and model generation remain separate acceptance."
+    },
+    {
+      "id": "editor-guided-result-actions",
+      "sources": ["ruinedfooocus/features/gallery/ui_guided_results.py"],
+      "callbacks": "project$|use_map$",
+      "work": "Project owned map provenance, or explicitly restore its original image and attach a separate editing guide; Face selection maps reuse the existing mask/inpaint handoff.",
+      "resource_owner": "EditorWorkspace LatestUIRequests authenticated channel, EditorSessionStore owner/revision/artifact contracts and guide_handoffs frozen source/guide capture; guide_control_compat owns finite installed-consumer verification",
+      "persistence": "Explicit attachment atomically restores only the owned original/history pointer. Guide identities and denoise are transient server/UI state; prompts, dimensions, manual strengths and startup defaults are preserved. Rendering performs no model verification, download or native execution.",
+      "cancellation": "Control-file preflight occurs outside the shared UI publication lock. Changed source, owner or intent rejects late attachment/projection; another Editor action clears the guide's extra-image role. Failure requires an explicit compatible local control selection or reopening the current source.",
+      "acceptance": "Installed-Gradio callback/build-capture tests cover distinct original/guide pixels, Face reuse, draft preservation and source/intent races. Native compatibility, finished-image quality, GPU and browser delivery remain separately qualified."
+    },
+    {
+      "id": "editor-workspace-local-controls",
+      "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
+      "callbacks": "invalidate$|source_changed$|action_context$|adjustment_action$|<lambda>",
+      "work": "Project action-specific inputs and Run label, open More tools for explicit Adjust image intent, reset stale source context and advance the browser-owned Editor intent version.",
+      "resource_owner": "Per-browser Editor controls and LatestUIRequests authenticated workspace channel; optional cancellation targets only its bound task ID",
+      "persistence": "Control/version updates only; no editor artifact, profile or generated image is published by these callbacks. The tool selector sets explicit Adjust image intent for that alias and Generate intent for other tools.",
+      "cancellation": "Queue-free intent invalidation fences delayed terminal adoption and signals only the bound task. A changed upload/selection clears its stale context so the current owned image must be opened again.",
+      "acceptance": "Installed-Gradio CPU journeys cover local action/context invalidation. Source support is distinct from browser transport timing and real-model acceptance."
+    },
+    {
+      "id": "model-acquisition-catalogue",
+      "sources": [
+        "ruinedfooocus/features/models/ui_acquisition.py",
+        "ruinedfooocus/features/models/ui_download.py"
+      ],
+      "work": "Catalogue/filter/page/artwork, details/role projections, explicit captured download/cancel and installed-file activation.",
+      "resource_owner": "Versioned Catalogue cache publication; authenticated LatestUIRequests view/selection/details/role/context/page channels; bounded PreparationAdmission, AcquisitionSession, PreparationService and preview artifact owners",
+      "persistence": "Only captured downloads promote verified no-clobber files; source receipt/cache updates are atomic. Browse does not load models.",
+      "cancellation": "Queue-free acknowledgements; superseded waiting preparation futures cancel immediately, scans check cancellation per entry/path, late success/error and source actions validate current view/selection. Transfers retain subscriber cancellation.",
+      "acceptance": "Deterministic actual callback/Gradio and cache races verified on CPU; ordinary widget transport paint and actual full-app A/B journeys remain browser acceptance."
+    },
+    {
+      "id": "model-local-controls",
+      "sources": ["ruinedfooocus/features/models/ui*.py"],
+      "work": "Local checkpoint/LoRA/embedding search, details, component roles, source defaults and override/reset projections.",
+      "resource_owner": "Shared read-only catalogue snapshots; per-owner checkpoint query/card/identity/description fences through bounded preparation; explicit component/default settings owner",
+      "persistence": "Explicit inspect/default/override operations use model cache/config transactions; ordinary selection changes only browser draft.",
+      "cancellation": "Source signatures validated at action boundaries; delayed local filtering and detail results need latest-selection fencing.",
+      "acceptance": "Source mapped; targeted model CPU suites exist; callback-by-callback two-session delivery remains browser acceptance."
+    },
+    {
+      "id": "native-image-file-transport",
+      "sources": ["ruinedfooocus/features/image_processing/ui_native_formats.py"],
+      "work": "Precision output choices and explicit source-preserving still-image import/export; separate from model generation.",
+      "resource_owner": "Validated selected source record, bounded native_image_formats codec/copy owner and one-slot native-image-exports Gradio lane",
+      "persistence": "Imports copy admitted original bytes to a new path; exports write unique derived cache files. Temporary files publish atomically without clobbering original files.",
+      "cancellation": "No explicit codec Cancel is exposed; an admitted bounded file operation runs to completion or unwinds its own temporary file. It does not cancel native generation or mutate shared model state.",
+      "acceptance": "Precision/source/native-format owner proofs remain separate; W05 has not imported/exported existing user images or executed codecs."
+    },
+    {
+      "id": "image-request-controls",
+      "sources": [
+        "ruinedfooocus/features/image_editing/ui*.py",
+        "ruinedfooocus/features/image_processing/ui*.py",
+        "ruinedfooocus/features/generation/ui*.py"
+      ],
+      "work": "Local image operation/format, mask/reference, typed native controls and utilities request composition.",
+      "resource_owner": "Per-session controls and source-signature draft; explicit execution dispatches to JobRegistry/native admission",
+      "persistence": "No generated output until admitted worker; uploaded source/metadata kept distinct from preview and typed control values.",
+      "cancellation": "Control reads remain independent; computation uses owning task Stop and model/artifact leases.",
+      "acceptance": "Each native owner supplies CPU source/caller coverage; source support is not real-model acceptance. Video execution excluded."
+    },
+    {
+      "id": "prompt-tools",
+      "sources": [
+        "ruinedfooocus/features/prompting/ui*.py",
+        "ruinedfooocus/features/prompting/prompt_preview.py"
+      ],
+      "work": "Prompt drafts/styles/previews/randomization and explicit rewrite/evolve helper requests.",
+      "resource_owner": "Session draft version fence; dataset cache owner; helper compute through owned prompt preparation and compute admission",
+      "persistence": "Explicit style/preset save uses its configuration owner; computed result cannot overwrite an edited prompt draft.",
+      "cancellation": "UI draft tokens fence helper publication; explicit helper cancellation/compute owner remains authoritative.",
+      "acceptance": "Prompt draft/preparation CPU contracts exist; live tool delivery and draft preservation tracked separately."
+    },
+    {
+      "id": "cache-maintenance",
+      "sources": ["ruinedfooocus/ui/cache_maintenance.py"],
+      "work": "Bounded cache-size scan or explicit allowlisted derived-cache deletion.",
+      "resource_owner": "PreparationAdmission cache_maintenance lane and inactive artifact write lease per cache entry",
+      "persistence": "Only allowlisted derived entries; skip active readers/pending artifacts and retain source/runtime/user inputs.",
+      "cancellation": "No broad cleanup; short bounded operations report removed/skipped/errors. Serial resource mutation lane.",
+      "acceptance": "Cache ownership CPU contracts verified; maintenance browser delivery remains separate."
+    },
+    {
+      "id": "runtime-hardware-maintenance",
+      "sources": ["ruinedfooocus/ui/ui_hardware.py", "ruinedfooocus/ui/optional_image_runtime.py"],
+      "work": "Read-only support/package plan, explicit runtime/backend install/update/rollback/verify and cancellation.",
+      "resource_owner": "Frozen package plan, runtime action session, process/install lock and private per-runtime bundle",
+      "persistence": "Install transaction verifies bundle before active pointer switch; profile requested state remains distinct from loaded native state.",
+      "cancellation": "Session-owned cancellable subprocess/install transaction; queue-free Cancel. No concurrent native model mutation inferred.",
+      "acceptance": "Source ownership mapped; no installs/probes/GPU allowed in W05. Actual install/cancel/recovery acceptance belongs to runtime owner."
+    },
+    {
+      "id": "private-api-activity",
+      "sources": ["ruinedfooocus/ui/api_activity.py"],
+      "work": "Private queue-free refresh/tab projection of bounded redacted API workload facts.",
+      "resource_owner": "app/api_activity.py ApiActivity short RLock snapshot; at most 128 memory-only records for one hour, displaying at most 20 rows",
+      "persistence": "No disk or profile writes; only workload/state/duration facts. Request contents, paths, credentials, result contents and error messages are not accepted by the activity recorder.",
+      "cancellation": "Short read-only snapshot has no worker or install to cancel; it cannot cancel or change the observed jobs. Both UI bindings hide progress and bypass the Gradio queue.",
+      "acceptance": "Chat owner supplies activity/privacy CPU proofs; source ownership is distinct from actual rendered activity delivery."
+    },
+    {
+      "id": "settings-profiles-paths",
+      "sources": [
+        "ruinedfooocus/ui/ui_settings.py",
+        "ruinedfooocus/ui/path_picker.py",
+        "ruinedfooocus/ui/ui_guest.py",
+        "ruinedfooocus/ui/ui_api_workspace.py"
+      ],
+      "work": "Language/theme/text layout, profile save/save-as/next-launch, local paths, guest/API workspace and explicit reinstall intent.",
+      "resource_owner": "core/settings.py and path manager transaction; server-authenticated owner/guest checks; bounded Chat runtime refresh owner",
+      "persistence": "Configuration atomic replace and profile revision checks; paths captured for pending jobs. Profile save does not mutate active native models.",
+      "cancellation": "Short local changes; active acquisition/install uses owning session. Successful logout invalidates job and UI channels for its login prefix.",
+      "acceptance": "Profile/path/guest CPU suites exist; live concurrent save/navigation/runtime-refresh delivery remains owner acceptance."
+    },
+    {
+      "id": "legacy-gradio-api-compute",
+      "sources": ["ruinedfooocus/app/api.py"],
+      "callbacks": "api_llama|api_generate_image",
+      "work": "Legacy Gradio RPC Chat/image calls capture configured defaults and wait synchronously for the admitted serial worker.",
+      "resource_owner": "api_runtime bounded Job, captured request owner, JobRegistry and compute:shared native admission",
+      "persistence": "Worker owns completed output and metadata; RPC waits for its own terminal result.",
+      "cancellation": "Synchronous wait is bounded to 1800 seconds and finally signals only its job. These legacy handlers expose no explicit Stop; cancelling a running Gradio Python thread is not an immediate native interrupt guarantee.",
+      "acceptance": "Source-bound compatibility endpoints only; no legacy compute RPC, model or GPU execution was performed by this audit."
+    },
+    {
+      "id": "legacy-gradio-api-local-reads",
+      "sources": ["ruinedfooocus/app/api.py"],
+      "callbacks": "api_search|api_version|get_last_image",
+      "work": "Legacy Gradio RPC local image search, version and last-image path reads.",
+      "resource_owner": "Configured output search owner and read-only application version/last-image state; normal Gradio/UI access boundary",
+      "persistence": "No model or profile mutation and no generated output; search returns existing image URLs.",
+      "cancellation": "No native worker or explicit Stop for these synchronous reads; each call returns only its own search/state result.",
+      "acceptance": "Source-bound registration and callback identity verified; live endpoint reachability remains separate."
+    },
+    {
+      "id": "image-media-delivery",
+      "sources": ["ruinedfooocus/app/api.py", "ruinedfooocus/integrations/openai_api.py"],
+      "callbacks": "(^|\\.)(last_image|image_file)$",
+      "work": "Authenticated UI last-image display or opaque expiring API-generated-file capability delivery.",
+      "resource_owner": "UI login gate and display-copy owner, or API assets token map restricted to generated paths and 24-hour expiry",
+      "persistence": "Read/stream existing output or derived display bytes; API capability never accepts an arbitrary client filesystem path.",
+      "cancellation": "HTTP response lifespan; no generation, model load, install or cross-owner job cancellation.",
+      "acceptance": "Imperative route/source identity verified; HTTP media transfer and browser display are separate acceptance."
+    },
+    {
+      "id": "api-discovery",
+      "sources": ["ruinedfooocus/integrations/openai_api.py"],
+      "callbacks": "list_models|capabilities",
+      "work": "Authenticated API model/capability and current-request default snapshots.",
+      "resource_owner": "Web access/API token owner; local catalogue and api_runtime image_defaults snapshot",
+      "persistence": "Read-only route; no model load/acquisition.",
+      "cancellation": "HTTP request lifespan; no long worker or mutation to cancel.",
+      "acceptance": "API contract CPU callers verified; network service receipt is distinct from browser delivery."
+    },
+    {
+      "id": "api-compute",
+      "sources": ["ruinedfooocus/integrations/openai_api.py"],
+      "work": "Authenticated Chat/image/edit/upscale/histogram/review request and explicitly excluded video route. Model-free histogram work still uses the admitted serial worker in the current source.",
+      "resource_owner": "api_runtime eight-slot admission, per-request owner + JobRegistry and serialized compute:shared",
+      "persistence": "Worker owns completed files/metadata; captured request cannot be rewritten by another browser's controls.",
+      "cancellation": "Disconnect/cancel signals owning JobRegistry task; terminal/capacity release once; no cancellation of another owner.",
+      "acceptance": "API/lifecycle CPU caller contracts exist; real-model/platform and HTTP streaming cancellation remain separate bounded acceptance."
+    }
+  ]
+}

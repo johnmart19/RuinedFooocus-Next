@@ -1,15 +1,6 @@
 #!/bin/sh
-# Small example how to use the gradio api to access llama in RuinedFooocus
-
-USER=${1:-"Please, tell me a joke about generative AI."}
-
-DATA='{
-  "data": [
-    "You are an witty ai. Please help the user as best as you can.",
-    "'$USER'"
-  ]
-}'
-
-EVENT_ID=$(curl -sX POST http://localhost:7860/gradio_api/call/llama -s -H "Content-Type: application/json" -d "$DATA" | awk -F'"' '{print $4}')
-curl -sN http://localhost:7860/gradio_api/call/llama/$EVENT_ID
+# Quotes, Unicode and newlines stay one argument; Gradio serializes JSON.
+# RF_PYTHON selects the existing application interpreter (default: python3).
+SCRIPT_DIR=$(CDPATH= cd -P "$(dirname "$0")" && pwd) || exit 1
+exec "${RF_PYTHON:-python3}" "$SCRIPT_DIR/api_examples.py" llama "$@"
 

@@ -1,0 +1,13 @@
+[tool.ruff]
+required-version = "==0.17.5"
+target-version = "py310"
+line-length = 100
+force-exclude = true
+extend-exclude = ["ruinedfooocus/backends/vendor/**"]
+
+[tool.ruff.lint]
+select = ["E9", "F63", "F7", "F82"]
+
+[tool.ruff.format]
+line-ending = "lf"
+docstring-code-format = false

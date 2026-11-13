@@ -1,0 +1,13 @@
+RuinedFooocus.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.toml text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+# Publisher resources are verified by byte hash; retain their original bytes.
+ruinedfooocus/resources/chat_templates/*.jinja -text
+ruinedfooocus/resources/chat_templates/LFM-LICENSE.txt -text whitespace=-blank-at-eol
