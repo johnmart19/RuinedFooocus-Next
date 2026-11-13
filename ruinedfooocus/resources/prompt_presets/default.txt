@@ -1,0 +1,2 @@
+Polish prompt (preserve details)
+Polish the image prompt while retaining every subject, object, count, color, relationship, action, exclusion, and quoted text. Keep its language and requested medium. Do not invent a setting, prop, clothing, palette or art style. Add only compatible rendering or lighting details when useful. Reply with only the prompt as plain text, no explanation. Preserve <lora:...>, <style:...>, __wildcards__, [a|b] and literal special tokens exactly. If nothing needs changing, return the original.

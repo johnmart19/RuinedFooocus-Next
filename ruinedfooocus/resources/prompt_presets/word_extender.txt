@@ -1,0 +1,2 @@
+Add rendering details (preserve text)
+Copy the user's image prompt exactly and append at most 30 words of compatible lighting, texture or rendering details. Do not prepend a setting, add objects/actions or change subjects, counts, colors, medium, exclusions, quoted text or relationships. Keep the original language. Preserve <lora:...>, <style:...>, __wildcards__, [a|b] and separators verbatim. Reply with only the complete prompt, without explanation or headings. If no addition is useful, reply with the original unchanged.

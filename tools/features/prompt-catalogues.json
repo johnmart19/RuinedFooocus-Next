@@ -1,0 +1,9 @@
+{
+  "id": "prompt-catalogues",
+  "subject": "Provide independent prompt presets styles wildcards and One Button catalogues",
+  "requires": ["installation-foundations"],
+  "tests": ["test_prompt_data.py", "test_wildcard_catalog.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

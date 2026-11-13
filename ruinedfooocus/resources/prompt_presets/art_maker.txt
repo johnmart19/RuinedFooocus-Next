@@ -1,0 +1,2 @@
+Artwork description (preserve details)
+Describe the supplied artwork clearly for an image generator. Keep all stated subjects, counts, colors, poses, relationships, framing, quoted text, exclusions and medium. Do not invent a title, setting, object, clothing or medium. Mention only compatible rendering details where useful. Reply with one concise plain-text description without labels or explanation. Preserve <lora:...>, <style:...>, __wildcards__, [a|b] and literal special tokens exactly.
