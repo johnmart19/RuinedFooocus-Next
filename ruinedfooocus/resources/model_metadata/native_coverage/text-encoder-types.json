@@ -1,0 +1,578 @@
+{
+  "schema_version": 1,
+  "kind": "clip_types",
+  "rows": [
+    {
+      "id": "STABLE_DIFFUSION",
+      "native_value": 1,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": [
+        "SD20",
+        "SD21UNCLIP",
+        "SenseNovaU15",
+        "AuraFlow",
+        "BaseModel",
+        "MingImage",
+        "SDXL",
+        "SDXLRefiner",
+        "SD15_instructpix2pix",
+        "SDXL_instructpix2pix",
+        "SD_X4Upscaler"
+      ],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1671"
+    },
+    {
+      "id": "STABLE_CASCADE",
+      "native_value": 2,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["StableCascade_C"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1672"
+    },
+    {
+      "id": "SD3",
+      "native_value": 3,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["SD3"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1673"
+    },
+    {
+      "id": "HUNYUAN_DIT",
+      "native_value": 5,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["HunyuanDiT"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1675"
+    },
+    {
+      "id": "FLUX",
+      "native_value": 6,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Flux"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1676"
+    },
+    {
+      "id": "PIXART",
+      "native_value": 10,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["PixArt"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1680"
+    },
+    {
+      "id": "COSMOS",
+      "native_value": 11,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Anima", "CosmosPredict2"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1681"
+    },
+    {
+      "id": "LUMINA2",
+      "native_value": 12,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Lumina2", "ZImage", "ZImagePixelSpace"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1682"
+    },
+    {
+      "id": "HIDREAM",
+      "native_value": 14,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["HiDream", "HiDreamO1"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1684"
+    },
+    {
+      "id": "CHROMA",
+      "native_value": 15,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Chroma", "ChromaRadiance"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1685"
+    },
+    {
+      "id": "OMNIGEN2",
+      "native_value": 17,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Omnigen2"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1687"
+    },
+    {
+      "id": "QWEN_IMAGE",
+      "native_value": 18,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["QwenImage21", "QwenImage"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1688"
+    },
+    {
+      "id": "HUNYUAN_IMAGE",
+      "native_value": 19,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["HunyuanImage21Refiner", "HunyuanImage21"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1689"
+    },
+    {
+      "id": "KANDINSKY5_IMAGE",
+      "native_value": 23,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Kandinsky5Image"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1693"
+    },
+    {
+      "id": "NEWBIE",
+      "native_value": 24,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["NewBieImage"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1694"
+    },
+    {
+      "id": "FLUX2",
+      "native_value": 25,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["ErnieImage", "Flux2", "Flux2Klein4B", "Flux2Klein9B"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1695"
+    },
+    {
+      "id": "LONGCAT_IMAGE",
+      "native_value": 26,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["LongCatImage"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1696"
+    },
+    {
+      "id": "LENS",
+      "native_value": 28,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Lens"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1698"
+    },
+    {
+      "id": "PIXELDIT",
+      "native_value": 29,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["PiD", "PixelDiTT2I"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1699"
+    },
+    {
+      "id": "IDEOGRAM4",
+      "native_value": 30,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Ideogram4"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1700"
+    },
+    {
+      "id": "BOOGU",
+      "native_value": 31,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Boogu"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1701"
+    },
+    {
+      "id": "KREA2",
+      "native_value": 32,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Krea2"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1702"
+    },
+    {
+      "id": "JOYIMAGE",
+      "native_value": 33,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["JoyImage"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1703"
+    },
+    {
+      "id": "MAGE",
+      "native_value": 34,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["MageFlow"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1704"
+    },
+    {
+      "id": "MINIMAX",
+      "native_value": 35,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "MiniMaxH3Image uses its source-validated Qwen3-VL 32B encoder and native MINIMAX logical type.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": [],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1705"
+    },
+    {
+      "id": "FLUX3",
+      "native_value": 37,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Flux3"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1707"
+    },
+    {
+      "id": "MOSS_IMAGE",
+      "native_value": 38,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["MOSSImage"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1708"
+    },
+    {
+      "id": "FIBO2",
+      "native_value": 39,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image consumers are listed; compatible logical type, tokenizer and mixed-precision companion contracts are still required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "media": "image",
+      "image_component_families": ["Fibo2"],
+      "source_support": "native-CLIP-enum-registered",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1709"
+    }
+  ]
+}

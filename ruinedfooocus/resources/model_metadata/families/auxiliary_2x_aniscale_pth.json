@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:2x_aniscale_pth": {
+      "display_name": "AniScale",
+      "purpose": "Anime cleanup, including DVD noise, compression, blur, halos and bleeding.",
+      "native_scale": 2,
+      "source_url": "https://objectstorage.us-phoenix-1.oraclecloud.com/n/ax6ygfvpvzka/b/open-modeldb-files/o/2x-AniScale.pth",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": "CC-BY-NC-4.0",
+        "status": "model_registry_declared",
+        "sources": ["omdb_2x-AniScale"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "omdb_2x-AniScale"],
+      "architecture": "compact"
+    }
+  }
+}

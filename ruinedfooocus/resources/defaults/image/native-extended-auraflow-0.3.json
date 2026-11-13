@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-auraflow-0.3",
+  "family": "AuraFlow",
+  "media": "image",
+  "variant": "0.3",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 3.48,
+    "sampler_name": "euler",
+    "scheduler": "sgm_uniform",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "AuraFlow",
+    "architecture": "AuraFlow",
+    "native_config": {},
+    "behavioral_variants": ["0.3"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "AuraFlow",
+      "text_encoder_roles": ["clip_aura"],
+      "vae_role": "vae_auraflow",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": true,
+    "runtime_requirements": []
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Compatible AuraFlow native family example",
+    "source_url": "https://raw.githubusercontent.com/comfyanonymous/ComfyUI_examples/f9431bb000ce792094ff345446e22cac1ea6cef3/aura_flow/aura_flow_0.2_example.png",
+    "source_revision": "f9431bb000ce792094ff345446e22cac1ea6cef3",
+    "resource_sha256": "720ba6f2673b7a8ff639ff88a0daf55f4abec6179b59d9bdc29d8df9c29a8884",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "KSampler",
+      "inputs": {
+        "steps": 20,
+        "cfg": 3.48,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform"
+      }
+    }
+  ],
+  "legacy": null
+}

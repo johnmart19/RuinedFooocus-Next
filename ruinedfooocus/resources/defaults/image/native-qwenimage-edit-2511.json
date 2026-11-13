@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "native-qwenimage-edit-2511",
+  "family": "QwenImage",
+  "media": "image",
+  "variant": "edit-2511",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 40,
+    "cfg": 3,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1328, 1328]],
+  "default_size": [1328, 1328],
+  "applicability": {
+    "native_class": "QwenImage",
+    "architecture": "QwenImage",
+    "native_config": {
+      "image_model": "qwen_image",
+      "in_channels": 64,
+      "num_layers": 60
+    },
+    "behavioral_variants": ["edit-2511"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "QwenImage",
+      "text_encoder_roles": ["clip_qwen25"],
+      "vae_role": "vae_qwen_image",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI QwenImage edit-2511 workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_qwen_image_edit_2511_int8.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "7e89acdf205bc81f1e291f3ab6e37da8dde68dd6fbe2978721d0cacd23766ac1",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [3.1]
+    },
+    {
+      "node": "LoraLoaderModelOnly",
+      "mode": 0,
+      "values": ["Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors", 1]
+    }
+  ],
+  "legacy": null
+}

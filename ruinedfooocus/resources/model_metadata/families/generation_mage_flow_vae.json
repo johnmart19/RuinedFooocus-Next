@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:mage_flow_vae": {
+      "title": "Mage-Flow VAE (two aliases)",
+      "provenance": {
+        "source": "Comfy-Org/Mage-Flow/vae/mage_flow_vae_bf16.safetensors"
+      },
+      "consumers": ["MageFlow"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "value": "MIT repository declaration",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/Comfy-Org/Mage-Flow",
+        "note": null
+      },
+      "dependencies": ["MageFlow checkpoint + Qwen3-VL4B encoder"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "No text-generation sampling settings. Encode/decode dtype, tiling and device staging come from the VAE implementation and target workload; preserve latent channels, scaling and temporal layout."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Mage-Flow",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/resource_defaults.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

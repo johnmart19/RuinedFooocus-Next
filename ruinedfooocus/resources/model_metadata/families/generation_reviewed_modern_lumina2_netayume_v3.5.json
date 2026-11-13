@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_lumina2_netayume_v3.5": {
+      "title": "Lumina2 netayume-v3.5",
+      "consumers": ["Lumina2"],
+      "native_class": "Lumina2",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/duongve/NetaYume-Lumina-Image-2.0/blob/69c29c441119d43405d8373c654b16827d3cf46e/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-lumina2-netayume-v3.5",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_netayume_lumina_t2i.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

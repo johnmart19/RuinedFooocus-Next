@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:faceswap/GFPGANv1.4.pth": {
+      "id": "existing:faceswap/GFPGANv1.4.pth",
+      "catalogue_key": "faceswap/GFPGANv1.4.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:faceswap_gfpganv1_4_pth",
+      "label": "GFPGAN v1.4 (cropped-face restoration)",
+      "role": "face_restoration",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "GFPGANv1Clean",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a616bdabb55c3932a91c612e9b72d0cfd95f1c13297512c697d93e2ce09661f0",
+      "artifact": {
+        "bytes": 348632874,
+        "sha256": null,
+        "hash_evidence": null,
+        "full_file_hash_recomputed": false,
+        "pinned_url": null,
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:faceswap_gfpganv1_4_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    }
+  }
+}

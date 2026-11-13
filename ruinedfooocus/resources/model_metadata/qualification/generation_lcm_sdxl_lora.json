@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "profile_id": "generation:lcm_sdxl_lora",
+  "benchmarks": [
+    {
+      "profile_id": "generation:lcm_sdxl_lora",
+      "measurement_kind": "resource_measurement",
+      "dataset": null,
+      "value": 197,
+      "higher_is_better": null,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "adapter_parameter_count",
+      "unit": "million",
+      "protocol": {
+        "metric": "adapter_parameter_count",
+        "value": 197,
+        "unit": "million",
+        "scope": "author table; not GPU memory"
+      },
+      "evidence": {
+        "source_urls": [
+          "https://huggingface.co/latent-consistency/lcm-lora-sdxl",
+          "https://huggingface.co/blog/lcm_lora",
+          "https://huggingface.co/docs/diffusers/main/using-diffusers/inference_with_lcm_lora"
+        ]
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

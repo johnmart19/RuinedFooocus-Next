@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_ernieimage_base": {
+      "title": "ErnieImage base",
+      "consumers": ["ErnieImage"],
+      "native_class": "ErnieImage",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/ERNIE-Image/blob/50509a88bc4fb9e89583a98605f4c81dc221eb8c/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-ernieimage-base",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_ernie_image.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

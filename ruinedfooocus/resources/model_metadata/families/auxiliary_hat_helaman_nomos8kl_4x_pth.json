@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:hat_helaman_nomos8kl_4x_pth": {
+      "display_name": "Helaman Nomos8kSC HAT-L",
+      "purpose": "Photo enlargement handling JPEG/blur; large HAT.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/HAT-Helaman-Nomos8kL-4x.pth",
+      "release": {
+        "date": "2023-06-30",
+        "status": "known",
+        "kind": "creator_stated_original_release",
+        "sources": ["helaman_release_4xNomos8kSCHAT"]
+      },
+      "license": {
+        "identifier": "CC-BY-4.0",
+        "status": "creator_declared",
+        "sources": ["helaman_release_4xNomos8kSCHAT"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": [
+        "project_upscale",
+        "omdb_4x-Nomos8kSCHAT-L",
+        "mirror_card",
+        "mirror_names",
+        "helaman_release_4xNomos8kSCHAT"
+      ],
+      "architecture": "hat"
+    }
+  }
+}

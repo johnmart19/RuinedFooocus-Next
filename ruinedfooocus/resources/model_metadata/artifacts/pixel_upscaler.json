@@ -1,0 +1,2071 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:4x-UltraSharp.pth": {
+      "id": "existing:4x-UltraSharp.pth",
+      "catalogue_key": "4x-UltraSharp.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:4x_ultrasharp_pth",
+      "label": "UltraSharp (legacy alias)",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5f4737535c05f70a14cc45a91ea87a5fb921079ee4b87f28d0eee930f9824971",
+      "artifact": {
+        "bytes": 66961958,
+        "sha256": "a5812231fc936b42af08a5edba784195495d303d5b3248c24489ef0c4021fe01",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/lokCX/4x-Ultrasharp/resolve/1856559b50de25116a7c07261177dd128f1f5664/4x-UltraSharp.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:4x_ultrasharp_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:2x-Futsuu-Anime.pth": {
+      "id": "existing:2x-Futsuu-Anime.pth",
+      "catalogue_key": "2x-Futsuu-Anime.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:2x_futsuu_anime_pth",
+      "label": "Futsuu Anime",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "compact",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "423403b08d58fffe04251346b82e7385f20a66c1ea9c45c5395222a5fc9e085f",
+      "artifact": {
+        "bytes": 4838409,
+        "sha256": "5ed232c71599b01911e045c0246530fcfe5b2e0791242ff7d3964f97d74f8df0",
+        "hash_evidence": "registry_resource_metadata_not_recomputed",
+        "full_file_hash_recomputed": false,
+        "pinned_url": null,
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:2x_futsuu_anime_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:2x-AniScale.pth": {
+      "id": "existing:2x-AniScale.pth",
+      "catalogue_key": "2x-AniScale.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:2x_aniscale_pth",
+      "label": "AniScale",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "compact",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "1a0d22f02ddd6d120e717667dd7435b5f7c3ad9208a8b99dd3b80960bab4508a",
+      "artifact": {
+        "bytes": 4838301,
+        "sha256": "8036d8e4da1c1f16db79a4aefbda86f7c9a07c6a7fa03d5d2d9e2f0012909671",
+        "hash_evidence": "registry_resource_metadata_not_recomputed",
+        "full_file_hash_recomputed": false,
+        "pinned_url": null,
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:2x_aniscale_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:2x-AnimeSharpV4_Fast_RCAN_PU.safetensors": {
+      "id": "existing:2x-AnimeSharpV4_Fast_RCAN_PU.safetensors",
+      "catalogue_key": "2x-AnimeSharpV4_Fast_RCAN_PU.safetensors",
+      "state": "existing",
+      "profile_id": "auxiliary:2x_animesharpv4_fast_rcan_pu_safetensors",
+      "label": "AnimeSharp V4 Fast RCAN-PU",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "rcan",
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8670a6dca4d72b17afd99651f5bb7dcb582def7e76f676729f32f548cb8b711e",
+      "artifact": {
+        "bytes": 31359158,
+        "sha256": "b641c9eb10b43f26538177aa8f0fef8b9fc2a153afd1431d0a062a84c49ce6d0",
+        "hash_evidence": "registry_resource_metadata_not_recomputed",
+        "full_file_hash_recomputed": false,
+        "pinned_url": null,
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:2x_animesharpv4_fast_rcan_pu_safetensors"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:RealESRGAN_x2plus.pth": {
+      "id": "existing:RealESRGAN_x2plus.pth",
+      "catalogue_key": "RealESRGAN_x2plus.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:realesrgan_x2plus_pth",
+      "label": "Real-ESRGAN x2plus",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "RRDBNet",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "34593b3f34030ff81a0fc0bb9354e12dd3900129dfcce4c0a9c9c6fae728af17",
+      "artifact": {
+        "bytes": 67061725,
+        "sha256": null,
+        "hash_evidence": null,
+        "full_file_hash_recomputed": false,
+        "pinned_url": null,
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:realesrgan_x2plus_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:RealESRGAN_x4plus.pth": {
+      "id": "existing:RealESRGAN_x4plus.pth",
+      "catalogue_key": "RealESRGAN_x4plus.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:realesrgan_x4plus_pth",
+      "label": "Real-ESRGAN x4plus",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "RRDBNet",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "c30939725ca6bb833b20e203b8f18ccdb7c4ed33bcdbd3878d552fa469edc833",
+      "artifact": {
+        "bytes": 67040989,
+        "sha256": null,
+        "hash_evidence": null,
+        "full_file_hash_recomputed": false,
+        "pinned_url": null,
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:realesrgan_x4plus_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:RealESRGAN_x4plus_anime_6B.pth": {
+      "id": "existing:RealESRGAN_x4plus_anime_6B.pth",
+      "catalogue_key": "RealESRGAN_x4plus_anime_6B.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:realesrgan_x4plus_anime_6b_pth",
+      "label": "Real-ESRGAN x4plus anime6B",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "RRDBNet",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "e8915481261ba5e708eb48b8ceeb9c7f7e8dfe2db8635a6b74858afe27c7bab9",
+      "artifact": {
+        "bytes": 17938799,
+        "sha256": null,
+        "hash_evidence": null,
+        "full_file_hash_recomputed": false,
+        "pinned_url": null,
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:realesrgan_x4plus_anime_6b_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:DAT-4x.pth": {
+      "id": "existing:DAT-4x.pth",
+      "catalogue_key": "DAT-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:dat_4x_pth",
+      "label": "DAT x4",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "dat",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "eac16f9d1119b4a11ffb9ea78c4f0b6f47c1b8cdb41511ccef838f6b554bb4c2",
+      "artifact": {
+        "bytes": 154692051,
+        "sha256": "391a6ce69899dff5ea3214557e9d585608254579217169faf3d4c353caff049e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/DAT-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:dat_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:DAT-Helaman-LSDIR-4x.pth": {
+      "id": "existing:DAT-Helaman-LSDIR-4x.pth",
+      "catalogue_key": "DAT-Helaman-LSDIR-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:dat_helaman_lsdir_4x_pth",
+      "label": "Helaman LSDIR DAT",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "dat",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "72036b5cb85529d8fc5a8ad7ce3fb2e1460b3c412e3edd85e4e9fcee44f5ec34",
+      "artifact": {
+        "bytes": 154682919,
+        "sha256": "d76391730a9126f4a72ddb79a834e264809642d0b9c6fe394d6aadc150d0859e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/DAT-Helaman-LSDIR-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:dat_helaman_lsdir_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:DAT-Helaman-Nomos-4x.pth": {
+      "id": "existing:DAT-Helaman-Nomos-4x.pth",
+      "catalogue_key": "DAT-Helaman-Nomos-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:dat_helaman_nomos_4x_pth",
+      "label": "Helaman Nomos8k DAT",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "dat",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "e20f6cbf6153ed6e202cc2cc59f93c4511f56eaca7e8a1a1a345bd220bc9adbe",
+      "artifact": {
+        "bytes": 154697745,
+        "sha256": "a19a652c01d765537a7899abcee9ba190ca13ca8d1ee6c6d5d81f0503dda965f",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/DAT-Helaman-Nomos-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:dat_helaman_nomos_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:DAT-Helaman-SSDIR-4x.pth": {
+      "id": "existing:DAT-Helaman-SSDIR-4x.pth",
+      "catalogue_key": "DAT-Helaman-SSDIR-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:dat_helaman_ssdir_4x_pth",
+      "label": "Helaman SSDIR DAT",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "dat",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a58fde99ee3cf99217cb6a17233341ec875ff70c4f40dd47e0895bcca4464650",
+      "artifact": {
+        "bytes": 154682919,
+        "sha256": "390fcba6c25dc5c0f6e5706a542d00f9a42bceda92c530933c17a33c6994fc4c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/DAT-Helaman-SSDIR-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:dat_helaman_ssdir_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-BigFace-v3-4x.pth": {
+      "id": "existing:ESRGAN-BigFace-v3-4x.pth",
+      "catalogue_key": "ESRGAN-BigFace-v3-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_bigface_v3_4x_pth",
+      "label": "BigFace v3",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "24525d93d958d1f70cd86da2960291de166f95492b0b92ac0b85baffbd6fe1c5",
+      "artifact": {
+        "bytes": 66906130,
+        "sha256": "e8e7a3ecccc405c823db1504a66a9027e0c5f2745ed4d9412ff5043f54577863",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-BigFace-v3-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_bigface_v3_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-Box-4x.pth": {
+      "id": "existing:ESRGAN-Box-4x.pth",
+      "catalogue_key": "ESRGAN-Box-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_box_4x_pth",
+      "label": "Box",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "4bb300eae21a0d4182cb5e1404eeb9525a967de3df632b893df01082ec4b4eae",
+      "artifact": {
+        "bytes": 66958607,
+        "sha256": "add6c8944c16d02fad148fc40485385dbfe98f32b0c6fb2cddb362d463e0b3d5",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-Box-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_box_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-Helaman-HFA2k-4x.pth": {
+      "id": "existing:ESRGAN-Helaman-HFA2k-4x.pth",
+      "catalogue_key": "ESRGAN-Helaman-HFA2k-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_helaman_hfa2k_4x_pth",
+      "label": "Helaman HFA2k",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "023befca4dec37f336e7344b0d5b5b7f3feaa43ee249b7a9fd118f717b2fb4ef",
+      "artifact": {
+        "bytes": 67020037,
+        "sha256": "35dfd9f6e9d2d264f0e79c6a054798a5e71b1c752bd8b668786c01ebd62fe2b0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-Helaman-HFA2k-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_helaman_hfa2k_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-Helaman-LSDIRplus-4x.pth": {
+      "id": "existing:ESRGAN-Helaman-LSDIRplus-4x.pth",
+      "catalogue_key": "ESRGAN-Helaman-LSDIRplus-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_helaman_lsdirplus_4x_pth",
+      "label": "Helaman LSDIRplus",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "b760c761db76546302710f27e75090f6d9f4f7b0dcee5111b7f32a7f3d297bf6",
+      "artifact": {
+        "bytes": 67010245,
+        "sha256": "b549ddb71199fb8c54a0d33084bfe8ffd74882b383d85668066ca2ba57d49427",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-Helaman-LSDIRplus-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_helaman_lsdirplus_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-HugePaint-8x.pth": {
+      "id": "existing:ESRGAN-HugePaint-8x.pth",
+      "catalogue_key": "ESRGAN-HugePaint-8x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_hugepaint_8x_pth",
+      "label": "HugePaint",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "9bf7cc01bf0e65e74a6df25f1af266302741fd3eaa07c10738d5332788094059",
+      "artifact": {
+        "bytes": 67054134,
+        "sha256": "e53467d7822920156c86b146cabf0331ddf1f6878767e9654357c7656f5b5d01",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-HugePaint-8x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_hugepaint_8x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-NMKD-Siax-4x.pth": {
+      "id": "existing:ESRGAN-NMKD-Siax-4x.pth",
+      "catalogue_key": "ESRGAN-NMKD-Siax-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_nmkd_siax_4x_pth",
+      "label": "NMKD Siax CX",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "aea1c9b2081ea76cc33252a9fba131a15fc84d7633a3f7665eb888c9c28ed4b3",
+      "artifact": {
+        "bytes": 66957746,
+        "sha256": "560424d9f68625713fc47e9e7289a98aabe1d744e1cd6a9ae5a35e9957fd127e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-NMKD-Siax-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_nmkd_siax_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-NMKD-Superscale-4x.pth": {
+      "id": "existing:ESRGAN-NMKD-Superscale-4x.pth",
+      "catalogue_key": "ESRGAN-NMKD-Superscale-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_nmkd_superscale_4x_pth",
+      "label": "NMKD Superscale",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "e4f7f4a344a9c5360044b63c3ff4bcea3d1db6121eeec8f490a6cb6cb55c62c5",
+      "artifact": {
+        "bytes": 66958607,
+        "sha256": "1d1b0078fe71446e0469d8d4df59e96baa80d83cda600d68237d655830821bcc",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-NMKD-Superscale-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_nmkd_superscale_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-NMKD-Superscale-8x.pth": {
+      "id": "existing:ESRGAN-NMKD-Superscale-8x.pth",
+      "catalogue_key": "ESRGAN-NMKD-Superscale-8x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_nmkd_superscale_8x_pth",
+      "label": "NMKD Superscale x8",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "48d0f81fb5a6ae86d4a5e2d5f36fb9afba21801e6e220038dfcaf0f7505437be",
+      "artifact": {
+        "bytes": 67106707,
+        "sha256": "1fb44a906b9bc4dd89d6bf8d1d28e6cc59cc58c2a28251aa88c85a38e72c8507",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-NMKD-Superscale-8x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_nmkd_superscale_8x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-NMKD-YandereNeoXL-4x.pth": {
+      "id": "existing:ESRGAN-NMKD-YandereNeoXL-4x.pth",
+      "catalogue_key": "ESRGAN-NMKD-YandereNeoXL-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_nmkd_yandereneoxl_4x_pth",
+      "label": "NMKD YandereNeo XL",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "7b0288f78fe350450a93e72cb9970898051ed2826401f9c55dd93797c3fbe402",
+      "artifact": {
+        "bytes": 66961958,
+        "sha256": "ddcb5856b948654b6298fd50ed90a461eff8442d298779c23724a8c0e7bbbab1",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-NMKD-YandereNeoXL-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_nmkd_yandereneoxl_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-Remacri-4x.pth": {
+      "id": "existing:ESRGAN-Remacri-4x.pth",
+      "catalogue_key": "ESRGAN-Remacri-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_remacri_4x_pth",
+      "label": "Remacri",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "1dbdc26b951db54f8752387009680e7ad37da994b101055680c3161f4bb99a69",
+      "artifact": {
+        "bytes": 67025055,
+        "sha256": "e1a73bd89c2da1ae494774746398689048b5a892bd9653e146713f9df8bca86a",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-Remacri-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_remacri_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-UltraSharp-4x.pth": {
+      "id": "existing:ESRGAN-UltraSharp-4x.pth",
+      "catalogue_key": "ESRGAN-UltraSharp-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_ultrasharp_4x_pth",
+      "label": "UltraSharp",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8fa409c00b92cb878877f40f2ce93d40e9ae8087d0bea14a10930c523b6648ee",
+      "artifact": {
+        "bytes": 66961958,
+        "sha256": "a5812231fc936b42af08a5edba784195495d303d5b3248c24489ef0c4021fe01",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-UltraSharp-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_ultrasharp_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:ESRGAN-Valar-4x.pth": {
+      "id": "existing:ESRGAN-Valar-4x.pth",
+      "catalogue_key": "ESRGAN-Valar-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:esrgan_valar_4x_pth",
+      "label": "Valar",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "esrgan+",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "7410767fed9736ac0512aa4f22f004d393927936b036a4dcb9ec3080ff50fec4",
+      "artifact": {
+        "bytes": 67544144,
+        "sha256": "90c3192bef43e4baaa095c04751868065f23c52d98c1b42e6d0916bfeda75646",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/ESRGAN-Valar-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:esrgan_valar_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-2x.pth": {
+      "id": "existing:HAT-2x.pth",
+      "catalogue_key": "HAT-2x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_2x_pth",
+      "label": "HAT x2",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "0f3af1f232edb7db729756f3edb913692fc53c67ac8db9afba2e8864a5d9d50c",
+      "artifact": {
+        "bytes": 84546053,
+        "sha256": "35e9409849016ab2bfc0c549639ea4f1d4d5b2bdd75f856a925e124dd05670d0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-2x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_2x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-3x.pth": {
+      "id": "existing:HAT-3x.pth",
+      "catalogue_key": "HAT-3x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_3x_pth",
+      "label": "HAT x3",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "6581834b51b90e5dcede731ea7eb4acedccdf88375743f9bb8715ff0a0f05895",
+      "artifact": {
+        "bytes": 85284613,
+        "sha256": "453c90b94d494d041c8bff2d222987af311f07b4a09b4dafbd9ab6492f15206c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-3x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_3x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-4x.pth": {
+      "id": "existing:HAT-4x.pth",
+      "catalogue_key": "HAT-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_4x_pth",
+      "label": "HAT x4",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "c6741126099dbb8d2ffdb30a25c80e60ecf50fabce0618de0d5a079cd39814ab",
+      "artifact": {
+        "bytes": 85137601,
+        "sha256": "02dabea478aa5902a7170ad89350124e691bd89c91356f24b3267022622dc030",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-Helaman-Lexica-4x.pth": {
+      "id": "existing:HAT-Helaman-Lexica-4x.pth",
+      "catalogue_key": "HAT-Helaman-Lexica-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_helaman_lexica_4x_pth",
+      "label": "Helaman Lexica HAT",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "hat",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "9577a0f68984634800a92a270e9ec26bd01b6b3b309d1f84f6c4d7d7a33444df",
+      "artifact": {
+        "bytes": 85149569,
+        "sha256": "f3441f602f221ae111253b72ccb561e9f7a1a3dc84ab27923edea0a9581ea1dd",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-Helaman-Lexica-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_helaman_lexica_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-Helaman-Nomos8kL-4x.pth": {
+      "id": "existing:HAT-Helaman-Nomos8kL-4x.pth",
+      "catalogue_key": "HAT-Helaman-Nomos8kL-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_helaman_nomos8kl_4x_pth",
+      "label": "Helaman Nomos8kSC HAT-L",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "hat",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "d1e6dcdb33d54a5fa93ce5aa2190d1664692f3ed0687c3a9afc39c887062dc68",
+      "artifact": {
+        "bytes": 331564661,
+        "sha256": "9e7726ba191fdf05b87ea8585d78164b6e96e2ee04fdbb3285c3efa37db4b5b0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-Helaman-Nomos8kL-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_helaman_nomos8kl_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-L-2x.pth": {
+      "id": "existing:HAT-L-2x.pth",
+      "catalogue_key": "HAT-L-2x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_l_2x_pth",
+      "label": "HAT-L x2",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "08a63800f31b1f645887a96f0e53d69cf4081327580d2ffaf893c5589ca2fd03",
+      "artifact": {
+        "bytes": 165182573,
+        "sha256": "2818c7ca8d72ec4cc5f31c93203d55252a662dd35cda34ce1a69661f97dcd38f",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-L-2x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_l_2x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-L-3x.pth": {
+      "id": "existing:HAT-L-3x.pth",
+      "catalogue_key": "HAT-L-3x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_l_3x_pth",
+      "label": "HAT-L x3",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5984f12cd5b870c27ea13b20f6897109e7fe094dcf2c4a5e5a2f2f623edf07a5",
+      "artifact": {
+        "bytes": 165921133,
+        "sha256": "78af181bedf1e805fd7517d3738bc5824f7ebdc477fc9f757b708bcf49ad4e3d",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-L-3x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_l_3x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:HAT-L-4x.pth": {
+      "id": "existing:HAT-L-4x.pth",
+      "catalogue_key": "HAT-L-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:hat_l_4x_pth",
+      "label": "HAT-L x4 ImageNet-pretrained",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "hat",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "14ccc871a09ed9fb4076e8960b2b3b317951fdd3a0c23a7f96b28a644c29d367",
+      "artifact": {
+        "bytes": 165774123,
+        "sha256": "5992bd38522f2b8faf11ea4bd8ee08de92465bb66892166576999afc36d60043",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/HAT-L-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:hat_l_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:OmniSR-Helaman-HFA2k-2x.pth": {
+      "id": "existing:OmniSR-Helaman-HFA2k-2x.pth",
+      "catalogue_key": "OmniSR-Helaman-HFA2k-2x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:omnisr_helaman_hfa2k_2x_pth",
+      "label": "Helaman HFA2k AVC OmniSR",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "omnisr",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "09160a6dd7e14ec99df7151b98c71341cb0765222dd6da3b0fa724ce1a90b767",
+      "artifact": {
+        "bytes": 6551545,
+        "sha256": "8cf209b73e3b8bd16e6e0267cff0ca01db01e755041b1da94ca61c359e7a6772",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/OmniSR-Helaman-HFA2k-2x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:omnisr_helaman_hfa2k_2x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:RRDBNet-4x.pth": {
+      "id": "existing:RRDBNet-4x.pth",
+      "catalogue_key": "RRDBNet-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:rrdbnet_4x_pth",
+      "label": "RRDBNet x4 (unresolved checkpoint)",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "88b975d69441916cdc90cfe720215008dfcc8cd676672fe2827b66f927b5174d",
+      "artifact": {
+        "bytes": 66954395,
+        "sha256": "985fba37421353716ef2fbd7fbbab061e76409994d168cf52527aa8ee53f81ec",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/RRDBNet-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:rrdbnet_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:RealHAT-GAN-4x.pth": {
+      "id": "existing:RealHAT-GAN-4x.pth",
+      "catalogue_key": "RealHAT-GAN-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:realhat_gan_4x_pth",
+      "label": "Real HAT GAN",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "4a48c0e43b5b03f59ebbaba897fa9323e99e0269e23107457c2e84501ac9bbaa",
+      "artifact": {
+        "bytes": 170277017,
+        "sha256": "f5b1e3bbbb05147ca2beefcc715279cb647d7976cbda67d62ea7e6e20d5ffcc7",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/RealHAT-GAN-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:realhat_gan_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:RealHAT-Sharper-4x.pth": {
+      "id": "existing:RealHAT-Sharper-4x.pth",
+      "catalogue_key": "RealHAT-Sharper-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:realhat_sharper_4x_pth",
+      "label": "Real HAT GAN Sharper",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "221b000dddf608922ed91fd8adfab97b2e73d508153fc7638a812a5a4abb9fde",
+      "artifact": {
+        "bytes": 170277017,
+        "sha256": "5800b67136006eb8cab3b4ed7c8d73b6a195bb18e6cc709b674f9aa069c00271",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/RealHAT-Sharper-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:realhat_sharper_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:SRFormer-Light-4x.pth": {
+      "id": "existing:SRFormer-Light-4x.pth",
+      "catalogue_key": "SRFormer-Light-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:srformer_light_4x_pth",
+      "label": "SRFormer Light x4",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "60066ebd32e199be4fed34838d3eedbf5d5e67f0941ac96e496ea9e000be5944",
+      "artifact": {
+        "bytes": 38812063,
+        "sha256": "b60d4d3b9e7df7c580a54cfcfc69ef32bc547cc5cec8441896c89de86c5f950c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/SRFormer-Light-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:srformer_light_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:SRFormer-Nomos-4x.pth": {
+      "id": "existing:SRFormer-Nomos-4x.pth",
+      "catalogue_key": "SRFormer-Nomos-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:srformer_nomos_4x_pth",
+      "label": "Helaman Nomos8kSC SRFormer",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "srformer",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "fdffd0a28bb10a9f2e46dc170294be96a420249ef1fb0ed54e6acc94fdb69cc9",
+      "artifact": {
+        "bytes": 194403301,
+        "sha256": "f0730b12f88fd628313f0c77315ed592adb4cd883d5fd8b7211446c622811c9b",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/SRFormer-Nomos-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:srformer_nomos_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:SwiftSR-2x.pth": {
+      "id": "existing:SwiftSR-2x.pth",
+      "catalogue_key": "SwiftSR-2x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:swiftsr_2x_pth",
+      "label": "Swift-SRGAN x2",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "swift-srgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "0f7a157e7179518f6aa963ec243378f0cddc79e62b6b8ec7163c4465c06a1665",
+      "artifact": {
+        "bytes": 2410125,
+        "sha256": "b57a94a2be1e84eded4059aabce31e768a0c1e43887a14d457a586f3b1fcd877",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/SwiftSR-2x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:swiftsr_2x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:SwiftSR-4x.pth": {
+      "id": "existing:SwiftSR-4x.pth",
+      "catalogue_key": "SwiftSR-4x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:swiftsr_4x_pth",
+      "label": "Swift-SRGAN x4",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "swift-srgan",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "d979ed7e9aba92f34d815b3cef9f3fb543dc67100bcf85dbf5b6c2601e7b34a4",
+      "artifact": {
+        "bytes": 922571,
+        "sha256": "f741441dccb163c394afe095f76a5ca4a85732e699032732dc29320a900a609e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/SwiftSR-4x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:swiftsr_4x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:SwinIR-Helaman-Lexica-2x.pth": {
+      "id": "existing:SwinIR-Helaman-Lexica-2x.pth",
+      "catalogue_key": "SwinIR-Helaman-Lexica-2x.pth",
+      "state": "existing",
+      "profile_id": "auxiliary:swinir_helaman_lexica_2x_pth",
+      "label": "Helaman Lexica SwinIR",
+      "role": "pixel_upscaler",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "swinir",
+      "format": "pth",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "91b7d877c2ddd735243754ba07c6822a1574b78948abb3570652e381aa15f589",
+      "artifact": {
+        "bytes": 59011833,
+        "sha256": "443441716478b970eba85d21e2d3e4abf8273b82b1030cb91b8885fe0c98f575",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/be4764ac498735cc8f05047fdfc876f2dfe89578/SwinIR-Helaman-Lexica-2x.pth",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:swinir_helaman_lexica_2x_pth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    }
+  }
+}

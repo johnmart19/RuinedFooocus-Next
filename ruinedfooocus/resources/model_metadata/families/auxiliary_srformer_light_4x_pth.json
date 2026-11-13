@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:srformer_light_4x_pth": {
+      "display_name": "SRFormer Light x4",
+      "purpose": "Smaller attention model; exact original checkpoint/license unresolved.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/SRFormer-Light-4x.pth",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": null,
+        "status": "unresolved_conflicting_historical_metadata",
+        "reason": "Exact official light checkpoint mapping unresolved. Older registry official SRFormer entry states Apache-2.0; current upstream implementation says CC-BY-NC-4.0. Neither mirror MIT nor a different checkpoint record resolves this file.",
+        "sources": ["mirror_card", "srformer_readme", "omdb_4x-SRFormer-SRx4-DF2K"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": [
+        "project_upscale",
+        "mirror_card",
+        "mirror_names",
+        "srformer_readme",
+        "spandrel_SRFormer"
+      ],
+      "implementation_license": {
+        "identifier": "CC-BY-NC-4.0",
+        "status": "current_upstream_code_license",
+        "sources": ["srformer_readme"],
+        "note": "Separate from creator weight license and top-level wrapper MIT metadata."
+      }
+    }
+  }
+}

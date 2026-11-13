@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:gemma4_12b": {
+      "display_name": "Gemma 4 12B IT",
+      "architecture": "gemma4",
+      "release": {
+        "date": "2026-06-03",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/generation_config.json",
+          "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/README.md",
+          "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "gemma4_12b",
+        "base_repo": "google/gemma-4-12B-it",
+        "base_revision": "43c9d014b231474fa7212dbb48a762566c2b255d",
+        "publisher_recommended": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 64
+        },
+        "publisher_generation_config": {
+          "bos_token_id": 2,
+          "do_sample": true,
+          "eos_token_id": [1, 106, 50],
+          "pad_token_id": 0,
+          "suppress_tokens": [258883, 258882],
+          "temperature": 1.0,
+          "top_k": 64,
+          "top_p": 0.95,
+          "transformers_version": "5.10.0.dev0"
+        },
+        "publisher_unspecified_sampling_fields": [
+          "min_p",
+          "presence_penalty",
+          "frequency_penalty",
+          "repetition_penalty"
+        ],
+        "proposed_app_request": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 64,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/generation_config.json",
+          "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/README.md",
+          "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/chat_template.jinja"
+        ],
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false,
+          "preserve_thinking": false
+        },
+        "publisher_evidence": "Official card recommends this triple across all use cases; generation_config confirms it.",
+        "reasoning_note": "Pinned upstream template defaults enable_thinking=false and preserve_thinking=false. Use template controls and keep native turn/tool boundaries. Existing native EOS/suppressed-token behavior should be respected; do not blindly copy HF numeric token IDs into a different tokenizer.",
+        "required_files_note": "Current v2 vision manifest chooses the official Google QAT pair. Do not reuse the older generic Unsloth pair/hash for the QAT model."
+      },
+      "vision_profile": {},
+      "license": {
+        "identifier": "Apache-2.0",
+        "source": "https://huggingface.co/google/gemma-4-12B-it",
+        "evidence": "upstream model-card license declaration; retain exact artifact provenance"
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/generation_config.json",
+        "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/README.md",
+        "https://huggingface.co/google/gemma-4-12B-it/resolve/43c9d014b231474fa7212dbb48a762566c2b255d/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}

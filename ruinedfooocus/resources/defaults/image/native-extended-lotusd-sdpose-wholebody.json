@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-lotusd-sdpose-wholebody",
+  "family": "SDPose",
+  "media": "image",
+  "variant": "sdpose-wholebody",
+  "aliases": [],
+  "sampling": {},
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "LotusD",
+    "architecture": "LotusD",
+    "native_config": {
+      "in_channels": 4
+    },
+    "behavioral_variants": ["sdpose-wholebody"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SDPose",
+      "text_encoder_roles": [],
+      "vae_role": null,
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "SDPose specialized native workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/utility_sdpose_ood_image_to_pose.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "0844f85d22173eb75dd645cd72bc42f96c247bd0a28d6ece746db95e566f5aa6",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

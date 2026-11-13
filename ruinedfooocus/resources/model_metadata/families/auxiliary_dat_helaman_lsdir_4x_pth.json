@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:dat_helaman_lsdir_4x_pth": {
+      "display_name": "Helaman LSDIR DAT",
+      "purpose": "Photographic enlargement handling JPEG, resize and light blur.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/DAT-Helaman-LSDIR-4x.pth",
+      "release": {
+        "date": "2023-09-10",
+        "status": "known",
+        "kind": "creator_stated_original_release",
+        "sources": ["helaman_release_4xLSDIRDAT"]
+      },
+      "license": {
+        "identifier": "CC-BY-4.0",
+        "status": "creator_declared",
+        "sources": ["helaman_release_4xLSDIRDAT"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": [
+        "project_upscale",
+        "omdb_4x-LSDIRDAT",
+        "mirror_card",
+        "mirror_names",
+        "helaman_release_4xLSDIRDAT"
+      ],
+      "architecture": "dat"
+    }
+  }
+}

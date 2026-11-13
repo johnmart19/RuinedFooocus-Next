@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "profile_id": "language:deepseek_r1_distill_llama_8b",
+  "benchmarks": [
+    {
+      "profile_id": "language:deepseek_r1_distill_llama_8b",
+      "measurement_kind": "task_quality",
+      "dataset": "AIME 2024",
+      "value": 50.4,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "pass@1",
+      "unit": "percent",
+      "protocol": {
+        "dataset": "AIME 2024",
+        "split": null,
+        "metric": "pass@1",
+        "score": 50.4,
+        "unit": "percent",
+        "shots": null,
+        "protocol_id": "deepseek_distill_table"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "scope": "exact Llama8B distill checkpoint, not full DeepSeek-R1 or Qwen7B distill",
+        "precision": null,
+        "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+        "max_generation_tokens": 32768,
+        "sampling": {
+          "temperature": 0.6,
+          "top_p": 0.95,
+          "responses_per_query": 64
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:deepseek_r1_distill_llama_8b",
+      "measurement_kind": "task_quality",
+      "dataset": "AIME 2024",
+      "value": 80.0,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "cons@64",
+      "unit": "percent",
+      "protocol": {
+        "dataset": "AIME 2024",
+        "split": null,
+        "metric": "cons@64",
+        "score": 80.0,
+        "unit": "percent",
+        "shots": null,
+        "protocol_id": "deepseek_distill_table"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "scope": "exact Llama8B distill checkpoint, not full DeepSeek-R1 or Qwen7B distill",
+        "precision": null,
+        "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+        "max_generation_tokens": 32768,
+        "sampling": {
+          "temperature": 0.6,
+          "top_p": 0.95,
+          "responses_per_query": 64
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:deepseek_r1_distill_llama_8b",
+      "measurement_kind": "task_quality",
+      "dataset": "MATH-500",
+      "value": 89.1,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "pass@1",
+      "unit": "percent",
+      "protocol": {
+        "dataset": "MATH-500",
+        "split": null,
+        "metric": "pass@1",
+        "score": 89.1,
+        "unit": "percent",
+        "shots": null,
+        "protocol_id": "deepseek_distill_table"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "scope": "exact Llama8B distill checkpoint, not full DeepSeek-R1 or Qwen7B distill",
+        "precision": null,
+        "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+        "max_generation_tokens": 32768,
+        "sampling": {
+          "temperature": 0.6,
+          "top_p": 0.95,
+          "responses_per_query": 64
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:deepseek_r1_distill_llama_8b",
+      "measurement_kind": "task_quality",
+      "dataset": "GPQA Diamond",
+      "value": 49.0,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "pass@1",
+      "unit": "percent",
+      "protocol": {
+        "dataset": "GPQA Diamond",
+        "split": null,
+        "metric": "pass@1",
+        "score": 49.0,
+        "unit": "percent",
+        "shots": null,
+        "protocol_id": "deepseek_distill_table"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "scope": "exact Llama8B distill checkpoint, not full DeepSeek-R1 or Qwen7B distill",
+        "precision": null,
+        "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+        "max_generation_tokens": 32768,
+        "sampling": {
+          "temperature": 0.6,
+          "top_p": 0.95,
+          "responses_per_query": 64
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:deepseek_r1_distill_llama_8b",
+      "measurement_kind": "task_quality",
+      "dataset": "LiveCodeBench",
+      "value": 39.6,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "pass@1",
+      "unit": "percent",
+      "protocol": {
+        "dataset": "LiveCodeBench",
+        "split": null,
+        "metric": "pass@1",
+        "score": 39.6,
+        "unit": "percent",
+        "shots": null,
+        "protocol_id": "deepseek_distill_table"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "scope": "exact Llama8B distill checkpoint, not full DeepSeek-R1 or Qwen7B distill",
+        "precision": null,
+        "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+        "max_generation_tokens": 32768,
+        "sampling": {
+          "temperature": 0.6,
+          "top_p": 0.95,
+          "responses_per_query": 64
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:deepseek_r1_distill_llama_8b",
+      "measurement_kind": "task_quality",
+      "dataset": "Codeforces",
+      "value": 1205,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "rating",
+      "unit": "rating_points",
+      "protocol": {
+        "dataset": "Codeforces",
+        "split": null,
+        "metric": "rating",
+        "score": 1205,
+        "unit": "rating_points",
+        "shots": null,
+        "protocol_id": "deepseek_distill_table"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "scope": "exact Llama8B distill checkpoint, not full DeepSeek-R1 or Qwen7B distill",
+        "precision": null,
+        "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+        "max_generation_tokens": 32768,
+        "sampling": {
+          "temperature": 0.6,
+          "top_p": 0.95,
+          "responses_per_query": 64
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

@@ -1,0 +1,720 @@
+{
+  "schema_version": 1,
+  "kind": "roles",
+  "rows": [
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 25
+      },
+      "native_reader": "comfy.sd.load_checkpoint_guess_config",
+      "RF_root_category": "checkpoints",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Bundled components retain precedence.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "checkpoints",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [".yaml"],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 26
+      },
+      "native_reader": "RF bounded local YAML recipe",
+      "RF_root_category": null,
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Data-only overrides; never import a named class.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "configs",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 28
+      },
+      "native_reader": "comfy.sd.load_lora_for_models",
+      "RF_root_category": "loras",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Match MODEL/CLIP targets and signed strength.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "loras",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 29
+      },
+      "native_reader": "comfy.sd.VAE",
+      "RF_root_category": "vae",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Match latent channels, spatial/temporal layout, alpha and codec.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "vae",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 30
+      },
+      "native_reader": "comfy.sd.load_clip",
+      "RF_root_category": "clip",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Match native CLIP type, encoder count, tokenizer and projector.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "text_encoders",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 31
+      },
+      "native_reader": "comfy.sd.load_diffusion_model",
+      "RF_root_category": "diffusion_models",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Require native architecture detection and compatible companions.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "diffusion_models",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 32
+      },
+      "native_reader": "comfy.clip_vision.load",
+      "RF_root_category": "clip_vision",
+      "owner": "W07",
+      "packet": "R",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Still-image Style/Redux/PhotoMaker and UnCLIP have distinct dimensions.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "clip_vision",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 33
+      },
+      "native_reader": "comfy.sd.load_style_model",
+      "RF_root_category": "style_models",
+      "owner": "W07",
+      "packet": "R",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "StyleAdapter and Redux are distinct readers/layouts.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "style_models",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 34
+      },
+      "native_reader": "comfy.sd1_clip.load_embed",
+      "RF_root_category": "embeddings",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Match the selected text encoder embedding width.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "embeddings",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": ["folder"],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 35
+      },
+      "native_reader": "comfy.diffusers_load.load_diffusers",
+      "RF_root_category": "diffusers",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Only the captured local native single-file layout; shards need separate review.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "diffusers",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 36
+      },
+      "native_reader": "comfy.sd.VAE / RF preview decoder",
+      "RF_root_category": "vae_approx",
+      "owner": "W07",
+      "packet": "U",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Preview decoders and full codecs are different roles.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "vae_approx",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 38
+      },
+      "native_reader": "comfy.controlnet.load_controlnet",
+      "RF_root_category": "controlnet",
+      "owner": "W07",
+      "packet": "P",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Match base family, union mode and mask/guide contract.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "controlnet",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 39
+      },
+      "native_reader": "comfy.sd.load_gligen",
+      "RF_root_category": "gligen",
+      "owner": "W07",
+      "packet": "U",
+      "disposition": "source-consumer-needs-acceptance",
+      "reason": "Captured ordered text boxes on compatible native SD UNet/CLIP and eight-times RGB codec.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "cpu-contracts",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "gligen",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 41
+      },
+      "native_reader": "UpscaleModelLoader / Spandrel",
+      "RF_root_category": "upscalers",
+      "owner": "W07",
+      "packet": "U",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Retain native scale, channel count and exact target geometry.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "upscale_models",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 49
+      },
+      "native_reader": "HypernetworkLoader",
+      "RF_root_category": "hypernetworks",
+      "owner": "W07",
+      "packet": "U",
+      "disposition": "source-consumer-needs-acceptance",
+      "reason": "Captured native attention dimensions, signed strength and request-local native clone.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "cpu-contracts",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "hypernetworks",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 51
+      },
+      "native_reader": "PhotoMakerLoader",
+      "RF_root_category": "photomaker",
+      "owner": "W07",
+      "packet": "R",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "SDXL trigger/token/vision contract; not arbitrary image adapters.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "photomaker",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 55
+      },
+      "native_reader": "ModelPatchLoader",
+      "RF_root_category": "model_patches",
+      "owner": "W07",
+      "packet": "P",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Qwen 2.1 Union is connected; Qwen Fun/ZImage/Anima/USO remain distinct.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "model_patches",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 59
+      },
+      "native_reader": "LoadBackgroundRemovalModel",
+      "RF_root_category": "background_removal",
+      "owner": "W07",
+      "packet": "U",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Compatible BiRefNet source route; qualify alpha edges separately.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "background_removal",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 63
+      },
+      "native_reader": "LoadDA3Model / LoadMoGeModel",
+      "RF_root_category": "geometry_estimation",
+      "owner": "W07",
+      "packet": "U",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Still depth/normal maps apply; mesh export remains outside scope.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "geometry_estimation",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_discovery_tokens": [
+        ".bin",
+        ".ckpt",
+        ".pkl",
+        ".pt",
+        ".pt2",
+        ".pth",
+        ".safetensors",
+        ".sft"
+      ],
+      "source": {
+        "source_key": "native/folder_paths.py",
+        "line": 67
+      },
+      "native_reader": "LoadMediaPipeFaceLandmarker",
+      "RF_root_category": "detection",
+      "owner": "W07",
+      "packet": "U",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Still face landmark overlays use the complete MediaPipe bundle; this does not qualify mesh or video execution.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "detection",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_base_roles": ["diffusion_models", "unet"],
+      "source": {
+        "source_key": "gguf/nodes.py",
+        "line": 67
+      },
+      "native_reader": "gguf_sd_loader",
+      "RF_root_category": "diffusion_models",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Image architecture and quantization checks remain native.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "unet_gguf",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_base_roles": ["text_encoders", "clip"],
+      "source": {
+        "source_key": "gguf/nodes.py",
+        "line": 68
+      },
+      "native_reader": "gguf_clip_loader",
+      "RF_root_category": "clip",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Select by case-insensitive container plus native encoder layout.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "clip_gguf",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    },
+    {
+      "native_base_roles": ["loras"],
+      "source": {
+        "source_key": "gguf/nodes.py",
+        "line": 69
+      },
+      "native_reader": "load_gguf_lora",
+      "RF_root_category": "loras",
+      "owner": "W07",
+      "packet": "F",
+      "disposition": "source-role-needs-consumer-validation",
+      "reason": "Connected explicit image LoRA path; exact native target validation required.",
+      "evidence": {
+        "source": "inspected",
+        "ui_api": "pending",
+        "real_runtime": "pending",
+        "visual_quality": "pending"
+      },
+      "id": "lora_gguf",
+      "media": "image-or-utility",
+      "source_support": "native-folder-or-GGUF-alias",
+      "installed_status": "runtime-inventory-not-examined",
+      "qualification": "not-inherited-from-role-registration"
+    }
+  ]
+}

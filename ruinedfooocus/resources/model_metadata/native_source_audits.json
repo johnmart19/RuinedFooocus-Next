@@ -1,0 +1,476 @@
+{
+  "schema_version": 1,
+  "audits": {
+    "b12327": {
+      "source_commit": "81f21f4b27fc8252f11404a006744045aac5ea6e",
+      "base_build": "b12110",
+      "base_source_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+      "checked_date_utc": "2026-11-12",
+      "scope": "source_only",
+      "qualification": "No binary, artifact execution, GPU, behavior, quality or performance qualification. All inspected files differ from the base; no unchanged-code claim.",
+      "review": "Explicit architecture factory, native hparams/tensor/graph implementations, retained mtmd GGUF/projector routes, and server chat/tool/reasoning API entry points. Existing artifact-specific task restrictions and companion identities remain authoritative.",
+      "architectures": {
+        "bailingmoe3": {
+          "text": "source_supported"
+        },
+        "gemma3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gemma4": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gpt-oss": {
+          "text": "source_supported"
+        },
+        "granite": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "lfm2": {
+          "text": "source_supported"
+        },
+        "lfm3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "llama": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "mistral3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported"
+        },
+        "qwen2vl": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3": {
+          "text": "source_supported"
+        },
+        "qwen35": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        }
+      },
+      "sources": {
+        "src/models/bailingmoe3.cpp": {
+          "sha256": "18abf2388894d49a48066259d2b917955c083428d941314325ccb7705bc8bb8c",
+          "base_sha256": "2ffa1ad422a68324b3a4d990deb3c24a0c4dbd0f66a5ee08d44699375b6d9aa6",
+          "changed_from_base": true
+        },
+        "src/models/gemma3.cpp": {
+          "sha256": "84f828ae5ddb628587158a00ac2fdb78fa6aa101dafa989898e08a1dd49d7295",
+          "base_sha256": "c2c620d079029a8a6e1fffbd81f36b3cfb2642aa9b68d8ca13b9a29be26655ef",
+          "changed_from_base": true
+        },
+        "src/models/gemma4.cpp": {
+          "sha256": "bc2a9d0741ab8ff4fe00e0159f2d43dad3ee1edcf0f098be5daa6fa093a54339",
+          "base_sha256": "0ae2b735c7356b9ffeca964e9b77ab574bbf517a53d1af97946cf3488c98078c",
+          "changed_from_base": true
+        },
+        "src/models/openai-moe.cpp": {
+          "sha256": "399d0c1a6cb8aa2702c89087f5d979add7538649e236707e015381e12d754e9b",
+          "base_sha256": "1e72822e506c534f111762e71ae282dbc20d9d9a26b12bfa6aeae384dbb027c0",
+          "changed_from_base": true
+        },
+        "src/models/granite.cpp": {
+          "sha256": "bb11d97106203c1d0e639299226a60ce60ffde2720b71e28b4287bb331cf83f2",
+          "base_sha256": "8601bb092790b0ba1f81ed5f43181712965e5e891c9d2b0bc1137cd2c36a0dcf",
+          "changed_from_base": true
+        },
+        "src/models/lfm2.cpp": {
+          "sha256": "c15ad7e53d2c6c459f0621276e2d2390ed05f1c0138f99322e79e6fa940f6a66",
+          "base_sha256": "eae164b9b8bba9e6b5eab49cc0911c28a13b5c13901805266b7e77159d367694",
+          "changed_from_base": true
+        },
+        "src/models/lfm3.cpp": {
+          "sha256": "305f9abf7ffbdd35faa34d5e0012377d78139dbfa0f36ac423e58a68fce49f15",
+          "base_sha256": "26157ecc12efbfc34c6e0ee6b8cd89a5f3bcef1765fb28640cc1a921b35d28e8",
+          "changed_from_base": true
+        },
+        "src/models/llama.cpp": {
+          "sha256": "dbd44e2d9bb2539c8da524aede4433c24578da590737d872f7552e66b0f39c58",
+          "base_sha256": "38a43fef15432002ed7bc1a49ffb5e1c2cfba30beb5afc1d38422c288ad8d885",
+          "changed_from_base": true
+        },
+        "src/models/mistral3.cpp": {
+          "sha256": "1377854fe47bf3bcc22fae6f1a3b088f08c888749edc35ea85e153f13753b9f5",
+          "base_sha256": "9bd6587f130cb55b34be3aa930341033889e85b01bc2b2d1b3fffea1de27a719",
+          "changed_from_base": true
+        },
+        "src/models/qwen2.cpp": {
+          "sha256": "154669efdee6d73585ef5ffc5785d10249f29e92c0dfa097806b72e024d78616",
+          "base_sha256": "7f7f9df9bdaaf7c8aaab900fe046c97936b67d656f66dea445735f1beec695f4",
+          "changed_from_base": true
+        },
+        "src/models/qwen2vl.cpp": {
+          "sha256": "05052a5f52e60c5b7def7bdd28c7db088dd8917a76a7eb896434fa5484d9089b",
+          "base_sha256": "2d00d03c371b87e158f95d69a89bf91cfbcbfa066c8d07f3738e264b3fe919c0",
+          "changed_from_base": true
+        },
+        "src/models/qwen3.cpp": {
+          "sha256": "7df64f8b1914a10106dead976a756d796e570ed52f5d638a59f8a4497f35ac34",
+          "base_sha256": "6018840e2d7e23340e2404aceb216e6afcedbd8ae24977a0df0eb878be9d0107",
+          "changed_from_base": true
+        },
+        "src/models/qwen35.cpp": {
+          "sha256": "d8bea564d8eff04d5c4d2ad97d176791d9e6443c73d428c4a173d29358258aaa",
+          "base_sha256": "7e4673de5708ce96602079941379417d0cd3d4010381dcb93192807929b6f9bc",
+          "changed_from_base": true
+        },
+        "src/models/qwen35moe.cpp": {
+          "sha256": "81a7cc32f15e6902807fe7304f8e80563854a5ca449924c6da90c1fb370887a5",
+          "base_sha256": "579426f57c8691279ab9231264b5a0bceb214e57b3876d58020a1f40a98647a4",
+          "changed_from_base": true
+        },
+        "tools/mtmd/mtmd.cpp": {
+          "sha256": "638227372e11b21f09fc933b6cad444ad55ab663939acb2752df0a1cea3698c2",
+          "base_sha256": "3d531a45ed17044ef33430189a7851a94bfe7448d492f7f77bdcd0833970ce03",
+          "changed_from_base": true
+        },
+        "tools/mtmd/mtmd.h": {
+          "sha256": "7f1a8436341f9f803dcd7ed9e9fdd0ad9e098cc4a5a70761f890d27b0234ad0c",
+          "base_sha256": "e53fe94a6b0c4af3649b821a47acfdb434caf7a16675761884e99f5518c7d2a1",
+          "changed_from_base": true
+        },
+        "tools/mtmd/mtmd-model.cpp": {
+          "sha256": "46b4280e27c94c37a6b5733522e8225bad9b701257ad03538066a94126879e64",
+          "base_sha256": null,
+          "changed_from_base": true
+        },
+        "tools/server/server.cpp": {
+          "sha256": "79976f2b7a145d5809e8e742ad178cf77ad1009f3f13a86452829f96147bec28",
+          "base_sha256": "d4d343db7c1b648eb5358ae2b87966a5f78ce5c9b245c7fbfe9827ba6971f08b",
+          "changed_from_base": true
+        },
+        "src/llama-arch.cpp": {
+          "sha256": "d7a123dc2e146d09a3d17bc751020e0e669e72534867d18da8eb3afbb454dc57",
+          "base_sha256": "6054f982e7856defee08a51b6bbf66fec7c0856e72a792c6600a9c1407d44d56",
+          "changed_from_base": true
+        },
+        "src/llama-model.cpp": {
+          "sha256": "d95c1b95e2e7233ee39ceb5d96e88c484db4e02c4a435531721b38baa9302fa8",
+          "base_sha256": "4a05742afc09dc89873e40c8b47a97826f95c4cb90fb32ba48271b4d8f4a14de",
+          "changed_from_base": true
+        },
+        "common/chat.cpp": {
+          "sha256": "4791ca7e6e62f9cc6ac74de0de3d8bdb432bd19fec1161552bfeed37146169c4",
+          "base_sha256": "c4396b123b02aade70d5bf30517f1f6b23cdc8da29ae92244f16e5ea6494a5e4",
+          "changed_from_base": true
+        },
+        "common/arg.cpp": {
+          "sha256": "51caf9d78f2ddabbc1f0361fcdca105decb19a0daef18272b170debc0015923c",
+          "base_sha256": "83cd576c95940ac4f84059da3c5b34914c15a94a834a608743389f2d43f25ea2",
+          "changed_from_base": true
+        },
+        "tools/server/server-common.cpp": {
+          "sha256": "3a048ecef55e16aee5ade25b5ee055d9d2de289ec33dfe2ddd61d112944044dc",
+          "base_sha256": "b686729ed7d098e2f0c3da1ba28325d0e6d30721dab09f71cb9b53f342710ddb",
+          "changed_from_base": true
+        }
+      },
+      "source_url_template": "https://github.com/ggml-org/llama.cpp/blob/81f21f4b27fc8252f11404a006744045aac5ea6e/{path}"
+    },
+    "b12366": {
+      "source_commit": "31953bcf74ba489a8bbb0c936c5fcf24fcf9485c",
+      "base_build": "b12110",
+      "base_source_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+      "checked_date_utc": "2026-11-13",
+      "scope": "source_only",
+      "qualification": "Exact source-only review; no binary artifact execution, model behavior, GPU placement, quality, performance or stability qualification.",
+      "review": "Reviewed b12327..b12366 delta: fused Qwen3.5 tensors retain separate-tensor fallbacks; mtmd validates projector tensors/merge sizes and corrects MiniCPM dimensions; media URL restrictions preserve inline data URLs; server tool/CORS changes do not enable RF server-side tools. Existing artifact-specific tasks and companion identities remain authoritative.",
+      "architectures": {
+        "bailingmoe3": {
+          "text": "source_supported"
+        },
+        "gemma3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gemma4": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gpt-oss": {
+          "text": "source_supported"
+        },
+        "granite": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "lfm2": {
+          "text": "source_supported"
+        },
+        "lfm3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "llama": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "mistral3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported"
+        },
+        "qwen2vl": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3": {
+          "text": "source_supported"
+        },
+        "qwen35": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        }
+      },
+      "sources": {
+        "src/models/bailingmoe3.cpp": {
+          "sha256": "18abf2388894d49a48066259d2b917955c083428d941314325ccb7705bc8bb8c",
+          "base_sha256": "2ffa1ad422a68324b3a4d990deb3c24a0c4dbd0f66a5ee08d44699375b6d9aa6",
+          "changed_from_base": true,
+          "b12327_sha256": "18abf2388894d49a48066259d2b917955c083428d941314325ccb7705bc8bb8c",
+          "changed_from_b12327": false
+        },
+        "src/models/gemma3.cpp": {
+          "sha256": "84f828ae5ddb628587158a00ac2fdb78fa6aa101dafa989898e08a1dd49d7295",
+          "base_sha256": "c2c620d079029a8a6e1fffbd81f36b3cfb2642aa9b68d8ca13b9a29be26655ef",
+          "changed_from_base": true,
+          "b12327_sha256": "84f828ae5ddb628587158a00ac2fdb78fa6aa101dafa989898e08a1dd49d7295",
+          "changed_from_b12327": false
+        },
+        "src/models/gemma4.cpp": {
+          "sha256": "bc2a9d0741ab8ff4fe00e0159f2d43dad3ee1edcf0f098be5daa6fa093a54339",
+          "base_sha256": "0ae2b735c7356b9ffeca964e9b77ab574bbf517a53d1af97946cf3488c98078c",
+          "changed_from_base": true,
+          "b12327_sha256": "bc2a9d0741ab8ff4fe00e0159f2d43dad3ee1edcf0f098be5daa6fa093a54339",
+          "changed_from_b12327": false
+        },
+        "src/models/openai-moe.cpp": {
+          "sha256": "399d0c1a6cb8aa2702c89087f5d979add7538649e236707e015381e12d754e9b",
+          "base_sha256": "1e72822e506c534f111762e71ae282dbc20d9d9a26b12bfa6aeae384dbb027c0",
+          "changed_from_base": true,
+          "b12327_sha256": "399d0c1a6cb8aa2702c89087f5d979add7538649e236707e015381e12d754e9b",
+          "changed_from_b12327": false
+        },
+        "src/models/granite.cpp": {
+          "sha256": "bb11d97106203c1d0e639299226a60ce60ffde2720b71e28b4287bb331cf83f2",
+          "base_sha256": "8601bb092790b0ba1f81ed5f43181712965e5e891c9d2b0bc1137cd2c36a0dcf",
+          "changed_from_base": true,
+          "b12327_sha256": "bb11d97106203c1d0e639299226a60ce60ffde2720b71e28b4287bb331cf83f2",
+          "changed_from_b12327": false
+        },
+        "src/models/lfm2.cpp": {
+          "sha256": "c15ad7e53d2c6c459f0621276e2d2390ed05f1c0138f99322e79e6fa940f6a66",
+          "base_sha256": "eae164b9b8bba9e6b5eab49cc0911c28a13b5c13901805266b7e77159d367694",
+          "changed_from_base": true,
+          "b12327_sha256": "c15ad7e53d2c6c459f0621276e2d2390ed05f1c0138f99322e79e6fa940f6a66",
+          "changed_from_b12327": false
+        },
+        "src/models/lfm3.cpp": {
+          "sha256": "305f9abf7ffbdd35faa34d5e0012377d78139dbfa0f36ac423e58a68fce49f15",
+          "base_sha256": "26157ecc12efbfc34c6e0ee6b8cd89a5f3bcef1765fb28640cc1a921b35d28e8",
+          "changed_from_base": true,
+          "b12327_sha256": "305f9abf7ffbdd35faa34d5e0012377d78139dbfa0f36ac423e58a68fce49f15",
+          "changed_from_b12327": false
+        },
+        "src/models/llama.cpp": {
+          "sha256": "dbd44e2d9bb2539c8da524aede4433c24578da590737d872f7552e66b0f39c58",
+          "base_sha256": "38a43fef15432002ed7bc1a49ffb5e1c2cfba30beb5afc1d38422c288ad8d885",
+          "changed_from_base": true,
+          "b12327_sha256": "dbd44e2d9bb2539c8da524aede4433c24578da590737d872f7552e66b0f39c58",
+          "changed_from_b12327": false
+        },
+        "src/models/mistral3.cpp": {
+          "sha256": "1377854fe47bf3bcc22fae6f1a3b088f08c888749edc35ea85e153f13753b9f5",
+          "base_sha256": "9bd6587f130cb55b34be3aa930341033889e85b01bc2b2d1b3fffea1de27a719",
+          "changed_from_base": true,
+          "b12327_sha256": "1377854fe47bf3bcc22fae6f1a3b088f08c888749edc35ea85e153f13753b9f5",
+          "changed_from_b12327": false
+        },
+        "src/models/qwen2.cpp": {
+          "sha256": "154669efdee6d73585ef5ffc5785d10249f29e92c0dfa097806b72e024d78616",
+          "base_sha256": "7f7f9df9bdaaf7c8aaab900fe046c97936b67d656f66dea445735f1beec695f4",
+          "changed_from_base": true,
+          "b12327_sha256": "154669efdee6d73585ef5ffc5785d10249f29e92c0dfa097806b72e024d78616",
+          "changed_from_b12327": false
+        },
+        "src/models/qwen2vl.cpp": {
+          "sha256": "05052a5f52e60c5b7def7bdd28c7db088dd8917a76a7eb896434fa5484d9089b",
+          "base_sha256": "2d00d03c371b87e158f95d69a89bf91cfbcbfa066c8d07f3738e264b3fe919c0",
+          "changed_from_base": true,
+          "b12327_sha256": "05052a5f52e60c5b7def7bdd28c7db088dd8917a76a7eb896434fa5484d9089b",
+          "changed_from_b12327": false
+        },
+        "src/models/qwen3.cpp": {
+          "sha256": "7df64f8b1914a10106dead976a756d796e570ed52f5d638a59f8a4497f35ac34",
+          "base_sha256": "6018840e2d7e23340e2404aceb216e6afcedbd8ae24977a0df0eb878be9d0107",
+          "changed_from_base": true,
+          "b12327_sha256": "7df64f8b1914a10106dead976a756d796e570ed52f5d638a59f8a4497f35ac34",
+          "changed_from_b12327": false
+        },
+        "src/models/qwen35.cpp": {
+          "sha256": "923e830962205b214ff624328520296c91262d0d82f75aee2cb592c8d4dab2af",
+          "base_sha256": "7e4673de5708ce96602079941379417d0cd3d4010381dcb93192807929b6f9bc",
+          "changed_from_base": true,
+          "b12327_sha256": "d8bea564d8eff04d5c4d2ad97d176791d9e6443c73d428c4a173d29358258aaa",
+          "changed_from_b12327": true
+        },
+        "src/models/qwen35moe.cpp": {
+          "sha256": "81a7cc32f15e6902807fe7304f8e80563854a5ca449924c6da90c1fb370887a5",
+          "base_sha256": "579426f57c8691279ab9231264b5a0bceb214e57b3876d58020a1f40a98647a4",
+          "changed_from_base": true,
+          "b12327_sha256": "81a7cc32f15e6902807fe7304f8e80563854a5ca449924c6da90c1fb370887a5",
+          "changed_from_b12327": false
+        },
+        "tools/mtmd/mtmd.cpp": {
+          "sha256": "638227372e11b21f09fc933b6cad444ad55ab663939acb2752df0a1cea3698c2",
+          "base_sha256": "3d531a45ed17044ef33430189a7851a94bfe7448d492f7f77bdcd0833970ce03",
+          "changed_from_base": true,
+          "b12327_sha256": "638227372e11b21f09fc933b6cad444ad55ab663939acb2752df0a1cea3698c2",
+          "changed_from_b12327": false
+        },
+        "tools/mtmd/mtmd.h": {
+          "sha256": "7f1a8436341f9f803dcd7ed9e9fdd0ad9e098cc4a5a70761f890d27b0234ad0c",
+          "base_sha256": "e53fe94a6b0c4af3649b821a47acfdb434caf7a16675761884e99f5518c7d2a1",
+          "changed_from_base": true,
+          "b12327_sha256": "7f1a8436341f9f803dcd7ed9e9fdd0ad9e098cc4a5a70761f890d27b0234ad0c",
+          "changed_from_b12327": false
+        },
+        "tools/mtmd/mtmd-model.cpp": {
+          "sha256": "74cd1f3fed4de8282a305b4472c090ceb52c6a494f19afa3100b444c2850e88f",
+          "base_sha256": null,
+          "changed_from_base": true,
+          "b12327_sha256": "46b4280e27c94c37a6b5733522e8225bad9b701257ad03538066a94126879e64",
+          "changed_from_b12327": true
+        },
+        "tools/server/server.cpp": {
+          "sha256": "a58e21d5f413f4e9b9bbffe6050d971c47d5b78695bf5211f257ceb3c8b56a70",
+          "base_sha256": "d4d343db7c1b648eb5358ae2b87966a5f78ce5c9b245c7fbfe9827ba6971f08b",
+          "changed_from_base": true,
+          "b12327_sha256": "79976f2b7a145d5809e8e742ad178cf77ad1009f3f13a86452829f96147bec28",
+          "changed_from_b12327": true
+        },
+        "src/llama-arch.cpp": {
+          "sha256": "d7a123dc2e146d09a3d17bc751020e0e669e72534867d18da8eb3afbb454dc57",
+          "base_sha256": "6054f982e7856defee08a51b6bbf66fec7c0856e72a792c6600a9c1407d44d56",
+          "changed_from_base": true,
+          "b12327_sha256": "d7a123dc2e146d09a3d17bc751020e0e669e72534867d18da8eb3afbb454dc57",
+          "changed_from_b12327": false
+        },
+        "src/llama-model.cpp": {
+          "sha256": "c8557bc258fc6c23dfd7e70f9ca07e68ebcd41ca34782af4af4aa484c8900ae7",
+          "base_sha256": "4a05742afc09dc89873e40c8b47a97826f95c4cb90fb32ba48271b4d8f4a14de",
+          "changed_from_base": true,
+          "b12327_sha256": "d95c1b95e2e7233ee39ceb5d96e88c484db4e02c4a435531721b38baa9302fa8",
+          "changed_from_b12327": true
+        },
+        "common/chat.cpp": {
+          "sha256": "4791ca7e6e62f9cc6ac74de0de3d8bdb432bd19fec1161552bfeed37146169c4",
+          "base_sha256": "c4396b123b02aade70d5bf30517f1f6b23cdc8da29ae92244f16e5ea6494a5e4",
+          "changed_from_base": true,
+          "b12327_sha256": "4791ca7e6e62f9cc6ac74de0de3d8bdb432bd19fec1161552bfeed37146169c4",
+          "changed_from_b12327": false
+        },
+        "common/arg.cpp": {
+          "sha256": "010823f370c875a8685ee06b8ce4994408e091aab4bfff9e5b6a2d73646bd1e0",
+          "base_sha256": "83cd576c95940ac4f84059da3c5b34914c15a94a834a608743389f2d43f25ea2",
+          "changed_from_base": true,
+          "b12327_sha256": "51caf9d78f2ddabbc1f0361fcdca105decb19a0daef18272b170debc0015923c",
+          "changed_from_b12327": true
+        },
+        "tools/server/server-common.cpp": {
+          "sha256": "350dfb104d7c1ad1ffe388c35342d93e3f90b4d5c906458952e719e13f59c346",
+          "base_sha256": "b686729ed7d098e2f0c3da1ba28325d0e6d30721dab09f71cb9b53f342710ddb",
+          "changed_from_base": true,
+          "b12327_sha256": "3a048ecef55e16aee5ade25b5ee055d9d2de289ec33dfe2ddd61d112944044dc",
+          "changed_from_b12327": true
+        },
+        "tools/mtmd/models/llava.cpp": {
+          "sha256": "f9db71311722ad0c7ceef00ac936b6866def4cb1e9479367848a7fbfe53dae2d",
+          "b12327_sha256": "e62375533fbe3e5cbd77c3a60e0287bf7a9512d00129cb8ebd9fa44adb7e34a7",
+          "changed_from_b12327": true
+        },
+        "common/fit.cpp": {
+          "sha256": "4d3c8de593e42b8e7b649f36dc6190eac59f613663dccb5626e2e4e38d255766",
+          "b12327_sha256": "4d3c8de593e42b8e7b649f36dc6190eac59f613663dccb5626e2e4e38d255766",
+          "changed_from_b12327": false
+        },
+        "src/llama-model-loader.cpp": {
+          "sha256": "5cce872907839dfaf90db8deafd162fae0a339d6a322add04f55f77de65b6e73",
+          "b12327_sha256": "5cce872907839dfaf90db8deafd162fae0a339d6a322add04f55f77de65b6e73",
+          "changed_from_b12327": false
+        },
+        "tools/server/server-context.cpp": {
+          "sha256": "9b632c3aedb0acfea3ef44308e4f04be1f5fad10110329b05ea737fcb7bb83ef",
+          "b12327_sha256": "0cf98c79f821cfeeecb48f7c17985aead01b73aef7cf490c66905b66eae8508a",
+          "changed_from_b12327": true
+        },
+        "common/log.cpp": {
+          "sha256": "f345a4af8c06177313437693657f7493ff197ad99e70a45f18f12aa7d261e671",
+          "b12327_sha256": "f345a4af8c06177313437693657f7493ff197ad99e70a45f18f12aa7d261e671",
+          "changed_from_b12327": false
+        }
+      },
+      "source_url_template": "https://github.com/ggml-org/llama.cpp/blob/31953bcf74ba489a8bbb0c936c5fcf24fcf9485c/{path}",
+      "delta_review": {
+        "from_build": "b12327",
+        "from_source_commit": "81f21f4b27fc8252f11404a006744045aac5ea6e",
+        "compare_url": "https://github.com/ggml-org/llama.cpp/compare/b12327...b12366",
+        "commits": 39,
+        "unchanged_paths": [
+          "common/chat.cpp",
+          "common/fit.cpp",
+          "common/log.cpp",
+          "src/llama-arch.cpp",
+          "src/llama-model-loader.cpp",
+          "src/models/bailingmoe3.cpp",
+          "src/models/gemma3.cpp",
+          "src/models/gemma4.cpp",
+          "src/models/granite.cpp",
+          "src/models/lfm2.cpp",
+          "src/models/lfm3.cpp",
+          "src/models/llama.cpp",
+          "src/models/mistral3.cpp",
+          "src/models/openai-moe.cpp",
+          "src/models/qwen2.cpp",
+          "src/models/qwen2vl.cpp",
+          "src/models/qwen3.cpp",
+          "src/models/qwen35moe.cpp",
+          "tools/mtmd/mtmd.cpp",
+          "tools/mtmd/mtmd.h"
+        ],
+        "changed_paths": [
+          "common/arg.cpp",
+          "src/llama-model.cpp",
+          "src/models/qwen35.cpp",
+          "tools/mtmd/models/llava.cpp",
+          "tools/mtmd/mtmd-model.cpp",
+          "tools/server/server-common.cpp",
+          "tools/server/server-context.cpp",
+          "tools/server/server.cpp"
+        ],
+        "input_placement": "src/llama-model-loader.cpp, common/log.cpp, common/fit.cpp and LFM3/GPT-OSS model implementations are byte-identical to reviewed b12327; changed llama-model.cpp does not alter mandatory input placement.",
+        "tool_reasoning": "common/chat.cpp and mtmd public APIs are byte-identical; changed HTTP/media validation accepts RF inline data URLs and leaves tool/reasoning completion fields intact."
+      }
+    }
+  }
+}

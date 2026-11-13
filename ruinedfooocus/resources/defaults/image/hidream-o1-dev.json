@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "hidream-o1-dev",
+  "family": "HiDream O1",
+  "media": "image",
+  "variant": "dev",
+  "aliases": ["HiDream O1 Dev"],
+  "sampling": {
+    "custom_steps": 28,
+    "cfg": 1,
+    "sampler_name": "lcm",
+    "scheduler": "normal",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [
+    [2048, 2048],
+    [2304, 1728],
+    [1728, 2304],
+    [2560, 1440],
+    [1440, 2560],
+    [2496, 1664],
+    [1664, 2496],
+    [3104, 1312],
+    [1312, 3104],
+    [2304, 1792],
+    [1792, 2304]
+  ],
+  "default_size": [2048, 2048],
+  "applicability": {
+    "behavioral_variants": ["dev"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "HiDreamO1",
+      "text_encoder_roles": [],
+      "vae_role": "pixel_space",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Local HiDream O1 Dev family recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": {
+    "custom_steps": 28,
+    "cfg": 1,
+    "sampler_name": "lcm",
+    "scheduler": "normal",
+    "clip_skip": 1,
+    "recommended_resolutions": "2048x2048, 2304x1728, 1728x2304, 2560x1440, 1440x2560, 2496x1664, 1664x2496, 3104x1312, 1312x3104, 2304x1792, 1792x2304"
+  }
+}

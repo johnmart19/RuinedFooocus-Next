@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_sdxlrefiner_base": {
+      "title": "SDXLRefiner base",
+      "consumers": ["SDXLRefiner"],
+      "native_class": "SDXLRefiner",
+      "license": {
+        "value": "openrail++",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/blob/5d4cfe854c9a9a87939ff3653551c2b3c99a4356/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-sdxlrefiner-base",
+        "auto_recipe_supported": false,
+        "source_workflow": "sdxl_refiner_prompt_example.json"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

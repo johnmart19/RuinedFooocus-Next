@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_flux2klein9b_klein_distilled_9b_kv": {
+      "title": "Flux2Klein9B klein-distilled-9b-kv",
+      "consumers": ["Flux2Klein9B"],
+      "native_class": "Flux2",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-kv-fp8/blob/8430c03ee457ea86907ed31a009cd56280df003d/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-flux2klein9b-klein-distilled-9b-kv",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_flux2_klein_9b_kv_image_edit.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

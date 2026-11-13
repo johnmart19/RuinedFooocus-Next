@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:hidream_llama": {
+      "title": "HiDream Llama 3.1 8B low-bit encoder",
+      "provenance": {
+        "source": "calcuis/hidream-gguf/llama-q2_k.gguf",
+        "lineage": "Llama3.1-8B encoder described in conversion card"
+      },
+      "consumers": ["HiDream"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "status": "upstream_and_conversion_terms_need_per_artifact_resolution"
+      },
+      "dependencies": ["HiDream checkpoint + CLIP-G + CLIP-L + T5 XXL + FLUX VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/calcuis/hidream-gguf",
+        "https://huggingface.co/HiDream-ai/HiDream-I1-Full",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

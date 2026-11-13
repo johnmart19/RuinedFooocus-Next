@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-sdxlrefiner-base",
+  "family": "SDXLRefiner",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {},
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "SDXLRefiner",
+    "architecture": "SDXLRefiner",
+    "native_config": {
+      "in_channels": 4
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SDXLRefiner",
+      "text_encoder_roles": ["clip_g"],
+      "vae_role": "vae_sdxl",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "SDXLRefiner specialized native workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/sdxl_refiner_prompt_example.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "c376af45ad93aeb52326d51d73f2d218c85423e36eec05a498edda50b769e4fb",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [
+    {
+      "node": "KSamplerAdvanced",
+      "mode": 0,
+      "values": ["enable", 6767725640732, "randomize", 25, 8, "euler", "normal", 0, 20, "enable"]
+    },
+    {
+      "node": "KSamplerAdvanced",
+      "mode": 0,
+      "values": ["disable", 0, "fixed", 25, 8, "euler", "normal", 20, 10000, "disable"]
+    }
+  ],
+  "legacy": null
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:joyimage_encoder": {
+      "title": "JoyImage native Qwen3-VL 8B encoder",
+      "provenance": {
+        "upstream": "Comfy-Org/JoyAI-Image-Edit",
+        "revision": "8010e7b4c2ac3f762d33775ac5d6a011eea4166c",
+        "app_aliases": ["clip_joyimage_8b"]
+      },
+      "consumers": ["JoyImage"],
+      "dependencies": ["JoyImage diffusion checkpoint and native Wan 2.1 VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Native JOYIMAGE conditioning; use the exact checkpoint sampling recipe."
+      },
+      "sources": [
+        "https://huggingface.co/Comfy-Org/JoyAI-Image-Edit/tree/8010e7b4c2ac3f762d33775ac5d6a011eea4166c",
+        "https://github.com/Comfy-Org/workflow_templates/blob/611c497cca4087967ecd85fd62bc12fa7130e885/blueprints/image_edit_joy_image_edit.json"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

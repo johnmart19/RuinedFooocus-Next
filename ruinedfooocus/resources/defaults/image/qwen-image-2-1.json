@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "id": "qwen-image-2-1",
+  "family": "Qwen Image 2.1",
+  "media": "image",
+  "variant": "base",
+  "aliases": ["Qwen Image 2.1", "QwenImage21"],
+  "sampling": {
+    "custom_steps": 25,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [
+    [2048, 2048],
+    [2400, 1792],
+    [1792, 2400],
+    [2528, 1696],
+    [1696, 2528],
+    [2752, 1536],
+    [1536, 2752]
+  ],
+  "default_size": [2048, 2048],
+  "applicability": {
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "QwenImage21",
+      "text_encoder_roles": ["clip_qwen_image21"],
+      "vae_role": "vae_qwen_image21",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "publisher_geometry",
+    "label": "Qwen publisher recommended dimensions (2K)",
+    "source_url": "https://huggingface.co/Qwen/Qwen-Image-2.1/blob/d26bb61231c349cf6b7896fa83353113880e1ba3/README.md",
+    "source_revision": "d26bb61231c349cf6b7896fa83353113880e1ba3",
+    "fetched_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": {
+    "custom_steps": 25,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1,
+    "recommended_resolutions": "1024x1024, 2048x2048, 2400x1792, 1792x2400, 2528x1696, 1696x2528, 2752x1536, 1536x2752"
+  },
+  "publisher": {
+    "default_size": [2048, 2048],
+    "recommended_sizes": [
+      [2048, 2048],
+      [2400, 1792],
+      [1792, 2400],
+      [2528, 1696],
+      [1696, 2528],
+      [2752, 1536],
+      [1536, 2752]
+    ],
+    "provenance": {
+      "kind": "publisher_geometry",
+      "label": "Qwen publisher recommended dimensions (2K)",
+      "source_url": "https://huggingface.co/Qwen/Qwen-Image-2.1/blob/d26bb61231c349cf6b7896fa83353113880e1ba3/README.md",
+      "source_revision": "d26bb61231c349cf6b7896fa83353113880e1ba3",
+      "fetched_at_utc": "2026-11-11T04:45:07.601597Z"
+    },
+    "sampling": {
+      "custom_steps": 40
+    },
+    "sampling_scope": "Diffusers publisher example; not a ComfyUI sampler recipe"
+  },
+  "sampling_provenance": {
+    "kind": "native_workflow",
+    "label": "ComfyUI base working recipe",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/611c497cca4087967ecd85fd62bc12fa7130e885/templates/image_qwen_image_2_1_t2i.json",
+    "source_revision": "611c497cca4087967ecd85fd62bc12fa7130e885",
+    "fetched_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "working_recipe": {
+    "default_size": [1024, 1024],
+    "recommended_sizes": [[1024, 1024]],
+    "provenance": {
+      "kind": "native_workflow",
+      "label": "ComfyUI base working recipe",
+      "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/611c497cca4087967ecd85fd62bc12fa7130e885/templates/image_qwen_image_2_1_t2i.json",
+      "source_revision": "611c497cca4087967ecd85fd62bc12fa7130e885",
+      "fetched_at_utc": "2026-11-11T04:45:07.601597Z"
+    }
+  }
+}

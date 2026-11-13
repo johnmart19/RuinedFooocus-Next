@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:flux1_vae": {
+      "title": "FLUX.1 autoencoder",
+      "provenance": {
+        "sources": [
+          "camenduru/FLUX.1-dev/ae.safetensors",
+          "diffusers/FLUX.1-vae/diffusion_pytorch_model.safetensors"
+        ],
+        "lineage": "FLUX.1 image autoencoder; separate conversions must be hash/architecture checked"
+      },
+      "consumers": ["Flux", "HiDream", "NewBieImage", "Boogu"],
+      "release": {
+        "date": "2024-08-01",
+        "date_precision": "day",
+        "scope": "FLUX1_family_release",
+        "source": "https://bfl.ai/blog/24-08-01-bfl",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "status": "upstream_and_conversion_terms_need_per_artifact_resolution"
+      },
+      "dependencies": ["Compatible image diffusion checkpoint and its text encoders"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "No text-generation sampling settings. Encode/decode dtype, tiling and device staging come from the VAE implementation and target workload; preserve latent channels, scaling and temporal layout."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/camenduru/FLUX.1-dev",
+        "https://huggingface.co/diffusers/FLUX.1-vae",
+        "https://huggingface.co/black-forest-labs/FLUX.1-dev",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

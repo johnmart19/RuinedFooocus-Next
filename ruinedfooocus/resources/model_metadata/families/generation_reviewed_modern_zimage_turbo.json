@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_zimage_turbo": {
+      "title": "ZImage turbo",
+      "consumers": ["ZImage"],
+      "native_class": "ZImage",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/z_image_turbo/blob/6fc90a3b1b653e935a0d175e260736de25b84df5/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-zimage-turbo",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_z_image_turbo_int8.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

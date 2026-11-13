@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:omnigen2_encoder": {
+      "title": "OmniGen2 native Qwen2.5-VL 3B encoder",
+      "provenance": {
+        "upstream": "Comfy-Org/OmniGen-2",
+        "revision": "babe908cd4ed58efc7359e9e35b426cd73071949",
+        "app_aliases": ["clip_omnigen2_3b"]
+      },
+      "consumers": ["Omnigen2"],
+      "dependencies": ["OmniGen2 diffusion checkpoint and Flux VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Native OMNIGEN2 conditioning and tokenizer; not a Qwen2.5-VL7B substitution."
+      },
+      "sources": [
+        "https://huggingface.co/Comfy-Org/OmniGen-2/tree/babe908cd4ed58efc7359e9e35b426cd73071949",
+        "https://github.com/Comfy-Org/workflow_templates/blob/611c497cca4087967ecd85fd62bc12fa7130e885/templates/image_omnigen2_t2i.json"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

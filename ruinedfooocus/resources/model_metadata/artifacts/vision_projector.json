@@ -1,0 +1,1194 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:vision/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf": {
+      "id": "existing:vision/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf",
+      "catalogue_key": "vision/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf",
+      "state": "existing",
+      "profile_id": "language:smolvlm_256m",
+      "label": "SmolVLM-256M-Instruct",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "llama",
+      "format": "gguf",
+      "quantization": {
+        "label": "Q8_0",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "72db42ecfd5affb3b6d8479b04b5f0fe2502627713324e113d1066ff63be2910",
+      "artifact": {
+        "bytes": 103769856,
+        "sha256": "7e943f7c53f0382a6fc41b6ee0c2def63ba4fded9ab8ed039cc9e2ab905e0edd",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/ggml-org/SmolVLM-256M-Instruct-GGUF/resolve/b9e4379657e1450d04d02eec8e345667265b0a00/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf": {
+      "id": "existing:vision/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf",
+      "state": "existing",
+      "profile_id": "language:qwen25_vl_3b",
+      "label": "Qwen2.5-VL-3B-Instruct",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen2vl",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5a5fe084fdf6f1a3898c3b05482e0347cf3da1d23a67a3367604055408260ffd",
+      "artifact": {
+        "bytes": 1338428128,
+        "sha256": "b9160fe9d814d1fadf68395677468534778b39ac33c2e7561b7b218626e60d5e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/resolve/5037fcf163dd95d1e41d1974465f0898ed108ca2/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-gemma-3-4b-it-f16.gguf": {
+      "id": "existing:vision/mmproj-gemma-3-4b-it-f16.gguf",
+      "catalogue_key": "vision/mmproj-gemma-3-4b-it-f16.gguf",
+      "state": "existing",
+      "profile_id": "language:gemma3_4b_it",
+      "label": "Gemma 3 4B IT",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "gemma3",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a67164289eb3a107f90033138f8831bb97f6e22492b9f734a5a1760f6c89d2fe",
+      "artifact": {
+        "bytes": 851251104,
+        "sha256": "8c0fb064b019a6972856aaae2c7e4792858af3ca4561be2dbf649123ba6c40cb",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/ggml-org/gemma-3-4b-it-GGUF/resolve/d0976223747697cb51e056d85c532013931fe52e/mmproj-model-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "gemma"
+      }
+    },
+    "existing:vision/mmproj-Qwen3.5-9B-BF16.gguf": {
+      "id": "existing:vision/mmproj-Qwen3.5-9B-BF16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen3.5-9B-BF16.gguf",
+      "state": "existing",
+      "profile_id": "language:qwen35_9b_heretic_v2",
+      "label": "Qwen3.5-9B Ultra Uncensored Heretic v2",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "ea357e326009058956a9d76a876884cc445fab9aac5dd86c97ecf49eeadf760d",
+      "artifact": {
+        "bytes": 921704896,
+        "sha256": "d89c4bc142d02ed64aeed5c0a358bdead9109f21f4ada03a6b2df17a1aa94d9e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/llmfan46/Qwen3.5-9B-Ultra-Uncensored-Heretic-GGUF/resolve/56152d16c9f4656a71e42cf3ad8af9273b9238bb/Qwen3.5-9B-mmproj-BF16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference.",
+        "source_repair": {
+          "previous_url": "https://huggingface.co/llmfan46/Qwen3.5-9B-ultra-uncensored-heretic-GGUF/resolve/main/Qwen3.5-9B-mmproj-BF16.gguf",
+          "checked_date_utc": "2026-11-08",
+          "scope": "Pinned source repair; existing installed files remain unchanged."
+        }
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/main/LICENSE"
+      }
+    },
+    "existing:vision/mmproj-Qwen3.5-4B-F16.gguf": {
+      "id": "existing:vision/mmproj-Qwen3.5-4B-F16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen3.5-4B-F16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:qwen35_4b",
+      "label": "Qwen3.5-4B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "3deeb69628e7ea619fa0f2934c2460c879998769ad790530f3706191109005bc",
+      "artifact": {
+        "bytes": 672423616,
+        "sha256": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/e87f176479d0855a907a41277aca2f8ee7a09523/mmproj-F16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3.5-4B/blob/main/LICENSE"
+      }
+    },
+    "existing:vision/mmproj-Qwen3.5-9B-F16.gguf": {
+      "id": "existing:vision/mmproj-Qwen3.5-9B-F16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen3.5-9B-F16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:qwen35_9b",
+      "label": "Qwen3.5-9B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5c4566247f8bfedf86793505bb9ffcce8782b3b985087ebf5277db17e4739678",
+      "artifact": {
+        "bytes": 918166080,
+        "sha256": "f70dc3509053962b0d0d3ee8a7eacebf5d60aa560cad78254ae8698516ae029f",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/resolve/3885219b6810b007914f3a7950a8d1b469d598a5/mmproj-F16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3.5-9B/blob/main/LICENSE"
+      }
+    },
+    "existing:vision/mmproj-gemma-4-12b-it-F16.gguf": {
+      "id": "existing:vision/mmproj-gemma-4-12b-it-F16.gguf",
+      "catalogue_key": "vision/mmproj-gemma-4-12b-it-F16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:gemma4_12b",
+      "label": "Gemma 4 12B IT",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "gemma4",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "c1770ff76e11e5e2c692b8a1a9551f5916cc18591be66c6088233ce17f9cffb4",
+      "artifact": {
+        "bytes": 175115840,
+        "sha256": "91f086971e56d7a7d8d39e271873fccdb49541bd259d6e02c401a4f1cb7a219e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/gemma-4-12b-it-GGUF/resolve/fc034cfff751157913579611efad8462ac1be606/mmproj-F16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+      }
+    },
+    "existing:vision/mmproj-Qwen3.8-27B-F16.gguf": {
+      "id": "existing:vision/mmproj-Qwen3.8-27B-F16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen3.8-27B-F16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:qwen38_27b",
+      "label": "Qwen3.8-27B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "1ffe637d71b04c72b5128c491e93f3aff3bb8a98f3d467f2221fe9e3819e4a43",
+      "artifact": {
+        "bytes": 927607488,
+        "sha256": "cbb841a9ee0636b2ec172f5bb8df2ea8dfeb01e90fe7c6126581d662a0b4e43e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF/resolve/4ca720788d1e01f1bff70c033e0d0028fd02e502/mmproj-F16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-Qwen3.8-27B-Humanlike-Chat-2.0-BF16.gguf": {
+      "id": "existing:vision/mmproj-Qwen3.8-27B-Humanlike-Chat-2.0-BF16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen3.8-27B-Humanlike-Chat-2.0-BF16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:humanlike2",
+      "label": "Qwen3.8-27B Humanlike Chat 2.0",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "59e13f4dadd57c4fcbb7b79bce31a5f0e8278bd64e46d38093d11562d02f6818",
+      "artifact": {
+        "bytes": 931145888,
+        "sha256": "c9a09064683620bea3d3bfed5d4462e1a97a7d2fff7e5045d6862a0a85eeb5b5",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-GGUF/resolve/e55216fa4cc583519d72fcf45bf795a1c7a2dff9/mmproj/mmproj-BF16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-Ministral-3-8B-Instruct-2512-BF16.gguf": {
+      "id": "existing:vision/mmproj-Ministral-3-8B-Instruct-2512-BF16.gguf",
+      "catalogue_key": "vision/mmproj-Ministral-3-8B-Instruct-2512-BF16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:ministral3_8b",
+      "label": "Ministral 3 8B Instruct 2512",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "mistral3",
+      "format": "gguf",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "9ae9447e9b285db1716b4ffc08ca374ef52cf16d3b09dd74bd6e8822cc81be96",
+      "artifact": {
+        "bytes": 858283168,
+        "sha256": "e799380f596d152ff4026a72d409ecc89c96cd437676804bc3f2ab3bd6b486ec",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF/resolve/0102285ad796bd99af90f58de616092e5630e970/Ministral-3-8B-Instruct-2512-BF16-mmproj.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-LFM3-VL-2B-F16.gguf": {
+      "id": "existing:vision/mmproj-LFM3-VL-2B-F16.gguf",
+      "catalogue_key": "vision/mmproj-LFM3-VL-2B-F16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:lfm3_vl_2b",
+      "label": "LFM3-VL-2B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "lfm3",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "ee464c05793b077869cfd15fc8dfd83219d9285fd3c6078d70fa99b57ee0f3cd",
+      "artifact": {
+        "bytes": 378996032,
+        "sha256": "1d8e6e58eefc093e09d6332f081516e1ddbd5b35cfca7f35463fb270db230b1e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF/resolve/1add221a5ea6c047fcf1eaaf2d247939d7cf8849/mmproj-LFM3-VL-2B-F16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "lfm1.0",
+        "license_link": "LICENSE"
+      }
+    },
+    "existing:vision/mmproj-MiniCPM-V-4_7-1B-f16-16x.gguf": {
+      "id": "existing:vision/mmproj-MiniCPM-V-4_7-1B-f16-16x.gguf",
+      "catalogue_key": "vision/mmproj-MiniCPM-V-4_7-1B-f16-16x.gguf",
+      "state": "existing",
+      "profile_id": "proposed:minicpm_v_4_7_1b",
+      "label": "MiniCPM-V-4.7-1B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "e28d1f1e0781d685e7a4890ed50b093665d19986619426d09cdd75e291febfc9",
+      "artifact": {
+        "bytes": 1110117984,
+        "sha256": "fb9cc047a3cdad5317fd8433a4aeda2d22f00f02ca4bd93b34ad84165b25a900",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf/resolve/345adbfa02c4a4671e61b7c75502dc9bf24fa93d/mmproj-model-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-Qwen3.5-0.8B-BF16.gguf": {
+      "id": "existing:vision/mmproj-Qwen3.5-0.8B-BF16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen3.5-0.8B-BF16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:qwen3_5_0_8b",
+      "label": "Qwen3.5-0.8B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a65e0928e6c5926d1948d940f2c80f9233a7f67fac8f517a80e588e4634df252",
+      "artifact": {
+        "bytes": 207345952,
+        "sha256": "6fdd1b4bdc3d2ae8bd15d783e23260dd07dcf83f45604a21dabfd6efad8f8bc5",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/lmstudio-community/Qwen3.5-0.8B-GGUF/resolve/26bab2c9369648924251c0ebb3dae012f5147707/mmproj-Qwen3.5-0.8B-BF16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf": {
+      "id": "existing:vision/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf",
+      "catalogue_key": "vision/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:smolvlm2_500m_video_instruct",
+      "label": "SmolVLM2-500M-Video-Instruct",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "llama",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "cb640e6cb558bdd210f6762fe1556b2dea92f0898ae7a4c793626ecd6f6d4831",
+      "artifact": {
+        "bytes": 199470624,
+        "sha256": "b5dc8ebe7cbeab66a5369693960a52515d7824f13d4063ceca78431f2a6b59b0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF/resolve/ccd7aae53bcb1997355c2f094959e72b3642ce17/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf": {
+      "id": "existing:vision/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf",
+      "catalogue_key": "vision/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:smolvlm2_256m_video_instruct",
+      "label": "SmolVLM2-256M-Video-Instruct",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "llama",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "24e7ed6fb1c44f8c56b8883e106e76f494535a92aadfc2530c6388582a39fe8f",
+      "artifact": {
+        "bytes": 190033440,
+        "sha256": "819d4b38743fcf57f2a26af0ebfa6e23a7a8849e3c47e63f6ab8a61acb7c245a",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF/resolve/a8383113a70b406f088ac936e5f1918ed08e620d/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-Qwen3.5-2B-BF16.gguf": {
+      "id": "existing:vision/mmproj-Qwen3.5-2B-BF16.gguf",
+      "catalogue_key": "vision/mmproj-Qwen3.5-2B-BF16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:qwen3_5_2b",
+      "label": "Qwen3.5-2B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35",
+      "format": "gguf",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5981686f1284c02e03466e3b09e26ad5229e8561c7f1b67cf738792826e979bc",
+      "artifact": {
+        "bytes": 671372416,
+        "sha256": "31a8b681d34e70eaef158f7bacf1bc726a7a29babd185119ab3ebf402890dfbc",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF/resolve/bb84e11355a036e28f080c7793fa6d22b7c4e344/mmproj-Qwen3.5-2B-BF16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-MiniCPM-V-4_7-35B-A3B-f16-16x.gguf": {
+      "id": "existing:vision/mmproj-MiniCPM-V-4_7-35B-A3B-f16-16x.gguf",
+      "catalogue_key": "vision/mmproj-MiniCPM-V-4_7-35B-A3B-f16-16x.gguf",
+      "state": "existing",
+      "profile_id": "proposed:minicpm_v_4_7_35b_a3b",
+      "label": "MiniCPM-V-4.7-35B-A3B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "qwen35moe",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "b9c77b8f821f82a16d2b1079925541f7b99c46707f4aad3519a491f209c14302",
+      "artifact": {
+        "bytes": 1119575840,
+        "sha256": "bff3b688e14c300eca273092c37c50a0ddfcc2054e079af1a0480edeed5d20f1",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-35B-A3B-gguf/resolve/cf943fbe32f840b20ca05ccc146e7dc72baf9a9b/mmproj-model-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-granite-vision-4.1-4b-f16.gguf": {
+      "id": "existing:vision/mmproj-granite-vision-4.1-4b-f16.gguf",
+      "catalogue_key": "vision/mmproj-granite-vision-4.1-4b-f16.gguf",
+      "state": "existing",
+      "profile_id": "proposed:granite_vision_4_1_4b",
+      "label": "Granite-Vision-4.1-4B",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "granite",
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8d010da4413357011ad2286a4046cc102824fc193c497513e419b4fcf35e5985",
+      "artifact": {
+        "bytes": 1162347936,
+        "sha256": "573dd2579f6043649299f0b2225000a5691d92f320aabe909fb4c6e75450cad2",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF/resolve/b1fa14294b0f5cac04c43076d1c4574091abf117/mmproj-model-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vision/mmproj-gemma-4-12B-it-QAT.gguf": {
+      "id": "existing:vision/mmproj-gemma-4-12B-it-QAT.gguf",
+      "catalogue_key": "vision/mmproj-gemma-4-12B-it-QAT.gguf",
+      "state": "existing",
+      "profile_id": "proposed:gemma_4_12b_it_qat",
+      "label": "Gemma 4 12B IT QAT",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "gemma4",
+      "format": "gguf",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "QAT",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "2e753448288d30c56519976f3f55a00328854140544f3e3df76f1db81d104c85",
+      "artifact": {
+        "bytes": 175115616,
+        "sha256": "cb018338a7538a9814d994bfe54644c71eb7ed54e31eae2f721e45fd3c260da7",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/google/gemma-4-12B-it-qat-q4_0-gguf/resolve/29d097773436b69ff9feafd636ab4cf873786537/mmproj-gemma-4-12b-it-qat-q4_0.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+      }
+    },
+    "existing:vision/mmproj-gemma-4-26B-A4B-it-QAT.gguf": {
+      "id": "existing:vision/mmproj-gemma-4-26B-A4B-it-QAT.gguf",
+      "catalogue_key": "vision/mmproj-gemma-4-26B-A4B-it-QAT.gguf",
+      "state": "existing",
+      "profile_id": "proposed:gemma_4_26b_a4b_it_qat",
+      "label": "Gemma 4 26B-A4B IT QAT",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "gemma4",
+      "format": "gguf",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "QAT",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "fdd6067b82cedd3d9a9dcdcd3804df6e52e273adde5cb8da4516f5e4dca9e587",
+      "artifact": {
+        "bytes": 1194828160,
+        "sha256": "a359953a076b877db30c31dbbb4c6d93b4a6e017ee5db5784247e4d4c0dd4f3b",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf/resolve/d1c082be9cf3c8a514acf63b8761f4b41935842e/gemma-4-26B-it-mmproj.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+      }
+    },
+    "existing:vision/mmproj-gemma-4-31B-it-QAT.gguf": {
+      "id": "existing:vision/mmproj-gemma-4-31B-it-QAT.gguf",
+      "catalogue_key": "vision/mmproj-gemma-4-31B-it-QAT.gguf",
+      "state": "existing",
+      "profile_id": "proposed:gemma_4_31b_it_qat",
+      "label": "Gemma 4 31B IT QAT",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "gemma4",
+      "format": "gguf",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "QAT",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "466efa6686711e9db44aa2f596bfefe32b60c43651eb8c14d085fb9d426ebd2f",
+      "artifact": {
+        "bytes": 1200726368,
+        "sha256": "6bd60bdb958548b4093196d38744b0f2290c12503a3fddd7486bffa9c5eb07a4",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/google/gemma-4-31B-it-qat-q4_0-gguf/resolve/59dde24573e7e61570dba08b18a2e1fe246955ed/gemma-4-31B-it-mmproj.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+      }
+    },
+    "existing:vision/mmproj-gemma-4-E4B-it-QAT.gguf": {
+      "id": "existing:vision/mmproj-gemma-4-E4B-it-QAT.gguf",
+      "catalogue_key": "vision/mmproj-gemma-4-E4B-it-QAT.gguf",
+      "state": "existing",
+      "profile_id": "proposed:gemma_4_e4b_it_qat",
+      "label": "Gemma 4 E4B IT QAT",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "gemma4",
+      "format": "gguf",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "QAT",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "ee0b51c09457625d90a849dd7522f2a61b493ac692000635259bbb5f8145eb39",
+      "artifact": {
+        "bytes": 991552256,
+        "sha256": "7498a37cb619e55f2fcf87eb931f56e99389ed6d432e4c5c66110694c0d65578",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/google/gemma-4-E4B-it-qat-q4_0-gguf/resolve/4b4a2c1d584be7264f87aac328a1bc739ce81b6c/gemma-4-E4B-it-mmproj.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+      }
+    },
+    "existing:vision/mmproj-gemma-4-E2B-it-QAT.gguf": {
+      "id": "existing:vision/mmproj-gemma-4-E2B-it-QAT.gguf",
+      "catalogue_key": "vision/mmproj-gemma-4-E2B-it-QAT.gguf",
+      "state": "existing",
+      "profile_id": "proposed:gemma_4_e2b_it_qat",
+      "label": "Gemma 4 E2B IT QAT",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "gemma4",
+      "format": "gguf",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "QAT",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "75cce677b07c76469349f8e3c3700c5278096dafda447622c66fb53411c571a3",
+      "artifact": {
+        "bytes": 986833664,
+        "sha256": "021059cce659fe7f9170d5599761d7bbaf644b798dab9503aca30dc43e6beb14",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/google/gemma-4-E2B-it-qat-q4_0-gguf/resolve/675cff42a74c774d6cb76f76d8eacb49b48c9b93/gemma-4-E2B-it-mmproj.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+      }
+    }
+  }
+}

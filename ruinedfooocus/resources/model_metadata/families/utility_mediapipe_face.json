@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "utility:mediapipe_face": {
+      "title": "MediaPipe Face Landmarker (FP32)",
+      "provenance": {
+        "upstream": "Comfy-Org/mediapipe",
+        "revision": "f787efc1ad99492ec7d5b6564c0dd6c48d84ee49",
+        "exact_variant": "detection/mediapipe_face_fp32.safetensors"
+      },
+      "purpose": "Native facial landmark overlays and face-region selection masks for a still image.",
+      "consumers": ["Face landmarks"],
+      "license": {
+        "value": "Apache-2.0",
+        "source": "https://huggingface.co/Comfy-Org/mediapipe/blob/f787efc1ad99492ec7d5b6564c0dd6c48d84ee49/README.md",
+        "evidence_scope": "publisher_repository_declaration"
+      },
+      "dependencies": ["Pinned ComfyUI pure-PyTorch MediaPipe port"],
+      "component_role": "face-landmarker",
+      "standalone_vram_status": "unqualified_workload_and_components_dependent"
+    }
+  }
+}

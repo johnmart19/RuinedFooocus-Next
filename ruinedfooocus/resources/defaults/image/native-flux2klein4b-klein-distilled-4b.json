@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "id": "native-flux2klein4b-klein-distilled-4b",
+  "family": "Flux2Klein4B",
+  "media": "image",
+  "variant": "klein-distilled-4b",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "Flux2Scheduler",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "Flux2",
+    "architecture": "Flux2Klein4B",
+    "native_config": {
+      "image_model": "flux2",
+      "in_channels": 128,
+      "hidden_size": 3072,
+      "patch_size": 1,
+      "depth": 5,
+      "depth_single_blocks": 20
+    },
+    "behavioral_variants": ["klein-distilled-4b", "distilled"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "Flux2Klein4B",
+      "text_encoder_roles": ["clip_qwen3_4b"],
+      "vae_role": "vae_flux2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": ["Flux2Scheduler"],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Flux2Klein4B klein-distilled-4b workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_flux2_klein_image_edit_4b_distilled.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "7f1ead62d1456d485e95fb432fb492d2783f5ec9cfeefefe4ef71bfb448ba1a3",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "Flux2Scheduler",
+      "mode": 0,
+      "values": [4, 1024, 1024]
+    },
+    {
+      "node": "CFGGuider",
+      "mode": 0,
+      "values": [1]
+    },
+    {
+      "node": "Flux2Scheduler",
+      "mode": 0,
+      "values": [4, 1024, 1024]
+    },
+    {
+      "node": "CFGGuider",
+      "mode": 0,
+      "values": [1]
+    }
+  ],
+  "legacy": null
+}

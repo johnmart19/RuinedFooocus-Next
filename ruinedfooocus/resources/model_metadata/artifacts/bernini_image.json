@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:diffusion_models/wan2.2_bernini_r_high_noise_fp8_scaled.safetensors": {
+      "id": "existing:diffusion_models/wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+      "catalogue_key": "diffusion_models/wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+      "state": "existing",
+      "profile_id": "generation:bernini_image",
+      "label": "Bernini-R image high",
+      "role": "image_diffusion_checkpoint",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "download_identity": "4e191c81077c3f1c94401f91ea86872d31b184fc0b1db065641dbba48507f40b",
+      "format": "safetensors",
+      "artifact": {
+        "bytes": 15574833216,
+        "sha256": "9ff3d7369da98f8eaf71045f7d0e99d5e344eea5e7dc934a930608786fe73f52",
+        "pinned_url": "https://huggingface.co/Comfy-Org/Bernini-R/resolve/f7fd9812e54095d0c511d5e7429e6d8f6acc381a/diffusion_models/wan2.2_bernini_r_high_noise_fp8_scaled.safetensors",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "header_sha256": "d8aec897e3af480492d7eca7b57141ea968e89cde7f46ea7886db11754ebd6e3",
+        "header_bytes": 181280,
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Bounded immutable publisher metadata; no weights acquired or executed.",
+        "availability": "publisher_metadata_only"
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Bernini-R",
+        "source_revision": "f7fd9812e54095d0c511d5e7429e6d8f6acc381a",
+        "native_loader": "Bernini-R image recipe only; no generic Wan/video admission",
+        "default_recipe_id": "native-bernini-image",
+        "auto_recipe_supported": true
+      },
+      "native_family": "BerniniImage",
+      "native_class": "WAN21_T2V",
+      "architecture": "BerniniImage",
+      "behavioral_variant": "image-edit",
+      "companions": {
+        "text": [
+          "existing:diffusion_models/wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+          "existing:clip/bernini_umt5_xxl_fp8_scaled.safetensors",
+          "existing:vae/bernini_wan21_vae_bf16.safetensors"
+        ],
+        "image": [
+          "existing:diffusion_models/wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+          "existing:clip/bernini_umt5_xxl_fp8_scaled.safetensors",
+          "existing:vae/bernini_wan21_vae_bf16.safetensors"
+        ]
+      },
+      "component_contract": {
+        "roles": [
+          {
+            "role": "clip_bernini_umt5",
+            "filename": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+            "embedded": false,
+            "artifact_id": "existing:clip/bernini_umt5_xxl_fp8_scaled.safetensors"
+          },
+          {
+            "role": "vae_bernini",
+            "filename": "Wan2_1_VAE_bf16.safetensors",
+            "embedded": false,
+            "artifact_id": "existing:vae/bernini_wan21_vae_bf16.safetensors"
+          }
+        ],
+        "source_workflow": "blueprints/Image Edit (Bernini-R).json",
+        "required_runtime_nodes": ["BerniniConditioning", "SplitSigmas"],
+        "workflow_controls": ["bernini_split_step", "bernini_lightx2v"],
+        "compatibility_basis": "Exact signed still-image recipe and native UMT5/Wan2.1 RGB codec roles."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_workflow_source_supported",
+          "pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+        }
+      },
+      "auto_recipe_supported": true
+    },
+    "existing:diffusion_models/wan2.2_bernini_r_low_noise_fp8_scaled.safetensors": {
+      "id": "existing:diffusion_models/wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+      "catalogue_key": "diffusion_models/wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+      "state": "existing",
+      "profile_id": "generation:bernini_image",
+      "label": "Bernini-R image low",
+      "role": "image_stage_companion",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "download_identity": "1a2c2e2c7bfe4612b7b4bfc530e89b411622f92a95453b14cffd61f4ab87a663",
+      "format": "safetensors",
+      "artifact": {
+        "bytes": 15574833216,
+        "sha256": "ce35c070f345c91abe43d6bf29b0eccb8687e4026fadc0e0a70a73c9afb7bbb3",
+        "pinned_url": "https://huggingface.co/Comfy-Org/Bernini-R/resolve/f7fd9812e54095d0c511d5e7429e6d8f6acc381a/diffusion_models/wan2.2_bernini_r_low_noise_fp8_scaled.safetensors",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "header_sha256": "286333af0c02bc74084c8af08465f43e753890ee0eeb51734b97bdeb2806165b",
+        "header_bytes": 181280,
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Bounded immutable publisher metadata; no weights acquired or executed.",
+        "availability": "publisher_metadata_only"
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Bernini-R",
+        "source_revision": "f7fd9812e54095d0c511d5e7429e6d8f6acc381a",
+        "native_loader": "Bernini-R image recipe only; no generic Wan/video admission"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_workflow_source_supported",
+          "pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+        }
+      }
+    },
+    "existing:clip/bernini_umt5_xxl_fp8_scaled.safetensors": {
+      "id": "existing:clip/bernini_umt5_xxl_fp8_scaled.safetensors",
+      "catalogue_key": "clip/bernini_umt5_xxl_fp8_scaled.safetensors",
+      "state": "existing",
+      "profile_id": "generation:bernini_image",
+      "label": "Bernini-R image clip",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "download_identity": "a6972495a04e51468bbfba00fc216e9828a6374c0f755445829f0c09e9c9ea0c",
+      "format": "safetensors",
+      "artifact": {
+        "bytes": 6735906897,
+        "sha256": "c3355d30191f1f066b26d93fba017ae9809dce6c627dda5f6a66eaa651204f68",
+        "pinned_url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/123acf1cc74bccbb9bfff8ac1ee72edc08c2341d/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "header_sha256": "50fe9015ebb8094759e108418e179fff9e88c3a558a27472f3718cd021588dc6",
+        "header_bytes": 48848,
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Bounded immutable publisher metadata; no weights acquired or executed.",
+        "availability": "publisher_metadata_only"
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged",
+        "source_revision": "123acf1cc74bccbb9bfff8ac1ee72edc08c2341d",
+        "native_loader": "Bernini-R image recipe only; no generic Wan/video admission"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_workflow_source_supported",
+          "pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+        }
+      }
+    },
+    "existing:vae/bernini_wan21_vae_bf16.safetensors": {
+      "id": "existing:vae/bernini_wan21_vae_bf16.safetensors",
+      "catalogue_key": "vae/bernini_wan21_vae_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:bernini_image",
+      "label": "Bernini-R image vae",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "download_identity": "b716f468276e6ab5e1ce5cd8f08d551439015a0f2a7777c042b54ccbb75ff63c",
+      "format": "safetensors",
+      "artifact": {
+        "bytes": 253806278,
+        "sha256": "1ab9a32cc2c740f6e39d80d367ce5dcc28db8c71b79b28670546b8973e9d75f9",
+        "pinned_url": "https://huggingface.co/Kijai/WanVideo_comfy/resolve/8260d429d19fd7a72304cad059160b95d843913f/Wan2_1_VAE_bf16.safetensors",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "header_sha256": "6cab561813d867be3837f4f58cfeb97a986700a76fe714149975ec112934e2f5",
+        "header_bytes": 21208,
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Bounded immutable publisher metadata; no weights acquired or executed.",
+        "availability": "publisher_metadata_only"
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Kijai/WanVideo_comfy",
+        "source_revision": "8260d429d19fd7a72304cad059160b95d843913f",
+        "native_loader": "Bernini-R image recipe only; no generic Wan/video admission"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_workflow_source_supported",
+          "pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+        }
+      }
+    },
+    "existing:loras/bernini_lightx2v_rank64_bf16.safetensors": {
+      "id": "existing:loras/bernini_lightx2v_rank64_bf16.safetensors",
+      "catalogue_key": "loras/bernini_lightx2v_rank64_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:bernini_image",
+      "label": "Bernini-R image lora",
+      "role": "image_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "download_identity": "af18fe6257401f030b7164a71d730da7a04d4b9eed6e9955febd1e404c530696",
+      "format": "safetensors",
+      "artifact": {
+        "bytes": 630697104,
+        "sha256": "37d49218544b9e0bfb8e831d1399f451fbc5068aff6474f42a90c928363c3573",
+        "pinned_url": "https://huggingface.co/Kijai/WanVideo_comfy/resolve/8260d429d19fd7a72304cad059160b95d843913f/Lightx2v/lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank64_bf16.safetensors",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "header_sha256": "ac6777797c12a9ac05c8ecb2fcde25b37eb39a0a5564a3da1fa91deafa1e478e",
+        "header_bytes": 177160,
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Bounded immutable publisher metadata; no weights acquired or executed.",
+        "availability": "publisher_metadata_only"
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Kijai/WanVideo_comfy",
+        "source_revision": "8260d429d19fd7a72304cad059160b95d843913f",
+        "native_loader": "Bernini-R image recipe only; no generic Wan/video admission"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_workflow_source_supported",
+          "pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+        }
+      }
+    }
+  }
+}

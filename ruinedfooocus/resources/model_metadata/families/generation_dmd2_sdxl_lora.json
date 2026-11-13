@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:dmd2_sdxl_lora": {
+      "title": "DMD2 SDXL four-step LoRA (two precisions)",
+      "provenance": {
+        "author": "tianweiy/DMD2; SDXL 4-step adapter"
+      },
+      "consumers": ["SDXL"],
+      "release": {
+        "date": "2024-05-23",
+        "date_precision": "day",
+        "scope": "method_paper_v1",
+        "source": "https://arxiv.org/abs/2405.14867",
+        "artifact_conversion_release_date": null,
+        "note": "Method paper date is not established upload date of either selected LoRA."
+      },
+      "license": {
+        "status": "conflicting_metadata_with_primary_license_file",
+        "metadata": "cc-by-nc-4.0",
+        "readme_license_section": "CC BY-NC-SA 4.0",
+        "primary_license_file": "CC BY-NC-SA 4.0",
+        "primary_license_url": "https://github.com/tianweiy/DMD2/blob/main/LICENSE.md",
+        "primary_license_blob_sha": "c94338cf6251657e6357788e756270ce1638dbf2",
+        "preferred_label": "CC-BY-NC-SA-4.0",
+        "source": "https://huggingface.co/tianweiy/DMD2",
+        "note": "Author GitHub LICENSE.md agrees with README, while HF tag omits ShareAlike. Retain metadata conflict and source provenance."
+      },
+      "dependencies": [
+        "Compatible SDXL base checkpoint, encoders/VAE, LoRA loader and trained sampling schedule"
+      ],
+      "settings": {
+        "scope": "author_Diffusers_LoRA_recipe",
+        "steps": 4,
+        "guidance_scale": 0,
+        "scheduler": "LCMScheduler",
+        "timesteps": [999, 749, 499, 249],
+        "lora_scale": 1.0,
+        "proposed_app_starting_profile": {
+          "steps": 4,
+          "cfg": 1,
+          "sampler": "lcm",
+          "scheduler": "simple",
+          "lora_strength": 1.0,
+          "evidence": "Author-linked Comfy example uses this sampler/CFG for the DMD2 4-step UNet; applying it to the selected LoRA is a proposed app recipe, not an exact-artifact benchmark.",
+          "source": "https://gist.github.com/comfyanonymous/fcce4ced378f74f4c46026b134faf27a"
+        },
+        "note": "Author suggests lower LoRA scale may suit community models. Diffusers guidance=0 disables CFG; Comfy uses CFG1 for this behavior, while CFG0 would favor unconditional output."
+      },
+      "hardware_notes": [
+        "Adapter alone is small relative to SDXL pipeline. Four sampling steps reduce denoising work, not necessarily peak VRAM or memory of the underlying checkpoint."
+      ],
+      "sources": [
+        "https://huggingface.co/tianweiy/DMD2",
+        "https://arxiv.org/abs/2405.14867",
+        "https://github.com/tianweiy/DMD2/blob/main/LICENSE.md",
+        "https://gist.github.com/comfyanonymous/fcce4ced378f74f4c46026b134faf27a"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

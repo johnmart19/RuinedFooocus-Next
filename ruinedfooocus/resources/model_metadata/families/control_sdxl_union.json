@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:cn_union_sdxl": {
+      "title": "Xinsir SDXL Union 1.0 (base six-mode)",
+      "provenance": {
+        "upstream": "xinsir/controlnet-union-sdxl-1.0",
+        "revision": "801a4a3fa3d4c936f4feea95b98607bc6726f80c",
+        "exact_variant": "diffusion_pytorch_model.safetensors"
+      },
+      "purpose": "SDXL multi-condition ControlNet using the pinned native Union mode table.",
+      "consumers": ["Native Union ControlNet"],
+      "license": {
+        "value": "Apache-2.0",
+        "source": "https://huggingface.co/xinsir/controlnet-union-sdxl-1.0/blob/801a4a3fa3d4c936f4feea95b98607bc6726f80c/README.md",
+        "evidence_scope": "publisher_repository_declaration"
+      },
+      "dependencies": [
+        "SDXL checkpoint",
+        "Pinned ComfyUI ControlNet loader and SetUnionControlNetType"
+      ],
+      "supported_modes": [
+        "openpose",
+        "depth",
+        "hed/pidi/scribble/ted",
+        "canny/lineart/anime_lineart/mlsd",
+        "normal",
+        "segment"
+      ],
+      "unsupported_modes": ["tile", "repaint"],
+      "normal_convention": {
+        "publisher_preprocessor": "NormalBaeDetector scannet.pt",
+        "moge_axis_conversion": "source_qualified_inference: native-opengl invertR; native-directx invertR+G; no spatialflip",
+        "evidence_scope": "Inferred from pinned MoGe outward camera normals and original BAE/DSINE shared FrameNet groundtruth/evaluation. Not a direct Xinsir coordinate declaration. GPU/visual acceptance pending."
+      },
+      "standalone_vram_status": "unqualified_workload_and_components_dependent"
+    }
+  }
+}

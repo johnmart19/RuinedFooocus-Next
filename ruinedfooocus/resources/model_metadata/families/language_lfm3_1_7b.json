@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:lfm3_1_7b": {
+      "label": "LFM3-1.7B",
+      "identity": {
+        "checkpoint_repo_requested": "LiquidAI/LFM3-1.7B",
+        "checkpoint_repo_resolved": "LiquidAI/LFM3-1.7B",
+        "checkpoint_revision_observed": "0dc4268b561499c648c7ba7c9466bf3d8d01517a",
+        "artifact_repo_requested": "LiquidAI/LFM3-1.7B-GGUF",
+        "gguf_architecture": "lfm3"
+      },
+      "release": {
+        "announced_release_date": "2026-10-27",
+        "release_date_status": "publisher_announcement",
+        "release_source_url": "https://www.liquid.ai/blog/lfm3",
+        "paper_publication_date": null,
+        "checkpoint_repository_created_at": "2026-10-23T21:35:42.000Z",
+        "checkpoint_repository_last_modified_at": "2026-11-03T18:08:34.000Z",
+        "repository_created_at_is_model_release_date": false,
+        "quantization_publication_date": null,
+        "quantization_publication_date_status": "per_artifact_publication_not_verified; repository_creation_is_not_file_release",
+        "metadata_source_url": "https://huggingface.co/api/models/LiquidAI/LFM3-1.7B"
+      },
+      "architecture": {
+        "gguf_architecture": "lfm3",
+        "parameter_count_hf_safetensors_reported": 1728801536,
+        "parameter_count_caveat": "HF serialized-tensor count; tied/duplicated tensors and multimodal components may differ from advertised unique parameter count.",
+        "geometry": {
+          "status": "upstream_config_verified",
+          "hf_architectures": ["Lfm3ForCausalLM"],
+          "hf_model_type": "lfm3",
+          "hf_text_model_type": "lfm3",
+          "layers": 24,
+          "hidden_size": 2048,
+          "attention_heads": 16,
+          "kv_heads": 4,
+          "head_dim": 128,
+          "head_dim_basis": "explicit_config",
+          "native_context_tokens": 262144,
+          "sliding_window_tokens": 256,
+          "layer_counts": {
+            "conv": 13,
+            "full_attention": 6,
+            "sliding_attention": 5
+          },
+          "tie_word_embeddings": true,
+          "rope_scaling": null,
+          "kv_estimate_4k": {
+            "kind": "analytical_component_not_measured_peak_memory",
+            "cache_dtype": "F16 K + F16 V",
+            "sequences": 1,
+            "context_tokens": 4096,
+            "formula": "2(K,V) * 2 bytes * kv_heads * head_dim * cached_tokens * relevant_layers",
+            "full_attention_bytes": 50331648,
+            "sliding_window_bounded_bytes": 2621440,
+            "full_plus_bounded_sliding_bytes": 52953088,
+            "attention_cache_all_attention_layers_at_4k_bytes": 92274688,
+            "recurrent_or_convolution_state_bytes": null,
+            "extra_state_unknown": true,
+            "excludes": [
+              "weights",
+              "projector",
+              "image encoder activations",
+              "compute buffers",
+              "allocator overhead",
+              "additional slots/sequences"
+            ],
+            "sliding_cache_caveat": "Actual runtime may allocate differently from an ideal bounded sliding cache; use conservative reservation and observed peak memory."
+          }
+        }
+      },
+      "license": {
+        "declared_upstream": "LFM Open License v1.0",
+        "status": "custom_license_verified",
+        "source_urls": [
+          "https://huggingface.co/LiquidAI/LFM3-1.7B/blob/0dc4268b561499c648c7ba7c9466bf3d8d01517a/LICENSE"
+        ],
+        "restriction_summary": "Commercial-use grant has an annual-revenue threshold defined as US$10M or more; read section5 and its qualified-nonprofit exception. Not an Apache/MIT license."
+      },
+      "publisher_settings": {
+        "generation_config": {
+          "_from_model_config": true,
+          "bos_token_id": 124894,
+          "do_sample": true,
+          "eos_token_id": [124900],
+          "output_attentions": false,
+          "output_hidden_states": false,
+          "pad_token_id": 124893,
+          "repetition_penalty": 1.1,
+          "temperature": 0.1,
+          "top_k": 50,
+          "transformers_version": "5.12.1",
+          "use_cache": true
+        },
+        "generation_config_scope": "upstream HF configuration; not automatically read by either GGUF runtime",
+        "recommendations": [
+          {
+            "task": "general/chat/tools/agents/coding",
+            "temperature": 0.1,
+            "top_k": 50,
+            "repeat_penalty": 1.1
+          },
+          {
+            "task": "math/STEM",
+            "temperature": 1.0,
+            "top_p": 0.95,
+            "top_k": 20
+          }
+        ]
+      },
+      "app_profile_proposals": [
+        {
+          "id": "general_candidate_preserve_current_default",
+          "status": "proposal_not_applied_or_benchmarked",
+          "request": {
+            "temperature": 0.1,
+            "top_p": 1.0,
+            "top_k": 50,
+            "min_p": 0.0,
+            "repeat_penalty": 1.1,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0,
+            "max_tokens": 2048,
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            }
+          },
+          "load": {
+            "context_tokens": 4096,
+            "n_batch": 512,
+            "n_ubatch": 512
+          },
+          "provenance": "Publisher settings where stated, with explicitly chosen application budgets and neutral unspecified samplers.",
+          "note": "Documented candidate only; preserve current configured default and user overrides."
+        }
+      ],
+      "capabilities": {
+        "eligible_tasks": ["general_chat", "tool_routing", "prompt_writing", "reasoning"],
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "system_prompt": "Explicit system role; actual application hierarchy adherence still requires testing.",
+        "thinking": {
+          "kind": "thinking_by_default",
+          "control": {
+            "enable_thinking": false
+          },
+          "caveat": "Publisher says disabling thinking can be inconsistent on reasoning-heavy tasks; do not equate a false flag with a guaranteed no-reasoning model."
+        },
+        "tools": {
+          "template": "native LFM3 tool template",
+          "format_evidence": "upstream template and native llama.cpp parser",
+          "quality_evidence": "publisher BFCL/ToolSandbox",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_measured",
+        "roleplay_app_evaluation": "not_measured",
+        "generate_image_tool_app_evaluation": "not_measured"
+      },
+      "benchmark_caveats": [
+        "Published checkpoint results are not a measurement of these GGUF conversions. No quantitative score is inferred for a quantization."
+      ],
+      "source_urls": {
+        "checkpoint": "https://huggingface.co/LiquidAI/LFM3-1.7B/tree/0dc4268b561499c648c7ba7c9466bf3d8d01517a",
+        "checkpoint_card": "https://huggingface.co/LiquidAI/LFM3-1.7B/blob/0dc4268b561499c648c7ba7c9466bf3d8d01517a/README.md",
+        "config": "https://huggingface.co/LiquidAI/LFM3-1.7B/blob/0dc4268b561499c648c7ba7c9466bf3d8d01517a/config.json",
+        "generation_config": "https://huggingface.co/LiquidAI/LFM3-1.7B/blob/0dc4268b561499c648c7ba7c9466bf3d8d01517a/generation_config.json",
+        "artifact_card": "https://huggingface.co/LiquidAI/LFM3-1.7B-GGUF/blob/cd0c74c575b5c416f3011b5b4c298077f26ca8c2/README.md",
+        "artifact_repository": "https://huggingface.co/LiquidAI/LFM3-1.7B-GGUF",
+        "chat_template": "https://huggingface.co/LiquidAI/LFM3-1.7B/blob/0dc4268b561499c648c7ba7c9466bf3d8d01517a/chat_template.jinja"
+      },
+      "runtime_status": {
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": false,
+          "projector_source_supported": null,
+          "status": "unsupported_architecture_absent",
+          "cpu_execution_status": "unsupported",
+          "gpu_execution_status": "unsupported",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": null,
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/llama-arch.cpp"
+          ]
+        },
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "llama_cpp_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b12110",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/pull/31252",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/lfm3.cpp",
+            "https://huggingface.co/LiquidAI/LFM3-1.7B-GGUF"
+          ],
+          "first_architecture_code_tag": "b11938",
+          "first_architecture_code_commit": "19cce6919992fdffd92e0ac152caaf1e2b8f254e",
+          "publisher_recommended_minimum": "b11960",
+          "recommended_minimum_source": "https://huggingface.co/LiquidAI/LFM3-1.7B-GGUF",
+          "later_fixes_in_b12110": [
+            {
+              "tag": "b12004",
+              "commit": "3c809f44383bcebc318b8cddd8c6d11aaa861e9b",
+              "purpose": "forced reasoning end/schema handling"
+            }
+          ]
+        }
+      },
+      "hardware_notes": {
+        "cpu_speed_measured": false,
+        "gpu_speed_measured": false,
+        "planning_context_tokens": 4096,
+        "weight_bytes_are_not_peak_RAM_or_VRAM": true,
+        "gpu_backend_caveat": "Availability of a CPU/Vulkan/HIP/CUDA build is distinct from this exact model/quant working correctly and quickly on the user's hardware. No ROCm/Vulkan model benchmark was run.",
+        "tier_assignment": "Use exact per-artifact bytes plus matching projector, KV components, conservative compute/state overhead, OS reserve and image budget. This research intentionally does not pretend a parameter label is a VRAM minimum."
+      },
+      "template_validation_note": "Template inspection uses upstream HF evidence; check the effective embedded GGUF template and adapter behavior before advertising tool capability for every quantization."
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:srformer_nomos_4x_pth": {
+      "display_name": "Helaman Nomos8kSC SRFormer",
+      "purpose": "Base SRFormer photographic enlargement with JPEG and blur degradation.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/SRFormer-Nomos-4x.pth",
+      "release": {
+        "date": "2023-06-26",
+        "status": "known",
+        "kind": "creator_stated_original_release",
+        "sources": ["helaman_release_4xNomos8kSCSRFormer"]
+      },
+      "license": {
+        "identifier": "CC-BY-4.0",
+        "status": "creator_declared",
+        "sources": ["helaman_release_4xNomos8kSCSRFormer"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": [
+        "project_upscale",
+        "omdb_4x-Nomos8kSCSRFormer",
+        "mirror_card",
+        "mirror_names",
+        "helaman_release_4xNomos8kSCSRFormer",
+        "srformer_readme",
+        "spandrel_SRFormer"
+      ],
+      "architecture": "srformer",
+      "implementation_license": {
+        "identifier": "CC-BY-NC-4.0",
+        "status": "current_upstream_code_license",
+        "sources": ["srformer_readme"],
+        "note": "Separate from creator weight license and top-level wrapper MIT metadata."
+      }
+    }
+  }
+}

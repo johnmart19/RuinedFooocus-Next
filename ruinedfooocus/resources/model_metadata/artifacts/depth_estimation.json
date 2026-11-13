@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:geometry_estimation/depth_anything_3_small.safetensors": {
+      "id": "existing:geometry_estimation/depth_anything_3_small.safetensors",
+      "catalogue_key": "geometry_estimation/depth_anything_3_small.safetensors",
+      "state": "existing",
+      "profile_id": "auxiliary:geometry_estimation_depth_anything_3_small_safetensors",
+      "label": "Depth Anything3 SMALL",
+      "role": "depth_estimation",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "DA3-SMALL",
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "531dfbe0bbb09e2fa5fd3f709d0e0c5f9bbf245f1828975b6c6ec02e7da1145d",
+      "artifact": {
+        "bytes": 137254980,
+        "sha256": "9c0a53d157c5b315d4c82908a43d93eeaa3a9ac3de9d15c2b4242ef46b5508ad",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Depth-Anything-3/resolve/8265be070134dc7459217308cdc03109bde199b0/geometry_estimation/depth_anything_3_small.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:geometry_estimation_depth_anything_3_small_safetensors"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:geometry_estimation/depth_anything_3_base.safetensors": {
+      "id": "existing:geometry_estimation/depth_anything_3_base.safetensors",
+      "catalogue_key": "geometry_estimation/depth_anything_3_base.safetensors",
+      "state": "existing",
+      "profile_id": "auxiliary:geometry_estimation_depth_anything_3_base_safetensors",
+      "label": "Depth Anything3 BASE",
+      "role": "depth_estimation",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "DA3-BASE",
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5570a2c9c438ff7aa82f6e64ba8dce2b33531be9fa2ce36231ad120c305f8b4f",
+      "artifact": {
+        "bytes": 541524124,
+        "sha256": "418c0d2ea857e2d1215fa51baa46833f499a62eb2400ec63d337aa20d326414f",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Depth-Anything-3/resolve/8265be070134dc7459217308cdc03109bde199b0/geometry_estimation/depth_anything_3_base.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:geometry_estimation_depth_anything_3_base_safetensors"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:geometry_estimation/lotus-depth-d-v1-1.safetensors": {
+      "id": "existing:geometry_estimation/lotus-depth-d-v1-1.safetensors",
+      "catalogue_key": "geometry_estimation/lotus-depth-d-v1-1.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_extended_lotusd_depth_v1.1",
+      "label": "LotusD depth-v1.1",
+      "role": "depth_estimation",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "LotusD",
+      "native_class": "LotusD",
+      "native_family": "LotusD",
+      "behavioral_variant": "depth-v1.1",
+      "auto_recipe_supported": false,
+      "media": "utility",
+      "format": "safetensors",
+      "quantization": {
+        "label": "F16",
+        "dtype_bytes": {
+          "F16": 1735113608
+        },
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "9e6a7123aed32297e548a71e5d551df967dc73a2697adf94e4b2bb44a2b1d98c",
+      "artifact": {
+        "bytes": 1735197352,
+        "sha256": "dc1394219a04afdd9f72ad41ea0d3dfa435603fc7831a0ac5b884cc2b2ebf688",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/lotus/resolve/39a199245c96cbe4b3788a637f8b1e34667771c2/lotus-depth-d-v1-1.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "8d0f92264991c8e11b441554a3f9172ff0a74912a533f92cc1003697b057d56e",
+        "header_bytes": 83736,
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple plus native header classification; no complete weight download."
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_header_matches_registered_configuration",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": ["existing:vae/sd15_vae.safetensors"],
+        "image": []
+      },
+      "component_contract": {
+        "roles": [
+          {
+            "role": "vae_sd",
+            "filename": "sd15_vae.safetensors",
+            "artifact_id": "existing:vae/sd15_vae.safetensors",
+            "embedded": false
+          }
+        ],
+        "embedded": {
+          "clip": false,
+          "vae": false
+        },
+        "source_workflow": "image_lotus_depth_v1_1.json",
+        "required_runtime_nodes": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "workflow_controls": [
+          {
+            "node": "SamplerCustomAdvanced",
+            "mode": 0,
+            "values": []
+          },
+          {
+            "node": "BasicGuider",
+            "mode": 0,
+            "values": []
+          },
+          {
+            "node": "BasicScheduler",
+            "mode": 0,
+            "values": ["normal", 1, 1]
+          },
+          {
+            "node": "KSamplerSelect",
+            "mode": 0,
+            "values": ["euler"]
+          },
+          {
+            "node": "LotusConditioning",
+            "mode": 0,
+            "values": []
+          }
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/lotus",
+        "source_revision": "39a199245c96cbe4b3788a637f8b1e34667771c2",
+        "native_classification": {
+          "native_class": "LotusD",
+          "native_config": {
+            "use_checkpoint": false,
+            "image_size": 32,
+            "out_channels": 4,
+            "use_spatial_transformer": true,
+            "legacy": false,
+            "adm_in_channels": 4,
+            "dtype": null,
+            "in_channels": 4,
+            "model_channels": 320,
+            "num_res_blocks": [2, 2, 2, 2],
+            "transformer_depth": [1, 1, 1, 1, 1, 1, 0, 0],
+            "channel_mult": [1, 2, 4, 4],
+            "transformer_depth_middle": 1,
+            "use_linear_in_transformer": true,
+            "context_dim": 1024,
+            "num_head_channels": 64,
+            "transformer_depth_output": [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+            "use_temporal_attention": false,
+            "use_temporal_resblock": false
+          },
+          "header_sha256": "8d0f92264991c8e11b441554a3f9172ff0a74912a533f92cc1003697b057d56e",
+          "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\726521c04765c0475cf2e82638fd8055583fcd3ce9cb13c090576eb53d29d17f.artifact.json"
+        },
+        "default_recipe_id": "native-extended-lotusd-depth-v1.1",
+        "auto_recipe_supported": false,
+        "recipe_requirements": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "behavioral_variant_source": "Exact publisher tuple/primary native workflow, never local filename inference."
+      }
+    }
+  }
+}

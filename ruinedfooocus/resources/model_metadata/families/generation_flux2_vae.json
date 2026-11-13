@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:flux2_vae": {
+      "title": "FLUX.2 autoencoder",
+      "provenance": {
+        "upstream": "FLUX.2 autoencoder; chatpig GGUF or Comfy-Org safetensors"
+      },
+      "consumers": [
+        "Flux2",
+        "Flux2Klein4B",
+        "Flux2Klein9B",
+        "Fibo2",
+        "Flux3",
+        "Ideogram4",
+        "ErnieImage",
+        "MOSSImage"
+      ],
+      "release": {
+        "date": "2025-11-25",
+        "date_precision": "day",
+        "scope": "FLUX2_family_release",
+        "source": "https://bfl.ai/blog/flux-2",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "status": "upstream_and_conversion_terms_need_per_artifact_resolution"
+      },
+      "dependencies": ["Selected compatible diffusion checkpoint + its encoder"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "No text-generation sampling settings. Encode/decode dtype, tiling and device staging come from the VAE implementation and target workload; preserve latent channels, scaling and temporal layout."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/flux2-dev",
+        "https://huggingface.co/chatpig/flux2-dev-gguf",
+        "https://bfl.ai/blog/flux-2",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

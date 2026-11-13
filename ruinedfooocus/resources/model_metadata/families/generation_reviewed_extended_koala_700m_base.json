@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_koala_700m_base": {
+      "title": "KOALA_700M base",
+      "consumers": ["KOALA_700M"],
+      "native_class": "KOALA_700M",
+      "license": {
+        "value": null,
+        "status": "not_declared_in_bounded_publisher_manifest",
+        "source_url": "https://huggingface.co/etri-vilab/koala-700m/blob/5e73a318a1ee1b97cc31fd50f09ac13e018c0b63/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-koala-700m-base",
+        "auto_recipe_supported": true,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

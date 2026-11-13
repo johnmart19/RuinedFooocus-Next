@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:clip_l": {
+      "title": "CLIP-L conditioning encoder",
+      "provenance": {
+        "source": "comfyanonymous/flux_text_encoders and calcuis/hidream-gguf",
+        "lineage": "CLIP-L; inspect architecture, not just local clip folder"
+      },
+      "consumers": ["BaseModel", "SDXL", "SD3", "Flux", "HiDream"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "status": "upstream_and_conversion_terms_need_per_artifact_resolution"
+      },
+      "dependencies": ["Family-specific diffusion checkpoint and remaining components"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/comfyanonymous/flux_text_encoders",
+        "https://huggingface.co/calcuis/hidream-gguf",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

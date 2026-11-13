@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:lcm_sdxl_lora": {
+      "title": "LCM-LoRA SDXL acceleration adapter",
+      "provenance": {
+        "author": "latent-consistency/lcm-lora-sdxl",
+        "base": "stabilityai/stable-diffusion-xl-base-1.0"
+      },
+      "consumers": ["SDXL"],
+      "release": {
+        "date": "2023-11-09",
+        "date_precision": "day",
+        "scope": "author_release_blog",
+        "source": "https://huggingface.co/blog/lcm_lora",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "OpenRAIL++",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/latent-consistency/lcm-lora-sdxl",
+        "note": null
+      },
+      "dependencies": ["SDXL-compatible checkpoint + encoder/VAE + LCM sampling workflow"],
+      "settings": {
+        "scope": "author_base_T2I_recipe",
+        "steps_recommended_range": [2, 8],
+        "example_steps": 4,
+        "guidance_scale": 0,
+        "scheduler": "LCMScheduler",
+        "comfy_guidance_disabled_cfg": 1,
+        "note": "Base card permits guidance disabled or 1\u20132. Diffusers guidance0 must not be copied as Comfy CFG0. Task-specific inpainting/ControlNet examples differ. Restore ordinary sampler/settings when removing acceleration adapter."
+      },
+      "hardware_notes": [
+        "Full SDXL checkpoint and VAE memory dominate; no measured exact artifact CPU/GPU tier supplied."
+      ],
+      "sources": [
+        "https://huggingface.co/latent-consistency/lcm-lora-sdxl",
+        "https://huggingface.co/blog/lcm_lora",
+        "https://huggingface.co/docs/diffusers/main/using-diffusers/inference_with_lcm_lora"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

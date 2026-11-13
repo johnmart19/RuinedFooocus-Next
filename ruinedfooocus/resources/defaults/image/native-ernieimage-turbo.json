@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "native-ernieimage-turbo",
+  "family": "ErnieImage",
+  "media": "image",
+  "variant": "turbo",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "ErnieImage",
+    "architecture": "ErnieImage",
+    "native_config": {
+      "image_model": "ernie"
+    },
+    "behavioral_variants": ["turbo"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "ErnieImage",
+      "text_encoder_roles": ["clip_ministral3"],
+      "vae_role": "vae_flux2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI ErnieImage turbo workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_ernie_image_turbo.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "4592a576b0d2173a6c957b7830c8573ddbc9ee1cd028d0887867005676cfc084",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

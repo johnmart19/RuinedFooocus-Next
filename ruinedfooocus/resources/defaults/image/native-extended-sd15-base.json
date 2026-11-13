@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-sd15-base",
+  "family": "SD 1.5",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 8,
+    "sampler_name": "euler",
+    "scheduler": "normal",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[512, 512]],
+  "default_size": [512, 512],
+  "applicability": {
+    "native_class": "SD15",
+    "architecture": "SD 1.5",
+    "native_config": {
+      "in_channels": 4
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SD 1.5",
+      "text_encoder_roles": ["clip_l"],
+      "vae_role": "vae_sd",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": true,
+    "runtime_requirements": []
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI SD 1.5 basic API example",
+    "source_url": "https://github.com/comfyanonymous/ComfyUI/blob/fca60fe70e5b84c5c6b058263653d15cb3401e44/script_examples/basic_api_example.py",
+    "source_revision": "fca60fe70e5b84c5c6b058263653d15cb3401e44",
+    "resource_sha256": "db563c2f5c9b0bef90025e7c5329e3e4d890360d9aac011ee9cb07da1b3da8e0",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

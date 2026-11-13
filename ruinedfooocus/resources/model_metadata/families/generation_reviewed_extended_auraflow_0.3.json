@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_auraflow_0.3": {
+      "title": "AuraFlow 0.3",
+      "consumers": ["AuraFlow"],
+      "native_class": "AuraFlow",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/fal/AuraFlow-v0.3/blob/2cd8588f04c886002be4571697d84654a50e3af3/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-auraflow-0.3",
+        "auto_recipe_supported": true,
+        "source_workflow": "example:aura_flow/aura_flow_0.2_example.png"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

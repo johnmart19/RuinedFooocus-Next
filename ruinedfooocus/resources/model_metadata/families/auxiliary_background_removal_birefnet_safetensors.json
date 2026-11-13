@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:background_removal_birefnet_safetensors": {
+      "title": "BiRefNet (ComfyUI repack)",
+      "provenance": {
+        "upstream": "Comfy-Org/BiRefNet",
+        "revision": "884af709e9b795d89dafbf97f29c8d6a2386f5c6",
+        "exact_variant": "background_removal/birefnet.safetensors"
+      },
+      "purpose": "Native foreground mask estimation for image background removal.",
+      "consumers": ["Native background removal"],
+      "license": {
+        "value": "MIT",
+        "source": "https://huggingface.co/Comfy-Org/BiRefNet/blob/884af709e9b795d89dafbf97f29c8d6a2386f5c6/README.md",
+        "evidence_scope": "publisher_repository_declaration"
+      },
+      "dependencies": [],
+      "standalone_vram_status": "profile_or_workflow_dependent"
+    }
+  }
+}

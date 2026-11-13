@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-hunyuandit1-1.0",
+  "family": "HunyuanDiT1",
+  "media": "image",
+  "variant": "1.0",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 6.0,
+    "sampler_name": "euler",
+    "scheduler": "sgm_uniform",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "HunyuanDiT1",
+    "architecture": "HunyuanDiT1",
+    "native_config": {
+      "image_model": "hydit1",
+      "depth": 40,
+      "hidden_size": 1408
+    },
+    "behavioral_variants": ["1.0"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "HunyuanDiT1",
+      "text_encoder_roles": ["clip_hydit_bert", "clip_hydit_mt5"],
+      "vae_role": "vae_sdxl",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Compatible HunyuanDiT1 native family example",
+    "source_url": "https://raw.githubusercontent.com/comfyanonymous/ComfyUI_examples/f9431bb000ce792094ff345446e22cac1ea6cef3/hunyuan_dit/hunyuan_dit_1.2_example.png",
+    "source_revision": "f9431bb000ce792094ff345446e22cac1ea6cef3",
+    "resource_sha256": "2bcc41b8f01a6ece719d80ddf01bfe676164b63bb9edd6610e93a373f45ac5d7",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "KSampler",
+      "inputs": {
+        "steps": 30,
+        "cfg": 6.0,
+        "sampler_name": "euler",
+        "scheduler": "sgm_uniform"
+      }
+    }
+  ],
+  "legacy": null
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:clip/wevisone_vl_2b_int8_convrot.safetensors": {
+      "id": "existing:clip/wevisone_vl_2b_int8_convrot.safetensors",
+      "catalogue_key": "clip/wevisone_vl_2b_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "utility:wevisone_vl_2b_int8_convrot",
+      "label": "WeVisOne-VL 2B (INT8 convrot)",
+      "role": "image_utility_encoder",
+      "component_role": "wevisone-clip",
+      "native_text_type": "WEVISONE_2B",
+      "utility_kinds": ["wevisone-detect", "wevisone-matte"],
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "auto_recipe_supported": false,
+      "architecture": "WeVisOne-VL",
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 convrot",
+        "source": "published_variant_and_verified_local_I8_U8_with_BF16_F32_auxiliary_tensors",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "0a340ce9c9686570efe80c5dd2143c8b155c5600b43151f6e318eecf86bb5447",
+      "artifact": {
+        "bytes": 2890564784,
+        "sha256": "88f3b1be21ff0828f20f0a711a14e00c55f401bceafad3c8943b7ce2c577a03e",
+        "hash_evidence": "publisher_hf_lfs_stream_and_independent_local_sha256",
+        "full_file_hash_recomputed": true,
+        "pinned_url": "https://huggingface.co/Comfy-Org/WeVisOne-VL/resolve/135355350443103e34089dd39264fe0651691929/text_encoders/wevisone_vl_2b_int8_convrot.safetensors",
+        "availability": "publisher_lfs_metadata_and_local_integrity_verified",
+        "checked_utc": "2026-11-11T15:40:14.489038+00:00",
+        "header_bytes": 164136,
+        "header_sha256": "740569692d0c364cb9dc330786d4bad51976e575f37494f27240953b8573d90f",
+        "evidence_scope": "Pinned publisher tuple, full payload integrity and positive native WeVisOne bounded-header type. No execution, output-quality, memory-fit or default qualification."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "native_comfy": {
+          "tag": "v0.45.0",
+          "source_pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+          "native_te_model": "WEVISONE_2B"
+        },
+        "loader_profile_id": "utility:wevisone_vl_2b_int8_convrot"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    }
+  }
+}

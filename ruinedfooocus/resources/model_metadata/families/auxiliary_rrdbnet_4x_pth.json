@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:rrdbnet_4x_pth": {
+      "display_name": "RRDBNet x4 (unresolved checkpoint)",
+      "purpose": "Generic RRDBNet filename; training objective and original variant unresolved.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/RRDBNet-4x.pth",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": null,
+        "status": "unknown",
+        "reason": "Mirror license does not establish original weight license."
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "mirror_card", "mirror_names"]
+    }
+  }
+}

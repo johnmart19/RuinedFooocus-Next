@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "sdxl",
+  "family": "SDXL",
+  "media": "image",
+  "variant": "base",
+  "aliases": ["SDXL", "SDXL 1.0"],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 7,
+    "sampler_name": "dpmpp_2m",
+    "scheduler": "karras",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [
+    [1024, 1024],
+    [832, 1216],
+    [1216, 832]
+  ],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "SDXL",
+      "text_encoder_roles": ["clip_l", "clip_g"],
+      "vae_role": "vae_sdxl",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Local SDXL family recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": {
+    "custom_steps": 30,
+    "cfg": 7,
+    "sampler_name": "dpmpp_2m",
+    "scheduler": "karras",
+    "clip_skip": 1,
+    "recommended_resolutions": "1024x1024, 832x1216, 1216x832"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "profile_id": "proposed:qwen38_27b",
+  "benchmarks": [
+    {
+      "profile_id": "proposed:qwen38_27b",
+      "measurement_kind": "task_quality",
+      "dataset": "OmniDocBench_1_5",
+      "value": 91.1,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen38_27b",
+      "measurement_kind": "task_quality",
+      "dataset": "RealWorldQA",
+      "value": 85.9,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen38_27b",
+      "measurement_kind": "task_quality",
+      "dataset": "MathVision_without_code_interpreter",
+      "value": 90.0,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen38_27b",
+      "measurement_kind": "task_quality",
+      "dataset": "CharXiv_RQ_without_code_interpreter",
+      "value": 83.7,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

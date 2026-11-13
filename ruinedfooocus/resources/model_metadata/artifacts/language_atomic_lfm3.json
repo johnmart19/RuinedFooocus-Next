@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:llm/LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf": {
+      "id": "existing:llm/LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf",
+      "catalogue_key": "llm/LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf",
+      "state": "existing",
+      "profile_id": "language:atomic_lfm3_1_7b_uncensored",
+      "label": "AtomicChat LFM3 1.7B Uncensored",
+      "role": "language_model",
+      "chat_weight": true,
+      "uses_chat_runtime": true,
+      "architecture": "lfm3",
+      "format": "gguf",
+      "quantization": {
+        "label": "AD-Q4_K_M",
+        "source": "publisher filename and local GGUF v3 file_type15; 287 tensor records inspected",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "2f68d3de7244cb8469fa7b52aa3fcdbaa899c5683c9f6d18a1e93ce050afebdf",
+      "artifact": {
+        "bytes": 1132208000,
+        "sha256": "b22df65673b54ed326f18f74826d76f3b65dadc237ffd6306cd52be04544827d",
+        "hash_evidence": "publisher HF LFS and independent full local SHA256",
+        "full_file_hash_recomputed": true,
+        "pinned_url": "https://huggingface.co/AtomicChat/LFM3-1.7B-Uncensored-GGUF/resolve/3ad712542eb9de349dbd28f2739b69c925cdec7d/LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Exact artifact integrity, bounded GGUF header and embedded template; not behavior, GPU or memory qualification."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "source_supported_not_device_benchmarked",
+          "tested_source_build": "b12110",
+          "chat": "source_supported",
+          "image": "not_available_in_selected_artifact",
+          "tools": "template present; app behavior requires exact-artifact acceptance",
+          "source_evidence_ref": "language:atomic_lfm3_1_7b_uncensored.runtime_status.native_llama_cpp"
+        },
+        "xllamacpp": {
+          "status": "unsupported_architecture",
+          "package": "2026.10.11870",
+          "bundled_build": "b11870",
+          "chat": "unsupported",
+          "image": "not_available_in_selected_artifact",
+          "reason": "Installed xllamacpp b11870 has no LFM3 architecture. Select native llama.cpp for this model."
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "not_measured",
+        "planning_profiles": []
+      }
+    }
+  }
+}

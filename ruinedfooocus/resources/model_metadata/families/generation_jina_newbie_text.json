@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:jina_newbie_text": {
+      "title": "Jina CLIP v2 text-only tower for NewBieImage",
+      "provenance": {
+        "upstream": "jinaai/jina-clip-v2 text tower only",
+        "conversion": "woctordho/comfyui-jina-clip-v2; LoRA merged, tokenizer included as spiece_model tensor"
+      },
+      "consumers": ["NewBieImage"],
+      "release": {
+        "date": "2024-11-05",
+        "date_precision": "day",
+        "scope": "publisher_model_directory_release",
+        "source": "https://jina.ai/models/jina-clip-v2/",
+        "artifact_conversion_release_date": null,
+        "note": "Publisher directory says Nov 5; launch blog Nov 21; research paper Dec 11/12. These are distinct timestamps. Exact conversion date not established."
+      },
+      "license": {
+        "value": "CC-BY-NC-4.0 upstream",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/jinaai/jina-clip-v2",
+        "note": null
+      },
+      "dependencies": [
+        "NewBieImage checkpoint + Gemma3 4B encoder + FLUX VAE; Comfy dual CLIP loader type newbie"
+      ],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/woctordho/comfyui-jina-clip-v2",
+        "https://huggingface.co/jinaai/jina-clip-v2",
+        "https://jina.ai/models/jina-clip-v2/"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

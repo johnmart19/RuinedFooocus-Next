@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_sd20_wd_beta2_aesthetic": {
+      "title": "SD 2.0 wd-beta2-aesthetic",
+      "consumers": ["SD 2.0"],
+      "native_class": "SD20",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/waifu-diffusion/wd-1-5-beta2/blob/e21f3ff25b90018dedfaf0ec5de3467811073df9/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-sd20-wd-beta2-aesthetic",
+        "auto_recipe_supported": false,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

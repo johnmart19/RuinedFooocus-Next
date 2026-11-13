@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:wan21_vae": {
+      "title": "Wan2.1 image codec for Cosmos Predict2 and JoyImage",
+      "provenance": {
+        "source": "Comfy-Org/Wan_2.1_ComfyUI_repackaged; calcuis/cosmos-predict2-gguf Wan VAE conversion"
+      },
+      "consumers": ["CosmosPredict2", "JoyImage"],
+      "release": {
+        "date": "2025-02-25",
+        "date_precision": "day",
+        "scope": "Wan2.1_release",
+        "source": "https://github.com/Wan-Video/Wan2.1",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "Wan upstream Apache-2.0; Cosmos conversion repo has NVIDIA model declaration",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged",
+        "note": null
+      },
+      "dependencies": [
+        "Compatible CosmosPredict2 or JoyImage still-image checkpoint and conditioning"
+      ],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "No text-generation sampling settings. Encode/decode dtype, tiling and device staging come from the VAE implementation and target workload; preserve latent channels, scaling and temporal layout."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged",
+        "https://huggingface.co/calcuis/cosmos-predict2-gguf",
+        "https://github.com/Wan-Video/Wan2.1"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

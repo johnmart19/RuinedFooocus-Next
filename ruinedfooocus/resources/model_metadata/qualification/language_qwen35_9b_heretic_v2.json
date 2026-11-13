@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "profile_id": "language:qwen35_9b_heretic_v2",
+  "benchmarks": [
+    {
+      "profile_id": "language:qwen35_9b_heretic_v2",
+      "measurement_kind": "task_quality",
+      "dataset": "PIQA",
+      "value": 0.796,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "acc",
+      "unit": "fraction",
+      "protocol": {
+        "dataset": "PIQA",
+        "split": null,
+        "metric": "acc",
+        "score": 0.796,
+        "unit": "fraction",
+        "shots": 0,
+        "protocol_id": "derivative_card_eval",
+        "version": 1,
+        "standard_error": 0.0094
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "llmfan46/Qwen3.5-9B-ultra-uncensored-heretic",
+        "scope": "publisher reports Heretic derivative; precise mapping to historical v2 GGUF is not independently verified",
+        "precision": null,
+        "source_url": "https://huggingface.co/llmfan46/Qwen3.5-9B-ultra-uncensored-heretic-GGUF/blob/b93c15ba249eab3e624576411621d1d1d4696973/README.md",
+        "harness": "lm-eval-style tables",
+        "batch_size": "128 PIQA;64 MMLU"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:qwen35_9b_heretic_v2",
+      "measurement_kind": "task_quality",
+      "dataset": "PIQA",
+      "value": 0.8009,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "acc_norm",
+      "unit": "fraction",
+      "protocol": {
+        "dataset": "PIQA",
+        "split": null,
+        "metric": "acc_norm",
+        "score": 0.8009,
+        "unit": "fraction",
+        "shots": 0,
+        "protocol_id": "derivative_card_eval",
+        "version": 1,
+        "standard_error": 0.0093
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "llmfan46/Qwen3.5-9B-ultra-uncensored-heretic",
+        "scope": "publisher reports Heretic derivative; precise mapping to historical v2 GGUF is not independently verified",
+        "precision": null,
+        "source_url": "https://huggingface.co/llmfan46/Qwen3.5-9B-ultra-uncensored-heretic-GGUF/blob/b93c15ba249eab3e624576411621d1d1d4696973/README.md",
+        "harness": "lm-eval-style tables",
+        "batch_size": "128 PIQA;64 MMLU"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:qwen35_9b_heretic_v2",
+      "measurement_kind": "task_quality",
+      "dataset": "MMLU",
+      "value": 0.7841,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "acc",
+      "unit": "fraction",
+      "protocol": {
+        "dataset": "MMLU",
+        "split": null,
+        "metric": "acc",
+        "score": 0.7841,
+        "unit": "fraction",
+        "shots": 0,
+        "protocol_id": "derivative_card_eval",
+        "version": 2,
+        "standard_error": 0.0033,
+        "protocol_note": "Aggregate shot cell is blank; displayed component tasks are zero-shot."
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "llmfan46/Qwen3.5-9B-ultra-uncensored-heretic",
+        "scope": "publisher reports Heretic derivative; precise mapping to historical v2 GGUF is not independently verified",
+        "precision": null,
+        "source_url": "https://huggingface.co/llmfan46/Qwen3.5-9B-ultra-uncensored-heretic-GGUF/blob/b93c15ba249eab3e624576411621d1d1d4696973/README.md",
+        "harness": "lm-eval-style tables",
+        "batch_size": "128 PIQA;64 MMLU"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

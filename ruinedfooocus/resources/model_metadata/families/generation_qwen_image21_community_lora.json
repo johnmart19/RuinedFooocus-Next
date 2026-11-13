@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:qwen_image21_community_lora": {
+      "kind": "image_generation",
+      "display_name": "Qwen Image 2.1 edit adapter",
+      "consumers": ["Qwen Image 2.1"],
+      "license": {
+        "value": "apache-2.0",
+        "source": "https://huggingface.co/WarmBloodAban/Qwen-Image-2.1-LoRAs"
+      }
+    }
+  }
+}

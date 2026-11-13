@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:qwen3_5_2b": {
+      "display_name": "Qwen3.5-2B",
+      "architecture": "qwen35",
+      "release": {
+        "date": "2026-03-02",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/Qwen/Qwen3.5-2B",
+          "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF",
+          "https://huggingface.co/Qwen/Qwen3.5-2B/blob/main/preprocessor_config.json"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {},
+      "vision_profile": {
+        "model": "Qwen3.5-2B",
+        "base_repo": "Qwen/Qwen3.5-2B",
+        "base_revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+        "base_private": false,
+        "base_gated": false,
+        "license": "apache-2.0",
+        "priority": "optional_family_middle_step",
+        "role": "Stronger small Qwen option when 0.8B is inadequate and Qwen4 is too large; overlaps LFM3-VL/MiniCPM1 tier.",
+        "suggested_vram_tier_gb": [4, 6, 8],
+        "vram_tier_evidence": "Planning estimate only, not a measured guarantee. CPU operation needs sufficient host RAM. Disk bytes exclude context, vision and compute buffers.",
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "lmstudio-community/Qwen3.5-2B-GGUF",
+            "revision": "bb84e11355a036e28f080c7793fa6d22b7c4e344",
+            "filename": "Qwen3.5-2B-Q4_K_M.gguf",
+            "local_filename": "Qwen3.5-2B-Q4_K_M.gguf",
+            "bytes": 1270808032,
+            "sha256": "0bfe35afc9f05b7fac3fa04925e051ac7939a42a8a17ea11afc99701bea826cc",
+            "url": "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-Q4_K_M.gguf",
+            "pinned_url": "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF/resolve/bb84e11355a036e28f080c7793fa6d22b7c4e344/Qwen3.5-2B-Q4_K_M.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "lmstudio-community/Qwen3.5-2B-GGUF",
+            "revision": "bb84e11355a036e28f080c7793fa6d22b7c4e344",
+            "filename": "mmproj-Qwen3.5-2B-BF16.gguf",
+            "local_filename": "mmproj-Qwen3.5-2B-BF16.gguf",
+            "bytes": 671372416,
+            "sha256": "31a8b681d34e70eaef158f7bacf1bc726a7a29babd185119ab3ebf402890dfbc",
+            "url": "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF/resolve/main/mmproj-Qwen3.5-2B-BF16.gguf",
+            "pinned_url": "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF/resolve/bb84e11355a036e28f080c7793fa6d22b7c4e344/mmproj-Qwen3.5-2B-BF16.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ],
+        "combined_disk_bytes": 1942180448,
+        "combined_disk_gb_decimal": 1.942180448,
+        "combined_disk_gib_binary": 1.8087964951992035,
+        "parameter_count_hf_safetensors": 2274069824,
+        "sources": [
+          "https://huggingface.co/Qwen/Qwen3.5-2B",
+          "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF",
+          "https://huggingface.co/Qwen/Qwen3.5-2B/blob/main/preprocessor_config.json"
+        ],
+        "release_date": "2026-03-02",
+        "architecture": "qwen3_5 hybrid Gated DeltaNet/full attention with separate vision encoder",
+        "context_native_tokens": 262144,
+        "native_tools": true,
+        "reasoning_control": "Unlike the larger siblings, 0.8B and 2B default to non-thinking. Keep enable_thinking=false explicit. Their official cards warn that thinking may enter loops. /think and /nothink soft switches are not supported.",
+        "publisher_sampling_nonthinking": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 1.5,
+          "repetition_penalty": 1.0
+        },
+        "image_budget": {
+          "publisher_min_pixels": 65536,
+          "publisher_max_pixels": 16777216,
+          "patch_size": 16,
+          "merge_size": 2,
+          "approx_pixels_per_visual_token": 1024,
+          "proposed_starting_max_pixels": 524288,
+          "note": "This proposed local budget is lower than the processor default. Increase toward 1MP for detail if memory and prefill time permit."
+        },
+        "app_profile_suggestion": {
+          "context_tokens": 4096,
+          "parallel_requests": 1,
+          "enable_thinking": false,
+          "max_output_tokens": 512,
+          "images_per_request": 1
+        },
+        "integration_notes": [
+          "Use a verified modern Qwen3.5 vision runtime and native template. LM Studio community GGUF is a third-party conversion; the base model and license are official Qwen.",
+          "Keep model-specific vision sampling distinct from text sampling. Higher presence penalty can reduce repeats but may harm exact OCR copying; benchmark any OCR override."
+        ]
+      },
+      "license": {
+        "identifier": "apache-2.0",
+        "note": null,
+        "url": null
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/Qwen/Qwen3.5-2B",
+        "https://huggingface.co/lmstudio-community/Qwen3.5-2B-GGUF",
+        "https://huggingface.co/Qwen/Qwen3.5-2B/blob/main/preprocessor_config.json"
+      ],
+      "task_limits": null
+    }
+  }
+}

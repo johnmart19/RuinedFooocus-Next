@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "native-pid-flux1-1024-to-4096-4step",
+  "family": "PiD",
+  "media": "image",
+  "variant": "flux1-1024-to-4096-4step",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 4,
+    "cfg": 1,
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[4096, 4096]],
+  "default_size": [4096, 4096],
+  "applicability": {
+    "native_class": "PiD",
+    "architecture": "PiD",
+    "native_config": {
+      "image_model": "pid",
+      "lq_latent_channels": 16,
+      "latent_spatial_down_factor": 8
+    },
+    "behavioral_variants": ["flux1-1024-to-4096-4step"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "PiD",
+      "text_encoder_roles": ["clip_gemma2_it_elm"],
+      "vae_role": "pixel_space",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "runtime_requirements": ["PiDConditioning", "source latent upscale utility"],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI PiD flux1-1024-to-4096-4step workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/utility_pid_latent_upscale_dit.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "696b67103fc7ec6ac91ca91a54e58ff07ee36e219a5dd4044aa4f14f4ebdf973",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "BasicScheduler",
+      "mode": 0,
+      "values": ["simple", 4, 1]
+    },
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [3]
+    }
+  ],
+  "legacy": null
+}

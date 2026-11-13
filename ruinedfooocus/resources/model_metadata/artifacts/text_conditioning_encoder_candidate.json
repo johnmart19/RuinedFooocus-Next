@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:clip/Qwen3-VL-8B-Instruct-Q5_K_M.gguf": {
+      "id": "existing:clip/Qwen3-VL-8B-Instruct-Q5_K_M.gguf",
+      "catalogue_key": "clip/Qwen3-VL-8B-Instruct-Q5_K_M.gguf",
+      "state": "existing",
+      "profile_id": "generation:qwen3vl8_generic_override",
+      "label": "Qwen3-VL 8B GGUF conditioning alternatives",
+      "role": "text_conditioning_encoder_candidate",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q5_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "6e9b929e32348b644f6111d59c09f9f95f8dad1ab510ebea77acbfc9fe616bb2",
+      "artifact": {
+        "bytes": 5851114336,
+        "sha256": "bb6d45711239c508c18b6a67f00dd094a41add64e8639f8554738bfeccf5a3bc",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Qwen3-VL-8B-Instruct-GGUF/resolve/b93a7ee713758252c555be4210c00540df954dc2/Qwen3-VL-8B-Instruct-Q5_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3vl8_generic_override"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive-Q6_K.gguf": {
+      "id": "existing:clip/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive-Q6_K.gguf",
+      "catalogue_key": "clip/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive-Q6_K.gguf",
+      "state": "existing",
+      "profile_id": "generation:qwen3vl8_generic_override",
+      "label": "Qwen3-VL 8B GGUF conditioning alternatives",
+      "role": "text_conditioning_encoder_candidate",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q6_K",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "e58d4bcd939b1ff30793f27693166347edf9703430cf7d231c42b426cc6aeca3",
+      "artifact": {
+        "bytes": 6725900384,
+        "sha256": "0447bbaea9f2844b9ca5fa975c04d56d44a5e53deb37ae4497e46194fde508cf",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/HauhauCS/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive/resolve/131a3da6324520b0471196ed0012386d701543a6/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive-Q6_K.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3vl8_generic_override"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    }
+  }
+}

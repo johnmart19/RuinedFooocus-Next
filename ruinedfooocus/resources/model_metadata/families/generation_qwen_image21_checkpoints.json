@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:qwen_image21_checkpoints": {
+      "kind": "image_generation",
+      "display_name": "Qwen Image 2.1",
+      "consumers": ["Qwen Image 2.1"],
+      "license": {
+        "value": "qwen-research",
+        "source": "https://huggingface.co/Qwen/Qwen-Image-2.1/blob/main/LICENSE"
+      },
+      "evidence_scope": "Published weights and native loader contract. Model, mode and device acceptance are recorded separately."
+    }
+  }
+}

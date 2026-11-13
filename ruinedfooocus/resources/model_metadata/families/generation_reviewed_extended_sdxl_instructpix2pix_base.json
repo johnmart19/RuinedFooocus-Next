@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_sdxl_instructpix2pix_base": {
+      "title": "SDXL_instructpix2pix base",
+      "consumers": ["SDXL_instructpix2pix"],
+      "native_class": "SDXL_instructpix2pix",
+      "license": {
+        "value": "openrail++",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/diffusers/sdxl-instructpix2pix-768/blob/06653d47f8d22f2c2205a5884d6a24c5e76d2ca7/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-sdxl-instructpix2pix-base",
+        "auto_recipe_supported": false,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

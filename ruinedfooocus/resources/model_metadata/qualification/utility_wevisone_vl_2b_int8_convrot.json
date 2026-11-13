@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profile_id": "utility:wevisone_vl_2b_int8_convrot",
+  "qualification": {
+    "scope": "Published artifact integrity and positive native bounded-header admission. Actual model execution, output quality and memory fit remain unqualified.",
+    "ordinary_diffusion_encoder": false,
+    "chat_weight": false,
+    "automatic_recipe": false
+  }
+}

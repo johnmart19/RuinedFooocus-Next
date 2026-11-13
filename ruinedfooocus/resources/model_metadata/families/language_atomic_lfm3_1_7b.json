@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:atomic_lfm3_1_7b_uncensored": {
+      "label": "AtomicChat LFM3 1.7B Uncensored",
+      "identity": {
+        "artifact_repo_requested": "AtomicChat/LFM3-1.7B-Uncensored-GGUF",
+        "artifact_revision": "3ad712542eb9de349dbd28f2739b69c925cdec7d",
+        "base_checkpoint_repo": "LiquidAI/LFM3-1.7B",
+        "gguf_architecture": "lfm3",
+        "creator_modification": "Publisher reports a projected rank-1 LoRA baked at W*=2, followed by activation-aware quantization.",
+        "matching_trainable_checkpoint": "not_identified; base LiquidAI BF16 is not this modified Atomic artifact"
+      },
+      "license": {
+        "declared_upstream": "LFM Open License v1.0",
+        "status": "creator_declared_custom_license",
+        "source_urls": [
+          "https://huggingface.co/AtomicChat/LFM3-1.7B-Uncensored-GGUF/blob/3ad712542eb9de349dbd28f2739b69c925cdec7d/README.md"
+        ]
+      },
+      "publisher_settings": {
+        "recommendations": [],
+        "source_url": "https://huggingface.co/AtomicChat/LFM3-1.7B-Uncensored-GGUF/blob/3ad712542eb9de349dbd28f2739b69c925cdec7d/README.md",
+        "scope": "The pinned Atomic card has no sampling directives and its GGUF has no sampling.* fields. Do not inherit the base LiquidAI generation config as an Atomic recommendation; runtime defaults and explicit user/request overrides apply."
+      },
+      "capabilities": {
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "thinking": {
+          "control": {
+            "enable_thinking": true
+          },
+          "caveat": "Existing LFM3 reasoning controls remain unavailable; do not promise a reasoning-Off switch."
+        },
+        "tools": {
+          "template": "exact artifact-embedded LFM3 template",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_qualified",
+        "roleplay_app_evaluation": "not_qualified",
+        "universal_refusal_free_guarantee": false
+      },
+      "chat_template": {
+        "source": "tokenizer.chat_template in the exact pinned GGUF; no replacement from the current base repository",
+        "source_url": "https://huggingface.co/AtomicChat/LFM3-1.7B-Uncensored-GGUF/blob/3ad712542eb9de349dbd28f2739b69c925cdec7d/LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf",
+        "sha256": "f45005c50cd2a97329722bf3a2dee9f16c04cdf825a589b280fb7e99e6827818",
+        "bytes": 12129,
+        "matches_base_template": "https://huggingface.co/LiquidAI/LFM3-1.7B/blob/1da06bec6a819da10b54c67e5c90972b46d81871/chat_template.jinja",
+        "tool_arguments": "mapping objects; embedded template rejects JSON-encoded argument strings"
+      },
+      "runtime_status": {
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "architecture_source_supported": true,
+          "status": "source_supported; exact artifact device and behavior qualification separate",
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/pull/31252",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/lfm3.cpp"
+          ]
+        },
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": false,
+          "status": "unsupported_architecture_absent"
+        }
+      },
+      "acceptance_limits": {
+        "default_selection": "explicit_user_decision_2026_11_11",
+        "benchmark_inheritance": "none; LiquidAI and older compact-model results do not qualify this derivative",
+        "quality": "not_qualified",
+        "memory_or_gpu_fit": "not_measured"
+      }
+    }
+  }
+}

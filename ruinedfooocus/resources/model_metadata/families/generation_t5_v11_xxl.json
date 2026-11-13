@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:t5_v11_xxl": {
+      "title": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "provenance": {
+        "upstream": "google/t5-v1_1-xxl; encoder-only city96 conversion"
+      },
+      "consumers": ["Flux", "HiDream", "SD3", "PixArt"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "value": "Apache-2.0",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf",
+        "note": null
+      },
+      "dependencies": ["Selected family checkpoint + remaining family-specific encoders/VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf",
+        "https://huggingface.co/google/t5-v1_1-xxl",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

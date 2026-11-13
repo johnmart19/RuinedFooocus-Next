@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "id": "native-flux-dev",
+  "family": "Flux.1 D",
+  "media": "image",
+  "variant": "dev",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 3.5,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "behavioral_variants": ["base", "dev"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "Flux",
+      "text_encoder_roles": ["clip_l", "clip_t5"],
+      "vae_role": "vae_flux",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "native_class": "Flux",
+    "architecture": "Flux.1 D",
+    "native_config": {
+      "image_model": "flux",
+      "in_channels": 16,
+      "hidden_size": 3072,
+      "patch_size": 2,
+      "depth": 19,
+      "depth_single_blocks": 38
+    },
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Local FLUX.1 dev family recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": null
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_sd21unclipl_unclip_l": {
+      "title": "SD21UnclipL unclip-l",
+      "consumers": ["SD21UnclipL"],
+      "native_class": "SD21UnclipL",
+      "license": {
+        "value": null,
+        "status": "not_declared_in_bounded_publisher_manifest",
+        "source_url": "https://huggingface.co/comfyanonymous/wd-1.5-beta2_unCLIP/blob/9304ceb2aab3b07049c205599a4dab11a92c276f/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-sd21unclipl-unclip-l",
+        "auto_recipe_supported": false,
+        "source_workflow": "example:unclip/unclip_example.png"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

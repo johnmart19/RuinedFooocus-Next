@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-sd3-3.5-large",
+  "family": "SD3",
+  "media": "image",
+  "variant": "3.5-large",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 4.01,
+    "sampler_name": "euler",
+    "scheduler": "sgm_uniform",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "SD3",
+    "architecture": "SD3",
+    "native_config": {
+      "in_channels": 16,
+      "patch_size": 2,
+      "depth": 38
+    },
+    "behavioral_variants": ["3.5-large"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SD3",
+      "text_encoder_roles": ["clip_l", "clip_g", "clip_t5"],
+      "vae_role": "vae_sd3",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": true,
+    "runtime_requirements": []
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "SD3 specialized native workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/sd3.5_simple_example.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "22636f8ea8d35f41ecf92917112e14376bc30ae2c01de0b9553493cf2c176619",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [
+    {
+      "node": "KSampler",
+      "mode": 0,
+      "values": [585483408983215, "randomize", 20, 4.01, "euler", "sgm_uniform", 1]
+    }
+  ],
+  "legacy": null
+}

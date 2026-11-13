@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "native-stablecascade-c-full",
+  "family": "Stable_Cascade_C",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 4,
+    "sampler_name": "euler_ancestral",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "Stable_Cascade_C",
+    "architecture": "Stable_Cascade_C",
+    "native_variant": "full-c",
+    "native_config": { "stable_cascade_stage": "c", "c_cond": 2048 },
+    "behavioral_variants": ["base"],
+    "default_for_native_configuration": true,
+    "auto_recipe_supported": true,
+    "quantization_independent": true,
+    "identity_basis": "positive_full_native_c_configuration_and_current_variant",
+    "component_contract": {
+      "native_family": "StableCascade_C",
+      "text_encoder_roles": ["clip_g"],
+      "vae_role": "vae_cascade_c",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "runtime_requirements": [
+      "Native Stage C prior",
+      "Full bundled Stage B companion",
+      "Native Stage A decode"
+    ]
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Native full Stable Cascade C staged recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "inspected_at_utc": "2026-11-11",
+    "runtime_qualification": {
+      "source_revision": "a7cf09a6ba44000c4af9e0f8e0ecddc24f2a9453",
+      "native_pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44",
+      "receipt_sha256": "2667e903d2e61fc4b2aff2dafd5a78bd626f12e5acfc7ff15a9b842fbf44d296",
+      "cases": ["C01 source paired grids", "C02 native SR and ordered vision references"],
+      "limits": "Explicit staged controls passed; automatic caller execution is qualified separately. Lite configurations and other hardware are not covered."
+    }
+  },
+  "legacy": null
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_mossimage_sft": {
+      "title": "MOSSImage sft",
+      "consumers": ["MOSSImage"],
+      "native_class": "MOSSImage",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/MOSS-Image/blob/2929efe3cdd506c0a430bcfca70a9a8d805cc095/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-mossimage-sft",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_moss_image_t2i.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:dat_helaman_nomos_4x_pth": {
+      "display_name": "Helaman Nomos8k DAT",
+      "purpose": "Photographic super-resolution handling JPEG, blur and resize.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/DAT-Helaman-Nomos-4x.pth",
+      "release": {
+        "date": "2023-08-13",
+        "status": "known",
+        "kind": "creator_original_model_release_not_exact_repack_date",
+        "sources": ["helaman_release_Nomos8kDAT"]
+      },
+      "license": {
+        "identifier": "CC-BY-4.0",
+        "status": "intended_creator_model_declared_exact_repack_chain_incomplete",
+        "sources": ["helaman_release_Nomos8kDAT"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "mirror_card", "mirror_names", "omdb_4x-Nomos8kDAT"],
+      "architecture": "dat"
+    }
+  }
+}

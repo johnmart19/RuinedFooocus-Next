@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "profile_id": "proposed:ling3_tiny",
+  "benchmarks": [
+    {
+      "profile_id": "proposed:ling3_tiny",
+      "measurement_kind": "task_quality",
+      "dataset": "Artificial Analysis Intelligence Index v4.1.1",
+      "value": 25,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher_relaying_external_result",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/inclusionAI/Ling-3.0-tiny"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:ling3_tiny",
+      "measurement_kind": "task_quality",
+      "dataset": "Artificial Analysis Agentic Index",
+      "value": 16,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher_relaying_external_result",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/inclusionAI/Ling-3.0-tiny"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:esrgan_nmkd_yandereneoxl_4x_pth": {
+      "display_name": "NMKD YandereNeo XL",
+      "purpose": "Named ESRGAN custom model; exact domain description is sparse.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/ESRGAN-NMKD-YandereNeoXL-4x.pth",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": "WTFPL",
+        "status": "model_registry_declared",
+        "sources": ["omdb_4x-NMKD-YandereNeo-XL"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "omdb_4x-NMKD-YandereNeo-XL", "mirror_card", "mirror_names"],
+      "architecture": "esrgan"
+    }
+  }
+}

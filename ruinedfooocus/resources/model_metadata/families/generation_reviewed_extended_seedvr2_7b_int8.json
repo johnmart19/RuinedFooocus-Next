@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_seedvr2_7b_int8": {
+      "title": "SeedVR2 7b-int8",
+      "consumers": ["SeedVR2 still-image restoration"],
+      "native_class": "SeedVR2",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/SeedVR2/blob/df48879708206a403d2a61acd55578c2e80fd233/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-seedvr2-7b-int8",
+        "auto_recipe_supported": false,
+        "source_workflow": "utility_seedvr2_7b_int8_upscale_image.json"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

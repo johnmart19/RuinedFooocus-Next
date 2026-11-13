@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:t5_old_cosmos": {
+      "title": "Older T5 XXL encoder for Cosmos Predict2",
+      "provenance": {
+        "source": "calcuis/cosmos-predict2-gguf; t5xxl_old_fp32-q4_0.gguf"
+      },
+      "consumers": ["CosmosPredict2"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "status": "upstream_and_conversion_terms_need_per_artifact_resolution"
+      },
+      "dependencies": ["CosmosPredict2 checkpoint + Wan VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/calcuis/cosmos-predict2-gguf",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

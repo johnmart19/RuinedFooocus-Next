@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_mageflow_turbo": {
+      "title": "MageFlow native image model",
+      "consumers": ["MageFlow"],
+      "native_class": "MageFlow",
+      "license": {
+        "value": "mit",
+        "license_name": null,
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Mage-Flow/blob/6ff68fbf3c667325e961d551691b246791d5eec0/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "mage-flow-turbo",
+        "scope": "existing_family_variant_recipe",
+        "source_recipe": "image_mage_flow_turbo_t2i_int8.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Exact publisher manifest plus bounded native header classification; no full-file or hardware qualification."
+    }
+  }
+}

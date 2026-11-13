@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_boogu_turbo": {
+      "title": "Boogu turbo",
+      "consumers": ["Boogu"],
+      "native_class": "Boogu",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Boogu-Image/blob/8606e7df2f5389282617b8b534db290e1f5d7811/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-boogu-turbo",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_boogu_image_0_1_turbo_t2i.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

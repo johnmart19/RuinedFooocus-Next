@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:gpt_oss_20b": {
+      "label": "gpt-oss-20b",
+      "identity": {
+        "checkpoint_repo_requested": "openai/gpt-oss-20b",
+        "checkpoint_repo_resolved": "openai/gpt-oss-20b",
+        "checkpoint_revision_observed": "6cee5e81ee83917806bbde320786a8fb61efebee",
+        "artifact_repo_requested": "lmstudio-community/gpt-oss-20b-GGUF",
+        "gguf_architecture": "gpt-oss"
+      },
+      "release": {
+        "announced_release_date": "2025-08-05",
+        "release_date_status": "publisher_model_card_date",
+        "release_source_url": "https://arxiv.org/html/2508.10925v1",
+        "paper_publication_date": "2025-08-08",
+        "checkpoint_repository_created_at": "2025-08-04T22:33:29.000Z",
+        "checkpoint_repository_last_modified_at": "2025-08-26T17:25:47.000Z",
+        "repository_created_at_is_model_release_date": false,
+        "quantization_publication_date": null,
+        "quantization_publication_date_status": "per_artifact_publication_not_verified; repository_creation_is_not_file_release",
+        "metadata_source_url": "https://huggingface.co/api/models/openai/gpt-oss-20b"
+      },
+      "architecture": {
+        "gguf_architecture": "gpt-oss",
+        "parameter_count_hf_safetensors_reported": 20914757184,
+        "parameter_count_caveat": "HF serialized-tensor count; tied/duplicated tensors and multimodal components may differ from advertised unique parameter count.",
+        "geometry": {
+          "status": "upstream_config_verified",
+          "hf_architectures": ["GptOssForCausalLM"],
+          "hf_model_type": "gpt_oss",
+          "hf_text_model_type": "gpt_oss",
+          "layers": 24,
+          "hidden_size": 2880,
+          "attention_heads": 64,
+          "kv_heads": 8,
+          "head_dim": 64,
+          "head_dim_basis": "explicit_config",
+          "native_context_tokens": 131072,
+          "sliding_window_tokens": 128,
+          "layer_counts": {
+            "sliding_attention": 12,
+            "full_attention": 12
+          },
+          "tie_word_embeddings": false,
+          "rope_scaling": {
+            "beta_fast": 32.0,
+            "beta_slow": 1.0,
+            "factor": 32.0,
+            "original_max_position_embeddings": 4096,
+            "rope_type": "yarn",
+            "truncate": false
+          },
+          "kv_estimate_4k": {
+            "kind": "analytical_component_not_measured_peak_memory",
+            "cache_dtype": "F16 K + F16 V",
+            "sequences": 1,
+            "context_tokens": 4096,
+            "formula": "2(K,V) * 2 bytes * kv_heads * head_dim * cached_tokens * relevant_layers",
+            "full_attention_bytes": 100663296,
+            "sliding_window_bounded_bytes": 3145728,
+            "full_plus_bounded_sliding_bytes": 103809024,
+            "attention_cache_all_attention_layers_at_4k_bytes": 201326592,
+            "recurrent_or_convolution_state_bytes": 0,
+            "extra_state_unknown": false,
+            "excludes": [
+              "weights",
+              "projector",
+              "image encoder activations",
+              "compute buffers",
+              "allocator overhead",
+              "additional slots/sequences"
+            ],
+            "sliding_cache_caveat": "Actual runtime may allocate differently from an ideal bounded sliding cache; use conservative reservation and observed peak memory."
+          }
+        },
+        "advertised_total_parameters": 20900000000,
+        "advertised_active_parameters": 3600000000,
+        "experts_total": 32,
+        "experts_active": 4
+      },
+      "license": {
+        "declared_upstream": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_urls": [
+          "https://huggingface.co/openai/gpt-oss-20b/blob/6cee5e81ee83917806bbde320786a8fb61efebee/README.md"
+        ]
+      },
+      "publisher_settings": {
+        "generation_config": {
+          "bos_token_id": 199998,
+          "do_sample": true,
+          "eos_token_id": [200002, 199999, 200012],
+          "pad_token_id": 199999,
+          "transformers_version": "4.55.0.dev0"
+        },
+        "generation_config_scope": "upstream HF configuration; not automatically read by either GGUF runtime",
+        "recommendations": [
+          {
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "source_url": "https://github.com/openai/gpt-oss"
+          }
+        ]
+      },
+      "app_profile_proposals": [
+        {
+          "id": "low_effort_general_candidate",
+          "status": "proposal_not_applied_or_benchmarked",
+          "request": {
+            "temperature": 1.0,
+            "top_p": 1.0,
+            "top_k": 0,
+            "min_p": 0.0,
+            "repeat_penalty": 1.0,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0,
+            "max_tokens": 2048,
+            "chat_template_kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "load": {
+            "context_tokens": 4096,
+            "n_batch": 512,
+            "n_ubatch": 512
+          },
+          "provenance": "Publisher settings where stated, with explicitly chosen application budgets and neutral unspecified samplers."
+        }
+      ],
+      "capabilities": {
+        "eligible_tasks": ["general_chat", "tool_routing", "prompt_writing", "reasoning", "coding"],
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "system_prompt": "Harmony distinguishes system, developer, user, assistant and tool roles.",
+        "thinking": {
+          "kind": "reasoning",
+          "control": {
+            "reasoning_effort": "low"
+          },
+          "allowed": ["low", "medium", "high"],
+          "caveat": "Low effort is not an off switch."
+        },
+        "tools": {
+          "template": "Harmony",
+          "format_evidence": "dedicated gpt-oss parser",
+          "quality_evidence": "publisher tau-bench/SWE-bench agent evaluations",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_measured",
+        "roleplay_app_evaluation": "not_measured",
+        "generate_image_tool_app_evaluation": "not_measured"
+      },
+      "benchmark_caveats": [
+        "Published checkpoint results are not a measurement of these GGUF conversions. No quantitative score is inferred for a quantization."
+      ],
+      "source_urls": {
+        "checkpoint": "https://huggingface.co/openai/gpt-oss-20b/tree/6cee5e81ee83917806bbde320786a8fb61efebee",
+        "checkpoint_card": "https://huggingface.co/openai/gpt-oss-20b/blob/6cee5e81ee83917806bbde320786a8fb61efebee/README.md",
+        "config": "https://huggingface.co/openai/gpt-oss-20b/blob/6cee5e81ee83917806bbde320786a8fb61efebee/config.json",
+        "generation_config": "https://huggingface.co/openai/gpt-oss-20b/blob/6cee5e81ee83917806bbde320786a8fb61efebee/generation_config.json",
+        "artifact_card": "https://huggingface.co/lmstudio-community/gpt-oss-20b-GGUF/blob/21f8a86825e36be34d24601e6d5ab45e2d366f4b/README.md",
+        "artifact_repository": "https://huggingface.co/lmstudio-community/gpt-oss-20b-GGUF",
+        "chat_template": null
+      },
+      "runtime_status": {
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b11870",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/models/openai-moe.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/common/chat.cpp"
+          ],
+          "caveat": "Older final-channel constrained-output handling. Native b12110 includes b12068 correction."
+        },
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "llama_cpp_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b12110",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/openai-moe.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/common/chat.cpp"
+          ],
+          "later_fixes": [
+            {
+              "tag": "b12068",
+              "commit": "4402e65401f11587e1ed2e549b2c0c0285d871ee",
+              "source_url": "https://github.com/ggml-org/llama.cpp/pull/31556"
+            }
+          ]
+        }
+      },
+      "hardware_notes": {
+        "cpu_speed_measured": false,
+        "gpu_speed_measured": false,
+        "planning_context_tokens": 4096,
+        "weight_bytes_are_not_peak_RAM_or_VRAM": true,
+        "gpu_backend_caveat": "Availability of a CPU/Vulkan/HIP/CUDA build is distinct from this exact model/quant working correctly and quickly on the user's hardware. No ROCm/Vulkan model benchmark was run.",
+        "tier_assignment": "Use exact per-artifact bytes plus matching projector, KV components, conservative compute/state overhead, OS reserve and image budget. This research intentionally does not pretend a parameter label is a VRAM minimum."
+      },
+      "template_validation_note": "Template inspection uses upstream HF evidence; check the effective embedded GGUF template and adapter behavior before advertising tool capability for every quantization."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_sd15_base": {
+      "title": "SD 1.5 base",
+      "consumers": ["SD 1.5"],
+      "native_class": "SD15",
+      "license": {
+        "value": "creativeml-openrail-m",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/blob/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-sd15-base",
+        "auto_recipe_supported": true,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:detection/mediapipe_face_fp32.safetensors": {
+      "id": "existing:detection/mediapipe_face_fp32.safetensors",
+      "catalogue_key": "detection/mediapipe_face_fp32.safetensors",
+      "state": "existing",
+      "profile_id": "utility:mediapipe_face",
+      "label": "MediaPipe Face Landmarker (FP32)",
+      "role": "image_utility_model",
+      "component_role": "face-landmarker",
+      "utility_kinds": ["face-landmarks"],
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "auto_recipe_supported": false,
+      "architecture": "FaceLandmarker",
+      "native_class": "FaceLandmarker",
+      "native_family": "FaceLandmarker",
+      "media": "utility",
+      "format": "safetensors",
+      "download_identity": "16ee51d38392a0de49a790f9354684b8765f4334e9af4b0b3a2bc4e72de90dd3",
+      "artifact": {
+        "bytes": 5423900,
+        "sha256": "a98c4806081d40eba35102a0f6dc0000c2e1388b72cf24e691703d0605bd888a",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/mediapipe/resolve/f787efc1ad99492ec7d5b6564c0dd6c48d84ee49/detection/mediapipe_face_fp32.safetensors",
+        "availability": "publisher_lfs_metadata",
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Immutable publisher tuple and pinned native loader contract; execution and device eligibility are unqualified."
+      },
+      "runtime": {
+        "native_comfy": {
+          "source_pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+          "loader": "LoadMediaPipeFaceLandmarker"
+        }
+      },
+      "companions": { "text": [], "image": [] },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/api/models/Comfy-Org/mediapipe?blobs=true",
+        "source_revision": "f787efc1ad99492ec7d5b6564c0dd6c48d84ee49"
+      }
+    }
+  }
+}

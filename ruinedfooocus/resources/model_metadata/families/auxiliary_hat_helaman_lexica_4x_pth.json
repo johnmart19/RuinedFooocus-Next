@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:hat_helaman_lexica_4x_pth": {
+      "display_name": "Helaman Lexica HAT",
+      "purpose": "Enlarge generated artwork; trained on Lexica outputs without degradation.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/HAT-Helaman-Lexica-4x.pth",
+      "release": {
+        "date": "2023-07-06",
+        "status": "known",
+        "kind": "creator_stated_original_release",
+        "sources": ["helaman_readme"]
+      },
+      "license": {
+        "identifier": "CC-BY-4.0",
+        "status": "model_registry_declared",
+        "sources": ["omdb_4x-LexicaHAT"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": [
+        "project_upscale",
+        "omdb_4x-LexicaHAT",
+        "mirror_card",
+        "mirror_names",
+        "helaman_readme"
+      ],
+      "architecture": "hat"
+    }
+  }
+}

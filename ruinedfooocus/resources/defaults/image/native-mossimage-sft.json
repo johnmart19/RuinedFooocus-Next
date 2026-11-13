@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "native-mossimage-sft",
+  "family": "MOSSImage",
+  "media": "image",
+  "variant": "sft",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 25,
+    "cfg": 2.5,
+    "sampler_name": "er_sde",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "MOSSImage",
+    "architecture": "MOSSImage",
+    "native_config": {
+      "image_model": "moss_image",
+      "num_layers": 42
+    },
+    "behavioral_variants": ["sft"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "MOSSImage",
+      "text_encoder_roles": ["clip_qwen35_9b"],
+      "vae_role": "vae_flux2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI MOSSImage sft workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_moss_image_t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "619bd00f86ad6b060ca7c2e315590d9fcffc37e3fa0d0478fb61695d9b7d90a7",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "SkipLayerGuidanceDiTSimple",
+      "mode": 0,
+      "values": ["", "22", 0, 0.5]
+    }
+  ],
+  "legacy": null
+}

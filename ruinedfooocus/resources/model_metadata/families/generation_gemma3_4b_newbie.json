@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:gemma3_4b_newbie": {
+      "title": "Gemma 3 4B for NewBieImage",
+      "provenance": {
+        "upstream": "google/gemma-3-4b-it; Unsloth GGUF or woctordho Comfy conversion"
+      },
+      "consumers": ["NewBieImage"],
+      "release": {
+        "date": "2025-03-12",
+        "date_precision": "day",
+        "scope": "base_family",
+        "source": "https://developers.googleblog.com/en/introducing-gemma3/",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "Gemma",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/google/gemma-3-4b-it",
+        "note": null
+      },
+      "dependencies": ["NewBieImage checkpoint + Jina CLIP v2 text encoder + FLUX VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/woctordho/comfyui-gemma-3-4b-it",
+        "https://huggingface.co/unsloth/gemma-3-4b-it-GGUF",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py",
+        "https://developers.googleblog.com/en/introducing-gemma3/"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

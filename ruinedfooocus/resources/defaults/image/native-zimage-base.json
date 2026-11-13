@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "native-zimage-base",
+  "family": "ZImage",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 25,
+    "cfg": 4,
+    "sampler_name": "res_multistep",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "ZImage",
+    "architecture": "ZImage",
+    "native_config": {
+      "image_model": "lumina2",
+      "patch_size": 2,
+      "in_channels": 16
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "ZImage",
+      "text_encoder_roles": ["clip_qwen3_4b"],
+      "vae_role": "vae_lumina2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI ZImage base workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_z_image_int8.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "0fd196ee8543f98caf204c3ccf7e28006ade07d3e5978ba3d0b28d8f77e12cc1",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [3]
+    }
+  ],
+  "legacy": null
+}

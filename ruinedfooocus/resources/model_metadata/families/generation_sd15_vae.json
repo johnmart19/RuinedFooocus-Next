@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:sd15_vae": {
+      "title": "Stable Diffusion 1.5 VAE",
+      "provenance": {
+        "upstream": "stable-diffusion-v1-5/stable-diffusion-v1-5/vae"
+      },
+      "consumers": ["BaseModel"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "value": "CreativeML Open RAIL-M repository declaration",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5",
+        "note": null
+      },
+      "dependencies": ["Compatible SD1.x checkpoint and encoder; may already be embedded"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "No text-generation sampling settings. Encode/decode dtype, tiling and device staging come from the VAE implementation and target workload; preserve latent channels, scaling and temporal layout."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_pid_flux1_1024_to_4096_4step": {
+      "title": "PiD flux1-1024-to-4096-4step",
+      "consumers": ["PiD"],
+      "native_class": "PiD",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/PixelDiT/blob/f1aa9118da0a0b53a4433e5de9a4de2e9aae2193/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-pid-flux1-1024-to-4096-4step",
+        "auto_recipe_supported": false,
+        "source_recipe": "utility_pid_latent_upscale_dit.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

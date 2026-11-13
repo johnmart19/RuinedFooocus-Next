@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "profile_id": "language:openthinker_7b_v1",
+  "benchmarks": [
+    {
+      "profile_id": "language:openthinker_7b_v1",
+      "measurement_kind": "task_quality",
+      "dataset": "AIME24",
+      "value": 31.3,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "points_on_publisher_scale",
+      "protocol": {
+        "dataset": "AIME24",
+        "split": null,
+        "metric": "reported score",
+        "score": 31.3,
+        "unit": "points_on_publisher_scale",
+        "shots": null,
+        "protocol_id": "original_evalchemy"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "open-thoughts/OpenThinker-7B",
+        "scope": "original OpenThinker-7B card results; later reruns/versions not interchangeable",
+        "precision": null,
+        "source_url": "https://huggingface.co/open-thoughts/OpenThinker-7B/blob/4ba9dee9b7e6e4796c6bccf6e15c2f5b60843e1e/README.md",
+        "harness": "Evalchemy",
+        "sampling": null
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:openthinker_7b_v1",
+      "measurement_kind": "task_quality",
+      "dataset": "MATH500",
+      "value": 83.0,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "points_on_publisher_scale",
+      "protocol": {
+        "dataset": "MATH500",
+        "split": null,
+        "metric": "reported score",
+        "score": 83.0,
+        "unit": "points_on_publisher_scale",
+        "shots": null,
+        "protocol_id": "original_evalchemy"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "open-thoughts/OpenThinker-7B",
+        "scope": "original OpenThinker-7B card results; later reruns/versions not interchangeable",
+        "precision": null,
+        "source_url": "https://huggingface.co/open-thoughts/OpenThinker-7B/blob/4ba9dee9b7e6e4796c6bccf6e15c2f5b60843e1e/README.md",
+        "harness": "Evalchemy",
+        "sampling": null
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:openthinker_7b_v1",
+      "measurement_kind": "task_quality",
+      "dataset": "GPQA Diamond",
+      "value": 42.4,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "points_on_publisher_scale",
+      "protocol": {
+        "dataset": "GPQA Diamond",
+        "split": null,
+        "metric": "reported score",
+        "score": 42.4,
+        "unit": "points_on_publisher_scale",
+        "shots": null,
+        "protocol_id": "original_evalchemy"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "open-thoughts/OpenThinker-7B",
+        "scope": "original OpenThinker-7B card results; later reruns/versions not interchangeable",
+        "precision": null,
+        "source_url": "https://huggingface.co/open-thoughts/OpenThinker-7B/blob/4ba9dee9b7e6e4796c6bccf6e15c2f5b60843e1e/README.md",
+        "harness": "Evalchemy",
+        "sampling": null
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "language:openthinker_7b_v1",
+      "measurement_kind": "task_quality",
+      "dataset": "LiveCodeBench v2",
+      "value": 39.9,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "points_on_publisher_scale",
+      "protocol": {
+        "dataset": "LiveCodeBench v2",
+        "split": "all",
+        "metric": "reported score",
+        "score": 39.9,
+        "unit": "points_on_publisher_scale",
+        "shots": null,
+        "protocol_id": "original_evalchemy"
+      },
+      "evidence": {
+        "evaluator": "model publisher",
+        "evidence_type": "publisher_reported",
+        "quantized_artifact_tested": false,
+        "independent_reproduction_verified": false,
+        "tested_checkpoint": "open-thoughts/OpenThinker-7B",
+        "scope": "original OpenThinker-7B card results; later reruns/versions not interchangeable",
+        "precision": null,
+        "source_url": "https://huggingface.co/open-thoughts/OpenThinker-7B/blob/4ba9dee9b7e6e4796c6bccf6e15c2f5b60843e1e/README.md",
+        "harness": "Evalchemy",
+        "sampling": null
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

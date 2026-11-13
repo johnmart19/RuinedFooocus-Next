@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:esrgan_ultrasharp_4x_pth": {
+      "display_name": "UltraSharp",
+      "purpose": "Detail/sharpness-oriented image restoration, especially JPEG sources.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/ESRGAN-UltraSharp-4x.pth",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": "CC-BY-NC-SA-4.0",
+        "status": "model_registry_declared",
+        "sources": ["omdb_4x-UltraSharp"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "omdb_4x-UltraSharp", "mirror_card", "mirror_names"],
+      "architecture": "esrgan"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "native-boogu-edit",
+  "family": "Boogu",
+  "media": "image",
+  "variant": "edit",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 25,
+    "cfg": 3.5,
+    "sampler_name": "dpmpp_2m",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "Boogu",
+    "architecture": "Boogu",
+    "native_config": {
+      "image_model": "boogu",
+      "hidden_size": 3360,
+      "num_layers": 32
+    },
+    "behavioral_variants": ["edit"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "Boogu",
+      "text_encoder_roles": ["clip_qwen3vl_8b_scaled"],
+      "vae_role": "vae_flux",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Boogu edit workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_boogu_image_0_1_edit.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "9fd2141c9bdfecbfc298bca8b24cb3676b0f1d32ca015a82a5d9384a55d000b4",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [3.16]
+    },
+    {
+      "node": "BasicScheduler",
+      "mode": 0,
+      "values": ["simple", 25, 1]
+    }
+  ],
+  "legacy": null
+}

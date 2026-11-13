@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:hunyuan_refiner_vae": {
+      "kind": "image_generation",
+      "display_name": "HunyuanImage21Refiner",
+      "evidence_scope": "Native source/CPU only; actual model/device acceptance unqualified"
+    }
+  }
+}

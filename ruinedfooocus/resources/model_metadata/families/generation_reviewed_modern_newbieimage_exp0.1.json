@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_newbieimage_exp0.1": {
+      "title": "NewBieImage exp0.1",
+      "consumers": ["NewBieImage"],
+      "native_class": "Lumina2",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/NewBie-image-Exp0.1_repackaged/blob/ae96af8db04fdf08a51877cc279930cf00020df5/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-newbieimage-exp0.1",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_newbieimage_exp0_1-t2i.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

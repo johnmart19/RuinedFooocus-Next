@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "native-qwenimage-edit-2509",
+  "family": "QwenImage",
+  "media": "image",
+  "variant": "edit-2509",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 2.5,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [
+    [1328, 1328],
+    [1664, 928],
+    [928, 1664]
+  ],
+  "default_size": [1328, 1328],
+  "applicability": {
+    "behavioral_variants": ["edit-2509"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "QwenImage",
+      "text_encoder_roles": ["clip_qwen25"],
+      "vae_role": "vae_qwen_image",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "native_class": "QwenImage",
+    "architecture": "QwenImage",
+    "native_config": {
+      "image_model": "qwen_image",
+      "in_channels": 64,
+      "num_layers": 60
+    },
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Local Qwen Image Edit family recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": null,
+  "workflow_note": "The current graph also illustrates a Lightning LoRA; this inherited non-LoRA family recipe does not apply the graph's 4/8-step LoRA settings to a base checkpoint."
+}

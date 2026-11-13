@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "id": "native-flux2-dev",
+  "family": "Flux2",
+  "media": "image",
+  "variant": "dev",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "Flux2Scheduler",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1248, 832]],
+  "default_size": [1248, 832],
+  "applicability": {
+    "native_class": "Flux2",
+    "architecture": "Flux2",
+    "native_config": {
+      "image_model": "flux2",
+      "in_channels": 128,
+      "hidden_size": 6144,
+      "patch_size": 1,
+      "depth": 8,
+      "depth_single_blocks": 48
+    },
+    "behavioral_variants": ["dev"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "Flux2",
+      "text_encoder_roles": ["clip_mistral3"],
+      "vae_role": "vae_flux2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": ["Flux2Scheduler", "FluxGuidance(4)"],
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Flux2 dev workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_flux2.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "43ddb21f14842f3004eab409f4520156d91b11682b6d5cbd1e3740173aa922cc",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "Flux2Scheduler",
+      "mode": 0,
+      "values": [20, 1248, 832]
+    },
+    {
+      "node": "BasicGuider",
+      "mode": 0,
+      "values": []
+    },
+    {
+      "node": "FluxGuidance",
+      "mode": 0,
+      "values": [4]
+    },
+    {
+      "node": "LoraLoaderModelOnly",
+      "mode": 0,
+      "values": ["Flux_2-Turbo-LoRA_comfyui.safetensors", 1]
+    }
+  ],
+  "legacy": null
+}

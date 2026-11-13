@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:ling3_tiny": {
+      "display_name": "Ling 3.0 Tiny",
+      "architecture": "bailingmoe3",
+      "release": {
+        "date": null,
+        "precision": "unknown",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "exact_day_unverified",
+        "sources": [
+          "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/generation_config.json",
+          "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/README.md",
+          "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/chat_template.jinja"
+        ],
+        "reason": "No unambiguous official release day verified; first weight-upload commit is not automatically the announcement date."
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "ling3_tiny",
+        "base_repo": "inclusionAI/Ling-3.0-tiny",
+        "base_revision": "9a98e35fe1c9ee255f78dd64771c7ae15a799481",
+        "publisher_recommended": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20
+        },
+        "publisher_generation_config": {
+          "temperature": 1.0,
+          "top_p": 0.95,
+          "top_k": 20
+        },
+        "publisher_unspecified_sampling_fields": [
+          "min_p",
+          "presence_penalty",
+          "frequency_penalty",
+          "repetition_penalty"
+        ],
+        "proposed_app_request": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/generation_config.json",
+          "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/README.md",
+          "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/chat_template.jinja"
+        ],
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "publisher_evidence": "Card and generation_config specify the same triple. Other sampling fields are not specified.",
+        "reasoning_note": "Thinking defaults on. Nonthinking is an app latency choice, not the vendor best-performance recommendation. Native template uses enable_thinking, not /nothink.",
+        "required_files_note": "Text GGUF only. Optional draft/MTP/long-context-extension recipes are not required."
+      },
+      "vision_profile": {},
+      "license": {
+        "identifier": "MIT",
+        "source": "https://huggingface.co/inclusionAI/Ling-3.0-tiny",
+        "evidence": "upstream model-card license declaration; retain exact artifact provenance"
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/generation_config.json",
+        "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/README.md",
+        "https://huggingface.co/inclusionAI/Ling-3.0-tiny/resolve/9a98e35fe1c9ee255f78dd64771c7ae15a799481/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}

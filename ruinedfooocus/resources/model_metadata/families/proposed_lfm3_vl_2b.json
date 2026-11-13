@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:lfm3_vl_2b": {
+      "display_name": "LFM3-VL-2B",
+      "architecture": "lfm3",
+      "release": {
+        "date": "2026-10-27",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B",
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF",
+          "https://huggingface.co/blog/LiquidAI/lfm3",
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B/blob/main/chat_template.jinja",
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B/blob/main/processor_config.json"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 128000,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {},
+      "vision_profile": {
+        "model": "LFM3-VL-2B",
+        "base_repo": "LiquidAI/LFM3-VL-2B",
+        "base_revision": "71d8e745d97c224984e0f20412f532a5ce9dfd3e",
+        "base_private": false,
+        "base_gated": false,
+        "license": "other",
+        "priority": "core_small_specialist",
+        "role": "First compact visual worker to evaluate for descriptions, image review, OCR, grounding and GUI screenshots.",
+        "suggested_vram_tier_gb": [4, 6, 8],
+        "vram_tier_evidence": "Planning estimate only, not a measured guarantee. CPU operation needs sufficient host RAM. Disk bytes exclude context, vision and compute buffers.",
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "LiquidAI/LFM3-VL-2B-GGUF",
+            "revision": "1add221a5ea6c047fcf1eaaf2d247939d7cf8849",
+            "filename": "LFM3-VL-2B-QAD-Q4_0.gguf",
+            "local_filename": "LFM3-VL-2B-QAD-Q4_0.gguf",
+            "bytes": 1049615648,
+            "sha256": "621c455376cb96a20891697deb9975c6fb47dd5ea98ed3ad1f3b7e8f24f0b1e6",
+            "url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF/resolve/main/LFM3-VL-2B-QAD-Q4_0.gguf",
+            "pinned_url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF/resolve/1add221a5ea6c047fcf1eaaf2d247939d7cf8849/LFM3-VL-2B-QAD-Q4_0.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "LiquidAI/LFM3-VL-2B-GGUF",
+            "revision": "1add221a5ea6c047fcf1eaaf2d247939d7cf8849",
+            "filename": "mmproj-LFM3-VL-2B-F16.gguf",
+            "local_filename": "mmproj-LFM3-VL-2B-F16.gguf",
+            "bytes": 378996032,
+            "sha256": "1d8e6e58eefc093e09d6332f081516e1ddbd5b35cfca7f35463fb270db230b1e",
+            "url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF/resolve/main/mmproj-LFM3-VL-2B-F16.gguf",
+            "pinned_url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF/resolve/1add221a5ea6c047fcf1eaaf2d247939d7cf8849/mmproj-LFM3-VL-2B-F16.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ],
+        "combined_disk_bytes": 1428611680,
+        "combined_disk_gb_decimal": 1.42861168,
+        "combined_disk_gib_binary": 1.3304983079433441,
+        "release_date": "2026-10-27",
+        "context_native_tokens": 128000,
+        "context_publisher_shorthand": "128K",
+        "context_exact_gguf_tokens": 128000,
+        "parameter_count_publisher": "1.92B total: 1.73B language + 164M vision + 25M projector",
+        "architecture": "lfm3 / lfm3_vl",
+        "license_note": "LFM Open License v1.0 has a $10M commercial-revenue condition and a qualified nonprofit exception for noncommercial/research use. Preserve the license and attribution notices when redistributing. Ungated download does not remove these terms.",
+        "license_url": "https://huggingface.co/LiquidAI/LFM3-VL-2B/resolve/71d8e745d97c224984e0f20412f532a5ce9dfd3e/LICENSE",
+        "native_tools": true,
+        "task_limits": "The publisher does not recommend this checkpoint for coding, multi-turn conversations or complex reasoning. Use as a focused visual worker; retain the existing text assistant for conversation and persona.",
+        "reasoning_control": "The base template defaults enable_thinking=true. Set chat_template_kwargs.enable_thinking=false for fast captions/reviews; retain thinking as an explicit advanced mode. preserve_thinking controls history retention, not whether new reasoning is generated.",
+        "publisher_sampling_nonthinking": {
+          "temperature": 0.1,
+          "top_p": 1.0,
+          "top_k": 50,
+          "min_p": 0,
+          "repetition_penalty": 1.1
+        },
+        "image_budget": {
+          "publisher_min_pixels": 65536,
+          "publisher_max_pixels": 16777216,
+          "patch_size": 16,
+          "merge_size": 2,
+          "approx_pixels_per_visual_token": 1024,
+          "proposed_starting_max_pixels": 1048576,
+          "note": "The proposed 1MP ceiling is an application budget, not a vendor default. Bound image processing and context; do not inherit the 16MP ceiling for a low-memory profile."
+        },
+        "app_profile_suggestion": {
+          "context_tokens": 4096,
+          "parallel_requests": 1,
+          "enable_thinking": false,
+          "max_output_tokens": 512,
+          "images_per_request": 1
+        },
+        "integration_notes": [
+          "Official llama.cpp support requires b11960+ / v0.8.0+, and LM Studio llama.cpp engine 2.65.1+. The runtime agent must verify the bundled binary and wrapper image path.",
+          "Runtime source audit found first LFM3-VL support at b11938, newer than released xllamacpp snapshot b11870. Native b12110 supports it and includes a later reasoning-budget/schema fix at b12004. Mark the embedded backend unavailable until it is upgraded; do not advertise support merely because text-only LFM3 loads.",
+          "Q4_0 here is a separate quantization-aware-distillation checkpoint, not a generic post-training Q4_0. It was trained to recover Q4_0 accuracy. Q4_K_M is a fallback candidate, not an automatic upgrade.",
+          "Use the native template and processor. Do not manually paste image sentinel tokens into plain text.",
+          "Native tool calls use the Qwen3-Coder-style XML representation. The template expects function arguments as mappings; decode OpenAI argument JSON strings before formatting history when required by the wrapper.",
+          "Preserve the current tool turn and resend tool definitions. Do not strip reasoning needed by an in-progress tool turn merely to hide it from UI.",
+          "Video is 2fps with 4\u2013768 frames by default; current llama.cpp video-fps does not override that. Video support is not necessary for this image-focused addition.",
+          "NVFP4 is a separate NVIDIA-optimized checkpoint and needs b12088+; older builds may load it yet produce incorrect output. Keep it out of the generic CPU/AMD default."
+        ],
+        "vendor_comparison": {
+          "harness": "Liquid 62-benchmark unweighted average, vLLM 0.27.1",
+          "LFM3_VL_thinking": 71.4,
+          "LFM3_VL_nonthinking": 62.1,
+          "Qwen3_5_2B_thinking": 64.0,
+          "Qwen3_5_4B_thinking": 73.4,
+          "MiniCPM_V4_7_1B": 57.5,
+          "caveat": "Vendor-run and not local Q4. Peers used reasoning enabled where supported; InternVL used its better mode per benchmark. Do not present the LFM thinking score as its low-latency nonthinking quality."
+        },
+        "sources": [
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B",
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF",
+          "https://huggingface.co/blog/LiquidAI/lfm3",
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B/blob/main/chat_template.jinja",
+          "https://huggingface.co/LiquidAI/LFM3-VL-2B/blob/main/processor_config.json"
+        ],
+        "alternative_artifacts": [
+          {
+            "kind": "alternative_weight",
+            "repo_id": "LiquidAI/LFM3-VL-2B-GGUF",
+            "revision": "1add221a5ea6c047fcf1eaaf2d247939d7cf8849",
+            "filename": "LFM3-VL-2B-Q4_K_M.gguf",
+            "local_filename": "LFM3-VL-2B-Q4_K_M.gguf",
+            "bytes": 1099627808,
+            "sha256": "56dac2e192ff0d9ab8507f4f1aeb4aed0463449bbbefaac79497f041c95f21eb",
+            "url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF/resolve/main/LFM3-VL-2B-Q4_K_M.gguf",
+            "pinned_url": "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF/resolve/1add221a5ea6c047fcf1eaaf2d247939d7cf8849/LFM3-VL-2B-Q4_K_M.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ]
+      },
+      "license": {
+        "identifier": "other",
+        "note": "LFM Open License v1.0 has a $10M commercial-revenue condition and a qualified nonprofit exception for noncommercial/research use. Preserve the license and attribution notices when redistributing. Ungated download does not remove these terms.",
+        "url": "https://huggingface.co/LiquidAI/LFM3-VL-2B/resolve/71d8e745d97c224984e0f20412f532a5ce9dfd3e/LICENSE"
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/LiquidAI/LFM3-VL-2B",
+        "https://huggingface.co/LiquidAI/LFM3-VL-2B-GGUF",
+        "https://huggingface.co/blog/LiquidAI/lfm3",
+        "https://huggingface.co/LiquidAI/LFM3-VL-2B/blob/main/chat_template.jinja",
+        "https://huggingface.co/LiquidAI/LFM3-VL-2B/blob/main/processor_config.json"
+      ],
+      "task_limits": "The publisher does not recommend this checkpoint for coding, multi-turn conversations or complex reasoning. Use as a focused visual worker; retain the existing text assistant for conversation and persona."
+    }
+  }
+}

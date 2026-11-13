@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "native-bernini-image",
+  "family": "BerniniImage",
+  "media": "image",
+  "variant": "image-edit",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 40,
+    "cfg": 5,
+    "sampler_name": "res_multistep",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [
+    [
+      928,
+      1280
+    ],
+    [
+      1280,
+      928
+    ]
+  ],
+  "default_size": [
+    928,
+    1280
+  ],
+  "applicability": {
+    "native_class": "WAN21_T2V",
+    "architecture": "BerniniImage",
+    "native_config": {
+      "image_model": "wan2.1"
+    },
+    "behavioral_variants": [
+      "image-edit"
+    ],
+    "default_for_native_configuration": false,
+    "quantization_independent": false,
+    "identity_basis": "exact_publisher_header_and_size_then_signed_payload_preparation",
+    "auto_recipe_supported": true,
+    "component_contract": {
+      "native_family": "BerniniImage",
+      "text_encoder_roles": [
+        "clip_bernini_umt5"
+      ],
+      "vae_role": "vae_bernini",
+      "embedded_components_first": false,
+      "vae_gguf_image_supported": false
+    },
+    "runtime_requirements": [
+      "BerniniConditioning",
+      "SplitSigmas"
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Pinned Bernini-R one-frame image graph",
+    "source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/blueprints/Image%20Edit%20(Bernini-R).json",
+    "source_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+    "resource_sha256": "da28b3c871ac9f5e09c30ca1ed182bcf3ce29cd028cf2383bd43b99013c42ed2",
+    "inspected_at_utc": "2026-11-12"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

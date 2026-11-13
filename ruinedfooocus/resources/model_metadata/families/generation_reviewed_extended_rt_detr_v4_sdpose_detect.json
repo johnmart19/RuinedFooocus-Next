@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_rt_detr_v4_sdpose_detect": {
+      "title": "RT_DETR_v4 sdpose-detect",
+      "consumers": ["Image tools detection"],
+      "native_class": "RT_DETR_v4",
+      "license": {
+        "value": "mit",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/SDPose/blob/acb43fbe8142b54d9ebd52b720b81dd4e14c8d81/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-rt-detr-v4-sdpose-detect",
+        "auto_recipe_supported": false,
+        "source_workflow": "utility_sdpose_multi_person.json"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

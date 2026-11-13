@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "native-ernieimage-base",
+  "family": "ErnieImage",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 4,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "ErnieImage",
+    "architecture": "ErnieImage",
+    "native_config": {
+      "image_model": "ernie"
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "ErnieImage",
+      "text_encoder_roles": ["clip_ministral3"],
+      "vae_role": "vae_flux2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI ErnieImage base workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_ernie_image.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "6713587397dd7f5ae62d17012b55060de262f720d05f9b174967193ce990d7b0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

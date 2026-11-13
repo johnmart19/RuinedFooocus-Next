@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "profile_id": "proposed:qwen35_9b",
+  "benchmarks": [
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "MMMU_Pro",
+      "value": 70.1,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "RealWorldQA",
+      "value": 80.3,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "OCRBench",
+      "value": 89.2,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "OmniDocBench_1_5",
+      "value": 87.7,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "CountBench",
+      "value": 97.2,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+        "caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "MMLU-Pro",
+      "value": 82.5,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "IFEval",
+      "value": 91.5,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "IFBench",
+      "value": 64.5,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "BFCL-V4",
+      "value": 66.1,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:qwen35_9b",
+      "measurement_kind": "task_quality",
+      "dataset": "MMMU-Pro",
+      "value": 70.1,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": "publisher_evaluation_not_app_default",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "upstream_checkpoint_not_this_GGUF",
+        "source_url": "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md"
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

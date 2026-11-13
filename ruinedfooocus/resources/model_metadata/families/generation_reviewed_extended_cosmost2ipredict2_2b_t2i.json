@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_cosmost2ipredict2_2b_t2i": {
+      "title": "CosmosPredict2 2b-t2i",
+      "consumers": ["CosmosPredict2"],
+      "native_class": "CosmosT2IPredict2",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Cosmos-Predict2/blob/bc1946fd79f358326a8ce898f718fd1e88b1a5de/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-cosmost2ipredict2-2b-t2i",
+        "auto_recipe_supported": true,
+        "source_workflow": "example:cosmos_predict2/cosmos_predict2_2b_t2i_example.png"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

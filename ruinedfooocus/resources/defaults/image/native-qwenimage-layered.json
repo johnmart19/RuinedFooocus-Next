@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "native-qwenimage-layered",
+  "family": "QwenImage",
+  "media": "image",
+  "variant": "layered",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 2.5,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[640, 640]],
+  "default_size": [640, 640],
+  "applicability": {
+    "native_class": "QwenImage",
+    "architecture": "QwenImage",
+    "native_config": {
+      "image_model": "qwen_image",
+      "in_channels": 64,
+      "num_layers": 60,
+      "use_additional_t_cond": true,
+      "default_ref_method": "negative_index"
+    },
+    "behavioral_variants": ["layered"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_positive_layered_topology",
+    "component_contract": {
+      "native_family": "QwenImage",
+      "text_encoder_roles": ["clip_qwen25"],
+      "vae_role": "vae_qwen_image_layered",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "runtime_requirements": [
+      "EmptyQwenImageLayeredLatentImage",
+      "Qwen layered RGBA VAE",
+      "layer count and frame decode"
+    ],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI QwenImage layered workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_qwen_image_layered.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "c93da5dffc492d739208630bfff1cc6554fb802cba824da7cde87a23947923ab",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [1]
+    },
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [1]
+    }
+  ],
+  "legacy": null
+}

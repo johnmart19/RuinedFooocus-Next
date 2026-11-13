@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:vae/sd4x_vae.safetensors": {
+      "id": "existing:vae/sd4x_vae.safetensors",
+      "catalogue_key": "vae/sd4x_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:sd4x_vae",
+      "label": "SD4x four-times VAE codec",
+      "role": "image_codec",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "AutoencoderKL4channel4xcodec",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Publisher dtype unspecified",
+        "training": "unspecified_original",
+        "source": "publisher_config_not_local_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "99667d0e0e69948edc2344de6d39ccec49cb4e3b2d952688ce402fd1e13c069b",
+      "artifact": {
+        "bytes": 221326504,
+        "sha256": "33478c297ec29218100f8ee86007b3ab4c2701896d5ca5c9e3a84fc29f678183",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler/resolve/572c99286543a273bfd17fac263db5a77be12c4c/vae/diffusion_pytorch_model.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-09",
+        "evidence_scope": "Official JSON configs and repository LFS metadata only; no payload or real-model execution."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:sd4x_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      }
+    },
+    "existing:vae/qwen_image_layered_vae.safetensors": {
+      "id": "existing:vae/qwen_image_layered_vae.safetensors",
+      "catalogue_key": "vae/qwen_image_layered_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_modern_qwen_layered_codec",
+      "label": "Qwen Image Layered RGBA VAE",
+      "role": "image_codec",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImageLayeredVAE",
+      "native_family": "QwenImageLayered",
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "7ba938f7196b60987ed3640079fb26815d442ed51e76a42436a3a68b2468ef8d",
+      "artifact": {
+        "bytes": 253816616,
+        "sha256": "c5320595fc61859ccdd0282184208f7b781c983b8ce4c6bc3e7723a807d3d28d",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/02130716aaf54a36f84c9fcfa8a373ab06284e2b/split_files/vae/qwen_image_layered_vae.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "21aecaad515892db3b9019ac582d8c2cff296f5a117021b60e843b0a6b4df777",
+        "header_bytes": 21176,
+        "checked_date_utc": "2026-11-11"
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_vae_header_layout_reviewed_not_executed",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "component_contract": {
+        "image_channels": 4,
+        "latent_channels": 16,
+        "encoder_input_shape": [96, 4, 3, 3, 3],
+        "source_workflow": "image_qwen_image_layered.json",
+        "incompatible_with": ["ordinary RGB QwenImage", "Anima RGB VAE"]
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI",
+        "source_revision": "02130716aaf54a36f84c9fcfa8a373ab06284e2b"
+      }
+    },
+    "existing:vae/seedvr2_ema_vae_fp16.safetensors": {
+      "id": "existing:vae/seedvr2_ema_vae_fp16.safetensors",
+      "catalogue_key": "vae/seedvr2_ema_vae_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_extended_seedvr2_codec",
+      "label": "SeedVR2 codec",
+      "role": "image_codec",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SeedVR2 codec",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Publisher header dtypes",
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "057ad4df6dba9538b04969b4d19e1d4c6428f1985caa8fd6ec8e302ae82896c9",
+      "artifact": {
+        "bytes": 501324814,
+        "sha256": "20678548f420d98d26f11442d3528f8b8c94e57ee046ef93dbb7633da8612ca1",
+        "pinned_url": "https://huggingface.co/Comfy-Org/SeedVR2/resolve/df48879708206a403d2a61acd55578c2e80fd233/vae/seedvr2_ema_vae_fp16.safetensors",
+        "header_sha256": "d620dc95c2ea7f6d93d32e5ea41463f951b259af200916e1de864f81a29a29bd",
+        "header_bytes": 28352,
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "availability": "bounded_header_range_reachable",
+        "checked_date_utc": "2026-11-11"
+      },
+      "runtime": {
+        "comfy": {
+          "status": "source_graph_dependency",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "component_contract": {
+        "source_workflow": "utility_seedvr2_3b_int8_upscale_image.json"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/SeedVR2",
+        "source_revision": "df48879708206a403d2a61acd55578c2e80fd233",
+        "source_receipt": "cache\\plan-execution-20261111\\publisher-payload-review\\de7f5c07a1eb446eb1ef68d7138511fa323022db1f9c6b524a742678c2499f1e.artifact.json"
+      }
+    },
+    "existing:vae/minimax_h3_image_vae_fp16.safetensors": {
+      "id": "existing:vae/minimax_h3_image_vae_fp16.safetensors",
+      "catalogue_key": "vae/minimax_h3_image_vae_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:minimax_h3_image",
+      "label": "MiniMax H3 Image image VAE",
+      "role": "image_codec",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "MiniMaxH3ImageVAE",
+      "native_family": "MiniMaxH3Image",
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "source": "publisher_filename_not_local_payload_execution",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "179456c8d87e500953cffd80a710358127e511c9559c6dc69a5a8a75998abc41",
+      "artifact": {
+        "bytes": 1168505312,
+        "sha256": "d80e9c2e5cfc9844869961ff5a58c9a9e52182df6bfb30b26018dd7f348721af",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/MiniMax-H3-Image/resolve/0bb149f51e3156ed4b90dd45d5620346bfe1df8f/vae/minimax_h3_image_vae_fp16.safetensors",
+        "availability": "public_pinned_publisher_metadata",
+        "checked_date_utc": "2026-11-11"
+      },
+      "runtime": {
+        "comfy": {
+          "status": "source_cpu_caller_qualified_real_artifact_and_hardware_pending",
+          "pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/MiniMax-H3-Image",
+        "source_revision": "0bb149f51e3156ed4b90dd45d5620346bfe1df8f",
+        "default_recipe_id": "native-minimax-h3-image",
+        "auto_recipe_supported": true
+      },
+      "auto_recipe_supported": true
+    }
+  }
+}

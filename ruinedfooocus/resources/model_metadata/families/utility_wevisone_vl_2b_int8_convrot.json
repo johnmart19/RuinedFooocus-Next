@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "utility:wevisone_vl_2b_int8_convrot": {
+      "title": "WeVisOne-VL 2B (INT8 convrot)",
+      "provenance": {
+        "upstream": "Comfy-Org/WeVisOne-VL",
+        "revision": "135355350443103e34089dd39264fe0651691929",
+        "exact_variant": "text_encoders/wevisone_vl_2b_int8_convrot.safetensors",
+        "base_model": "tencent/WeVisOne-VL-2B"
+      },
+      "purpose": "Native object detection and image matting with the WeVisOne mask decoder.",
+      "consumers": ["WeVisOne detection", "WeVisOne matting"],
+      "license": {
+        "value": "Apache-2.0",
+        "source": "https://huggingface.co/Comfy-Org/WeVisOne-VL/blob/135355350443103e34089dd39264fe0651691929/README.md",
+        "evidence_scope": "publisher_repository_declaration"
+      },
+      "dependencies": ["WeVisOne image tools with the native ComfyUI 0.45 backend"],
+      "component_role": "wevisone-clip",
+      "native_text_type": "WEVISONE_2B",
+      "standalone_vram_status": "profile_or_workflow_dependent"
+    }
+  }
+}

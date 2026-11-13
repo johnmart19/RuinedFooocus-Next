@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_fibo2_edit_turbo": {
+      "title": "Fibo2 edit-turbo",
+      "consumers": ["Fibo2"],
+      "native_class": "Fibo2",
+      "license": {
+        "value": "cc-by-nc-4.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Fibo-2.0/blob/4742d4bec410034142c8e65559e5f00c6f29eccb/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-fibo2-edit-turbo",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_fibo2_edit_turbo_pe.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

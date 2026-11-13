@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "native-minimax-h3-image",
+  "family": "MiniMaxH3Image",
+  "media": "image",
+  "variant": "pdd-6",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 6,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [
+    [2048, 2048],
+    [1536, 2048],
+    [2048, 1536]
+  ],
+  "default_size": [2048, 2048],
+  "applicability": {
+    "native_class": "MiniMaxH3Image",
+    "architecture": "MiniMaxH3Image",
+    "native_config": {
+      "image_model": "minimax_h3_image",
+      "latents_dim": 24,
+      "text_dim": 5120,
+      "pdd_steps": 6
+    },
+    "behavioral_variants": ["pdd-6"],
+    "default_for_native_configuration": true,
+    "quantization_independent": true,
+    "identity_basis": "native_image_topology_and_original_pdd_metadata",
+    "component_contract": {
+      "native_family": "MiniMaxH3Image",
+      "text_encoder_roles": ["clip_minimax_h3_image"],
+      "vae_role": "vae_minimax_h3_image",
+      "embedded_components_first": false,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [
+      "MiniMaxH3ImageConditioning",
+      "MiniMaxH3ImageModelSampling",
+      "MiniMaxH3ImageVAE"
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native MiniMax H3 Image PDD T2I/edit",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_minimax_h3_image_t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.131",
+    "resource_sha256": "73f7d9c137e48de2183d9f9e19cdd0ea9009d9433fd3a48f10c43534eecf255b",
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

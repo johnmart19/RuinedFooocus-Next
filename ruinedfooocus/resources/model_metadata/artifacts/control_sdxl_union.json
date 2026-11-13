@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:cn_union_sdxl": {
+      "id": "existing:cn_union_sdxl",
+      "catalogue_key": "cn_union_sdxl",
+      "state": "existing",
+      "profile_id": "auxiliary:cn_union_sdxl",
+      "label": "Xinsir SDXL Union 1.0 (base six-mode)",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "auto_recipe_supported": false,
+      "architecture": "SDXL Union",
+      "native_family": "SDXL",
+      "native_class": "ControlNet",
+      "media": "image",
+      "format": "safetensors",
+      "download_identity": "11e3e95c994884f768a1f0f6d19e0ffa949b330e52d1ed57318e8a1b1705dec1",
+      "artifact": {
+        "bytes": 2512030408,
+        "sha256": "a9e13fd61f3193887791c8a0dd07a07202174dc47d5ddaea94ea1344f07c7467",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/xinsir/controlnet-union-sdxl-1.0/resolve/801a4a3fa3d4c936f4feea95b98607bc6726f80c/diffusion_pytorch_model.safetensors",
+        "availability": "publisher_lfs_metadata",
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Immutable publisher tuple and pinned native loader contract. Local broker integrity is recorded separately; device and quality qualification remain pending."
+      },
+      "runtime": {
+        "native_comfy": {
+          "source_pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+          "loader": "ControlNetLoader",
+          "mode_selector": "SetUnionControlNetType",
+          "union_modes": 6
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/api/models/xinsir/controlnet-union-sdxl-1.0?blobs=true",
+        "source_revision": "801a4a3fa3d4c936f4feea95b98607bc6726f80c",
+        "normal_example": "https://github.com/xinsir6/ControlNetPlus/blob/main/controlnet_union_test_normal.py"
+      }
+    }
+  }
+}

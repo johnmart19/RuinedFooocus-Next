@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:auraflow_encoder": {
+      "title": "AuraFlow v0.3 text encoder",
+      "provenance": {
+        "upstream": "fal/AuraFlow-v0.3/text_encoder/model.fp16.safetensors",
+        "note": "clip_aura is a local alias; it is the AuraFlow text encoder, not an interchangeable OpenAI CLIP-L/G file."
+      },
+      "consumers": ["AuraFlow"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "value": "Apache-2.0 repository declaration",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/fal/AuraFlow-v0.3",
+        "note": null
+      },
+      "dependencies": ["AuraFlow checkpoint and matching AuraFlow VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/fal/AuraFlow-v0.3",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

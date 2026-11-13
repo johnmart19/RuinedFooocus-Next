@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-pixartsigma-xl-2-1024-ms",
+  "family": "PixArt",
+  "media": "image",
+  "variant": "xl-2-1024-ms",
+  "aliases": [],
+  "sampling": {},
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "PixArtSigma",
+    "architecture": "PixArt",
+    "native_config": {
+      "patch_size": 2,
+      "hidden_size": 1152,
+      "in_channels": 4,
+      "depth": 28,
+      "image_model": "pixart_sigma"
+    },
+    "behavioral_variants": ["xl-2-1024-ms"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "PixArt",
+      "text_encoder_roles": ["clip_t5"],
+      "vae_role": "vae_pixart",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
+    ]
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "PixArt provisional working canvas; native sampling review pending",
+    "source_url": "https://huggingface.co/PixArt-alpha/PixArt-Sigma-XL-2-1024-MS/blob/e102b3591cc82e97071b8b4cb90d834d0c487207/README.md",
+    "source_revision": "e102b3591cc82e97071b8b4cb90d834d0c487207",
+    "geometry_evidence": "Unqualified working canvas, not a publisher dimension recommendation.",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

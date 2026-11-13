@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:deepseek_r1_distill_llama_8b": {
+      "label": "DeepSeek-R1-Distill-Llama-8B",
+      "identity": {
+        "checkpoint_repo_requested": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "checkpoint_repo_resolved": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "checkpoint_revision_observed": "6a6f4aa4197940add57724a7707d069478df56b1",
+        "artifact_repo_requested": "unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF",
+        "gguf_architecture": "llama"
+      },
+      "release": {
+        "announced_release_date": "2025-01-20",
+        "release_date_status": "publisher_family_release_announcement_explicitly_includes_six_distilled_models",
+        "release_source_url": "https://deepseek.com/en/news/deepseek-r1/",
+        "paper_publication_date": null,
+        "checkpoint_repository_created_at": "2025-01-20T09:09:42.000Z",
+        "checkpoint_repository_last_modified_at": "2025-02-24T03:32:07.000Z",
+        "repository_created_at_is_model_release_date": false,
+        "quantization_publication_date": null,
+        "quantization_publication_date_status": "per_artifact_publication_not_verified; repository_creation_is_not_file_release",
+        "metadata_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+        "release_scope_note": "Dated DeepSeek-R1 family announcement explicitly releases six smaller distilled models, including the Llama 8B checkpoint. This date is not inferred from repository creation."
+      },
+      "architecture": {
+        "gguf_architecture": "llama",
+        "parameter_count_hf_safetensors_reported": 8030261248,
+        "parameter_count_caveat": "HF serialized-tensor count; tied/duplicated tensors and multimodal components may differ from advertised unique parameter count.",
+        "geometry": {
+          "status": "upstream_config_verified",
+          "hf_architectures": ["LlamaForCausalLM"],
+          "hf_model_type": "llama",
+          "hf_text_model_type": "llama",
+          "layers": 32,
+          "hidden_size": 4096,
+          "attention_heads": 32,
+          "kv_heads": 8,
+          "head_dim": 128,
+          "head_dim_basis": "hidden_size / num_attention_heads",
+          "native_context_tokens": 131072,
+          "sliding_window_tokens": null,
+          "layer_counts": {
+            "full_attention": 32
+          },
+          "tie_word_embeddings": false,
+          "rope_scaling": {
+            "factor": 8.0,
+            "low_freq_factor": 1.0,
+            "high_freq_factor": 4.0,
+            "original_max_position_embeddings": 8192,
+            "rope_type": "llama3"
+          },
+          "kv_estimate_4k": {
+            "kind": "analytical_component_not_measured_peak_memory",
+            "cache_dtype": "F16 K + F16 V",
+            "sequences": 1,
+            "context_tokens": 4096,
+            "formula": "2(K,V) * 2 bytes * kv_heads * head_dim * cached_tokens * relevant_layers",
+            "full_attention_bytes": 536870912,
+            "sliding_window_bounded_bytes": 0,
+            "full_plus_bounded_sliding_bytes": 536870912,
+            "attention_cache_all_attention_layers_at_4k_bytes": 536870912,
+            "recurrent_or_convolution_state_bytes": 0,
+            "extra_state_unknown": false,
+            "excludes": [
+              "weights",
+              "projector",
+              "image encoder activations",
+              "compute buffers",
+              "allocator overhead",
+              "additional slots/sequences"
+            ],
+            "sliding_cache_caveat": "Actual runtime may allocate differently from an ideal bounded sliding cache; use conservative reservation and observed peak memory."
+          }
+        }
+      },
+      "license": {
+        "declared_upstream": "MIT",
+        "status": "MIT derivative with upstream Llama lineage conditions",
+        "source_urls": [
+          "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+          "https://huggingface.co/meta-llama/Llama-3.1-8B/blob/main/LICENSE"
+        ],
+        "underlying_model_license": "Llama 3.1 Community License"
+      },
+      "publisher_settings": {
+        "generation_config": {
+          "_from_model_config": true,
+          "bos_token_id": 128000,
+          "eos_token_id": 128001,
+          "do_sample": true,
+          "temperature": 0.6,
+          "top_p": 0.95,
+          "transformers_version": "4.39.3"
+        },
+        "generation_config_scope": "upstream HF configuration; not automatically read by either GGUF runtime",
+        "recommendations": [
+          {
+            "temperature": 0.6,
+            "temperature_range": [0.5, 0.7],
+            "top_p": 0.95,
+            "system_prompt": "avoid, per publisher"
+          }
+        ]
+      },
+      "app_profile_proposals": [
+        {
+          "id": "reasoning_candidate",
+          "status": "proposal_not_applied_or_benchmarked",
+          "request": {
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "top_k": 0,
+            "min_p": 0.0,
+            "repeat_penalty": 1.0,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0,
+            "max_tokens": 4096
+          },
+          "load": {
+            "context_tokens": 8192,
+            "n_batch": 512,
+            "n_ubatch": 512
+          },
+          "provenance": "Publisher settings where stated, with explicitly chosen application budgets and neutral unspecified samplers.",
+          "note": "Keep application system policy intact; expose as a reasoning specialist and test prompt adaptation separately. Larger output budgets increase latency."
+        }
+      ],
+      "capabilities": {
+        "eligible_tasks": ["reasoning", "math", "coding"],
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "system_prompt": "Publisher recommends avoiding system prompts and placing instructions in the user prompt; this conflicts with assuming it is a universal system-driven persona model.",
+        "thinking": {
+          "kind": "reasoning_specialist",
+          "control": null,
+          "caveat": "Template normally opens a think block. No verified universal enable_thinking=false control."
+        },
+        "tools": {
+          "template": "DeepSeek distill reasoning template",
+          "format_evidence": "legacy tool-turn rendering exists, but generic tool-definition path is not established",
+          "quality_evidence": "none for this exact distill checkpoint",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_measured",
+        "roleplay_app_evaluation": "not_measured",
+        "generate_image_tool_app_evaluation": "not_measured"
+      },
+      "benchmark_caveats": [
+        "Published checkpoint results are not a measurement of these GGUF conversions. No quantitative score is inferred for a quantization."
+      ],
+      "source_urls": {
+        "checkpoint": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/tree/6a6f4aa4197940add57724a7707d069478df56b1",
+        "checkpoint_card": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/README.md",
+        "config": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/config.json",
+        "generation_config": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/generation_config.json",
+        "artifact_card": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/blob/615f8936e16dfde29dcc00be71145d4d5ce8ed53/README.md",
+        "artifact_repository": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF",
+        "chat_template": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B/blob/6a6f4aa4197940add57724a7707d069478df56b1/tokenizer_config.json"
+      },
+      "lineage": ["meta-llama/Llama-3.1-8B", "DeepSeek-R1 reasoning distillation"],
+      "runtime_status": {
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b11870",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/models/llama.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/common/chat.cpp"
+          ]
+        },
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "llama_cpp_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b12110",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/llama.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/common/chat.cpp"
+          ]
+        }
+      },
+      "hardware_notes": {
+        "cpu_speed_measured": false,
+        "gpu_speed_measured": false,
+        "planning_context_tokens": 4096,
+        "weight_bytes_are_not_peak_RAM_or_VRAM": true,
+        "gpu_backend_caveat": "Availability of a CPU/Vulkan/HIP/CUDA build is distinct from this exact model/quant working correctly and quickly on the user's hardware. No ROCm/Vulkan model benchmark was run.",
+        "tier_assignment": "Use exact per-artifact bytes plus matching projector, KV components, conservative compute/state overhead, OS reserve and image budget. This research intentionally does not pretend a parameter label is a VRAM minimum."
+      },
+      "template_validation_note": "Template inspection uses upstream HF evidence; check the effective embedded GGUF template and adapter behavior before advertising tool capability for every quantization."
+    }
+  }
+}

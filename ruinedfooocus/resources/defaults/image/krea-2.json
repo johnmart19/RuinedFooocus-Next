@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "krea-2",
+  "family": "Krea 2",
+  "media": "image",
+  "variant": "base",
+  "aliases": ["Krea 2", "Krea2"],
+  "sampling": {
+    "custom_steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "Krea2",
+      "text_encoder_roles": ["clip_qwen3vl_4b_scaled"],
+      "vae_role": "vae_qwen_image",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Local Krea 2 family recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": {
+    "custom_steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1,
+    "recommended_resolutions": "1024x1024; native Krea-2 Turbo template fallback, checkpoint recommendations take priority"
+  }
+}

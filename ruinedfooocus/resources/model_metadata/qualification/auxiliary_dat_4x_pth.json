@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "profile_id": "auxiliary:dat_4x_pth",
+  "benchmarks": [
+    {
+      "profile_id": "auxiliary:dat_4x_pth",
+      "measurement_kind": "task_quality",
+      "dataset": "Urban100",
+      "value": 27.87,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "PSNR_dB",
+      "unit": null,
+      "protocol": {
+        "kind": "publisher_model_benchmark",
+        "evaluated_model": "DAT x4",
+        "dataset": "Urban100",
+        "task": "4x classical super-resolution",
+        "metrics": {
+          "PSNR_dB": 27.87,
+          "SSIM": 0.8343
+        },
+        "parameters_millions": 14.8,
+        "flops_g": 275.75,
+        "flops_output_shape": [3, 512, 512],
+        "scope": "Original publisher DAT x4, mapped to exact mirror via registry SHA-256; not an app execution benchmark.",
+        "sources": ["dat_readme", "omdb_4x-DAT"],
+        "use_for_cross_task_ranking": false
+      },
+      "evidence": {
+        "source_records": {
+          "dat_readme": {
+            "url": "https://github.com/zhengchen1999/DAT",
+            "kind": "original_publisher"
+          },
+          "omdb_4x-DAT": {
+            "url": "https://openmodeldb.info/models/4x-DAT",
+            "pinned_metadata": "https://github.com/OpenModelDB/open-model-database/blob/782aac088bd83dd3fc438a42eb0c3868dc559110/data/models/4x-DAT.json",
+            "kind": "model_registry_with_creator_resources",
+            "note": "Registry resource hashes can establish identity; registry date is not automatically a confirmed publication date."
+          }
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "auxiliary:dat_4x_pth",
+      "measurement_kind": "task_quality",
+      "dataset": "Urban100",
+      "value": 0.8343,
+      "higher_is_better": true,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": "SSIM",
+      "unit": null,
+      "protocol": {
+        "kind": "publisher_model_benchmark",
+        "evaluated_model": "DAT x4",
+        "dataset": "Urban100",
+        "task": "4x classical super-resolution",
+        "metrics": {
+          "PSNR_dB": 27.87,
+          "SSIM": 0.8343
+        },
+        "parameters_millions": 14.8,
+        "flops_g": 275.75,
+        "flops_output_shape": [3, 512, 512],
+        "scope": "Original publisher DAT x4, mapped to exact mirror via registry SHA-256; not an app execution benchmark.",
+        "sources": ["dat_readme", "omdb_4x-DAT"],
+        "use_for_cross_task_ranking": false
+      },
+      "evidence": {
+        "source_records": {
+          "dat_readme": {
+            "url": "https://github.com/zhengchen1999/DAT",
+            "kind": "original_publisher"
+          },
+          "omdb_4x-DAT": {
+            "url": "https://openmodeldb.info/models/4x-DAT",
+            "pinned_metadata": "https://github.com/OpenModelDB/open-model-database/blob/782aac088bd83dd3fc438a42eb0c3868dc559110/data/models/4x-DAT.json",
+            "kind": "model_registry_with_creator_resources",
+            "note": "Registry resource hashes can establish identity; registry date is not automatically a confirmed publication date."
+          }
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

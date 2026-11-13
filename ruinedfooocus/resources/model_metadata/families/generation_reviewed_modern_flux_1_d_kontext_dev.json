@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_flux_1_d_kontext_dev": {
+      "title": "Flux.1 D kontext-dev",
+      "consumers": ["Flux"],
+      "native_class": "Flux",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/flux1-kontext-dev_ComfyUI/blob/795e390e4a1200720e40af3780d5d8b96bc13ae3/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-flux-1-d-kontext-dev",
+        "auto_recipe_supported": false,
+        "source_recipe": "flux_kontext_dev_basic.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

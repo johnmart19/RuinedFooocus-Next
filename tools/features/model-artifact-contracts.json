@@ -1,0 +1,10 @@
+{
+  "id": "model-artifact-contracts",
+  "subject": "Identify immutable local model artifacts and trusted catalogue records",
+  "requires": ["installation-foundations"],
+  "tests": ["test_cache_contract.py"],
+  "native_comfy": true,
+  "native_gguf": true,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+  "native_gguf_revision": "da5f435cd9a9e54ad27eed417ed72b1f2543ef41"
+}

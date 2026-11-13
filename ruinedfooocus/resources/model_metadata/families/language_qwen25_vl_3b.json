@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:qwen25_vl_3b": {
+      "label": "Qwen2.5-VL-3B-Instruct",
+      "identity": {
+        "checkpoint_repo_requested": "Qwen/Qwen2.5-VL-3B-Instruct",
+        "checkpoint_repo_resolved": "Qwen/Qwen2.5-VL-3B-Instruct",
+        "checkpoint_revision_observed": "66285546d2b821cf421d4f5eb2576359d3770cd3",
+        "artifact_repo_requested": "ggml-org/Qwen2.5-VL-3B-Instruct-GGUF",
+        "gguf_architecture": "qwen2vl"
+      },
+      "release": {
+        "announced_release_date": "2025-01-28",
+        "release_date_status": "explicit_publisher_release_news",
+        "release_source_url": "https://github.com/QwenLM-corp/Qwen2.5-VL/blob/main/README.md",
+        "paper_publication_date": null,
+        "checkpoint_repository_created_at": "2025-01-26T09:25:35.000Z",
+        "checkpoint_repository_last_modified_at": "2025-04-06T16:23:42.000Z",
+        "repository_created_at_is_model_release_date": false,
+        "quantization_publication_date": null,
+        "quantization_publication_date_status": "per_artifact_publication_not_verified; repository_creation_is_not_file_release",
+        "metadata_source_url": "https://huggingface.co/api/models/Qwen/Qwen2.5-VL-3B-Instruct",
+        "blog_publication_date": "2025-01-26",
+        "blog_source_url": "https://qwenlm.github.io/blog/qwen2.5-vl/",
+        "date_discrepancy_preserved": true,
+        "date_discrepancy_note": "The official blog displays January 26, 2025, while official GitHub release news explicitly dates the release January 28, 2025. Prefer January 28 for model release and retain January 26 as blog publication; do not flatten the two into a single uncontested date.",
+        "date_evidence": [
+          {
+            "date": "2025-01-28",
+            "kind": "explicit_release_news",
+            "source_url": "https://github.com/QwenLM-corp/Qwen2.5-VL/blob/main/README.md"
+          },
+          {
+            "date": "2025-01-26",
+            "kind": "blog_displayed_publication_date",
+            "source_url": "https://qwenlm.github.io/blog/qwen2.5-vl/"
+          }
+        ]
+      },
+      "architecture": {
+        "gguf_architecture": "qwen2vl",
+        "parameter_count_hf_safetensors_reported": 3754622976,
+        "parameter_count_caveat": "HF serialized-tensor count; tied/duplicated tensors and multimodal components may differ from advertised unique parameter count.",
+        "geometry": {
+          "status": "upstream_config_verified",
+          "hf_architectures": ["Qwen2_5_VLForConditionalGeneration"],
+          "hf_model_type": "qwen2_5_vl",
+          "hf_text_model_type": "qwen2_5_vl",
+          "layers": 36,
+          "hidden_size": 2048,
+          "attention_heads": 16,
+          "kv_heads": 2,
+          "head_dim": 128,
+          "head_dim_basis": "hidden_size / num_attention_heads",
+          "native_context_tokens": 128000,
+          "sliding_window_tokens": null,
+          "layer_counts": {
+            "full_attention": 36
+          },
+          "tie_word_embeddings": true,
+          "rope_scaling": {
+            "type": "mrope",
+            "mrope_section": [16, 24, 24]
+          },
+          "kv_estimate_4k": {
+            "kind": "analytical_component_not_measured_peak_memory",
+            "cache_dtype": "F16 K + F16 V",
+            "sequences": 1,
+            "context_tokens": 4096,
+            "formula": "2(K,V) * 2 bytes * kv_heads * head_dim * cached_tokens * relevant_layers",
+            "full_attention_bytes": 150994944,
+            "sliding_window_bounded_bytes": 0,
+            "full_plus_bounded_sliding_bytes": 150994944,
+            "attention_cache_all_attention_layers_at_4k_bytes": 150994944,
+            "recurrent_or_convolution_state_bytes": 0,
+            "extra_state_unknown": false,
+            "excludes": [
+              "weights",
+              "projector",
+              "image encoder activations",
+              "compute buffers",
+              "allocator overhead",
+              "additional slots/sequences"
+            ],
+            "sliding_cache_caveat": "Actual runtime may allocate differently from an ideal bounded sliding cache; use conservative reservation and observed peak memory."
+          }
+        },
+        "projector_type": "QWEN2VL"
+      },
+      "license": {
+        "declared_upstream": "Qwen Research License Agreement",
+        "status": "upstream_license_conflicts_with_conversion_metadata",
+        "source_urls": [
+          "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/blob/66285546d2b821cf421d4f5eb2576359d3770cd3/LICENSE",
+          "https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/blob/5037fcf163dd95d1e41d1974465f0898ed108ca2/README.md"
+        ],
+        "declared_gguf_card": "apache-2.0",
+        "restriction_summary": "Upstream grant is non-commercial research/evaluation only; commercial use requires a separate license. Do not label this3B model Apache2.0 based on its converter card."
+      },
+      "publisher_settings": {
+        "generation_config": {
+          "bos_token_id": 151643,
+          "pad_token_id": 151643,
+          "do_sample": true,
+          "eos_token_id": [151645, 151643],
+          "repetition_penalty": 1.05,
+          "temperature": 1e-6,
+          "transformers_version": "4.49.0"
+        },
+        "generation_config_scope": "upstream HF configuration; not automatically read by either GGUF runtime",
+        "recommendations": []
+      },
+      "app_profile_proposals": [
+        {
+          "id": "caption_ocr_candidate",
+          "status": "proposal_not_applied_or_benchmarked",
+          "request": {
+            "temperature": 0,
+            "top_p": 1.0,
+            "top_k": 0,
+            "min_p": 0.0,
+            "repeat_penalty": 1.05,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0,
+            "max_tokens": 512
+          },
+          "load": {
+            "context_tokens": 4096,
+            "n_batch": 512,
+            "n_ubatch": 512,
+            "image_max_tokens": 1024
+          },
+          "provenance": "Publisher settings where stated, with explicitly chosen application budgets and neutral unspecified samplers.",
+          "preprocess": {
+            "patch_size": 14,
+            "spatial_merge_size": 2,
+            "pixels_per_visual_token_approx": 784,
+            "image_count": 1
+          },
+          "note": "Qwen2.5VL uses28x28 merged patches, not the1024pixels/token mapping of Qwen3.5. App image resizing must be included when describing effective OCR resolution."
+        }
+      ],
+      "capabilities": {
+        "eligible_tasks": ["image_captioning", "image_question_answering", "ocr"],
+        "input_modalities": ["text", "image"],
+        "output_modalities": ["text"],
+        "system_prompt": "Explicit system-role serialization; hierarchy adherence in app unmeasured.",
+        "thinking": {
+          "kind": "standard_vision_instruct",
+          "control": null
+        },
+        "tools": {
+          "template": "Qwen2.5-VL image/video template",
+          "format_evidence": "upstream template has no tools branch",
+          "quality_evidence": "visual-agent claim does not establish generic function calls for this artifact",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_measured",
+        "roleplay_app_evaluation": "not_measured",
+        "generate_image_tool_app_evaluation": "not_measured",
+        "video_note": "Publisher supports video; current image-based application path is not thereby a video frontend."
+      },
+      "benchmark_caveats": [
+        "Published checkpoint results are not a measurement of these GGUF conversions. No quantitative score is inferred for a quantization."
+      ],
+      "source_urls": {
+        "checkpoint": "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/tree/66285546d2b821cf421d4f5eb2576359d3770cd3",
+        "checkpoint_card": "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/blob/66285546d2b821cf421d4f5eb2576359d3770cd3/README.md",
+        "config": "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/blob/66285546d2b821cf421d4f5eb2576359d3770cd3/config.json",
+        "generation_config": "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/blob/66285546d2b821cf421d4f5eb2576359d3770cd3/generation_config.json",
+        "artifact_card": "https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/blob/5037fcf163dd95d1e41d1974465f0898ed108ca2/README.md",
+        "artifact_repository": "https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF",
+        "chat_template": "https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct/blob/66285546d2b821cf421d4f5eb2576359d3770cd3/tokenizer_config.json"
+      },
+      "runtime_status": {
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": true,
+          "projector_source_supported": true,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b11870",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/models/qwen2vl.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/common/chat.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/tools/mtmd/clip.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/tools/mtmd/mtmd.cpp"
+          ]
+        },
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "llama_cpp_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+          "architecture_source_supported": true,
+          "projector_source_supported": true,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b12110",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/qwen2vl.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/common/chat.cpp"
+          ]
+        }
+      },
+      "hardware_notes": {
+        "cpu_speed_measured": false,
+        "gpu_speed_measured": false,
+        "planning_context_tokens": 4096,
+        "weight_bytes_are_not_peak_RAM_or_VRAM": true,
+        "gpu_backend_caveat": "Availability of a CPU/Vulkan/HIP/CUDA build is distinct from this exact model/quant working correctly and quickly on the user's hardware. No ROCm/Vulkan model benchmark was run.",
+        "tier_assignment": "Use exact per-artifact bytes plus matching projector, KV components, conservative compute/state overhead, OS reserve and image budget. This research intentionally does not pretend a parameter label is a VRAM minimum."
+      },
+      "template_validation_note": "Template inspection uses upstream HF evidence; check the effective embedded GGUF template and adapter behavior before advertising tool capability for every quantization."
+    }
+  }
+}

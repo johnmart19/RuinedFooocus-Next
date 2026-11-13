@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_lotusd_depth_v1.1": {
+      "title": "LotusD depth-v1.1",
+      "consumers": ["LotusD"],
+      "native_class": "LotusD",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/lotus/blob/39a199245c96cbe4b3788a637f8b1e34667771c2/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-lotusd-depth-v1.1",
+        "auto_recipe_supported": false,
+        "source_workflow": "image_lotus_depth_v1_1.json"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

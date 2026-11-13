@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:qwen35_4b": {
+      "display_name": "Qwen3.5-4B",
+      "architecture": "qwen35",
+      "release": {
+        "date": "2026-03-02",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+          "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "qwen35_4b",
+        "base_repo": "Qwen/Qwen3.5-4B",
+        "base_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+        "publisher_recommended": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 1.5,
+          "repetition_penalty": 1
+        },
+        "publisher_generation_config": null,
+        "publisher_unspecified_sampling_fields": ["frequency_penalty"],
+        "proposed_app_request": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 1.5,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+          "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/chat_template.jinja"
+        ],
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "publisher_evidence": "Exact 4B/9B cards call this nonthinking GENERAL-task sampling. Do not replace it using the different 0.8B/2B text/VL split.",
+        "optional_thinking_publisher": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 1.5,
+          "repetition_penalty": 1
+        },
+        "reasoning_note": "Thinking defaults on unless explicitly disabled. /nothink is unsupported. Their nonthinking REASONING-task recommendations conflict between API section and later best-practices section; the proposed general-chat preset is consistent in both, so no need to resolve that unused preset.",
+        "required_files_note": "GGUF alone for text; matching size-specific projector only when an image is actually supplied."
+      },
+      "vision_profile": {},
+      "license": {
+        "identifier": "Apache-2.0",
+        "source": "https://huggingface.co/Qwen/Qwen3.5-4B",
+        "evidence": "upstream model-card license declaration; retain exact artifact provenance"
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/README.md",
+        "https://huggingface.co/Qwen/Qwen3.5-4B/resolve/851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:sd3_vae": {
+      "title": "SD3 / SD3.5 VAE",
+      "provenance": {
+        "source": "calcuis/sd3.5-large-gguf/diffusion_pytorch_model.safetensors"
+      },
+      "consumers": ["SD3"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "base_family",
+        "source": null,
+        "artifact_conversion_release_date": null,
+        "note": "No authoritative exact release date for this component/conversion found in inspected sources. Do not substitute repository creation or last-modified time."
+      },
+      "license": {
+        "value": "Stability AI Community declared in conversion repository",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/calcuis/sd3.5-large-gguf",
+        "note": null
+      },
+      "dependencies": ["SD3/SD3.5-compatible checkpoint and CLIP-L/G + T5 as applicable"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "No text-generation sampling settings. Encode/decode dtype, tiling and device staging come from the VAE implementation and target workload; preserve latent channels, scaling and temporal layout."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/calcuis/sd3.5-large-gguf",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

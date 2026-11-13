@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:minimax_h3_image": {
+      "title": "MiniMax H3 Image native PDD graph",
+      "consumers": ["MiniMaxH3Image"],
+      "dependencies": [
+        "Dedicated MiniMax H3 Image VAE and 50-layer Qwen3-VL 32B conditioning encoder"
+      ],
+      "settings": {
+        "scope": "source-reviewed-native-image-workflow",
+        "native_conditioning": "MiniMaxH3ImageConditioning",
+        "steps": 6,
+        "cfg": 1,
+        "sampler": "euler",
+        "scheduler": "simple"
+      },
+      "hardware_notes": [
+        "Published payload sizes are weight storage, not peak VRAM. INT8 graph has 49,289,162,266 bytes across diffusion, encoder and codec before activations/workspace; sequential offload is native-owned. No real-model/device/visual qualification transferred."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3-Image/tree/0bb149f51e3156ed4b90dd45d5620346bfe1df8f",
+        "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy_extras/nodes_minimax_h3.py#L711"
+      ]
+    }
+  }
+}

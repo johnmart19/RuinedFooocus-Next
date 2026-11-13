@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:humanlike2": {
+      "display_name": "Qwen3.8-27B Humanlike Chat 2.0",
+      "architecture": "qwen35",
+      "release": {
+        "date": "2026-10-02",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-GGUF/commit/c6901682f1f14a8931d87875cafd629d9a36e931",
+          "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/generation_config.json",
+          "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/README.md",
+          "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "humanlike2",
+        "base_repo": "LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0",
+        "base_revision": "0a4d369895bf0a8b217fb08ef738769bac9d881b",
+        "publisher_recommended": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20
+        },
+        "publisher_generation_config": {
+          "bos_token_id": 248044,
+          "do_sample": true,
+          "eos_token_id": [248046, 248044],
+          "pad_token_id": 248044,
+          "temperature": 1.0,
+          "top_k": 20,
+          "top_p": 0.95
+        },
+        "publisher_unspecified_sampling_fields": [
+          "min_p",
+          "presence_penalty",
+          "frequency_penalty",
+          "repetition_penalty"
+        ],
+        "proposed_app_request": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/generation_config.json",
+          "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/README.md",
+          "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/chat_template.jinja"
+        ],
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false,
+          "preserve_thinking": false
+        },
+        "publisher_evidence": "Creator specifically recommends T1/P.95/K20 with thinking disabled for quickest replies; generation_config matches. Do not silently replace this with stock Qwen .7/.8/PP1.5. min_p and penalties are not specified.",
+        "reasoning_note": "Template defaults thinking on, xhigh effort and preserve_thinking. Valid effort levels match Qwen3.8. Keep creator template and versioned local identity; model remains experimental for tool calling.",
+        "required_files_note": "Text GGUF alone. Retained vision tower was not fine-tuned/tested for v2 image quality; matching optional projector is separately validated for access, not behavior."
+      },
+      "vision_profile": {},
+      "license": {
+        "identifier": "Apache-2.0",
+        "provenance": "Huihui abliterated Qwen3.8 derivative, then Humanlike2.0; not the official Qwen checkpoint"
+      },
+      "benchmark_status": "small_creator_validation_only_not_standard_benchmark",
+      "sources": [
+        "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/generation_config.json",
+        "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/README.md",
+        "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0/resolve/0a4d369895bf0a8b217fb08ef738769bac9d881b/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:lfm25_1_2b": {
+      "label": "LFM2.5-1.2B-Instruct compact candidate",
+      "identity": {
+        "checkpoint_repo_resolved": "LiquidAI/LFM2.5-1.2B-Instruct",
+        "checkpoint_revision_observed": "b9d816ab510f9a28dca37cb182e9da8b0226e13c",
+        "artifact_repo_requested": "LiquidAI/LFM2.5-1.2B-Instruct-GGUF",
+        "gguf_architecture": "lfm2"
+      },
+      "license": {
+        "declared_upstream": "LFM Open License v1.0",
+        "status": "custom_license_verified",
+        "source_urls": [
+          "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct/blob/b9d816ab510f9a28dca37cb182e9da8b0226e13c/LICENSE"
+        ]
+      },
+      "publisher_settings": {
+        "generation_config": {
+          "temperature": 0.1,
+          "top_k": 50,
+          "repetition_penalty": 1.05
+        },
+        "recommendations": [
+          {
+            "task": "general/chat compact candidate qualification",
+            "temperature": 0.1,
+            "top_p": 1,
+            "top_k": 50,
+            "min_p": 0,
+            "repeat_penalty": 1.05,
+            "presence_penalty": 0
+          }
+        ],
+        "scope": "Pinned publisher temperature/top-k/repetition penalty plus explicit application neutral sampler values; candidate recipe, not universal quality qualification."
+      },
+      "capabilities": {
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "tools": {
+          "template": "artifact-matched bundled publisher template",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "failed_fixed_rubric_2026_11_09",
+        "roleplay_app_evaluation": "failed_fixed_rubric_2026_11_09"
+      },
+      "chat_template": {
+        "resource": "chat_templates/lfm25-instruct-publisher.jinja",
+        "sha256": "ba551d58630afa3190b1be3602e28301f3d2e9bbac978dfc49d6d825171648b6",
+        "source_url": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct/blob/b9d816ab510f9a28dca37cb182e9da8b0226e13c/chat_template.jinja"
+      },
+      "app_load_defaults": {
+        "context_tokens": 2048,
+        "n_predict": 256,
+        "n_batch": 256,
+        "n_ubatch": 128,
+        "parallel_sequences": 1
+      }
+    }
+  }
+}

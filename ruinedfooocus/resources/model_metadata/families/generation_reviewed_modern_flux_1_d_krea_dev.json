@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_flux_1_d_krea_dev": {
+      "title": "Flux.1 D krea-dev",
+      "consumers": ["Flux"],
+      "native_class": "Flux",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/FLUX.1-Krea-dev_ComfyUI/blob/d9d7c421e64d3a80b16a79c0fdc9989bfdaa6f01/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-flux-1-d-krea-dev",
+        "auto_recipe_supported": true,
+        "source_recipe": "flux1_krea_dev.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

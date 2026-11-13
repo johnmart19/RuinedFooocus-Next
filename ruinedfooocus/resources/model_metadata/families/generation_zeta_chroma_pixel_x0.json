@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:zeta_chroma_pixel_x0": {
+      "title": "Zeta-Chroma pixel-space x0",
+      "consumers": ["ZImagePixelSpace"],
+      "native_class": "ZImagePixelSpace",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/lodestones/Zeta-Chroma/blob/38ddc5f3e26fbbcb0ee4ff374b3f5cc384376d4b/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-zeta-pixel-unqualified",
+        "auto_recipe_supported": false
+      },
+      "evidence_scope": "Exact publisher tuple and pinned native header classification; sampling and hardware remain unqualified."
+    }
+  }
+}

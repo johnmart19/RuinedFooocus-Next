@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "native-fibo2-edit-turbo",
+  "family": "Fibo2",
+  "media": "image",
+  "variant": "edit-turbo",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "Fibo2",
+    "architecture": "Fibo2",
+    "native_config": {
+      "image_model": "fibo2",
+      "in_channels": 128
+    },
+    "behavioral_variants": ["edit-turbo", "turbo"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "Fibo2",
+      "text_encoder_roles": ["clip_qwen3vl_4b"],
+      "vae_role": "vae_flux2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Fibo2 edit-turbo workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_fibo2_edit_turbo_pe.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "7b7b498e9095a6cf047a72afa7c97bcd27e8f9e12585f8e2b9ca94d6ef962fc0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

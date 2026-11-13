@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:diffusion_models/ideogram4_unconditional_fp8_scaled.safetensors": {
+      "id": "existing:diffusion_models/ideogram4_unconditional_fp8_scaled.safetensors",
+      "catalogue_key": "diffusion_models/ideogram4_unconditional_fp8_scaled.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_modern_ideogram4_unconditional_companion",
+      "label": "Ideogram4 unconditional-companion",
+      "role": "image_diffusion_companion",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Ideogram4",
+      "native_class": "Ideogram4",
+      "native_family": "Ideogram4",
+      "behavioral_variant": "unconditional-companion",
+      "format": "safetensors",
+      "quantization": {
+        "label": "F32 / BF16 / F8_E4M3 / U8",
+        "dtype_bytes": {
+          "F32": 844,
+          "BF16": 2713856,
+          "F8_E4M3": 9277931520,
+          "U8": 5697
+        },
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "f9caeff889f0d85be8424b2ea91cef711ebfe8ced14edce293227971feaf2e61",
+      "artifact": {
+        "bytes": 9280741293,
+        "sha256": "9b359007dae162cca7591d00868feea733eb7c56e56e3a214a4d5a9a2a07cd60",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Ideogram-4/resolve/2aa6c75ce6d5fabded0ca4d0f76abbfaf8edc87d/diffusion_models/ideogram4_unconditional_fp8_scaled.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "f09f615017709843bfb69f2480373113355f6ab1cf1ea25b04bc213056e798ce",
+        "header_bytes": 89368,
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "TLS range header plus immutable publisher manifest; no complete weights downloaded."
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "component_contract": {
+        "roles": [
+          {
+            "role": "clip_qwen3vl_8b",
+            "filename": "qwen3vl_8b_fp8_scaled.safetensors",
+            "embedded": false,
+            "artifact_id": "existing:clip/qwen3vl_8b_fp8_scaled.safetensors"
+          },
+          {
+            "role": "vae_flux2",
+            "filename": "flux2-vae.safetensors",
+            "embedded": false,
+            "artifact_id": "existing:vae/flux2-vae.safetensors"
+          }
+        ],
+        "embedded": {
+          "clip": false,
+          "vae": false
+        },
+        "source_workflow": "image_ideogram4_t2i.json",
+        "required_runtime_nodes": ["Second UNET, consumed by DualModelGuider"],
+        "workflow_controls": [
+          {
+            "node": "Ideogram4Scheduler",
+            "mode": 0,
+            "values": [20, 1024, 1024, 0.5, 1.75]
+          },
+          {
+            "node": "DualModelGuider",
+            "mode": 0,
+            "values": [7]
+          }
+        ],
+        "compatibility_basis": "Native family selector roles; source workflow and any compatible alternative encoder precision are recorded separately."
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Ideogram-4",
+        "source_revision": "2aa6c75ce6d5fabded0ca4d0f76abbfaf8edc87d",
+        "native_classification": {
+          "native_class": "Ideogram4",
+          "native_config": {
+            "image_model": "ideogram4",
+            "in_channels": 128,
+            "num_layers": 34
+          },
+          "header_sha256": "f09f615017709843bfb69f2480373113355f6ab1cf1ea25b04bc213056e798ce",
+          "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\6dd1e72791ae6c06157f7dd17b91f72c7802c4710cf2d218e4d1471914e73040.artifact.json"
+        },
+        "default_recipe_id": null,
+        "auto_recipe_supported": false,
+        "recipe_requirements": ["Second UNET, consumed by DualModelGuider"],
+        "behavioral_variant_source": "Exact immutable publisher artifact referenced by the inspected official variant workflow; never local filename matching."
+      },
+      "auto_recipe_supported": false
+    }
+  }
+}

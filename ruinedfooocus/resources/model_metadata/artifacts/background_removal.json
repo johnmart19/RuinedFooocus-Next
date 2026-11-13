@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:background_removal/birefnet.safetensors": {
+      "id": "existing:background_removal/birefnet.safetensors",
+      "catalogue_key": "background_removal/birefnet.safetensors",
+      "state": "existing",
+      "profile_id": "auxiliary:background_removal_birefnet_safetensors",
+      "label": "BiRefNet (ComfyUI repack)",
+      "role": "background_removal",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "BiRefNet",
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "source": "verified_local_safetensors_header_floating_tensors",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "2af729e609a87f88a63a7ec9959b80ad4d8910ff9eb62a8cf4ded6f773e8dfca",
+      "artifact": {
+        "bytes": 444473596,
+        "sha256": "9ab37426bf4de0567af6b5d21b16151357149139362e6e8992021b8ce356a154",
+        "hash_evidence": "publisher_hf_lfs_and_local_sha256",
+        "full_file_hash_recomputed": true,
+        "pinned_url": "https://huggingface.co/Comfy-Org/BiRefNet/resolve/884af709e9b795d89dafbf97f29c8d6a2386f5c6/background_removal/birefnet.safetensors",
+        "availability": "publisher_lfs_metadata_verified",
+        "checked_utc": "2026-11-11T00:44:00+00:00",
+        "evidence_scope": "Pinned publisher LFS metadata and matching installed file digest. Local header contains F16 floating tensors and I64 buffers."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:background_removal_birefnet_safetensors"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    }
+  }
+}

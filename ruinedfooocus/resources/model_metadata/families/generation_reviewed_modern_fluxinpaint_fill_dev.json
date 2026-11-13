@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_fluxinpaint_fill_dev": {
+      "title": "FluxInpaint fill-dev",
+      "consumers": ["Flux"],
+      "native_class": "FluxInpaint",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/flux1-dev/blob/10cf201a3d49f7ff4de84d6a97d6a32cdfa8cb86/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-fluxinpaint-fill-dev",
+        "auto_recipe_supported": false,
+        "source_recipe": "flux_fill_inpaint_example.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

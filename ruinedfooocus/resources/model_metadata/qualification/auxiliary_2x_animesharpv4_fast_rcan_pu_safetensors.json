@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "profile_id": "auxiliary:2x_animesharpv4_fast_rcan_pu_safetensors",
+  "benchmarks": [
+    {
+      "profile_id": "auxiliary:2x_animesharpv4_fast_rcan_pu_safetensors",
+      "measurement_kind": "uncontrolled_creator_claim",
+      "dataset": null,
+      "value": null,
+      "higher_is_better": null,
+      "quantization": null,
+      "mode": null,
+      "precision": null,
+      "tools": null,
+      "metric": null,
+      "unit": null,
+      "protocol": {
+        "kind": "creator_subjective_and_speed_claim",
+        "scope": "Fast RCAN-PU versus full AnimeSharpV4 RCAN",
+        "claims": {
+          "quality_approx_percent": 95,
+          "pytorch_speedup_approx": 6,
+          "tensorrt_speedup_approx": 4
+        },
+        "hardware": null,
+        "resolution": null,
+        "use_for_cross_model_ranking": false,
+        "sources": ["omdb_2x-AnimeSharpV4-Fast-RCAN-PU", "kim_release"]
+      },
+      "evidence": {
+        "source_records": {
+          "omdb_2x-AnimeSharpV4-Fast-RCAN-PU": {
+            "url": "https://openmodeldb.info/models/2x-AnimeSharpV4-Fast-RCAN-PU",
+            "pinned_metadata": "https://github.com/OpenModelDB/open-model-database/blob/782aac088bd83dd3fc438a42eb0c3868dc559110/data/models/2x-AnimeSharpV4-Fast-RCAN-PU.json",
+            "kind": "model_registry_with_creator_resources",
+            "note": "Registry resource hashes can establish identity; registry date is not automatically a confirmed publication date."
+          },
+          "kim_release": {
+            "url": "https://github.com/Kim2091/Kim2091-Models/releases/tag/2x-AnimeSharpV4",
+            "kind": "creator_release",
+            "local_evidence": "aux_code/kim_release.json"
+          }
+        }
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

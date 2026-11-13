@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:sdxl_base_1_0_0_9vae": {
+      "title": "Stable Diffusion XL 1.0 base \u2014 0.9-VAE named checkpoint",
+      "provenance": {
+        "upstream": "stabilityai/stable-diffusion-xl-base-1.0",
+        "exact_variant": "sd_xl_base_1.0_0.9vae.safetensors"
+      },
+      "consumers": ["SDXL"],
+      "release": {
+        "date": "2023-07-26",
+        "date_precision": "day",
+        "scope": "base_family",
+        "source": "https://stability.ai/news-updates/stable-diffusion-sdxl-1-announcement",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "CreativeML Open RAIL++-M",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0",
+        "note": null
+      },
+      "dependencies": ["CLIP-L + OpenCLIP-G + compatible SDXL VAE if not already embedded"],
+      "settings": {
+        "scope": "app_family_fallback",
+        "app_preset": {
+          "custom_steps": 30,
+          "cfg": 7,
+          "sampler_name": "dpmpp_2m",
+          "scheduler": "karras",
+          "clip_skip": 1,
+          "recommended_resolutions": "1024x1024, 832x1216, 1216x832"
+        },
+        "note": "This is the app fallback, not a claim of optimal parameters for every derivative."
+      },
+      "hardware_notes": [
+        "Stability launch says SDXL can run on an 8-GB consumer GPU. Treat this as upstream family feasibility, not measured peak for current resolution, batch size, refiner or loaded companion LLM."
+      ],
+      "sources": [
+        "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0",
+        "https://stability.ai/news-updates/stable-diffusion-sdxl-1-announcement",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

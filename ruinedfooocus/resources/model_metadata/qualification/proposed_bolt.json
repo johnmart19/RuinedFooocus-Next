@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "profile_id": "proposed:bolt",
+  "benchmarks": [
+    {
+      "profile_id": "proposed:bolt",
+      "measurement_kind": "task_quality",
+      "dataset": "MultiChallenge",
+      "value": 55.6,
+      "higher_is_better": true,
+      "quantization": "Q4_K_M",
+      "mode": "thinking",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "selected_quantization_publisher_evaluation",
+        "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+        "harness": "NVIDIA NeMo Gym",
+        "caveat": "Vendor-run, not reproduced here; thinking results do not predict the proposed fast nonthinking profile."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:bolt",
+      "measurement_kind": "task_quality",
+      "dataset": "RoleBench",
+      "value": 71.21,
+      "higher_is_better": true,
+      "quantization": "Q4_K_M",
+      "mode": "nonthinking",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "selected_quantization_publisher_evaluation",
+        "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+        "harness": "NVIDIA NeMo Gym",
+        "caveat": "Vendor-run, not reproduced here; thinking results do not predict the proposed fast nonthinking profile."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:bolt",
+      "measurement_kind": "task_quality",
+      "dataset": "BFCL-v3",
+      "value": 67.31,
+      "higher_is_better": true,
+      "quantization": "Q4_K_M",
+      "mode": "thinking",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "selected_quantization_publisher_evaluation",
+        "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+        "harness": "NVIDIA NeMo Gym",
+        "caveat": "Vendor-run, not reproduced here; thinking results do not predict the proposed fast nonthinking profile."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:bolt",
+      "measurement_kind": "task_quality",
+      "dataset": "IHEval",
+      "value": 82.4,
+      "higher_is_better": true,
+      "quantization": "Q4_K_M",
+      "mode": "thinking",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "selected_quantization_publisher_evaluation",
+        "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+        "harness": "NVIDIA NeMo Gym",
+        "caveat": "Vendor-run, not reproduced here; thinking results do not predict the proposed fast nonthinking profile."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:bolt",
+      "measurement_kind": "task_quality",
+      "dataset": "IFBench",
+      "value": 64.0,
+      "higher_is_better": true,
+      "quantization": "Q4_K_M",
+      "mode": "thinking",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "selected_quantization_publisher_evaluation",
+        "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+        "harness": "NVIDIA NeMo Gym",
+        "caveat": "Vendor-run, not reproduced here; thinking results do not predict the proposed fast nonthinking profile."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:bolt",
+      "measurement_kind": "task_quality",
+      "dataset": "ToolSandbox",
+      "value": 74.13,
+      "higher_is_better": true,
+      "quantization": "Q4_K_M",
+      "mode": "thinking",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "selected_quantization_publisher_evaluation",
+        "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+        "harness": "NVIDIA NeMo Gym",
+        "caveat": "Vendor-run, not reproduced here; thinking results do not predict the proposed fast nonthinking profile."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    },
+    {
+      "profile_id": "proposed:bolt",
+      "measurement_kind": "task_quality",
+      "dataset": "SysBench",
+      "value": 67.22,
+      "higher_is_better": true,
+      "quantization": "Q4_K_M",
+      "mode": "thinking",
+      "precision": null,
+      "tools": null,
+      "metric": "reported score",
+      "unit": "publisher_score",
+      "protocol": {},
+      "evidence": {
+        "reporter": "model_publisher",
+        "scope": "selected_quantization_publisher_evaluation",
+        "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB",
+        "harness": "NVIDIA NeMo Gym",
+        "caveat": "Vendor-run, not reproduced here; thinking results do not predict the proposed fast nonthinking profile."
+      },
+      "local_reproduction": false,
+      "comparison_scope": "Exact dataset, metric, protocol, mode, precision and artifact scope only; no universal ranking."
+    }
+  ]
+}

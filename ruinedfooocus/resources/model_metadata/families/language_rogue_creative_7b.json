@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:rogue_creative_7b": {
+      "label": "L3.2 Rogue Creative Instruct Uncensored Abliterated 7B",
+      "identity": {
+        "checkpoint_repo_requested": "DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B",
+        "checkpoint_repo_resolved": "DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B",
+        "checkpoint_revision_observed": "b5585f553ed84901ce2ad06444ffc41b5a69fcd6",
+        "artifact_repo_requested": "DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF",
+        "gguf_architecture": "llama"
+      },
+      "release": {
+        "announced_release_date": null,
+        "release_date_status": "no_dated_release_announcement_verified",
+        "release_source_url": null,
+        "paper_publication_date": null,
+        "checkpoint_repository_created_at": "2024-10-31T00:12:37.000Z",
+        "checkpoint_repository_last_modified_at": "2025-07-28T00:37:37.000Z",
+        "repository_created_at_is_model_release_date": false,
+        "quantization_publication_date": null,
+        "quantization_publication_date_status": "per_artifact_publication_not_verified; repository_creation_is_not_file_release",
+        "metadata_source_url": "https://huggingface.co/api/models/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B"
+      },
+      "architecture": {
+        "gguf_architecture": "llama",
+        "parameter_count_hf_safetensors_reported": 7532860416,
+        "parameter_count_caveat": "HF serialized-tensor count; tied/duplicated tensors and multimodal components may differ from advertised unique parameter count.",
+        "geometry": {
+          "status": "upstream_config_verified",
+          "hf_architectures": ["LlamaForCausalLM"],
+          "hf_model_type": "llama",
+          "hf_text_model_type": "llama",
+          "layers": 67,
+          "hidden_size": 3072,
+          "attention_heads": 24,
+          "kv_heads": 8,
+          "head_dim": 128,
+          "head_dim_basis": "explicit_config",
+          "native_context_tokens": 131072,
+          "sliding_window_tokens": null,
+          "layer_counts": {
+            "full_attention": 67
+          },
+          "tie_word_embeddings": true,
+          "rope_scaling": {
+            "factor": 32.0,
+            "high_freq_factor": 4.0,
+            "low_freq_factor": 1.0,
+            "original_max_position_embeddings": 8192,
+            "rope_type": "llama3"
+          },
+          "kv_estimate_4k": {
+            "kind": "analytical_component_not_measured_peak_memory",
+            "cache_dtype": "F16 K + F16 V",
+            "sequences": 1,
+            "context_tokens": 4096,
+            "formula": "2(K,V) * 2 bytes * kv_heads * head_dim * cached_tokens * relevant_layers",
+            "full_attention_bytes": 1124073472,
+            "sliding_window_bounded_bytes": 0,
+            "full_plus_bounded_sliding_bytes": 1124073472,
+            "attention_cache_all_attention_layers_at_4k_bytes": 1124073472,
+            "recurrent_or_convolution_state_bytes": 0,
+            "extra_state_unknown": false,
+            "excludes": [
+              "weights",
+              "projector",
+              "image encoder activations",
+              "compute buffers",
+              "allocator overhead",
+              "additional slots/sequences"
+            ],
+            "sliding_cache_caveat": "Actual runtime may allocate differently from an ideal bounded sliding cache; use conservative reservation and observed peak memory."
+          }
+        },
+        "layer_expansion_note": "Publisher adds39 layers to reach67. This is not ordinary 7B geometry; KV cache grows with the expanded layer count."
+      },
+      "license": {
+        "declared_upstream": null,
+        "status": "conflicting_or_incomplete_metadata_keep_lineage_terms",
+        "source_urls": [
+          "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/blob/d16b3f64da9bbb00c3b0e6280740c30a4dc7a146/README.md",
+          "https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct/blob/main/LICENSE"
+        ],
+        "declared_gguf_card": "apache-2.0",
+        "underlying_model_license": "Llama 3.2 Community License"
+      },
+      "publisher_settings": {
+        "generation_config": null,
+        "generation_config_scope": "upstream HF configuration; not automatically read by either GGUF runtime",
+        "recommendations": [
+          {
+            "repeat_penalty_min": 1.05,
+            "roleplay_repeat_penalty_range": [1.1, 1.14],
+            "scope": "GGUF publisher"
+          },
+          {
+            "low_quantization_note": "Publisher recommends temperature <=1 for Q2 and <=2 for Q3.",
+            "unsupported_ui_specific_controls": "Do not forward Ooba/Kobold smoothing_factor blindly as a llama.cpp request key."
+          }
+        ]
+      },
+      "app_profile_proposals": [
+        {
+          "id": "creative_candidate",
+          "status": "proposal_not_applied_or_benchmarked",
+          "request": {
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "top_k": 40,
+            "min_p": 0.0,
+            "repeat_penalty": 1.1,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0,
+            "max_tokens": 2048
+          },
+          "load": {
+            "context_tokens": 4096,
+            "n_batch": 512,
+            "n_ubatch": 512
+          },
+          "provenance": "Publisher settings where stated, with explicitly chosen application budgets and neutral unspecified samplers."
+        }
+      ],
+      "capabilities": {
+        "eligible_tasks": ["creative_writing", "roleplay", "prompt_writing"],
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "system_prompt": "System role retained; author warns very high temperature can hurt roleplay instruction following.",
+        "thinking": {
+          "kind": "standard_instruct",
+          "control": null
+        },
+        "tools": {
+          "template": "Llama3 custom-tools template inherited upstream",
+          "format_evidence": "upstream tokenizer template; generic auto-parser path",
+          "quality_evidence": "no exact-derivative tool benchmark verified",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_measured",
+        "roleplay_app_evaluation": "not_measured",
+        "generate_image_tool_app_evaluation": "not_measured"
+      },
+      "benchmark_caveats": [
+        "Published checkpoint results are not a measurement of these GGUF conversions. No quantitative score is inferred for a quantization.",
+        "No formal benchmark for this exact67-layer derivative was verified. Publisher prose examples are not scores; base Llama3.2 results must not be attached as derivative results."
+      ],
+      "source_urls": {
+        "checkpoint": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B/tree/b5585f553ed84901ce2ad06444ffc41b5a69fcd6",
+        "checkpoint_card": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B/blob/b5585f553ed84901ce2ad06444ffc41b5a69fcd6/README.md",
+        "config": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B/blob/b5585f553ed84901ce2ad06444ffc41b5a69fcd6/config.json",
+        "generation_config": null,
+        "artifact_card": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/blob/d16b3f64da9bbb00c3b0e6280740c30a4dc7a146/README.md",
+        "artifact_repository": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF",
+        "chat_template": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B/blob/b5585f553ed84901ce2ad06444ffc41b5a69fcd6/tokenizer_config.json"
+      },
+      "lineage": [
+        "meta-llama/Llama-3.2-3B-Instruct",
+        "huihui-ai/Llama-3.2-3B-Instruct-abliterated",
+        "DavidAU Brainstorm40x layer expansion"
+      ],
+      "runtime_status": {
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b11870",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/models/llama.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/common/chat.cpp"
+          ]
+        },
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "llama_cpp_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b12110",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/llama.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/common/chat.cpp"
+          ]
+        },
+        "tool_template_caveat": "Upstream Llama3 template defaults tools_in_user_message=true, which can raise on an empty user-message probe. App native wrapper has a retry using false; test embedded xllamacpp independently. This is a specific integration risk, not a confirmed model failure."
+      },
+      "hardware_notes": {
+        "cpu_speed_measured": false,
+        "gpu_speed_measured": false,
+        "planning_context_tokens": 4096,
+        "weight_bytes_are_not_peak_RAM_or_VRAM": true,
+        "gpu_backend_caveat": "Availability of a CPU/Vulkan/HIP/CUDA build is distinct from this exact model/quant working correctly and quickly on the user's hardware. No ROCm/Vulkan model benchmark was run.",
+        "tier_assignment": "Use exact per-artifact bytes plus matching projector, KV components, conservative compute/state overhead, OS reserve and image budget. This research intentionally does not pretend a parameter label is a VRAM minimum."
+      },
+      "template_validation_note": "Template inspection uses upstream HF evidence; check the effective embedded GGUF template and adapter behavior before advertising tool capability for every quantization."
+    }
+  }
+}

@@ -1,0 +1,489 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:checkpoints/sdpose_wholebody_fp16.safetensors": {
+      "id": "existing:checkpoints/sdpose_wholebody_fp16.safetensors",
+      "catalogue_key": "checkpoints/sdpose_wholebody_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_extended_lotusd_sdpose_wholebody",
+      "label": "SDPose sdpose-wholebody",
+      "role": "image_utility_model",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "LotusD",
+      "native_class": "LotusD",
+      "native_family": "SDPose",
+      "behavioral_variant": "sdpose-wholebody",
+      "auto_recipe_supported": false,
+      "media": "utility",
+      "format": "safetensors",
+      "quantization": {
+        "label": "F16",
+        "dtype_bytes": {
+          "F16": 1916519520
+        },
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "9e8483a77a6c355786be1d5f8bcfd000483b2e7c4ac39352dc2746f1c9f095fb",
+      "artifact": {
+        "bytes": 1916645792,
+        "sha256": "63d01f9a7494560693b24767f4469d59c9d3266b31ff0a253e74d1e611442721",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/SDPose/resolve/acb43fbe8142b54d9ebd52b720b81dd4e14c8d81/checkpoints/sdpose_wholebody_fp16.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "e492fa325a8bcbe4281afcb9e0a19a7f6e99b9de80e087f9e9754fb3e656a9eb",
+        "header_bytes": 126264,
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple plus native header classification; no complete weight download."
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_header_matches_registered_configuration",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": ["existing:diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors"]
+      },
+      "component_contract": {
+        "roles": [],
+        "embedded": {
+          "clip": false,
+          "vae": true
+        },
+        "source_workflow": "utility_sdpose_ood_image_to_pose.json",
+        "required_runtime_nodes": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "workflow_controls": []
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/SDPose",
+        "source_revision": "acb43fbe8142b54d9ebd52b720b81dd4e14c8d81",
+        "native_classification": {
+          "native_class": "LotusD",
+          "native_config": {
+            "use_checkpoint": false,
+            "image_size": 32,
+            "use_spatial_transformer": true,
+            "legacy": false,
+            "num_classes": "sequential",
+            "adm_in_channels": 4,
+            "in_channels": 4,
+            "out_channels": 4,
+            "model_channels": 320,
+            "num_res_blocks": [2, 2, 2, 2],
+            "transformer_depth": [1, 1, 1, 1, 1, 1, 0, 0],
+            "transformer_depth_output": [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+            "channel_mult": [1, 2, 4, 4],
+            "transformer_depth_middle": 1,
+            "use_linear_in_transformer": true,
+            "context_dim": 1024,
+            "use_temporal_resblock": false,
+            "use_temporal_attention": false,
+            "heatmap_head": true
+          },
+          "header_sha256": "e492fa325a8bcbe4281afcb9e0a19a7f6e99b9de80e087f9e9754fb3e656a9eb",
+          "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\ac679ed4fff6222b8c5d0d4f70f98a89b691be162b6fd4fc1b2fc6ebf40b2a31.artifact.json"
+        },
+        "default_recipe_id": "native-extended-lotusd-sdpose-wholebody",
+        "auto_recipe_supported": false,
+        "recipe_requirements": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "behavioral_variant_source": "Exact publisher tuple/primary native workflow, never local filename inference."
+      }
+    },
+    "existing:diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors": {
+      "id": "existing:diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors",
+      "catalogue_key": "diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_extended_rt_detr_v4_sdpose_detect",
+      "label": "RT_DETR_v4 sdpose-detect",
+      "role": "image_utility_model",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "RT_DETR_v4",
+      "native_class": "RT_DETR_v4",
+      "native_family": "RT_DETR_v4",
+      "behavioral_variant": "sdpose-detect",
+      "auto_recipe_supported": false,
+      "media": "utility",
+      "format": "safetensors",
+      "quantization": {
+        "label": "I64 / F16 / BOOL",
+        "dtype_bytes": {
+          "I64": 1056,
+          "F16": 123820738,
+          "BOOL": 8400
+        },
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "942350d6af306dcb15275f2a51493b0e43657340d2d6c1a1be418f6b28b3b64f",
+      "artifact": {
+        "bytes": 123968978,
+        "sha256": "581f9af9bbabb664d1891cbccd823308b176ecd409146f954dfa39af3bec2476",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/SDPose/resolve/acb43fbe8142b54d9ebd52b720b81dd4e14c8d81/diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "b7d60e0c230f197431709e146d125c94dd19d459df7ec6994d4e8749731361d4",
+        "header_bytes": 138776,
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple plus native header classification; no complete weight download."
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_header_matches_registered_configuration",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "component_contract": {
+        "roles": [],
+        "embedded": {
+          "clip": false,
+          "vae": false
+        },
+        "source_workflow": "utility_sdpose_multi_person.json",
+        "required_runtime_nodes": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "workflow_controls": []
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/SDPose",
+        "source_revision": "acb43fbe8142b54d9ebd52b720b81dd4e14c8d81",
+        "native_classification": {
+          "native_class": "RT_DETR_v4",
+          "native_config": {
+            "image_model": "RT_DETR_v4",
+            "enc_h": 384
+          },
+          "header_sha256": "b7d60e0c230f197431709e146d125c94dd19d459df7ec6994d4e8749731361d4",
+          "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\1ea03e9afcea44385add89c7c582547a083575a8ff39154196e48b4a54e8be54.artifact.json"
+        },
+        "default_recipe_id": "native-extended-rt-detr-v4-sdpose-detect",
+        "auto_recipe_supported": false,
+        "recipe_requirements": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "behavioral_variant_source": "Exact publisher tuple/primary native workflow, never local filename inference."
+      }
+    },
+    "existing:checkpoints/sam3.1_multiplex_fp16.safetensors": {
+      "id": "existing:checkpoints/sam3.1_multiplex_fp16.safetensors",
+      "catalogue_key": "checkpoints/sam3.1_multiplex_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_extended_sam31_multiplex_3.1",
+      "label": "SAM31 multiplex-3.1",
+      "role": "image_utility_model",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SAM31",
+      "native_class": "SAM31",
+      "native_family": "SAM31",
+      "behavioral_variant": "multiplex-3.1",
+      "auto_recipe_supported": false,
+      "media": "utility",
+      "format": "safetensors",
+      "quantization": {
+        "label": "F16",
+        "dtype_bytes": {
+          "F16": 1745323480
+        },
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8abba72e1d9c7301292ba295551eb80e842ed02f400326f823918c57aabb31e6",
+      "artifact": {
+        "bytes": 1745546848,
+        "sha256": "9ba99c92703c2e8b4f47de2d34a539bb8e18923049e238b780d70dbe6368eb03",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/sam3.1/resolve/7bb8374780a725b4353ed31f3a9395c9742b5621/checkpoints/sam3.1_multiplex_fp16.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "3472565ad9eb7ca146833ea5a513944e120c968e9869fdaf9d1d4ff6cd95dd47",
+        "header_bytes": 223360,
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple plus native header classification; no complete weight download."
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_header_matches_registered_configuration",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "component_contract": {
+        "roles": [],
+        "embedded": {
+          "clip": true,
+          "vae": false
+        },
+        "source_workflow": "utility_image_segment_sam3.json",
+        "required_runtime_nodes": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "workflow_controls": []
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/sam3.1",
+        "source_revision": "7bb8374780a725b4353ed31f3a9395c9742b5621",
+        "native_classification": {
+          "native_class": "SAM31",
+          "native_config": {
+            "image_model": "SAM31"
+          },
+          "header_sha256": "3472565ad9eb7ca146833ea5a513944e120c968e9869fdaf9d1d4ff6cd95dd47",
+          "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\2961903161a66c8529032371f014202d2ac7b182d17cfe7e639313bb88afbc40.artifact.json"
+        },
+        "default_recipe_id": "native-extended-sam31-multiplex-3.1",
+        "auto_recipe_supported": false,
+        "recipe_requirements": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "behavioral_variant_source": "Exact publisher tuple/primary native workflow, never local filename inference."
+      }
+    },
+    "existing:diffusion_models/seedvr2_3b_int8_convrot.safetensors": {
+      "id": "existing:diffusion_models/seedvr2_3b_int8_convrot.safetensors",
+      "catalogue_key": "diffusion_models/seedvr2_3b_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_extended_seedvr2_3b_int8",
+      "label": "SeedVR2 3b-int8",
+      "role": "image_utility_model",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SeedVR2",
+      "native_class": "SeedVR2",
+      "native_family": "SeedVR2",
+      "behavioral_variant": "3b-int8",
+      "auto_recipe_supported": false,
+      "media": "utility",
+      "format": "safetensors",
+      "quantization": {
+        "label": "F32 / BF16 / F16 / I8 / U8",
+        "dtype_bytes": {
+          "F32": 4472832,
+          "BF16": 1249280,
+          "F16": 121873856,
+          "I8": 3330539520,
+          "U8": 15120
+        },
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5b7c0740fc5ba8bc335b4c4fe54f343cfa8ec2b4324c1f65f43028bbdb635d27",
+      "artifact": {
+        "bytes": 3458259704,
+        "sha256": "c3dec8bcc5916843a8a858572970597462e1f2dc598d6dfd818f6cd40f53a157",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/SeedVR2/resolve/df48879708206a403d2a61acd55578c2e80fd233/diffusion_models/seedvr2_3b_int8_convrot.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "7d2a7ad66706163ebd8bd0d03bb9bb2dbd15ff335c9f7d3c9702c1e21686cc4f",
+        "header_bytes": 109088,
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple plus native header classification; no complete weight download."
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_header_matches_registered_configuration",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": ["existing:vae/seedvr2_ema_vae_fp16.safetensors"],
+        "image": []
+      },
+      "component_contract": {
+        "roles": [
+          {
+            "role": "native_seedvr2_vae",
+            "filename": "seedvr2_ema_vae_fp16.safetensors",
+            "artifact_id": "existing:vae/seedvr2_ema_vae_fp16.safetensors",
+            "embedded": false
+          }
+        ],
+        "embedded": {
+          "clip": false,
+          "vae": false
+        },
+        "source_workflow": "utility_seedvr2_3b_int8_upscale_image.json",
+        "required_runtime_nodes": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "workflow_controls": [
+          {
+            "node": "KSampler",
+            "mode": 0,
+            "values": [959948902156062, "fixed", 1, 1, "euler", "simple", 1]
+          },
+          {
+            "node": "SeedVR2Conditioning",
+            "mode": 0,
+            "values": []
+          }
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/SeedVR2",
+        "source_revision": "df48879708206a403d2a61acd55578c2e80fd233",
+        "native_classification": {
+          "native_class": "SeedVR2",
+          "native_config": {
+            "image_model": "seedvr2",
+            "vid_dim": 2560,
+            "heads": 20,
+            "num_layers": 32,
+            "norm_eps": 1e-5,
+            "mlp_type": "swiglu",
+            "vid_out_norm": true
+          },
+          "header_sha256": "7d2a7ad66706163ebd8bd0d03bb9bb2dbd15ff335c9f7d3c9702c1e21686cc4f",
+          "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\39f3f116d638def058297d135c8161462839ffa8aed0b072248345df9e092130.artifact.json"
+        },
+        "default_recipe_id": "native-extended-seedvr2-3b-int8",
+        "auto_recipe_supported": false,
+        "recipe_requirements": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "behavioral_variant_source": "Exact publisher tuple/primary native workflow, never local filename inference."
+      }
+    },
+    "existing:diffusion_models/seedvr2_7b_int8_convrot.safetensors": {
+      "id": "existing:diffusion_models/seedvr2_7b_int8_convrot.safetensors",
+      "catalogue_key": "diffusion_models/seedvr2_7b_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_extended_seedvr2_7b_int8",
+      "label": "SeedVR2 7b-int8",
+      "role": "image_utility_model",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SeedVR2",
+      "native_class": "SeedVR2",
+      "native_family": "SeedVR2",
+      "behavioral_variant": "7b-int8",
+      "auto_recipe_supported": false,
+      "media": "utility",
+      "format": "safetensors",
+      "quantization": {
+        "label": "F32 / BF16 / F16 / I8 / U8",
+        "dtype_bytes": {
+          "F32": 7962624,
+          "BF16": 1249280,
+          "F16": 171762512,
+          "I8": 8153726976,
+          "U8": 20736
+        },
+        "source": "bounded_pinned_publisher_header",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "adbebc3a9f916c9487f125342d58a161b8780869fdd072e24feea2b91c4ec6e4",
+      "artifact": {
+        "bytes": 8334897976,
+        "sha256": "5aa0d25fc9d35e449b659d0c9a5dcb22e2a4fa04032101b95a39da42b32c1be6",
+        "hash_evidence": "publisher_hf_lfs_manifest",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/SeedVR2/resolve/df48879708206a403d2a61acd55578c2e80fd233/diffusion_models/seedvr2_7b_int8_convrot.safetensors",
+        "availability": "bounded_header_range_reachable",
+        "header_sha256": "06af0a10e3b36d2279bc80882dbe2f69f73f477098234b30f20aec8247f0cfd4",
+        "header_bytes": 175840,
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple plus native header classification; no complete weight download."
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_header_matches_registered_configuration",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": ["existing:vae/seedvr2_ema_vae_fp16.safetensors"],
+        "image": []
+      },
+      "component_contract": {
+        "roles": [
+          {
+            "role": "native_seedvr2_vae",
+            "filename": "seedvr2_ema_vae_fp16.safetensors",
+            "artifact_id": "existing:vae/seedvr2_ema_vae_fp16.safetensors",
+            "embedded": false
+          }
+        ],
+        "embedded": {
+          "clip": false,
+          "vae": false
+        },
+        "source_workflow": "utility_seedvr2_7b_int8_upscale_image.json",
+        "required_runtime_nodes": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "workflow_controls": [
+          {
+            "node": "KSampler",
+            "mode": 0,
+            "values": [959948902156062, "fixed", 1, 1, "euler", "simple", 1]
+          },
+          {
+            "node": "SeedVR2Conditioning",
+            "mode": 0,
+            "values": []
+          }
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "unqualified_workload_and_components_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/SeedVR2",
+        "source_revision": "df48879708206a403d2a61acd55578c2e80fd233",
+        "native_classification": {
+          "native_class": "SeedVR2",
+          "native_config": {
+            "image_model": "seedvr2",
+            "vid_dim": 3072,
+            "heads": 24,
+            "num_layers": 36,
+            "mm_layers": 36,
+            "norm_eps": 1e-5,
+            "rope_type": "rope3d",
+            "rope_dim": 64,
+            "mlp_type": "normal"
+          },
+          "header_sha256": "06af0a10e3b36d2279bc80882dbe2f69f73f477098234b30f20aec8247f0cfd4",
+          "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\dc6f3ed21e0b2a3749e37ceff133bbc1cedb38b94383df6af780896eaf562ca7.artifact.json"
+        },
+        "default_recipe_id": "native-extended-seedvr2-7b-int8",
+        "auto_recipe_supported": false,
+        "recipe_requirements": [
+          "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+        ],
+        "behavioral_variant_source": "Exact publisher tuple/primary native workflow, never local filename inference."
+      }
+    }
+  }
+}

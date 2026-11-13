@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "ming-image-design",
+  "family": "Ming Image Design",
+  "media": "image",
+  "variant": "design",
+  "aliases": ["Ming Image Design", "MingImage"],
+  "sampling": {
+    "custom_steps": 12,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [
+    [1024, 1024],
+    [2048, 2048]
+  ],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "behavioral_variants": ["design"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "MingImage",
+      "text_encoder_roles": ["clip_ming_image"],
+      "vae_role": "vae_ming_image",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Local Ming Image Design family recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": {
+    "custom_steps": 12,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1,
+    "model_sampling_flux": {
+      "max_shift": 1.15,
+      "base_shift": 0.5
+    },
+    "recommended_resolutions": "1024x1024, 2048x2048; immutable native Ming Image Design workflow; prompt enhancement is optional"
+  }
+}

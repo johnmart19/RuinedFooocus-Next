@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_ssd1b_base": {
+      "title": "SSD1B base",
+      "consumers": ["SSD1B"],
+      "native_class": "SSD1B",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/segmind/SSD-1B/blob/60987f37e94cd59c36b1cba832b9f97b57395a10/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-ssd1b-base",
+        "auto_recipe_supported": true,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

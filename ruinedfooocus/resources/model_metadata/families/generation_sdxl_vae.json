@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:sdxl_vae": {
+      "title": "SDXL VAE",
+      "provenance": {
+        "upstream": "stabilityai/stable-diffusion-xl-base-1.0/vae"
+      },
+      "consumers": ["SDXL"],
+      "release": {
+        "date": "2023-07-26",
+        "date_precision": "day",
+        "scope": "base_family",
+        "source": "https://stability.ai/news-updates/stable-diffusion-sdxl-1-announcement",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "CreativeML Open RAIL++-M repository declaration",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0",
+        "note": null
+      },
+      "dependencies": ["SDXL-compatible checkpoint and encoders"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "No text-generation sampling settings. Encode/decode dtype, tiling and device staging come from the VAE implementation and target workload; preserve latent channels, scaling and temporal layout."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

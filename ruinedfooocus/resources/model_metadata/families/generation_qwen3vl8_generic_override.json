@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:qwen3vl8_generic_override": {
+      "title": "Qwen3-VL 8B GGUF conditioning alternatives",
+      "provenance": {
+        "upstream": "Qwen3-VL-8B-Instruct; HauhauCS is an altered derivative, not merely a quantization"
+      },
+      "consumers": [],
+      "release": {
+        "date": "2025-10-15",
+        "date_precision": "day",
+        "scope": "unmodified_base_size_release",
+        "source": "https://github.com/QwenLM/Qwen3-VL",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "Apache-2.0 declared by both conversion cards",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/unsloth/Qwen3-VL-8B-Instruct-GGUF",
+        "note": null
+      },
+      "dependencies": [],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/unsloth/Qwen3-VL-8B-Instruct-GGUF",
+        "https://huggingface.co/HauhauCS/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/resource_defaults.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

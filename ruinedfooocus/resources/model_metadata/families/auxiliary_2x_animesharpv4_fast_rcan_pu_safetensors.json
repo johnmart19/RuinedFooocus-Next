@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:2x_animesharpv4_fast_rcan_pu_safetensors": {
+      "display_name": "AnimeSharp V4 Fast RCAN-PU",
+      "purpose": "Anime/video-oriented sharpness and MPEG2/H264 compression cleanup.",
+      "native_scale": 2,
+      "source_url": "https://github.com/Kim2091/Kim2091-Models/releases/download/2x-AnimeSharpV4/2x-AnimeSharpV4_Fast_RCAN_PU.safetensors",
+      "release": {
+        "date": "2025-01-12",
+        "status": "known",
+        "kind": "exact_asset_upload",
+        "sources": ["kim_release"],
+        "note": "Asset upload date; container release may predate this model file."
+      },
+      "license": {
+        "identifier": "CC-BY-NC-SA-4.0",
+        "status": "model_registry_declared",
+        "sources": ["omdb_2x-AnimeSharpV4-Fast-RCAN-PU"]
+      },
+      "benchmark_status": "creator_claim_with_incomplete_conditions",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "omdb_2x-AnimeSharpV4-Fast-RCAN-PU", "kim_release"],
+      "architecture": "rcan"
+    }
+  }
+}
