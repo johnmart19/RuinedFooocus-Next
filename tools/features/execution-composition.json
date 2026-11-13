@@ -1,0 +1,30 @@
+{
+  "id": "execution-composition",
+  "subject": "Execute serialized image and Chat pipelines through owned APIs",
+  "requires": ["native-image-workflows", "chat-runtime-contracts", "xllamacpp-installer"],
+  "tests": [
+    "test_api_image_urls.py",
+    "test_api_live_contracts.py",
+    "test_chat_attachments.py",
+    "test_chat_turn_permissions.py",
+    "test_execution_feature_entrypoints.py",
+    "test_image_cleanup.py",
+    "test_image_request_isolation.py",
+    "test_local_prompt_enhancement.py",
+    "test_metadata_guidance_replay.py",
+    "test_model_capabilities.py",
+    "test_onnx_diagnostics.py",
+    "test_prompt_draft_fence.py",
+    "test_prompt_schedule_sigmas.py",
+    "test_prompt_wildcards.py",
+    "test_style_catalog.py",
+    "test_vae_decode.py",
+    "test_vision_transport.py",
+    "test_worker_cleanup.py",
+    "test_worker_routing.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": true,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+  "native_gguf_revision": "da5f435cd9a9e54ad27eed417ed72b1f2543ef41"
+}
