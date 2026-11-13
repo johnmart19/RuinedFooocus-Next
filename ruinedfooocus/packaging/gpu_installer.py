@@ -53,6 +53,11 @@ def installed_torch_constraints():
     return {"versions": versions} if versions else None
 
 
+def preserve_installed_rocm(installed_rocm, torch_platform, reinstall=False):
+    if not installed_rocm or reinstall:
+        return False
+    # An explicit different ROCm version is a request to change environments.
+    return torch_platform == installed_rocm_platform(installed_rocm)
 
 
 @contextmanager
