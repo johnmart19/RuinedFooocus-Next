@@ -1,0 +1,1 @@
+Place the native MediaPipe face landmarker safetensors bundle here for Image tools > Face landmarks. It must include both detectors, mesh, blendshapes, canonical geometry and topology. This route draws a still-image landmark overlay; it does not export a 3D mesh.

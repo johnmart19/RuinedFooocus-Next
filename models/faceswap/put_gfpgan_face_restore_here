@@ -1,0 +1,3 @@
+GFPGAN face restoration models belong here (GFPGANv1.4.pth).
+The optional download catalogue retains GFPGANv1.4.pth for compatibility.
+Face swapping is not supported; inswapper models are not used.

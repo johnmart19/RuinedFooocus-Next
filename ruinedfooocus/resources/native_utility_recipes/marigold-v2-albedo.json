@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "marigold-v2-albedo",
+  "operation": "marigold-albedo",
+  "native_comfy_revision": "fca60fe70e5b84c5c6b058263653d15cb3401e44",
+  "source_workflow": "image_marigold_v2_albedo_estimation.json",
+  "source_workflow_package": "comfyui-workflow-templates-json==0.1.129",
+  "source_repository": "Comfy-Org/marigold-v2-0",
+  "source_revision": "c304e4370a1bc677a98c906c3683ace49a6bdadd",
+  "source_metadata_url": "https://huggingface.co/api/models/Comfy-Org/marigold-v2-0?blobs=true",
+  "source_checked": "2026-11-11",
+  "license": "apache-2.0",
+  "evidence_scope": "Pinned official recipe and publisher LFS metadata only; no weights retrieved or executed.",
+  "auto_recipe_supported": false,
+  "components": {
+    "image_utility_model": {
+      "role": "marigold-qwen-edit",
+      "native_family": "QwenImage",
+      "behavioral_variant": "edit-2509",
+      "folder": "diffusion_models",
+      "filename": "qwen_image_edit_2509_int8_convrot.safetensors",
+      "bytes": 20499083752,
+      "sha256": "638402843782296122f42f2ff557a63a9535c4fbc3f6978308042c8d0f4012b4"
+    },
+    "image_utility_vae": {
+      "role": "marigold-albedo-vae",
+      "folder": "vae",
+      "filename": "marigold_v2_albedo_vae.safetensors",
+      "bytes": 253806278,
+      "sha256": "91524d3ecafcbb25ceea3d7a76b09581eb27664fb1ba09996db3da2b1f91563f"
+    },
+    "image_utility_lora": {
+      "role": "marigold-albedo-lora",
+      "folder": "loras",
+      "filename": "marigold_v2_albedo.safetensors",
+      "bytes": 1703764632,
+      "sha256": "263ec11bb29625c5ec7b145ea2fbc9e8e7854ad4a229031e020e55d614e8e919"
+    },
+    "image_utility_conditioning": {
+      "role": "marigold-albedo-conditioning",
+      "folder": "embeddings",
+      "filename": "marigold_v2_albedo_conditioning.safetensors",
+      "bytes": 2573432,
+      "sha256": "f3d70cc7d4d37743e3f4da197b97a2d2847a8a172a50f86112642ecfa99834fd"
+    }
+  },
+  "native_recipe": {
+    "model_sampling": "ModelSamplingAuraFlow",
+    "shift": 1.73,
+    "sampling": "img_to_img_velocity",
+    "noise": "DisableNoise",
+    "guider": "BasicGuider",
+    "sampler": "euler",
+    "sigmas": [0.5, 0.0],
+    "prediction": "albedo"
+  }
+}

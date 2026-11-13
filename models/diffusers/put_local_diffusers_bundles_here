@@ -1,0 +1,1 @@
+Place supported local Diffusers bundle directories here. Each bundle needs model_index.json and its matching component files. See docs/model-folders.md.

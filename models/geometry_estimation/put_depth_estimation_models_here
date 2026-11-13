@@ -1,0 +1,1 @@
+Place native Depth Anything 3 Small/Base, Lotus depth or MoGe safetensors here. DA3 supports automatic Depth preprocessing and the standalone Depth map tool. Lotus depth and MoGe depth are separate still-image tools; Lotus additionally needs a compatible SD VAE. MoGe panorama and mesh export are separate scopes.

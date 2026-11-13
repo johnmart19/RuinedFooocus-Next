@@ -8,7 +8,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from modules.canny_utils import sanitize_canny_thresholds
+from ruinedfooocus.features.image_editing.canny_utils import sanitize_canny_thresholds
 
 
 class TestCannyThresholds(unittest.TestCase):

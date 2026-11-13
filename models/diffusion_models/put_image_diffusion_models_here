@@ -1,0 +1,2 @@
+Place supported image diffusion-only safetensors or GGUF files here.
+Select the model in Create; its matching text encoders and VAE are separate components.

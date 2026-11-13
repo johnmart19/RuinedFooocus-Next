@@ -1,0 +1,2 @@
+Place textual-inversion embeddings for compatible image text encoders here.
+Use embedding:filename in a prompt. Existing models/embedding files remain discoverable.

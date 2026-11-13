@@ -1,0 +1,3 @@
+Drop finished model files here while RuinedFooocus is running.
+The sorter moves identifiable files and leaves conflicts, unknown files and split models here.
+See docs/model-folders.md for supported folders and Inbox sorting.
