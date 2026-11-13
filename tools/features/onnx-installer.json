@@ -1,0 +1,14 @@
+{
+  "id": "onnx-installer",
+  "subject": "Acquire isolated ONNX and Windows ML runtimes with provider discovery",
+  "requires": ["installation-foundations"],
+  "tests": [
+    "test_legacy_onnx_install_cancellation.py",
+    "test_onnx_install_transactions.py",
+    "test_onnx_provider_recipes.py",
+    "test_windows_ml_catalog_ui.py",
+    "test_windows_ml_qualification.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
