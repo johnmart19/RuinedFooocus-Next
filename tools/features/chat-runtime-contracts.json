@@ -1,0 +1,18 @@
+{
+  "id": "chat-runtime-contracts",
+  "subject": "Provide complete Chat profiles local model preparation retrieval and native server contracts",
+  "requires": ["native-image-workflows", "llama-installer", "xllamacpp-installer"],
+  "tests": [
+    "test_assistant_cards.py",
+    "test_chat_feature_entrypoints.py",
+    "test_document_attachments.py",
+    "test_gguf_streaming_metadata.py",
+    "test_llama_runtime_events.py",
+    "test_llama_server.py",
+    "test_preparation_service.py",
+    "test_rag_manifest.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

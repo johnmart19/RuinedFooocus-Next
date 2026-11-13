@@ -1,0 +1,15 @@
+{
+  "pdf": {
+    "package": "pypdf",
+    "version": "7.1.0",
+    "requires_python": ">=3.10",
+    "license": "BSD-3-Clause",
+    "wheel": "pypdf-7.1.0-py3-none-any.whl",
+    "size": 418698,
+    "sha256": "47cca6b24bdcf4c4d65b5f7b8b972535c61710a061261e737688777cfd9a7bfb",
+    "url": "https://files.pythonhosted.org/packages/ed/4c/d19f91b743c8579b67e3d8b001e095745dec5bb13a9b4b9eadc235a85d9e/pypdf-7.1.0-py3-none-any.whl",
+    "source": "https://pypi.org/pypi/pypdf/7.1.0/json",
+    "checked": "2026-11-13",
+    "extras": []
+  }
+}
