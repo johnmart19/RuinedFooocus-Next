@@ -1,0 +1,9 @@
+{
+  "diffusion_models/SSD-1B.safetensors": {
+    "url": "https://huggingface.co/segmind/SSD-1B/resolve/60987f37e94cd59c36b1cba832b9f97b57395a10/SSD-1B.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "SSD-1B.safetensors",
+    "size": 4465671506,
+    "sha256": "0bf1ce6b065a6b969ab02dc8e8fa21eb20ee189b10935c49ce68c77a7e432c1c"
+  }
+}

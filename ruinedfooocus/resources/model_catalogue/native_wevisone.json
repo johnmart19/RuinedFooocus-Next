@@ -1,0 +1,9 @@
+{
+  "clip/wevisone_vl_2b_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/WeVisOne-VL/resolve/135355350443103e34089dd39264fe0651691929/text_encoders/wevisone_vl_2b_int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "wevisone_vl_2b_int8_convrot.safetensors",
+    "size": 2890564784,
+    "sha256": "88f3b1be21ff0828f20f0a711a14e00c55f401bceafad3c8943b7ce2c577a03e"
+  }
+}

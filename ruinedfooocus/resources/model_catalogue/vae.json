@@ -1,0 +1,92 @@
+{
+  "vae/ae.safetensors": {
+    "url": "https://huggingface.co/camenduru/FLUX.1-dev/resolve/main/ae.safetensors",
+    "path": "path_vae",
+    "filename": "ae.safetensors"
+  },
+  "vae/auraflow_vae_fp32.safetensors": {
+    "url": "https://huggingface.co/fal/AuraFlow-v0.3/resolve/main/vae/diffusion_pytorch_model.safetensors",
+    "path": "path_vae",
+    "filename": "auraflow_vae_fp32.safetensors"
+  },
+  "vae/flux-vae.safetensors": {
+    "url": "https://huggingface.co/diffusers/FLUX.1-vae/resolve/main/diffusion_pytorch_model.safetensors",
+    "path": "path_vae",
+    "filename": "flux-vae.safetensors"
+  },
+  "vae/pig_flux2_vae_fp32-f16.gguf": {
+    "url": "https://huggingface.co/chatpig/flux2-dev-gguf/resolve/main/pig_flux2_vae_fp32-f16.gguf",
+    "path": "path_vae",
+    "filename": "pig_flux2_vae_fp32-f16.gguf"
+  },
+  "vae/flux2-vae.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors",
+    "path": "path_vae",
+    "filename": "flux2-vae.safetensors"
+  },
+  "vae/sdxl_vae.safetensors": {
+    "url": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/vae/diffusion_pytorch_model.safetensors",
+    "path": "path_vae",
+    "filename": "sdxl_vae.safetensors"
+  },
+  "vae/sd3_vae.safetensors": {
+    "url": "https://huggingface.co/calcuis/sd3.5-large-gguf/resolve/main/diffusion_pytorch_model.safetensors",
+    "path": "path_vae",
+    "filename": "sd3_vae.safetensors"
+  },
+  "vae/lumina2_vae_fp8.safetensors": {
+    "url": "https://huggingface.co/calcuis/lumina-gguf/resolve/main/lumina2_vae_fp8.safetensors",
+    "path": "path_vae",
+    "filename": "lumina2_vae_fp8.safetensors"
+  },
+  "vae/lumina2_vae_fp16.safetensors": {
+    "url": "https://huggingface.co/calcuis/lumina-gguf/resolve/main/lumina2_vae_fp16.safetensors",
+    "path": "path_vae",
+    "filename": "lumina2_vae_fp16.safetensors"
+  },
+  "vae/lumina2_vae_fp32.safetensors": {
+    "url": "https://huggingface.co/calcuis/lumina-gguf/resolve/main/lumina2_vae_fp32.safetensors",
+    "path": "path_vae",
+    "filename": "lumina2_vae_fp32.safetensors"
+  },
+  "vae/mage_flow_vae.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Mage-Flow/resolve/main/vae/mage_flow_vae_bf16.safetensors",
+    "path": "path_vae",
+    "filename": "mage_flow_vae.safetensors"
+  },
+  "vae/mage_flow_vae_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Mage-Flow/resolve/main/vae/mage_flow_vae_bf16.safetensors",
+    "path": "path_vae",
+    "filename": "mage_flow_vae_bf16.safetensors"
+  },
+  "vae/wan_2.1_vae.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors",
+    "path": "path_vae",
+    "filename": "wan_2.1_vae.safetensors"
+  },
+  "vae/pixart_sigma_vae_fp16.safetensors": {
+    "url": "https://huggingface.co/calcuis/pixart/resolve/main/pixart_sigma_vae_fp16.safetensors",
+    "path": "path_vae",
+    "filename": "pixart_sigma_vae_fp16.safetensors"
+  },
+  "vae/pixart_vae_fp16.safetensors": {
+    "url": "https://huggingface.co/calcuis/pixart/resolve/main/pixart_vae_fp16.safetensors",
+    "path": "path_vae",
+    "filename": "pixart_vae_fp16.safetensors"
+  },
+  "vae/qwen_image_vae.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors",
+    "path": "path_vae",
+    "filename": "qwen_image_vae.safetensors"
+  },
+  "vae/pig_wan_vae_fp32-f16.gguf": {
+    "url": "https://huggingface.co/calcuis/cosmos-predict2-gguf/resolve/main/pig_wan_vae_fp32-f16.gguf",
+    "path": "path_vae",
+    "filename": "pig_wan_vae_fp32-f16.gguf"
+  },
+  "vae/sd15_vae.safetensors": {
+    "url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/vae/diffusion_pytorch_model.safetensors",
+    "path": "path_vae",
+    "filename": "sd15_vae.safetensors"
+  }
+}

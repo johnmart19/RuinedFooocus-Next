@@ -1,0 +1,16 @@
+{
+  "diffusion_models/mage_flow_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Mage-Flow/resolve/6ff68fbf3c667325e961d551691b246791d5eec0/diffusion_models/mage_flow_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "mage_flow_int8_convrot.safetensors",
+    "size": 4159146848,
+    "sha256": "e081068163d7793b7e0d54ae2a773d3ac1c0d5b099c09b69dcbff36448485ae8"
+  },
+  "diffusion_models/mage_flow_turbo_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Mage-Flow/resolve/6ff68fbf3c667325e961d551691b246791d5eec0/diffusion_models/mage_flow_turbo_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "mage_flow_turbo_int8_convrot.safetensors",
+    "size": 4159146840,
+    "sha256": "327c3967a5190ea52e453ec3dd81ba168e37a2a0ff2c763aa3e9260bbbe1913c"
+  }
+}

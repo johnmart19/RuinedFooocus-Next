@@ -1,0 +1,9 @@
+{
+  "diffusion_models/pid_flux1_1024_to_4096_4step_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/PixelDiT/resolve/f1aa9118da0a0b53a4433e5de9a4de2e9aae2193/diffusion_models/pid_flux1_1024_to_4096_4step_bf16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "pid_flux1_1024_to_4096_4step_bf16.safetensors",
+    "size": 2724747428,
+    "sha256": "17c282ed387edad7bfdd3189c5a17363d73e3d60b5e841dfded81c3b76e211ee"
+  }
+}

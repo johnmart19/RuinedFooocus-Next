@@ -1,0 +1,16 @@
+{
+  "diffusion_models/moss_image_base_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/2929efe3cdd506c0a430bcfca70a9a8d805cc095/diffusion_models/moss_image_base_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "moss_image_base_int8_convrot.safetensors",
+    "size": 5413698958,
+    "sha256": "f601c1e1161915fb3fea003da0c1782e374dd960fbb3978bc0e4e3fa1f2d8e6f"
+  },
+  "diffusion_models/moss_image_sft_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/2929efe3cdd506c0a430bcfca70a9a8d805cc095/diffusion_models/moss_image_sft_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "moss_image_sft_int8_convrot.safetensors",
+    "size": 5413698958,
+    "sha256": "b4d1475bc7eeffd7b809e82ea13a1fba1fb85c4e18365af3813722faa5c0fe4f"
+  }
+}

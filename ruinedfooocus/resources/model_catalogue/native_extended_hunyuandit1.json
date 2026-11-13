@@ -1,0 +1,16 @@
+{
+  "checkpoints/hunyuan_dit_1.0.safetensors": {
+    "url": "https://huggingface.co/comfyanonymous/hunyuan_dit_comfyui/resolve/ffdcfdc13da97c04769ead9ea1ea45c9e852d503/hunyuan_dit_1.0.safetensors",
+    "path": "path_checkpoints",
+    "filename": "hunyuan_dit_1.0.safetensors",
+    "size": 8273392406,
+    "sha256": "60ee5b765b40575c23a82cb4fec8e51e28157391e94397abf40d9546e81e1c58"
+  },
+  "checkpoints/hunyuan_dit_1.1.safetensors": {
+    "url": "https://huggingface.co/comfyanonymous/hunyuan_dit_comfyui/resolve/ffdcfdc13da97c04769ead9ea1ea45c9e852d503/hunyuan_dit_1.1.safetensors",
+    "path": "path_checkpoints",
+    "filename": "hunyuan_dit_1.1.safetensors",
+    "size": 8273392406,
+    "sha256": "26ab130e7bb515e976aa6d8fac8c3f11caef986c13140447ba102a4b1e675245"
+  }
+}

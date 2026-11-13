@@ -1,0 +1,9 @@
+{
+  "diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/SDPose/resolve/acb43fbe8142b54d9ebd52b720b81dd4e14c8d81/diffusion_models/rt_detr_v4-x-hgnet_fp16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "rt_detr_v4-x-hgnet_fp16.safetensors",
+    "size": 123968978,
+    "sha256": "581f9af9bbabb664d1891cbccd823308b176ecd409146f954dfa39af3bec2476"
+  }
+}

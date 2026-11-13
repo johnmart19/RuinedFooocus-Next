@@ -1,0 +1,9 @@
+{
+  "diffusion_models/chroma-radiance-x0.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Chroma1-Radiance_Repackaged/resolve/a94a9efb873f66878541890410f2a6f79d07dd73/split_files/diffusion_models/chroma-radiance-x0.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "chroma-radiance-x0.safetensors",
+    "size": 19012346326,
+    "sha256": "086e11d033ccd7470e67fa80e00a29902df2868cc84e16df0b48853be3a8672a"
+  }
+}

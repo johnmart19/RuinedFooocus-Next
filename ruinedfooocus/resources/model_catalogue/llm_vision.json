@@ -1,0 +1,40 @@
+{
+  "vision/SmolVLM-256M-Instruct-Q8_0.gguf": {
+    "url": "https://huggingface.co/ggml-org/SmolVLM-256M-Instruct-GGUF/resolve/main/SmolVLM-256M-Instruct-Q8_0.gguf",
+    "path": "path_vision",
+    "filename": "SmolVLM-256M-Instruct-Q8_0.gguf",
+    "mmproj": "mmproj-SmolVLM-256M-Instruct-Q8_0.gguf"
+  },
+  "vision/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf": {
+    "url": "https://huggingface.co/ggml-org/SmolVLM-256M-Instruct-GGUF/resolve/main/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf",
+    "path": "path_vision",
+    "filename": "mmproj-SmolVLM-256M-Instruct-Q8_0.gguf"
+  },
+  "vision/Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/resolve/main/Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf",
+    "path": "path_vision",
+    "filename": "Qwen2.5-VL-3B-Instruct-Q4_K_M.gguf",
+    "mmproj": "mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf"
+  },
+  "vision/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf": {
+    "url": "https://huggingface.co/ggml-org/Qwen2.5-VL-3B-Instruct-GGUF/resolve/main/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf",
+    "path": "path_vision",
+    "filename": "mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf"
+  },
+  "vision/gemma-3-4b-it-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/ggml-org/gemma-3-4b-it-GGUF/resolve/main/gemma-3-4b-it-Q4_K_M.gguf",
+    "path": "path_vision",
+    "filename": "gemma-3-4b-it-Q4_K_M.gguf",
+    "mmproj": "mmproj-gemma-3-4b-it-f16.gguf"
+  },
+  "vision/mmproj-gemma-3-4b-it-f16.gguf": {
+    "url": "https://huggingface.co/ggml-org/gemma-3-4b-it-GGUF/resolve/main/mmproj-model-f16.gguf",
+    "path": "path_vision",
+    "filename": "mmproj-gemma-3-4b-it-f16.gguf"
+  },
+  "vision/mmproj-Qwen3.5-9B-BF16.gguf": {
+    "url": "https://huggingface.co/llmfan46/Qwen3.5-9B-Ultra-Uncensored-Heretic-GGUF/resolve/56152d16c9f4656a71e42cf3ad8af9273b9238bb/Qwen3.5-9B-mmproj-BF16.gguf",
+    "path": "path_vision",
+    "filename": "mmproj-Qwen3.5-9B-BF16.gguf"
+  }
+}

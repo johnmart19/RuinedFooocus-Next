@@ -1,0 +1,9 @@
+{
+  "diffusion_models/koala_700m_unet_fp16.safetensors": {
+    "url": "https://huggingface.co/etri-vilab/koala-700m/resolve/5e73a318a1ee1b97cc31fd50f09ac13e018c0b63/unet/diffusion_pytorch_model.fp16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "koala_700m_unet_fp16.safetensors",
+    "size": 1565720384,
+    "sha256": "8395037248657fa903a0be3e5b296cb950faea360815f78e0a9863fdf5ee4164"
+  }
+}

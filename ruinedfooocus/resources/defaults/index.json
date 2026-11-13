@@ -1,0 +1,1086 @@
+{
+  "schema_version": 1,
+  "recipes": {
+    "Native full Stable Cascade C": {
+      "path": "image/native-stablecascade-c-full.json",
+      "id": "native-stablecascade-c-full",
+      "family": "Stable_Cascade_C",
+      "variant": "base",
+      "media": "image",
+      "sha256": "2d3972d04eabf9b3965a6c24744dff6124e3b5042d1d793745fc76b40c0fd663"
+    },
+    "Stable Cascade C": {
+      "path": "image/stable-cascade-c.json",
+      "id": "stable-cascade-c",
+      "family": "Stable Cascade C",
+      "variant": "base",
+      "media": "image",
+      "sha256": "6c25dc35e70eb8add998ee6befb1693c084c7ee2418fc7e8cd5c4fe3fe0c2b13"
+    },
+    "Qwen Image 2.1": {
+      "path": "image/qwen-image-2-1.json",
+      "id": "qwen-image-2-1",
+      "family": "Qwen Image 2.1",
+      "variant": "base",
+      "media": "image",
+      "sha256": "cfd5d3debf08e432689d86a23e58b46b5c7d93a192c89fc2b832226b26c594fc"
+    },
+    "Lens": {
+      "path": "image/lens.json",
+      "id": "lens",
+      "family": "Lens",
+      "variant": "base",
+      "media": "image",
+      "sha256": "8cba95558ec9ab2af81f11afeb80d83d2ffc51f91a6a8df22a01e841e727117e"
+    },
+    "Lens Turbo": {
+      "path": "image/lens-turbo.json",
+      "id": "lens-turbo",
+      "family": "Lens",
+      "variant": "turbo",
+      "media": "image",
+      "sha256": "3b75234a033b6425c27810a7c4b5c5750ccda74b69a3844bb6d563c5d804fc90"
+    },
+    "Ming Image Design": {
+      "path": "image/ming-image-design.json",
+      "id": "ming-image-design",
+      "family": "Ming Image Design",
+      "variant": "design",
+      "media": "image",
+      "sha256": "b087163eca40c730dd383feb57e4b1642be4079b9befc6e1887f522ffc20f357"
+    },
+    "MOSS Image": {
+      "path": "image/moss-image.json",
+      "id": "moss-image",
+      "family": "MOSS Image",
+      "variant": "base",
+      "media": "image",
+      "sha256": "3b162244b4b2909bbeca454849e1884b648bfe20b02fb5ea5faf4722d491e0b9"
+    },
+    "Anima": {
+      "path": "image/anima.json",
+      "id": "anima",
+      "family": "Anima",
+      "variant": "base",
+      "media": "image",
+      "sha256": "8b9570185c7ef67833406d9b6912ca5900eccb47830ff3ed71eeef0eacc228d1"
+    },
+    "Qwen Image Edit": {
+      "path": "image/qwen-image-edit.json",
+      "id": "qwen-image-edit",
+      "family": "Qwen Image",
+      "variant": "edit",
+      "media": "image",
+      "sha256": "102e4aba5b99d11ff3413bf273d51b9342c7511fde384acb3bef40bdeae2981a"
+    },
+    "Qwen Image": {
+      "path": "image/qwen-image.json",
+      "id": "qwen-image",
+      "family": "Qwen Image",
+      "variant": "base",
+      "media": "image",
+      "sha256": "9f02926bb6bbc12ce2c22d4e740bd3f710eb5558a4c15af707d83aac1e8bd3ca"
+    },
+    "Krea 2": {
+      "path": "image/krea-2.json",
+      "id": "krea-2",
+      "family": "Krea 2",
+      "variant": "base",
+      "media": "image",
+      "sha256": "53c640c0585251b08031b09113d15366c8997d95b7877e56c6af6d74cfc9f5c3"
+    },
+    "Mage Flow": {
+      "path": "image/mage-flow.json",
+      "id": "mage-flow",
+      "family": "Mage Flow",
+      "variant": "base",
+      "media": "image",
+      "sha256": "95311ee04e1fd65f0192b027ff886e3876fd4c1e665d8f65096e3a3f964a5956"
+    },
+    "Mage Flow Turbo": {
+      "path": "image/mage-flow-turbo.json",
+      "id": "mage-flow-turbo",
+      "family": "Mage Flow",
+      "variant": "turbo",
+      "media": "image",
+      "sha256": "459bcacfa9821f9d49b95e98f73daf0a8feb740df7cf409ff14a2da8a522fbe3"
+    },
+    "Z-Image Turbo": {
+      "path": "image/z-image-turbo.json",
+      "id": "z-image-turbo",
+      "family": "Z-Image Turbo",
+      "variant": "base",
+      "media": "image",
+      "sha256": "f6c2b6e2796550cfb12c3504d72c74dc65f336e7b955dafc2c0feba516cd51cf"
+    },
+    "SDXL": {
+      "path": "image/sdxl.json",
+      "id": "sdxl",
+      "family": "SDXL",
+      "variant": "base",
+      "media": "image",
+      "sha256": "85b40a9e47008e190f45139edf9fef06406e6f866b24b5edea3f298ba18e576f"
+    },
+    "Illustrious XL": {
+      "path": "image/illustrious-xl.json",
+      "id": "illustrious-xl",
+      "family": "Illustrious XL",
+      "variant": "base",
+      "media": "image",
+      "sha256": "8d11eab4ae4feb2ad32195d9611d361652c6dd566348bb0410dddc336a3cc15c"
+    },
+    "Pony XL": {
+      "path": "image/pony-xl.json",
+      "id": "pony-xl",
+      "family": "Pony XL",
+      "variant": "base",
+      "media": "image",
+      "sha256": "f63f2d49b22214e5e4c75b5e2ab15b3bd1d8c736f6472754c0b329659a7e6fa5"
+    },
+    "NoobAI XL": {
+      "path": "image/noobai-xl.json",
+      "id": "noobai-xl",
+      "family": "NoobAI XL",
+      "variant": "base",
+      "media": "image",
+      "sha256": "87aedd129523fcdf9248cc6556b2ab35bd9fa00d9caa4d791fbd9cecb1d40744"
+    },
+    "FLUX.1 dev": {
+      "path": "image/flux-1-dev.json",
+      "id": "flux-1-dev",
+      "family": "FLUX.1 dev",
+      "variant": "base",
+      "media": "image",
+      "sha256": "0e39a8b7bdac2a53e2ab893d88f7c1b60f3e9e6e6703deec1327fb927a89670f"
+    },
+    "FLUX.1 schnell": {
+      "path": "image/flux-1-schnell.json",
+      "id": "flux-1-schnell",
+      "family": "FLUX.1 schnell",
+      "variant": "base",
+      "media": "image",
+      "sha256": "328882194030df0d220b3ceaaf6fabfd24e9732e05ee335539ae82b55b87b10a"
+    },
+    "FLUX 3 Klein": {
+      "path": "image/flux-3-klein.json",
+      "id": "flux-3-klein",
+      "family": "FLUX 3 Klein",
+      "variant": "base",
+      "media": "image",
+      "sha256": "836a7d2deeacef2745d819c5d53ac55df834d64631e3886229321d4fa7e3b593"
+    },
+    "HiDream I1 Full": {
+      "path": "image/hidream-i1-full.json",
+      "id": "hidream-i1-full",
+      "family": "HiDream I1 Full",
+      "variant": "full",
+      "media": "image",
+      "sha256": "336c23b8b8440ea8f730425dedd28f3bb313c5d197ae14925f8f0ebdb591d1e4"
+    },
+    "HiDream I1 Dev": {
+      "path": "image/hidream-i1-dev.json",
+      "id": "hidream-i1-dev",
+      "family": "HiDream I1 Full",
+      "variant": "dev",
+      "media": "image",
+      "sha256": "b2367ffeba8ad74114a5de12324556fb213973ec81b9f2067aa39c634c362f6b"
+    },
+    "HiDream I1 Fast": {
+      "path": "image/hidream-i1-fast.json",
+      "id": "hidream-i1-fast",
+      "family": "HiDream I1 Full",
+      "variant": "fast",
+      "media": "image",
+      "sha256": "38603c3468234fb0b322ce4a157660d285b07c99547bf2c53e62be22041bff6c"
+    },
+    "SD3.5": {
+      "path": "image/sd3-5.json",
+      "id": "sd3-5",
+      "family": "SD3.5",
+      "variant": "base",
+      "media": "image",
+      "sha256": "b11b640dbb2769956eb16f537ae62492783167b2efada5e469705640d96396a8"
+    },
+    "HiDream O1": {
+      "path": "image/hidream-o1.json",
+      "id": "hidream-o1",
+      "family": "HiDream O1",
+      "variant": "full",
+      "media": "image",
+      "sha256": "e8bbc1e5cafd0e90a3938a51909f38c98229c90b753b65516147b9886e8ee9b6"
+    },
+    "HiDream O1 Dev": {
+      "path": "image/hidream-o1-dev.json",
+      "id": "hidream-o1-dev",
+      "family": "HiDream O1",
+      "variant": "dev",
+      "media": "image",
+      "sha256": "aa2304ced83b7abc999f7167422d3cba4bfa4b4189e405212628992cc536f122"
+    },
+    "Qwen Image 2.1 Turbo": {
+      "path": "image/qwen-image-2-1-turbo.json",
+      "id": "qwen-image-2-1-turbo",
+      "family": "Qwen Image 2.1",
+      "variant": "turbo",
+      "media": "image",
+      "sha256": "446dc6c2c57d3035c1804fb1271320b518ef7e5a50a271941f1e5cc309ae7f55"
+    },
+    "Omnigen2": {
+      "path": "image/native-config-omnigen2.json",
+      "id": "native-config-omnigen2",
+      "family": "Omnigen2",
+      "variant": "base",
+      "media": "image",
+      "sha256": "4c515d8539ad0bfa0e1a85f69c3b755d5301b791248e791dd8f221b522c23ce4"
+    },
+    "Kandinsky5Image": {
+      "path": "image/native-config-kandinsky5image.json",
+      "id": "native-config-kandinsky5image",
+      "family": "Kandinsky5Image",
+      "variant": "base",
+      "media": "image",
+      "sha256": "6c9f54e612eda5937d9fb45863da7821067da5974575976963fae67a1dc990f7"
+    },
+    "Native Boogu edit": {
+      "path": "image/native-boogu-edit.json",
+      "id": "native-boogu-edit",
+      "family": "Boogu",
+      "variant": "edit",
+      "media": "image",
+      "sha256": "1f30536b87c2a819f4076a45df7a2935ba6e413eb8bbeebf9fcbb4f3b2a8ea6c"
+    },
+    "Native Boogu turbo": {
+      "path": "image/native-boogu-turbo.json",
+      "id": "native-boogu-turbo",
+      "family": "Boogu",
+      "variant": "turbo",
+      "media": "image",
+      "sha256": "39b4e4d50cfae08ca0ec50abdcc1bb73b81e3c64293f0ee84550bc778af25032"
+    },
+    "Native Chroma base": {
+      "path": "image/native-chroma-base.json",
+      "id": "native-chroma-base",
+      "family": "Chroma",
+      "variant": "base",
+      "media": "image",
+      "sha256": "27c9d0b04f4c6d35c41c2cd7e3430840e97acf8d19e062fb49af586db62c8cb7"
+    },
+    "Native ChromaRadiance radiance-x0": {
+      "path": "image/native-chromaradiance-radiance-x0.json",
+      "id": "native-chromaradiance-radiance-x0",
+      "family": "ChromaRadiance",
+      "variant": "radiance-x0",
+      "media": "image",
+      "sha256": "54d7bd5f211231b2ecd933574eb9f1497aea61d613a4baf69b6ddaa79b0056f0"
+    },
+    "Native Fibo2 dev": {
+      "path": "image/native-fibo2-dev.json",
+      "id": "native-fibo2-dev",
+      "family": "Fibo2",
+      "variant": "dev",
+      "media": "image",
+      "sha256": "aef6a06906d53e8e53fdc077b77cb1de424751e30b6162c5b613d6970a1fc2aa"
+    },
+    "Native Fibo2 edit-turbo": {
+      "path": "image/native-fibo2-edit-turbo.json",
+      "id": "native-fibo2-edit-turbo",
+      "family": "Fibo2",
+      "variant": "edit-turbo",
+      "media": "image",
+      "sha256": "676fb3d8a3962174f2d46dbf5cba26d016411575ed9fcd2af24a6b5541c95deb"
+    },
+    "Native Flux.1 D krea-dev": {
+      "path": "image/native-flux-1-d-krea-dev.json",
+      "id": "native-flux-1-d-krea-dev",
+      "family": "Flux.1 D",
+      "variant": "krea-dev",
+      "media": "image",
+      "sha256": "f0ee09ec6f994250671a9d6ed3c8b572c25551474c8904121f193b1e60b5d1c4"
+    },
+    "Native Flux.1 D kontext-dev": {
+      "path": "image/native-flux-1-d-kontext-dev.json",
+      "id": "native-flux-1-d-kontext-dev",
+      "family": "Flux.1 D",
+      "variant": "kontext-dev",
+      "media": "image",
+      "sha256": "fae7a2c5786521317b1f9d7f4065d5e83a4ff0001ca5f7d418d9aabffe73e3d4"
+    },
+    "Native FluxInpaint fill-dev": {
+      "path": "image/native-fluxinpaint-fill-dev.json",
+      "id": "native-fluxinpaint-fill-dev",
+      "family": "FluxInpaint",
+      "variant": "fill-dev",
+      "media": "image",
+      "sha256": "2719eabcb865da5a06f56dd1052990888ec5ce94d3882c9e3302b3c546f04b50"
+    },
+    "Native Flux2Klein4B klein-base-4b": {
+      "path": "image/native-flux2klein4b-klein-base-4b.json",
+      "id": "native-flux2klein4b-klein-base-4b",
+      "family": "Flux2Klein4B",
+      "variant": "klein-base-4b",
+      "media": "image",
+      "sha256": "ad85d98561e0b85f480f0117400c88955992f73c899b4ab0781a4f8fbea747c6"
+    },
+    "Native Flux2Klein4B klein-distilled-4b": {
+      "path": "image/native-flux2klein4b-klein-distilled-4b.json",
+      "id": "native-flux2klein4b-klein-distilled-4b",
+      "family": "Flux2Klein4B",
+      "variant": "klein-distilled-4b",
+      "media": "image",
+      "sha256": "fe2a77e90a54517d86e1d6a66a90ef6c972f7a100893d9697054c4db45e17b75"
+    },
+    "Native Flux2Klein9B klein-distilled-9b-kv": {
+      "path": "image/native-flux2klein9b-klein-distilled-9b-kv.json",
+      "id": "native-flux2klein9b-klein-distilled-9b-kv",
+      "family": "Flux2Klein9B",
+      "variant": "klein-distilled-9b-kv",
+      "media": "image",
+      "sha256": "07c9b8e26676303403bd94119b92f22b5c99cdad5378e277f02d1f7deee6e139"
+    },
+    "Native Flux2 dev": {
+      "path": "image/native-flux2-dev.json",
+      "id": "native-flux2-dev",
+      "family": "Flux2",
+      "variant": "dev",
+      "media": "image",
+      "sha256": "88b1d88634529783cecd358ad06a67a034c84cc9bf8124e519800f192b2e63e2"
+    },
+    "Native Ideogram4 conditional": {
+      "path": "image/native-ideogram4-conditional.json",
+      "id": "native-ideogram4-conditional",
+      "family": "Ideogram4",
+      "variant": "conditional",
+      "media": "image",
+      "sha256": "d4fdf2da4991ba801ff20c4966457b899cc78759d4705c005298fe93b8727eb7"
+    },
+    "Native JoyImage edit": {
+      "path": "image/native-joyimage-edit.json",
+      "id": "native-joyimage-edit",
+      "family": "JoyImage",
+      "variant": "edit",
+      "media": "image",
+      "sha256": "22141ad7384981278d6a8adea506fc23c9b68e87e8a522260a6c6c02ff28a7a1"
+    },
+    "Native LongCatImage base": {
+      "path": "image/native-longcatimage-base.json",
+      "id": "native-longcatimage-base",
+      "family": "LongCatImage",
+      "variant": "base",
+      "media": "image",
+      "sha256": "28cb7449c134f20f27916e45a0bac9abfba6a0bd1de229dfb1d00e1fe5f66d75"
+    },
+    "Native LongCatImage edit": {
+      "path": "image/native-longcatimage-edit.json",
+      "id": "native-longcatimage-edit",
+      "family": "LongCatImage",
+      "variant": "edit",
+      "media": "image",
+      "sha256": "31424f30b9c46e9e2fa712ac7f2f57a4ec575e22547f3cf694464a2920a2c6ed"
+    },
+    "Native NewBieImage exp0.1": {
+      "path": "image/native-newbieimage-exp0.1.json",
+      "id": "native-newbieimage-exp0.1",
+      "family": "NewBieImage",
+      "variant": "exp0.1",
+      "media": "image",
+      "sha256": "f5ceeb3595381237b551aa55b5c85cf0dca9bc476e6e8b556cc37efd45a216f8"
+    },
+    "Native Lumina2 netayume-v3.5": {
+      "path": "image/native-lumina2-netayume-v3.5.json",
+      "id": "native-lumina2-netayume-v3.5",
+      "family": "Lumina2",
+      "variant": "netayume-v3.5",
+      "media": "image",
+      "sha256": "c383fdcf4d24e2af121c78aefad16b316a57819f77d164f8f36d9c6685068c30"
+    },
+    "Native MOSSImage base": {
+      "path": "image/native-mossimage-base.json",
+      "id": "native-mossimage-base",
+      "family": "MOSSImage",
+      "variant": "base",
+      "media": "image",
+      "sha256": "38a4aef1826fd450d732687867e5ac49ce0e62f14041baa3f7220909c0632bb5"
+    },
+    "Native MOSSImage sft": {
+      "path": "image/native-mossimage-sft.json",
+      "id": "native-mossimage-sft",
+      "family": "MOSSImage",
+      "variant": "sft",
+      "media": "image",
+      "sha256": "77d358ac3dfc566444a432f7807f18af137035304029d719fa92b9e3224c6cd0"
+    },
+    "Native PixelDiTT2I t2i": {
+      "path": "image/native-pixelditt2i-t2i.json",
+      "id": "native-pixelditt2i-t2i",
+      "family": "PixelDiTT2I",
+      "variant": "t2i",
+      "media": "image",
+      "sha256": "979af20e8229fcab9749752d0e482d2a3ecc527b5c514967a44848aafba34a92"
+    },
+    "Native PiD flux1-1024-to-4096-4step": {
+      "path": "image/native-pid-flux1-1024-to-4096-4step.json",
+      "id": "native-pid-flux1-1024-to-4096-4step",
+      "family": "PiD",
+      "variant": "flux1-1024-to-4096-4step",
+      "media": "image",
+      "sha256": "19022392293ff412d301677ab04494a11ad7dbefdb356277e8e98d24408ecc90"
+    },
+    "Native QwenImage 2512": {
+      "path": "image/native-qwenimage-2512.json",
+      "id": "native-qwenimage-2512",
+      "family": "QwenImage",
+      "variant": "2512",
+      "media": "image",
+      "sha256": "5c12f325b1e1dc5f94e1ac74379a0c0d7c837047bbe792de4f332022733846bc"
+    },
+    "Native QwenImage edit-2511": {
+      "path": "image/native-qwenimage-edit-2511.json",
+      "id": "native-qwenimage-edit-2511",
+      "family": "QwenImage",
+      "variant": "edit-2511",
+      "media": "image",
+      "sha256": "f94650b230e223f5af4b2ded1e1d3126fabc3ef75f512eea70461df59ccda0a8"
+    },
+    "Native QwenImage layered": {
+      "path": "image/native-qwenimage-layered.json",
+      "id": "native-qwenimage-layered",
+      "family": "QwenImage",
+      "variant": "layered",
+      "media": "image",
+      "sha256": "f867c7f29fd31beb159d251157c999398d6d6bae83938a873cbce2c0260a339a"
+    },
+    "Native ZImage base": {
+      "path": "image/native-zimage-base.json",
+      "id": "native-zimage-base",
+      "family": "ZImage",
+      "variant": "base",
+      "media": "image",
+      "sha256": "da7ce9306fa6b7552ab92895a2dbc79d795599ca7df2ff44b03bf2e0afbffebb"
+    },
+    "Native ZImage turbo": {
+      "path": "image/native-zimage-turbo.json",
+      "id": "native-zimage-turbo",
+      "family": "ZImage",
+      "variant": "turbo",
+      "media": "image",
+      "sha256": "fccc3a1e713257656672214cd26f6525e93b342da83ee63bb6dea12fd06451e3"
+    },
+    "Native ErnieImage base": {
+      "path": "image/native-ernieimage-base.json",
+      "id": "native-ernieimage-base",
+      "family": "ErnieImage",
+      "variant": "base",
+      "media": "image",
+      "sha256": "ec9a1e9e4f9b75d9e6f28590b6be978a9305c7061d239375d87d1615a5cd9bfa"
+    },
+    "Native ErnieImage turbo": {
+      "path": "image/native-ernieimage-turbo.json",
+      "id": "native-ernieimage-turbo",
+      "family": "ErnieImage",
+      "variant": "turbo",
+      "media": "image",
+      "sha256": "27529663a083549ffd1628c8ce7cbf92919683093368ceb4fa7769c0df8d21b0"
+    },
+    "Native Flux.1 D dev": {
+      "path": "image/native-flux-dev.json",
+      "id": "native-flux-dev",
+      "family": "Flux.1 D",
+      "variant": "dev",
+      "media": "image",
+      "sha256": "871b4ae8abf83faa984ec5a6b8c9867cc0c257f49601a74bd355180bdecd423b"
+    },
+    "Native QwenImage base": {
+      "path": "image/native-qwenimage-base.json",
+      "id": "native-qwenimage-base",
+      "family": "QwenImage",
+      "variant": "base",
+      "media": "image",
+      "sha256": "26f32c0938078387d606b9598394d542d37151125ab80f1ace0732ad3cc20fc7"
+    },
+    "Native QwenImage edit": {
+      "path": "image/native-qwenimage-edit.json",
+      "id": "native-qwenimage-edit",
+      "family": "QwenImage",
+      "variant": "edit",
+      "media": "image",
+      "sha256": "a49bbd0e7b722293a8652b5002f6f4a927a1fa68acec8e7266b49cbacd62737f"
+    },
+    "Native QwenImage edit-2509": {
+      "path": "image/native-qwenimage-edit-2509.json",
+      "id": "native-qwenimage-edit-2509",
+      "family": "QwenImage",
+      "variant": "edit-2509",
+      "media": "image",
+      "sha256": "f506fe79d1d6767e109d9bcd8e2bcc3ab648b0b27cd7d5fc29dcd721b0ddc425"
+    },
+    "Native extended SD15 base": {
+      "path": "image/native-extended-sd15-base.json",
+      "id": "native-extended-sd15-base",
+      "family": "SD 1.5",
+      "variant": "base",
+      "media": "image",
+      "sha256": "2568a836423d30550711832366c95a5b722f91d4ad8c46dd6b85aaf39cad5737"
+    },
+    "Native extended SD20 wd-beta2-aesthetic": {
+      "path": "image/native-extended-sd20-wd-beta2-aesthetic.json",
+      "id": "native-extended-sd20-wd-beta2-aesthetic",
+      "family": "SD 2.0",
+      "variant": "wd-beta2-aesthetic",
+      "media": "image",
+      "sha256": "d3e9b7bd64ca931527a65e013a1d142afa5d517de185597e33478b17e32b9570"
+    },
+    "Native extended SD21UnclipL unclip-l": {
+      "path": "image/native-extended-sd21unclipl-unclip-l.json",
+      "id": "native-extended-sd21unclipl-unclip-l",
+      "family": "SD21UnclipL",
+      "variant": "unclip-l",
+      "media": "image",
+      "sha256": "2204a2cd3261984427306cda877e1a62b7f126f3331d6fcb682401be69e8649b"
+    },
+    "Native extended SD21UnclipH unclip-h": {
+      "path": "image/native-extended-sd21uncliph-unclip-h.json",
+      "id": "native-extended-sd21uncliph-unclip-h",
+      "family": "SD21UnclipH",
+      "variant": "unclip-h",
+      "media": "image",
+      "sha256": "875d87434d2be67780266022b05a323c2d0ba8b1c33698f738723fb458779498"
+    },
+    "Native extended SD15_instructpix2pix base": {
+      "path": "image/native-extended-sd15-instructpix2pix-base.json",
+      "id": "native-extended-sd15-instructpix2pix-base",
+      "family": "SD15_instructpix2pix",
+      "variant": "base",
+      "media": "image",
+      "sha256": "5d8662da75a560ac61e78fa2935a9619ada7881565d2027ad977d158bc6af59d"
+    },
+    "Native extended SDXL_instructpix2pix base": {
+      "path": "image/native-extended-sdxl-instructpix2pix-base.json",
+      "id": "native-extended-sdxl-instructpix2pix-base",
+      "family": "SDXL_instructpix2pix",
+      "variant": "base",
+      "media": "image",
+      "sha256": "725586d96e566d912d8f25736f9b5d1f8fb21e6594395332b7e6c2bfc89214a9"
+    },
+    "Native extended SDXLRefiner base": {
+      "path": "image/native-extended-sdxlrefiner-base.json",
+      "id": "native-extended-sdxlrefiner-base",
+      "family": "SDXLRefiner",
+      "variant": "base",
+      "media": "image",
+      "sha256": "82cbc61f2a543173b14a760c7bffba2d301ab1d639a08f1b04434e76625f4cf3"
+    },
+    "Native extended SSD1B base": {
+      "path": "image/native-extended-ssd1b-base.json",
+      "id": "native-extended-ssd1b-base",
+      "family": "SSD1B",
+      "variant": "base",
+      "media": "image",
+      "sha256": "efade79a4afc716fae5eac311905b4fd60ae8f0fe108a447313710b1d2ea6ecb"
+    },
+    "Native extended KOALA_700M base": {
+      "path": "image/native-extended-koala-700m-base.json",
+      "id": "native-extended-koala-700m-base",
+      "family": "KOALA_700M",
+      "variant": "base",
+      "media": "image",
+      "sha256": "b6cba440ab91041525945c1261c12126fbe25d79e5687422f14d433c961696a6"
+    },
+    "Native extended KOALA_1B base": {
+      "path": "image/native-extended-koala-1b-base.json",
+      "id": "native-extended-koala-1b-base",
+      "family": "KOALA_1B",
+      "variant": "base",
+      "media": "image",
+      "sha256": "8f8528897554017762c2e448343ae41d7fcb0701911227daa07af937c72fafaa"
+    },
+    "Native extended Segmind_Vega base": {
+      "path": "image/native-extended-segmind-vega-base.json",
+      "id": "native-extended-segmind-vega-base",
+      "family": "Segmind_Vega",
+      "variant": "base",
+      "media": "image",
+      "sha256": "47d8b76955fda9d46b2bd0de082f6ebcb66599bef859b5965fb22c3b1327ae15"
+    },
+    "Native extended SD3 3.5-large": {
+      "path": "image/native-extended-sd3-3.5-large.json",
+      "id": "native-extended-sd3-3.5-large",
+      "family": "SD3",
+      "variant": "3.5-large",
+      "media": "image",
+      "sha256": "b82b28e71351676d8b6bae9196fd6378e4ae4f6d3e6ae97ec4702a8ba5c4c9c7"
+    },
+    "Native extended AuraFlow 0.3": {
+      "path": "image/native-extended-auraflow-0.3.json",
+      "id": "native-extended-auraflow-0.3",
+      "family": "AuraFlow",
+      "variant": "0.3",
+      "media": "image",
+      "sha256": "b67b73aa9ea6c078a55c823eb9acd22b95279693b38d69d439da41c219549f86"
+    },
+    "Native extended PixArtAlpha xl-2-1024-ms": {
+      "path": "image/native-extended-pixartalpha-xl-2-1024-ms.json",
+      "id": "native-extended-pixartalpha-xl-2-1024-ms",
+      "family": "PixArt",
+      "variant": "xl-2-1024-ms",
+      "media": "image",
+      "sha256": "3251d639d7477cab99d4d9c7b31ded2bff170eb80eb647ed593f69bbdf39c8a5"
+    },
+    "Native extended PixArtSigma xl-2-1024-ms": {
+      "path": "image/native-extended-pixartsigma-xl-2-1024-ms.json",
+      "id": "native-extended-pixartsigma-xl-2-1024-ms",
+      "family": "PixArt",
+      "variant": "xl-2-1024-ms",
+      "media": "image",
+      "sha256": "952455a61fce50a0fa751bfb265ddc57495a1f8751169889dc30c4c919246b89"
+    },
+    "Native extended HunyuanDiT1 1.0": {
+      "path": "image/native-extended-hunyuandit1-1.0.json",
+      "id": "native-extended-hunyuandit1-1.0",
+      "family": "HunyuanDiT1",
+      "variant": "1.0",
+      "media": "image",
+      "sha256": "d287b4cdb7ea1d576132a0ea6aa116bd2df9bfdb37148ee98f29c974797e44e9"
+    },
+    "Native extended HunyuanDiT1 1.1": {
+      "path": "image/native-extended-hunyuandit1-1.1.json",
+      "id": "native-extended-hunyuandit1-1.1",
+      "family": "HunyuanDiT1",
+      "variant": "1.1",
+      "media": "image",
+      "sha256": "26b86e52e03bde02c2d4e74782cb1098653ee0ddbcdfcce926669a0909aeeeb3"
+    },
+    "Native extended HunyuanImage21 base": {
+      "path": "image/native-extended-hunyuanimage21-base.json",
+      "id": "native-extended-hunyuanimage21-base",
+      "family": "HunyuanImage21",
+      "variant": "base",
+      "media": "image",
+      "sha256": "3c529c14a542a3a2cb69847363e525e6f228ea334560750ded35385cd77da14f"
+    },
+    "Native extended HunyuanImage21Refiner refiner": {
+      "path": "image/native-extended-hunyuanimage21refiner-refiner.json",
+      "id": "native-extended-hunyuanimage21refiner-refiner",
+      "family": "HunyuanImage21Refiner",
+      "variant": "refiner",
+      "media": "image",
+      "sha256": "692626f7f8727113e03b33a341884cec173b03f728923db871c41c6b11cc2820"
+    },
+    "Native extended CosmosT2IPredict2 2b-t2i": {
+      "path": "image/native-extended-cosmost2ipredict2-2b-t2i.json",
+      "id": "native-extended-cosmost2ipredict2-2b-t2i",
+      "family": "CosmosPredict2",
+      "variant": "2b-t2i",
+      "media": "image",
+      "sha256": "cb8ea2df13c53daf5e773b70010ce35d2d9c839a750874d0b5532e07a2de56cf"
+    },
+    "Native extended LotusD depth-v1.1": {
+      "path": "image/native-extended-lotusd-depth-v1.1.json",
+      "id": "native-extended-lotusd-depth-v1.1",
+      "family": "LotusD",
+      "variant": "depth-v1.1",
+      "media": "image",
+      "sha256": "c3d9db62a1b8ec2b64f20c9f4e092c001b558ec5c8240ea033a56837b2506bdd"
+    },
+    "Native extended LotusD sdpose-wholebody": {
+      "path": "image/native-extended-lotusd-sdpose-wholebody.json",
+      "id": "native-extended-lotusd-sdpose-wholebody",
+      "family": "SDPose",
+      "variant": "sdpose-wholebody",
+      "media": "image",
+      "sha256": "69afc8b5c0156db01adb8a7b2804a96fa79624726f163ff0f18f277267124764"
+    },
+    "Native extended RT_DETR_v4 sdpose-detect": {
+      "path": "image/native-extended-rt-detr-v4-sdpose-detect.json",
+      "id": "native-extended-rt-detr-v4-sdpose-detect",
+      "family": "RT_DETR_v4",
+      "variant": "sdpose-detect",
+      "media": "image",
+      "sha256": "b5617b3025703ce1fe01b2a12011ed459cc5e3e262dff507cfaf5417591f5f19"
+    },
+    "Native extended SAM31 multiplex-3.1": {
+      "path": "image/native-extended-sam31-multiplex-3.1.json",
+      "id": "native-extended-sam31-multiplex-3.1",
+      "family": "SAM31",
+      "variant": "multiplex-3.1",
+      "media": "image",
+      "sha256": "609f7673c5fb290619e8096f2b374f70d46bf6c7c0832b19077d6b972f30d3b7"
+    },
+    "Native extended SeedVR2 3b-int8": {
+      "path": "image/native-extended-seedvr2-3b-int8.json",
+      "id": "native-extended-seedvr2-3b-int8",
+      "family": "SeedVR2",
+      "variant": "3b-int8",
+      "media": "image",
+      "sha256": "bd2fc962584e86e52a55326595c58533ac8ca0f8d54b474833484078e17c77c7"
+    },
+    "Native extended SeedVR2 7b-int8": {
+      "path": "image/native-extended-seedvr2-7b-int8.json",
+      "id": "native-extended-seedvr2-7b-int8",
+      "family": "SeedVR2",
+      "variant": "7b-int8",
+      "media": "image",
+      "sha256": "c782e83285066a79219cb0535b4f77f7af597788c7ff75896cae737371402485"
+    },
+    "Native Zeta pixel-space (settings unqualified)": {
+      "path": "image/native-zeta-pixel-unqualified.json",
+      "id": "native-zeta-pixel-unqualified",
+      "family": "ZImagePixelSpace",
+      "variant": "x0-pixel",
+      "media": "image",
+      "sha256": "e65de4af8163cfe1bd8541f82602edce46fb1ae94ed9ec569c48ed99bc583308"
+    },
+    "Native MiniMax H3 Image PDD": {
+      "path": "image/native-minimax-h3-image.json",
+      "id": "native-minimax-h3-image",
+      "family": "MiniMaxH3Image",
+      "variant": "pdd-6",
+      "media": "image",
+      "sha256": "3d4ba2457bb7a7c2a8faf738b14f4140193290057252dc93e93c01a7c3095b41"
+    },
+    "Bernini-R image edit": {
+      "path": "image/native-bernini-image.json",
+      "id": "native-bernini-image",
+      "family": "BerniniImage",
+      "variant": "image-edit",
+      "media": "image",
+      "sha256": "18751e238547fb01fbaea9214fc8c98f2468f7b2bd4a21a2ef1f1bfaad1dd4fe"
+    }
+  },
+  "aliases": {
+    "Stable Cascade C": "Stable Cascade C",
+    "Stable_Cascade_C": "Stable Cascade C",
+    "StableCascade_C": "Stable Cascade C",
+    "Qwen Image 2.1": "Qwen Image 2.1",
+    "QwenImage21": "Qwen Image 2.1",
+    "Lens": "Lens",
+    "Lens Turbo": "Lens Turbo",
+    "Ming Image Design": "Ming Image Design",
+    "MingImage": "Ming Image Design",
+    "MOSS Image": "MOSS Image",
+    "MOSSImage": "MOSS Image",
+    "Anima": "Anima",
+    "Qwen Image Edit": "Qwen Image Edit",
+    "Qwen Image": "Qwen Image",
+    "QwenImage": "Qwen Image",
+    "Qwen": "Qwen Image",
+    "Qwen-Image": "Qwen Image",
+    "Krea 2": "Krea 2",
+    "Krea2": "Krea 2",
+    "Mage Flow": "Mage Flow",
+    "MageFlow": "Mage Flow",
+    "Mage Flow Turbo": "Mage Flow Turbo",
+    "Z-Image Turbo": "Z-Image Turbo",
+    "SDXL": "SDXL",
+    "SDXL 1.0": "SDXL",
+    "Illustrious XL": "Illustrious XL",
+    "Illustrious": "Illustrious XL",
+    "Pony XL": "Pony XL",
+    "Pony": "Pony XL",
+    "NoobAI XL": "NoobAI XL",
+    "NoobAI": "NoobAI XL",
+    "FLUX.1 dev": "FLUX.1 dev",
+    "Flux.1 D": "FLUX.1 dev",
+    "FLUX.1 schnell": "FLUX.1 schnell",
+    "Flux.1 S": "FLUX.1 schnell",
+    "FLUX 3 Klein": "FLUX 3 Klein",
+    "HiDream I1 Full": "HiDream I1 Full",
+    "HiDream": "HiDream I1 Full",
+    "HiDream I1 Dev": "HiDream I1 Dev",
+    "HiDream I1 Fast": "HiDream I1 Fast",
+    "SD3.5": "SD3.5",
+    "SD 3.5": "SD3.5",
+    "SD 3.5 Large": "SD3.5",
+    "HiDream O1": "HiDream O1",
+    "HiDreamO1": "HiDream O1",
+    "HiDream O1 Dev": "HiDream O1 Dev",
+    "Qwen Image 2.1 Turbo": "Qwen Image 2.1 Turbo",
+    "Omnigen2": "Omnigen2",
+    "Kandinsky5Image": "Kandinsky5Image",
+    "Boogu": "Native Boogu edit",
+    "Chroma": "Native Chroma base",
+    "ChromaRadiance": "Native ChromaRadiance radiance-x0",
+    "Fibo2": "Native Fibo2 dev",
+    "FluxInpaint": "Native FluxInpaint fill-dev",
+    "Flux2Klein4B": "Native Flux2Klein4B klein-base-4b",
+    "Flux2Klein9B": "Native Flux2Klein9B klein-distilled-9b-kv",
+    "Flux2": "Native Flux2 dev",
+    "Ideogram4": "Native Ideogram4 conditional",
+    "JoyImage": "Native JoyImage edit",
+    "LongCatImage": "Native LongCatImage base",
+    "NewBieImage": "Native NewBieImage exp0.1",
+    "Lumina2": "Native Lumina2 netayume-v3.5",
+    "PixelDiTT2I": "Native PixelDiTT2I t2i",
+    "PiD": "Native PiD flux1-1024-to-4096-4step",
+    "ZImage": "Native ZImage base",
+    "ErnieImage": "Native ErnieImage base",
+    "SD 1.5": "Native extended SD15 base",
+    "SD 2.0": "Native extended SD20 wd-beta2-aesthetic",
+    "SD21UnclipL": "Native extended SD21UnclipL unclip-l",
+    "SD21UnclipH": "Native extended SD21UnclipH unclip-h",
+    "SD15_instructpix2pix": "Native extended SD15_instructpix2pix base",
+    "SDXL_instructpix2pix": "Native extended SDXL_instructpix2pix base",
+    "SDXLRefiner": "Native extended SDXLRefiner base",
+    "SSD1B": "Native extended SSD1B base",
+    "KOALA_700M": "Native extended KOALA_700M base",
+    "KOALA_1B": "Native extended KOALA_1B base",
+    "Segmind_Vega": "Native extended Segmind_Vega base",
+    "SD3": "Native extended SD3 3.5-large",
+    "AuraFlow": "Native extended AuraFlow 0.3",
+    "PixArt": "Native extended PixArtAlpha xl-2-1024-ms",
+    "HunyuanDiT1": "Native extended HunyuanDiT1 1.0",
+    "HunyuanImage21": "Native extended HunyuanImage21 base",
+    "HunyuanImage21Refiner": "Native extended HunyuanImage21Refiner refiner",
+    "CosmosPredict2": "Native extended CosmosT2IPredict2 2b-t2i",
+    "LotusD": "Native extended LotusD depth-v1.1",
+    "SDPose": "Native extended LotusD sdpose-wholebody",
+    "RT_DETR_v4": "Native extended RT_DETR_v4 sdpose-detect",
+    "SAM31": "Native extended SAM31 multiplex-3.1",
+    "SeedVR2": "Native extended SeedVR2 3b-int8",
+    "MiniMaxH3Image": "Native MiniMax H3 Image PDD",
+    "BerniniImage": "Bernini-R image edit"
+  },
+  "variants": {
+    "Stable Cascade C": {
+      "base": "Stable Cascade C"
+    },
+    "HiDream I1 Full": {
+      "full": "HiDream I1 Full",
+      "dev": "HiDream I1 Dev",
+      "fast": "HiDream I1 Fast"
+    },
+    "HiDream O1": {
+      "full": "HiDream O1",
+      "base": "HiDream O1",
+      "dev": "HiDream O1 Dev"
+    },
+    "Qwen Image": {
+      "base": "Native QwenImage base",
+      "edit": "Native QwenImage edit",
+      "2512": "Native QwenImage 2512",
+      "edit-2511": "Native QwenImage edit-2511",
+      "layered": "Native QwenImage layered",
+      "edit-2509": "Native QwenImage edit-2509"
+    },
+    "Mage Flow": {
+      "base": "Mage Flow",
+      "turbo": "Mage Flow Turbo"
+    },
+    "Lens": {
+      "base": "Lens",
+      "turbo": "Lens Turbo"
+    },
+    "Ming Image Design": {
+      "design": "Ming Image Design"
+    },
+    "Qwen Image 2.1": {
+      "base": "Qwen Image 2.1",
+      "turbo": "Qwen Image 2.1 Turbo"
+    },
+    "Boogu": {
+      "edit": "Native Boogu edit",
+      "turbo": "Native Boogu turbo"
+    },
+    "Chroma": {
+      "base": "Native Chroma base"
+    },
+    "ChromaRadiance": {
+      "radiance-x0": "Native ChromaRadiance radiance-x0"
+    },
+    "Fibo2": {
+      "dev": "Native Fibo2 dev",
+      "edit-turbo": "Native Fibo2 edit-turbo",
+      "turbo": "Native Fibo2 edit-turbo"
+    },
+    "FLUX.1 dev": {
+      "krea-dev": "Native Flux.1 D krea-dev",
+      "kontext-dev": "Native Flux.1 D kontext-dev",
+      "base": "Native Flux.1 D dev",
+      "dev": "Native Flux.1 D dev"
+    },
+    "FluxInpaint": {
+      "fill-dev": "Native FluxInpaint fill-dev"
+    },
+    "Flux2Klein4B": {
+      "klein-base-4b": "Native Flux2Klein4B klein-base-4b",
+      "base": "Native Flux2Klein4B klein-base-4b",
+      "klein-distilled-4b": "Native Flux2Klein4B klein-distilled-4b",
+      "distilled": "Native Flux2Klein4B klein-distilled-4b"
+    },
+    "Flux2Klein9B": {
+      "klein-distilled-9b-kv": "Native Flux2Klein9B klein-distilled-9b-kv",
+      "distilled": "Native Flux2Klein9B klein-distilled-9b-kv",
+      "kv": "Native Flux2Klein9B klein-distilled-9b-kv"
+    },
+    "Flux2": {
+      "dev": "Native Flux2 dev"
+    },
+    "Ideogram4": {
+      "conditional": "Native Ideogram4 conditional"
+    },
+    "JoyImage": {
+      "edit": "Native JoyImage edit"
+    },
+    "LongCatImage": {
+      "base": "Native LongCatImage base",
+      "edit": "Native LongCatImage edit"
+    },
+    "NewBieImage": {
+      "exp0.1": "Native NewBieImage exp0.1"
+    },
+    "Lumina2": {
+      "netayume-v3.5": "Native Lumina2 netayume-v3.5"
+    },
+    "MOSS Image": {
+      "base": "Native MOSSImage base",
+      "sft": "Native MOSSImage sft"
+    },
+    "PixelDiTT2I": {
+      "t2i": "Native PixelDiTT2I t2i"
+    },
+    "PiD": {
+      "flux1-1024-to-4096-4step": "Native PiD flux1-1024-to-4096-4step"
+    },
+    "ZImage": {
+      "base": "Native ZImage base",
+      "turbo": "Native ZImage turbo"
+    },
+    "ErnieImage": {
+      "base": "Native ErnieImage base",
+      "turbo": "Native ErnieImage turbo"
+    },
+    "SD 1.5": {
+      "base": "Native extended SD15 base"
+    },
+    "SD 2.0": {
+      "wd-beta2-aesthetic": "Native extended SD20 wd-beta2-aesthetic"
+    },
+    "SD21UnclipL": {
+      "unclip-l": "Native extended SD21UnclipL unclip-l"
+    },
+    "SD21UnclipH": {
+      "unclip-h": "Native extended SD21UnclipH unclip-h"
+    },
+    "SD15_instructpix2pix": {
+      "base": "Native extended SD15_instructpix2pix base"
+    },
+    "SDXL_instructpix2pix": {
+      "base": "Native extended SDXL_instructpix2pix base"
+    },
+    "SDXLRefiner": {
+      "base": "Native extended SDXLRefiner base"
+    },
+    "SSD1B": {
+      "base": "Native extended SSD1B base"
+    },
+    "KOALA_700M": {
+      "base": "Native extended KOALA_700M base"
+    },
+    "KOALA_1B": {
+      "base": "Native extended KOALA_1B base"
+    },
+    "Segmind_Vega": {
+      "base": "Native extended Segmind_Vega base"
+    },
+    "SD3": {
+      "3.5-large": "Native extended SD3 3.5-large"
+    },
+    "AuraFlow": {
+      "0.3": "Native extended AuraFlow 0.3"
+    },
+    "PixArt": {
+      "xl-2-1024-ms": "Native extended PixArtSigma xl-2-1024-ms"
+    },
+    "HunyuanDiT1": {
+      "1.0": "Native extended HunyuanDiT1 1.0",
+      "1.1": "Native extended HunyuanDiT1 1.1"
+    },
+    "HunyuanImage21": {
+      "base": "Native extended HunyuanImage21 base"
+    },
+    "HunyuanImage21Refiner": {
+      "refiner": "Native extended HunyuanImage21Refiner refiner"
+    },
+    "CosmosPredict2": {
+      "2b-t2i": "Native extended CosmosT2IPredict2 2b-t2i"
+    },
+    "LotusD": {
+      "depth-v1.1": "Native extended LotusD depth-v1.1"
+    },
+    "SDPose": {
+      "sdpose-wholebody": "Native extended LotusD sdpose-wholebody"
+    },
+    "RT_DETR_v4": {
+      "sdpose-detect": "Native extended RT_DETR_v4 sdpose-detect"
+    },
+    "SAM31": {
+      "multiplex-3.1": "Native extended SAM31 multiplex-3.1"
+    },
+    "SeedVR2": {
+      "3b-int8": "Native extended SeedVR2 3b-int8",
+      "7b-int8": "Native extended SeedVR2 7b-int8"
+    }
+  },
+  "legacy_sha256": "5dde2b88f603d0cc76a070fbaddac7f0ed9c3894e8eb83a33ee44c09c9d7beb9",
+  "provenance": {
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "native_recipes": {
+    "Stable_Cascade_C": ["Native full Stable Cascade C"],
+    "Boogu": ["Native Boogu edit", "Native Boogu turbo"],
+    "Chroma": ["Native Chroma base"],
+    "ChromaRadiance": ["Native ChromaRadiance radiance-x0"],
+    "Fibo2": ["Native Fibo2 dev", "Native Fibo2 edit-turbo"],
+    "Flux": ["Native Flux.1 D krea-dev", "Native Flux.1 D kontext-dev", "Native Flux.1 D dev"],
+    "FluxInpaint": ["Native FluxInpaint fill-dev"],
+    "Flux2": [
+      "Native Flux2Klein4B klein-base-4b",
+      "Native Flux2Klein4B klein-distilled-4b",
+      "Native Flux2Klein9B klein-distilled-9b-kv",
+      "Native Flux2 dev"
+    ],
+    "Ideogram4": ["Native Ideogram4 conditional"],
+    "JoyImage": ["Native JoyImage edit"],
+    "LongCatImage": ["Native LongCatImage base", "Native LongCatImage edit"],
+    "Lumina2": ["Native NewBieImage exp0.1", "Native Lumina2 netayume-v3.5"],
+    "MOSSImage": ["Native MOSSImage base", "Native MOSSImage sft"],
+    "PixelDiTT2I": ["Native PixelDiTT2I t2i"],
+    "PiD": ["Native PiD flux1-1024-to-4096-4step"],
+    "QwenImage": [
+      "Native QwenImage 2512",
+      "Native QwenImage edit-2511",
+      "Native QwenImage layered",
+      "Native QwenImage base",
+      "Native QwenImage edit",
+      "Native QwenImage edit-2509"
+    ],
+    "ZImage": ["Native ZImage base", "Native ZImage turbo"],
+    "ErnieImage": ["Native ErnieImage base", "Native ErnieImage turbo"],
+    "SD15": ["Native extended SD15 base"],
+    "SD20": ["Native extended SD20 wd-beta2-aesthetic"],
+    "SD21UnclipL": ["Native extended SD21UnclipL unclip-l"],
+    "SD21UnclipH": ["Native extended SD21UnclipH unclip-h"],
+    "SD15_instructpix2pix": ["Native extended SD15_instructpix2pix base"],
+    "SDXL_instructpix2pix": ["Native extended SDXL_instructpix2pix base"],
+    "SDXLRefiner": ["Native extended SDXLRefiner base"],
+    "SSD1B": ["Native extended SSD1B base"],
+    "KOALA_700M": ["Native extended KOALA_700M base"],
+    "KOALA_1B": ["Native extended KOALA_1B base"],
+    "Segmind_Vega": ["Native extended Segmind_Vega base"],
+    "SD3": ["Native extended SD3 3.5-large"],
+    "AuraFlow": ["Native extended AuraFlow 0.3"],
+    "PixArtAlpha": ["Native extended PixArtAlpha xl-2-1024-ms"],
+    "PixArtSigma": ["Native extended PixArtSigma xl-2-1024-ms"],
+    "HunyuanDiT1": ["Native extended HunyuanDiT1 1.0", "Native extended HunyuanDiT1 1.1"],
+    "HunyuanImage21": ["Native extended HunyuanImage21 base"],
+    "HunyuanImage21Refiner": ["Native extended HunyuanImage21Refiner refiner"],
+    "CosmosT2IPredict2": ["Native extended CosmosT2IPredict2 2b-t2i"],
+    "LotusD": ["Native extended LotusD depth-v1.1", "Native extended LotusD sdpose-wholebody"],
+    "RT_DETR_v4": ["Native extended RT_DETR_v4 sdpose-detect"],
+    "SAM31": ["Native extended SAM31 multiplex-3.1"],
+    "SeedVR2": ["Native extended SeedVR2 3b-int8", "Native extended SeedVR2 7b-int8"],
+    "ZImagePixelSpace": ["Native Zeta pixel-space (settings unqualified)"],
+    "MiniMaxH3Image": ["Native MiniMax H3 Image PDD"]
+  }
+}

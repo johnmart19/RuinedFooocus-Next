@@ -1,0 +1,9 @@
+{
+  "diffusion_models/pixart_sigma_xl_2_1024_ms.safetensors": {
+    "url": "https://huggingface.co/PixArt-alpha/PixArt-Sigma-XL-2-1024-MS/resolve/e102b3591cc82e97071b8b4cb90d834d0c487207/transformer/diffusion_pytorch_model.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "pixart_sigma_xl_2_1024_ms.safetensors",
+    "size": 2443492488,
+    "sha256": "2fa4dee9229c02b03163f57bdb8e80c7a5ee364b7161796abe9c05e8dd13f239"
+  }
+}

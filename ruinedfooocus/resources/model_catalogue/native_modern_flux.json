@@ -1,0 +1,16 @@
+{
+  "diffusion_models/flux1-krea-dev_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/FLUX.1-Krea-dev_ComfyUI/resolve/d9d7c421e64d3a80b16a79c0fdc9989bfdaa6f01/split_files/diffusion_models/flux1-krea-dev_fp8_scaled.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "flux1-krea-dev_fp8_scaled.safetensors",
+    "size": 11904639672,
+    "sha256": "b17a8c21703c4d6ffb0e300dd920eff3cfd35c9a72a1abaf107e3788e408b8d8"
+  },
+  "diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/flux1-kontext-dev_ComfyUI/resolve/795e390e4a1200720e40af3780d5d8b96bc13ae3/split_files/diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "flux1-dev-kontext_fp8_scaled.safetensors",
+    "size": 11904640136,
+    "sha256": "630ba795ec64283b4230ea23cf79406c2c68b7c578229ed139f30043eadb30a2"
+  }
+}

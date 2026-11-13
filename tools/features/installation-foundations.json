@@ -1,0 +1,21 @@
+{
+  "id": "installation-foundations",
+  "subject": "Provide portable installer policy package planning and recovered profile data",
+  "requires": [],
+  "tests": [
+    "test_core_resources.py",
+    "test_git_transport.py",
+    "test_hub_download.py",
+    "test_linux_gpu_prerequisites.py",
+    "test_llama_runtime_policy.py",
+    "test_llama_runtime_probe.py",
+    "test_package_plan_direct_wheels.py",
+    "test_preparation_queue.py",
+    "test_runtime_state_retention.py",
+    "test_startup_profile_data.py",
+    "test_task_errors.py",
+    "test_vendor_admission.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

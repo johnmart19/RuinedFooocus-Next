@@ -1,0 +1,9 @@
+{
+  "diffusion_models/pixeldit_1300m_1024px_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/PixelDiT/resolve/f1aa9118da0a0b53a4433e5de9a4de2e9aae2193/diffusion_models/pixeldit_1300m_1024px_bf16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "pixeldit_1300m_1024px_bf16.safetensors",
+    "size": 2604985230,
+    "sha256": "d904bae12526c48a522a503b80668fbd45bae6398e9d6f3c2a3e76629552d4ff"
+  }
+}

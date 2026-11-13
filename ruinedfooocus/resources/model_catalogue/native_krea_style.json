@@ -1,0 +1,9 @@
+{
+  "loras/krea2_style_reference.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/588feaf955b08b9ac4723eeb751752ab045dba71/loras/krea2_style_reference.safetensors",
+    "path": "path_loras",
+    "filename": "krea2_style_reference.safetensors",
+    "size": 457111760,
+    "sha256": "f50df5a9e62e4be8aa926a63dd5bb1a64770c4004f763c1208007ae13daa82b8"
+  }
+}

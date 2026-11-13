@@ -1,0 +1,9 @@
+{
+  "diffusion_models/Chroma1-HD-fp8mixed.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Chroma1-HD_repackaged/resolve/595f6c4194ea076c87f2d88f753f331edc221644/split_files/diffusion_models/Chroma1-HD-fp8mixed.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "Chroma1-HD-fp8mixed.safetensors",
+    "size": 9193379316,
+    "sha256": "a2928ca6075f308f4d5e2182e2b96120fa8ad270ec6ea9b1b5c724c85c49a575"
+  }
+}

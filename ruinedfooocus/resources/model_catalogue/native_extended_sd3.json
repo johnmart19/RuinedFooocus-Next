@@ -1,0 +1,9 @@
+{
+  "checkpoints/sd3.5_large_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/stable-diffusion-3.5-fp8/resolve/934251d1e6168bcb45a069abc5bd5cdd5f8fea00/sd3.5_large_fp8_scaled.safetensors",
+    "path": "path_checkpoints",
+    "filename": "sd3.5_large_fp8_scaled.safetensors",
+    "size": 14934922866,
+    "sha256": "5ad94d6f951556b1ab6b75930fd4effbafaf3130fe9df440e7f2d05a220dd1be"
+  }
+}

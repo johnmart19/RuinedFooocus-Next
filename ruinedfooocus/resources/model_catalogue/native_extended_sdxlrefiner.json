@@ -1,0 +1,9 @@
+{
+  "checkpoints/sd_xl_refiner_1.0.safetensors": {
+    "url": "https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/5d4cfe854c9a9a87939ff3653551c2b3c99a4356/sd_xl_refiner_1.0.safetensors",
+    "path": "path_checkpoints",
+    "filename": "sd_xl_refiner_1.0.safetensors",
+    "size": 6075981930,
+    "sha256": "7440042bbdc8a24813002c09b6b69b64dc90fded4472613437b7f55f9b7d9c5f"
+  }
+}

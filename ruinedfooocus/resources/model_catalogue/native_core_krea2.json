@@ -1,0 +1,9 @@
+{
+  "diffusion_models/krea2_turbo_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/588feaf955b08b9ac4723eeb751752ab045dba71/diffusion_models/krea2_turbo_fp8_scaled.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "krea2_turbo_fp8_scaled.safetensors",
+    "size": 13141730784,
+    "sha256": "eb4dd8c612cfd10f64f25b057e6e6bbcb5737c94a7372177e456dbf7579502f1"
+  }
+}

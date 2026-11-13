@@ -1,0 +1,16 @@
+{
+  "diffusion_models/NewBie-Image-Exp0.1-bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/NewBie-image-Exp0.1_repackaged/resolve/ae96af8db04fdf08a51877cc279930cf00020df5/split_files/diffusion_models/NewBie-Image-Exp0.1-bf16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "NewBie-Image-Exp0.1-bf16.safetensors",
+    "size": 6973329400,
+    "sha256": "b8ed0f26c0b90b70a5a2ef0f69041529af7fbfef206f773c07d6cd1d56d77ef8"
+  },
+  "checkpoints/NetaYumev35_pretrained_all_in_one.safetensors": {
+    "url": "https://huggingface.co/duongve/NetaYume-Lumina-Image-2.0/resolve/69c29c441119d43405d8373c654b16827d3cf46e/NetaYumev35_pretrained_all_in_one.safetensors",
+    "path": "path_checkpoints",
+    "filename": "NetaYumev35_pretrained_all_in_one.safetensors",
+    "size": 10620231237,
+    "sha256": "4125cb490996ea85c8e3ba242866da02efd83a6a2c079dc8924a95eaa8327a44"
+  }
+}

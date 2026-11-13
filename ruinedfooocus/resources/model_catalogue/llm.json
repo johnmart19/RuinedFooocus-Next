@@ -1,0 +1,448 @@
+{
+  "llm/Qwen3-1.7B-Q8_0.gguf": {
+    "url": "https://huggingface.co/Qwen/Qwen3-1.7B-GGUF/resolve/90862c4b9d2787eaed51d12237eafdfe7c5f6077/Qwen3-1.7B-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "Qwen3-1.7B-Q8_0.gguf",
+    "size": 1834426016,
+    "sha256": "061b54daade076b5d3362dac252678d17da8c68f07560be70818cace6590cb1a"
+  },
+  "llm/LFM2.5-1.2B-Instruct-Q8_0.gguf": {
+    "url": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct-GGUF/resolve/8ed288026e23958ad9dfa92d53ed773a8eee7125/LFM2.5-1.2B-Instruct-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "LFM2.5-1.2B-Instruct-Q8_0.gguf",
+    "size": 1246253888
+  },
+  "llm/LFM3-1.7B-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/LiquidAI/LFM3-1.7B-GGUF/resolve/cd0c74c575b5c416f3011b5b4c298077f26ca8c2/LFM3-1.7B-Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "LFM3-1.7B-Q4_K_M.gguf"
+  },
+  "llm/LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/AtomicChat/LFM3-1.7B-Uncensored-GGUF/resolve/3ad712542eb9de349dbd28f2739b69c925cdec7d/LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "LFM3-1.7B-Uncensored-AD-Q4_K_M.gguf",
+    "size": 1132208000,
+    "sha256": "b22df65673b54ed326f18f74826d76f3b65dadc237ffd6306cd52be04544827d"
+  },
+  "llm/Qwen3.5-9B-ultra-uncensored-heretic-v2-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/llmfan46/Qwen3.5-9B-Ultra-Uncensored-Heretic-GGUF/resolve/56152d16c9f4656a71e42cf3ad8af9273b9238bb/Qwen3.5-9B-ultra-uncensored-heretic-v2-Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Qwen3.5-9B-ultra-uncensored-heretic-v2-Q4_K_M.gguf",
+    "mmproj": "mmproj-Qwen3.5-9B-BF16.gguf"
+  },
+  "llm/gpt-oss-20b-MXFP4.gguf": {
+    "url": "https://huggingface.co/lmstudio-community/gpt-oss-20b-GGUF/resolve/main/gpt-oss-20b-MXFP4.gguf",
+    "path": "path_llm",
+    "filename": "gpt-oss-20b-MXFP4.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-F16.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-F16.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-F16.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-Q2_K.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-Q2_K.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-Q2_K.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-Q2_K_L.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-Q2_K_L.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-Q2_K_L.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-Q3_K_M.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-Q3_K_M.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-Q3_K_M.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-Q4_K_M.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-Q5_K_M.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-Q5_K_M.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-Q5_K_M.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-Q6_K.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-Q6_K.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-Q6_K.gguf"
+  },
+  "llm/DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf": {
+    "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-IQ4_XS.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-IQ4_XS.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-IQ4_XS.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q2_k.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q2_k.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q2_k.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q3_k_m.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q3_k_m.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q3_k_m.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q3_k_s.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q3_k_s.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q3_k_s.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q4_k_m.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q4_k_m.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q4_k_m.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q4_k_s.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q4_k_s.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q4_k_s.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q5_k_s.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q5_k_s.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q5_k_s.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q6_k.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q6_k.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q6_k.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q8_0.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-Q8_0.gguf"
+  },
+  "llm/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-q5_k_m.gguf": {
+    "url": "https://huggingface.co/DavidAU/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-GGUF/resolve/main/L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-q5_k_m.gguf",
+    "path": "path_llm",
+    "filename": "L3.2-Rogue-Creative-Instruct-Uncensored-Abliterated-7B-D_AU-q5_k_m.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-IQ3_M.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-IQ3_M.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-IQ3_M.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-IQ3_XS.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-IQ3_XS.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-IQ3_XS.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-IQ4_XS.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-IQ4_XS.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-IQ4_XS.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q2_K.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q2_K.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q2_K.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q2_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q2_K_L.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q2_K_L.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q3_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q3_K_L.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q3_K_L.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q3_K_M.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q3_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q3_K_M.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q3_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q3_K_S.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q3_K_S.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q3_K_XL.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q3_K_XL.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q3_K_XL.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q4_0.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q4_0.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q4_0.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q4_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q4_K_L.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q4_K_L.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q4_K_M.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q4_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q4_K_S.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q4_K_S.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q5_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q5_K_L.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q5_K_L.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q5_K_M.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q5_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q5_K_M.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q5_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q5_K_S.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q5_K_S.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q6_K.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q6_K.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q6_K.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q6_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q6_K_L.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q6_K_L.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-Q8_0.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-Q8_0.gguf"
+  },
+  "llm/Llama-3.2-3B-Instruct-uncensored-f16.gguf": {
+    "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-uncensored-GGUF/resolve/main/Llama-3.2-3B-Instruct-uncensored-f16.gguf",
+    "path": "path_llm",
+    "filename": "Llama-3.2-3B-Instruct-uncensored-f16.gguf"
+  },
+  "llm/OpenThinker-7B-IQ2_M.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-IQ2_M.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-IQ2_M.gguf"
+  },
+  "llm/OpenThinker-7B-IQ3_M.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-IQ3_M.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-IQ3_M.gguf"
+  },
+  "llm/OpenThinker-7B-IQ3_XS.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-IQ3_XS.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-IQ3_XS.gguf"
+  },
+  "llm/OpenThinker-7B-IQ4_NL.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-IQ4_NL.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-IQ4_NL.gguf"
+  },
+  "llm/OpenThinker-7B-IQ4_XS.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-IQ4_XS.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-IQ4_XS.gguf"
+  },
+  "llm/OpenThinker-7B-Q2_K.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q2_K.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q2_K.gguf"
+  },
+  "llm/OpenThinker-7B-Q2_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q2_K_L.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q2_K_L.gguf"
+  },
+  "llm/OpenThinker-7B-Q3_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q3_K_L.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q3_K_L.gguf"
+  },
+  "llm/OpenThinker-7B-Q3_K_M.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q3_K_M.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q3_K_M.gguf"
+  },
+  "llm/OpenThinker-7B-Q3_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q3_K_S.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q3_K_S.gguf"
+  },
+  "llm/OpenThinker-7B-Q3_K_XL.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q3_K_XL.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q3_K_XL.gguf"
+  },
+  "llm/OpenThinker-7B-Q4_0.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q4_0.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q4_0.gguf"
+  },
+  "llm/OpenThinker-7B-Q4_1.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q4_1.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q4_1.gguf"
+  },
+  "llm/OpenThinker-7B-Q4_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q4_K_L.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q4_K_L.gguf"
+  },
+  "llm/OpenThinker-7B-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q4_K_M.gguf"
+  },
+  "llm/OpenThinker-7B-Q4_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q4_K_S.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q4_K_S.gguf"
+  },
+  "llm/OpenThinker-7B-Q5_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q5_K_L.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q5_K_L.gguf"
+  },
+  "llm/OpenThinker-7B-Q5_K_M.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q5_K_M.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q5_K_M.gguf"
+  },
+  "llm/OpenThinker-7B-Q5_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q5_K_S.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q5_K_S.gguf"
+  },
+  "llm/OpenThinker-7B-Q6_K.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q6_K.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q6_K.gguf"
+  },
+  "llm/OpenThinker-7B-Q6_K_L.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q6_K_L.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q6_K_L.gguf"
+  },
+  "llm/OpenThinker-7B-Q8_0.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-Q8_0.gguf"
+  },
+  "llm/OpenThinker-7B-f16.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-f16.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-f16.gguf"
+  },
+  "llm/OpenThinker-7B-f32.gguf": {
+    "url": "https://huggingface.co/bartowski/OpenThinker-7B-GGUF/resolve/main/OpenThinker-7B-f32.gguf",
+    "path": "path_llm",
+    "filename": "OpenThinker-7B-f32.gguf"
+  },
+  "llm/PokeeAI_pokee_research_7b-IQ2_M.gguf": {
+    "url": "https://huggingface.co/bartowski/PokeeAI_pokee_research_7b-GGUF/resolve/main/PokeeAI_pokee_research_7b-IQ2_M.gguf",
+    "path": "path_llm",
+    "filename": "PokeeAI_pokee_research_7b-IQ2_M.gguf"
+  },
+  "llm/PokeeAI_pokee_research_7b-Q4_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/PokeeAI_pokee_research_7b-GGUF/resolve/main/PokeeAI_pokee_research_7b-Q4_K_S.gguf",
+    "path": "path_llm",
+    "filename": "PokeeAI_pokee_research_7b-Q4_K_S.gguf"
+  },
+  "llm/PokeeAI_pokee_research_7b-Q5_K_S.gguf": {
+    "url": "https://huggingface.co/bartowski/PokeeAI_pokee_research_7b-GGUF/resolve/main/PokeeAI_pokee_research_7b-Q5_K_S.gguf",
+    "path": "path_llm",
+    "filename": "PokeeAI_pokee_research_7b-Q5_K_S.gguf"
+  },
+  "llm/PokeeAI_pokee_research_7b-Q8_0.gguf": {
+    "url": "https://huggingface.co/bartowski/PokeeAI_pokee_research_7b-GGUF/resolve/main/PokeeAI_pokee_research_7b-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "PokeeAI_pokee_research_7b-Q8_0.gguf"
+  },
+  "llm/PokeeAI_pokee_research_7b-bf16.gguf": {
+    "url": "https://huggingface.co/bartowski/PokeeAI_pokee_research_7b-GGUF/resolve/main/PokeeAI_pokee_research_7b-bf16.gguf",
+    "path": "path_llm",
+    "filename": "PokeeAI_pokee_research_7b-bf16.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.IQ3_M.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.IQ3_M.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.IQ3_M.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.IQ3_S.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.IQ3_S.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.IQ3_S.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.IQ3_XS.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.IQ3_XS.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.IQ3_XS.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.IQ4_XS.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.IQ4_XS.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.IQ4_XS.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q2_K.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q2_K.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q2_K.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_L.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_L.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_L.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_M.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_M.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_S.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_S.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q3_K_S.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q4_K_M.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q4_K_M.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q4_K_S.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q4_K_S.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q4_K_S.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q5_K_M.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q5_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q5_K_M.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q5_K_S.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q5_K_S.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q5_K_S.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q6_K.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q6_K.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q6_K.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.Q8_0.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.Q8_0.gguf"
+  },
+  "llm/Qwen2.5-7B-Instruct-abliterated-v2.f16.gguf": {
+    "url": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/resolve/main/Qwen2.5-7B-Instruct-abliterated-v2.f16.gguf",
+    "path": "path_llm",
+    "filename": "Qwen2.5-7B-Instruct-abliterated-v2.f16.gguf"
+  }
+}

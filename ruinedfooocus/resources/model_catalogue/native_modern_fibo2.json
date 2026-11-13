@@ -1,0 +1,16 @@
+{
+  "diffusion_models/fibo2_dev_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Fibo-2.0/resolve/4742d4bec410034142c8e65559e5f00c6f29eccb/diffusion_models/fibo2_dev_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "fibo2_dev_int8_convrot.safetensors",
+    "size": 8408562474,
+    "sha256": "063dd397395809fd22234c6bd32932cfcb22619f4d2282bdbf1dc58c406fe325"
+  },
+  "diffusion_models/fibo2_edit_turbo_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Fibo-2.0/resolve/4742d4bec410034142c8e65559e5f00c6f29eccb/diffusion_models/fibo2_edit_turbo_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "fibo2_edit_turbo_int8_convrot.safetensors",
+    "size": 8408562474,
+    "sha256": "1f6fa7c499191f405467123f655f11762661eaa5bd479d1da8f161398ef72c3b"
+  }
+}

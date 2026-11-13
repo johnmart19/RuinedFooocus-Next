@@ -1,0 +1,16 @@
+{
+  "diffusion_models/ideogram4_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Ideogram-4/resolve/2aa6c75ce6d5fabded0ca4d0f76abbfaf8edc87d/diffusion_models/ideogram4_fp8_scaled.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "ideogram4_fp8_scaled.safetensors",
+    "size": 9280741285,
+    "sha256": "49a946f1b0f8bcf5eab7d3b1ecc7b453c104e034cb1b592032745692724bd306"
+  },
+  "diffusion_models/ideogram4_unconditional_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Ideogram-4/resolve/2aa6c75ce6d5fabded0ca4d0f76abbfaf8edc87d/diffusion_models/ideogram4_unconditional_fp8_scaled.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "ideogram4_unconditional_fp8_scaled.safetensors",
+    "size": 9280741293,
+    "sha256": "9b359007dae162cca7591d00868feea733eb7c56e56e3a214a4d5a9a2a07cd60"
+  }
+}

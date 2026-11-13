@@ -1,0 +1,9 @@
+{
+  "vae/qwen_image_layered_vae.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/02130716aaf54a36f84c9fcfa8a373ab06284e2b/split_files/vae/qwen_image_layered_vae.safetensors",
+    "path": "path_vae",
+    "filename": "qwen_image_layered_vae.safetensors",
+    "size": 253816616,
+    "sha256": "c5320595fc61859ccdd0282184208f7b781c983b8ce4c6bc3e7723a807d3d28d"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "checkpoints/instruct-pix2pix-00-22000.safetensors": {
+    "url": "https://huggingface.co/timbrooks/instruct-pix2pix/resolve/31519b5cb02a7fd89b906d88731cd4d6a7bbf88d/instruct-pix2pix-00-22000.safetensors",
+    "path": "path_checkpoints",
+    "filename": "instruct-pix2pix-00-22000.safetensors",
+    "size": 7703416451,
+    "sha256": "fbc31a67aab29ad38eef622a252d3fa4b0a81d4a4dc65da416cf45b13aa67688"
+  }
+}

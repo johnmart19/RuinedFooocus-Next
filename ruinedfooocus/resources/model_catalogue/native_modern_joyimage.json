@@ -1,0 +1,9 @@
+{
+  "diffusion_models/joyai_image_edit_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/JoyAI-Image-Edit/resolve/8010e7b4c2ac3f762d33775ac5d6a011eea4166c/diffusion_models/joyai_image_edit_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "joyai_image_edit_int8_convrot.safetensors",
+    "size": 16433221208,
+    "sha256": "da8301c271764c63e018826f12c41c36d24c840c95c5385782bbf6a96268eeae"
+  }
+}

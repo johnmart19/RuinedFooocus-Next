@@ -1,0 +1,16 @@
+{
+  "diffusion_models/hidream_i1_dev_fp8.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/HiDream-I1_ComfyUI/resolve/942970a008493fc9bf05b4827374009e69f6a993/split_files/diffusion_models/hidream_i1_dev_fp8.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "hidream_i1_dev_fp8.safetensors",
+    "size": 17105946040,
+    "sha256": "9a372d7384d56e34a8cc7fd77a0fa3d26d6b75d82c7582fd5347e2fd9e6f8664"
+  },
+  "diffusion_models/hidream_i1_fast_fp8.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/HiDream-I1_ComfyUI/resolve/942970a008493fc9bf05b4827374009e69f6a993/split_files/diffusion_models/hidream_i1_fast_fp8.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "hidream_i1_fast_fp8.safetensors",
+    "size": 17105946040,
+    "sha256": "2d471e82523234e157b9ddd44c0428c89907eeb4e7923b316d49362d17020236"
+  }
+}

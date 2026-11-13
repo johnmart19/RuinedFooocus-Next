@@ -1,0 +1,9 @@
+{
+  "diffusion_models/hunyuanimage2.1_refiner_fp8_e4m3fn.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/resolve/78cfe74376b50a2f52995c4800f792f99ab575b2/split_files/diffusion_models/hunyuanimage2.1_refiner_fp8_e4m3fn.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "hunyuanimage2.1_refiner_fp8_e4m3fn.safetensors",
+    "size": 15039072232,
+    "sha256": "4afbb728c7fb8d5143233e79a4c7993c6645f4853b7cd934d12854fbbbf9c899"
+  }
+}

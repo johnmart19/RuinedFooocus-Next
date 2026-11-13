@@ -1,0 +1,16 @@
+{
+  "geometry_estimation/lotus-depth-d-v1-1.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/lotus/resolve/39a199245c96cbe4b3788a637f8b1e34667771c2/lotus-depth-d-v1-1.safetensors",
+    "path": "path_geometry_estimation",
+    "filename": "lotus-depth-d-v1-1.safetensors",
+    "size": 1735197352,
+    "sha256": "dc1394219a04afdd9f72ad41ea0d3dfa435603fc7831a0ac5b884cc2b2ebf688"
+  },
+  "checkpoints/sdpose_wholebody_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/SDPose/resolve/acb43fbe8142b54d9ebd52b720b81dd4e14c8d81/checkpoints/sdpose_wholebody_fp16.safetensors",
+    "path": "path_checkpoints",
+    "filename": "sdpose_wholebody_fp16.safetensors",
+    "size": 1916645792,
+    "sha256": "63d01f9a7494560693b24767f4469d59c9d3266b31ff0a253e74d1e611442721"
+  }
+}

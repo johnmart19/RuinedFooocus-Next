@@ -1,0 +1,9 @@
+{
+  "checkpoints/wd-1-5-beta2-aesthetic-unclip-h-fp16.safetensors": {
+    "url": "https://huggingface.co/comfyanonymous/wd-1.5-beta2_unCLIP/resolve/9304ceb2aab3b07049c205599a4dab11a92c276f/wd-1-5-beta2-aesthetic-unclip-h-fp16.safetensors",
+    "path": "path_checkpoints",
+    "filename": "wd-1-5-beta2-aesthetic-unclip-h-fp16.safetensors",
+    "size": 3983581602,
+    "sha256": "062603a01ed43b081df0c1b99f82449ba97283135810cca5fae204a32970e027"
+  }
+}

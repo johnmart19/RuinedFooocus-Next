@@ -1,0 +1,9 @@
+{
+  "diffusion_models/anima-base-v1.0.safetensors": {
+    "url": "https://huggingface.co/circlestone-labs/Anima/resolve/f973fc41ec7545364ac9776c2440285f43ff2a30/split_files/diffusion_models/anima-base-v1.0.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "anima-base-v1.0.safetensors",
+    "size": 4182218328,
+    "sha256": "bd43b7cffe1ed1153d9c41e7beb2f18cb1273eafbaa3af3edd6a173dc90a006e"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "diffusion_models/sdxl_instructpix2pix_unet.safetensors": {
+    "url": "https://huggingface.co/diffusers/sdxl-instructpix2pix-768/resolve/06653d47f8d22f2c2205a5884d6a24c5e76d2ca7/unet/diffusion_pytorch_model.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "sdxl_instructpix2pix_unet.safetensors",
+    "size": 10270123816,
+    "sha256": "01d538927edfdf63511a38840b9d0cd8d8dcd4e40001566b83c9104ef1a2f92f"
+  }
+}
