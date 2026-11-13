@@ -1,0 +1,8 @@
+{
+  "id": "launch-activation",
+  "subject": "Activate the complete application through supported root launchers",
+  "requires": ["ui-composition", "source-distribution"],
+  "tests": ["test_launchers.py", "test_startup_options.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
