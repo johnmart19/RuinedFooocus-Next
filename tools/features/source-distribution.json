@@ -1,0 +1,8 @@
+{
+  "id": "source-distribution",
+  "subject": "Build portable source archives and distribute the complete application",
+  "requires": ["ui-composition"],
+  "tests": ["test_distribution.py", "test_resource_paths.py", "test_source_updates.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
