@@ -1,0 +1,8 @@
+{
+  "id": "cuda-installer",
+  "subject": "Install qualified CUDA and explicit Torch device recipes",
+  "requires": ["installation-foundations"],
+  "tests": ["test_runtime_bundles.py", "test_runtime_support.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
