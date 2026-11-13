@@ -151,29 +151,312 @@ def torch_install_commands(torchruntime, torch_platform, os_platform, nightly=Fa
     return commands
 
 
+def xllamacpp_index(torch_platform, os_platform, version=None, choice="Auto"):
+    """Vulkan-first LLM policy, independent of the image Torch backend.
+
+    Selecting an index is acquisition policy, not proof of a usable device.
+    Runtime activation separately verifies the selected native device.
+    """
+    explicit = choice not in (None, "Auto")
+    if explicit:
+        from ruinedfooocus.packaging.hardware_inventory import XLLAMACPP_INDEXES
+
+        if choice not in XLLAMACPP_INDEXES:
+            raise RuntimeError(f"Unknown xllamacpp backend {choice!r}.")
+        if choice.startswith("ROCm") and os_platform != "Linux":
+            raise RuntimeError("xllamacpp ROCm wheels exist only for Linux and WSL.")
+        if choice.startswith("ROCm") and torch_platform.startswith("rocm1"):
+            raise RuntimeError(
+                "The xllamacpp ROCm 7.2 wheel crashes beside ROCm 10 PyTorch. "
+                "Use native llama.cpp with ROCm, or xllamacpp on CPU."
+            )
+        backend = XLLAMACPP_INDEXES[choice]
+    else:
+        from ruinedfooocus.backends.llama.runtime_policy import preferred_backend
+
+        backend = "vulkan" if preferred_backend(os_platform) == "Vulkan" else None
+    root = "https://xorbitsai.github.io/xllamacpp/whl"
+    if version and backend:
+        from ruinedfooocus.packaging.cuda_selection import wheel_available
+
+        if not wheel_available(f"{root}/{backend}", "xllamacpp", version):
+            if backend != "vulkan" and not explicit:
+                print(f"No matching xllamacpp {backend} wheel for this Python; trying Vulkan.")
+                backend = "vulkan"
+            if not wheel_available(f"{root}/{backend}", "xllamacpp", version):
+                raise RuntimeError(
+                    f"No xllamacpp {version} {backend} wheel matches this Python/OS. Use native llama.cpp or a supported Python version."
+                )
+    return f"{root}/{backend}" if backend else "https://pypi.org/simple"
 
 
+def has_cuda_xllamacpp():
+    return has_xllamacpp_device("CUDA")
 
 
+def has_xllamacpp_device(prefix):
+    # Check the loaded backend, not just the shared distribution version.
+    try:
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                # Linux CUDA wheels use the libraries bundled with PyTorch. Load
+                # them as the application does before probing xllamacpp's devices.
+                "import sys\n"
+                "if sys.platform == 'linux':\n"
+                "    import torch\n"
+                "import xllamacpp as x\n"
+                f"print('RF_DEVICE=' + str(int(any(d['name'].startswith({prefix!r}) for d in x.get_device_info()))))",
+            ],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        return result.returncode == 0 and "RF_DEVICE=1" in result.stdout.splitlines()
+    except (OSError, subprocess.TimeoutExpired):
+        return False
 
 
+def _xllamacpp_installation():
+    distribution = importlib.metadata.distribution("xllamacpp")
+    # RECORD metadata alone can remain unchanged after a damaged DLL. Verify
+    # recorded payload bytes without importing the extension or probing devices.
+    for file in distribution.files or ():
+        expected = file.hash
+        if expected is None:
+            continue  # RECORD itself and generated entry points may be unhashed.
+        if expected.mode != "sha256":
+            raise OSError("xllamacpp has an unsupported installed-file hash")
+        digest = hashlib.sha256()
+        with Path(file.locate()).open("rb") as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(chunk)
+        actual = base64.urlsafe_b64encode(digest.digest()).rstrip(b"=").decode()
+        if actual != expected.value:
+            raise OSError(f"xllamacpp installed-file integrity mismatch: {file.name}")
+    record = next(
+        file
+        for file in distribution.files or []
+        if str(file).replace("\\", "/").endswith(".dist-info/RECORD")
+    )
+    record = Path(record.locate())
+    from ruinedfooocus.core.paths import data_path
+
+    from ruinedfooocus.packaging.package_plan import current_target, target_identity
+
+    return data_path("cache", "llama.cpp", "xllamacpp-backend.json"), {
+        "version": distribution.version,
+        "record_sha256": hashlib.sha256(record.read_bytes()).hexdigest(),
+        "target": target_identity(current_target()),
+    }
 
 
+def xllamacpp_backend_matches(index):
+    """Backend wheels share versions; remember the exact installed wheel source."""
+    try:
+        marker, installation = _xllamacpp_installation()
+        return json.loads(marker.read_text(encoding="utf-8")) == dict(installation, index=index)
+    except (importlib.metadata.PackageNotFoundError, StopIteration, OSError, ValueError):
+        # Untracked/manual installs are replaced once rather than guessed from Torch.
+        return False
 
 
+def record_xllamacpp_backend(index):
+    marker, installation = _xllamacpp_installation()
+    marker.parent.mkdir(parents=True, exist_ok=True)
+    temporary = marker.with_suffix(".tmp")
+    temporary.write_text(json.dumps(dict(installation, index=index)), encoding="utf-8")
+    temporary.replace(marker)
 
 
+def cached_xllamacpp_backend_matches(index, *, cpu=False):
+    """Offline CPU may reuse a tracked GPU wheel; offload is disabled by the loader."""
+    if not cpu:
+        return xllamacpp_backend_matches(index)
+    try:
+        marker, installation = _xllamacpp_installation()
+        saved = json.loads(marker.read_text(encoding="utf-8"))
+        known = ("https://pypi.org/simple", "https://xorbitsai.github.io/xllamacpp/whl/")
+        source = saved.pop("index", "")
+        return saved == installation and (source == known[0] or source.startswith(known[1]))
+    except (importlib.metadata.PackageNotFoundError, StopIteration, OSError, ValueError):
+        return False
 
 
+def cached_xllamacpp_index():
+    """Exact tracked source after interpreter and payload verification."""
+    try:
+        marker, installation = _xllamacpp_installation()
+        saved = json.loads(marker.read_text(encoding="utf-8"))
+        source = saved.pop("index", "")
+        if saved == installation and (
+            source == "https://pypi.org/simple"
+            or source.startswith("https://xorbitsai.github.io/xllamacpp/whl/")
+        ):
+            return source
+    except (importlib.metadata.PackageNotFoundError, StopIteration, OSError, ValueError):
+        pass
+    return None
 
 
+def cleanup_xllamacpp_markers():
+    """Old app markers can leave empty dist-info directories after a pip upgrade."""
+    for directory in Path(sysconfig.get_path("purelib")).glob("xllamacpp-*.dist-info"):
+        marker = directory / "ruinedfooocus-backend.json"
+        if marker.is_file():
+            marker.unlink()
+            if not any(directory.iterdir()):
+                directory.rmdir()
 
 
+def has_vulkan_xllamacpp():
+    # Backend wheels share a distribution version; version alone is insufficient.
+    try:
+        files = importlib.metadata.files("xllamacpp") or []
+        return any(
+            (
+                file.name.lower() == "ggml-vulkan.dll"
+                or re.fullmatch(r"vulkan-1(?:-[0-9a-f]+)?\.dll", file.name.lower())
+                or re.fullmatch(r"libvulkan(?:-[0-9a-f]+)?\.so(?:\.[0-9]+)*", file.name.lower())
+            )
+            and Path(file.locate()).is_file()
+            for file in files
+        )
+    except importlib.metadata.PackageNotFoundError:
+        return False
 
 
+def selected_llm_runtime(profile=None):
+    from ruinedfooocus.core.paths import settings_path
+
+    path = settings_path(profile)
+    if not path.is_file():
+        return "llama.cpp"
+    values = json.loads(path.read_text(encoding="utf-8"))
+    return values.get("llm_runtime", "llama.cpp")
 
 
+def saved_xllamacpp_backend(profile=None):
+    """Saved xllamacpp backend; Use CPU for everything forces the CPU wheel."""
+    from ruinedfooocus.core.paths import settings_path
+    from ruinedfooocus.packaging.backend_preferences import effective_backends
+
+    path = settings_path(profile)
+    try:
+        values = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+    except (OSError, ValueError):
+        values = {}
+    return effective_backends(values)["xllamacpp"]
 
 
+def ensure_xllamacpp(
+    torch_platform, os_platform, reinstall=False, installed_torch=None, choice="Auto"
+):
+    from ruinedfooocus.packaging.install_lock import installation_lock
+
+    with installation_lock(Path(sys.prefix) / "xllamacpp"):
+        return _ensure_xllamacpp(torch_platform, os_platform, reinstall, installed_torch, choice)
 
 
+def _ensure_xllamacpp(torch_platform, os_platform, reinstall, installed_torch, choice):
+    from ruinedfooocus.packaging.launch_util import is_installed
+    from ruinedfooocus.packaging.startup_options import skip_dependency_install
+
+    xlc_version = "xllamacpp==2026.10.11870"
+    # No wheel-index/network/device access while validating offline identity.
+    index = xllamacpp_index(torch_platform, os_platform, choice=choice)
+    if skip_dependency_install():
+        if not is_installed(xlc_version):
+            raise RuntimeError(
+                "XLlamacpp is missing. Launch without --offline/--skip-dependency-install to install it, or select native llama.cpp."
+            )
+        if not cached_xllamacpp_backend_matches(index, cpu=choice == "CPU"):
+            cached = cached_xllamacpp_index() if choice == "Auto" else None
+            if cached:
+                label = (
+                    "CUDA"
+                    if cached.rsplit("/", 1)[-1] in ("cu128", "cu132")
+                    else "ROCm"
+                    if "/rocm-" in cached
+                    else None
+                )
+                if label and has_xllamacpp_device(label):
+                    reason = "Preferred Vulkan wheel is not cached; using the verified cached GPU backend"
+                    print(f"Chat Auto: {reason} ({label}).")
+                    return {"backend": label, "fallback_reason": reason}
+            raise RuntimeError(
+                "Cached xllamacpp backend/interpreter identity does not match the selection. "
+                "Restart online to acquire it, or select native llama.cpp."
+            )
+        return {"backend": "CPU" if choice == "CPU" else choice, "fallback_reason": ""}
+    index = xllamacpp_index(
+        torch_platform, os_platform, version=xlc_version.split("==")[1], choice=choice
+    )
+    needs_vulkan = index.endswith("/vulkan")
+    needs_cuda = index.rsplit("/", 1)[-1] in ("cu128", "cu132")
+    wrong_backend = (
+        not cached_xllamacpp_backend_matches(index, cpu=choice == "CPU")
+        or needs_vulkan
+        and not has_vulkan_xllamacpp()
+        or needs_cuda
+        and not has_cuda_xllamacpp()
+    )
+    installed_before = is_installed(xlc_version)
+    if reinstall or not installed_before or wrong_backend:
+        if "xllamacpp" in sys.modules:
+            raise RuntimeError(
+                "xllamacpp is already imported. Restart before changing its native backend."
+            )
+        cleanup_xllamacpp_markers()
+        from ruinedfooocus.packaging.package_plan import (
+            PackageLayer,
+            current_target,
+            execute_plan,
+            plan_packages,
+            resolve_packages,
+        )
+
+        layer = PackageLayer(
+            "xllamacpp",
+            (xlc_version,),
+            index,
+            xlc_version.split("==")[1],
+            "Apache-2.0",
+            hashlib.sha256(xlc_version.encode()).hexdigest(),
+            index,
+            ("https://github.com/xorbitsai/xllamacpp/releases/download",)
+            if index != "https://pypi.org/simple"
+            else ("https://files.pythonhosted.org/packages",),
+        )
+        constraints = tuple(
+            f"{name}=={version}"
+            for name, version in (installed_torch or {}).get("versions", {}).items()
+        )
+        artifacts = resolve_packages(
+            (layer,),
+            index=index,
+            extra_indexes=("https://pypi.org/simple",),
+            constraints=constraints,
+        )
+        plan = plan_packages(
+            current_target(),
+            {"eligible": True},
+            (layer,),
+            (),
+            artifacts,
+            environment=sys.prefix,
+            recipe=index,
+            api_floor=None,
+        )
+        # All wheel backends support CPU acquisition; actual GPU visibility is
+        # verified below/at activation and is never claimed by this package plan.
+        execute_plan(plan, plan.digest, force=reinstall or wrong_backend and installed_before)
+        if needs_cuda and not has_cuda_xllamacpp():
+            raise RuntimeError(
+                "xllamacpp CUDA installed but no CUDA device is available. Check the NVIDIA driver, or use native llama.cpp with Vulkan."
+            )
+        if needs_vulkan and not has_vulkan_xllamacpp():
+            raise RuntimeError("xllamacpp Vulkan installed but its Vulkan libraries are missing.")
+        record_xllamacpp_backend(index)
+    return {"backend": "CPU" if choice == "CPU" else choice, "fallback_reason": ""}
