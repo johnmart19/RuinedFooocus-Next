@@ -492,15 +492,6 @@
   padding: 0.625rem 11rem 0.5rem 0.75rem !important;
   min-height: 3rem;
 }
-#chat-setup-model {
-  /* The heading and description can wrap independently of this action. */
-  position: static;
-  align-self: flex-start;
-  inline-size: fit-content;
-  min-inline-size: 0;
-  max-inline-size: 100%;
-  white-space: normal;
-}
 #chat-controls {
   gap: 0.5rem;
   overflow-x: hidden;
@@ -993,4 +984,31 @@
   font-size: 1.125rem;
   line-height: 1;
   cursor: pointer;
+}
+/* Page titles sit on the page like Gallery, Models and Settings: a group that
+   holds the page heading draws no card of its own (its sections keep theirs). */
+:is(#app-tabs, #image-stage) .gr-group:has(.rf-page-head),
+.gr-group:has(.rf-page-head) {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+/* On Create and Editor the empty page-tabs row above the stage would add one
+   layout gap; start the stage where other pages start their heading. */
+#app-tabs + #image-stage {
+  margin-top: calc(-1 * var(--layout-gap));
+}
+/* Section cards space their rows like their button grids (Gradio's group
+   wrapper otherwise leaves 1px between a choice and the actions under it). */
+.rf-section > .styler {
+  gap: 0.5rem;
+}
+/* The Gallery page counter is centered beside its 44px buttons. */
+#browser-page-total {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+#browser-page-total :is(.prose, p) {
+  margin: 0;
 }

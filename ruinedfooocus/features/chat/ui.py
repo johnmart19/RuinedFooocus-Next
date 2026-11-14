@@ -187,20 +187,6 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     f"<p>{translate_ui('Talk to a language model running on this PC.')}</p>",
                     elem_classes=["rf-page-head"],
                 )
-                setup_model = gr.Button(
-                    translate_ui("Choose / load model"),
-                    min_width=0,
-                    size="sm",
-                    elem_id="chat-setup-model",
-                )
-                setup_model.click(
-                    fn=None,
-                    outputs=[],
-                    js=asset_path("chat_setup.js").read_text(encoding="utf-8"),
-                    queue=False,
-                    api_visibility="undocumented",
-                    show_progress="hidden",
-                )
                 llama_history = gr.State(assistant_info(default_bot)["chatstart"])
                 llama_chat = gr.Chatbot(
                     label="",

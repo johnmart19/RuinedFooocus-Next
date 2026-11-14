@@ -82,7 +82,7 @@ class ResponsiveUILayoutTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
-    def test_chat_setup_action_reserves_space_after_the_native_heading_and_description(self):
+    def test_chat_header_is_the_native_heading_and_description_without_a_setup_action(self):
         tree = ast.parse((ROOT / "ruinedfooocus/features/chat/ui.py").read_text(encoding="utf-8"))
         conversation = next(
             node
@@ -117,16 +117,18 @@ class ResponsiveUILayoutTests(unittest.TestCase):
         header_components = [
             entry for entry in demo.config["components"] if entry["type"] in ("html", "button")
         ]
-        self.assertEqual([entry["type"] for entry in header_components], ["html", "html", "button"])
+        # Model choice and loading live in the side panel, not under the heading.
+        self.assertEqual([entry["type"] for entry in header_components][:2], ["html", "html"])
+        self.assertNotIn(
+            "chat-setup-model", [entry["props"].get("elem_id") for entry in header_components]
+        )
+        self.assertNotIn(
+            "Choose / load model",
+            (ROOT / "ruinedfooocus/features/chat/ui.py").read_text(encoding="utf-8"),
+        )
         self.assertIn("<h1>", header_components[0]["props"]["value"])
         self.assertIn("<p>", header_components[1]["props"]["value"])
-        self.assertEqual(header_components[2]["props"]["elem_id"], "chat-setup-model")
-        action = rules("#chat-setup-model", SHELL_CSS)
-        self.assertEqual(len(action), 1)
-        self.assertIn("position: static", action[0])
-        self.assertIn("max-inline-size: 100%", action[0])
-        self.assertIn("white-space: normal", action[0])
-        self.assertNotRegex(action[0], r"font-size|inset|overflow:\s*hidden")
+        self.assertFalse(rules("#chat-setup-model", SHELL_CSS))
 
     def test_tabs_and_sibling_image_stage_share_tokens_and_scoped_controls(self):
         scope = ":is(#app-tabs, #image-stage)"

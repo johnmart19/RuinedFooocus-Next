@@ -861,6 +861,22 @@ def create_image_gallery():
         def request_refresh(page, term, version, request: gr.Request = None):
             return acknowledge(page, term, version, True, request)
 
+        def open_view(page, term, version, request: gr.Request = None):
+            """Opening Gallery: show the indexed page now, then scan for new files.
+
+            The refresh request still scans and replaces this page when it finishes.
+            """
+            descriptor = acknowledge(page, term, version, True, request)
+            if not isinstance(descriptor, dict):
+                return {view_request: gr.skip()}
+            updates = render_page(descriptor["page"], descriptor["term"], request=request)
+            updates[page_records] = [
+                record | {"_view_version": descriptor["version"]}
+                for record in updates[page_records]
+            ]
+            # The scan re-renders only when it finds new, changed or removed files.
+            return {view_request: dict(descriptor, shown=True), **updates}
+
         def request_page(page, term, version, request: gr.Request = None):
             return acknowledge(page, term, version, False, request)
 
@@ -928,6 +944,14 @@ def create_image_gallery():
                             ),
                             publish=lambda commit: latest_ui_requests.publish(ticket, commit),
                         )
+                    scan = browser.last_scan if descriptor.get("refresh") else None
+                    if (
+                        descriptor.get("shown")
+                        and scan is not None
+                        and not (scan.parsed or scan.removed)
+                    ):
+                        # The page opened with this index already; only the status changes.
+                        return {status_output: gr.update(value=status)}
                     updates = render_page(
                         descriptor["page"], descriptor["term"], status, request, ticket.cancelled
                     )
@@ -1546,8 +1570,8 @@ def create_image_gallery():
 
     return (
         app_image_browser,
-        request_refresh,
+        open_view,
         [ib_page, search_input, request_version],
-        [view_request],
+        list(dict.fromkeys([view_request, *refresh_outputs])),
         bind_actions,
     )

@@ -215,7 +215,17 @@ class GallerySchedulingTests(unittest.TestCase):
                 if isinstance(control, gr.State) and control.value == []
             )
             self.assertEqual(state[records._id], [])
-            descriptor = refresh(1, "", 1, self.request)
+            # Opening Gallery shows the indexed page at once and requests a scan.
+            opened = refresh(1, "", 1, self.request)
+            request_output = next(
+                control
+                for control in opened
+                if isinstance(control, gr.JSON) and isinstance(opened[control], dict)
+            )
+            descriptor = opened[request_output]
+            self.assertTrue(descriptor["refresh"])
+            self.assertEqual(len(opened[records]), 2 if indexed else 0)
+            self.assertTrue(all(record["_view_version"] == 1 for record in opened[records]))
 
             async def visit():
                 result = await prepare.fn(descriptor, self.request)
@@ -224,18 +234,26 @@ class GallerySchedulingTests(unittest.TestCase):
                 return result
 
             result = asyncio.run(visit())
-            self.assertEqual(len(state[records._id]), 2)
-            self.assertTrue(all(record["_view_version"] == 1 for record in state[records._id]))
             self.assertEqual(walked.call_count, 1)
-            self.assertEqual(decoded.call_count, 2)
-            self.assertEqual(copies.call_count, 2)
             self.assertEqual(browser.last_scan.count, 3)
             self.assertEqual(browser.last_scan.parsed, 0 if indexed else 3)
-            self.assertEqual(len(result[gallery].value), 2)
+            # Each page is rendered once per visit: by the open when the index is
+            # unchanged, otherwise by the scan.
+            self.assertEqual(decoded.call_count, 2)
+            if indexed:
+                self.assertNotIn(gallery, result)
+                self.assertNotIn(records, result)
+                self.assertIn(functions["prepare_view"].outputs[2], result)
+            else:
+                self.assertEqual(copies.call_count, 2)
+                self.assertEqual(len(state[records._id]), 2)
+                self.assertTrue(all(record["_view_version"] == 1 for record in state[records._id]))
+                self.assertEqual(len(result[gallery].value), 2)
             page = next(
                 control for control in app.blocks.values() if control.elem_id == "browser-page"
             )
-            self.assertEqual(result[page]["maximum"], 2)
+            rendered = opened if indexed else result
+            self.assertEqual(rendered[page]["maximum"], 2)
             for control in prepare.outputs:
                 if isinstance(control, gr.Button) and str(control.value) in (
                     "Use prompt",
@@ -243,7 +261,7 @@ class GallerySchedulingTests(unittest.TestCase):
                     "Open in Editor",
                 ):
                     self.assertFalse(control.interactive)
-                    self.assertFalse(result[control]["interactive"])
+                    self.assertFalse(rendered[control]["interactive"])
             page_request = functions["request_next"].fn(1, "", 2, self.request)
             following = asyncio.run(prepare.fn(page_request, self.request))
             self.assertEqual(len(following[records]), 1)

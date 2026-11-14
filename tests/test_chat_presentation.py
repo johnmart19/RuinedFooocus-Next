@@ -24,28 +24,6 @@ class ChatPresentationTests(unittest.TestCase):
     def function(self, app, name):
         return next(fn for fn in app.fns.values() if getattr(fn.fn, "__name__", "") == name)
 
-    def test_setup_expands_the_actual_library_before_scrolling_and_focusing(self):
-        harness = r"""
-const vm=require('node:vm'),assert=require('node:assert/strict');
-const source=require('node:fs').readFileSync(0,'utf8').trim().replace(/;$/, '');
-(async()=>{for(const closed of [true,false]) {
-  let visible=!closed; const trace=[];
-  const toggle={click(){trace.push('open')}};
-  const target={scrollIntoView(){assert.ok(visible);trace.push('scroll')},querySelector(){return {focus(){assert.ok(visible);trace.push('focus')}}}};
-  const scope={requestAnimationFrame(callback){trace.push('frame');visible=true;callback(0)},document:{getElementById(id){return id==='chat-model-library'?{querySelector(){return closed?toggle:null}}:id==='chat-model-source'?target:null}}};
-  await vm.runInNewContext('('+source+')',scope)();
-  assert.deepEqual(trace,closed?['open','frame','scroll','focus']:['scroll','focus']);
-}})().catch(error=>{console.error(error);process.exitCode=1});
-"""
-        result = subprocess.run(
-            ["node", "-e", harness],
-            input=asset_path("chat_setup.js").read_text(encoding="utf-8"),
-            text=True,
-            capture_output=True,
-            timeout=15,
-        )
-        self.assertEqual(result.returncode, 0, result.stderr)
-
     def test_all_three_choices_are_captured_independently_and_never_overwrite_create_draft(self):
         fixture = fixtures.ChatImageUiEventsTests()
         app, _, submit, _, _ = fixture.make_ui(prompt=True)
