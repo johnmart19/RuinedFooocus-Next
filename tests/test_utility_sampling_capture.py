@@ -535,10 +535,6 @@ class UtilitySamplingCaptureTests(unittest.TestCase):
         path.write_bytes((2).to_bytes(8, "little") + b"{}")
         self.models.get_file.return_value = path
         with (
-            patch(
-                "ruinedfooocus.features.models.component_profiles.snapshot_request",
-                side_effect=lambda data, *args: data,
-            ),
             patch.object(
                 assets,
                 "capture_image_assets",
@@ -670,10 +666,6 @@ class UtilitySamplingCaptureTests(unittest.TestCase):
         with (
             patch.object(self.performance, "apply", side_effect=defaults),
             patch.object(self.models, "get_file", return_value=checkpoint),
-            patch(
-                "ruinedfooocus.features.models.component_profiles.snapshot_request",
-                side_effect=lambda data, *args: data,
-            ),
             patch(
                 "ruinedfooocus.features.prompting.local_model.capture_prompt_preparation",
                 side_effect=lambda data, *args: data,

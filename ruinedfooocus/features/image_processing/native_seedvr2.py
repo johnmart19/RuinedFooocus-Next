@@ -126,7 +126,9 @@ def capture_assets(data, manager):
     from PIL import Image, ImageOps
     from ruinedfooocus.features.generation.image_preparation import selected_image_artifact
 
-    result = dict(data)
+    from ruinedfooocus.features.image_processing.utility_defaults import default_components
+
+    result = default_components(manager, KIND, data)
     image = result.get("input_image")
     if not isinstance(image, Image.Image) or image.width * image.height > MAX_PIXELS:
         raise ValueError("Add one still image of at most 16 megapixels for restoration.")

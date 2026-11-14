@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Miniatury biblioteki",
   "settings.theme_cached_and_selected_save_to_keep_it": "Motyw zapisany w pamięci podręcznej i wybrany. Zapisz, aby go zachować.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Motyw zastosowany w tej przeglądarce. Zapisz, aby go zachować.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Są tworzone ponownie podczas przeglądania biblioteki. Oryginalne obrazy zostają zachowane."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Są tworzone ponownie podczas przeglądania biblioteki. Oryginalne obrazy zostają zachowane.",
+  "gallery.edit_strength": "Siła edycji",
+  "gallery.action_inputs": "Dane wejściowe działania",
+  "gallery.check_resources": "Sprawdź zasoby",
+  "gallery.inpaint_image": "Domaluj obraz",
+  "gallery.compose_images": "Połącz obrazy",
+  "gallery.upscale_image": "Powiększ obraz",
+  "gallery.create_depth_map": "Utwórz mapę głębi",
+  "gallery.restore_image": "Odrestauruj obraz",
+  "gallery.apply_adjustment": "Zastosuj korektę",
+  "prompting.describe_image": "Opisz obraz",
+  "prompting.undo_description": "Cofnij opis"
 }

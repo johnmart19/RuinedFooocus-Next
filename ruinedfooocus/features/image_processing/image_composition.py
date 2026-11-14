@@ -325,10 +325,25 @@ def bind_editor_inputs(data, *, owner=None, store=None):
     ticket = validate_request(data, owner=owner, store=store)
     if ticket is None:
         return data
-    images = [
-        working_source(source_record(ref.path))[0]
-        for ref in (ticket.source, *ticket.additional_images)
-    ]
+    step = data.get("_image_workflow_step")
+    if ticket.operation == "compose":
+        from ruinedfooocus.features.image_editing.image_workflows import (
+            WorkflowStep,
+            composition_inputs,
+        )
+
+        if not isinstance(step, WorkflowStep) or step.ticket != ticket or step.action != "compose":
+            raise ValueError("The composition has no matching owned workflow step.")
+        if store is None:
+            from ruinedfooocus.features.gallery.editor_session import default_store
+
+            store = default_store()
+        images = composition_inputs(step, store, owner=owner)
+    else:
+        images = [
+            working_source(source_record(ref.path))[0]
+            for ref in (ticket.source, *ticket.additional_images)
+        ]
     mask = None
     if ticket.mask is not None:
         from PIL import Image, ImageOps

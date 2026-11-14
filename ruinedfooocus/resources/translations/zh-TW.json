@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "圖庫縮圖",
   "settings.theme_cached_and_selected_save_to_keep_it": "佈景主題已快取並選取。儲存後保留。",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "佈景主題已套用至此瀏覽器。儲存後保留。",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "瀏覽圖庫時重新產生。原始影像會保留。"
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "瀏覽圖庫時重新產生。原始影像會保留。",
+  "gallery.edit_strength": "編輯強度",
+  "gallery.action_inputs": "操作輸入",
+  "gallery.check_resources": "檢查資源",
+  "gallery.inpaint_image": "局部重繪影像",
+  "gallery.compose_images": "合成影像",
+  "gallery.upscale_image": "放大影像",
+  "gallery.create_depth_map": "建立深度圖",
+  "gallery.restore_image": "修復影像",
+  "gallery.apply_adjustment": "套用調整",
+  "prompting.describe_image": "描述影像",
+  "prompting.undo_description": "復原描述"
 }

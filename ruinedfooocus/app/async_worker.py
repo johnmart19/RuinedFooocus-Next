@@ -1118,6 +1118,9 @@ def _process(gen_data):
                     **{key: gen_data[key] for key in image_composition.FIELDS},
                     **export_settings,
                 )
+            from ruinedfooocus.features.image_editing.edit_prompt import attach_metadata
+
+            prompt = attach_metadata(gen_data, prompt)
             if not sampling:
                 from ruinedfooocus.features.generation.request_metadata import (
                     attach_source_generation,

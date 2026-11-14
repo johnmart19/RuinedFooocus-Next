@@ -185,9 +185,17 @@ class MetadataBoundaryTests(unittest.TestCase):
                 keys.update(keyword.arg for keyword in node.keywords if keyword.arg)
         self.assertTrue({"prompt", "negative", "steps", "width", "height", "seed"} <= keys)
         metadata = read_metadata(dict.fromkeys(keys, "synthetic"))
-        # Runtime engine observations are diagnostic output, never replay authority.
+        # Runtime observations and executed guide identities are diagnostic output;
+        # a guide requires explicit current image bytes rather than metadata replay.
         self.assertEqual(
-            set(render_values(metadata)), keys - {"image_engine", "image_engine_details"}
+            set(render_values(metadata)),
+            keys - {"image_engine", "image_engine_details", "control_guide"},
+        )
+        self.assertNotIn(
+            "control_guide",
+            render_values(
+                {"prompt": "scene", "control_guide": {"image": "old-guide.png", "kind": "depth"}}
+            ),
         )
 
     def test_png_import_keeps_command_like_prompts_literal(self):
@@ -252,6 +260,7 @@ class MetadataBoundaryTests(unittest.TestCase):
             _api_job="fake",
             _loopback_image=None,
             _metadata_prompt=False,
+            _editor_prompt_metadata={"instruction": "unrequested runtime descriptor"},
             unrelated_worker_flag=True,
         )
         imported = replay(json.dumps(payload), **original)
@@ -261,6 +270,7 @@ class MetadataBoundaryTests(unittest.TestCase):
         self.assertEqual((imported["cfg"], imported["seed"]), (5, 17))
         self.assertIs(imported["_metadata_prompt"], True)
         self.assertNotIn("unrelated_worker_flag", imported)
+        self.assertNotIn("_editor_prompt_metadata", imported)
 
     def test_imported_metadata_cannot_add_a_chat_route_or_clear_its_origin(self):
         imported = replay(
@@ -359,6 +369,15 @@ class MetadataBoundaryTests(unittest.TestCase):
             cn_strength=0.25,
             image_geometry={"width": 32, "height": 48},
             software="RuinedFooocus",
+            image_edit_prompt=dict(
+                schema=1,
+                mode="img2img",
+                operation="prompt-edit",
+                source_prompt="Original scene café 0007.",
+                previous_instructions=["Keep the blue scarf."],
+                instruction="  Make her more detailed.  ",
+                context_omission=None,
+            ),
         )
         imported = replay(json.dumps(settings))
         for key, value in settings.items():

@@ -241,11 +241,13 @@ class ToolNavigationTests(unittest.TestCase):
                     overrides = gr.JSON()
                     component_scope = gr.Textbox()
                     activate = gr.Button()
+                    status = gr.Markdown()
         settings.acquisition = SimpleNamespace(
             selection=selection,
             records=records,
             component_role=role,
             activate=activate,
+            status=status,
             inspected_local=lambda row, models: row,
         )
         with gr.Blocks(analytics_enabled=False) as chat:
@@ -330,9 +332,9 @@ class ToolNavigationTests(unittest.TestCase):
         self.assertEqual(projected[scope["create_tabs"]._id]["selected"], "image-tools")
         self.assertEqual(state[scope["image_tools_tabs"]._id].selected, image_tab.id)
         self.assertEqual(state[top._id].selected, "editor")
-        self.assertEqual(state[workspace.destination._id], "editor")
+        self.assertEqual(projected[workspace.destination._id], "editor")
         self.assertTrue(state[workspace.panel._id].visible)
-        self.assertEqual(state[workspace.action._id].value, "generate")
+        self.assertEqual(projected[workspace.action._id], "generate")
         self.assertEqual(state.blocks_config.blocks[base._id].value, "Janku")
         self.assertEqual(projected[operation._id]["value"], "Segment")
 

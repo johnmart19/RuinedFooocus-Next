@@ -1,7 +1,9 @@
 # Standalone Depth Anything 3 maps
 
-In **Create → Image tools**, choose **Depth map**, add a source image, and select
-an installed **Depth Anything 3 model**. The compatible models come from the
+In **Editor**, choose **Depth map** and add a source image.
+A compatible installed **Depth Anything 3 model** is preferred;
+otherwise the [DA3 Small default](native-utility-defaults.md) downloads on Run.
+The compatible models come from the
 configured `geometry_estimation` roots. The Models catalogue already offers
 DA3 Small and Base. Once the model is installed, this tool can run offline.
 

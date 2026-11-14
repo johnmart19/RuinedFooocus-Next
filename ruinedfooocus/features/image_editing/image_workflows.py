@@ -66,6 +66,7 @@ ACTION_FIELDS = {
     "select-background": {"background_id"},
     "generate-background": SAMPLING_FIELDS,
     "compose": {
+        "background_id",
         "foreground_id",
         "composition_mode",
         "composition_x",
@@ -178,8 +179,6 @@ def _parameters(action, parameters, source):
     ):
         raise ValueError("Use only settings owned by this image workflow step.")
     values = json.loads(_json(parameters))
-    if source.frame.dtype != "uint8" or source.frame.color_space != "sRGB":
-        raise ValueError("Create an explicit 8-bit sRGB Library working copy before this workflow.")
     width = _integer(values.setdefault("target_width", source.frame.width), "Target width")
     height = _integer(values.setdefault("target_height", source.frame.height), "Target height")
     if width * height > 64 * 1024 * 1024:
@@ -284,15 +283,13 @@ def capture_step(
             raise ValueError("The selected foreground is not from this workflow.")
         values["foreground_id"] = cursor.foreground_id
     additional = ()
+    if "background_id" in values and "foreground_id" in values:
+        raise ValueError("Choose one owned background or foreground, not both.")
     for key in ("background_id", "foreground_id"):
         if key in values:
             ref = store.artifact(session_id, values[key], revision=revision, owner=owner)
             if ref.kind != "image":
                 raise ValueError("Backgrounds and foregrounds must be owned images.")
-            if ref.frame.dtype != "uint8" or ref.frame.color_space != "sRGB":
-                raise ValueError(
-                    "Use an explicit 8-bit sRGB working copy for workflow image inputs."
-                )
             additional = (ref.artifact_id,)
     if action in ("select-background", "compose") and not additional:
         raise ValueError("Select the owned background or foreground for this step.")
@@ -332,14 +329,33 @@ def capture_step(
     return WorkflowStep(ticket, action, _json(values), mask, cursor)
 
 
-def _image(store, ticket, ref, owner):
-    from PIL import Image, ImageOps
+def _image(store, ticket, ref, owner, *, details=False):
+    from ruinedfooocus.features.gallery.editing_workflow import working_image
 
     store.validate(ticket, owner=owner)
-    with Image.open(ref.path) as value:
-        image = ImageOps.exif_transpose(value).convert("RGBA").copy()
+    image, information = working_image(ref.path)
+    if image.size != ref.frame.size:
+        raise ValueError("The prepared working image differs from its captured source frame.")
     store.validate(ticket, owner=owner)
-    return image
+    return (image, information) if details else image
+
+
+def composition_inputs(step, store, *, owner):
+    """Resolve both owned roles again at native capture, preserving the current canvas."""
+    if not isinstance(step, WorkflowStep) or step.action != "compose":
+        raise ValueError("Capture an owned composition step before resolving its image roles.")
+    source = _image(store, step.ticket, step.ticket.source, owner)
+    additional = _image(store, step.ticket, step.ticket.additional_images[0], owner)
+    if "background_id" not in step.parameters:
+        return [source, additional]
+    from PIL import Image
+    import numpy as np
+    from ruinedfooocus.features.image_editing.image_geometry import prepare_reference
+
+    pixels, _ = prepare_reference(additional, source.size, "pad", multiple=1, preserve_alpha=True)
+    background = Image.fromarray((pixels[0].numpy() * 255).round().astype(np.uint8))
+    store.validate(step.ticket, owner=owner)
+    return [background, source]
 
 
 def worker_request(step, store, *, owner):
@@ -348,7 +364,7 @@ def worker_request(step, store, *, owner):
     if step.action == "select-background":
         raise ValueError("Background selection uses selected_background, without compute.")
     values = step.parameters
-    source = _image(store, step.ticket, step.ticket.source, owner)
+    source, information = _image(store, step.ticket, step.ticket.source, owner, details=True)
     data = {key: value for key, value in values.items() if key in SAMPLING_FIELDS}
     data.update(
         task_type="process",
@@ -365,6 +381,7 @@ def worker_request(step, store, *, owner):
         custom_height=values["target_height"],
         image_resize_mode=values["image_resize_mode"],
         controlnet={},
+        image_source=information,
     )
     if values["alpha_policy"] == "flatten-black":
         from PIL import Image
@@ -381,11 +398,10 @@ def worker_request(step, store, *, owner):
     elif step.action == "generate-background":
         data.update(input_image=None, size_mode="target")
     elif step.action == "compose":
-        foreground = _image(store, step.ticket, step.ticket.additional_images[0], owner)
         data.update(
             controlnet=dict(type="image-composite"),
             input_image=None,
-            composition_images=[source, foreground],
+            composition_images=composition_inputs(step, store, owner=owner),
             **{key: value for key, value in values.items() if key.startswith("composition_")},
         )
     elif step.action == "prompt-edit":
@@ -437,6 +453,9 @@ def selected_background(step, store, *, owner):
             result=list(ref.frame.size),
         ),
         alpha_policy="selected background alpha",
+        precision_conversion=(
+            f"selected existing background: {ref.frame.dtype} {ref.frame.color_space}; original retained"
+        ),
     )
 
 
@@ -507,6 +526,29 @@ def execution_metadata(step, result_size, *, actual=None):
         if step.action == "remove-background"
         else values["alpha_policy"]
     )
+    if step.action == "compose" and "background_id" in values:
+        result["background_fit"] = dict(
+            policy="uniform fit with transparent padding; no crop or stretch",
+            source=list(step.ticket.additional_images[0].frame.size),
+            result=list(step.ticket.source.frame.size),
+        )
+    if step.action != "select-background":
+        conversions = [
+            dict(
+                image_id=ref.artifact_id,
+                original_dtype=ref.frame.dtype,
+                original_color_space=ref.frame.color_space,
+                working_dtype="uint8",
+                working_color_space="sRGB",
+            )
+            for ref in (step.ticket.source, *step.ticket.additional_images)
+            if ref.frame.dtype != "uint8" or ref.frame.color_space != "sRGB"
+        ]
+        if conversions:
+            result["working_images"] = conversions
+            result["precision_conversion"] = (
+                "automatic request-local 8-bit sRGB working images; original artifacts retained"
+            )
     return result
 
 
@@ -531,7 +573,7 @@ def advance_workflow(cursor, step, snapshot):
 
 def skip_background_removal(store, cursor, *, owner):
     """An already transparent source may advance without a fictitious completed step."""
-    from PIL import Image
+    from ruinedfooocus.features.gallery.editing_workflow import working_image
 
     snapshot = store.snapshot(cursor.session_id, owner=owner)
     if cursor.next_action != "remove-background" or snapshot.revision != cursor.revision:
@@ -539,11 +581,11 @@ def skip_background_removal(store, cursor, *, owner):
     ref = store.artifact(
         cursor.session_id, snapshot.current.artifact_id, revision=cursor.revision, owner=owner
     )
-    if ref.frame.dtype != "uint8" or ref.frame.alpha == "none":
+    if ref.frame.alpha == "none":
         raise ValueError("The current source has no existing transparency to preserve.")
-    with Image.open(ref.path) as image:
-        if image.convert("RGBA").getchannel("A").getextrema()[0] == 255:
-            raise ValueError("The current source is opaque; background removal is not a no-op.")
+    image, _ = working_image(ref.path)
+    if image.getchannel("A").getextrema()[0] == 255:
+        raise ValueError("The current source is opaque; background removal is not a no-op.")
     store.artifact(cursor.session_id, ref.artifact_id, revision=cursor.revision, owner=owner)
     return replace(cursor, position=cursor.position + 1, foreground_id=ref.artifact_id)
 

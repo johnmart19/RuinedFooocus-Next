@@ -93,7 +93,15 @@ class EditorWorkspaceEventTests(unittest.TestCase):
                 custom_height=gr.Number(value=768, precision=0),
                 aspect_ratios_selection=gr.Dropdown(choices=["Custom..."], value="Custom..."),
                 image_source=gr.State(None),
-                input_image=gr.Image(type="pil", format="png"),
+                input_image=gr.Image(type="pil", format="png", image_mode="RGBA"),
+                reference_images=gr.Gallery(value=[]),
+                output_format=gr.Dropdown(choices=["png", "exr", "avif"], value="png"),
+                output_bit_depth=gr.Dropdown(choices=["8-bit", "16-bit"], value="8-bit"),
+                output_color_space=gr.Dropdown(choices=["sRGB", "Linear"], value="sRGB"),
+                output_crf=gr.Slider(minimum=1, maximum=63, value=18),
+                _adjustment_hdr_precision=gr.Dropdown(
+                    choices=["16-bit float", "32-bit float"], value=None
+                ),
                 resolution_auto=gr.Checkbox(value=True),
                 cn_selection=gr.Dropdown(
                     choices=[
@@ -108,7 +116,7 @@ class EditorWorkspaceEventTests(unittest.TestCase):
                 cn_type=gr.Dropdown(choices=["None"], value="None"),
             )
             self.remote.update(
-                preview=gr.Image(type="filepath", format="png"),
+                preview=gr.Image(type="filepath", format="png", image_mode=None),
                 inpaint_toggle=gr.Checkbox(value=False),
                 inpaint=gr.ImageEditor(type="pil"),
                 hint=gr.Markdown(),
@@ -118,6 +126,10 @@ class EditorWorkspaceEventTests(unittest.TestCase):
             self.workspace = EditorWorkspace(store=self.store)
             self.workspace.destination.value = "editor"
             self.controls["_editor_destination"] = self.workspace.destination
+            self.controls["_editor_source_input"] = self.workspace.source_input
+            self.controls["_editor_denoise"] = self.workspace.denoise
+            self.controls["_editor_output_explicit"] = self.workspace.output_explicit
+            self.controls["_native_main_source"] = self.remote["native_source"]
             self.workspace.bind(
                 self.controls,
                 run_request=self.run_request,
@@ -198,7 +210,13 @@ class EditorWorkspaceEventTests(unittest.TestCase):
                 update_results,
                 inputs=self.products,
                 outputs=list(
-                    dict.fromkeys([*self.remote.values(), self.workspace.latest_generated])
+                    dict.fromkeys(
+                        [
+                            *self.remote.values(),
+                            self.workspace.latest_generated,
+                            self.workspace.source_input,
+                        ]
+                    )
                 ),
             )
         self.saved = dict(
@@ -439,6 +457,12 @@ process.stdout.write(JSON.stringify({output,memory}));
                     output = self.root / "fallback-generation-fixture.png"
                     Image.new("RGBA", (73, 121), (201, 11, 31, 255)).save(output)
                     self.fallback_ready = True
+                elif mode == "owned-copy-result":
+                    output = self.root / f"owned-copy-{item.task_id}.png"
+                    request["input_image"].save(output)
+                    self.worker_scope["stage_editor_result"](request, [str(output)])
+                    with self.jobs.condition:
+                        self.worker_scope["publish_editor_result"](item)
                 else:
                     item.check()
                     captured = image_composition.capture(request, "image-composite")
@@ -485,6 +509,7 @@ process.stdout.write(JSON.stringify({output,memory}));
             _editor_action=action,
             _editor_framing="preserve",
         )
+        values["_native_main_source"] = self.value(session, self.remote["native_source"])
         preview = self.value(session, self.remote["preview"])
         values["main_view"] = preview.get("path") if isinstance(preview, dict) else preview
         if background is not None:
@@ -646,6 +671,311 @@ process.stdout.write(JSON.stringify({output,memory}));
                 self.assertEqual(self.value(session, self.workspace.context), before)
         self.run_request.assert_not_called()
 
+    def test_all_action_chips_name_run_and_reveal_their_inputs_without_replacing_drafts(self):
+        session = self.session("all-action-inputs")
+        self.open_library(session)
+        context = copy.deepcopy(self.value(session, self.workspace.context))
+        draft = self.value(session, self.controls["prompt"])
+        strength = 0.46
+        session.values[self.workspace.denoise._id] = strength
+        callback = self.event(self.workspace.action, "change", "action_context")
+        self.assertEqual(self.workspace.action.value, "prompt-edit")
+        self.assertTrue(self.workspace.denoise.visible)
+        self.assertTrue(self.workspace.action_inputs.open)
+        self.assertTrue(self.workspace.action_inputs.visible)
+        self.assertFalse(self.workspace.mask_choice.visible)
+        actions = [value for _, value in self.workspace.action.choices]
+        self.assertEqual(len(actions), 11)
+        for action in actions:
+            with self.subTest(action=action):
+                updates = self.call(session, callback, {self.workspace.action: action})
+                self.assertEqual(
+                    updates[self.remote["run"]]["value"], str(self.workspace.action_label(action))
+                )
+                self.assertEqual(updates[self.workspace.mask]["visible"], action == "inpaint")
+                self.assertEqual(
+                    updates[self.workspace.background]["visible"],
+                    action in ("select-background", "compose"),
+                )
+                self.assertEqual(
+                    updates[self.workspace.denoise]["visible"], action == "prompt-edit"
+                )
+                if action in ("inpaint", "compose", "select-background"):
+                    self.assertTrue(updates[self.workspace.action_inputs]["visible"])
+                    self.assertTrue(updates[self.workspace.action_inputs]["open"])
+                self.assertEqual(self.value(session, self.workspace.context), context)
+                self.assertEqual(self.value(session, self.controls["prompt"]), draft)
+                self.assertEqual(self.value(session, self.workspace.denoise), strength)
+        self.run_request.assert_not_called()
+
+    def test_upload_reads_metadata_without_automatic_caption_inference_and_keeps_draft(self):
+        from ruinedfooocus.features.image_processing.interrogate import metadata_prompt
+        from PIL.PngImagePlugin import PngInfo
+
+        forbidden = Mock(side_effect=AssertionError("Upload must not run a caption model"))
+        handler = function_from(
+            "ruinedfooocus/ui/app.py",
+            "load_images_handler",
+            {
+                "Image": Image,
+                "metadata_prompt": metadata_prompt,
+                "gr": gr,
+                "look": forbidden,
+            },
+        )
+        precision = self.root / "upload-no-metadata.tiff"
+        Image.new("I;16", (17, 23), 12345).save(precision)
+        self.assertEqual(handler(str(precision), "", "create")[0], "")
+        self.assertEqual(handler(str(precision), "Make her more detailed", "create")[0], gr.skip())
+        saved = self.root / "upload-metadata.png"
+        info = PngInfo()
+        info.add_text("parameters", '{"prompt":"saved source description"}')
+        Image.new("RGB", (17, 23), "red").save(saved, pnginfo=info)
+        self.assertEqual(handler(str(saved), "", "create")[0], "saved source description")
+        self.assertEqual(handler(str(saved), "Exact user instruction", "create")[0], gr.skip())
+        for source in (precision, saved):
+            for instruction in ("", "Make her more detailed"):
+                with self.subTest(source=source.name, instruction=instruction):
+                    self.assertEqual(handler(str(source), instruction, "editor")[0], gr.skip())
+        forbidden.assert_not_called()
+
+    def test_adjustment_activation_restores_internal_choices_and_reveals_actual_panel(self):
+        from ruinedfooocus.features.image_processing import ui_image_adjustments
+        from ruinedfooocus.features.image_processing.still_image_utilities import adjustment_kind
+
+        session = self.session("adjustment-first-use")
+        with patch.object(
+            self.shared,
+            "add_ctrl",
+            side_effect=lambda key, value: self.controls.update({key: value}),
+            create=True,
+        ):
+            with self.app:
+                ui_image_adjustments.create_ui(
+                    self.controls["cn_selection"], self.controls["cn_type"], adjustment_kind
+                )
+        activate = self.event(self.workspace.action, "change", "adjustment_action")
+        updates = self.call(session, activate, {self.workspace.action: "adjust-image"})
+        chosen = updates[self.controls["cn_type"]]
+        self.assertEqual(chosen["value"], "Image-transform")
+        self.assertIn("Image-transform", [value for _, value in chosen["choices"]])
+        panel = next(
+            fn
+            for fn in self.app.fns.values()
+            if getattr(fn.fn, "__name__", "") == "adjustment_context"
+        )
+        shown = self.call(session, panel)
+        self.assertTrue(shown[panel.outputs[0]]["visible"])
+        self.assertTrue(shown[panel.outputs[2]]["visible"])
+        self.assertEqual(self.value(session, self.controls["transform_operation"]), "resize")
+
+    def test_passive_preview_sync_gives_point_tools_current_upload_without_open_or_run(self):
+        from gradio.processing_utils import move_files_to_cache
+        from ruinedfooocus.features.image_processing import ui_native_vision
+
+        with (
+            patch.object(
+                self.shared,
+                "add_ctrl",
+                side_effect=lambda key, value: self.controls.update({key: value}),
+                create=True,
+            ),
+            patch.object(self.shared, "path_manager", object(), create=True),
+            patch.object(ui_native_vision, "native_model_choices", return_value=[]),
+            patch.object(ui_native_vision, "picker_value", return_value="/segment"),
+            patch.object(ui_native_vision, "coco_classes", return_value=[]),
+        ):
+            with self.app:
+                ui_native_vision.create_ui(
+                    self.controls["cn_selection"],
+                    self.controls["cn_type"],
+                    self.controls["input_image"],
+                    gr.Number(0),
+                    lambda *_: "segment",
+                )
+        session = self.session("point-upload-source")
+        self.open_library(session)
+        sync = self.event(self.remote["preview"], "change", "preview_source")
+        clear = self.event(self.controls["input_image"], "change", "clear")
+
+        def upload(name, color):
+            path = self.root / name
+            Image.new("RGBA", (73, 121), color).save(path)
+            value = self.plain(
+                move_files_to_cache(
+                    self.remote["preview"].postprocess(str(path)),
+                    self.remote["preview"],
+                    postprocess=True,
+                )
+            )
+            session.values[self.remote["preview"]._id] = value
+            self.call(session, self.event(self.remote["preview"], "upload", "source_changed"))
+            self.call(session, sync)
+            self.call(session, clear)
+            return path
+
+        first = upload("point-source-B.png", (71, 91, 111, 131))
+        first_bytes = first.read_bytes()
+        shown = self.value(session, self.controls["input_image"])
+        with Image.open(shown["path"]) as image:
+            self.assertEqual(image.getpixel((0, 0)), (71, 91, 111, 131))
+        self.assertIsNone(self.value(session, self.workspace.context))
+        point = self.event(self.controls["input_image"], "select", "add_point")
+        asyncio.run(
+            self.api(
+                session,
+                point,
+                event_data=gr.SelectData(
+                    self.controls["input_image"], {"index": [12, 13], "value": None}
+                ),
+            )
+        )
+        self.assertEqual(
+            json.loads(self.value(session, self.controls["segment_positive_points"])),
+            [{"x": 12, "y": 13}],
+        )
+        self.assertEqual(self.call(session, sync)[self.controls["input_image"]], gr.skip())
+        session.values[self.workspace.mask._id] = "old-mask.png"
+        session.values[self.controls["reference_images"]._id] = ["old-reference.png"]
+        upload("point-source-C.png", (111, 91, 71, 131))
+        self.assertIsNone(self.value(session, self.workspace.mask))
+        self.assertEqual(self.value(session, self.controls["segment_positive_points"]), "[]")
+        self.assertEqual(self.value(session, self.controls["reference_images"]), [])
+        self.assertEqual(first.read_bytes(), first_bytes)
+        self.run_request.assert_not_called()
+
+    def test_passive_preview_sync_defers_during_an_accepted_job(self):
+        session = self.session("preview-active-job")
+        self.open_library(session)
+        sync = self.event(self.remote["preview"], "change", "preview_source")
+        before = self.value(session, self.controls["input_image"])
+        updates = self.call(session, sync, {self.remote["task"]: "accepted-job"})
+        self.assertEqual(updates[self.controls["input_image"]], gr.skip())
+        self.assertEqual(self.value(session, self.controls["input_image"]), before)
+        self.run_request.assert_not_called()
+
+    def test_output_intent_marks_only_real_selector_input_and_survives_source_actions(self):
+        session = self.session("explicit-output")
+        self.assertFalse(self.value(session, self.workspace.output_explicit))
+        fn = self.event(self.controls["output_format"], "input", "mark_output_explicit")
+        self.assertTrue(all(name == "input" for _, name in fn.targets))
+        self.call(session, fn)
+        self.assertTrue(self.value(session, self.workspace.output_explicit))
+        self.open_library(session)
+        self.call(
+            session,
+            self.event(self.workspace.action, "change", "action_context"),
+            {self.workspace.action: "adjust-image"},
+        )
+        self.assertTrue(self.value(session, self.workspace.output_explicit))
+        self.assertTrue(self.request_values(session, "adjust-image")["_editor_output_explicit"])
+        for name in (
+            "output_bit_depth",
+            "output_color_space",
+            "output_crf",
+            "_adjustment_hdr_precision",
+        ):
+            self.assertIn((self.controls[name]._id, "input"), fn.targets)
+
+    def test_upload_then_edit_run_adopts_source_without_open_and_publishes_owned_history(self):
+        from gradio.processing_utils import move_files_to_cache
+
+        session = self.session("upload-one-step")
+        self.open_library(session)
+        old_context = copy.deepcopy(self.value(session, self.workspace.context))
+        replacement = self.root / "new-upload.png"
+        Image.new("RGBA", (73, 121), (66, 77, 88, 123)).save(replacement)
+        original = replacement.read_bytes()
+        preview = self.plain(
+            move_files_to_cache(
+                self.remote["preview"].postprocess(str(replacement)),
+                self.remote["preview"],
+                postprocess=True,
+            )
+        )
+        session.values[self.remote["preview"]._id] = preview
+        self.call(session, self.event(self.remote["preview"], "upload", "source_changed"))
+        self.assertIsNone(self.value(session, self.workspace.context))
+        self.assertEqual(self.value(session, self.workspace.source_input), "preview")
+        self.worker_mode = "owned-copy-result"
+        function = self.event(self.remote["run"])
+
+        async def journey():
+            with patch(
+                "ruinedfooocus.features.image_editing.ui_guidance.family_for_checkpoint",
+                return_value="SDXL",
+            ):
+                result, _ = await self.api(
+                    session, function, {self.values: self.request_values(session, "prompt-edit")}
+                )
+                await self.finish(session, function, result)
+
+        asyncio.run(journey())
+        self.assertEqual(len(self.requests), 1)
+        request = self.requests[0]
+        self.assertEqual(request["input_image"].getpixel((0, 0)), (66, 77, 88, 123))
+        self.assertEqual(request["_image_workflow_step"].parameters["denoise"], 0.3)
+        context = self.value(session, self.workspace.context)
+        self.assertNotEqual(context["session_id"], old_context["session_id"])
+        snapshot = self.store.snapshot(context["session_id"], owner=session.owner)
+        self.assertEqual(len(snapshot.steps), 1)
+        self.assertEqual(Path(snapshot.original.path).read_bytes(), original)
+        self.assertEqual(replacement.read_bytes(), original)
+        self.assertEqual(self.value(session, self.controls["prompt"]), self.saved["prompt"])
+
+    def test_slow_old_preview_cannot_replace_input_upload_and_reselect_mirrors_again(self):
+        from gradio.processing_utils import move_files_to_cache
+        from ruinedfooocus.features.gallery.editing_workflow import working_source
+
+        session = self.session("preview-source-race")
+        self.open_library(session)
+        sync = self.event(self.remote["preview"], "change", "preview_source")
+        self.call(session, sync)
+        original_preview = copy.deepcopy(self.value(session, self.remote["preview"]))
+        entered, release = threading.Event(), threading.Event()
+
+        def held(record):
+            entered.set()
+            self.assertTrue(release.wait(5))
+            return working_source(record)
+
+        session.state[self.workspace.preview_signature._id] = None
+        other = self.root / "input-B.png"
+        Image.new("RGBA", (73, 121), (170, 120, 70, 255)).save(other)
+        other_value = self.plain(
+            move_files_to_cache(
+                self.controls["input_image"].postprocess(str(other)),
+                self.controls["input_image"],
+                postprocess=True,
+            )
+        )
+        with (
+            patch("ruinedfooocus.features.gallery.ui_workspace.working_source", side_effect=held),
+            ThreadPoolExecutor(max_workers=1) as pool,
+        ):
+            pending = pool.submit(self.call, session, sync)
+            self.assertTrue(entered.wait(5))
+            try:
+                session.values[self.controls["input_image"]._id] = other_value
+                self.call(
+                    session,
+                    self.event(self.controls["input_image"], "upload", "input_source_changed"),
+                )
+            finally:
+                release.set()
+            updates = pending.result(5)
+        self.assertEqual(updates[self.controls["input_image"]], gr.skip())
+        self.assertEqual(self.value(session, self.workspace.source_input), "input")
+        with Image.open(self.value(session, self.controls["input_image"])["path"]) as image:
+            self.assertEqual(image.getpixel((0, 0)), (170, 120, 70, 255))
+        self.assertIsNone(self.value(session, self.workspace.preview_signature))
+        session.values[self.remote["preview"]._id] = original_preview
+        self.call(session, self.event(self.remote["preview"], "upload", "source_changed"))
+        self.call(session, sync)
+        with Image.open(self.value(session, self.controls["input_image"])["path"]) as image:
+            self.assertEqual(image.getpixel((0, 0)), (20, 40, 60, 127))
+        self.run_request.assert_not_called()
+
     def test_quick_tools_reveal_native_panels_and_keep_draft_source_and_saved_values(self):
         from ruinedfooocus.features.image_processing import ui_depth_utilities, ui_native_vision
 
@@ -756,7 +1086,7 @@ process.stdout.write(JSON.stringify({output,memory}));
                     ),
                 )
                 self.assertEqual(session.state[self.destinations._id].selected, "editor")
-                self.assertEqual(session.state[self.workspace.destination._id], "editor")
+                self.assertEqual(self.value(session, self.workspace.destination), "editor")
                 context = self.value(session, self.workspace.context)
                 snapshot = self.store.snapshot(context["session_id"], owner=session.owner)
                 self.assertEqual(context, self.workspace.public_context(snapshot))
@@ -1078,19 +1408,20 @@ process.stdout.write(JSON.stringify({output,memory}));
                     held = self.value(session, self.controls["input_image"])
                     with Image.open(held["path"]) as image:
                         self.assertEqual(image.getpixel((0, 0)), (20, 40, 60, 127))
-                    function = self.event(self.remote["run"])
-                    result, _ = await self.api(
-                        session,
-                        function,
-                        {
-                            self.values: self.request_values(session, "prompt-edit"),
-                            self.workspace.version: 2,
-                        },
+                    with patch(
+                        "ruinedfooocus.features.image_editing.ui_guidance.family_for_checkpoint",
+                        return_value="SDXL",
+                    ):
+                        data = self.workspace.build_request(
+                            self.request_values(session, "prompt-edit"), request=session.request
+                        )
+                    self.assertEqual(data["input_image"].getpixel((0, 0)), (31, 151, 47, 255))
+                    self.assertNotEqual(
+                        data["_editor_operation"].session_id, old_source["session_id"]
                     )
-                    await self.finish(session, function, result)
+                    self.assertEqual(data["prompt"], self.value(session, self.controls["prompt"]))
 
                 asyncio.run(journey())
-                self.assertIn("Open an owned image", self.value(session, self.workspace.notice))
                 self.assertEqual(self.requests, [])
                 self.run_request.assert_not_called()
                 self.assertEqual(
@@ -1478,10 +1809,13 @@ process.stdout.write(JSON.stringify({output,memory}));
         self.assertEqual(Path(snapshot.current.path), original)
         self.assertNotEqual(snapshot.current.frame.dtype, "uint8")
         self.assertEqual(Path(self.value(session, self.remote["native_source"])["path"]), original)
-        with self.assertRaisesRegex(ValueError, "8-bit sRGB"):
-            self.workspace.build_request(
-                self.request_values(session, "remove-background"), request=session.request
-            )
+        data = self.workspace.build_request(
+            self.request_values(session, "remove-background"), request=session.request
+        )
+        self.assertEqual(Path(data["_editor_operation"].source.path), original)
+        self.assertEqual(data["input_image"].mode, "RGBA")
+        self.assertEqual(data["input_image"].size, (73, 121))
+        self.assertNotEqual(data["image_source"]["conversion"], "none")
         self.assertEqual(self.store.snapshot(context["session_id"], owner=session.owner).steps, ())
         self.assertEqual(original.read_bytes(), original_bytes)
         self.run_request.assert_not_called()

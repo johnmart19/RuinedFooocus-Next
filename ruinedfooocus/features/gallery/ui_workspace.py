@@ -1,7 +1,9 @@
 """One artifact-backed editor over the existing Create controls and worker."""
 
 from concurrent.futures import CancelledError
-from contextlib import closing, contextmanager
+from contextlib import contextmanager
+import logging
+import os
 from pathlib import Path
 from uuid import uuid4
 
@@ -17,11 +19,28 @@ from ruinedfooocus.features.gallery.ui_guided_results import GuidedResultActions
 class EditorWorkspace:
     """The state holds opaque P3 references; text/model/source widgets stay shared."""
 
+    SOURCE_REFERENCES = {
+        "reference_images": [],
+        "qwen_union_guide": None,
+        "qwen_union_source": None,
+        "qwen_union_mask": None,
+        "reference_adapter_image": None,
+        "model_patch_image": None,
+        "model_patch_inpaint_image": None,
+        "model_patch_mask": None,
+        "control_inpaint_image": None,
+        "control_inpaint_mask": None,
+        "_editor_guide_handoff": None,
+    }
+
     def __init__(self, *, store=None):
         self.store = store
         self.context = gr.State(None)
+        self.source_input = gr.State("placeholder")
+        self.preview_signature = gr.State(None)
+        self.output_explicit = gr.State(False)
         self.version = gr.Number(1, visible=False, precision=0)
-        self.destination = gr.State("create")
+        self.destination = gr.Textbox("create", visible=False, interactive=False)
         self.latest_generated = gr.State(None)
         self.channel = f"editor-workspace-{self.context._id}"
         self.chat_open_events = []
@@ -42,7 +61,9 @@ class EditorWorkspace:
                     t("Use result as selection mask"), size="sm", visible=False
                 )
             self.guided_results = GuidedResultActions(self.use_selection)
-            self.notice = gr.Markdown(t("Open an image to edit it without replacing the original."))
+            self.notice = gr.Markdown(
+                t("Choose an image, an action and a model, then run it. The original is kept.")
+            )
             with gr.Group(visible=False, elem_id="editor-gallery-picker") as self.picker:
                 self.picker_records = gr.State([])
                 self.picker_selected = gr.State(None)
@@ -88,7 +109,7 @@ class EditorWorkspace:
                     (t("Restore still image (SeedVR2)"), "restore-seedvr2"),
                     (t("Adjust image"), "adjust-image"),
                 ],
-                value="generate",
+                value="prompt-edit",
             )
             # One-click entry to image tools that otherwise sit in the tool list.
             self.quick_tool = gr.Radio(
@@ -105,7 +126,15 @@ class EditorWorkspace:
                 label=t("Apply current styles and negative processing"),
                 value=False,
             )
-            with gr.Accordion(t("Mask and composition inputs"), open=False):
+            self.denoise = gr.Slider(
+                label=t("Edit strength"),
+                minimum=0.01,
+                maximum=1.0,
+                step=0.01,
+                value=0.3,
+                visible=True,
+            )
+            with gr.Accordion(t("Action inputs"), open=True) as self.action_inputs:
                 self.mask = gr.File(
                     label=t("Selection mask (grayscale)"), type="filepath", visible=False
                 )
@@ -113,12 +142,17 @@ class EditorWorkspace:
                     [(t("Union mask"), "union"), (t("Instance mask"), "instance")],
                     value="union",
                     label=t("Mask selection"),
+                    visible=False,
                 )
-                self.mask_index = gr.Number(0, label=t("Instance index"), precision=0, minimum=0)
+                self.mask_index = gr.Number(
+                    0, label=t("Instance index"), precision=0, minimum=0, visible=False
+                )
                 self.mask_count = gr.Number(
-                    1, label=t("Instance count"), precision=0, minimum=1, maximum=64
+                    1, label=t("Instance count"), precision=0, minimum=1, maximum=64, visible=False
                 )
-                self.invert = gr.Checkbox(label=t("Invert selection mask"), value=False)
+                self.invert = gr.Checkbox(
+                    label=t("Invert selection mask"), value=False, visible=False
+                )
                 self.background = gr.File(
                     label=t("Background image"), type="filepath", visible=False
                 )
@@ -127,10 +161,65 @@ class EditorWorkspace:
                     label=t("Image framing"),
                     value="preserve",
                 )
-                self.preview = gr.Button(t("Preview image readiness"), size="sm")
+                self.preview = gr.Button(t("Check resources"), size="sm")
+
+    @staticmethod
+    def action_label(action, destination="editor"):
+        if destination == "create":
+            return t("Generate")
+        return {
+            "generate": t("Generate"),
+            "prompt-edit": t("Edit image"),
+            "inpaint": t("Inpaint image"),
+            "remove-background": t("Remove background"),
+            "select-background": t("Select background"),
+            "generate-background": t("Generate background"),
+            "compose": t("Compose images"),
+            "upscale": t("Upscale image"),
+            "depth-map": t("Create depth map"),
+            "restore-seedvr2": t("Restore image"),
+            "adjust-image": t("Apply adjustment"),
+        }.get(action, t("Run image action"))
 
     def selected_store(self):
         return self.store or editor_session.default_store()
+
+    def run_version_js(self, destination_index):
+        return (
+            """(...values) => {
+            const destinations = ['create', 'editor', 'library', 'models', 'chat', 'settings'];
+            const current = destinations.find(name => document.getElementById(`rf-nav-${name}-button`)?.getAttribute('aria-selected') === 'true');
+            if (current) values["""
+            + str(int(destination_index))
+            + """] = current;
+            window.__rfEditorRequest = (window.__rfEditorRequest || 1) + 1;
+            values[values.length - 1] = window.__rfEditorRequest;
+            return values;
+        }"""
+        )
+
+    @property
+    def reference_outputs(self):
+        return [self.controls[name] for name in self.SOURCE_REFERENCES if name in self.controls]
+
+    @classmethod
+    def reference_outputs_from(cls, get_control):
+        """Resolve the public registry while the app is declaring its Run event."""
+        outputs = []
+        for name in cls.SOURCE_REFERENCES:
+            try:
+                outputs.append(get_control(name))
+            except (KeyError, ValueError):
+                # Optional feature controls need not exist in every composition.
+                continue
+        return outputs
+
+    def clear_references(self):
+        return {
+            self.controls[name]: [] if isinstance(value, list) else value
+            for name, value in self.SOURCE_REFERENCES.items()
+            if name in self.controls
+        }
 
     @property
     def source_outputs(self):
@@ -139,9 +228,11 @@ class EditorWorkspace:
             dict.fromkeys(
                 [
                     self.context,
+                    self.source_input,
                     self.notice,
                     self.action,
                     self.mask,
+                    *self.reference_outputs,
                     *(
                         self.controls[name]
                         for name in (
@@ -169,6 +260,7 @@ class EditorWorkspace:
             dict.fromkeys(
                 [
                     self.context,
+                    self.source_input,
                     self.notice,
                     self.action,
                     self.mask,
@@ -216,7 +308,9 @@ class EditorWorkspace:
             display = str(display_image(record.path, configured_cache_root()))
             native_source = result_presentation([NativeImageOutput(record.path, display)])[2][0]
         updates = {
+            **self.clear_references(),
             self.context: self.public_context(snapshot, additional=additional),
+            self.source_input: "preview",
             self.notice: localize(
                 "Current image revision: {revision}",
                 resolve_locale(request=request),
@@ -232,7 +326,7 @@ class EditorWorkspace:
         }
         if details["conversion"] != "none":
             updates[self.notice] += " · " + localize(
-                "This preview is a working copy. Adjust image uses the original precision; other image actions may require an 8-bit sRGB copy.",
+                "A suitable working image is prepared automatically. The original is kept.",
                 resolve_locale(request=request),
             )
         if navigate:
@@ -313,6 +407,14 @@ class EditorWorkspace:
             raise
 
     def adopt_image(self, value, *, native_source=None, owner):
+        from ruinedfooocus.features.gallery.actions import source_record
+        from ruinedfooocus.features.image_processing.native_image_formats import image_metadata
+
+        def adopt(path):
+            record = source_record(path)
+            saved = image_metadata(path).get("parameters")
+            return open_editor(record, saved, owner=owner, store=self.selected_store())
+
         if native_source is not None:
             from ruinedfooocus.features.gallery.actions import source_path
             from ruinedfooocus.features.image_processing.native_image_outputs import (
@@ -325,9 +427,9 @@ class EditorWorkspace:
             if isinstance(bound.get("main_view"), (str, Path)):
                 raise ValueError("The precision preview changed. Select its original image again.")
             path = source_path(native_source)
-            return self.selected_store().start(path, owner=owner)
+            return adopt(path)
         with self._staged_input(value) as path:
-            return self.selected_store().start(path, owner=owner)
+            return adopt(path)
 
     def bind_chat_open(self, button, result):
         """Register at Chat construction; app wiring installs it after native tabs exist."""
@@ -416,6 +518,30 @@ class EditorWorkspace:
         }
 
         automatic_size = controls.get("resolution_auto") or gr.State(True)
+
+        def mark_output_explicit():
+            return True
+
+        output_inputs = [
+            controls[name].input
+            for name in (
+                "output_format",
+                "output_bit_depth",
+                "output_color_space",
+                "output_crf",
+                "_adjustment_hdr_precision",
+            )
+            if name in controls
+        ]
+        if output_inputs:
+            gr.on(
+                triggers=output_inputs,
+                fn=mark_output_explicit,
+                outputs=self.output_explicit,
+                queue=False,
+                show_progress="hidden",
+                api_visibility="private",
+            )
 
         def open_current(
             path, source, native_source, automatic, task_id, version, request: gr.Request = None
@@ -607,44 +733,225 @@ class EditorWorkspace:
             api_visibility="private",
         )
 
-        def source_changed(task_id, version, request: gr.Request = None):
+        def preview_trace(stage, **state):
+            if os.environ.get("RF_EDITOR_PREVIEW_DEBUG") == "1":
+                logging.getLogger(__name__).warning("Editor preview %s %s", stage, state)
+
+        def source_changed(task_id, version, request: gr.Request = None, *, source="preview"):
             invalidate(task_id, version, request)
-            return gr.skip() if task_id is not None else None
+            if task_id is not None:
+                return gr.skip()
+            latest_ui_requests.cancel(ui_request_owner(request), self.channel + "-preview")
+            preview_trace("source-changed", origin=source, version=version)
+            return {
+                **self.clear_references(),
+                self.context: None,
+                self.source_input: source,
+                self.preview_signature: None,
+                self.mask: None,
+                run_controls["inpaint"]: gr.update(value=None),
+            }
+
+        def input_source_changed(task_id, version, request: gr.Request = None):
+            return source_changed(task_id, version, request, source="input")
+
+        source_events = []
+        for triggers, callback in (
+            ([run_controls["preview"].upload, run_controls["gallery"].select], source_changed),
+            ([controls["input_image"].upload], input_source_changed),
+        ):
+            source_events.append(
+                gr.on(
+                    triggers=triggers,
+                    fn=callback,
+                    inputs=[run_controls["task"], self.version],
+                    outputs=[
+                        self.context,
+                        self.source_input,
+                        self.preview_signature,
+                        self.mask,
+                        run_controls["inpaint"],
+                        *self.reference_outputs,
+                    ],
+                    js=self.version_js,
+                    queue=False,
+                    show_progress="hidden",
+                    api_visibility="private",
+                )
+            )
+
+        def preview_source(
+            path, native, origin, previous, task_id, version, request: gr.Request = None
+        ):
+            preview_trace(
+                "start",
+                origin=origin,
+                active=task_id is not None,
+                path_present=path is not None,
+                version=version,
+            )
+            if task_id is not None or origin == "input":
+                return gr.skip()
+            token = latest_ui_requests.begin(
+                ui_request_owner(request), self.channel + "-preview", int(version)
+            )
+            try:
+                if path is None or origin == "placeholder":
+                    return latest_ui_requests.publish(
+                        token,
+                        lambda: {
+                            controls["input_image"]: None,
+                            controls["image_source"]: None,
+                            self.preview_signature: None,
+                        },
+                    )
+                from ruinedfooocus.features.gallery.actions import source_path, source_record
+                from ruinedfooocus.features.models.model_identity import file_signature
+
+                if native is not None:
+                    from ruinedfooocus.features.image_processing.native_image_outputs import (
+                        capture_original_source,
+                    )
+
+                    bound = capture_original_source(
+                        dict(main_view=path, _native_main_source=native)
+                    )
+                    if isinstance(bound.get("main_view"), (str, Path)):
+                        raise ValueError("The displayed image no longer matches its original.")
+                    path = source_path(native)
+                signature = [str(Path(path).resolve()), *file_signature(path)]
+                if signature == previous:
+                    preview_trace("unchanged", version=version)
+                    return gr.skip()
+                image, details = working_source(source_record(path))
+                if signature != [str(Path(path).resolve()), *file_signature(path)]:
+                    raise ValueError("The source image changed while preparing its preview.")
+                updates = latest_ui_requests.publish(
+                    token,
+                    lambda: {
+                        controls["input_image"]: image,
+                        controls["image_source"]: details,
+                        self.preview_signature: signature,
+                    },
+                )
+                preview_trace("published", version=version, width=image.width, height=image.height)
+                return updates
+            except CancelledError:
+                preview_trace("superseded", version=version)
+                return gr.skip()
+            except (ValueError, OSError) as error:
+                logging.getLogger(__name__).warning(
+                    "Editor input preview could not be prepared: %s", error
+                )
+                try:
+                    return latest_ui_requests.publish(
+                        token,
+                        lambda: {
+                            controls["input_image"]: None,
+                            controls["image_source"]: None,
+                            self.preview_signature: None,
+                        },
+                    )
+                except CancelledError:
+                    return gr.skip()
+            finally:
+                latest_ui_requests.finish(token)
 
         gr.on(
             triggers=[
-                run_controls["preview"].upload,
-                controls["input_image"].upload,
-                run_controls["gallery"].select,
+                run_controls["preview"].change,
+                run_controls["native_source"].change,
+                self.source_input.change,
             ],
-            fn=source_changed,
-            inputs=[run_controls["task"], self.version],
-            outputs=self.context,
+            fn=preview_source,
+            inputs=[
+                run_controls["preview"],
+                run_controls["native_source"],
+                self.source_input,
+                self.preview_signature,
+                run_controls["task"],
+                self.version,
+            ],
+            outputs=[controls["input_image"], controls["image_source"], self.preview_signature],
             js=self.version_js,
             queue=False,
             show_progress="hidden",
             api_visibility="private",
         )
-
-        def action_context(action, destination):
-            return (
-                gr.update(
-                    value=t("Generate")
-                    if destination == "create" or action == "generate"
-                    else t("Run image action")
-                ),
-                gr.update(visible=action == "inpaint"),
-                gr.update(visible=action == "select-background"),
+        for event in source_events:
+            event.success(
+                preview_source,
+                inputs=[
+                    run_controls["preview"],
+                    run_controls["native_source"],
+                    self.source_input,
+                    self.preview_signature,
+                    run_controls["task"],
+                    self.version,
+                ],
+                outputs=[controls["input_image"], controls["image_source"], self.preview_signature],
+                js=self.version_js,
+                queue=False,
+                show_progress="hidden",
+                api_visibility="private",
             )
 
+        def action_context(action, destination, tool, mask_choice):
+            masking = action == "inpaint"
+            background = action in ("select-background", "compose")
+            framing = action in (
+                "prompt-edit",
+                "inpaint",
+                "generate-background",
+                "upscale",
+                "compose",
+            )
+            return {
+                run_controls["run"]: gr.update(
+                    value=(
+                        t(tool)
+                        if destination == "editor"
+                        and action == "generate"
+                        and tool in {value for _, value in self.quick_tool.choices}
+                        else self.action_label(action, destination)
+                    )
+                ),
+                self.action_inputs: gr.update(visible=masking or background or framing, open=True),
+                self.mask: gr.update(visible=masking),
+                self.mask_choice: gr.update(visible=masking),
+                self.mask_index: gr.update(visible=masking and mask_choice == "instance"),
+                self.mask_count: gr.update(visible=masking and mask_choice == "instance"),
+                self.invert: gr.update(visible=masking),
+                self.background: gr.update(visible=background),
+                self.framing: gr.update(visible=framing),
+                self.denoise: gr.update(visible=action == "prompt-edit"),
+            }
+
         gr.on(
-            triggers=[self.action.change, self.destination.change],
+            triggers=[
+                self.action.change,
+                self.destination.change,
+                self.mask_choice.change,
+                *([controls["cn_selection"].change] if "cn_selection" in controls else []),
+            ],
             fn=action_context,
-            inputs=[self.action, self.destination],
+            inputs=[
+                self.action,
+                self.destination,
+                controls.get("cn_selection") or gr.State(None),
+                self.mask_choice,
+            ],
             outputs=[
                 run_controls["run"],
+                self.action_inputs,
                 self.mask,
+                self.mask_choice,
+                self.mask_index,
+                self.mask_count,
+                self.invert,
                 self.background,
+                self.framing,
+                self.denoise,
             ],
             queue=False,
             show_progress="hidden",
@@ -661,15 +968,32 @@ class EditorWorkspace:
         )
 
         def adjustment_action(action, current_type):
+            utility = {
+                "depth-map": "Depth map",
+                "restore-seedvr2": "Restore still image (SeedVR2)",
+                "remove-background": "RemBG",
+            }.get(action)
+            if utility is not None:
+                return [utility, gr.skip()] + (
+                    [gr.update(selected="image-tools")] if create_tabs is not None else []
+                )
             if action != "adjust-image":
                 return [gr.skip() for _ in adjustment_outputs]
             from ruinedfooocus.features.image_processing.still_image_utilities import (
                 ADJUSTMENT_LABEL,
+                ADJUSTMENT_KINDS,
                 adjustment_kind,
             )
 
             kind = adjustment_kind(ADJUSTMENT_LABEL, current_type)
-            return [ADJUSTMENT_LABEL, gr.update(value=kind.capitalize())] + (
+            choices = list(controls["cn_type"].choices)
+            known = {value for _, value in choices}
+            choices += [
+                (value.capitalize(), value.capitalize())
+                for value in ADJUSTMENT_KINDS
+                if value.capitalize() not in known
+            ]
+            return [ADJUSTMENT_LABEL, gr.update(value=kind.capitalize(), choices=choices)] + (
                 [gr.update(selected="image-tools")] if create_tabs is not None else []
             )
 
@@ -733,8 +1057,11 @@ class EditorWorkspace:
             )
 
         def adopt_mask(path, context, request: gr.Request = None):
-            if not path or not context:
-                raise gr.Error("Open an image before selecting its exact-frame mask.")
+            if not path:
+                return context
+            if not context:
+                # Run owns source and mask admission together for a fresh upload.
+                return None
             store, owner = self.selected_store(), ui_request_owner(request)
             store.artifact(
                 context["session_id"],
@@ -1191,10 +1518,16 @@ class EditorWorkspace:
     def run(self, values, version):
         """Fence the existing stream; only a successful current terminal adopts pixels."""
         owner = ui_request_owner()
+        latest_ui_requests.cancel(owner, self.channel + "-preview")
         ticket = latest_ui_requests.begin(owner, self.channel, int(version))
         task_id = None
         try:
             data = latest_ui_requests.publish(ticket, lambda: self.build_request(values))
+            adopted = None
+            if not values.get("_editor_context") and data.get("_editor_context"):
+                adopted = self.selected_store().snapshot(
+                    data["_editor_context"]["session_id"], owner=owner
+                )
             selection = data.pop("_editor_selected_background", None)
             if selection is not None:
                 from ruinedfooocus.features.image_editing.image_workflows import selected_background
@@ -1214,7 +1547,7 @@ class EditorWorkspace:
                     snapshot, additional=[selection.ticket.source.artifact_id]
                 )
                 return
-            with closing(self.run_request(data)) as stream:
+            with self._request_stream(data) as stream:
                 for updates in stream:
                     updates = dict(updates)
                     if task_id is None and values.get("main_view") is not None:
@@ -1222,6 +1555,18 @@ class EditorWorkspace:
                     observed_task = updates.get(self.run_controls["task"])
                     if observed_task is not None:
                         task_id = observed_task
+                    if adopted is not None and task_id is not None:
+                        source_updates = self.snapshot_updates(adopted)
+                        # An uploaded/painted mask and manual frame belong to this
+                        # captured request. Source admission must not reset them.
+                        for control in (
+                            self.mask,
+                            self.run_controls["inpaint"],
+                            self.run_controls["inpaint_toggle"],
+                        ):
+                            source_updates.pop(control, None)
+                        updates = source_updates | updates
+                        adopted = None
                     if not latest_ui_requests.current(ticket):
                         if task_id is not None:
                             self.stop_request(task_id)
@@ -1306,6 +1651,54 @@ class EditorWorkspace:
         finally:
             latest_ui_requests.finish(ticket)
 
+    @contextmanager
+    def _request_stream(self, data):
+        stream = self.run_request(data)
+        closing_exit = False
+        try:
+            yield stream
+        except GeneratorExit:
+            closing_exit = True
+            raise
+        finally:
+            try:
+                stream.close()
+            except Exception:
+                if not closing_exit:
+                    raise
+                logging.getLogger(__name__).warning(
+                    "Editor stream cleanup failed while closing", exc_info=True
+                )
+
+    def _source_values(self, values, *, request=None):
+        """Admit the visible/uploaded still on Run, retaining valid owned context."""
+        if values.get("_editor_destination") == "create" or values.get("_editor_context"):
+            return values
+        uploaded = values.get("_editor_source_input") == "input"
+        selected = values.get("input_image") if uploaded else values.get("main_view")
+        native = None if uploaded else values.get("_native_main_source")
+        if selected is None:
+            selected = values.get("input_image")
+            native = None
+        if values.get("_editor_source_input") == "placeholder":
+            selected = None
+        if isinstance(selected, (str, Path)):
+            from ruinedfooocus.core.paths import asset_path
+
+            if Path(selected).resolve() == asset_path("init_image.png").resolve():
+                selected = None
+        if selected is None:
+            if values.get("_editor_action", "generate") == "generate":
+                return values
+            raise ValueError("Choose or upload an image to run this action.")
+        snapshot = self.adopt_image(selected, native_source=native, owner=ui_request_owner(request))
+        result = dict(
+            values, **self.SOURCE_REFERENCES, _editor_context=self.public_context(snapshot)
+        )
+        result["reference_images"] = []
+        result.pop("_editor_guide_request", None)
+        return result
+
     def build_request(self, values, *, request=None):
         """Capture one explicit P4 step; the accepted worker owns final P1/P2 binding."""
         from ruinedfooocus.features.image_editing import image_workflows as workflows
@@ -1360,6 +1753,7 @@ class EditorWorkspace:
             if values.get("automatic_upscale_target") == "Input image only":
                 values["automatic_upscale_target"] = "Generated image"
         action = values.get("_editor_action", "generate")
+        values = self._source_values(values, request=request)
         if action != "generate" and values.get("_editor_guide_handoff") is not None:
             values = dict(values)
             handoff = values.pop("_editor_guide_handoff")
@@ -1371,10 +1765,27 @@ class EditorWorkspace:
             result = dict(values)
             if values.get("_editor_destination") == "editor" and values.get("_editor_context"):
                 result["editor_context"] = values["_editor_context"]
+                if values.get("cn_selection") in {value for _, value in self.quick_tool.choices}:
+                    from ruinedfooocus.features.gallery.actions import source_record
+
+                    context = values["_editor_context"]
+                    source = self.selected_store().artifact(
+                        context["session_id"],
+                        context["source_id"],
+                        revision=context["revision"],
+                        owner=ui_request_owner(request),
+                    )
+                    image, details = working_source(source_record(source.path))
+                    result.update(
+                        input_image=image,
+                        main_view=image.copy(),
+                        image_source=details,
+                        _native_main_source=None,
+                    )
             return self._capture_guided_request(result, request=request)
         context = values.get("_editor_context")
         if not context:
-            raise ValueError("Open an owned image before running this action.")
+            raise ValueError("Choose or upload an image to run this action.")
         owner, store = ui_request_owner(request), self.selected_store()
         source = store.artifact(
             context["session_id"], context["source_id"], revision=context["revision"], owner=owner
@@ -1427,7 +1838,7 @@ class EditorWorkspace:
                 values.get("custom_height", source.frame.height),
             )
             if action in ("remove-background", "compose") or (
-                action in ("prompt-edit", "inpaint")
+                action in ("prompt-edit", "inpaint", "generate-background")
                 and values.get("resolution_auto", True)
                 and parameters["image_resize_mode"] == "preserve"
             ):
@@ -1440,9 +1851,22 @@ class EditorWorkspace:
             from ruinedfooocus.features.image_editing.ui_guidance import family_for_checkpoint
 
             family = family_for_checkpoint(values.get("base_model_name"))
-            parameters["denoise"] = values.get("cn_strength", 0.3)
+            parameters["denoise"] = values.get("_editor_denoise", 0.3)
         if action == "upscale":
-            parameters["upscaler"] = values.get("automatic_upscale")
+            upscaler = values.get("automatic_upscale")
+            parameters["upscaler"] = (
+                "2× General (RealESRGAN)" if not upscaler or upscaler == "Off" else upscaler
+            )
+            if values.get("resolution_auto", True):
+                # Auto size follows the chosen pixel upscaler; shared generation
+                # dimensions are not an explicit Editor target.
+                from ruinedfooocus.features.generation.automatic_upscale import scale_for
+
+                factor = scale_for(parameters["upscaler"])
+                parameters.update(
+                    target_width=round(source.frame.width * factor),
+                    target_height=round(source.frame.height * factor),
+                )
         if action == "select-background":
             path = values.get("_editor_background")
             if not path:
@@ -1453,15 +1877,25 @@ class EditorWorkspace:
                 ).artifact_id
         if action == "compose":
             additional = context.get("additional_image_ids") or []
-            if not additional:
-                raise ValueError(
-                    "Select or generate a background before composing its retained foreground."
-                )
-            parameters["foreground_id"] = additional[0]
+            background = values.get("_editor_background")
+            if background:
+                with self._staged_input(background) as path:
+                    parameters["background_id"] = store.bind_image(
+                        context["session_id"], path, owner=owner
+                    ).artifact_id
+            elif additional:
+                parameters["foreground_id"] = additional[0]
+            else:
+                raise ValueError("Choose a background image to compose with this foreground.")
             parameters.setdefault("composition_mode", "SRC_OVER")
         mask = None
         if action == "inpaint":
             mask_id = context.get("mask_id")
+            if not mask_id and values.get("_editor_mask"):
+                with self._staged_input(values["_editor_mask"]) as path:
+                    mask_id = store.bind_mask(
+                        context["session_id"], path, context["source_id"], owner=owner
+                    ).artifact_id
             if not mask_id and values.get("inpaint_view") is not None:
                 from ruinedfooocus.features.image_editing.inpaint_utils import source_and_mask
 

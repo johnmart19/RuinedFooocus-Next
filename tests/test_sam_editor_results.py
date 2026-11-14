@@ -237,7 +237,7 @@ class SamEditorWorkerTests(unittest.TestCase):
             self.store.capture_derived_results(ticket, [wrong] * 65, owner=self.owner)
         for mode, dtype, message in (("I;16", np.uint16, "8-bit"), ("L", np.uint8, "empty")):
             path = self.publication.folder / (mode.replace(";", "-") + ".png")
-            Image.fromarray(np.zeros((20, 40), dtype=dtype), mode).save(path)
+            Image.fromarray(np.zeros((20, 40), dtype=dtype)).save(path)
             refs = self.store.capture_derived_results(ticket, [path], owner=self.owner)
             completed = self.store.complete_derived_results(
                 ticket, refs, output="mask", owner=self.owner

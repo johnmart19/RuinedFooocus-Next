@@ -263,6 +263,10 @@ def _describe(path):
             imported.color_space,
             "straight" if channels == 4 else "none",
         )
+        if path.suffix.lower() in (".png", ".avif"):
+            with Image.open(path) as image:
+                if imported.color_space == "sRGB" and image.info.get("icc_profile"):
+                    frame = replace(frame, color_space="embedded ICC")
     else:
         with Image.open(path) as image:
             if getattr(image, "n_frames", 1) != 1:
@@ -270,9 +274,22 @@ def _describe(path):
             orientation = image.getexif().get(274, 1)
             width, height = image.size[::-1] if orientation in (5, 6, 7, 8) else image.size
             alpha = "A" in image.getbands() or "transparency" in image.info
-            dtype = "float32" if image.mode == "F" else ("int32" if image.mode == "I" else "uint8")
+            dtype = (
+                "float32"
+                if image.mode == "F"
+                else "int32"
+                if image.mode == "I"
+                else "uint16"
+                if image.mode.startswith("I;16")
+                else "uint8"
+            )
             frame = ImageFrame(
-                width, height, image.mode, dtype, "sRGB", "straight" if alpha else "none"
+                width,
+                height,
+                image.mode,
+                dtype,
+                "embedded ICC" if image.info.get("icc_profile") else "sRGB",
+                "straight" if alpha else "none",
             )
     if not 0 < frame.width * frame.height <= MAX_PIXELS:
         raise ValueError("The editor source exceeds the still-image pixel limit.")
@@ -781,8 +798,6 @@ class EditorSessionStore:
                         result_ids=[ref.artifact_id for ref in results],
                         output=output,
                         selection_eligible=output == "mask"
-                        and ticket.source.frame.dtype == "uint8"
-                        and ticket.source.frame.color_space == "sRGB"
                         and all(
                             ref.frame.dtype == "uint8" and ref.frame.color_space == "sRGB"
                             for ref in results
@@ -828,8 +843,6 @@ class EditorSessionStore:
             source = self._get(value, derived["source_id"], kind="image")
             if source.frame_id != derived.get("source_frame_id"):
                 raise ValueError("The original image frame changed after segmentation.")
-            if source.frame.dtype != "uint8" or source.frame.color_space != "sRGB":
-                raise ValueError("Inpainting needs an explicit 8-bit sRGB source and mask.")
             result_ids = derived["result_ids"]
             if any(not 0 <= index < len(result_ids) for index in indices):
                 raise ValueError("The object mask results changed; select an existing instance.")
@@ -996,7 +1009,7 @@ class EditorSessionStore:
         return self._move(session_id, revision, redo=False, owner=owner)
 
     def use_result_as_mask(self, session_id, revision, result_id, *, owner=None):
-        """Attach an exact-byte selection and restore its retained source in one save."""
+        """Attach scalar L8 coverage and restore its retained source in one save."""
         import numpy as np
         from PIL import Image
 
@@ -1020,29 +1033,34 @@ class EditorSessionStore:
             result = self._get(value, result_id, kind="image")
             if result.frame.size != source.frame.size:
                 raise ValueError("The mask result must match its original source frame exactly.")
-            if (
-                result.frame.dtype != "uint8"
-                or result.frame.color_space != "sRGB"
-                or source.frame.dtype != "uint8"
-                or source.frame.color_space != "sRGB"
-            ):
-                raise ValueError(
-                    "Inpainting needs an 8-bit sRGB source and mask. Export an explicit working copy first."
-                )
             if len(value["artifacts"]) >= self.max_artifacts:
                 raise ValueError("The editor artifact limit is full; open a new session.")
-            with Image.open(result.path) as image:
-                pixels = np.asarray(image)
-                if (
-                    pixels.ndim != 3
-                    or pixels.shape[-1] not in (3, 4)
-                    or not np.array_equal(pixels[..., 0], pixels[..., 1])
-                    or not np.array_equal(pixels[..., 0], pixels[..., 2])
-                ):
-                    raise ValueError(
-                        "The mask result must contain matching grayscale RGB channels."
-                    )
-                selection = Image.fromarray(pixels[..., 0].copy(), "L")
+            from ruinedfooocus.features.image_processing.native_image_formats import (
+                _pixels,
+                needs_preview,
+                read_image,
+            )
+
+            if needs_preview(Path(result.path)):
+                pixels = read_image(result.path).pixels
+            else:
+                with Image.open(result.path) as image:
+                    pixels = np.array(image)
+            if (
+                pixels.ndim == 3
+                and pixels.shape[-1] in (3, 4)
+                and (
+                    np.array_equal(pixels[..., 0], pixels[..., 1])
+                    and np.array_equal(pixels[..., 0], pixels[..., 2])
+                )
+            ):
+                pixels = pixels[..., 0]
+            elif pixels.ndim != 2:
+                raise ValueError("The mask result must contain matching grayscale RGB channels.")
+            # A selection is a scalar coverage map, not color: normalize its
+            # native precision without a transfer curve or image-alpha extraction.
+            scalar = _pixels(pixels)[..., 0].clamp(0, 1).numpy()
+            selection = Image.fromarray((scalar * 255).round().astype(np.uint8), "L")
             self._get(value, result_id, kind="image")
             path = self.root / "selection-masks" / (uuid.uuid4().hex + ".png")
             path.parent.mkdir(parents=True, exist_ok=True)

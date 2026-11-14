@@ -61,6 +61,7 @@ def fence_event(
     discard_context_stale=False,
     revocation_input=None,
     revoke=False,
+    image_contexts=(),
     **options,
 ):
     """Keep server validation, then fence the actual client-side output update.
@@ -102,7 +103,11 @@ def fence_event(
             continue
         if not component.elem_id:
             component.elem_id = f"rf-prompt-context-{component._id}"
-        contexts.append(component.elem_id)
+        contexts.append(
+            {"id": component.elem_id, "image": True}
+            if component in image_contexts
+            else component.elem_id
+        )
     config = json.dumps(
         dict(
             prompt=inputs.index(prompt),

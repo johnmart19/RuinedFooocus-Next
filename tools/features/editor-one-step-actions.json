@@ -1,0 +1,28 @@
+{
+  "id": "editor-one-step-actions",
+  "subject": "Run Editor actions directly from selected images with safe working copies",
+  "requires": ["ui-composition"],
+  "tests": [
+    "test_editor_working_copies.py",
+    "test_editor_prompt_routing.py",
+    "test_editor_workspace_actions.py",
+    "test_editor_workspace_events.py",
+    "test_editor_run_outputs.py",
+    "test_prompt_caption.py",
+    "test_prompt_draft_fence.py",
+    "test_utility_defaults.py",
+    "test_image_workflow_handoffs.py",
+    "test_editor_session.py",
+    "test_image_metadata_boundary.py",
+    "test_image_worker_prompt_batches.py",
+    "test_image_plan_callers.py",
+    "test_library_editing_ui.py",
+    "test_utility_sampling_capture.py",
+    "test_utility_saved_selections.py",
+    "test_localization.py",
+    "test_navigation_shell.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

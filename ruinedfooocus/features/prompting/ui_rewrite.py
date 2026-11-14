@@ -5,14 +5,9 @@ from ruinedfooocus.core.translation_manager import localize, resolve_locale, tra
 from ruinedfooocus.features.prompting.local_model import run_prompt
 from ruinedfooocus.features.prompting.presets import rewrite_presets
 from ruinedfooocus.features.prompting.ui_draft_fence import fence_event
+from ruinedfooocus.features.prompting.prompt_resources import RESOURCE
 
 
-RESOURCE = re.compile(
-    r"<(?:lora|style|embedding):[^<>]+>|"
-    r"\(embedding:[\w./\\-]+:[+-]?(?:\d+(?:\.\d*)?|\.\d+)\)|"
-    r"\bembedding:[\w./\\-]+",
-    re.I,
-)
 # Apostrophes inside words belong to prose, including inside single-quoted text.
 REWRITE_LITERALS = re.compile(
     r'<[^<>]*>|__[^\n]*?__|"(?:\\.|[^"\\])*"|'

@@ -7,8 +7,12 @@ from ruinedfooocus.features.image_processing.native_seedvr2 import (
     COLORS,
     DEFAULTS,
     KIND,
-    model_choices,
 )
+from ruinedfooocus.features.image_processing.utility_defaults import component_choices, picker_value
+
+
+def model_choices(manager, codec=False):
+    return component_choices(manager, KIND, "seedvr2_vae" if codec else "seedvr2_model")
 
 
 def selection_choices(manager, selected=None, *, codec=False):
@@ -22,6 +26,16 @@ def create_ui(selection, control_type, model_refresh, kind_for):
     from ruinedfooocus.app import state as shared
 
     saved = shared.settings.default_settings
+    selected = {
+        field: picker_value(
+            shared.path_manager,
+            KIND,
+            field,
+            saved.get(field),
+            model_choices(shared.path_manager, codec=field == "seedvr2_vae"),
+        )
+        for field in ("seedvr2_model", "seedvr2_vae")
+    }
     with gr.Group(visible=kind_for(selection.value, control_type.value) == KIND) as group:
         gr.Markdown(
             t(
@@ -31,15 +45,13 @@ def create_ui(selection, control_type, model_refresh, kind_for):
         controls = {
             "seedvr2_model": gr.Dropdown(
                 label=t("SeedVR2 restoration model"),
-                choices=selection_choices(shared.path_manager, saved.get("seedvr2_model")),
-                value=saved.get("seedvr2_model") or None,
+                choices=selection_choices(shared.path_manager, selected["seedvr2_model"]),
+                value=selected["seedvr2_model"] or None,
             ),
             "seedvr2_vae": gr.Dropdown(
                 label=t("SeedVR2 codec"),
-                choices=selection_choices(
-                    shared.path_manager, saved.get("seedvr2_vae"), codec=True
-                ),
-                value=saved.get("seedvr2_vae") or None,
+                choices=selection_choices(shared.path_manager, selected["seedvr2_vae"], codec=True),
+                value=selected["seedvr2_vae"] or None,
             ),
             "seedvr2_scale": gr.Slider(
                 label=t("Restoration scale"),
@@ -65,11 +77,28 @@ def create_ui(selection, control_type, model_refresh, kind_for):
             show_progress="hidden",
             api_visibility="undocumented",
         )
+
+    def refresh_components(model, codec):
+        updates = []
+        for field, value in (("seedvr2_model", model), ("seedvr2_vae", codec)):
+            codec_field = field == "seedvr2_vae"
+            value = picker_value(
+                shared.path_manager,
+                KIND,
+                field,
+                value,
+                model_choices(shared.path_manager, codec=codec_field),
+            )
+            updates.append(
+                gr.update(
+                    choices=selection_choices(shared.path_manager, value, codec=codec_field),
+                    value=value,
+                )
+            )
+        return updates
+
     model_refresh.change(
-        lambda model, codec: (
-            gr.update(choices=selection_choices(shared.path_manager, model)),
-            gr.update(choices=selection_choices(shared.path_manager, codec, codec=True)),
-        ),
+        refresh_components,
         inputs=[controls["seedvr2_model"], controls["seedvr2_vae"]],
         outputs=[controls["seedvr2_model"], controls["seedvr2_vae"]],
         queue=False,

@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Kitaplık küçük resimleri",
   "settings.theme_cached_and_selected_save_to_keep_it": "Tema önbelleğe alındı ve seçildi. Kalıcı olması için kaydedin.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Tema bu tarayıcıya uygulandı. Kalıcı olması için kaydedin.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Kitaplıkta gezinirken yeniden oluşturulur. Özgün görüntüler korunur."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Kitaplıkta gezinirken yeniden oluşturulur. Özgün görüntüler korunur.",
+  "gallery.edit_strength": "Düzenleme gücü",
+  "gallery.action_inputs": "İşlem girdileri",
+  "gallery.check_resources": "Kaynakları denetle",
+  "gallery.inpaint_image": "Görüntüyü kısmen yeniden oluştur",
+  "gallery.compose_images": "Görüntüleri birleştir",
+  "gallery.upscale_image": "Görüntüyü büyüt",
+  "gallery.create_depth_map": "Derinlik haritası oluştur",
+  "gallery.restore_image": "Görüntüyü onar",
+  "gallery.apply_adjustment": "Ayarlamayı uygula",
+  "prompting.describe_image": "Görüntüyü betimle",
+  "prompting.undo_description": "Betimlemeyi geri al"
 }

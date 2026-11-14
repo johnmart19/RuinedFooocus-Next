@@ -105,10 +105,9 @@ def inpaint_inputs(store, handoff, *, owner):
     )
     if (source.frame_id, mask.frame_id) != (handoff.source_frame_id, handoff.mask_frame_id):
         raise ValueError("The captured image or selection mask frame changed.")
-    if source.frame.dtype != "uint8" or source.frame.color_space != "sRGB":
-        raise ValueError("Use an explicit 8-bit sRGB working image for this mask handoff.")
-    with Image.open(source.path) as value:
-        image = ImageOps.exif_transpose(value).convert("RGBA").copy()
+    from ruinedfooocus.features.gallery.editing_workflow import working_image
+
+    image, _ = working_image(source.path)
     with Image.open(mask.path) as value:
         if value.mode not in ("1", "L"):
             raise ValueError("The selection mask must remain a single grayscale channel.")

@@ -104,7 +104,8 @@ def image_tool_help(features):
         )
     return translate_ui(
         "None generates a fresh image. Adding an image selects Native image edit when the "
-        "checkpoint supports it, otherwise Image to image."
+        "checkpoint supports it, otherwise Image to image. Lower denoise preserves more of "
+        "the source; higher denoise allows larger changes."
     )
 
 

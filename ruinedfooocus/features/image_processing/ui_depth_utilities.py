@@ -7,7 +7,12 @@ from ruinedfooocus.features.image_processing.depth_utilities import (
     DEFAULTS,
     KINDS,
     LABELS,
-    component_choices,
+    component_choices as local_component_choices,
+)
+from ruinedfooocus.features.image_processing.utility_defaults import (
+    PREFERENCES,
+    component_choices as default_choices,
+    picker_value,
 )
 
 MODEL_LABELS = {
@@ -26,6 +31,12 @@ HELP = {
 }
 
 
+def component_choices(manager, kind, field, *, locale=None):
+    if field in PREFERENCES.get(kind, {}):
+        return default_choices(manager, kind, field, locale=locale)
+    return local_component_choices(manager, kind, field, locale=locale)
+
+
 def choices(manager, kind, field, selected, *, locale=None):
     values = component_choices(manager, kind, field, locale=locale)
     if selected and selected not in {value for _, value in values}:
@@ -41,6 +52,13 @@ def create_ui(selection, control_type, input_image, model_refresh, kind_for):
 
     def picker(field, label, visible=True):
         selected = saved.get(field, DEFAULTS[field])
+        selected = picker_value(
+            shared.path_manager,
+            kind,
+            field,
+            selected,
+            component_choices(shared.path_manager, kind, field),
+        )
         return gr.Dropdown(
             label=translate_ui(label),
             choices=choices(shared.path_manager, kind, field, selected),
@@ -149,6 +167,13 @@ def create_ui(selection, control_type, input_image, model_refresh, kind_for):
         active = kind_for(choice, tool_type)
         pickers = []
         for field, selected_value in zip(tuple(components)[:4], selected):
+            selected_value = picker_value(
+                shared.path_manager,
+                active,
+                field,
+                selected_value,
+                component_choices(shared.path_manager, active, field, locale=locale),
+            )
             visible = (
                 active in KINDS
                 if field == "image_utility_model"

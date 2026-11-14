@@ -1102,5 +1102,16 @@
   "shell.library_thumbnails": "Миниатюры библиотеки",
   "settings.theme_cached_and_selected_save_to_keep_it": "Тема сохранена в кэше и выбрана. Сохраните, чтобы оставить её.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Тема применена в этом браузере. Сохраните, чтобы оставить её.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Создаются заново при просмотре библиотеки. Исходные изображения сохраняются."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Создаются заново при просмотре библиотеки. Исходные изображения сохраняются.",
+  "gallery.edit_strength": "Сила редактирования",
+  "gallery.action_inputs": "Входные данные действия",
+  "gallery.check_resources": "Проверить ресурсы",
+  "gallery.inpaint_image": "Дорисовать изображение",
+  "gallery.compose_images": "Объединить изображения",
+  "gallery.upscale_image": "Увеличить изображение",
+  "gallery.create_depth_map": "Создать карту глубины",
+  "gallery.restore_image": "Восстановить изображение",
+  "gallery.apply_adjustment": "Применить коррекцию",
+  "prompting.describe_image": "Описать изображение",
+  "prompting.undo_description": "Отменить описание"
 }

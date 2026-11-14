@@ -86,13 +86,27 @@ and restoration for targets that are not alignment multiples.
 metadata and rejects a different target. Pure processing removes inherited
 diffusion fields rather than claiming sampling occurred.
 
-The working input contract is an explicit 8-bit sRGB image. Precision originals
-first use Library's existing deliberate working-copy conversion; originals are
-retained. A precision source never silently becomes a byte working image here.
+Model workflows automatically prepare a request-local 8-bit sRGB working image
+from the owned original, using the same native precision/color conversion as
+Library editing. Embedded ICC profiles use Pillow's CMS with alpha kept separate
+from the color transform. No export or manual preparation step is required.
+The original artifact, metadata, precision, dimensions and history identity stay
+unchanged. The request and completed history record the working conversion;
+native adjustments and precision exports continue to read original samples.
+Owned selection masks keep their exact source/frame identities and soft coverage;
+proven precision mask results normalize to an L8 selection without a color curve.
 An edit size change requires explicit `pad` or `crop`; default preservation
 cannot silently resize, crop or stretch. Composition retains native contain/pad
 geometry and source alpha. [Composition](native-image-composition.md) and
 [exact upscale targets](exact-image-targets.md) remain the algorithm owners.
+
+Direct Compose also accepts one owned `background_id` while the current image
+remains the foreground and owns the output canvas. The background fits uniformly
+with transparent padding; it is never cropped or stretched. Native capture
+revalidates and rebuilds both inputs from their owned IDs, preserving role order.
+The existing current-background plus `foreground_id` route remains supported;
+the two role selectors are mutually exclusive. Neither route invents an
+intermediate history step.
 
 ## Finite presets and lineage
 

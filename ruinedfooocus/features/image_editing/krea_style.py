@@ -49,6 +49,10 @@ def capture_assets(data, manager, models, controls):
     result = dict(data)
     result.pop(KEY, None)
     result.pop("native_krea_style", None)
+    if (controls or {}).get("type") != "edit":
+        if any(result.get(key) is not None for key in FIELDS):
+            raise ValueError("Krea style LoRA settings require the Krea2 style-reference recipe.")
+        return result, ()
     family = _control_checkpoint_family(models, result.get("base_model_name"))
     family = ALIASES.get(family, family)
     active = (

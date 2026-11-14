@@ -199,7 +199,8 @@ class LibraryEditingUiTests(unittest.TestCase):
                 )
             )
         self.assertIsInstance(result[self.editor.notice], str)
-        self.assertIn("8-bit sRGB", result[self.editor.notice])
+        self.assertIn("prepared automatically", result[self.editor.notice])
+        self.assertIn("original is kept", result[self.editor.notice])
 
     def test_delayed_metadata_uses_existing_browser_fence_and_preserves_manual_text(self):
         load = self.functions["load_selection"]
@@ -352,6 +353,8 @@ else {
         ]
 
     def test_real_gradio_signature_injects_owner_before_variadic_create_capture(self):
+        self.assertEqual(self.editor.denoise.value, 0.3)
+        self.assertEqual(self.defaults["cn_strength"], 0.37)
         callback = self.functions["run"].fn
         request = gr.Request(session_hash="Library-session-A")
         inputs, *_ = special_args(callback, self.arguments(), request=request)
@@ -363,6 +366,7 @@ else {
         request = self.captured[0]
         self.assertEqual(request["prompt"], "Changed instruction")
         self.assertEqual(request["negative"], "No blur")
+        self.assertEqual(request["cn_strength"], 0.37)
         self.assertEqual(request["seed"], 42)
         self.assertEqual(
             request["image_component_overrides"], self.defaults["image_component_overrides"]

@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Мініатюри бібліотеки",
   "settings.theme_cached_and_selected_save_to_keep_it": "Тему збережено в кеші та вибрано. Збережіть, щоб залишити її.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Тему застосовано в цьому браузері. Збережіть, щоб залишити її.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Створюються заново під час перегляду бібліотеки. Оригінальні зображення зберігаються."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Створюються заново під час перегляду бібліотеки. Оригінальні зображення зберігаються.",
+  "gallery.edit_strength": "Сила редагування",
+  "gallery.action_inputs": "Вхідні дані дії",
+  "gallery.check_resources": "Перевірити ресурси",
+  "gallery.inpaint_image": "Домалювати зображення",
+  "gallery.compose_images": "Поєднати зображення",
+  "gallery.upscale_image": "Збільшити зображення",
+  "gallery.create_depth_map": "Створити карту глибини",
+  "gallery.restore_image": "Відновити зображення",
+  "gallery.apply_adjustment": "Застосувати коригування",
+  "prompting.describe_image": "Описати зображення",
+  "prompting.undo_description": "Скасувати опис"
 }

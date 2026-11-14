@@ -110,7 +110,7 @@ class LibraryEditor:
                 minimum=0.01,
                 maximum=1,
                 step=0.01,
-                value=current_value("cn_strength", 0.25),
+                value=0.3,
             )
             with gr.Row():
                 self.width = gr.Number(
@@ -141,7 +141,7 @@ class LibraryEditor:
             gr.Markdown(
                 t(
                     "Run uses the current Create sampling, upscale, component and LoRA settings. "
-                    "Uploaded references are required again. Precision originals stay unchanged; editing uses an 8-bit sRGB working copy."
+                    "Uploaded references are required again. Any working image is prepared automatically; the original is kept."
                 )
             )
             with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
@@ -436,7 +436,7 @@ class LibraryEditor:
                 notice = details["filename"]
                 if details["conversion"] != "none":
                     notice += " · " + localize(
-                        "Editing uses an 8-bit sRGB working copy; the original is retained.",
+                        "Any working image is prepared automatically; the original is kept.",
                         resolve_locale(request=request),
                     )
                 if data.get("base_model_name"):

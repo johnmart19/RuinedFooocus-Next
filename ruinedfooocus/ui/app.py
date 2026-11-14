@@ -59,7 +59,7 @@ import ruinedfooocus.features.prompting.ui_random as ui_onebutton
 import ruinedfooocus.features.image_editing.ui as ui_controlnet
 from ruinedfooocus.features.image_editing.qwen_image21_local_edit import PAINT_COLOR
 from ruinedfooocus.app.api import add_api, add_fastapi
-from ruinedfooocus.features.image_processing.interrogate import look
+from ruinedfooocus.features.image_processing.interrogate import metadata_prompt
 
 # Block the "Token indices sequence length is longer than the specified maximum sequence length for this model" warning
 import transformers
@@ -152,19 +152,19 @@ def create_navigation_shell(
     app = gr.Blocks(title=title, analytics_enabled=False, fill_width=True)
     with app:
         with gr.Tabs(elem_id="app-tabs", overflow_behavior="wrap") as top_tabs:
-            with gr.Tab(t("Create"), id="create") as create_tab:
+            with gr.Tab(t("Create"), id="create", elem_id="rf-nav-create") as create_tab:
                 pass
-            with gr.Tab(t("Editor"), id="editor") as editor_tab:
+            with gr.Tab(t("Editor"), id="editor", elem_id="rf-nav-editor") as editor_tab:
                 pass
-            with gr.Tab(t("Gallery"), id="library") as gallery_tab:
+            with gr.Tab(t("Gallery"), id="library", elem_id="rf-nav-library") as gallery_tab:
                 page_head(t("Gallery"), t("Browse your images and reuse their settings."))
                 gallery.render()
-            with gr.Tab(t("Models"), id="models") as models_page:
+            with gr.Tab(t("Models"), id="models", elem_id="rf-nav-models") as models_page:
                 page_head(t("Models"), t("Pick an installed model or download a new one."))
                 model_destinations = gr.Tabs(overflow_behavior="wrap")
-            with gr.Tab(t("Chat"), id="chat") as chat_tab:
+            with gr.Tab(t("Chat"), id="chat", elem_id="rf-nav-chat") as chat_tab:
                 chat.render()
-            with gr.Tab(t("Settings"), id="settings") as settings_tab:
+            with gr.Tab(t("Settings"), id="settings", elem_id="rf-nav-settings") as settings_tab:
                 page_head(t("Settings"), t("Profiles, hardware, defaults and maintenance."))
                 settings_app.render()
         with gr.Group(elem_id="image-stage") as image_stage:
@@ -223,13 +223,17 @@ def create_navigation_shell(
             if image:
                 updates[create_tabs] = gr.update(selected=inner or "generation")
             if destination == "create" or editing and action is not None:
-                updates[run_button] = gr.update(
-                    value=t("Run image action")
-                    if editing and action != "generate"
-                    else t("Generate")
-                )
+                updates[run_button] = gr.update(value=workspace.action_label(action, destination))
             return updates
 
+        navigation_version = gr.Number(0, visible=False, precision=0)
+        capture_navigation = "(action, version) => { window.__rfNavigationSerial = (window.__rfNavigationSerial || 0) + 1; return [action, window.__rfNavigationSerial]; }"
+        publish_navigation = """(result) => {
+            const button = document.getElementById(result.button);
+            if (result.version !== window.__rfNavigationSerial || button?.getAttribute('aria-selected') !== 'true')
+                return result.updates.map(() => ({__type__: 'update'}));
+            return result.updates;
+        }"""
         for tab, destination in (
             (create_tab, "create"),
             (editor_tab, "editor"),
@@ -238,16 +242,50 @@ def create_navigation_shell(
             (chat_tab, "chat"),
             (settings_tab, "settings"),
         ):
-            tab.select(
-                lambda action, destination=destination: navigate(
-                    destination, select=False, action=action
-                ),
-                inputs=workspace.action,
-                outputs=navigation_outputs,
+            navigation_result = gr.JSON(None, visible=False)
+
+            def select_destination(
+                action, version, destination=destination, request: gr.Request = None
+            ):
+                updates = navigate(destination, select=False, action=action)
+                from gradio.i18n import I18nData
+
+                button = updates.get(run_button)
+                if button and isinstance(button.get("value"), I18nData):
+                    from ruinedfooocus.core.translation_manager import catalogue, resolve_locale
+
+                    updates[run_button] = dict(
+                        button,
+                        value=catalogue().translate(
+                            button["value"].key.removeprefix("ruinedfooocus."),
+                            locale=resolve_locale(request=request),
+                        ),
+                    )
+                return dict(
+                    version=version,
+                    button=f"rf-nav-{destination}-button",
+                    updates=[updates.get(control, gr.skip()) for control in navigation_outputs],
+                )
+
+            event = tab.select(
+                select_destination,
+                inputs=[workspace.action, navigation_version],
+                outputs=navigation_result,
+                js=capture_navigation,
                 queue=False,
                 show_progress="hidden",
                 show_progress_on=[],
                 api_visibility="undocumented",
+            )
+            event.success(
+                fn=None,
+                inputs=navigation_result,
+                outputs=navigation_outputs,
+                js=publish_navigation,
+                queue=False,
+                show_progress="hidden",
+                show_progress_on=[],
+                api_visibility="private",
             )
         for component in app.blocks.values():
             if isinstance(component, gr.Tabs):
@@ -663,7 +701,9 @@ def launch_app(args):
                 updates[create_tabs] = gr.skip()
                 updates[shell.model_destinations] = result[2]
             if destination == "editor":
-                updates[editor_workspace.action] = "generate"
+                updates[editor_workspace.action] = (
+                    "generate" if inner == "image-tools" else "prompt-edit"
+                )
             return updates
 
         app_settings.acquisition.activate.click(
@@ -924,6 +964,7 @@ def update_results(product):
         generation_originals: gr.update(value=originals, visible=bool(originals)),
         generation_artifacts: records,
         editor_workspace.latest_generated: latest_generated_result(records) or gr.skip(),
+        editor_workspace.source_input: "preview" if displays else gr.skip(),
         native_main_source: records[0] if records and records[0]["precision"] else None,
         shared.get_ctrl("image_source"): None,
         metadata_json: gr.update(value=metadata),
@@ -1191,7 +1232,10 @@ with shared.gradio_root as block:
             editor_workspace = EditorWorkspace()
             add_ctrl("_editor_destination", editor_workspace.destination)
             add_ctrl("_editor_context", editor_workspace.context)
+            add_ctrl("_editor_source_input", editor_workspace.source_input)
             add_ctrl("_editor_action", editor_workspace.action)
+            add_ctrl("_editor_denoise", editor_workspace.denoise)
+            add_ctrl("_editor_output_explicit", editor_workspace.output_explicit)
             add_ctrl("_editor_prompt_processing", editor_workspace.prompt_processing)
             add_ctrl("_editor_mask", editor_workspace.mask)
             add_ctrl("_editor_background", editor_workspace.background)
@@ -1302,7 +1346,7 @@ with shared.gradio_root as block:
 
             @main_view.upload(
                 api_visibility="undocumented",
-                inputs=[main_view, prompt],
+                inputs=[main_view, prompt, editor_workspace.destination],
                 outputs=[
                     prompt,
                     gallery,
@@ -1312,9 +1356,11 @@ with shared.gradio_root as block:
                     shared.get_ctrl("image_source"),
                 ],
             )
-            def load_images_handler(file, prompt):
-                image = Image.open(file)
-                params = look(image, prompt, gr)
+            def load_images_handler(file, prompt, destination):
+                params = gr.skip()
+                if destination == "create" and not prompt:
+                    with Image.open(file) as image:
+                        params = metadata_prompt(image) or ""
                 return params, [file], [], None, gr.update(value=[], visible=False), None
 
         with gr.Column(scale=2, min_width=0, elem_id="generation-controls"):
@@ -2117,6 +2163,19 @@ with shared.gradio_root as block:
                     model_refresh=model_metadata_refresh,
                 )
             bind_prompt_generation(shared.get_ctrl("obp_image_prompt"))
+            from ruinedfooocus.features.prompting.ui_caption import add_describe_controls
+
+            prompt_tools_tab = next(
+                tab for tab in create_controls_tabs.children if tab.elem_id == "prompt-tools"
+            )
+            with prompt_tools_tab:
+                add_describe_controls(
+                    prompt,
+                    main_view,
+                    native_main_source,
+                    input_source=shared.get_ctrl("input_image"),
+                    source_kind=editor_workspace.source_input,
+                )
             from ruinedfooocus.features.image_processing.ui_native_formats import (
                 create_ui as create_output_format_ui,
             )
@@ -2761,7 +2820,7 @@ with shared.gradio_root as block:
             show_progress="minimal",
             show_progress_on=progress_html,
             inputs=[*state["ctrls_obj"], editor_workspace.version],
-            js=editor_workspace.version_js,
+            js=editor_workspace.run_version_js(state["ctrls_name"].index("_editor_destination")),
             outputs=[
                 run_button,
                 stop_button,
@@ -2779,9 +2838,11 @@ with shared.gradio_root as block:
                 shared.get_ctrl("image_source"),
                 shared.get_ctrl("input_image"),
                 editor_workspace.context,
+                editor_workspace.source_input,
                 editor_workspace.notice,
                 editor_workspace.mask,
                 editor_workspace.latest_generated,
+                *editor_workspace.reference_outputs_from(shared.get_ctrl),
             ],
         )
 

@@ -635,12 +635,17 @@ class ImageWorkflowHandoffTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "target"):
             workflows.finish_pixels(step, self.store, Image.new("RGBA", (25, 16)), owner=self.owner)
 
-    def test_precision_original_requires_explicit_library_working_copy(self):
+    def test_precision_original_automatically_prepares_a_private_working_copy(self):
         path = self.root / "precision.tiff"
         Image.fromarray(np.full((16, 24), 0.375, dtype=np.float32)).save(path)
+        original = path.read_bytes()
         source = self.store.start(path, owner=self.owner)
-        with self.assertRaisesRegex(ValueError, "working copy"):
-            self.capture("prompt-edit", snapshot=source)
+        step = self.capture("prompt-edit", snapshot=source)
+        request = workflows.worker_request(step, self.store, owner=self.owner)
+        self.assertEqual(request["input_image"].getpixel((0, 0)), (95, 95, 95, 255))
+        self.assertEqual(request["image_source"]["original_dtype"], "float32")
+        self.assertEqual(step.ticket.source, source.current)
+        self.assertEqual(path.read_bytes(), original)
 
     def test_cursor_preset_intent_is_applied_and_explicit_step_values_win(self):
         cursor = workflows.begin_workflow(

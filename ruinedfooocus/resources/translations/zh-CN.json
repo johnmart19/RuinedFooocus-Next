@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "图库缩略图",
   "settings.theme_cached_and_selected_save_to_keep_it": "主题已缓存并选中。保存后保留。",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "主题已应用于此浏览器。保存后保留。",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "浏览图库时重新生成。原始图像保持不变。"
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "浏览图库时重新生成。原始图像保持不变。",
+  "gallery.edit_strength": "编辑强度",
+  "gallery.action_inputs": "操作输入",
+  "gallery.check_resources": "检查资源",
+  "gallery.inpaint_image": "局部重绘图像",
+  "gallery.compose_images": "合成图像",
+  "gallery.upscale_image": "放大图像",
+  "gallery.create_depth_map": "创建深度图",
+  "gallery.restore_image": "修复图像",
+  "gallery.apply_adjustment": "应用调整",
+  "prompting.describe_image": "描述图像",
+  "prompting.undo_description": "撤销描述"
 }

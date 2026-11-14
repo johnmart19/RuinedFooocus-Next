@@ -68,7 +68,18 @@ def _owned_library_mask(context, *, owner, store):
 
 
 def working_source(record):
-    """Copy a validated original and explicitly convert precision files for editing."""
+    """Prepare a private working image from the validated original, never its preview."""
+    path = source_path(record)
+    image, details = working_image(path)
+    source_path(record)
+    return image, details
+
+
+def working_image(path):
+    """Decode owned/trusted pixels as sRGB8 for model inputs, without changing files."""
+    from io import BytesIO
+    from pathlib import Path
+
     from ruinedfooocus.features.image_processing.native_image_formats import (
         MAX_BYTES,
         MAX_PIXELS,
@@ -77,7 +88,7 @@ def working_source(record):
         read_image,
     )
 
-    path = source_path(record)
+    path = Path(path)
     if not 0 < path.stat().st_size <= MAX_BYTES:
         raise ValueError("Choose a still image no larger than 512 MiB.")
     if needs_preview(path):
@@ -85,6 +96,7 @@ def working_source(record):
         pixels = convert_color(imported.pixels, imported.color_space, "sRGB")
         array = (pixels.clamp(0, 1).numpy() * 255).astype(np.uint8)
         image = Image.fromarray(array[..., 0] if array.shape[-1] == 1 else array)
+        image.info.update(getattr(imported, "metadata", {}))
         details = dict(
             original_dtype=str(imported.pixels.dtype),
             original_color_space=imported.color_space,
@@ -97,19 +109,97 @@ def working_source(record):
                 or not 0 < original.width * original.height <= MAX_PIXELS
             ):
                 raise ValueError("Choose a still image for image tools.")
-            image = ImageOps.exif_transpose(original).convert("RGBA").copy()
-        details = dict(original_dtype="uint8", original_color_space="sRGB", conversion="none")
+            image = ImageOps.exif_transpose(original).copy()
+            pixels = np.asarray(image)
+            dtype = str(pixels.dtype)
+            if pixels.dtype != np.uint8:
+                pixels = convert_color(pixels, "sRGB", "sRGB")
+                array = (pixels.clamp(0, 1).numpy() * 255).astype(np.uint8)
+                image = Image.fromarray(array[..., 0] if array.shape[-1] == 1 else array)
+                image.info.update(original.info)
+        details = dict(
+            original_dtype=dtype,
+            original_color_space="sRGB",
+            conversion="none" if dtype == "uint8" else "image tools use an 8-bit working image",
+        )
+    # Native codecs retain high precision above. Pillow's CMS applies embedded
+    # profiles to the final model-input copy; alpha is not a color channel.
+    profile = image.info.get("icc_profile")
+    if profile is None and path.suffix.lower() in (".png", ".avif"):
+        with Image.open(path) as original:
+            profile = original.info.get("icc_profile")
+    if profile and details["original_color_space"] == "sRGB":
+        from PIL import ImageCms
+
+        alpha = (
+            image.convert("RGBA").getchannel("A")
+            if "A" in image.getbands() or "transparency" in image.info
+            else Image.new("L", image.size, 255)
+        )
+        information = dict(image.info)
+        rgb = image.convert("RGB") if image.mode in ("RGBA", "P", "LA") else image
+        destination = ImageCms.ImageCmsProfile(ImageCms.createProfile("sRGB"))
+        try:
+            source_profile = ImageCms.ImageCmsProfile(BytesIO(profile))
+            if source_profile.profile.xcolor_space.strip() == "RGB":
+                rgb = rgb.convert("RGB")
+            image = ImageCms.profileToProfile(
+                rgb, source_profile, destination, outputMode="RGB"
+            ).convert("RGBA")
+        except (ImageCms.PyCMSError, OSError, TypeError, ValueError) as error:
+            raise ValueError(
+                "The image's embedded color profile could not be converted to sRGB."
+            ) from error
+        image.putalpha(alpha)
+        image.info.update(information, icc_profile=destination.tobytes())
+        details.update(
+            original_color_space="embedded ICC",
+            conversion="native precision conversion and embedded ICC to sRGB; image tools use an 8-bit working image",
+        )
+    image = image.convert("RGBA").copy()
     with path.open("rb") as source:
         digest = hashlib.file_digest(source, "sha256").hexdigest()
-    source_path(record)
     details.update(
         filename=path.name,
         sha256=digest,
         width=image.width,
         height=image.height,
         working_dtype="uint8",
+        working_color_space="sRGB",
     )
     return image, details
+
+
+def _automatic_adjustment_output(data, original, action):
+    """Preserve native samples when an Editor request still owns untouched defaults."""
+    from ruinedfooocus.features.image_processing.native_image_formats import (
+        ImportedImage,
+        format_settings,
+    )
+
+    if data.get("_editor_output_explicit") is not False:
+        return
+    choice = format_settings(data)
+    if choice != format_settings():
+        return
+    pixels = original.pixels if isinstance(original, ImportedImage) else np.asarray(original)
+    space = original.color_space if isinstance(original, ImportedImage) else "sRGB"
+    hdr = action == "image-color" and data.get("color_operation") == "sdr-to-hdr"
+    if pixels.dtype == np.uint8 and space == "sRGB" and not hdr:
+        return
+    scalar = action == "image-mask"
+    floating = np.issubdtype(pixels.dtype, np.floating) or space != "sRGB" or hdr
+    selected = dict(
+        output_format="exr" if floating else "png",
+        output_bit_depth="32-bit float" if floating else "16-bit",
+        output_color_space="sRGB" if scalar else "HDR" if hdr else space,
+        output_crf=choice["output_crf"],
+    )
+    data.update(format_settings(selected))
+    data["image_source"]["output_selection"] = dict(
+        policy="automatic precision-preserving Editor output",
+        selected=selected,
+    )
 
 
 def build_library_request(
@@ -218,6 +308,8 @@ def build_library_request(
                 conversion="none",
             ),
         )
+        if editor_context is not None:
+            _automatic_adjustment_output(data, original, action)
         for field in getattr(utilities._handler(action), "IMAGE_FIELDS", ()):
             data[field] = controls.get(field)
         if (

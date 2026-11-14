@@ -14,11 +14,15 @@ from ruinedfooocus.features.image_processing.native_vision import (
     DEFAULTS,
     KINDS,
     coco_classes,
-    native_model_choices,
 )
+from ruinedfooocus.features.image_processing.utility_defaults import component_choices, picker_value
 
 POSITIVE, NEGATIVE = "positive", "negative"
 PREVIEW_SIDE = 768
+
+
+def native_model_choices(manager, kind):
+    return component_choices(manager, kind, "native_vision_model")
 
 
 def model_choices(manager, kind, selected=""):
@@ -34,13 +38,13 @@ def model_prompt(kind):
         return dict(
             label=translate_ui("Depth Anything 3 model"),
             info=translate_ui(
-                "Choose an installed Depth Anything 3 model. Generate saves a grayscale map at the source size. White is near."
+                "A compatible local model is preferred; the default downloads on first use. Generate saves a grayscale map at the source size. White is near."
             ),
         )
     return dict(
         label=translate_ui("Detection / segmentation model"),
         info=translate_ui(
-            "Choose a local RT-DETR model for detection or SAM 3 / 3.1 for segmentation."
+            "A compatible local model is preferred; the RT-DETR or SAM default downloads on first use."
         ),
     )
 
@@ -117,6 +121,13 @@ def create_ui(selection, control_type, input_image, model_refresh, kind_for):
     saved = shared.settings.default_settings
     kind = kind_for(selection.value, control_type.value)
     saved_model = saved.get("native_vision_model") or ""
+    saved_model = picker_value(
+        shared.path_manager,
+        kind,
+        "native_vision_model",
+        saved_model,
+        native_model_choices(shared.path_manager, kind) if kind in KINDS else [],
+    )
     with gr.Group(visible=kind in KINDS) as group:
         model = gr.Dropdown(
             choices=model_choices(shared.path_manager, kind, saved_model),
@@ -260,6 +271,10 @@ def create_ui(selection, control_type, input_image, model_refresh, kind_for):
                 choices=[(translate_ui("All classes"), "all"), *coco_classes()],
                 value=selected_class,
             )
+        available = native_model_choices(shared.path_manager, active) if active in KINDS else []
+        selected = picker_value(
+            shared.path_manager, active, "native_vision_model", selected, available
+        )
         choices = model_choices(shared.path_manager, active, selected)
         return [
             gr.update(visible=active in KINDS),

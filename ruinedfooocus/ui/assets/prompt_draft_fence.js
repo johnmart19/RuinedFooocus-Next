@@ -1,13 +1,21 @@
 const fence = {
-  context(id) {
+  context(reference) {
+    const image = typeof reference === "object" && reference.image === true;
+    const id = image ? reference.id : reference;
     const node = document.getElementById(id);
     if (!node) return null;
-    const text = JSON.stringify(
-      Array.from(node.querySelectorAll("input,textarea,select"), (input) => [
-        input.value,
-        input.checked,
-      ]),
-    );
+    const values = Array.from(node.querySelectorAll("input,textarea,select"), (input) => [
+      input.value,
+      input.checked,
+    ]);
+    if (image)
+      values.push(
+        ...Array.from(node.querySelectorAll("img"), (item) => [
+          "image",
+          item.currentSrc || item.src,
+        ]),
+      );
+    const text = JSON.stringify(values);
     if (!node.rfPromptContext) {
       node.rfPromptContext = { revision: 0, text };
       const changed = () => {
@@ -20,7 +28,7 @@ const fence = {
       node.rfPromptContext.revision++;
       node.rfPromptContext.text = text;
     }
-    return { id, ...node.rfPromptContext };
+    return { id: reference, ...node.rfPromptContext };
   },
   draft(id) {
     const node = document.getElementById(id)?.querySelector("textarea");

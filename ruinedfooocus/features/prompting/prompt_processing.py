@@ -244,10 +244,14 @@ def use_random_prompt(gen_data, prompt):
 def process_prompt(style, prompt, negative, gen_data=None):
     if gen_data is None:
         gen_data = {}
+    from ruinedfooocus.features.image_editing.edit_prompt import render_prompt
+
+    rendered = render_prompt(prompt, gen_data)
     if gen_data.get("_metadata_prompt") and not gen_data.get("_apply_prompt_processing"):
-        return prompt, negative
+        return rendered, negative
     gen_data["raw_prompt"] = prompt
     gen_data["raw_negative"] = negative
+    prompt = rendered
     enhanced = False
 
     def enhance_once(text, model_type="", preset_focus=""):

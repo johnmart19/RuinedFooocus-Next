@@ -484,6 +484,152 @@ class AdjustmentIntegrationTests(unittest.TestCase):
             (data["prompt"], data["negative"]), ("retained draft", "retained negative")
         )
 
+    def owned_adjustment(self, path, action="image-transform", **controls):
+        snapshot = self.store.start(path, owner=self.owner)
+        return build_library_request(
+            controls,
+            source_record(path),
+            prompt="retained draft",
+            negative="retained negative",
+            checkpoint=None,
+            action=action,
+            resets={},
+            features={},
+            presets=json.loads(resource_path("defaults", "powerup.default").read_text()),
+            custom="Custom...",
+            editor_context=dict(
+                session_id=snapshot.session_id,
+                revision=snapshot.revision,
+                source_id=snapshot.current.artifact_id,
+            ),
+            editor_store=self.store,
+            owner=self.owner,
+        )
+
+    def test_editor_untouched_default_preserves_png16_for_all_adjustment_captures(self):
+        from ruinedfooocus.features.image_processing import native_image_formats as formats
+        from test_native_image_formats import native_codecs
+
+        values = np.array([[[1, 257, 65534], [33, 4097, 60000]]], dtype=np.uint16)
+        path = self.root / "native-precision.png"
+        with patch.object(formats, "_native", return_value=native_codecs()):
+            formats.write_image(path, values, dict(output_format="png", output_bit_depth="16-bit"))
+        original = path.read_bytes()
+        for action, parameters in (
+            ("image-transform", dict(transform_operation="flip")),
+            ("image-mask", dict(mask_operation="channel", mask_channel="red")),
+            ("image-color", dict(color_operation="morphology")),
+        ):
+            with self.subTest(action=action):
+                controls = dict(
+                    output_format="png",
+                    output_bit_depth="8-bit",
+                    output_color_space="sRGB",
+                    _editor_output_explicit=False,
+                    **parameters,
+                )
+                data = self.owned_adjustment(path, action, **controls)
+                captured = assets.capture_image_assets(
+                    data, self.manager, data["controlnet"], offline=True
+                )
+                request = captured[utilities._handler(action).KEY]
+                self.assertEqual(request.source.dtype, "uint16")
+                self.assertEqual(dict(request.output_settings)["output_bit_depth"], "16-bit")
+                self.assertEqual(data["image_source"]["conversion"], "none")
+                self.assertEqual(controls["output_bit_depth"], "8-bit")
+        data = self.owned_adjustment(
+            path, transform_operation="flip", _editor_output_explicit=False
+        )
+        captured = assets.capture_image_assets(data, self.manager, data["controlnet"], offline=True)
+        result = utilities.process(NS(), captured, self.manager, lambda: None)[0]
+        with patch.object(formats, "_native", return_value=native_codecs()):
+            output = formats.write_image(self.root / "flipped16.png", result, data)
+        decoded = formats.read_image(output).pixels
+        self.assertEqual(decoded.dtype, np.uint16)
+        np.testing.assert_allclose(
+            decoded.astype(np.int32), values[:, ::-1].astype(np.int32), atol=1, rtol=0
+        )
+        self.assertTrue(np.any(decoded % 257 != 0))
+        self.assertEqual(path.read_bytes(), original)
+
+    def test_editor_float_hdr_samples_and_hdr_operation_choose_exr(self):
+        from ruinedfooocus.features.image_processing import native_image_formats as formats
+        from test_native_image_formats import native_codecs
+
+        values = np.array([[[0.1234567, 1.25, 3.0], [-0.25, 0.3456789, 0.5]]], dtype=np.float32)
+        path = self.root / "linear-hdr.exr"
+        with patch.object(formats, "_native", return_value=native_codecs()):
+            formats.write_image(
+                path,
+                values,
+                dict(
+                    output_format="exr",
+                    output_bit_depth="32-bit float",
+                    output_color_space="linear",
+                ),
+            )
+        data = self.owned_adjustment(
+            path, transform_operation="flip", _editor_output_explicit=False
+        )
+        captured = assets.capture_image_assets(data, self.manager, data["controlnet"], offline=True)
+        request = captured[utilities._handler("image-transform").KEY]
+        self.assertEqual(request.source.dtype, "float32")
+        self.assertEqual(dict(request.output_settings)["output_format"], "exr")
+        self.assertEqual(dict(request.output_settings)["output_color_space"], "linear")
+        np.testing.assert_array_equal(
+            np.frombuffer(request.source.pixels, np.float32).reshape(values.shape), values
+        )
+        data = self.owned_adjustment(
+            self.path, "image-color", color_operation="sdr-to-hdr", _editor_output_explicit=False
+        )
+        captured = assets.capture_image_assets(data, self.manager, data["controlnet"], offline=True)
+        choice = dict(captured[utilities._handler("image-color").KEY].output_settings)
+        self.assertEqual((choice["output_format"], choice["output_color_space"]), ("exr", "HDR"))
+
+    def test_editor_explicit_or_missing_output_intent_retains_strict_native_policy(self):
+        values = np.array([[1, 257, 65534]], dtype=np.uint16)
+        path = self.root / "explicit-precision.png"
+        Image.fromarray(values).save(path)
+        for marker in ({}, {"_editor_output_explicit": True}):
+            with self.subTest(marker=marker):
+                data = self.owned_adjustment(path, transform_operation="flip", **marker)
+                self.assertNotIn("output_selection", data["image_source"])
+                with self.assertRaisesRegex(ValueError, "PNG16 or EXR"):
+                    assets.capture_image_assets(
+                        data, self.manager, data["controlnet"], offline=True
+                    )
+        for explicit in (False, True):
+            data = self.owned_adjustment(
+                path,
+                transform_operation="flip",
+                output_format="exr",
+                output_bit_depth="32-bit float",
+                output_color_space="sRGB",
+                _editor_output_explicit=explicit,
+            )
+            self.assertNotIn("output_selection", data["image_source"])
+            captured = assets.capture_image_assets(
+                data, self.manager, data["controlnet"], offline=True
+            )
+            self.assertEqual(
+                dict(captured[utilities._handler("image-transform").KEY].output_settings)[
+                    "output_format"
+                ],
+                "exr",
+            )
+
+    def test_editor_uint8_default_output_is_unchanged(self):
+        data = self.owned_adjustment(
+            self.path, transform_operation="flip", _editor_output_explicit=False
+        )
+        self.assertNotIn("output_selection", data["image_source"])
+        captured = assets.capture_image_assets(data, self.manager, data["controlnet"], offline=True)
+        choice = dict(captured[utilities._handler("image-transform").KEY].output_settings)
+        self.assertEqual(
+            (choice["output_format"], choice["output_bit_depth"], choice["output_color_space"]),
+            ("png", "8-bit", "sRGB"),
+        )
+
     def mask_result(self, *, size=None, metadata=True):
         snapshot = self.store.start(self.path, owner=self.owner)
         ticket = self.store.capture(

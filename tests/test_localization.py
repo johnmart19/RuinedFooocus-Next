@@ -58,6 +58,17 @@ class LocalizationTests(unittest.TestCase):
             "Download theme",
             "Image engine",
             "Optional image engine",
+            "Edit strength",
+            "Action inputs",
+            "Check resources",
+            "Inpaint image",
+            "Compose images",
+            "Upscale image",
+            "Create depth map",
+            "Restore image",
+            "Apply adjustment",
+            "Describe image",
+            "Undo description",
         ):
             for locale in manager.manifest["locales"]:
                 with self.subTest(locale=locale, text=text):

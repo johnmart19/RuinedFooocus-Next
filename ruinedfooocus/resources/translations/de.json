@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Bibliotheksvorschaubilder",
   "settings.theme_cached_and_selected_save_to_keep_it": "Design zwischengespeichert und ausgewählt. Zum Behalten speichern.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Design in diesem Browser angewendet. Zum Behalten speichern.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Werden beim Durchsuchen der Bibliothek neu erstellt. Die Originalbilder bleiben erhalten."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Werden beim Durchsuchen der Bibliothek neu erstellt. Die Originalbilder bleiben erhalten.",
+  "gallery.edit_strength": "Bearbeitungsstärke",
+  "gallery.action_inputs": "Eingaben für Aktion",
+  "gallery.check_resources": "Ressourcen prüfen",
+  "gallery.inpaint_image": "Bildbereich neu generieren",
+  "gallery.compose_images": "Bilder zusammensetzen",
+  "gallery.upscale_image": "Bild hochskalieren",
+  "gallery.create_depth_map": "Tiefenkarte erstellen",
+  "gallery.restore_image": "Bild restaurieren",
+  "gallery.apply_adjustment": "Anpassung anwenden",
+  "prompting.describe_image": "Bild beschreiben",
+  "prompting.undo_description": "Beschreibung rückgängig machen"
 }

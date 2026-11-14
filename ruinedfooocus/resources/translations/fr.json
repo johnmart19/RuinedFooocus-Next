@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Miniatures de la bibliothèque",
   "settings.theme_cached_and_selected_save_to_keep_it": "Thème mis en cache et sélectionné. Enregistrez pour le conserver.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Thème appliqué à ce navigateur. Enregistrez pour le conserver.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Régénérées lors de la consultation de la bibliothèque. Les images originales sont conservées."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Régénérées lors de la consultation de la bibliothèque. Les images originales sont conservées.",
+  "gallery.edit_strength": "Intensité de retouche",
+  "gallery.action_inputs": "Entrées de l’action",
+  "gallery.check_resources": "Vérifier les ressources",
+  "gallery.inpaint_image": "Retoucher une zone de l’image",
+  "gallery.compose_images": "Composer des images",
+  "gallery.upscale_image": "Agrandir l’image",
+  "gallery.create_depth_map": "Créer une carte de profondeur",
+  "gallery.restore_image": "Restaurer l’image",
+  "gallery.apply_adjustment": "Appliquer le réglage",
+  "prompting.describe_image": "Décrire l’image",
+  "prompting.undo_description": "Annuler la description"
 }

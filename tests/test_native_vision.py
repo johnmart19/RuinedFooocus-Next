@@ -128,7 +128,7 @@ class NativeVisionTests(unittest.TestCase):
             ("segment", dict(native_vision_model=str(outside))),
             ("segment", dict(native_vision_model="../outside.safetensors")),
             ("segment", dict(native_vision_model=str(self.files["RT_DETR_v4"]))),
-            ("segment", dict(native_vision_model=None)),
+            ("segment", dict(native_vision_model=True)),
             ("segment", dict(input_image=None)),
             ("segment", dict(input_image=huge)),
             ("segment", dict(inpaint_toggle=True)),
@@ -152,6 +152,18 @@ class NativeVisionTests(unittest.TestCase):
         for kind, values in cases:
             with self.subTest(kind=kind, values=str(values)[:60]), self.assertRaises(ValueError):
                 self.request(kind, **values)
+
+    def test_blank_native_model_uses_an_actual_compatible_installed_file(self):
+        for kind in native.KINDS:
+            for blank in (None, "", " "):
+                with self.subTest(kind=kind, blank=blank):
+                    data = self.request(kind, native_vision_model=blank)
+                    (item,) = data[KEY].artifacts
+                    self.assertEqual(data["native_vision_model"], str(item.request.destination))
+                    self.assertIn(
+                        native.validate_model(item.request.destination, kind), native.KINDS[kind]
+                    )
+                    self.assertEqual(item.request.url, "")
 
     def native_modules(self, kind, config):
         """Pinned node bodies with tiny CPU stand-ins for the model and device services."""
@@ -309,7 +321,7 @@ class NativeVisionTests(unittest.TestCase):
         )
         (item,) = result[KEY].artifacts
         self.assertEqual((item.request.destination, item.request.url), (path, ""))
-        for selection in (None, "missing.safetensors", str(self.files["SAM3"])):
+        for selection in (True, "missing.safetensors", str(self.files["SAM3"])):
             with (
                 self.subTest(selection=selection),
                 self.assertRaisesRegex(ValueError, "installed Depth Anything 3"),

@@ -28,6 +28,15 @@ Adjustment capture decodes that original once and derives its source details
 from those native samples, without preparing an unused sRGB8 working copy.
 Precision exports remain explicit and frozen with the request.
 
+When Editor's file-output controls still have their untouched defaults, adjustment
+requests choose a precision-preserving output automatically: PNG16 for native
+uint16 sRGB samples, or floating-point EXR for float/linear/HDR samples. Scalar
+masks use their existing sRGB output contract; SDR-to-HDR selects EXR/HDR. This
+choice belongs to the request and does not change the shared output controls.
+Non-default options and choices made in the output controls remain authoritative.
+Requests without Editor's output-intent marker retain the existing strict API
+contract, including rejection of an incompatible precision export.
+
 The additional operations stay in these existing surfaces. **Transform → Crop to
 selection** uses an exact-frame mask and crops to its nonzero bounding box without
 resampling. **Color** also offers text overlay, RGB morphology and SDR-to-HDR.
@@ -47,9 +56,11 @@ chosen. This validates the current owner/revision, proven mask operation, exact
 source frame and grayscale channels. It attaches a lossless RGB8-to-L8 selection
 and restores the retained source in one manifest transaction. The original RGB,
 alpha, metadata and mask-result history remain intact; Redo reopens the mask.
-The existing inpaint contract requires an 8-bit sRGB source and selection.
-Precision masks/sources are rejected at this handoff with an explicit working-copy
-instruction; no display thumbnail or silent precision reduction is used.
+Inpainting automatically prepares a request-local sRGB8 copy of the retained
+source. Proven precision mask results normalize their scalar coverage to an L8
+selection; they do not pass through a color transfer curve or source alpha.
+Original precision images and mask artifacts stay unchanged, and native
+adjustments/export continue to use original samples rather than display previews.
 
 Blend uses the native RGB clamp to 0–1. Transfer requires encoded sRGB in range,
 and its Histogram choice is labeled **Histogram (256-bin)**. Quantize explicitly

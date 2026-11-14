@@ -244,7 +244,10 @@ def capture_assets(data, manager, models=None):
             "Turn off inpainting, generation recipes and reference adapters for this utility."
         )
     image = ImageOps.exif_transpose(source).convert("RGBA").copy()
-    result = dict(data, input_image=image, controlnet={"type": kind})
+    from ruinedfooocus.features.image_processing.utility_defaults import default_components
+
+    result = default_components(manager, kind, data)
+    result.update(input_image=image, controlnet={"type": kind})
     module = _module(kind)
     parameters = module.parameters(result)
     files, artifacts = [], []

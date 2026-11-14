@@ -1,7 +1,9 @@
 # Native SeedVR2 still-image restoration
 
 Image tools → **Restore still image (SeedVR2)** restores one source image with an
-installed SeedVR2 diffusion model and its matching SeedVR2 codec. The files are
+installed SeedVR2 diffusion model and its matching SeedVR2 codec. With no local
+match, the [3B model and official codec defaults](native-utility-defaults.md)
+download on Run. The files are
 selected independently of the generation checkpoint. The model has the explicit
 `image_utility_model` role; it is not an ESRGAN upscaler. The adapter does not load
 a text encoder or use a generation prompt, LoRA, reference adapter, or inpainting.

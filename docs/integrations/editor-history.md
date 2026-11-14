@@ -27,6 +27,9 @@ and path-bearing signature entries nested in inherited provenance, plans and
 steps. It preserves hashes, resource names, opaque IDs and literal prompt text.
 Internal `source_generation`/`steps` remain exact for replay.
 
+[Editor prompt conditioning](editor-prompts.md) describes literal instructions,
+native edit versus ordinary image-to-image, and bounded source prompt context.
+
 ## UI import and Gallery drafts
 
 Editor **Open current image** adopts the displayed still; **Latest generated**

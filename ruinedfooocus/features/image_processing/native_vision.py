@@ -178,7 +178,9 @@ def capture_assets(data, manager, kind):
 
     if kind not in KINDS:
         raise ValueError("Choose a supported native image tool.")
-    result = dict(data)
+    from ruinedfooocus.features.image_processing.utility_defaults import default_components
+
+    result = default_components(manager, kind, data)
     image = result.get("input_image")
     if (
         not isinstance(image, Image.Image)

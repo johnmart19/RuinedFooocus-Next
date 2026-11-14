@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Bibliotekets miniatyrbilder",
   "settings.theme_cached_and_selected_save_to_keep_it": "Temat är cachat och valt. Spara för att behålla det.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Temat har tillämpats i den här webbläsaren. Spara för att behålla det.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Återskapas när du bläddrar i biblioteket. Originalbilderna bevaras."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Återskapas när du bläddrar i biblioteket. Originalbilderna bevaras.",
+  "gallery.edit_strength": "Redigeringsstyrka",
+  "gallery.action_inputs": "Indata för åtgärd",
+  "gallery.check_resources": "Kontrollera resurser",
+  "gallery.inpaint_image": "Måla om bild",
+  "gallery.compose_images": "Kombinera bilder",
+  "gallery.upscale_image": "Förstora bild",
+  "gallery.create_depth_map": "Skapa djupkarta",
+  "gallery.restore_image": "Återställ bild",
+  "gallery.apply_adjustment": "Tillämpa justering",
+  "prompting.describe_image": "Beskriv bild",
+  "prompting.undo_description": "Ångra beskrivning"
 }

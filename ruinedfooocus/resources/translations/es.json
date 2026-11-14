@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Miniaturas de la biblioteca",
   "settings.theme_cached_and_selected_save_to_keep_it": "Tema almacenado en caché y seleccionado. Guarda para conservarlo.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Tema aplicado en este navegador. Guarda para conservarlo.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Se regeneran al explorar la biblioteca. Se conservan las imágenes originales."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Se regeneran al explorar la biblioteca. Se conservan las imágenes originales.",
+  "gallery.edit_strength": "Intensidad de edición",
+  "gallery.action_inputs": "Entradas de la acción",
+  "gallery.check_resources": "Comprobar recursos",
+  "gallery.inpaint_image": "Regenerar una zona de la imagen",
+  "gallery.compose_images": "Combinar imágenes",
+  "gallery.upscale_image": "Ampliar imagen",
+  "gallery.create_depth_map": "Crear mapa de profundidad",
+  "gallery.restore_image": "Restaurar imagen",
+  "gallery.apply_adjustment": "Aplicar ajuste",
+  "prompting.describe_image": "Describir imagen",
+  "prompting.undo_description": "Deshacer descripción"
 }

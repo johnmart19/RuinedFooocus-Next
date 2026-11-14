@@ -22,6 +22,7 @@ RENDER_FIELDS = frozenset(
         "native_composition_source",
         "negative",
         "raw_prompt",
+        "image_edit_prompt",
         "raw_negative",
         "style_provenance",
         "steps",

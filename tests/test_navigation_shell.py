@@ -2,6 +2,8 @@
 
 import asyncio
 import ast
+import json
+import subprocess
 from collections import Counter
 from pathlib import Path
 import tempfile
@@ -30,6 +32,42 @@ def layout_ids(node):
 
 
 class NavigationShellTests(unittest.TestCase):
+    @staticmethod
+    def navigation_presentation(shell, event, result, state):
+        publish = next(
+            row for row in shell.app.config["dependencies"] if row["trigger_after"] == event["id"]
+        )
+        envelope = result["data"][0]
+        envelope = envelope.model_dump() if hasattr(envelope, "model_dump") else envelope
+        values = asyncio.run(
+            shell.app.postprocess_data(shell.app.fns[publish["id"]], envelope["updates"], state)
+        )
+        return dict(
+            zip(
+                publish["outputs"],
+                [value.model_dump() if hasattr(value, "model_dump") else value for value in values],
+            )
+        )
+
+    @staticmethod
+    def navigation_script(script, arguments, memory):
+        harness = """const vm=require('node:vm'), d=JSON.parse(require('node:fs').readFileSync(0,'utf8'));
+        const window=d.memory.window||{}, document={getElementById(id){return {getAttribute(name){return name==='aria-selected'&&id===`rf-nav-${d.memory.selected}-button`?'true':'false'}}}};
+        const result=vm.runInNewContext('('+d.script+')',{window,document})(...d.arguments);
+        process.stdout.write(JSON.stringify({result,window}));"""
+        run = subprocess.run(
+            ["node", "-e", harness],
+            input=json.dumps(dict(script=script, arguments=arguments, memory=memory)),
+            text=True,
+            capture_output=True,
+            timeout=10,
+        )
+        if run.returncode:
+            raise AssertionError(run.stderr)
+        output = json.loads(run.stdout)
+        memory["window"] = output["window"]
+        return output["result"]
+
     def shell(self, gallery=None, translate=lambda value: value):
         create, scope, base, _, create_draft = navigation_fixtures.create_fixture()
         with create:
@@ -172,7 +210,12 @@ class NavigationShellTests(unittest.TestCase):
             with self.subTest(event=event["id"]):
                 self.assertTrue(set(event["inputs"]).issubset(known))
                 self.assertTrue(set(event["outputs"]).issubset(known))
-                self.assertTrue(all(target[0] in known for target in event["targets"]))
+                for target, name in event["targets"]:
+                    if target is None:
+                        self.assertEqual(name, "success")
+                        self.assertIn(event["trigger_after"], shell.app.fns)
+                    else:
+                        self.assertIn(target, known)
 
     def test_two_native_round_trips_keep_all_six_drafts_without_workflow_or_file_callbacks(self):
         shell, workspace, base, scope, *_, workflow_events = self.shell()
@@ -215,15 +258,19 @@ class NavigationShellTests(unittest.TestCase):
                             if event["targets"] == [(destination._id, "select")]
                         )
                         self.assertFalse(event["queue"])
-                        self.assertEqual(event["inputs"], [workspace.action._id])
+                        self.assertEqual(event["inputs"][0], workspace.action._id)
                         # The native select event already changed the browser's
                         # tab. Check its transport, not Gradio's rebuilt Tabs cache.
                         result = asyncio.run(
-                            shell.app.process_api(event["id"], ["generate"], state=state)
+                            shell.app.process_api(
+                                event["id"],
+                                ["generate", round_number * 6 + routes.index(destination) + 1],
+                                state=state,
+                            )
                         )
-                        updates = dict(zip(event["outputs"], result["data"]))
+                        updates = self.navigation_presentation(shell, event, result, state)
                         self.assertEqual(updates[shell.tabs._id], gr.skip())
-                        self.assertEqual(state[workspace.destination._id], destination.id)
+                        self.assertEqual(updates[workspace.destination._id], destination.id)
                         image = destination.id in ("create", "editor")
                         editing = destination.id == "editor"
                         classes = state[shell.image_stage._id].elem_classes or []
@@ -266,7 +313,12 @@ class NavigationShellTests(unittest.TestCase):
         self.assertTrue(all(event["show_progress_on"] == [] for event in navigation))
         self.assertTrue(
             all(
-                event["outputs"] == [control._id for control in shell.outputs]
+                next(
+                    row
+                    for row in shell.app.config["dependencies"]
+                    if row["trigger_after"] == event["id"]
+                )["outputs"]
+                == [control._id for control in shell.outputs]
                 for event in navigation
             )
         )
@@ -303,6 +355,57 @@ class NavigationShellTests(unittest.TestCase):
             self.assertEqual(state[shell.model_destinations._id].selected, destination)
             self.assertEqual(state[workspace.context._id], context)
             self.assertEqual(state[base._id].value, base.value)
+
+    def test_late_gallery_response_cannot_hide_editor_or_replace_run_destination(self):
+        shell, workspace, *_ = self.shell(translate=translate_ui)
+        state = SessionState(shell.app)
+        memory = {"selected": "create", "window": {}}
+        pending = {}
+        routes = {tab.id: tab for tab in shell.tabs.children}
+        for destination in ("models", "chat", "settings", "library", "editor"):
+            memory["selected"] = destination
+            event = next(
+                row
+                for row in shell.app.config["dependencies"]
+                if row["targets"] == [(routes[destination]._id, "select")]
+            )
+            args = self.navigation_script(event["js"], ["prompt-edit", 0], memory)
+            response = asyncio.run(shell.app.process_api(event["id"], args, state=state))
+            pending[destination] = (event, response)
+
+        def deliver(destination):
+            event, response = pending[destination]
+            child = next(
+                row
+                for row in shell.app.config["dependencies"]
+                if row["trigger_after"] == event["id"]
+            )
+            value = response["data"][0]
+            value = value.model_dump() if hasattr(value, "model_dump") else value
+            guarded = self.navigation_script(child["js"], [value], memory)
+            outputs = asyncio.run(
+                shell.app.postprocess_data(shell.app.fns[child["id"]], guarded, state)
+            )
+            return dict(
+                zip(
+                    child["outputs"],
+                    [row.model_dump() if hasattr(row, "model_dump") else row for row in outputs],
+                )
+            )
+
+        current = deliver("editor")
+        self.assertEqual(current[workspace.destination._id], "editor")
+        self.assertEqual(current[shell.outputs[-1]._id]["value"], "Edit image")
+        self.assertEqual(state[shell.image_stage._id].elem_classes, ["rf-editor"])
+        delayed = deliver("library")
+        self.assertEqual(delayed[workspace.destination._id], gr.skip())
+        self.assertEqual(state[shell.image_stage._id].elem_classes, ["rf-editor"])
+        # A current native selection is authoritative even before its server
+        # presentation response has replaced the previous hidden JSON value.
+        for destination in ("create", "editor"):
+            memory["selected"] = destination
+            captured = self.navigation_script(workspace.run_version_js(0), ["library", 0], memory)
+            self.assertEqual(captured[0], destination)
 
     def test_create_projects_new_image_intent_without_clearing_editor_widgets(self):
         with gr.Blocks(analytics_enabled=False):
@@ -373,7 +476,7 @@ class NavigationShellTests(unittest.TestCase):
                 editor_workspace=workspace,
             )
         state = SessionState(shell.app)
-        state[workspace.destination._id] = "editor"
+        state[workspace.destination._id].value = "editor"
         state[workspace.context._id] = {"session_id": "prior-source"}
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory) / "saved.png"
@@ -393,7 +496,7 @@ class NavigationShellTests(unittest.TestCase):
                 result = asyncio.run(shell.app.process_api(event, values, state=state))
                 updates = dict(zip((control._id for control in event.outputs), result["data"]))
                 self.assertEqual(state[shell.tabs._id].selected, "create")
-                self.assertEqual(state[workspace.destination._id], "create")
+                self.assertEqual(updates[workspace.destination._id], "create")
                 self.assertFalse(state[workspace.panel._id].visible)
                 self.assertIsNone(state[workspace.context._id])
                 if name == "prompt_btn":
@@ -447,7 +550,7 @@ class NavigationShellTests(unittest.TestCase):
                         return_value=({}, None),
                     ),
                 ):
-                    asyncio.run(
+                    result = asyncio.run(
                         shell.app.process_api(
                             event,
                             [source_record(source), metadata, "1024×1024", None, None, None],
@@ -455,9 +558,14 @@ class NavigationShellTests(unittest.TestCase):
                         )
                     )
                 self.assertEqual(state[shell.tabs._id].selected, destination)
-                self.assertEqual(state[workspace.destination._id], destination)
+                self.assertEqual(
+                    result["data"][
+                        [control._id for control in event.outputs].index(workspace.destination._id)
+                    ],
+                    destination,
+                )
                 self.assertIsNone(state[workspace.context._id])
-                self.assertEqual(state[workspace.action._id].value, "generate")
+                self.assertEqual(state[workspace.action._id].value, "prompt-edit")
 
     def test_programmatic_inpaint_handoff_keeps_intent_through_native_action_change(self):
         editor = editor_fixtures.EditorWorkspaceEventTests()

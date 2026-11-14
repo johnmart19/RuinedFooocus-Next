@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "Bibliotheekminiaturen",
   "settings.theme_cached_and_selected_save_to_keep_it": "Thema opgeslagen in de cache en geselecteerd. Sla op om het te behouden.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "Thema toegepast in deze browser. Sla op om het te behouden.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Worden opnieuw aangemaakt bij het bladeren door de bibliotheek. De oorspronkelijke afbeeldingen blijven behouden."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "Worden opnieuw aangemaakt bij het bladeren door de bibliotheek. De oorspronkelijke afbeeldingen blijven behouden.",
+  "gallery.edit_strength": "Bewerkingssterkte",
+  "gallery.action_inputs": "Actie-invoer",
+  "gallery.check_resources": "Bronnen controleren",
+  "gallery.inpaint_image": "Afbeelding plaatselijk aanvullen",
+  "gallery.compose_images": "Afbeeldingen samenstellen",
+  "gallery.upscale_image": "Afbeelding vergroten",
+  "gallery.create_depth_map": "Dieptekaart maken",
+  "gallery.restore_image": "Afbeelding herstellen",
+  "gallery.apply_adjustment": "Aanpassing toepassen",
+  "prompting.describe_image": "Afbeelding beschrijven",
+  "prompting.undo_description": "Beschrijving ongedaan maken"
 }

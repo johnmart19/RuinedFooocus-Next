@@ -36,6 +36,7 @@ class EditorWorkspaceActionTests(unittest.TestCase):
             image_engine="native",
             loras=[["detail.safetensors", 0]],
             cn_strength=0.37,
+            _editor_denoise=0.37,
             custom_width=73,
             custom_height=121,
             _editor_framing="preserve",
@@ -70,6 +71,221 @@ class EditorWorkspaceActionTests(unittest.TestCase):
             self.store.snapshot(self.snapshot.session_id, owner=self.owner).revision,
             self.snapshot.revision,
         )
+
+    def test_uploaded_png16_and_native_original_keep_saved_prompt_context(self):
+        import json
+        import numpy as np
+
+        from ruinedfooocus.features.generation.request_metadata import capture_source_generation
+        from ruinedfooocus.features.image_processing.native_image_outputs import (
+            NativeImageOutput,
+            result_presentation,
+        )
+        from ruinedfooocus.features.prompting.prompt_processing import process_prompt
+
+        uploaded = self.root / "uploaded-16bit.png"
+        source_prompt = "A woman with a blue scarf, café sign 0007."
+        metadata = PngInfo()
+        metadata.add_text(
+            "parameters",
+            json.dumps(
+                dict(
+                    Prompt=source_prompt,
+                    Negative="old negative",
+                    base_model_name="old-model.safetensors",
+                    _api_job="untrusted saved job",
+                    task_type="llama",
+                    input_image="unrequested-source.png",
+                )
+            ),
+        )
+        Image.fromarray(np.full((121, 73), 32768, dtype=np.uint16)).save(uploaded, pnginfo=metadata)
+        original = uploaded.read_bytes()
+        preview = self.image("uploaded-preview.png", "RGB", (10, 20, 30))
+        native = result_presentation([NativeImageOutput(str(uploaded), str(preview))])[2][0]
+        instruction = "  Make her more detailed.  "
+        for marker in (None, native):
+            with self.subTest(native_original=marker is not None):
+                snapshot = self.workspace.adopt_image(
+                    str(preview if marker else uploaded), native_source=marker, owner=self.owner
+                )
+                self.assertEqual(snapshot.source_generation.get("prompt"), source_prompt)
+                self.assertEqual(snapshot.original.frame.dtype, "uint16")
+                self.assertEqual(Path(snapshot.original.path).read_bytes(), original)
+                values = dict(
+                    self.values,
+                    prompt=instruction,
+                    _editor_context=self.workspace.public_context(snapshot),
+                )
+                with patch(
+                    "ruinedfooocus.features.image_editing.ui_guidance.family_for_checkpoint",
+                    return_value="SDXL",
+                ):
+                    data = self.workspace.build_request(values, request=self.request)
+                data = capture_source_generation(data, store=self.store, owner=self.owner)
+                self.assertEqual(
+                    process_prompt([], instruction, data["negative"], data),
+                    (source_prompt + "\n" + instruction, "no blur"),
+                )
+                self.assertEqual(data["raw_prompt"], instruction)
+                self.assertEqual(data["base_model_name"], "fixture.safetensors")
+                self.assertEqual(data["input_image"].size, (73, 121))
+                for key in ("_api_job", "task_type", "input_image"):
+                    self.assertNotIn(key, data["_source_generation"])
+                self.assertEqual(uploaded.read_bytes(), original)
+
+    def test_run_adopts_visible_image_and_keeps_instruction_model_and_manual_frame(self):
+        visible = self.image("visible.png", "RGBA", (90, 80, 70, 120))
+        values = dict(
+            self.values,
+            _editor_context=None,
+            main_view=str(visible),
+            input_image=Image.new("RGB", (8, 9), "red"),
+            resolution_auto=False,
+            _editor_framing="pad",
+            custom_width=96,
+            custom_height=128,
+        )
+        with patch(
+            "ruinedfooocus.features.image_editing.ui_guidance.family_for_checkpoint",
+            return_value="SDXL",
+        ):
+            data = self.workspace.build_request(values, request=self.request)
+        step = data["_image_workflow_step"]
+        self.assertNotEqual(step.ticket.session_id, self.snapshot.session_id)
+        self.assertEqual(Path(step.ticket.source.path).read_bytes(), visible.read_bytes())
+        self.assertEqual(data["input_image"].getpixel((0, 0)), (90, 80, 70, 120))
+        self.assertEqual(data["prompt"], values["prompt"])
+        self.assertEqual(data["base_model_name"], values["base_model_name"])
+        self.assertEqual(
+            (step.parameters["target_width"], step.parameters["target_height"]), (96, 128)
+        )
+        self.assertEqual(self.store.snapshot(step.ticket.session_id, owner=self.owner).steps, ())
+        self.assertEqual(visible.read_bytes(), Path(step.ticket.source.path).read_bytes())
+
+    def test_latest_input_upload_wins_over_stale_visible_preview(self):
+        values = dict(
+            self.values,
+            _editor_context=None,
+            main_view=str(self.source),
+            input_image=Image.new("RGBA", (37, 59), (100, 110, 120, 130)),
+            _editor_source_input="input",
+            resolution_auto=True,
+        )
+        with patch(
+            "ruinedfooocus.features.image_editing.ui_guidance.family_for_checkpoint",
+            return_value="SDXL",
+        ):
+            data = self.workspace.build_request(values, request=self.request)
+        self.assertEqual(data["input_image"].size, (37, 59))
+        self.assertEqual(data["input_image"].getpixel((0, 0)), (100, 110, 120, 130))
+        self.assertEqual((data["custom_width"], data["custom_height"]), (37, 59))
+
+    def test_quick_tools_adopt_visible_source_instead_of_stale_hidden_input(self):
+        visible = self.image("quick-visible.png", "RGBA", (70, 80, 90, 140))
+        for tool in ("Face landmarks", "Whole-body pose", "Depth map"):
+            with self.subTest(tool=tool):
+                data = self.workspace.build_request(
+                    dict(
+                        self.values,
+                        _editor_destination="editor",
+                        _editor_action="generate",
+                        _editor_context=None,
+                        main_view=str(visible),
+                        cn_selection=tool,
+                        input_image=Image.new("RGB", (4, 5), "red"),
+                    ),
+                    request=self.request,
+                )
+                self.assertEqual(data["input_image"].getpixel((0, 0)), (70, 80, 90, 140))
+                self.assertEqual(data["main_view"].size, (73, 121))
+                self.assertEqual(data["editor_context"], data["_editor_context"])
+                self.assertEqual(data["cn_selection"], tool)
+                self.assertIsNone(data["_native_main_source"])
+
+    def test_branding_placeholder_is_not_an_editor_source(self):
+        from ruinedfooocus.core.paths import asset_path
+
+        with self.assertRaisesRegex(ValueError, "Choose or upload"):
+            self.workspace.build_request(
+                dict(
+                    self.values, _editor_context=None, main_view=str(asset_path("init_image.png"))
+                ),
+                request=self.request,
+            )
+
+    def test_edit_strength_is_independent_of_controlnet_and_retains_explicit_override(self):
+        with patch(
+            "ruinedfooocus.features.image_editing.ui_guidance.family_for_checkpoint",
+            return_value="SDXL",
+        ):
+            for strength in (1.0, 1.5):
+                values = dict(self.values, cn_strength=strength)
+                values.pop("_editor_denoise")
+                data = self.workspace.build_request(values, request=self.request)
+                self.assertEqual(data["_image_workflow_step"].parameters["denoise"], 0.3)
+            data = self.workspace.build_request(
+                dict(self.values, _editor_denoise=0.47, cn_strength=1.5), request=self.request
+            )
+        self.assertEqual(data["_image_workflow_step"].parameters["denoise"], 0.47)
+
+    def test_upscale_defaults_to_native_two_times_and_preserves_explicit_model_target(self):
+        data = self.workspace.build_request(
+            dict(
+                self.values,
+                _editor_action="upscale",
+                automatic_upscale="Off",
+                custom_width=512,
+                custom_height=768,
+            ),
+            request=self.request,
+        )
+        self.assertEqual(
+            data["_image_workflow_step"].parameters["upscaler"], "2× General (RealESRGAN)"
+        )
+        self.assertEqual((data["custom_width"], data["custom_height"]), (146, 242))
+        data = self.workspace.build_request(
+            dict(
+                self.values,
+                _editor_action="upscale",
+                automatic_upscale="4× UltraSharp",
+                resolution_auto=False,
+                custom_width=219,
+                custom_height=363,
+            ),
+            request=self.request,
+        )
+        self.assertEqual(data["_image_workflow_step"].parameters["upscaler"], "4× UltraSharp")
+        self.assertEqual((data["custom_width"], data["custom_height"]), (219, 363))
+
+    def test_compose_accepts_background_without_intermediate_history_step(self):
+        background = self.image("background.png", "RGBA", (40, 60, 200, 255))
+        data = self.workspace.build_request(
+            dict(self.values, _editor_action="compose", _editor_background=str(background)),
+            request=self.request,
+        )
+        step = data["_image_workflow_step"]
+        self.assertEqual(step.ticket.source.artifact_id, self.snapshot.current.artifact_id)
+        self.assertIn("background_id", step.parameters)
+        self.assertNotIn("foreground_id", step.parameters)
+        self.assertEqual(len(step.ticket.additional_images), 1)
+        self.assertEqual(self.store.snapshot(self.snapshot.session_id, owner=self.owner).steps, ())
+
+    def test_fresh_upload_and_mask_are_owned_together_on_run(self):
+        mask = self.image("fresh-mask.png", "L", 100)
+        data = self.workspace.build_request(
+            dict(
+                self.values,
+                _editor_context=None,
+                main_view=str(self.source),
+                _editor_action="inpaint",
+                _editor_mask=str(mask),
+            ),
+            request=self.request,
+        )
+        step = data["_image_workflow_step"]
+        self.assertEqual(step.mask.source_id, step.ticket.source.artifact_id)
+        self.assertEqual(data["inpaint_view"]["layers"][0].getchannel("A").getpixel((0, 0)), 100)
 
     def test_reusing_gradio_upload_cache_does_not_mutate_owned_original_or_break_undo(self):
         from gradio.processing_utils import move_files_to_cache

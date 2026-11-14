@@ -133,13 +133,16 @@ class DepthUtilitiesUI(unittest.TestCase):
             self.assertEqual(replay["cn_selection"], ui.LABELS[kind])
             self.assertTrue(all(replay[field] is None for field in utilities.REPLAY_RESETS))
 
-    def test_replay_empty_choices_survive_real_gradio_refresh_preprocessing(self):
+    def test_replay_clears_old_files_before_resolving_supported_tool_defaults(self):
         self.build("moge-depth")
         resets = utilities.replay_values({"controlnet": {"type": "moge-depth"}})
         for kind in utilities.KINDS:
             result = self.context(kind, resets["image_utility_model"])
             self.assertTrue(result[0]["visible"])
-            self.assertIsNone(result[2]["value"])
+            if kind in ("face-landmarks", "pose-map"):
+                self.assertEqual(result[2]["value"], f"/{kind}/image_utility_model")
+            else:
+                self.assertIsNone(result[2]["value"])
 
     def test_actual_image_tools_host_mounts_with_real_number_model_refresh(self):
         # Gradio otherwise writes generated typing files beside custom classes.

@@ -1077,5 +1077,16 @@
   "shell.library_thumbnails": "라이브러리 썸네일",
   "settings.theme_cached_and_selected_save_to_keep_it": "테마를 캐시에 저장하고 선택했습니다. 유지하려면 저장하세요.",
   "settings.theme_applied_to_this_browser_save_to_keep_it": "이 브라우저에 테마를 적용했습니다. 유지하려면 저장하세요.",
-  "settings.regenerated_when_browsing_library_original_images_are_preserved": "라이브러리를 탐색할 때 다시 생성됩니다. 원본 이미지는 보존됩니다."
+  "settings.regenerated_when_browsing_library_original_images_are_preserved": "라이브러리를 탐색할 때 다시 생성됩니다. 원본 이미지는 보존됩니다.",
+  "gallery.edit_strength": "편집 강도",
+  "gallery.action_inputs": "작업 입력",
+  "gallery.check_resources": "리소스 확인",
+  "gallery.inpaint_image": "이미지 부분 수정",
+  "gallery.compose_images": "이미지 합성",
+  "gallery.upscale_image": "이미지 확대",
+  "gallery.create_depth_map": "깊이 맵 만들기",
+  "gallery.restore_image": "이미지 복원",
+  "gallery.apply_adjustment": "조정 적용",
+  "prompting.describe_image": "이미지 설명",
+  "prompting.undo_description": "설명 실행 취소"
 }

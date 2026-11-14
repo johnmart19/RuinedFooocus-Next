@@ -2,7 +2,9 @@
 
 In **Editor → More tools**, choose **Lotus depth**, **MoGe depth**, **Face
 landmarks**, **Whole-body pose** or **Marigold albedo**. Add one source image and
-select the components shown for that tool, then run the image tool.
+run the image tool. Face landmarks and Whole-body pose select compatible local
+components or their [registered first-use defaults](native-utility-defaults.md).
+Advanced Lotus, MoGe and Marigold workflows require the components shown below.
 These utilities use their own local models and a fixed native operation. The
 generation checkpoint, prompt, text encoders and generation sampling settings
 are not required. The existing **Depth map** DA3 tool remains a separate route.
