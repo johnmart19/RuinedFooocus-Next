@@ -1,6 +1,7 @@
 """Actual mounted Gradio callbacks for scheduled LoRA intent."""
 
 import asyncio
+import ast
 import json
 from pathlib import Path
 import sys
@@ -17,7 +18,7 @@ from ruinedfooocus.features.image_editing import ui_lora_hooks as ui
 
 
 class LoraHookUITests(unittest.TestCase):
-    def build(self, family="SDXL", defaults=None, cards=None):
+    def build(self, family="SDXL", defaults=None, cards=None, selected_tool="None", kind_for=None):
         registered = {}
         shared = NS(
             settings=NS(default_settings=defaults or {}),
@@ -40,14 +41,15 @@ class LoraHookUITests(unittest.TestCase):
             if cards is not None:
                 registered["loras"] = gr.Gallery(value=cards)
             checkpoint = gr.Textbox(value=family)
-            selection, kind = gr.Textbox(value="None"), gr.Textbox(value="")
+            selection, kind = gr.Textbox(value=selected_tool), gr.Textbox(value="")
             refresh = gr.Number(value=0)
             controls = ui.create_ui(
                 checkpoint,
                 selection,
                 kind,
                 refresh,
-                lambda selected, tool: tool.lower() if selected == "Custom..." else None,
+                kind_for
+                or (lambda selected, tool: tool.lower() if selected == "Custom..." else None),
             )
         return demo, controls, registered, refresh
 
@@ -105,6 +107,61 @@ class LoraHookUITests(unittest.TestCase):
             self.assertTrue(updates[0]["visible"])
             self.assertTrue(updates[3]["visible"])
             self.assertFalse(updates[6]["visible"])
+
+    def test_restore_and_standalone_tools_hide_hooks_and_keep_the_generation_draft(self):
+        from ruinedfooocus.features.generation.image_preparation import omit_generation_conditioning
+        from ruinedfooocus.features.image_processing.still_image_utilities import KINDS
+
+        root = Path(__file__).resolve().parents[1]
+        presets = json.loads(
+            (root / "ruinedfooocus/resources/defaults/powerup.default").read_text(encoding="utf-8")
+        )
+        tree = ast.parse(
+            (root / "ruinedfooocus/features/image_editing/ui.py").read_text(encoding="utf-8")
+        )
+        node = next(
+            n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "tool_kind"
+        )
+        scope = dict(NEWCN="Custom...", controlnet=NS(cn_options=presets))
+        exec(compile(ast.Module(body=[node], type_ignores=[]), "actual_tool_kind", "exec"), scope)
+        draft = dict(
+            lora_hooks.DEFAULTS,
+            lora_hook_mode="keyframes",
+            lora_hook_model="style.safetensors",
+            lora_hook_model_strength=0.45,
+            lora_hook_clip_strength=0.25,
+        )
+        demo, controls, _, _ = self.build(
+            defaults=draft,
+            selected_tool="Restore still image (SeedVR2)",
+            kind_for=scope["tool_kind"],
+        )
+        callback = next(fn for fn in demo.fns.values() if fn.fn.__name__ == "context")
+        before = {key: control.value for key, control in controls.items()}
+        self.assertEqual(before["lora_hook_mode"], "keyframes")
+        self.assertEqual(before["lora_hook_model"], "style.safetensors")
+        self.assertEqual(before["lora_hook_model_strength"], 0.45)
+        self.assertFalse(callback.outputs[0].visible)
+        routes = [
+            (name, "")
+            for name, options in presets.items()
+            if options["type"] in (*KINDS, "restore-seedvr2")
+        ]
+        routes += [("Adjust image", "Image-mask"), ("Adjust image", "Image-color")]
+        for selection, tool in routes:
+            with self.subTest(selection=selection, tool=tool):
+                kind = scope["tool_kind"](selection, tool)
+                self.assertIn(kind, (*KINDS, "restore-seedvr2"))
+                updates = self.callback(
+                    demo, ["SDXL", "keyframes", "style.safetensors", selection, tool, 0.25]
+                )
+                self.assertFalse(updates[0]["visible"])
+                self.assertTrue(all("value" not in row for row in updates))
+                stripped = omit_generation_conditioning(dict(draft, controlnet={"type": kind}))
+                self.assertTrue(all(key not in stripped for key in lora_hooks.FIELDS))
+        restored = self.callback(demo, ["SDXL", "keyframes", "style.safetensors", "None", "", 0.25])
+        self.assertTrue(restored[0]["visible"])
+        self.assertEqual({key: control.value for key, control in controls.items()}, before)
 
     def test_local_file_labels_are_actual_text_with_i18n_enabled(self):
         from gradio.i18n import I18nData

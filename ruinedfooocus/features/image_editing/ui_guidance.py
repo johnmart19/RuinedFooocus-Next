@@ -247,6 +247,7 @@ def create_ui(
     kind_for=None,
 ):
     import ruinedfooocus.app.state as shared
+    from ruinedfooocus.features.image_processing.still_image_utilities import KINDS
 
     defaults = shared.settings.default_settings
     family = family_for_checkpoint(base_model.value)
@@ -261,6 +262,9 @@ def create_ui(
             "rembg",
             "detect",
             "segment",
+            "depth-map",
+            "restore-seedvr2",
+            *KINDS,
         )
 
     preset_notice = gr.Markdown("", visible=False)

@@ -19,6 +19,7 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
     from ruinedfooocus.app import state as shared
     from ruinedfooocus.features.image_editing.ui_guidance import family_for_checkpoint
     from ruinedfooocus.features.models.image_components import ALIASES, IMAGE_COMPONENTS
+    from ruinedfooocus.features.image_processing.still_image_utilities import KINDS
 
     saved = lora_hooks.replay_values(shared.settings.default_settings)
 
@@ -26,11 +27,24 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
         value = family_for_checkpoint(name)
         return ALIASES.get(value, value)
 
+    def applicable(current_family, selected, tool):
+        return current_family in IMAGE_COMPONENTS and kind_for(selected, tool) not in (
+            "rembg",
+            "upscale",
+            "detect",
+            "segment",
+            "depth-map",
+            "restore-seedvr2",
+            *KINDS,
+        )
+
     initial_family = family(base_model.value)
     mode = saved["lora_hook_mode"]
     controls = {}
     with gr.Accordion(
-        t("Scheduled LoRA"), open=False, visible=initial_family in IMAGE_COMPONENTS
+        t("Scheduled LoRA"),
+        open=False,
+        visible=applicable(initial_family, selection.value, tool_type.value),
     ) as panel:
         controls["lora_hook_mode"] = gr.Dropdown(
             label=t("LoRA schedule"),
@@ -203,13 +217,7 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
         request: gr.Request = None,
     ):
         current_family = family(checkpoint)
-        visible = current_family in IMAGE_COMPONENTS and kind_for(selection, tool) not in (
-            "rembg",
-            "upscale",
-            "detect",
-            "segment",
-            "depth-map",
-        )
+        visible = applicable(current_family, selection, tool)
         clip_supported = current_family in lora_hooks.CLIP_FAMILIES
         return (
             gr.update(visible=visible),

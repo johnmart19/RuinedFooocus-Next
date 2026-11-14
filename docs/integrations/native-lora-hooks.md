@@ -1,10 +1,14 @@
 # Native LoRA hook schedules
 
-In **Create → Image tools → Scheduled LoRA**, choose manual, interpolated or
+In **Editor → More tools → Scheduled LoRA**, choose manual, interpolated or
 strength-list keyframes, a local source, and its signed model/CLIP strengths. **Off** is the
 default. It performs no LoRA inventory scan, file preparation, native hook loading
 or additional encoding. Enabling the panel lists local state dictionaries; safe
 native loading and actual target mapping happen on Run.
+
+The panel is hidden for SeedVR2 restoration and registered standalone still-image utilities,
+which do not consume generation hooks. Returning to an applicable generation
+tool restores the panel with the scheduled-source draft unchanged.
 
 This adds scheduled sources after the existing card and prompt LoRAs. It does
 not change their add, prompt override, replacement or removal behavior. Selecting

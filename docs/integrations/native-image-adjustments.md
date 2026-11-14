@@ -9,6 +9,10 @@ The existing Run/Stop flow serializes these operations on the image worker.
 No checkpoint, text encoder, sampler,
 model download or learned component is needed.
 
+Generation-only Image guidance and Scheduled LoRA panels are hidden while an
+adjustment tool is selected. Returning to generation keeps the existing draft;
+these settings are not applied to Transform, Mask or Color operations.
+
 The native contracts live in [geometry](native-image-geometry.md),
 [masks](native-image-mask-tools.md) and [color](native-image-color-tools.md).
 `ui_image_adjustments.py` registers scalar controls and original-file inputs;

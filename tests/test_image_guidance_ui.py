@@ -56,6 +56,7 @@ class GuidanceUI(unittest.TestCase):
     def test_actual_refresh_callback_keeps_utility_guidance_hidden_and_preserves_values(self):
         import gradio as gr
         from gradio.state_holder import SessionState
+        from ruinedfooocus.features.image_processing.still_image_utilities import KINDS
 
         registered = {}
         shared = SimpleNamespace(
@@ -73,8 +74,8 @@ class GuidanceUI(unittest.TestCase):
                 model = gr.Textbox(value="same checkpoint")
                 preset = gr.Textbox(value="")
                 refresh = gr.Number(value=0)
-                selection = gr.Textbox(value="Segment by points")
-                kind = gr.Textbox(value="segment")
+                selection = gr.Textbox(value="Adjust image")
+                kind = gr.Textbox(value="image-transform")
                 controls = ui.create_ui(
                     model,
                     preset_selection=preset,
@@ -86,13 +87,23 @@ class GuidanceUI(unittest.TestCase):
                 )
             index = next(key for key, fn in demo.fns.items() if fn.fn.__name__ == "context_changed")
             fn = demo.fns[index]
+            self.assertFalse(fn.outputs[0].visible)
             self.assertIn((refresh._id, "change"), fn.targets)
             self.assertNotIn(selection, fn.outputs)
             self.assertNotIn(model, fn.outputs)
             values = [controls[key].value for key in ui.FIELD_SCHEMA]
             values[list(ui.FIELD_SCHEMA).index("cfg_norm_strength")] = "2"
             state = SessionState(demo)
-            for tool in ("segment", "detect", "rembg", "upscale", "img2img"):
+            for tool in (
+                "segment",
+                "detect",
+                "rembg",
+                "upscale",
+                "depth-map",
+                "restore-seedvr2",
+                *KINDS,
+                "img2img",
+            ):
                 result = asyncio.run(
                     demo.process_api(
                         index, [model.value, "", None, *values, selection.value, tool], state=state
