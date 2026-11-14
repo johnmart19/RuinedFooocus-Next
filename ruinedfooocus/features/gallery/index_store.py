@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import sqlite3
+import stat
 import threading
 import time
 
@@ -65,9 +66,26 @@ def ensure_schema(connection):
         connection.execute(f"PRAGMA user_version={SCHEMA_VERSION}")
 
 
-def connect_index(path):
+def connect_index(path, *, create_parent=True):
     path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
+    from ruinedfooocus.core.paths import data_path, ensure_app_directory
+
+    try:
+        relative = path.parent.relative_to(data_path("cache"))
+    except ValueError:
+        if create_parent:
+            path.parent.mkdir(parents=True, exist_ok=True)
+        elif not path.parent.is_dir():
+            raise FileNotFoundError(f"Library cache folder is unavailable: {path.parent}")
+    else:
+        ensure_app_directory("cache", *relative.parts)
+    try:
+        status = path.lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        if stat.S_ISLNK(status.st_mode) or getattr(status, "st_file_attributes", 0) & 0x400:
+            raise OSError(f"Library index cannot follow a link or reparse point: {path}")
     with _writer_lock(canonical_path_key(path)):
         connection = sqlite3.connect(path, timeout=5, check_same_thread=False)
         try:
@@ -87,10 +105,35 @@ def index_connection(browser):
         # No application caller shares this path: it supports isolated caller fixtures.
         yield browser.sql_conn
         return
+    manager = getattr(browser, "path_manager", None)
+    if manager is not None and hasattr(manager, "ensure_default_storage"):
+        manager.ensure_default_storage()
+        # Deleting the profile can restore the factory cache root. Lease and
+        # reopen that current database, retaining the old custom cache untouched.
+        path = Path(manager.model_paths["cache_path"]) / "images.db"
+        browser._database_path = path
     with preparation_service.artifact_lease(path):
-        # Schema initialization happens at construction, never in a page read.
-        connection = sqlite3.connect(path, timeout=5)
+        legacy = getattr(browser, "sql_conn", None)
+        if legacy is not None:
+            legacy.close()
+            browser.sql_conn = None
+        # Deletion invalidates the old schema and any old handle. Initialize the
+        # current database rather than reading an unlinked or empty replacement.
+        connection = connect_index(path, create_parent=False)
         try:
+            generation = getattr(manager, "_output_storage_generation", 0)
+            if generation != getattr(browser, "_output_storage_generation", 0):
+                from ruinedfooocus.core.paths import data_path
+
+                root = str(data_path("outputs"))
+                prefix = (root + os.sep).replace("!", "!!").replace("%", "!%").replace("_", "!_")
+                with _writer_lock(canonical_path_key(path)), connection:
+                    connection.execute(
+                        "DELETE FROM images WHERE fullpath=? OR fullpath LIKE ? ESCAPE '!'",
+                        (root, prefix + "%"),
+                    )
+                    connection.execute("UPDATE library_snapshot SET revision=0 WHERE id=1")
+                browser._output_storage_generation = generation
             yield connection
         finally:
             connection.close()

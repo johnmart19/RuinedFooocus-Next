@@ -1,0 +1,13 @@
+{
+  "id": "default-storage-recovery",
+  "subject": "Recover missing default storage and reset removed profiles safely",
+  "requires": ["gallery-cached-view-ownership"],
+  "tests": [
+    "test_storage_recovery.py",
+    "test_gallery_index.py",
+    "test_profile_transactions.py",
+    "test_resource_paths.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

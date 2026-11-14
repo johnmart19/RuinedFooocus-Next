@@ -1,9 +1,17 @@
-from ruinedfooocus.core.paths import APP_ROOT, data_path, resource_path, legacy_model_path
+from ruinedfooocus.core.paths import (
+    APP_ROOT,
+    data_path,
+    resource_path,
+    legacy_model_path,
+    ensure_app_directory,
+)
 from pathlib import Path
+import copy
 import json
 import os
 import errno
 import re
+from threading import RLock
 from urllib.parse import unquote, urlsplit
 from ruinedfooocus.core.config_io import save_json
 from ruinedfooocus.core.model_folders import FOLDER_SETTINGS, canonical_model_root, model_folders
@@ -12,6 +20,8 @@ from ruinedfooocus.core.model_formats import (
     NATIVE_TORCH_SUFFIXES,
     SAFETENSORS_SUFFIXES,
 )
+
+_PROFILE_RECOVERY_LOCK = RLock()
 
 
 def _registered_pinned_url(info, artifact, file_key):
@@ -121,20 +131,75 @@ class PathManager:
                     print(f"Error reading {file}: {e}")
 
     def set_settings_path(self, subfolder=None):
+        from ruinedfooocus.core.profile_store import ensure_profile_folder, profile_name
+
+        subfolder = profile_name(subfolder)
         self.subfolder = subfolder
         if self.subfolder in [None, "", "default"]:
             path = data_path("settings", "paths.json")
         else:
             path = data_path("settings", self.subfolder, "paths.json")
-        if not path.parent.exists():
-            path.parent.mkdir(parents=True, exist_ok=True)
+        ensure_profile_folder(subfolder)
         self.settings_path = path
+
+    def _refresh_profile(self):
+        with _PROFILE_RECOVERY_LOCK:
+            if (
+                self.settings_path is not None
+                and hasattr(self, "_paths")
+                and not getattr(self, "_recovering_profile", False)
+                and not self.settings_path.exists()
+            ):
+                self._recovering_profile = True
+                try:
+                    self.paths = self.load_paths()
+                    if hasattr(self, "_model_paths"):
+                        self._model_paths = self.get_model_paths()
+                finally:
+                    self._recovering_profile = False
+
+    @property
+    def paths(self):
+        self._refresh_profile()
+        return self._paths
+
+    @paths.setter
+    def paths(self, values):
+        self._paths = values
+
+    @property
+    def model_paths(self):
+        self._refresh_profile()
+        self.ensure_default_storage()
+        return self._model_paths
+
+    @model_paths.setter
+    def model_paths(self, values):
+        self._model_paths = values
+
+    def ensure_default_storage(self):
+        """Only default owned leaves recover; custom sources remain authoritative."""
+        with _PROFILE_RECOVERY_LOCK:
+            self._refresh_profile()
+            active = getattr(self, "_model_paths", {})
+            for setting, model_key, folder in (
+                ("path_outputs", "temp_outputs_path", "outputs"),
+                ("path_cache", "cache_path", "cache"),
+            ):
+                effective = active.get(model_key, self.get_abspath(self._paths[setting]))
+                if Path(effective) == data_path(folder):
+                    missing = not data_path(folder).exists()
+                    ensure_app_directory(folder)
+                    if missing and folder == "outputs":
+                        self._output_storage_generation = (
+                            getattr(self, "_output_storage_generation", 0) + 1
+                        )
 
     def load_paths(self):
         from ruinedfooocus.core.profile_store import read_object, recover_profile
 
         recover_profile(self.settings_path.parent)
-        paths = self.DEFAULT_PATHS.copy()
+        paths = copy.deepcopy(self.DEFAULT_PATHS)
         if self.settings_path.exists():
             paths.update(read_object(self.settings_path))
         for key in self.DEFAULT_PATHS:
@@ -230,6 +295,11 @@ class PathManager:
                     # Shared model roots can be read-only. Downloads and output
                     # writes still report their own destination errors when used.
                     print(f"Directory is unavailable for writing: {directory}")
+                else:
+                    if directory == data_path("outputs"):
+                        self._output_storage_generation = (
+                            getattr(self, "_output_storage_generation", 0) + 1
+                        )
             return directory
 
         if isinstance(path, list):

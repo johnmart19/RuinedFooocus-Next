@@ -7,6 +7,7 @@ model path values are relative to the former modules/ directory by design.
 
 import os
 from pathlib import Path
+import stat
 
 APP_ROOT = Path(__file__).resolve().parents[2]
 PACKAGE_ROOT = APP_ROOT / "ruinedfooocus"
@@ -25,6 +26,41 @@ def data_path(*parts):
     if not base.is_absolute():
         base = APP_ROOT / base
     return base.joinpath(*parts).resolve()
+
+
+def ensure_app_directory(*parts):
+    """Recreate only owned data leaves, without following links or missing mounts."""
+    relative = Path(*parts)
+    if (
+        relative.is_absolute()
+        or not relative.parts
+        or relative.parts[0] not in {"settings", "outputs", "cache", "presets"}
+        or ".." in relative.parts
+    ):
+        raise ValueError("Not an application-owned storage directory")
+    configured = os.environ.get("RF_DATA_DIR")
+    base = Path(configured).expanduser() if configured else APP_ROOT
+    if not base.is_absolute():
+        base = APP_ROOT / base
+    base = Path(os.path.abspath(base))
+    # An explicit missing data root may be an unmounted drive, not a new folder.
+    # Only its known children are recovered automatically.
+    cursor = base
+    for index, part in enumerate((None, *relative.parts)):
+        if part is not None:
+            cursor = cursor / part
+        try:
+            status = cursor.lstat()
+        except FileNotFoundError:
+            if index == 0:
+                raise
+            cursor.mkdir(exist_ok=True)
+            status = cursor.lstat()
+        if stat.S_ISLNK(status.st_mode) or getattr(status, "st_file_attributes", 0) & 0x400:
+            raise OSError(f"Application storage cannot follow a link or reparse point: {cursor}")
+        if not stat.S_ISDIR(status.st_mode):
+            raise NotADirectoryError(str(cursor))
+    return cursor
 
 
 def resource_path(*parts):

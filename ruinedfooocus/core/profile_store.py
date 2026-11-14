@@ -7,11 +7,12 @@ uses the profile. This is recovery, not a claim of filesystem-wide atomicity.
 
 import base64
 import json
+import stat
 from pathlib import Path
 from threading import RLock
 
 from ruinedfooocus.core.config_io import save_bytes, save_json
-from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.paths import data_path, ensure_app_directory
 
 _lock = RLock()
 
@@ -41,8 +42,33 @@ def profile_folder(name=None):
     return data_path("settings", name) if name else data_path("settings")
 
 
+def ensure_profile_folder(name=None):
+    name = profile_name(name)
+    return ensure_app_directory("settings", *([name] if name else []))
+
+
+def _prepare_owned_profile(folder):
+    """Keep generic fixture/read paths unchanged; guard actual application profiles."""
+    folder = Path(folder)
+    root = profile_folder()
+    if folder == root:
+        ensure_profile_folder()
+        return True
+    elif folder.parent == root:
+        ensure_profile_folder(folder.name)
+        return True
+    return False
+
+
 def read_object(path):
     path = Path(path)
+    if _prepare_owned_profile(path.parent):
+        try:
+            status = path.lstat()
+        except FileNotFoundError:
+            return {}
+        if stat.S_ISLNK(status.st_mode) or getattr(status, "st_file_attributes", 0) & 0x400:
+            raise OSError(f"Profile document cannot follow a link or reparse point: {path}")
     if not path.is_file():
         return {}
     try:
@@ -57,6 +83,7 @@ def read_object(path):
 def recover_profile(folder):
     with _lock:
         folder = Path(folder)
+        _prepare_owned_profile(folder)
         journal = folder / ".profile-save.json"
         if not journal.exists():
             return
