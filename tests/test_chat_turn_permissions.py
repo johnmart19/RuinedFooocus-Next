@@ -350,10 +350,12 @@ class ChatDraftCallerTests(unittest.TestCase):
             ],
         )
         self.assertEqual(undone["updates"], ["manual draft", None])
-        with self.assertRaisesRegex(ValueError, "overwrite"):
-            self.functions["undo_chat_prompt"].fn(
-                "new manual edit", ["manual draft", "candidate", 5], self.guard
-            )
+        # Refusals return to the browser step, which applies nothing and shows why.
+        refused = self.functions["undo_chat_prompt"].fn(
+            "new manual edit", ["manual draft", "candidate", 5], self.guard
+        )
+        self.assertIsNone(refused["updates"])
+        self.assertIn("overwrite", refused["error"])
 
     def test_revoked_pending_or_superseded_turn_cannot_apply(self):
         self.session.revoke(OWNER)
@@ -361,8 +363,10 @@ class ChatDraftCallerTests(unittest.TestCase):
             ("publish_chat_prompt", ["original", self.ticket, self.policy]),
             ("apply_chat_prompt", ["original", self.ticket, self.policy, self.guard]),
         ):
-            with self.subTest(name=name), self.assertRaises(ImageToolValidationError):
-                self.functions[name].fn(*values)
+            with self.subTest(name=name):
+                refused = self.functions[name].fn(*values)
+                self.assertIsNone(refused["updates"])
+                self.assertTrue(refused["error"])
         self.assertEqual(self.prompt.value, "original")
 
     def test_dismiss_captures_new_serial_and_apply_rechecks_live_context(self):

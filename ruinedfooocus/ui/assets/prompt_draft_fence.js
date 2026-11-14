@@ -82,6 +82,12 @@ const fence = {
       guard = result?.guard;
     if (!state || !guard || guard.serial !== state.serial) return unchanged;
     if (guard.revoked || (guard.revocation || 0) !== (state.revocation || 0)) return unchanged;
+    // The app's own message for this request: keep the prompt and show why.
+    if (result.error)
+      return [
+        ...unchanged.slice(0, -1),
+        { __type__: "update", value: result.error, visible: true },
+      ];
     const contextChanged = (guard.contexts || []).some(
       (context) => JSON.stringify(this.context(context.id)) !== JSON.stringify(context),
     );

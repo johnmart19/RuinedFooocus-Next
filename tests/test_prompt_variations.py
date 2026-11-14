@@ -7,6 +7,7 @@ from unittest.mock import patch
 import gradio as gr
 
 from ruinedfooocus.features.prompting import ui_evolve
+from ui_test_helpers import raise_refusal
 
 
 class PromptVariationTests(unittest.TestCase):
@@ -133,7 +134,7 @@ class PromptVariationTests(unittest.TestCase):
             ("apply", ("edited draft", session, 1)),
         ):
             with self.subTest(callback=callback, args=args), self.assertRaises(gr.Error):
-                callbacks[callback](*args, *([{}] if callback == "apply" else []))
+                raise_refusal(callbacks[callback](*args, *([{}] if callback == "apply" else [])))
 
 
 if __name__ == "__main__":

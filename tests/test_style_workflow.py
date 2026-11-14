@@ -19,6 +19,7 @@ from ruinedfooocus.features.prompting.style_catalog import (
     style_templates,
 )
 from ruinedfooocus.features.gallery.image_metadata import read_metadata, render_values
+from ui_test_helpers import raise_refusal
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -200,9 +201,11 @@ class StyleWorkflowTests(unittest.TestCase):
             (result[0], result[1], result[2]),
         ):
             with self.assertRaisesRegex(gr.Error, "changed"):
-                functions["publish_bake"](prompt_value, negative_value, styles, "", result, {})
+                raise_refusal(
+                    functions["publish_bake"](prompt_value, negative_value, styles, "", result, {})
+                )
         with self.assertRaisesRegex(gr.Error, "overwrite your edits"):
-            functions["undo"]("new edit", result[1], result[2], result[3], {})
+            raise_refusal(functions["undo"]("new edit", result[1], result[2], result[3], {}))
         self.assertEqual(
             tuple(functions["undo"](result[0], result[1], result[2], result[3], {})["updates"][:3]),
             ("original", "negative", ["Style: sai-anime", "Local chat model"]),
@@ -227,7 +230,11 @@ class StyleWorkflowTests(unittest.TestCase):
             list(pending),
         )
         with self.assertRaisesRegex(gr.Error, "changed"):
-            functions["publish_bake"]("original", "negative", selected, "new trigger", pending, {})
+            raise_refusal(
+                functions["publish_bake"](
+                    "original", "negative", selected, "new trigger", pending, {}
+                )
+            )
         publish = next(
             fn for fn in app.fns.values() if getattr(fn.fn, "__name__", None) == "publish_bake"
         )

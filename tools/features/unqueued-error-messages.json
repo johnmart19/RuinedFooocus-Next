@@ -1,0 +1,23 @@
+{
+  "id": "unqueued-error-messages",
+  "subject": "Show error messages from prompt actions and events that skip the queue",
+  "requires": [
+    "ui-event-behavior-checks"
+  ],
+  "tests": [
+    "test_prompt_draft_fence.py",
+    "test_prompt_caption.py",
+    "test_prompt_workflows.py",
+    "test_prompt_variations.py",
+    "test_style_workflow.py",
+    "test_chat_turn_permissions.py",
+    "test_qwen_image21_enhancement.py",
+    "test_error_messages_script.py",
+    "test_ui_runtime.py",
+    "test_guest_localization.py",
+    "test_user_errors.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

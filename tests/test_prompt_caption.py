@@ -52,8 +52,10 @@ class PromptCaptionTests(unittest.TestCase):
         history = result["updates"][1]
         undone = callbacks["undo_description"].fn(self.caption.return_value, history, guard)
         self.assertEqual(undone["updates"][:2], [original, None])
-        with self.assertRaises(gr.Error):
-            callbacks["undo_description"].fn("newer manual edit", history, guard)
+        # The refusal returns to the browser step, which shows it beside the prompt.
+        refused = callbacks["undo_description"].fn("newer manual edit", history, guard)
+        self.assertIsNone(refused["updates"])
+        self.assertTrue(refused["error"])
 
     def test_active_input_upload_takes_precedence_and_caption_receives_a_frozen_copy(self):
         self.caption.return_value = "upload description"

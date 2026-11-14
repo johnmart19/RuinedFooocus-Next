@@ -169,6 +169,80 @@ else {
         self.assertEqual(client.outputs[:2], [prompt, previous])
         self.assertTrue(app.config["dependencies"][1]["trigger_only_on_success"])
 
+    def test_app_messages_return_in_the_envelope_instead_of_failing_the_event(self):
+        def undo(current, saved):
+            raise ValueError("There is no prompt edit to undo.")
+
+        with gr.Blocks() as app:
+            prompt = gr.Textbox(value="draft")
+            previous = gr.JSON(None, visible="hidden")
+            button = gr.Button("Undo")
+            fence_event(
+                button.click,
+                undo,
+                prompt=prompt,
+                inputs=[prompt, previous],
+                outputs=[prompt, previous],
+                history_input=1,
+            )
+        backend = next(iter(app.fns.values()))
+        guard = {"revision": 1, "serial": 4, "operation": "undo", "text": "draft"}
+        envelope = backend.fn("draft", None, guard)
+        self.assertEqual(envelope["error"], "There is no prompt edit to undo.")
+        self.assertIsNone(envelope["updates"])
+        self.assertEqual(envelope["guard"], guard)
+
+        def broken(current, saved):
+            raise KeyError("internal")
+
+        with gr.Blocks() as app:
+            prompt = gr.Textbox(value="draft")
+            previous = gr.JSON(None, visible="hidden")
+            fence_event(
+                gr.Button().click,
+                broken,
+                prompt=prompt,
+                inputs=[prompt, previous],
+                outputs=[prompt, previous],
+                history_input=1,
+            )
+        with self.assertRaises(KeyError):
+            next(iter(app.fns.values())).fn("draft", None, guard)
+
+    def test_browser_shows_the_message_for_the_current_request_only(self):
+        source = asset_path("prompt_draft_fence.js").read_text(encoding="utf-8")
+        harness = r"""
+const assert = require('node:assert/strict');
+const vm = require('node:vm');
+const source = JSON.parse(require('node:fs').readFileSync(0, 'utf8'));
+const input = {value:'draft',listeners:{},addEventListener(name,fn){this.listeners[name]=fn;}};
+const scope = {document:{getElementById(id){return id==='prompt'?{querySelector:()=>input}:null}}};
+vm.runInNewContext(source+';globalThis.fence=fence;',scope);
+const fence = scope.fence;
+const config = {prompt:0,history_input:1,history_output:null,history_revision:2,contexts:[]};
+const begin = () => fence.capture('prompt','undo',['draft',null,{}],config).at(-1);
+const failed = (guard) => ({guard,updates:null,stale:null,error:'There is no prompt edit to undo.'});
+// The current request shows the message and leaves the prompt and history alone.
+let guard = begin();
+let output = fence.publish('prompt',failed(guard),2,config);
+assert.equal(output.length,3);
+assert.equal(output[0].value,undefined); assert.equal(output[1].value,undefined);
+assert.equal(output[2].value,'There is no prompt edit to undo.'); assert.equal(output[2].visible,true);
+assert.equal(input.value,'draft');
+// A reply for a superseded request shows nothing.
+const first = begin(), second = begin();
+output = fence.publish('prompt',failed(first),2,config);
+assert.equal(output[2].value,undefined); assert.equal(output[2].visible,undefined);
+"""
+        result = subprocess.run(
+            ["node", "-e", harness],
+            input=json.dumps(source),
+            text=True,
+            capture_output=True,
+            timeout=15,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_live_draft_revision_context_and_request_order_fence_actual_paint(self):
         source = asset_path("prompt_draft_fence.js").read_text(encoding="utf-8")
         harness = r"""

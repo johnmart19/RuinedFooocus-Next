@@ -960,3 +960,37 @@
 :is(#app-tabs, #image-stage) :is(input[type="number"], input[type="text"], input:not([type])) {
   line-height: 1.25;
 }
+/* Messages from events that skip the queue (see error_messages.js). */
+#rf-error-messages {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: grid;
+  gap: 0.5rem;
+  max-inline-size: min(26rem, calc(100vw - 2rem));
+}
+.rf-error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--error-border-color, var(--color-red-500, #ef4444));
+  border-radius: var(--rf-radius-sm);
+  background: var(--block-background-fill);
+  color: var(--body-text-color);
+  font-size: var(--text-sm);
+  box-shadow: 0 4px 16px #0004;
+}
+.rf-error-message span {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.rf-error-message button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+}

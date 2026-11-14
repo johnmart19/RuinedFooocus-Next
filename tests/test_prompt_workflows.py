@@ -323,6 +323,9 @@ class PromptCallbackTests(unittest.TestCase):
             if len(values) == len(fn.inputs)
             else fn.fn(*values, {"revision": 0, "serial": 1})
         )
+        # A refusal returns its message for the browser step instead of raising.
+        if envelope.get("error"):
+            raise gr.Error(envelope["error"])
         return tuple(envelope["updates"])
 
     def test_localized_append_checkbox_defaults_to_replace_in_real_component_config(self):

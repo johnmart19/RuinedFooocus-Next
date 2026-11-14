@@ -6,6 +6,7 @@ import gradio as gr
 
 from ruinedfooocus.core.paths import asset_path
 from ruinedfooocus.core.translation_manager import localize, resolve_locale
+from ruinedfooocus.ui.user_errors import USER_ERRORS
 
 
 def capture_draft(prompt, inputs, operation, *, context_inputs=()):
@@ -84,7 +85,15 @@ def fence_event(
             arguments = values
             ticket = arguments[guard_input]
             guard = ticket[guard_index] if ticket and len(ticket) > guard_index else None
-        updates = callback(*arguments, request=request) if with_request else callback(*arguments)
+        try:
+            updates = (
+                callback(*arguments, request=request) if with_request else callback(*arguments)
+            )
+        except (gr.Error, *USER_ERRORS) as error:
+            # A failed event never runs the browser publish step, so return the
+            # app's message for it to show beside the prompt instead of raising.
+            message = error.message if isinstance(error, gr.Error) else str(error)
+            return {"updates": None, "stale": None, "guard": guard, "error": message}
         return {
             "updates": list(updates),
             "stale": list(on_stale(*arguments)) if on_stale else None,

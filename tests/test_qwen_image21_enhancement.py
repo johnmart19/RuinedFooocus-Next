@@ -13,6 +13,7 @@ from PIL import Image
 
 from ruinedfooocus.features.image_editing import ui_guidance
 from ruinedfooocus.features.prompting import qwen_image21_enhancement as pe, ui_rewrite
+from ui_test_helpers import raise_refusal
 
 
 class QwenEnhancementTests(unittest.TestCase):
@@ -181,4 +182,4 @@ class QwenEnhancementTests(unittest.TestCase):
             )
             context[4].putpixel((0, 0), (255, 0, 0))
             with self.assertRaisesRegex(gr.Error, "context changed"):
-                callbacks["apply_qwen"]('Keep "A".', ticket, *context, {})
+                raise_refusal(callbacks["apply_qwen"]('Keep "A".', ticket, *context, {}))

@@ -24,6 +24,8 @@ sidebar_head = """<style>
 
 
 def startup_head(app_id, *, themed=False, sidebar=True):
+    from ruinedfooocus.core.paths import asset_path
+
     # Gradio's random 64-bit id loses precision when read as a JavaScript Number.
     return (
         head
@@ -32,6 +34,8 @@ def startup_head(app_id, *, themed=False, sidebar=True):
             f"<script>window.__rfAppId = {json.dumps(str(app_id))}; "
             f"window.__rfThemed = {json.dumps(bool(themed))};</script>"
         )
+        # Before Gradio's client starts, so its unqueued requests are observed.
+        + f"<script>{asset_path('error_messages.js').read_text(encoding='utf-8')}</script>"
     )
 
 
