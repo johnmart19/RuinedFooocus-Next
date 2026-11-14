@@ -109,6 +109,7 @@ class EditorWorkspaceEventTests(unittest.TestCase):
                         "Face landmarks",
                         "Whole-body pose",
                         "Depth map",
+                        "Detect objects",
                         "Adjust image",
                     ],
                     value="None",
@@ -1066,7 +1067,7 @@ process.stdout.write(JSON.stringify({output,memory}));
         kinds = {
             "Face landmarks": "face-landmarks",
             "Whole-body pose": "pose-map",
-            "Depth map": "depth-map",
+            "Detect objects": "detect",
         }
         with (
             patch.object(
@@ -1112,7 +1113,7 @@ process.stdout.write(JSON.stringify({output,memory}));
                     self.event(self.workspace.quick_tool, "input", "select_quick_tool"),
                     {self.workspace.quick_tool: choice},
                 )
-                fn = native["context" if choice == "Depth map" else "utility_context"]
+                fn = native["context" if choice == "Detect objects" else "utility_context"]
                 self.assertIn((self.controls["cn_selection"]._id, "change"), fn.targets)
                 updates = self.call(session, fn)
                 self.assertTrue(updates[fn.outputs[0]]["visible"])

@@ -54,7 +54,8 @@ class EditorWorkspace:
                 self.open_current = gr.Button(t("Open current image"), size="sm")
                 self.open_latest = gr.Button(t("Latest generated"), size="sm")
                 self.choose_gallery = gr.Button(t("Choose from Gallery"), size="sm")
-                self.undo = gr.Button(t("Undo"), size="sm")
+                # History actions start their own group at the row end.
+                self.undo = gr.Button(t("Undo"), size="sm", elem_classes=["rf-group-start"])
                 self.redo = gr.Button(t("Redo"), size="sm")
                 self.reopen = gr.Button(t("Reopen image history"), size="sm")
                 self.use_selection = gr.Button(
@@ -117,7 +118,7 @@ class EditorWorkspace:
                 choices=[
                     (t("Face landmarks"), "Face landmarks"),
                     (t("Pose"), "Whole-body pose"),
-                    (t("Depth map"), "Depth map"),
+                    # Depth map is an Image action above; no second shortcut.
                     # Multi-object selection; results become masks for the next edit.
                     (t("Detect objects"), "Detect objects"),
                     (t("Segment by points"), "Segment by points"),

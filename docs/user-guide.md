@@ -111,8 +111,8 @@ handles the common editing steps; the same source, mask and generation controls 
 Use **Latest generated** to open a completed image, or **Choose from Gallery** and
 select its tile. Before anything is generated in this session, an empty Editor
 opens the newest Gallery image; an image that is already open is never replaced.
-The **Image tools** shortcuts open the face-landmark, pose, depth, **Detect objects**
-and **Segment by points** controls; object selections become masks for the next edit.
+The **Image tools** shortcuts open the face-landmark, pose, **Detect objects**
+and **Segment by points** controls (depth maps are an Image action); object selections become masks for the next edit.
 With automatic size and Preserve framing, prompt edits and inpainting keep the
 source dimensions; an explicit size, Pad or Crop remains your choice.
 

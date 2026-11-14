@@ -366,23 +366,29 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 js_on_load=(ASSET_ROOT / "chat_splitter.js").read_text(encoding="utf-8"),
             )
             with gr.Column(scale=2, min_width=0, elem_id="chat-controls"):
-                llama_avatar = gr.Image(
-                    buttons=["download", "fullscreen"],
-                    value=assistant_avatar(assistant_info(default_bot)),
-                    label=assistant_info(default_bot)["name"],
-                    height="clamp(96px, 18dvh, 160px)",
-                    elem_id="chat-avatar",
-                    show_label=True,
-                    visible=assistant_info(default_bot)["avatar"] is not None,
-                )
-                llama_assistants = gr.Dropdown(
-                    choices=assistant_choices(),
-                    value=default_bot,
-                    label=translate_ui("Assistant"),
-                    show_label=True,
-                    interactive=True,
-                    min_width=0,
-                )
+                # Portrait and picker share one row; the picker already names the assistant.
+                with gr.Row(elem_id="chat-assistant-head", equal_height=False):
+                    llama_avatar = gr.Image(
+                        buttons=["fullscreen"],
+                        value=assistant_avatar(assistant_info(default_bot)),
+                        label=assistant_info(default_bot)["name"],
+                        height=88,
+                        elem_id="chat-avatar",
+                        show_label=False,
+                        container=False,
+                        min_width=88,
+                        scale=0,
+                        visible=assistant_info(default_bot)["avatar"] is not None,
+                    )
+                    llama_assistants = gr.Dropdown(
+                        choices=assistant_choices(),
+                        value=default_bot,
+                        label=translate_ui("Assistant"),
+                        show_label=True,
+                        interactive=True,
+                        min_width=0,
+                        scale=1,
+                    )
                 with gr.Row(
                     elem_id="chat-assistant-actions",
                     elem_classes=["rf-actions"],
@@ -397,6 +403,12 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                         interactive=default_bot != "__normal__",
                     )
                     llama_reload = gr.Button(translate_ui("Refresh"), size="sm", min_width=80)
+                    assistant_startup = gr.Button(
+                        translate_ui("Use at startup"),
+                        size="sm",
+                        variant="secondary",
+                        min_width=96,
+                    )
                 assistant_draft = gr.State(None)
                 assistant_version = gr.State(None)
                 with gr.Group(visible=False) as assistant_editor:
@@ -419,13 +431,6 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                         assistant_cancel = gr.Button(
                             translate_ui("Cancel"), size="sm", min_width=96
                         )
-                with gr.Row(elem_classes=["rf-actions"], equal_height=True):
-                    assistant_startup = gr.Button(
-                        translate_ui("Use at startup"),
-                        size="sm",
-                        variant="secondary",
-                        min_width=96,
-                    )
                 assistant_status = gr.Markdown("")
                 pending_assistant_delete = gr.State(None)
                 assistant_delete_dialog = gr.HTML(
@@ -478,7 +483,8 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     )
                     model_query = gr.Textbox(
                         label=translate_ui("Find a model or quantization"),
-                        placeholder=translate_ui("Model name, quantization or filename"),
+                        show_label=False,
+                        placeholder=translate_ui("Find a model or quantization"),
                     )
                     llama_model = gr.Dropdown(
                         label=translate_ui("Model"),
@@ -508,7 +514,9 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                           summary { cursor: pointer; list-style: none; padding: 6px 12px; min-height: 44px;
                             margin: 0; box-sizing: border-box; line-height: 28px; overflow-wrap: anywhere; border-radius: var(--input-radius);
                             background: var(--input-background-fill); border: 1px solid var(--border-color-primary); }
-                          summary::after { content: '▾'; float: right; }
+                          summary { display: flex; align-items: center; gap: 8px; }
+                          summary::-webkit-details-marker { display: none; }
+                          summary::after { content: '▾'; margin-inline-start: auto; flex: none; }
                           .model-options { max-height: 280px; overflow-y: auto; margin-top: 4px;
                             border: 1px solid var(--border-color-primary); border-radius: var(--input-radius);
                             background: var(--input-background-fill); box-shadow: 0 4px 12px #0003; }

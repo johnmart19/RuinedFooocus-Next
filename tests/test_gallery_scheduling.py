@@ -168,8 +168,12 @@ class GallerySchedulingTests(unittest.TestCase):
         return browser, scope, originals
 
     def check_native_first_visit(self, *, indexed):
-        from ruinedfooocus.features.gallery import thumbnails
-        from ruinedfooocus.features.gallery import index_store
+        import importlib
+
+        # Patch the modules the Gallery imports now; another suite may have
+        # replaced them in sys.modules after the package attributes were bound.
+        thumbnails = importlib.import_module("ruinedfooocus.features.gallery.thumbnails")
+        index_store = importlib.import_module("ruinedfooocus.features.gallery.index_store")
 
         browser, native, originals = self.native_browser()
         if indexed:

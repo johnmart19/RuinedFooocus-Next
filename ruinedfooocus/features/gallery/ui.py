@@ -619,11 +619,22 @@ def create_image_gallery():
                     next_page = gr.Button(t("Next"), scale=0, min_width=80, interactive=pages > 1)
                 ib_range = gr.Markdown("", elem_id="browser-image-count")
             with gr.Column(scale=1, min_width=0, elem_id="browser-controls") as browser_controls:
+                # Find images first, then act on the selected one; details last.
+                with gr.Row(elem_id="browser-search", equal_height=True):
+                    search_input = gr.Textbox(
+                        label=t("Search Metadata"),
+                        show_label=False,
+                        placeholder=t("Search Metadata"),
+                        value="",
+                        scale=1,
+                        min_width=0,
+                        container=False,
+                    )
+                    search_btn = gr.Button(t("Search"), scale=0, min_width=96)
                 with gr.Row(elem_id="browser-actions"):
                     # min_width lets the row wrap on phones instead of squeezing labels.
                     update_btn = gr.Button(t("Refresh images"), min_width=120)
                     cancel_refresh_btn = gr.Button(t("Cancel refresh"), min_width=120)
-                    continue_btn = gr.Button(translate_ui("Continue in Create"), min_width=120)
                     gr.Button(
                         translate_ui("Slideshow"),
                         link="gradio_api/file=ruinedfooocus/ui/assets/slideshow.html",
@@ -631,38 +642,35 @@ def create_image_gallery():
                         min_width=120,
                         elem_id="browser-slideshow",
                     )
-                prompt_version = gr.Radio(
-                    [
-                        (translate_ui("Rendered prompt"), "Rendered prompt"),
-                        (translate_ui("Original prompt"), "Original prompt"),
-                    ],
-                    value="Rendered prompt",
-                    label=translate_ui("Prompt to reuse"),
-                )
-                with gr.Row(elem_classes=["rf-actions"]):
-                    prompt_btn = gr.Button(translate_ui("Use prompt"), interactive=False)
-                    setup_btn = gr.Button(translate_ui("Reuse full setup"), interactive=False)
-                with gr.Row(elem_classes=["rf-actions"]):
-                    open_editor_btn = gr.Button(t("Open in Editor"), interactive=False)
-                    edit_btn = gr.Button(translate_ui("Edit image"), interactive=False)
-                    inpaint_btn = gr.Button(translate_ui("Inpaint"), interactive=False)
-                with gr.Row(elem_classes=["rf-actions"]):
-                    upscale_btn = gr.Button(translate_ui("Upscale"), interactive=False)
-                    rembg_btn = gr.Button(translate_ui("Remove background"), interactive=False)
-                with gr.Row(elem_classes=["rf-actions"]):
-                    grid_btn = gr.Button(t("Start image grid"), interactive=False)
-                    composite_btn = gr.Button(t("Start image composition"), interactive=False)
+                with gr.Group(elem_classes=["rf-section"]):
+                    prompt_version = gr.Radio(
+                        [
+                            (translate_ui("Rendered prompt"), "Rendered prompt"),
+                            (translate_ui("Original prompt"), "Original prompt"),
+                        ],
+                        value="Rendered prompt",
+                        label=translate_ui("Prompt to reuse"),
+                    )
+                    with gr.Row(elem_classes=["rf-actions"]):
+                        prompt_btn = gr.Button(translate_ui("Use prompt"), interactive=False)
+                        setup_btn = gr.Button(translate_ui("Reuse full setup"), interactive=False)
+                        continue_btn = gr.Button(translate_ui("Continue in Create"), min_width=120)
+                with gr.Group(elem_classes=["rf-section"]):
+                    with gr.Row(elem_classes=["rf-actions"]):
+                        open_editor_btn = gr.Button(t("Open in Editor"), interactive=False)
+                        edit_btn = gr.Button(translate_ui("Edit image"), interactive=False)
+                        inpaint_btn = gr.Button(translate_ui("Inpaint"), interactive=False)
+                        upscale_btn = gr.Button(translate_ui("Upscale"), interactive=False)
+                        rembg_btn = gr.Button(translate_ui("Remove background"), interactive=False)
+                        grid_btn = gr.Button(t("Start image grid"), interactive=False)
+                        composite_btn = gr.Button(t("Start image composition"), interactive=False)
                 metadata_output = gr.Textbox(
                     label=t("Image Metadata"),
                     interactive=False,
-                    lines=8,
+                    lines=6,
                     max_lines=14,
                     elem_id="browser-metadata",
                 )
-                search_input = gr.Textbox(
-                    label=t("Search Metadata"), placeholder=t("Search term"), value=""
-                )
-                search_btn = gr.Button(t("Search"))
                 status_output = gr.Markdown()
                 metadata_json = gr.JSON(value={}, visible=False)
 

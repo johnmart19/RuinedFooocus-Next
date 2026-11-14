@@ -1,0 +1,20 @@
+{
+  "id": "ui-grouped-panels",
+  "subject": "Group side panels and unify control styles across every page",
+  "requires": ["complete-ui-translations", "release-ui-localization"],
+  "tests": [
+    "test_editor_workspace_events.py",
+    "test_chatbots.py",
+    "test_chat_presentation.py",
+    "test_gallery_scheduling.py",
+    "test_library_editing_ui.py",
+    "test_responsive_ui_layout.py",
+    "test_prompt_action_layout.py",
+    "test_compact_model_profile_controls.py",
+    "test_navigation_shell.py",
+    "test_localization.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
