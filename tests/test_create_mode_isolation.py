@@ -110,13 +110,24 @@ class CreateModeIsolationTests(unittest.TestCase):
 
     async def navigate(self, destination):
         function = self.event(getattr(self.shell, destination), "select")
+        self.navigation_serial = getattr(self, "navigation_serial", 0) + 1
         result = await self.shell.app.process_api(
             function,
-            [self.state[self.workspace.action._id].value],
+            [self.state[self.workspace.action._id].value, self.navigation_serial],
             state=self.state,
             request=self.request,
         )
-        self.paint(function, result)
+        payload = result["data"][0]
+        payload = payload.model_dump() if hasattr(payload, "model_dump") else payload
+        self.assertEqual(payload["version"], self.navigation_serial)
+        self.assertEqual(payload["button"], f"rf-nav-{destination}-button")
+        # The browser publishes the server's updates through the follow-up step.
+        publish = next(
+            candidate
+            for candidate in self.shell.app.fns.values()
+            if candidate.trigger_after == function._id
+        )
+        self.paint(publish, {"data": payload["updates"]})
         return result
 
     def paint(self, function, result):
@@ -152,11 +163,11 @@ class CreateModeIsolationTests(unittest.TestCase):
     def test_native_create_editor_roundtrip_restores_label_without_clearing_draft(self):
         async def journey():
             await self.navigate("editor")
-            self.assertEqual(self.browser_values[self.run_button._id], "Run image action")
+            self.assertEqual(self.browser_values[self.run_button._id], "Edit image")
             await self.navigate("create")
             self.assertEqual(self.browser_values[self.run_button._id], "Generate")
             await self.navigate("editor")
-            self.assertEqual(self.browser_values[self.run_button._id], "Run image action")
+            self.assertEqual(self.browser_values[self.run_button._id], "Edit image")
 
         asyncio.run(journey())
         self.assert_editor_draft()
@@ -201,7 +212,7 @@ class CreateModeIsolationTests(unittest.TestCase):
             task_id = self.state[self.task._id]
             self.assertIsNotNone(task_id)
             await self.navigate("editor")
-            self.assertEqual(self.browser_values[self.run_button._id], "Run image action")
+            self.assertEqual(self.browser_values[self.run_button._id], "Edit image")
             self.assertFalse(self.state[self.run_button._id].interactive)
             await self.navigate("create")
             self.assertEqual(self.browser_values[self.run_button._id], "Generate")
@@ -228,7 +239,7 @@ class CreateModeIsolationTests(unittest.TestCase):
         )
         self.assertIn((editor.workspace.action._id, "change"), callback.targets)
         self.assertIn((editor.workspace.destination._id, "change"), callback.targets)
-        for destination, expected in (("create", "Generate"), ("editor", "Run image action")):
+        for destination, expected in (("create", "Generate"), ("editor", "Edit image")):
             editor.call(
                 session,
                 callback,

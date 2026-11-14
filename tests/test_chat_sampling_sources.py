@@ -13,6 +13,7 @@ from unittest.mock import Mock, patch
 
 import gguf
 
+from ruinedfooocus.features.chat.model_preparation import runtime_selection_key
 from ruinedfooocus.features.chat import sampling_sources as sources
 from ruinedfooocus.features.chat.model_profiles import ProfiledChatClient
 from ruinedfooocus.features.chat.ui_sampling import (
@@ -283,13 +284,14 @@ class ChatSamplingSourceTests(unittest.TestCase):
         path = self.gguf()
         evidence = Mock(return_value=[["Selected", "candidate B"]])
         callback = function_from(
-            "ruinedfooocus/features/chat/ui.py",
+            "ruinedfooocus/features/chat/ui_model_diagnostics.py",
             "refresh_sampling_recommendations",
             dict(
                 Path=Path,
                 selected_evidence=evidence,
                 path_manager=SimpleNamespace(DOWNLOADABLE_FILES={}),
-                model_roots=lambda: {},
+                catalogue_local_file=lambda *args: None,
+                _roots=lambda: {},
             ),
         )
         with patch.object(sources, "prepare_sampling_source", return_value={}) as prepare:
@@ -311,7 +313,7 @@ class ChatSamplingSourceTests(unittest.TestCase):
             effective={"temperature": 0},
             origins={"temperature": "saved_overrides"},
         )
-        prepared = SimpleNamespace(model=path, present=True)
+        prepared = SimpleNamespace(model=path, present=True, settings={})
         controls = {
             name: name
             for name in (
@@ -322,11 +324,15 @@ class ChatSamplingSourceTests(unittest.TestCase):
                 "llama_model_status",
                 "llama_msg",
                 "llama_use",
+                "cancel_load",
+                "llama_download",
+                "preparation_status",
             )
         }
         scope = dict(
             Path=Path,
             settings=SimpleNamespace(default_settings={}),
+            runtime_selection_key=runtime_selection_key,
             path_manager=object(),
             capture_model=lambda *a, **kw: prepared,
             local_models=lambda: {},
@@ -336,10 +342,30 @@ class ChatSamplingSourceTests(unittest.TestCase):
                 add_task=lambda data: 1,
                 task_result=lambda task: ("results", {"ready": True, "sampling_state": state}),
             ),
-            gr=SimpleNamespace(update=lambda **kw: kw),
+            gr=SimpleNamespace(update=lambda **kw: kw, Request=object),
             **controls,
         )
-        callback = function_from("ruinedfooocus/features/chat/ui.py", "use_model", scope)
+        import ast
+        import importlib
+
+        # Real helpers imported by the Chat UI; the fixture replaces only the
+        # worker, files and widgets. Modules needing ComfyUI stay out of CPU checks.
+        source = "ruinedfooocus/features/chat/ui.py"
+        helpers = {}
+        for node in ast.parse(Path(source).read_text(encoding="utf-8")).body:
+            if isinstance(node, ast.ImportFrom) and node.module and not node.level:
+                try:
+                    module = importlib.import_module(node.module)
+                except ImportError:
+                    continue
+                for alias in node.names:
+                    if hasattr(module, alias.name):
+                        helpers[alias.asname or alias.name] = getattr(module, alias.name)
+        # Load/Download button projection has its own tests.
+        scope = {**helpers, "action_updates": lambda *args, **kwargs: {}, **scope}
+        for helper in ("error_controls", "settle_superseded_load"):
+            function_from(source, helper, scope)
+        callback = function_from(source, "use_model", scope)
         session = ChatModelSession()
         session.active = "previous-model"
         with patch.object(
@@ -349,8 +375,10 @@ class ChatSamplingSourceTests(unittest.TestCase):
         ):
             updates = list(callback(str(path), "Model", "Local models", "Load", session))
         self.assertEqual(session.active, str(path))
-        self.assertIn("Your overrides", updates[-1]["sampling_status"])
-        self.assertIn("| temperature | 0 | Saved override |", updates[-1]["sampling_status"])
+        # The last update only refreshes Load/Download buttons.
+        status = next(u["sampling_status"] for u in reversed(updates) if "sampling_status" in u)
+        self.assertIn("Your overrides", status)
+        self.assertIn("| temperature | 0 | Saved override |", status)
 
     def test_malformed_cached_repository_fields_and_unknown_status_render_safely(self):
         path = self.gguf()

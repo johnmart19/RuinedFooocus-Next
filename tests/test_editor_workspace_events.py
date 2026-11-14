@@ -596,6 +596,23 @@ process.stdout.write(JSON.stringify({output,memory}));
         browser.load_images.assert_not_called()
         self.run_request.assert_not_called()
 
+    def test_latest_in_empty_editor_opens_newest_gallery_image(self):
+        session = self.session("empty-latest")
+        browser, _, _, _ = self.mount_picker(session)
+        browser.load_images.reset_mock()
+        self.assertIsNone(self.value(session, self.workspace.context))
+        self.call(
+            session,
+            self.event(self.workspace.open_latest),
+            {self.workspace.latest_generated: None},
+        )
+        browser.load_images.assert_called_once()
+        self.assertEqual(browser.load_images.call_args.args[0], 1)
+        context = self.value(session, self.workspace.context)
+        self.assertIsNotNone(context)
+        self.assertEqual(context["revision"], 1)
+        self.run_request.assert_not_called()
+
     def test_view_projections_track_no_progress_outputs_but_source_import_keeps_its_notice(self):
         adjustment = self.event(self.workspace.action, "change", "adjustment_action")
         quick = self.event(self.workspace.quick_tool, "input", "select_quick_tool")

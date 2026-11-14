@@ -2014,6 +2014,8 @@
   "Open selected image": "gallery.open_selected_image",
   "Close picker": "gallery.close_picker",
   "Face landmarks": "gallery.face_landmarks",
+  "Detect objects": "gallery.detect_objects",
+  "Segment by points": "gallery.segment_by_points",
   "Attach files": "chat.attach_files",
   "Run uses the current Create sampling, upscale, component and LoRA settings. Uploaded references are required again. Any working image is prepared automatically; the original is kept.": "gallery.run_uses_the_current_create_sampling_upscale_component_and_lora_settings_uploaded_references_are_required_again_any_working_image_is_prepared_automatically_the_original_is_kept",
   "Any working image is prepared automatically; the original is kept.": "gallery.any_working_image_is_prepared_automatically_the_original_is_kept",

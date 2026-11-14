@@ -246,7 +246,7 @@ class ImageChatScopeTests(unittest.TestCase):
                     for admission, value in ((source_record, path), (source_path, record)):
                         with self.assertRaisesRegex(ValueError, "single still image"):
                             admission(value)
-                    thumbnail = write_preview(original, root / ("artwork" + suffix))
+                    thumbnail = write_preview(original, root / f"artwork-{format}{suffix}")
                     with Image.open(thumbnail) as image:
                         self.assertEqual(getattr(image, "n_frames", 1), 1)
                     self.assertFalse(valid_preview(path))

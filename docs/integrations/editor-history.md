@@ -38,6 +38,8 @@ presentation assigns an output role from saved producer semantics. Selected
 batch index, original path and file signature identify the final image; technical
 maps, masks, helpers and previews do not replace this shortcut. All files remain
 in the result/Gallery surfaces, and maps retain their explicit guide actions.
+Without such a record, an Editor with no open image takes the first entry of the
+Gallery index (newest dated output); an open image is kept.
 A thumbnail, matching dimensions or filesystem sort order never selects an
 original. Precision originals and alpha remain unchanged.
 

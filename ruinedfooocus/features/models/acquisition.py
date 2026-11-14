@@ -32,6 +32,7 @@ CATEGORIES = {
     "upscalers": "Upscalers",
     "latent_upscalers": "Latent upscalers",
     "geometry_estimation": "Depth",
+    "detection": "Detection",
     "background_removal": "Background removal",
     "faceswap": "Face restoration",
 }

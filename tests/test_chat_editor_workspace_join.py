@@ -130,7 +130,7 @@ class ChatEditorWorkspaceJoinTests(unittest.TestCase):
         )
         context = state[self.editor.workspace.context._id]
         self.assertEqual(state[self.editor.destinations._id].selected, "editor")
-        self.assertEqual(state[self.editor.workspace.destination._id], "editor")
+        self.assertEqual(state[self.editor.workspace.destination._id].value, "editor")
         self.assertEqual(context, self.editor.workspace.public_context(completed))
         image_data = self.editor.value(session, self.editor.controls["input_image"])
         with Image.open(image_data["path"]) as image:

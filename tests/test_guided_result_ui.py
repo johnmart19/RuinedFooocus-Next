@@ -301,8 +301,10 @@ class GuidedResultUiTests(unittest.TestCase):
         expected = {
             *self.helper.controls,
             self.workspace.context,
+            self.workspace.source_input,
             self.workspace.notice,
             self.workspace.mask,
+            *self.workspace.reference_outputs,
             self.controls["image_source"],
             self.controls["input_image"],
             *(
@@ -311,7 +313,7 @@ class GuidedResultUiTests(unittest.TestCase):
             ),
         }
         self.assertEqual(set(self.projection.outputs), expected)
-        self.assertEqual(len(self.projection.outputs), 14)
+        self.assertEqual(len(self.projection.outputs), len(expected))
         projection = next(
             event
             for event in self.case.app.config["dependencies"]
@@ -403,7 +405,7 @@ class GuidedResultUiTests(unittest.TestCase):
             for name in ("prompt", "negative", "base_model_name", "custom_width", "custom_height")
         }
         projected = self.case.call(session, self.projection)
-        self.assertEqual(len(projected), 14)
+        self.assertEqual(len(projected), len(self.projection.outputs))
         self.assertFalse(projected[self.helper.button]["visible"])
         self.assertFalse(projected[self.helper.status]["visible"])
         self.assertFalse(projected[self.helper.objects]["visible"])

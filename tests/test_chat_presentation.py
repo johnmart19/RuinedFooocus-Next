@@ -319,7 +319,13 @@ for (const cancel of [null,...data.cancels]) {
                 else:
                     self.assertIn("'value': 'Loaded'", wire)
                     self.assertIn("fixture-build", wire)
-                    self.assertIn("Спостережене розміщення: mixed", wire)
+                    from ruinedfooocus.core.translation_manager import localize
+
+                    # The request locale reaches server-built text, translated or not.
+                    self.assertIn(
+                        localize("Observed placement: {placement}", "uk", placement="mixed"),
+                        wire,
+                    )
                     self.assertNotIn("{placement}", wire)
                     self.assertNotIn("__i18n__", wire)
                     self.assertEqual(session.initialized_runtime, snapshot)

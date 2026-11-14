@@ -153,8 +153,11 @@ class GuidedResultActions:
                 [
                     *self.controls,
                     workspace.context,
+                    workspace.source_input,
                     workspace.notice,
                     workspace.mask,
+                    # Restoring the source clears references that belonged to the old image.
+                    *workspace.reference_outputs,
                     controls["image_source"],
                     controls["input_image"],
                     *(

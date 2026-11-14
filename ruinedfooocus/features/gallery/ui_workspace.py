@@ -118,6 +118,9 @@ class EditorWorkspace:
                     (t("Face landmarks"), "Face landmarks"),
                     (t("Pose"), "Whole-body pose"),
                     (t("Depth map"), "Depth map"),
+                    # Multi-object selection; results become masks for the next edit.
+                    (t("Detect objects"), "Detect objects"),
+                    (t("Segment by points"), "Segment by points"),
                 ],
                 value=None,
                 elem_classes=["rf-chips"],
@@ -586,21 +589,32 @@ class EditorWorkspace:
             api_visibility="private",
         )
 
-        def open_latest(record, task_id, version, request: gr.Request = None):
+        def open_latest(record, current, task_id, version, request: gr.Request = None):
             from ruinedfooocus.features.image_processing.native_image_outputs import (
                 latest_generated_result,
             )
 
             def adopt():
-                if not record or latest_generated_result([record]) is None:
-                    return {
-                        self.notice: t(
-                            "No completed generated image is available yet. Choose an image from Gallery."
-                        )
-                    }
+                chosen, metadata = record, (record or {}).get("metadata")
+                if not chosen or latest_generated_result([chosen]) is None:
+                    # Nothing finished in this session: an empty Editor opens the
+                    # newest Gallery image; an open image is never replaced.
+                    chosen = None if current else self._newest_gallery_record()
+                    if chosen is None:
+                        return {
+                            self.notice: t(
+                                "No completed generated image is available yet. Choose an image from Gallery."
+                            )
+                        }
+                    from ruinedfooocus.features.gallery.actions import source_path
+                    from ruinedfooocus.features.image_processing.native_image_formats import (
+                        image_metadata,
+                    )
+
+                    metadata = image_metadata(source_path(chosen)).get("parameters", {})
                 snapshot = open_editor(
-                    record,
-                    record.get("metadata"),
+                    chosen,
+                    metadata,
                     owner=ui_request_owner(request),
                     store=self.selected_store(),
                 )
@@ -612,7 +626,7 @@ class EditorWorkspace:
 
         self.open_latest.click(
             open_latest,
-            inputs=[self.latest_generated, run_controls["task"], self.version],
+            inputs=[self.latest_generated, self.context, run_controls["task"], self.version],
             outputs=self.source_outputs,
             js=self.version_js,
             show_progress="minimal",
@@ -1098,8 +1112,20 @@ class EditorWorkspace:
         for button, result in self.chat_open_events:
             self._bind_chat_open(button, result)
 
+    def _newest_gallery_record(self):
+        """First record of the Gallery's newest-first index, or None without one."""
+        browser = getattr(self, "_picker_browser", None)
+        if browser is None:
+            return None
+        try:
+            records = browser.load_images(1, include_paths=True, include_page=True, page_size=1)[2]
+        except (OSError, ValueError):
+            return None
+        return dict(records[0]) if records else None
+
     def bind_picker(self, browser):
         """A bounded in-Editor view over the existing index, with its own browse fence."""
+        self._picker_browser = browser
         import asyncio
         from ruinedfooocus.app.preparation_admission import preparation_admission
         from ruinedfooocus.features.gallery.actions import select_source, source_path

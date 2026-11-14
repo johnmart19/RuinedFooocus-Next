@@ -59,7 +59,11 @@ def write_preview(data, cache_path, caption=""):
     cache_path = Path(cache_path)
     with Image.open(io.BytesIO(data)) as source:
         if getattr(source, "n_frames", 1) != 1:
-            raise ValueError("Publisher artwork must be a static image")
+            # An animation fills an empty card with its first frame but never
+            # replaces artwork that is already published.
+            if valid_preview(cache_path.with_suffix(".jpeg")):
+                raise ValueError("Publisher artwork must be a static image")
+            source.seek(0)
         if source.width * source.height > 16 * 1024 * 1024:
             raise ValueError("Publisher artwork dimensions exceed size limit")
         image = ImageOps.exif_transpose(source).convert("RGB")

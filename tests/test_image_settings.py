@@ -262,6 +262,8 @@ class ImageOutputTests(unittest.TestCase):
         scope = dict(
             asset_path=asset_path,
             resource_path=resource_path,
+            guided_edit=False,
+            guided_request=None,
             Image=Image,
             np=np,
             torch=torch,
@@ -342,6 +344,7 @@ class ImageOutputTests(unittest.TestCase):
             "resource_path": resource_path,
             "np": np,
             "img2img_mode": True,
+            "guided_edit": False,
             "sd4x_model": False,
             "layered_model": False,
             "qwen_references": None,

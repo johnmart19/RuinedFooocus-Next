@@ -1,0 +1,23 @@
+{
+  "id": "release-ui-review-fixes",
+  "subject": "Fix release review defects in Editor, Gallery, Chat and model artwork",
+  "requires": ["editor-one-step-guide"],
+  "tests": [
+    "test_editor_workspace_events.py",
+    "test_guided_result_ui.py",
+    "test_create_mode_isolation.py",
+    "test_chat_editor_workspace_join.py",
+    "test_chat_presentation.py",
+    "test_chat_sampling_sources.py",
+    "test_image_settings.py",
+    "test_image_chat_runtime_scope.py",
+    "test_hf_preview_reliability.py",
+    "test_catalogue_previews.py",
+    "test_model_acquisition.py",
+    "test_localization.py",
+    "test_navigation_shell.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
