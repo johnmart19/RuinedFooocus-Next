@@ -8,6 +8,7 @@ the same text. Other exceptions are unexpected and keep Gradio's generic message
 
 import functools
 import inspect
+from contextlib import aclosing
 
 import gradio as gr
 
@@ -27,8 +28,9 @@ def as_user_errors(fn):
         @functools.wraps(fn)
         async def wrapper(*args, **kwargs):
             try:
-                async for item in fn(*args, **kwargs):
-                    yield item
+                async with aclosing(fn(*args, **kwargs)) as values:
+                    async for item in values:
+                        yield item
             except USER_ERRORS as error:
                 raise _user_error(error) from error
 

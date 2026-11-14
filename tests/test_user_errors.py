@@ -89,6 +89,39 @@ class UserErrorTests(unittest.TestCase):
             )
         self.assertEqual(seen["request"].session_hash, "fixture")
 
+    def test_async_generator_close_waits_for_inner_resource_cleanup(self):
+        async def check():
+            cleanup_started = asyncio.Event()
+            release_cleanup = asyncio.Event()
+            cleanup_finished = asyncio.Event()
+
+            async def stream(text, request: gr.Request = None):
+                try:
+                    yield text
+                finally:
+                    cleanup_started.set()
+                    await release_cleanup.wait()
+                    cleanup_finished.set()
+
+            wrapped = as_user_errors(stream)
+            self.assertTrue(inspect.isasyncgenfunction(wrapped))
+            self.assertEqual(inspect.signature(wrapped), inspect.signature(stream))
+            values = wrapped("owned resource")
+            self.assertEqual(await anext(values), "owned resource")
+            closing = asyncio.create_task(values.aclose())
+            try:
+                await asyncio.wait_for(cleanup_started.wait(), timeout=2)
+                self.assertFalse(closing.done(), "aclose returned before resource cleanup")
+                self.assertFalse(cleanup_finished.is_set())
+                release_cleanup.set()
+                await asyncio.wait_for(closing, timeout=2)
+                self.assertTrue(cleanup_finished.is_set())
+            finally:
+                release_cleanup.set()
+                await asyncio.gather(closing, return_exceptions=True)
+
+        asyncio.run(check())
+
 
 if __name__ == "__main__":
     unittest.main()
