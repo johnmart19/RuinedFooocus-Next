@@ -1149,6 +1149,10 @@ def capture_request(data, context, operation, *, owner=None, store=None):
     count = data.get("image_number", data.get("n", 1))
     if type(count) is not int or count != 1:
         raise ValueError("An editor operation returns exactly one image.")
+    if operation == "restore-seedvr2":
+        from ruinedfooocus.features.image_processing.native_seedvr2 import capture_seed
+
+        data = capture_seed(data)
     selected = store or default_store()
     plan = data.get("_effective_image_plan")
     if plan is not None:

@@ -3,6 +3,7 @@
 from contextlib import ExitStack
 import math
 from pathlib import Path
+import secrets
 
 from ruinedfooocus.features.models.model_identity import file_signature
 
@@ -122,13 +123,24 @@ def geometry(size, scale):
     return (width, height), (width, height), padded
 
 
+def capture_seed(data):
+    """Resolve only Random's sentinel before capture, without touching global RNGs."""
+    seed = data.get("seed", 0)
+    if type(seed) is not int or not -1 <= seed <= 0xFFFFFFFFFFFFFFFF:
+        raise ValueError("SeedVR2 seed must be an unsigned 64-bit integer or Random (-1).")
+    if seed == -1:
+        # Match the existing owned image request policy, not the worker's late RNG.
+        seed = secrets.randbelow(2**32)
+    return dict(data, seed=seed, seed_random=False)
+
+
 def capture_assets(data, manager):
     from PIL import Image, ImageOps
     from ruinedfooocus.features.generation.image_preparation import selected_image_artifact
 
     from ruinedfooocus.features.image_processing.utility_defaults import default_components
 
-    result = default_components(manager, KIND, data)
+    result = default_components(manager, KIND, capture_seed(data))
     image = result.get("input_image")
     if not isinstance(image, Image.Image) or image.width * image.height > MAX_PIXELS:
         raise ValueError("Add one still image of at most 16 megapixels for restoration.")
@@ -139,14 +151,10 @@ def capture_assets(data, manager):
     color = result.get("seedvr2_color", DEFAULTS["seedvr2_color"])
     if color not in COLORS:
         raise ValueError("Choose a supported SeedVR2 color correction method.")
-    seed = result.get("seed", 0)
-    if type(seed) is not int or not 0 <= seed <= 0xFFFFFFFFFFFFFFFF:
-        raise ValueError("SeedVR2 seed must be an unsigned 64-bit integer.")
     result.update(
         input_image=image,
         seedvr2_scale=float(result.get("seedvr2_scale", DEFAULTS["seedvr2_scale"])),
         seedvr2_color=color,
-        seed=seed,
     )
     artifacts = []
     for key, role, codec in (
@@ -364,7 +372,13 @@ def process(owner, data, manager, check_cancelled):
             "alpha": "native resized source alpha; remove only artificial even/grid padding",
             "scale": data["seedvr2_scale"],
             "color": data["seedvr2_color"],
-            "sampling": {"steps": 1, "cfg": 1, "sampler": "euler", "scheduler": "simple"},
+            "sampling": {
+                "seed": data["seed"],
+                "steps": 1,
+                "cfg": 1,
+                "sampler": "euler",
+                "scheduler": "simple",
+            },
         }
         array = restored[0].detach().cpu().float().numpy().copy()
         if advanced_output(data):

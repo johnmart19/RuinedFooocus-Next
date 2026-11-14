@@ -137,6 +137,86 @@ class NativeSeedVR2Tests(unittest.TestCase):
             prepare_image_assets(data, check_cancelled=Mock(), service=service)
         service.submit.assert_not_called()
 
+    def test_editor_random_seed_freezes_once_before_assets_and_native_sampling(self):
+        import gradio as gr
+        import ruinedfooocus.features.image_editing as editing
+        from ruinedfooocus.app.resource_lifecycle import ui_request_owner
+        from ruinedfooocus.features.gallery.editor_session import (
+            EditorSessionStore,
+            KEY as EDITOR_KEY,
+        )
+        from ruinedfooocus.features.gallery.ui_workspace import EditorWorkspace
+
+        request = gr.Request(session_hash="seedvr2-random-owner")
+        owner = ui_request_owner(request)
+        store = EditorSessionStore(self.root / "history")
+        source = self.root / "source.png"
+        self.image.save(source)
+        snapshot = store.start(source, owner=owner)
+        with gr.Blocks(analytics_enabled=False):
+            workspace = EditorWorkspace(store=store)
+        controls = dict(
+            _editor_context=workspace.public_context(snapshot),
+            _editor_action=native.KIND,
+            prompt="",
+            negative="",
+            base_model_name="unused",
+            image_engine="native",
+            seed=-1,
+            seed_random=True,
+            seedvr2_model=str(self.model),
+            seedvr2_vae=str(self.codec),
+            seedvr2_scale=1,
+            seedvr2_color="none",
+        )
+        tools = NS(
+            controlnet=NS(cn_options={"Restore still image (SeedVR2)": {"type": native.KIND}}),
+            NEWCN="Custom...",
+        )
+        expected = 0xABCDEF01
+        before_python, before_torch = random.getstate(), torch.random.get_rng_state().clone()
+        with (
+            patch.dict(
+                sys.modules,
+                {
+                    "ruinedfooocus.features.gallery.ui": NS(REFERENCE_RESETS={}),
+                    "ruinedfooocus.features.image_editing.ui": tools,
+                },
+            ),
+            patch.object(editing, "ui", tools, create=True),
+            patch.object(native.secrets, "randbelow", return_value=expected) as choose,
+        ):
+            data = workspace.build_request(controls, request=request)
+            ticket = data[EDITOR_KEY]
+            self.assertEqual(ticket.parameters["seed"], expected)
+            captured = capture_image_assets(data, self.manager, {"type": native.KIND}, offline=True)
+            self.assertIs(captured[EDITOR_KEY], ticket)
+            self.assertEqual((captured["seed"], captured["seed_random"]), (expected, False))
+            choose.assert_called_once_with(2**32)
+        self.assertEqual((controls["seed"], controls["seed_random"]), (-1, True))
+        self.assertEqual(random.getstate(), before_python)
+        self.assertTrue(torch.equal(torch.random.get_rng_state(), before_torch))
+        self.install_nodes()
+        native.process(NS(), captured, self.manager, Mock())
+        self.assertEqual(self.calls[1][0:2], ("sample", expected))
+        self.assertEqual(captured["native_seedvr2_source"]["sampling"]["seed"], expected)
+        self.assertEqual(ticket.parameters["seed"], expected)
+
+    def test_fixed_seed_capture_is_exact_and_invalid_manual_values_never_randomize(self):
+        before = random.getstate()
+        with patch.object(
+            native.secrets, "randbelow", side_effect=AssertionError("unexpected RNG")
+        ):
+            for seed in (0, 17, 2**64 - 1):
+                with self.subTest(seed=seed):
+                    self.assertEqual(
+                        native.capture_seed(dict(seed=seed, seed_random=True))["seed"], seed
+                    )
+            for seed in (-2, -(2**63), True, False, None, -1.0, 0.5, "-1", 2**64):
+                with self.subTest(invalid=seed), self.assertRaises(ValueError):
+                    native.capture_seed(dict(seed=seed, seed_random=True))
+        self.assertEqual(random.getstate(), before)
+
     def test_capture_rejects_wrong_roles_escape_nonfinite_and_oversized_output(self):
         outside = write_header(self.root / "outside.safetensors", SHAPES["SeedVR2"])
         for values in (
@@ -148,7 +228,7 @@ class NativeSeedVR2Tests(unittest.TestCase):
             dict(seedvr2_scale=True),
             dict(seedvr2_scale=4.01),
             dict(seedvr2_color="unknown"),
-            dict(seed=-1),
+            dict(seed=-2),
             dict(seed=True),
             dict(seed=2**64),
             dict(inpaint_toggle=True),
@@ -524,8 +604,13 @@ class NativeSeedVR2Tests(unittest.TestCase):
                 generate_temp_filename=lambda **_: str(self.root / "render.png"),
             ),
         )
-        data = self.request(task_id=1, task_type="tool_call", silent=True, index=(0, 1))
-        result = render(data)
+        with patch.object(native.secrets, "randbelow", return_value=291115) as choose:
+            data = self.request(
+                seed=-1, task_id=1, task_type="tool_call", silent=True, index=(0, 1)
+            )
+            with patch.object(random, "randint", side_effect=AssertionError("late seed draw")):
+                result = render(data)
+            choose.assert_called_once_with(2**32)
         self.assertEqual(result, [str(self.root / "render.png")])
         with Image.open(result[0]) as image:
             self.assertEqual((image.mode, image.size), ("RGBA", (11, 7)))
@@ -533,6 +618,8 @@ class NativeSeedVR2Tests(unittest.TestCase):
         self.assertEqual((metadata["width"], metadata["height"]), (11, 7))
         self.assertEqual(metadata["controlnet"], {"type": native.KIND})
         self.assertEqual(metadata["seedvr2_model"], self.model.name)
+        self.assertEqual(metadata["seed"], data["seed"])
+        self.assertEqual(metadata["seed"], 291115)
         self.assertNotIn(str(self.root), json.dumps(metadata))
         self.assertNotIn("base_model_name", metadata)
         forbidden.assert_not_called()

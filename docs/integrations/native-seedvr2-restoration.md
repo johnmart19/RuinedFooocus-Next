@@ -34,6 +34,13 @@ source and padded target are limited to 16,777,216 pixels. Color correction is
 native postprocessor. The RGBA source is an oriented, immutable 8-bit working
 copy; precision image export retains the native floating result after restoration.
 
+Random seed (`-1`) is resolved once to a request-local 32-bit seed before the owned
+Editor ticket freezes, using the existing isolated image-request randomness policy.
+Asset capture and sampling reuse that seed, which is recorded with the native
+execution metadata. Fixed unsigned 64-bit seeds are preserved; other negative,
+fractional, boolean and overflowing values remain invalid. The UI checkbox and
+saved profile are not changed, and capture does not reseed global RNGs.
+
 API JSON and multipart image edits accept:
 
 ```json
