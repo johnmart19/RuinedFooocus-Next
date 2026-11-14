@@ -892,6 +892,11 @@ def launch_app(args):
             )
 
     normalize_hidden_progress(main_tabs)
+    # Show the app's own ValueError/PermissionError/FileNotFoundError text in the
+    # browser instead of Gradio's generic "Error".
+    from ruinedfooocus.ui import user_errors
+
+    user_errors.apply(main_tabs, shared.gradio_root)
     shared.server_app, shared.local_url, shared.share_url = main_tabs.launch(
         inbrowser=inbrowser,
         server_name=args.listen,
@@ -1370,7 +1375,10 @@ with shared.gradio_root as block:
                 api_visibility="undocumented", inputs=[prompt, spellcheck], outputs=prompt
             )
             def select_spellcheck(text, selection):
-                last_idx = text.rindex("__")
+                # The prompt may have changed since the suggestions were shown.
+                last_idx = (text or "").rfind("__")
+                if last_idx < 0 or not selection:
+                    return {prompt: gr.update()}
                 newtext = f"{text[:last_idx]}__{selection}__"
                 return {prompt: gr.update(value=newtext)}
 
@@ -1744,7 +1752,8 @@ with shared.gradio_root as block:
                         outputs=[aspect_ratios_selection, resolution_auto],
                     )
                     def ratio_save_click(ratio_name, custom_width, custom_height, family):
-                        ratio_name = ratio_name.strip()
+                        # An untouched name field arrives as None.
+                        ratio_name = (ratio_name or "").strip()
                         if ratio_name != "":
                             try:
                                 new_ratio_name = resolution_settings.save_custom(

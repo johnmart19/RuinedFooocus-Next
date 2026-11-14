@@ -81,14 +81,12 @@ def _check(app):
     return problems
 
 
-def main():
-    import argparse
+def build_app(settings=None):
+    """Run normal CPU startup up to Blocks.launch and return (apps, warnings).
 
-    parser = argparse.ArgumentParser(
-        description="Build the UI on CPU without serving it and check every event's wiring."
-    )
-    parser.add_argument("--settings", help="settings profile to build with (default profile)")
-    options = parser.parse_args()
+    No port is opened. Callers run in their own process: startup changes the
+    working directory, sys.argv and global application state.
+    """
     import gradio as gr
 
     built = []
@@ -107,7 +105,7 @@ def main():
         "--offline",
         "--skip-dependency-install",
         "--nobrowser",
-        *(["--settings", options.settings] if options.settings else []),
+        *(["--settings", settings] if settings else []),
     ]
     with warnings.catch_warnings(record=True) as caught:
         warnings.simplefilter("always")
@@ -120,15 +118,10 @@ def main():
         finally:
             gr.Blocks.launch = original
     if not built:
-        print("FAILED: the UI never reached launch")
-        return 1
+        raise RuntimeError("The UI never reached launch.")
     from ruinedfooocus.app import state as shared
 
-    apps = {id(a): a for a in [*built, getattr(shared, "gradio_root", None)] if a}
-    problems, events = [], 0
-    for app in apps.values():
-        events += len(app.fns)
-        problems += _check(app)
+    apps = list({id(a): a for a in [*built, getattr(shared, "gradio_root", None)] if a}.values())
     notes = sorted(
         {
             f"{Path(w.filename).name}:{w.lineno}: {str(w.message)[:200]}"
@@ -136,6 +129,26 @@ def main():
             if "gradio" in str(w.filename).lower() or "ruinedfooocus" in str(w.filename).lower()
         }
     )
+    return apps, notes
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Build the UI on CPU without serving it and check every event's wiring."
+    )
+    parser.add_argument("--settings", help="settings profile to build with (default profile)")
+    options = parser.parse_args()
+    try:
+        apps, notes = build_app(options.settings)
+    except RuntimeError as error:
+        print("FAILED:", error)
+        return 1
+    problems, events = [], 0
+    for app in apps:
+        events += len(app.fns)
+        problems += _check(app)
     for line in problems:
         print("PROBLEM", line)
     for line in notes:

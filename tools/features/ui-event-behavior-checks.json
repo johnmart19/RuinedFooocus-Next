@@ -1,0 +1,17 @@
+{
+  "id": "ui-event-behavior-checks",
+  "subject": "Fire every reachable UI event on the real app and show app error messages",
+  "requires": [
+    "suite-order-independence"
+  ],
+  "tests": [
+    "test_user_errors.py",
+    "test_ui_remaining_actions.py",
+    "test_tool_contracts.py",
+    "test_main_image_upload.py",
+    "test_preset_components.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

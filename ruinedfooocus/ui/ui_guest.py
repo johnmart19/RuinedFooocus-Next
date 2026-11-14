@@ -218,6 +218,9 @@ def launch_guest(args):
         )
     app.queue(max_size=8)
     normalize_hidden_progress(app)
+    from ruinedfooocus.ui import user_errors
+
+    user_errors.apply(app)
     server, _, _ = app.launch(
         server_name=args.listen,
         server_port=args.port,
