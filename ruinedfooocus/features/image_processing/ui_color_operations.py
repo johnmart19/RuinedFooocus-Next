@@ -76,6 +76,16 @@ def bind_output_controls():
     )
 
     def reflect_hdr_output(kind, precision, color_space):
+        # A multi-control update can notify format.change before the browser
+        # has received its matching depth/space values. This is display-only;
+        # leave the explicit HDR choice intact until the complete tuple arrives.
+        if not all(isinstance(value, str) for value in (kind, precision, color_space)):
+            return gr.skip()
+        if kind not in OPTIONS:
+            return gr.skip()
+        depths, spaces = OPTIONS[kind]
+        if precision not in depths or color_space not in spaces:
+            return gr.skip()
         return gr.update(
             value=precision
             if kind == "exr" and color_space == "HDR" and precision in OPTIONS["exr"][0]
@@ -87,6 +97,8 @@ def bind_output_controls():
         fn=reflect_hdr_output,
         inputs=[output_format, depth, space],
         outputs=mirror,
+        preprocess=False,
+        trigger_mode="always_last",
         queue=False,
         show_progress="hidden",
         api_visibility="undocumented",

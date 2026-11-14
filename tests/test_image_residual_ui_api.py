@@ -178,6 +178,96 @@ class ResidualImageToolsTests(unittest.TestCase):
         )
         self.assertFalse(self.call("face_output_context", ["overlay", "custom"])[0]["visible"])
 
+    def test_hdr_adoption_and_adjustment_switches_keep_format_inputs_preprocessable(self):
+        from ruinedfooocus.features.gallery.ui_workspace import EditorWorkspace
+        from ruinedfooocus.features.image_processing import native_image_formats as formats
+        from test_native_image_formats import native_codecs
+
+        self.mount(
+            selected_kind="Image-color",
+            saved={"color_operation": "sdr-to-hdr"},
+            choice="Adjust image",
+        )
+        fields = (*formats.FORMAT_FIELDS, ui_color_operations.HDR_MIRROR)
+        current = {key: self.controls[key].value for key in fields}
+
+        def capture_formats(*values):
+            return formats.format_settings(dict(zip(fields, values)))
+
+        with self.demo:
+            gr.Button().click(
+                capture_formats,
+                inputs=[self.controls[key] for key in fields],
+                outputs=gr.JSON(),
+            )
+            store = EditorSessionStore(self.root / "editor")
+            workspace = EditorWorkspace(store=store)
+        capture = self.event("capture_formats")
+
+        def apply(name, values):
+            updates = self.call(name, values)
+            event = self.demo.fns[self.event(name)]
+            reflected = self.demo.fns[self.event("reflect_hdr_output")]
+            queued = []
+            for control, update in zip(event.outputs, updates):
+                key = next((key for key in fields if self.controls[key] is control), None)
+                if key is not None and isinstance(update, dict) and "value" in update:
+                    current[key] = update["value"]
+                    if (control._id, "change") in reflected.targets:
+                        queued.append([current[key] for key in formats.FORMAT_FIELDS[:3]])
+            # A multi-control response can notify format.change before its
+            # sibling depth/space values reach the browser. Backend choices
+            # already reflect the complete response when this request arrives.
+            for values in queued:
+                reflected_value = self.call("reflect_hdr_output", values)[0]
+                if "value" in reflected_value:
+                    current[ui_color_operations.HDR_MIRROR] = reflected_value["value"]
+                if values[1] not in formats.OPTIONS[values[0]][0]:
+                    self.assertEqual(reflected_value, gr.skip())
+            return updates
+
+        def check(expected):
+            actual = asyncio.run(
+                self.demo.process_api(
+                    capture,
+                    [current[key] for key in fields],
+                    state=self.state,
+                )
+            )["data"][0]
+            actual = actual.root if hasattr(actual, "root") else actual
+            self.assertEqual(tuple(actual[key] for key in formats.FORMAT_FIELDS[:3]), expected)
+
+        current[ui_color_operations.HDR_MIRROR] = "16-bit float"
+        apply("choose_hdr_output", ["16-bit float"])
+        apply("reflect_hdr_output", [current[key] for key in formats.FORMAT_FIELDS[:3]])
+        check(("exr", "16-bit float", "HDR"))
+        with self.assertRaisesRegex(gr.Error, "8-bit.*not in the list of choices"):
+            asyncio.run(
+                self.demo.process_api(
+                    capture,
+                    ["exr", "8-bit", "HDR", 18, "16-bit float"],
+                    state=self.state,
+                )
+            )
+        path = self.root / "accepted-hdr.exr"
+        with patch.object(formats, "_native", return_value=native_codecs()):
+            formats.write_image(path, np.full((48, 64, 3), 0.5, np.float32), current)
+        original = path.read_bytes()
+        snapshot = workspace.adopt_image(str(path), owner=("format-transition",))
+        self.assertEqual(snapshot.original.frame.dtype, "float32")
+        for group in ("Image-mask", "Image-transform", "Image-color"):
+            self.call("adjustment_context", ["Adjust image", group, "pad", "channel", "sdr-to-hdr"])
+            check(("exr", "16-bit float", "HDR"))
+        current["output_format"] = "png"
+        apply("format_choices", ["png"])
+        apply("reflect_hdr_output", [current[key] for key in formats.FORMAT_FIELDS[:3]])
+        check(("png", "8-bit", "sRGB"))
+        current[ui_color_operations.HDR_MIRROR] = "16-bit float"
+        apply("choose_hdr_output", ["16-bit float"])
+        apply("reflect_hdr_output", [current[key] for key in formats.FORMAT_FIELDS[:3]])
+        check(("exr", "16-bit float", "HDR"))
+        self.assertEqual(path.read_bytes(), original)
+
     def test_typed_api_and_settings_share_native_scalar_validation(self):
         for operation, fields in (
             ("text-overlay", dict(color_text="bounded text", color_text_font_size=4.5)),

@@ -57,6 +57,10 @@ EXR writer receives HLG samples and stores scene-linear samples. This action
 requires a float export and does not pass its result through an 8-bit display
 working copy.
 
+The HDR precision mirror ignores transient mixed format updates until a valid
+complete tuple arrives. This display projection does not relax the native output
+dropdown validation used by Run or change the selected export precision.
+
 ## Precision, source and request contract
 
 `ruinedfooocus/features/image_processing/image_color_tools.py` owns `image-color`

@@ -1,0 +1,9 @@
+{
+  "id": "hdr-format-projection",
+  "subject": "Keep HDR format reflections valid while export choices change",
+  "requires": ["color-reference-alignment"],
+  "tests": ["test_image_residual_ui_api.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
