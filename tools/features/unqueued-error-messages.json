@@ -1,9 +1,7 @@
 {
   "id": "unqueued-error-messages",
   "subject": "Show error messages from prompt actions and events that skip the queue",
-  "requires": [
-    "ui-event-behavior-checks"
-  ],
+  "requires": ["ui-event-behavior-checks"],
   "tests": [
     "test_prompt_draft_fence.py",
     "test_prompt_caption.py",

@@ -1,9 +1,7 @@
 {
   "id": "stale-suite-contracts-and-ui-wiring",
   "subject": "Align 39 stale tests with current contracts and check every UI event's wiring",
-  "requires": [
-    "ui-review-closure"
-  ],
+  "requires": ["ui-review-closure"],
   "tests": [
     "test_action_contract_audit.py",
     "test_comfy045_release.py",

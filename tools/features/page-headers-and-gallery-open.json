@@ -1,9 +1,7 @@
 {
   "id": "page-headers-and-gallery-open",
   "subject": "Align page headers, drop Chat's duplicate model button and open Gallery from its index",
-  "requires": [
-    "unqueued-error-messages"
-  ],
+  "requires": ["unqueued-error-messages"],
   "tests": [
     "test_responsive_ui_layout.py",
     "test_chat_presentation.py",

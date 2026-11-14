@@ -2,7 +2,11 @@
   "id": "api-utility-discovery-fixture",
   "subject": "Check API model discovery against pending catalogue admission",
   "requires": ["ui-design-system"],
-  "tests": ["test_native_utility_admission.py", "test_api_model_discovery.py", "test_pending_image_callers.py"],
+  "tests": [
+    "test_native_utility_admission.py",
+    "test_api_model_discovery.py",
+    "test_pending_image_callers.py"
+  ],
   "native_comfy": true,
   "native_gguf": false,
   "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"

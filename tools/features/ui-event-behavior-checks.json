@@ -1,9 +1,7 @@
 {
   "id": "ui-event-behavior-checks",
   "subject": "Fire every reachable UI event on the real app and show app error messages",
-  "requires": [
-    "suite-order-independence"
-  ],
+  "requires": ["suite-order-independence"],
   "tests": [
     "test_user_errors.py",
     "test_ui_remaining_actions.py",

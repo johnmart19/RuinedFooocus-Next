@@ -1,0 +1,8 @@
+{
+  "id": "recent-feature-formatting",
+  "subject": "Format recent feature descriptors and validation documentation",
+  "requires": ["chat-attach-and-switches"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

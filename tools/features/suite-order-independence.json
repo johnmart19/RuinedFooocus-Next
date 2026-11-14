@@ -1,9 +1,7 @@
 {
   "id": "suite-order-independence",
   "subject": "Make native detector readiness and test stand-ins independent of test order",
-  "requires": [
-    "stale-suite-contracts-and-ui-wiring"
-  ],
+  "requires": ["stale-suite-contracts-and-ui-wiring"],
   "tests": [
     "test_api_examples.py",
     "test_api_upscale_metadata.py",
