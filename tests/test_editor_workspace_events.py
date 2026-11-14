@@ -83,6 +83,9 @@ class EditorWorkspaceEventTests(unittest.TestCase):
                 gr.Tab("Create", id="create")
                 gr.Tab("Editor", id="editor")
                 gr.Tab("Gallery", id="library")
+            with gr.Tabs(selected="generation") as self.tool_tabs:
+                gr.Tab("Generation", id="generation")
+                gr.Tab("More tools", id="image-tools")
             self.controls.update(
                 prompt=gr.Textbox(value="Create draft"),
                 negative=gr.Textbox(value="draft exclusions"),
@@ -110,6 +113,7 @@ class EditorWorkspaceEventTests(unittest.TestCase):
                         "Whole-body pose",
                         "Depth map",
                         "Detect objects",
+                        "Restore still image (SeedVR2)",
                         "Adjust image",
                     ],
                     value="None",
@@ -130,12 +134,14 @@ class EditorWorkspaceEventTests(unittest.TestCase):
             self.controls["_editor_source_input"] = self.workspace.source_input
             self.controls["_editor_denoise"] = self.workspace.denoise
             self.controls["_editor_output_explicit"] = self.workspace.output_explicit
+            self.controls["_editor_upscale_target"] = self.workspace.upscale_target
             self.controls["_native_main_source"] = self.remote["native_source"]
             self.workspace.bind(
                 self.controls,
                 run_request=self.run_request,
                 stop_request=self.stop_request,
                 run_controls=self.remote,
+                create_tabs=self.tool_tabs,
                 navigation={
                     self.destinations: gr.update(selected="editor"),
                     self.workspace.destination: "editor",
@@ -688,7 +694,8 @@ process.stdout.write(JSON.stringify({output,memory}));
             self.assertEqual(dependency["show_progress"], "hidden")
             self.assertEqual(dependency["show_progress_on"], [])
         self.assertEqual(
-            adjustment.outputs, [self.controls["cn_selection"], self.controls["cn_type"]]
+            adjustment.outputs,
+            [self.controls["cn_selection"], self.controls["cn_type"], self.tool_tabs],
         )
         source_import = self.event(self.library_open)
         dependency = next(
@@ -699,11 +706,56 @@ process.stdout.write(JSON.stringify({output,memory}));
         session = self.session("quiet-view-projection")
         self.open_library(session)
         context = copy.deepcopy(self.value(session, self.workspace.context))
-        selected = self.value(session, self.controls["cn_selection"])
         updates = self.call(session, adjustment)
-        self.assertTrue(all(update == gr.skip() for update in updates.values()))
+        self.assertEqual(updates[self.tool_tabs]["selected"], "generation")
         self.assertEqual(self.value(session, self.workspace.context), context)
-        self.assertEqual(self.value(session, self.controls["cn_selection"]), selected)
+        self.assertEqual(self.value(session, self.controls["cn_selection"]), "None")
+        self.run_request.assert_not_called()
+
+    def test_inpaint_after_restoration_reveals_generation_and_keeps_named_action(self):
+        session = self.session("restoration-to-inpaint")
+        self.open_library(session)
+        action = self.event(self.workspace.action, "change", "adjustment_action")
+        restore = self.call(session, action, {self.workspace.action: "restore-seedvr2"})
+        self.assertEqual(restore[self.tool_tabs]["selected"], "image-tools")
+        self.assertEqual(
+            self.value(session, self.controls["cn_selection"]), "Restore still image (SeedVR2)"
+        )
+        inpaint = self.call(session, action, {self.workspace.action: "inpaint"})
+        self.assertEqual(inpaint[self.tool_tabs]["selected"], "generation")
+        self.assertEqual(self.value(session, self.controls["cn_selection"]), "None")
+        updates = self.call(session, self.event(self.workspace.action, "change", "action_context"))
+        self.assertEqual(
+            updates[self.remote["run"]]["value"], str(self.workspace.action_label("inpaint"))
+        )
+        self.assertTrue(updates[self.workspace.mask]["visible"])
+        self.run_request.assert_not_called()
+
+    def test_explicit_generate_clears_old_utility_but_quick_tool_keeps_its_generate_route(self):
+        session = self.session("explicit-generate-after-utility")
+        self.open_library(session)
+        action = self.event(self.workspace.action, "change", "adjustment_action")
+        self.call(session, action, {self.workspace.action: "restore-seedvr2"})
+        updates = self.call(
+            session,
+            self.event(self.workspace.action, "input", "select_action"),
+            {self.workspace.action: "generate"},
+        )
+        self.assertEqual(self.value(session, self.controls["cn_selection"]), "None")
+        self.assertEqual(updates[self.tool_tabs]["selected"], "generation")
+        self.assertFalse(self.value(session, self.remote["inpaint_toggle"]))
+        self.call(
+            session,
+            self.event(self.workspace.quick_tool, "input", "select_quick_tool"),
+            {self.workspace.quick_tool: "Face landmarks"},
+        )
+        self.call(session, action)
+        self.assertEqual(self.value(session, self.workspace.action), "generate")
+        self.assertEqual(self.value(session, self.controls["cn_selection"]), "Face landmarks")
+        data = self.workspace.build_request(
+            self.request_values(session, "generate"), request=session.request
+        )
+        self.assertEqual(data["cn_selection"], "Face landmarks")
         self.run_request.assert_not_called()
 
     def test_picker_select_opens_original_through_success_continuation_in_one_action(self):
@@ -933,6 +985,54 @@ process.stdout.write(JSON.stringify({output,memory}));
         updates = self.call(session, sync, {self.remote["task"]: "accepted-job"})
         self.assertEqual(updates[self.controls["input_image"]], gr.skip())
         self.assertEqual(self.value(session, self.controls["input_image"]), before)
+        self.run_request.assert_not_called()
+
+    def test_upscale_target_uses_only_editor_input_and_revalidates_current_dimensions(self):
+        session = self.session("explicit-upscale-target")
+        self.open_library(session)
+        context = copy.deepcopy(self.value(session, self.workspace.context))
+        session.values.update(
+            {
+                self.controls["resolution_auto"]._id: False,
+                self.controls["custom_width"]._id: 512,
+                self.controls["custom_height"]._id: 768,
+            }
+        )
+        data = self.workspace.build_request(
+            self.request_values(session, "upscale"), request=session.request
+        )
+        self.assertEqual((data["custom_width"], data["custom_height"]), (146, 242))
+        capture = self.event(self.controls["custom_width"], "input", "capture_upscale_target")
+        self.assertTrue(all(name == "input" for _, name in capture.targets))
+        self.call(
+            session,
+            capture,
+            {self.controls["custom_width"]: 219, self.controls["custom_height"]: 363},
+        )
+        self.assertEqual(self.value(session, self.workspace.upscale_target), [219, 363])
+        self.assertEqual(self.value(session, self.workspace.context), context)
+        data = self.workspace.build_request(
+            self.request_values(session, "upscale"), request=session.request
+        )
+        self.assertEqual((data["custom_width"], data["custom_height"]), (219, 363))
+        session.values[self.controls["custom_width"]._id] = 512
+        data = self.workspace.build_request(
+            self.request_values(session, "upscale"), request=session.request
+        )
+        self.assertEqual((data["custom_width"], data["custom_height"]), (146, 242))
+        self.call(
+            session,
+            self.event(self.controls["resolution_auto"], "input"),
+            {self.controls["resolution_auto"]: True},
+        )
+        self.assertIsNone(self.value(session, self.workspace.upscale_target))
+        self.call(session, capture)
+        self.assertIsNotNone(self.value(session, self.workspace.upscale_target))
+        self.call(session, capture, {self.workspace.destination: "create"})
+        self.assertIsNone(self.value(session, self.workspace.upscale_target))
+        self.assertIsNone(
+            self.value(self.session("other-upscale-owner"), self.workspace.upscale_target)
+        )
         self.run_request.assert_not_called()
 
     def test_output_intent_marks_only_real_selector_input_and_survives_source_actions(self):

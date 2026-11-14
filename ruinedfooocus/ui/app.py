@@ -1271,6 +1271,7 @@ with shared.gradio_root as block:
             add_ctrl("_editor_action", editor_workspace.action)
             add_ctrl("_editor_denoise", editor_workspace.denoise)
             add_ctrl("_editor_output_explicit", editor_workspace.output_explicit)
+            add_ctrl("_editor_upscale_target", editor_workspace.upscale_target)
             add_ctrl("_editor_prompt_processing", editor_workspace.prompt_processing)
             add_ctrl("_editor_mask", editor_workspace.mask)
             add_ctrl("_editor_background", editor_workspace.background)
@@ -2486,7 +2487,7 @@ with shared.gradio_root as block:
                     gr.update(visible=editing and not upload and not inpainting),
                     gr.update(visible=True if editing and inpainting and not upload else "hidden"),
                     gr.update(visible=editing and upload),
-                    gr.update(value=t("Upscale") if upload else t("Generate")),
+                    gr.skip(),
                     gr.update(value="Generated image")
                     if not enabled and target != "Generated image"
                     else gr.update(),

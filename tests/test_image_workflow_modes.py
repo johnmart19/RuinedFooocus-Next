@@ -94,7 +94,10 @@ class ImageWorkflowModeTests(unittest.TestCase):
         run = function(
             "ruinedfooocus/ui/app.py",
             "switch_upscale_view",
-            dict(gr=SimpleNamespace(update=lambda **kw: kw), t=lambda s: s),
+            dict(
+                gr=SimpleNamespace(update=lambda **kw: kw, skip=lambda: {"__type__": "update"}),
+                t=lambda s: s,
+            ),
         )
         for scale in ("Off", "2× General (RealESRGAN)"):
             for target in ("Generated image", "Input image only"):
@@ -120,9 +123,7 @@ class ImageWorkflowModeTests(unittest.TestCase):
                             )
                             self.assertEqual(result[3]["visible"], editing and input_only)
                             self.assertTrue(all("value" not in update for update in result[1:4]))
-                            self.assertEqual(
-                                result[4]["value"], "Upscale" if input_only else "Generate"
-                            )
+                            self.assertEqual(result[4], {"__type__": "update"})
                             self.assertEqual(
                                 result[5],
                                 {"value": "Generated image"}

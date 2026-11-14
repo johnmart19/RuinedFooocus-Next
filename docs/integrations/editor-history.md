@@ -67,6 +67,17 @@ ownership. A newer source adoption after the job completes still supersedes old
 unpublished UI work. Stop and existing shared compute admission retain their
 own cancellation/serialization contracts.
 
+**Upscale selected image** follows the selected upscaler's scale (2× by default),
+even when Create previously used a fixed recommended resolution. Typing an Output
+target width or height in Editor captures an explicit target for that client;
+it is used only while both dimensions still match. Following the recommended
+size clears that override. Returning to a generation action such as Inpaint
+clears the previous utility selection and reveals Generation controls. The
+localized action renderer keeps the Run button's action name while image and
+inpaint preview visibility changes.
+Explicitly selecting **Generate** clears the previous image utility; selecting
+a quick tool still preserves its programmatic Generate route.
+
 Gallery has a separate prompt/setup/edit draft. Prompt/setup reuse changes local
 controls through the same final-paint draft fence as metadata selection. Trusted
 setup snapshots stay in bounded server State; Run resolves only the token that

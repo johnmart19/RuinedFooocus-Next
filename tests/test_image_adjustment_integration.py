@@ -204,7 +204,10 @@ class AdjustmentIntegrationTests(unittest.TestCase):
         other = asyncio.run(demo.process_api(action, ["prompt-edit", "Image-mask"], state=state))[
             "data"
         ]
-        self.assertTrue(all("selected" not in item and "value" not in item for item in other))
+        self.assertEqual(other[0], "None")
+        self.assertNotIn("value", other[1])
+        self.assertEqual(other[2]["selected"], "generation")
+        self.assertEqual(state[tabs._id].selected, "generation")
         self.assertEqual(
             (controls["prompt"].value, controls["negative"].value),
             ("retained draft", "retained negative"),

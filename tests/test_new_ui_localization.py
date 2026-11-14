@@ -93,6 +93,18 @@ class NewUiLocalizationTests(unittest.TestCase):
             "Edit image",
         )
         self.assertEqual(
+            wrapper(
+                request,
+                "en",
+                "inpaint",
+                "editor",
+                "Restore still image (SeedVR2)",
+                "Off",
+                "Generated image",
+            )["value"],
+            "Inpaint image",
+        )
+        self.assertEqual(
             wrapper(request, "en", "generate", "create", "None", "2×", "Input image only")["value"],
             "Upscale",
         )

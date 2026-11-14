@@ -229,6 +229,30 @@ class EditorWorkspaceActionTests(unittest.TestCase):
             )
         self.assertEqual(data["_image_workflow_step"].parameters["denoise"], 0.47)
 
+    def test_upscale_uses_model_scale_after_a_recommended_create_target(self):
+        source = self.image("portrait.png", "RGBA", (12, 24, 48, 127), size=(832, 1216))
+        snapshot = self.store.start(source, owner=self.owner)
+        original = source.read_bytes()
+        for upscaler, expected in (
+            ("Off", (1664, 2432)),
+            ("4× UltraSharp", (3328, 4864)),
+        ):
+            with self.subTest(upscaler=upscaler):
+                data = self.workspace.build_request(
+                    dict(
+                        self.values,
+                        _editor_context=self.workspace.public_context(snapshot),
+                        _editor_action="upscale",
+                        automatic_upscale=upscaler,
+                        resolution_auto=False,
+                        custom_width=832,
+                        custom_height=1216,
+                    ),
+                    request=self.request,
+                )
+                self.assertEqual((data["custom_width"], data["custom_height"]), expected)
+                self.assertEqual(source.read_bytes(), original)
+
     def test_upscale_defaults_to_native_two_times_and_preserves_explicit_model_target(self):
         data = self.workspace.build_request(
             dict(
@@ -250,6 +274,7 @@ class EditorWorkspaceActionTests(unittest.TestCase):
                 _editor_action="upscale",
                 automatic_upscale="4× UltraSharp",
                 resolution_auto=False,
+                _editor_upscale_target=[219, 363],
                 custom_width=219,
                 custom_height=363,
             ),

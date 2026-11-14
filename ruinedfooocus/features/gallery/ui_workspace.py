@@ -39,6 +39,7 @@ class EditorWorkspace:
         self.source_input = gr.State("placeholder")
         self.preview_signature = gr.State(None)
         self.output_explicit = gr.State(False)
+        self.upscale_target = gr.State(None)
         self.version = gr.Number(1, visible=False, precision=0)
         self.destination = gr.Textbox("create", visible=False, interactive=False)
         self.latest_generated = gr.State(None)
@@ -523,6 +524,35 @@ class EditorWorkspace:
 
         automatic_size = controls.get("resolution_auto") or gr.State(True)
 
+        def capture_upscale_target(destination, width, height, _version):
+            return [width, height] if destination == "editor" else None
+
+        if all(name in controls for name in ("custom_width", "custom_height")):
+            gr.on(
+                triggers=[controls[name].input for name in ("custom_width", "custom_height")],
+                fn=capture_upscale_target,
+                inputs=[
+                    self.destination,
+                    controls["custom_width"],
+                    controls["custom_height"],
+                    self.version,
+                ],
+                outputs=self.upscale_target,
+                js=self.run_version_js(0),
+                queue=False,
+                show_progress="hidden",
+                api_visibility="private",
+            )
+        if "resolution_auto" in controls:
+            automatic_size.input(
+                lambda automatic: None if automatic else gr.skip(),
+                inputs=automatic_size,
+                outputs=self.upscale_target,
+                queue=False,
+                show_progress="hidden",
+                api_visibility="private",
+            )
+
         def mark_output_explicit():
             return True
 
@@ -973,10 +1003,23 @@ class EditorWorkspace:
             api_visibility="private",
         )
 
+        def select_action(action):
+            updates = {run_controls["inpaint_toggle"]: action == "inpaint"}
+            if action == "generate":
+                if "cn_selection" in controls:
+                    updates[controls["cn_selection"]] = "None"
+                if create_tabs is not None:
+                    updates[create_tabs] = gr.update(selected="generation")
+            return updates
+
         self.action.input(
-            lambda action: action == "inpaint",
+            select_action,
             inputs=self.action,
-            outputs=run_controls["inpaint_toggle"],
+            outputs=[
+                run_controls["inpaint_toggle"],
+                *([controls["cn_selection"]] if "cn_selection" in controls else []),
+                *([create_tabs] if create_tabs is not None else []),
+            ],
             queue=False,
             show_progress="hidden",
             api_visibility="private",
@@ -991,6 +1034,17 @@ class EditorWorkspace:
             if utility is not None:
                 return [utility, gr.skip()] + (
                     [gr.update(selected="image-tools")] if create_tabs is not None else []
+                )
+            if action in (
+                "prompt-edit",
+                "inpaint",
+                "generate-background",
+                "upscale",
+                "compose",
+                "select-background",
+            ):
+                return ["None", gr.skip()] + (
+                    [gr.update(selected="generation")] if create_tabs is not None else []
                 )
             if action != "adjust-image":
                 return [gr.skip() for _ in adjustment_outputs]
@@ -1899,9 +1953,10 @@ class EditorWorkspace:
             parameters["upscaler"] = (
                 "2× General (RealESRGAN)" if not upscaler or upscaler == "Off" else upscaler
             )
-            if values.get("resolution_auto", True):
-                # Auto size follows the chosen pixel upscaler; shared generation
-                # dimensions are not an explicit Editor target.
+            explicit_target = values.get("_editor_upscale_target")
+            if values.get("resolution_auto", True) or explicit_target != [width, height]:
+                # A shared generation size is not an explicit Editor target.
+                # Only an Editor input event captures a matching target size.
                 from ruinedfooocus.features.generation.automatic_upscale import scale_for
 
                 factor = scale_for(parameters["upscaler"])
