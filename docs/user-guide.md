@@ -261,10 +261,10 @@ files, dedicated inputs, source denoise and Library/API behavior.
   For its official full `.ckpt`, first use **Models → Installed → Model → Checkpoint tools → Inspect**; its workflow controls refresh automatically.
   Inspect verifies the published source checksum; it does not scan tensor integrity. Its encoder and VAE
   appear as built in, so separate component downloads are unnecessary.
-- Drop an image on the main image with an empty prompt to reuse its saved prompt text, or
-  caption it with the configured interrogator if it has no usable prompt metadata. An existing
-  prompt stays unchanged. Type `clip:`, `florence:` or `brainblip:` before uploading to request
-  that captioner explicitly.
+- In **Create**, drop an image on the main image with an empty prompt to reuse its saved prompt text.
+  **Editor** uploads keep the edit instruction untouched. Uploading never starts image description. **Prompt tools → Describe image**
+  explicitly describes the current image using the engine selected in Settings; **Undo description**
+  restores the previous prompt while protecting later edits.
 
 ## Generations and metadata
 
@@ -310,7 +310,11 @@ files, dedicated inputs, source denoise and Library/API behavior.
   The separate **Slideshow** fits complete images within the screen. Thumbnail size and cleanup are under
   [Settings → Maintenance → Cache storage](settings.md#cache-storage).
 - **Editor → Image workspace** offers **Open current image**, **Latest generated** and **Choose from Gallery**.
-  Current adopts the displayed still. Latest imports the accepted final generation/edit image with its selected
+  Choose or upload an image, select **Edit selected image**, enter the change and choose a model, then
+  **Edit image**. Run opens the displayed image automatically; **Open current image** is optional.
+  **Edit strength** starts at 0.3 and stays independent of ControlNet strength. The selected model determines
+  how the change is applied; ordinary image models redraw from the image and its description.
+  Latest imports the accepted final generation/edit image with its selected
   batch identity; maps, masks, helpers and previews do not replace that shortcut. Those outputs remain accessible
   in Gallery and their explicit guide actions. Choose from Gallery opens a bounded picker inside Editor, using
   the original file rather than thumbnail pixels. Changed or missing selections must be chosen again.
@@ -319,16 +323,18 @@ files, dedicated inputs, source denoise and Library/API behavior.
   **Undo**, **Redo** and **Reopen image history** move through completed results without regeneration.
   Source/history adoption defers while an accepted job owns the Editor terminal: finish it or use **Stop**,
   then retry. Typing changes the next draft without cancelling the captured job. Failed operations retain the
-  current image/history and draft. Precision originals and alpha stay unchanged; tools that require an 8-bit
-  sRGB working copy report that conversion.
+  current image/history and draft. Precision originals and alpha stay unchanged; any required working
+  image is prepared automatically.
 - To replace a background, open the foreground, choose **Remove background**, then explicitly select
   **Select background** with a background file or **Generate background** with your prompt. Choose
   **Compose foreground and background**, then **Edit selected image** and **Upscale selected image**
   as needed. Each Run performs only the selected step. Background removal and composition keep their
-  source canvas; an edit-size change requires explicit Pad or Crop. Upscaling uses both output dimensions.
-  **Mask and composition inputs** accepts an exact-frame grayscale mask, union/instance selection and
+  source canvas; Compose also accepts a background file directly with the current foreground in one Run.
+  An edit-size change requires explicit Pad or Crop. Upscale starts with a 2× general upscaler and doubles
+  the source frame when Auto size is enabled; an explicit model and manual target remain yours.
+  **Action inputs** opens for the selected action and accepts an exact-frame grayscale mask, union/instance selection and
   explicit inversion; the existing painted inpaint editor also works. A new source/result needs a new mask.
-  **Preview image readiness** reports captured resources without downloading or generating.
+  **Check resources** is optional and reports captured resources without downloading or generating.
 - Custom generation-complete sounds are currently unavailable.
 
 ## Chat

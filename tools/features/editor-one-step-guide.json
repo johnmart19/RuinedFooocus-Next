@@ -1,0 +1,8 @@
+{
+  "id": "editor-one-step-guide",
+  "subject": "Document one-step Editor actions and explicit prompt tools",
+  "requires": ["editor-one-step-actions", "product-guides"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
