@@ -1,0 +1,23 @@
+{
+  "id": "native-runtime-storage",
+  "subject": "Keep installed native runtimes outside disposable cache",
+  "requires": ["stale-suite-contracts-and-ui-wiring"],
+  "tests": [
+    "test_runtime_publication.py",
+    "test_native_runtime_paths.py",
+    "test_installer_llama.py",
+    "test_llama_update.py",
+    "test_wsl_llama_bridge.py",
+    "test_onnx_installer.py",
+    "test_hardware_inventory.py",
+    "test_runtime_info_refresh.py",
+    "test_onnx_runtime.py",
+    "test_windows_ml.py",
+    "test_windows_ml_qualification.py",
+    "test_sdcpp_installer.py",
+    "test_sdcpp_caller.py",
+    "test_runtime_bundles.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

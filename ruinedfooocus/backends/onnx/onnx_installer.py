@@ -1,4 +1,5 @@
 from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 from ruinedfooocus.packaging.startup_options import skip_dependency_install
 
 """Install optional GPU ONNX wheels without replacing CPU ONNX."""
@@ -16,7 +17,7 @@ import tempfile
 import os
 import uuid
 from contextlib import ExitStack
-from ruinedfooocus.packaging.install_lock import installation_lock
+from ruinedfooocus.packaging.install_lock import installation_lock, publish_runtime_directory
 from ruinedfooocus.backends.onnx.provider_recipes import (
     MIGRAPHX_INDEX,
     MIGRAPHX_LIBS_INDEX,
@@ -51,7 +52,7 @@ def worker_command(root, probe=False, device_id=None, worker=None):
 
 def runtime_path():
     abi = f"cp{sys.version_info.major}{sys.version_info.minor}"
-    return ROOT / "cache" / "onnx" / abi / VERSION
+    return native_runtime_root("onnx", abi, VERSION, data_root=ROOT)
 
 
 def runtime_available():
@@ -230,7 +231,7 @@ def native_runtime_path(name, runtime=None):
             return legacy
     runtime = runtime or native_runtime(name)
     abi = f"cp{sys.version_info.major}{sys.version_info.minor}"
-    return ROOT / "cache" / "onnx" / abi / f"{runtime.package}-{runtime.version}"
+    return native_runtime_root("onnx", abi, f"{runtime.package}-{runtime.version}", data_root=ROOT)
 
 
 def _verified(root, version):
@@ -639,12 +640,13 @@ def _install_native_runtime(
     if staging:
         previous = final.with_name(final.name + ".previous-" + uuid.uuid4().hex)
         if final.exists():
-            os.replace(final, previous)
+            publish_runtime_directory(final, previous, check_cancelled=check_cancelled)
         try:
-            os.replace(root, final)
+            publish_runtime_directory(root, final, check_cancelled=check_cancelled)
         except BaseException:
             if previous.exists() and not final.exists():
-                os.replace(previous, final)
+                # Restore the prior runtime even when cancellation aborted publication.
+                publish_runtime_directory(previous, final)
             raise
         finally:
             staging.cleanup()

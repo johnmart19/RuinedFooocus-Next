@@ -139,7 +139,7 @@ def prepare_runtime(artifact, directory, *, archive, check_cancelled, progress=N
     """
     import zipfile
     from ruinedfooocus.core.preparation import preparation_service
-    from ruinedfooocus.packaging.install_lock import installation_lock
+    from ruinedfooocus.packaging.install_lock import installation_lock, publish_runtime_directory
 
     if artifact not in ARTIFACTS:
         raise ValueError("Unknown optional diffusion artifact")
@@ -219,5 +219,5 @@ def prepare_runtime(artifact, directory, *, archive, check_cancelled, progress=N
             if artifact.system == "Linux":
                 (stage / "sd-cli").chmod(0o755)
             check_cancelled()
-            os.rename(stage, directory)
+            publish_runtime_directory(stage, directory, check_cancelled=check_cancelled)
         return open_runtime(directory, artifact)

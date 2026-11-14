@@ -15,7 +15,7 @@ import time
 
 import requests
 
-from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 from ruinedfooocus.packaging.install_lock import installation_lock
 from ruinedfooocus.packaging.startup_options import skip_dependency_install
 from ruinedfooocus.backends.llama import llama_installer as installer
@@ -29,7 +29,7 @@ SYSTEM_LIBRARY = Path("/opt/rocm/lib/librocdxg.so")
 
 def library_directory(*, acquire=False, progress_callback=None, check_cancelled=None):
     installer._check(check_cancelled)
-    directory = data_path("cache", "llama.cpp", f"rocdxg-{VERSION}")
+    directory = native_runtime_root("llama.cpp", f"rocdxg-{VERSION}")
     library = directory / "librocdxg.so"
     with installation_lock(directory, timeout=0):
         for candidate in (library, SYSTEM_LIBRARY):

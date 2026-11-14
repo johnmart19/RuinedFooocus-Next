@@ -2,7 +2,7 @@
 
 import json
 from os import scandir
-from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 import os
 from pathlib import Path
 import shutil
@@ -43,7 +43,7 @@ def _installed_binaries():
     override = os.environ.get("LLAMA_SERVER")
     if override:
         return [Path(shutil.which(override) or override)], False
-    root = data_path("cache", "llama.cpp")
+    root = native_runtime_root("llama.cpp")
     executable = "llama-server.exe" if os.name == "nt" else "llama-server"
     pending = [(root, 0)]
     found = []
@@ -75,7 +75,7 @@ def _installed_binaries():
 def _build_label(binary):
     if os.environ.get("LLAMA_SERVER"):
         return "Custom llama.cpp: " + binary.name
-    root = data_path("cache", "llama.cpp")
+    root = native_runtime_root("llama.cpp")
     try:
         relative = binary.relative_to(root)
         build = relative.parts[0]
@@ -151,7 +151,7 @@ def _inspect_runtime_info():
                         active_rocm_directory,
                     )
 
-                    directory = active_rocm_directory(data_path("cache", "llama.cpp", "rocm-10.0"))
+                    directory = active_rocm_directory(native_runtime_root("llama.cpp", "rocm-10.0"))
                     sites = directory.glob("lib/python*/site-packages")
                     paths = [
                         str(site / package / "lib")

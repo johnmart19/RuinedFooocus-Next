@@ -9,9 +9,90 @@ from ruinedfooocus.backends.onnx import acquisition
 from types import SimpleNamespace
 from unittest.mock import Mock
 from contextlib import contextmanager
+from concurrent.futures import CancelledError
+from ruinedfooocus.packaging import install_lock as publication
 
 
 class OnnxInstallerTests(unittest.TestCase):
+    def test_publication_retry_preserves_transaction_rollback_cancellation_and_collision(self):
+        for outcome in ("transient", "persistent", "cancelled", "collision"):
+            with self.subTest(outcome=outcome), tempfile.TemporaryDirectory() as folder:
+                final = Path(folder).resolve() / "runtime"
+                final.mkdir()
+                (final / "previous.txt").write_text("retained")
+                attempts = []
+                original_rename = os.rename
+
+                def cancelled():
+                    if outcome == "cancelled" and attempts:
+                        raise CancelledError()
+
+                def rename(source, destination):
+                    if Path(source).name.startswith(".onnx-prepare-"):
+                        attempts.append((source, destination))
+                        if outcome != "transient" or len(attempts) < 3:
+                            if outcome == "collision":
+                                final.mkdir()
+                                (final / "manual.txt").write_text("unrelated")
+                            error = PermissionError("fixture native publication denied")
+                            error.winerror = 5 if len(attempts) % 2 else 32
+                            raise error
+                    return original_rename(source, destination)
+
+                def run(command, **kwargs):
+                    if command[0] == "pip":
+                        capi = Path(command[1]) / "onnxruntime/capi"
+                        capi.mkdir(parents=True)
+                        (capi / "onnxruntime_pybind11_state.pyd").write_bytes(b"fixture binary")
+                        return SimpleNamespace(returncode=0)
+                    return SimpleNamespace(
+                        returncode=0,
+                        stdout=json.dumps(
+                            dict(ok=True, version=installer.NATIVE_RUNTIMES["CUDA"].version)
+                        ),
+                        stderr="",
+                    )
+
+                with (
+                    patch.object(installer, "skip_dependency_install", return_value=False),
+                    patch.object(installer, "native_runtime_path", return_value=final),
+                    patch.object(installer, "_verified", return_value=False),
+                    patch.object(
+                        installer,
+                        "native_install_plan",
+                        side_effect=lambda n, root, *a, **k: ["pip", str(root)],
+                    ),
+                    patch.object(installer, "missing_requirements", return_value=[]),
+                    patch.object(acquisition, "run", side_effect=run),
+                    patch.object(publication, "_WINDOWS", True),
+                    patch.object(publication.time, "sleep"),
+                    patch.object(publication.os, "rename", side_effect=rename),
+                ):
+                    if outcome == "transient":
+                        installer.install_native_runtime("CUDA", check_cancelled=cancelled)
+                    else:
+                        error_type = {
+                            "persistent": PermissionError,
+                            "cancelled": CancelledError,
+                            "collision": FileExistsError,
+                        }[outcome]
+                        with self.assertRaises(error_type):
+                            installer.install_native_runtime("CUDA", check_cancelled=cancelled)
+                previous = list(final.parent.glob("runtime.previous-*"))
+                if outcome == "transient":
+                    self.assertEqual(len(attempts), 3)
+                    self.assertTrue((final / "verified.json").is_file())
+                    self.assertEqual((previous[0] / "previous.txt").read_text(), "retained")
+                elif outcome == "collision":
+                    self.assertEqual((final / "manual.txt").read_text(), "unrelated")
+                    self.assertEqual((previous[0] / "previous.txt").read_text(), "retained")
+                    self.assertEqual(len(attempts), 1)
+                else:
+                    self.assertEqual(len(attempts), 6 if outcome == "persistent" else 1)
+                    self.assertEqual((final / "previous.txt").read_text(), "retained")
+                    self.assertEqual(previous, [])
+                self.assertFalse(list(final.parent.glob(".onnx-prepare-*")))
+
     def test_default_migraphx_install_produces_evidence_and_binds_discovered_ep_device(self):
         with tempfile.TemporaryDirectory() as directory:
             final = Path(directory) / "plugin"

@@ -19,8 +19,8 @@ import requests
 
 from ruinedfooocus.backends.llama import llama_installer as installer
 from ruinedfooocus.core.config_io import save_json
-from ruinedfooocus.core.paths import data_path
-from ruinedfooocus.packaging.install_lock import installation_lock
+from ruinedfooocus.core.native_runtime_paths import native_runtime_root
+from ruinedfooocus.packaging.install_lock import installation_lock, publish_runtime_directory
 from ruinedfooocus.packaging.startup_options import skip_dependency_install
 
 
@@ -73,7 +73,7 @@ def _family(backend):
 
 def _pointer(backend):
     system, machine = _family(backend)
-    return data_path("cache", "llama.cpp", "selected", f"{system}-{machine}-{backend}.json")
+    return native_runtime_root("llama.cpp", "selected", f"{system}-{machine}-{backend}.json")
 
 
 def _package(backend, tag):
@@ -465,7 +465,7 @@ def install_update(backend, candidate, progress, *, progress_callback=None, chec
                     extracted / "rf-runtime.json", manifest | {"archives": [candidate.archive()]}
                 )
                 installer._check(check_cancelled)
-                extracted.rename(directory)
+                publish_runtime_directory(extracted, directory, check_cancelled=check_cancelled)
         installer._emit(
             progress_callback,
             "staging_runtime",

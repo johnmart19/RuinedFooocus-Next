@@ -21,7 +21,7 @@ class WslBridgeTests(unittest.TestCase):
         self.library = b"inert library fixture, never loaded"
         self.archive = b"inert deb fixture, never extracted by dpkg"
         for name, value in (
-            ("data_path", lambda *args: self.directory),
+            ("native_runtime_root", lambda *args: self.directory),
             ("LIBRARY_SHA256", hashlib.sha256(self.library).hexdigest()),
             ("ARCHIVE_SHA256", hashlib.sha256(self.archive).hexdigest()),
         ):

@@ -241,11 +241,11 @@ def _xllamacpp_installation():
         if str(file).replace("\\", "/").endswith(".dist-info/RECORD")
     )
     record = Path(record.locate())
-    from ruinedfooocus.core.paths import data_path
+    from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 
     from ruinedfooocus.packaging.package_plan import current_target, target_identity
 
-    return data_path("cache", "llama.cpp", "xllamacpp-backend.json"), {
+    return native_runtime_root("llama.cpp", "xllamacpp-backend.json"), {
         "version": distribution.version,
         "record_sha256": hashlib.sha256(record.read_bytes()).hexdigest(),
         "target": target_identity(current_target()),

@@ -1,7 +1,7 @@
-"""Official llama.cpp binaries, cached separately from models and Python packages."""
+"""Official llama.cpp binaries, retained separately from disposable cache."""
 
 import hashlib
-from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 import json
 import os
 from pathlib import Path
@@ -382,7 +382,7 @@ def runtime_environment(
     if not target or os.environ.get("LLAMA_SERVER"):
         return env
     # Native subprocess dependencies must not replace the app's working torch/ROCm.
-    base = data_path("cache", "llama.cpp", "rocm-10.0")
+    base = native_runtime_root("llama.cpp", "rocm-10.0")
     directory = active_rocm_directory(base)
     python = directory / "bin/python"
     marker = directory / f"{target}.ready"
@@ -443,7 +443,7 @@ def windows_rocm_environment(
 
     libraries = None if reinstall else paths(sys.executable)
     if not libraries and (not install or skip_dependency_install()):
-        directory = active_rocm_directory(data_path("cache", "llama.cpp", "rocm-10.0-windows"))
+        directory = active_rocm_directory(native_runtime_root("llama.cpp", "rocm-10.0-windows"))
         python = directory / "Scripts/python.exe"
         libraries = paths(python) if python.exists() else None
         if not libraries:
@@ -458,7 +458,7 @@ def windows_rocm_environment(
             raise RuntimeError(
                 "Cannot detect the AMD GPU target for ROCm 10. Select Vulkan or install a compatible ROCm SDK."
             )
-        base = data_path("cache", "llama.cpp", "rocm-10.0-windows")
+        base = native_runtime_root("llama.cpp", "rocm-10.0-windows")
         directory = active_rocm_directory(base)
         python = directory / "Scripts/python.exe"
         libraries = paths(python) if python.exists() and not reinstall else None
@@ -474,8 +474,8 @@ def windows_rocm_environment(
 
 
 def package_directory(package, *, version=VERSION):
-    return data_path(
-        "cache", "llama.cpp", version, package.removesuffix(".zip").removesuffix(".tar.gz")
+    return native_runtime_root(
+        "llama.cpp", version, package.removesuffix(".zip").removesuffix(".tar.gz")
     )
 
 
@@ -727,7 +727,9 @@ def _install_server(
             message="Publishing verified llama.cpp",
         )
         _check(check_cancelled)
-        extracted.rename(directory)
+        from ruinedfooocus.packaging.install_lock import publish_runtime_directory
+
+        publish_runtime_directory(extracted, directory, check_cancelled=check_cancelled)
     return next(directory.rglob(executable)).resolve()
 
 

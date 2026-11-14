@@ -127,7 +127,7 @@ class RuntimeInfoRefreshTests(unittest.TestCase):
             tempfile.TemporaryDirectory() as folder,
             patch.dict(os.environ, RF_DATA_DIR=folder, LLAMA_SERVER=""),
         ):
-            root = Path(folder) / "cache/llama.cpp"
+            root = Path(folder) / "repositories/llama.cpp"
             executable = "llama-server.exe" if os.name == "nt" else "llama-server"
             for number in range(12):
                 binary = root / f"b{number + 12000}" / f"backend-{number}" / executable

@@ -10,6 +10,7 @@ import zipfile
 
 from ruinedfooocus.backends.sdcpp import artifacts, contracts
 from ruinedfooocus.core.preparation import PreparationService
+from ruinedfooocus.packaging import install_lock as publication
 
 
 class SdcppArtifactTests(unittest.TestCase):
@@ -58,8 +59,25 @@ class SdcppArtifactTests(unittest.TestCase):
                 return path
 
             service = PreparationService(transport=transfer, staging_root=root / "stage")
+            original_rename = publication.os.rename
+            publications = []
+
+            def rename(source, destination):
+                if Path(source).parent.name.startswith("rf-sdcpp-"):
+                    publications.append((source, destination))
+                    if len(publications) < 3:
+                        error = PermissionError("fixture SDCPP publication denied")
+                        error.winerror = 5 if len(publications) == 1 else 32
+                        raise error
+                return original_rename(source, destination)
+
             try:
-                with patch.object(artifacts, "ARTIFACTS", (item,)):
+                with (
+                    patch.object(artifacts, "ARTIFACTS", (item,)),
+                    patch.object(publication, "_WINDOWS", True),
+                    patch.object(publication.time, "sleep"),
+                    patch.object(publication.os, "rename", side_effect=rename),
+                ):
                     candidate = artifacts.prepare_runtime(
                         item,
                         root / "runtime",
@@ -77,6 +95,7 @@ class SdcppArtifactTests(unittest.TestCase):
                     self.assertEqual(candidate, again)
                     self.assertFalse(candidate.device_verified)
                     self.assertEqual(len(calls), 1)
+                    self.assertEqual(len(publications), 3)
                     (root / "runtime/sd-cli.exe").write_bytes(b"tampered")
                     with self.assertRaisesRegex(RuntimeError, "integrity"):
                         artifacts.open_runtime(root / "runtime", item)

@@ -11,7 +11,7 @@ import sys
 import math
 import tempfile
 
-from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 from ruinedfooocus.packaging.install_lock import installation_lock
 from ruinedfooocus.backends.onnx.qualification import (
     matching_record,
@@ -53,7 +53,7 @@ def provider_preference(values):
 
 
 def manifest_path():
-    return data_path("cache", "onnx", "windows-ml", "provider.json")
+    return native_runtime_root("onnx", "windows-ml", "provider.json")
 
 
 def _catalog_rows(document):

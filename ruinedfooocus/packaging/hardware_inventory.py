@@ -368,9 +368,9 @@ def xllamacpp_installed():
         return None
     backend = None
     try:
-        from ruinedfooocus.core.paths import data_path
+        from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 
-        marker = data_path("cache", "llama.cpp", "xllamacpp-backend.json")
+        marker = native_runtime_root("llama.cpp", "xllamacpp-backend.json")
         index = json.loads(marker.read_text(encoding="utf-8")).get("index", "")
         suffix = index.rstrip("/").rsplit("/", 1)[-1]
         backend = next(

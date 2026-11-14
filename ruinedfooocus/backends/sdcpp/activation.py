@@ -8,7 +8,7 @@ import platform
 import threading
 
 from ruinedfooocus.core.config_io import save_json
-from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 from . import artifacts, runtime
 from .contracts import (
     RELEASE,
@@ -46,7 +46,7 @@ class Activation:
 
 
 def root_path():
-    return data_path("cache", "sdcpp")
+    return native_runtime_root("sdcpp")
 
 
 def artifact(backend, *, system=None, machine=None):
