@@ -1,7 +1,9 @@
 """Capture the existing txtai model's finite local closure before Chat compute."""
 
 from concurrent.futures import CancelledError
-from dataclasses import replace
+from dataclasses import dataclass, replace
+from functools import lru_cache
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -10,31 +12,85 @@ import time
 from huggingface_hub import snapshot_download
 from huggingface_hub.errors import LocalEntryNotFoundError
 
-from ruinedfooocus.core.paths import data_path
+from ruinedfooocus.core.paths import data_path, resource_path
 from ruinedfooocus.core.preparation import PreparationRequest, preparation_service, verify_file
-from ruinedfooocus.core.settings_schema import RAG_EMBEDDING_DEVICES
+from ruinedfooocus.core.settings_schema import RAG_EMBEDDING_DEVICES, RAG_EMBEDDING_MODELS
 from ruinedfooocus.features.chat.model_preparation import ModelPreparation, ModelTransfer
 from ruinedfooocus.features.models.model_identity import cached_file_sha256, file_signature
 
 MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
 MODEL_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
 MODEL_DIMENSIONS = 384
-# Official Hub metadata at this immutable revision. Small Git files are bound
-# by revision/size; the LFS weight additionally has its publisher SHA256.
-MODEL_FILES = (
-    ("1_Pooling/config.json", 190, None),
-    ("config.json", 612, None),
-    ("config_sentence_transformers.json", 116, None),
-    (
-        "model.safetensors",
-        90868376,
-        "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
-    ),
-    ("special_tokens_map.json", 112, None),
-    ("tokenizer.json", 466247, None),
-    ("tokenizer_config.json", 350, None),
-    ("vocab.txt", 231508, None),
-)
+
+
+@dataclass(frozen=True)
+class RagModel:
+    model_id: str
+    label: str
+    revision: str
+    files: tuple
+    contract: str
+
+    @property
+    def identity(self):
+        return json.loads(self.contract)
+
+
+@lru_cache(maxsize=1)
+def model_specs():
+    """Finite bundled manifests only; no discovery, network or model imports."""
+    path = resource_path("rag_embedding_models.json")
+    if path.stat().st_size > 64 * 1024:
+        raise ValueError("Bundled Chat embedding catalogue is too large.")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if data.get("schema_version") != 1 or {row["id"] for row in data["models"]} != set(
+        RAG_EMBEDDING_MODELS
+    ):
+        raise ValueError("Bundled Chat embedding catalogue is incomplete.")
+    result = []
+    for row in data["models"]:
+        identity = dict(row["encoding"])
+        manifest = json.dumps(row["files"], sort_keys=True, separators=(",", ":"))
+        identity["manifest_sha256"] = hashlib.sha256(manifest.encode()).hexdigest()
+        result.append(
+            RagModel(
+                row["id"],
+                row["label"],
+                row["revision"],
+                tuple(tuple(item) for item in row["files"]),
+                json.dumps(identity, sort_keys=True),
+            )
+        )
+    return tuple(result)
+
+
+def model_spec(model_id=MODEL_ID):
+    for item in model_specs():
+        if item.model_id == model_id:
+            return item
+    raise ValueError("Choose a listed Chat embedding model.")
+
+
+def model_choices():
+    return [
+        (
+            f"{item.label} · {sum(size for _, size, _ in item.files) / 1024**2:.0f} MiB",
+            item.model_id,
+        )
+        for item in model_specs()
+    ]
+
+
+def model_description(model_id):
+    item = model_spec(model_id)
+    return (
+        f"[{item.model_id}](https://huggingface.co/{item.model_id}/tree/{item.revision})"
+        f" · {item.identity['dimensions']} dimensions · {sum(size for _, size, _ in item.files) / 1024**2:.1f} MiB"
+    )
+
+
+# Public default constants retain the existing migration and caller contract.
+MODEL_FILES = model_spec().files
 
 
 def embedding_device_policy(values, launch_args):
@@ -61,6 +117,7 @@ def _chat_preparation_options(values, launch_args):
     options = dict(
         cpu=device == "CPU",
         offline=bool(getattr(launch_args, "offline", False)) or os.environ.get("RF_OFFLINE") == "1",
+        model_id=model_spec(values.get("rag_embedding_model", MODEL_ID)).model_id,
     )
     if origin == "directml":
         options["cpu_reason"] = (
@@ -81,45 +138,51 @@ def capture_chat_rag(sources, values, *, launch_args=None):
     return capture_rag(sources, **_chat_preparation_options(values, launch_args))
 
 
-def capture_rag(sources, *, cpu=False, offline=False, cache_root=None, cpu_reason=""):
+def capture_rag(
+    sources, *, cpu=False, offline=False, cache_root=None, cpu_reason="", model_id=MODEL_ID
+):
     """Capture the pinned model when the Chat request includes context."""
     if not sources:
         return None
     return _capture_embedding_model(
-        cpu=cpu, offline=offline, cache_root=cache_root, cpu_reason=cpu_reason
+        cpu=cpu, offline=offline, cache_root=cache_root, cpu_reason=cpu_reason, model_id=model_id
     )
 
 
-def _capture_embedding_model(*, cpu, offline, cache_root=None, cpu_reason=""):
+def _capture_embedding_model(*, cpu, offline, cache_root=None, cpu_reason="", model_id=MODEL_ID):
     """No acquisition/runtime import; reuse an already complete pinned snapshot."""
+    spec = model_spec(model_id)
+    files = MODEL_FILES if model_id == MODEL_ID else spec.files
     directory = (
         Path(cache_root)
         if cache_root is not None
-        else data_path("models", "rag_embeddings", MODEL_REVISION)
+        else data_path("models", "rag_embeddings", spec.revision)
+        if model_id == MODEL_ID
+        else data_path("models", "rag_embeddings", model_id.rsplit("/", 1)[-1], spec.revision)
     )
-    if not all((directory / name).is_file() for name, _, _ in MODEL_FILES):
+    if not all((directory / name).is_file() for name, _, _ in files):
         try:
             cached = Path(
-                snapshot_download(MODEL_ID, revision=MODEL_REVISION, local_files_only=True)
+                snapshot_download(spec.model_id, revision=spec.revision, local_files_only=True)
             )
         except LocalEntryNotFoundError:
             cached = None
-        if cached is not None and all((cached / name).is_file() for name, _, _ in MODEL_FILES):
+        if cached is not None and all((cached / name).is_file() for name, _, _ in files):
             directory = cached
     directory = directory.resolve()
-    policy = {"gpu": not bool(cpu), "offline": bool(offline)}
+    policy = {"gpu": not bool(cpu), "offline": bool(offline), "encoder": spec.identity}
     if cpu_reason:
         policy["cpu_reason"] = cpu_reason
     return ModelPreparation(
         directory,
         tuple(
             PreparationRequest(
-                f"https://huggingface.co/{MODEL_ID}/resolve/{MODEL_REVISION}/{name}",
+                f"https://huggingface.co/{spec.model_id}/resolve/{spec.revision}/{name}",
                 directory / name,
                 size,
                 checksum,
             )
-            for name, size, checksum in MODEL_FILES
+            for name, size, checksum in files
         ),
         json.dumps(policy, sort_keys=True),
     )
@@ -187,6 +250,7 @@ def runtime_options(prepared):
         # txtai's native device resolver short-circuits to CPU on None.
         # False still enters its accelerator availability probes.
         "gpu": True if prepared.settings["gpu"] else None,
+        "maxlength": prepared.settings.get("encoder", model_spec().identity)["max_length"],
         # txtai forwards vectors to AutoModel.from_pretrained; its top-level
         # device option does not control HFVectors placement. Tokenizer/pooling
         # metadata also resolve within this complete absolute local directory.
@@ -216,7 +280,8 @@ def index_identity(sources, prepared, prepared_sources=None):
             "sources": sources,
             "context_signatures": context_signatures,
             "model": str(prepared.model),
-            "dimensions": MODEL_DIMENSIONS,
+            "dimensions": prepared.settings.get("encoder", model_spec().identity)["dimensions"],
+            "encoder": prepared.settings.get("encoder", model_spec().identity),
             "gpu": prepared.settings["gpu"],
             "artifacts": [file_signature(artifact.destination) for artifact in prepared.artifacts],
         },

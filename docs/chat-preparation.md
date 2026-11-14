@@ -210,20 +210,52 @@ identity includes context-file and prepared model-file signatures; replacing a
 file at the same path invalidates the prior index without hashing weights during
 compute.
 
-The model remains `sentence-transformers/all-MiniLM-L6-v2`, pinned to official
+The default remains `sentence-transformers/all-MiniLM-L6-v2`, pinned to official
 Hub commit `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` (metadata checked
 2026-11-09, Apache-2.0). The eight-file native Transformer/tokenizer/pooling
 closure totals 91,567,511 bytes, including the 90,868,376-byte safetensors weight;
 ONNX, OpenVINO, TensorFlow and alternate weights are excluded. Sources use the
 [immutable publisher revision](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/tree/1110a243fdf4706b3f48f1d95db1a4f5529b4d41).
-Small Git files retain pinned revision/size identity; the LFS weight also retains
-the publisher's SHA256. Metadata availability is not real-model acceptance.
+Small files retain pinned revision/size identity, with SHA256 for the captured
+configuration files; the LFS weight retains the publisher's SHA256. Metadata
+availability is not real-model acceptance.
+
+The compact **Model** selector in **Settings → Local Chat → Documents and RAG**
+also offers these official, pinned alternatives:
+
+| Model                                                                                                                                                          | Pinned revision                            | Complete download |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------------- |
+| [MiniLM-L12-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L12-v2/tree/a50ef00143b4d5391434df20ae11632588ac25be)                                  | `a50ef00143b4d5391434df20ae11632588ac25be` | 134,165,444 bytes |
+| [Multilingual MiniLM-L12-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/tree/e8f8c211226b894fcb81acc59f3b34ba3efd5f42) | `e8f8c211226b894fcb81acc59f3b34ba3efd5f42` | 484,793,891 bytes |
+
+All three use the existing local AutoModel/tokenizer, 384-dimensional mean
+pooling and normalized vectors; arbitrary model IDs and remote model code are
+not accepted. Download size is not a runtime-memory estimate. Selection previews
+file presence and prepares that selected model; save the profile to apply it to
+new Chat requests. Preparation captures the selection before yielding progress.
+The selector is disabled during that tab's preparation, and completed requests
+retain their original model identity if settings later change.
+
+The encoder contract includes model/revision, pinned configuration and manifest
+identity, dimension, pooling, normalization and maximum input length. Both query
+and document retrieval use that same captured encoder. Any contract change
+invalidates the prior index, even if a path or vector dimension stays the same.
+The existing txtai tokenizer limit remains **512 tokens**. The Sentence
+Transformers reference configurations specify 256 for MiniLM-L6 and 128 for both
+alternatives; this selector does not silently switch to those shorter limits or
+claim long-input quality/performance parity with another framework.
+
+Weights live under `models/rag_embeddings`, outside disposable cache. The default
+keeps its existing `<revision>` directory for migration compatibility;
+alternatives use `<model-name>/<revision>`. Complete external HF snapshots may be
+reused read-only. The [copy-only legacy migration](integrations/cache-contract.md#legacy-rag-model-copy)
+still handles the default model's exact eight files when explicitly invoked idle.
 
 Offline requests use a complete local closure or fail before acquisition and
 compute; a partial directory is insufficient. Model files are not Python package
 installs, so `--skip-dependency-install` alone does not disable their normal
 online preparation. **Settings → Local Chat → Documents and RAG** shows the
-pinned 384-dimension model, exact-size file presence, and the placement policy
+selected pinned 384-dimension model, exact-size file presence, and the placement policy
 for new requests. **Prepare or verify embedding model** checks existing files
 and downloads any missing files when online. Cancellation detaches the current
 tab's preparation. Chat can continue to use its own preparation subscription.

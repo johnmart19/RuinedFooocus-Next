@@ -16,6 +16,11 @@ ONNX_BACKENDS = ("Auto", "CPU", "CUDA", "MIGraphX", "OpenVINO", "Windows GPU")
 # The xllamacpp ROCm 6.4 index stopped at an older release; ROCm 7.2 is Linux-only.
 XLLAMACPP_BACKENDS = ("Auto", "CPU", "Vulkan", "CUDA 12.8", "CUDA 13.2", "ROCm 7.2")
 RAG_EMBEDDING_DEVICES = ("Auto", "CPU")
+RAG_EMBEDDING_MODELS = (
+    "sentence-transformers/all-MiniLM-L6-v2",
+    "sentence-transformers/all-MiniLM-L12-v2",
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+)
 
 COMPUTE_CHOICES = {
     "image_device": ("Auto", "CPU"),
@@ -112,6 +117,7 @@ ENUM_FIELDS = {
     "llm_rewrite_reasoning_mode": (None, "Auto", "Off", "On"),
     "llm_rewrite_reasoning_effort": ("Auto", "Low", "Medium", "High"),
     "rag_embedding_device": RAG_EMBEDDING_DEVICES,
+    "rag_embedding_model": RAG_EMBEDDING_MODELS,
     "image_resize_mode": ("preserve", "pad", "crop"),
 }
 STARTUP_CONTROLS = (

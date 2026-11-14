@@ -1,0 +1,13 @@
+{
+  "id": "rag-model-selection",
+  "subject": "Select pinned Chat embedding models with isolated retrieval identities",
+  "requires": ["persistent-rag-model"],
+  "tests": [
+    "test_rag_model_selection.py",
+    "test_rag_settings.py",
+    "test_rag_preparation.py",
+    "test_rag_cache_migration.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

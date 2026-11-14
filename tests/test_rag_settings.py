@@ -34,8 +34,14 @@ class RagSettingsTests(unittest.TestCase):
             captured = rag.capture_embedding_model(settings, launch_args=launch)
             settings["rag_embedding_device"] = "Auto"
             automatic = rag.capture_embedding_model(settings, launch_args=launch)
-        self.assertEqual(captured.settings, {"gpu": False, "offline": False})
-        self.assertEqual(automatic.settings, {"gpu": True, "offline": False})
+        self.assertEqual(
+            captured.settings,
+            {"gpu": False, "offline": False, "encoder": rag.model_spec().identity},
+        )
+        self.assertEqual(
+            automatic.settings,
+            {"gpu": True, "offline": False, "encoder": rag.model_spec().identity},
+        )
         self.assertEqual(
             rag.embedding_device_policy(settings | {"cpu_everywhere": True}, launch),
             ("CPU", "global"),
@@ -124,19 +130,24 @@ class RagSettingsTests(unittest.TestCase):
         )
         self.assertEqual(ui.initialized_device(SimpleNamespace(embeddings=index)), "cpu")
 
-    def test_rag_controls_register_one_real_preference_and_private_events(self):
+    def test_rag_controls_register_model_and_device_preferences_and_private_events(self):
         register = Mock()
         with gr.Blocks(analytics_enabled=False) as app:
             with gr.Tab("Local Chat") as tab:
                 ui.create_rag_settings(
                     tab, SimpleNamespace(default_settings={}), SimpleNamespace(), register
                 )
-        register.assert_called_once()
-        self.assertEqual(register.call_args.args[0], "rag_embedding_device")
-        radio = register.call_args.args[1]
+        controls = {call.args[0]: call.args[1] for call in register.call_args_list}
+        self.assertEqual(set(controls), {"rag_embedding_model", "rag_embedding_device"})
+        self.assertEqual(
+            [choice[1] for choice in controls["rag_embedding_model"].choices],
+            list(rag.RAG_EMBEDDING_MODELS),
+        )
+        self.assertEqual(controls["rag_embedding_model"].value, rag.MODEL_ID)
+        radio = controls["rag_embedding_device"]
         self.assertEqual([choice[1] for choice in radio.choices], ["Auto", "CPU"])
         events = app.get_config_file()["dependencies"]
-        self.assertEqual(len(events), 4)
+        self.assertEqual(len(events), 5)
         self.assertTrue(all(event["api_visibility"] == "private" for event in events))
 
     def test_settings_status_is_passive_and_prepare_uses_the_same_captured_model(self):
@@ -156,14 +167,18 @@ class RagSettingsTests(unittest.TestCase):
                 patch.object(rag, "capture_embedding_model", side_effect=[offline, online, online]),
                 patch.object(rag, "prepare_rag", return_value=online) as prepare,
             ):
-                status, placement, button, _ = callbacks["refresh_status"](session, gr.Request())
+                status, placement, button, _, _ = callbacks["refresh_status"](
+                    session, rag.MODEL_ID, gr.Request()
+                )
                 self.assertIn("Offline mode", status)
                 self.assertIn("CPU", placement)
                 self.assertFalse(button["interactive"])
                 prepare.assert_not_called()
 
-                progress = callbacks["prepare_model"](session, gr.Request())
-                self.assertTrue(next(progress)[-1]["interactive"])
+                progress = callbacks["prepare_model"](session, rag.MODEL_ID, gr.Request())
+                busy = next(progress)
+                self.assertTrue(busy[-2]["interactive"])
+                self.assertFalse(busy[-1]["interactive"])
                 callbacks["cancel"](session)
                 self.assertIn("cancelled", next(progress)[0])
                 self.assertFalse(session.running)

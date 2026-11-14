@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "models": [
+    {
+      "id": "sentence-transformers/all-MiniLM-L6-v2",
+      "label": "MiniLM-L6-v2",
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "files": [
+        [
+          "1_Pooling/config.json",
+          190,
+          "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+        ],
+        ["config.json", 612, "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41"],
+        [
+          "config_sentence_transformers.json",
+          116,
+          "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3"
+        ],
+        [
+          "model.safetensors",
+          90868376,
+          "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db"
+        ],
+        ["special_tokens_map.json", 112, null],
+        ["tokenizer.json", 466247, null],
+        [
+          "tokenizer_config.json",
+          350,
+          "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b"
+        ],
+        ["vocab.txt", 231508, null]
+      ],
+      "encoding": {
+        "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "dimensions": 384,
+        "pooling": "mean",
+        "normalize": true,
+        "max_length": 512,
+        "reference_sentence_transformers_max_length": 256,
+        "weight_dtype": "float32",
+        "configs": {
+          "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+          "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+          "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+          "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3"
+        }
+      }
+    },
+    {
+      "id": "sentence-transformers/all-MiniLM-L12-v2",
+      "label": "MiniLM-L12-v2",
+      "revision": "a50ef00143b4d5391434df20ae11632588ac25be",
+      "files": [
+        [
+          "1_Pooling/config.json",
+          190,
+          "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+        ],
+        ["config.json", 615, "bc451f333af67312ba0de5018ef1c9ba663cb18549443e568f0bd35262dc1c48"],
+        [
+          "config_sentence_transformers.json",
+          116,
+          "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3"
+        ],
+        [
+          "model.safetensors",
+          133466304,
+          "d2d541e5f101695ae495eacd867a8d025ecfe8f9674fb23aa6cf93cdb60a5542"
+        ],
+        ["special_tokens_map.json", 112, null],
+        ["tokenizer.json", 466247, null],
+        [
+          "tokenizer_config.json",
+          352,
+          "fba7637034542f691ef4b1ad735d664971e8d9723012a1973d4ee985742e8e72"
+        ],
+        ["vocab.txt", 231508, null]
+      ],
+      "encoding": {
+        "model_id": "sentence-transformers/all-MiniLM-L12-v2",
+        "revision": "a50ef00143b4d5391434df20ae11632588ac25be",
+        "dimensions": 384,
+        "pooling": "mean",
+        "normalize": true,
+        "max_length": 512,
+        "reference_sentence_transformers_max_length": 128,
+        "weight_dtype": "float32",
+        "configs": {
+          "config.json": "bc451f333af67312ba0de5018ef1c9ba663cb18549443e568f0bd35262dc1c48",
+          "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+          "tokenizer_config.json": "fba7637034542f691ef4b1ad735d664971e8d9723012a1973d4ee985742e8e72",
+          "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3"
+        }
+      }
+    },
+    {
+      "id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "label": "Multilingual MiniLM-L12-v2",
+      "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+      "files": [
+        [
+          "1_Pooling/config.json",
+          190,
+          "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+        ],
+        ["config.json", 645, "6300193cb75e01cf80c96decef7187dfb33094d97cc1490b7ead6ff134476e4e"],
+        [
+          "config_sentence_transformers.json",
+          122,
+          "b8c64b5cece00d8424b4896ea75b512b6008576088497609dfeb6bd63e6d36b8"
+        ],
+        [
+          "model.safetensors",
+          470641600,
+          "eaa086f0ffee582aeb45b36e34cdd1fe2d6de2bef61f8a559a1bbc9bd955917b"
+        ],
+        [
+          "sentencepiece.bpe.model",
+          5069051,
+          "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+        ],
+        ["special_tokens_map.json", 239, null],
+        [
+          "tokenizer.json",
+          9081518,
+          "2c3387be76557bd40970cec13153b3bbf80407865484b209e655e5e4729076b8"
+        ],
+        [
+          "tokenizer_config.json",
+          526,
+          "5036ea374ffedd706e3bef33e2e0d6953cb868ef8a490e76e32ba0faa37a6b9b"
+        ]
+      ],
+      "encoding": {
+        "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+        "dimensions": 384,
+        "pooling": "mean",
+        "normalize": true,
+        "max_length": 512,
+        "reference_sentence_transformers_max_length": 128,
+        "weight_dtype": "float32",
+        "configs": {
+          "config.json": "6300193cb75e01cf80c96decef7187dfb33094d97cc1490b7ead6ff134476e4e",
+          "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+          "tokenizer_config.json": "5036ea374ffedd706e3bef33e2e0d6953cb868ef8a490e76e32ba0faa37a6b9b",
+          "config_sentence_transformers.json": "b8c64b5cece00d8424b4896ea75b512b6008576088497609dfeb6bd63e6d36b8"
+        }
+      }
+    }
+  ]
+}

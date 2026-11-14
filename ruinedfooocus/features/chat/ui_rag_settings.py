@@ -73,11 +73,13 @@ def initialized_device(pipeline):
 
 def create_rag_settings(tab, settings, launch_args, add_setting):
     with gr.Accordion(t("Documents and RAG"), open=False):
-        total_bytes = sum(size for _, size, _ in rag.MODEL_FILES)
-        gr.Markdown(
-            f"[{rag.MODEL_ID}](https://huggingface.co/{rag.MODEL_ID}/tree/{rag.MODEL_REVISION})"
-            f" · {rag.MODEL_DIMENSIONS} dimensions · {total_bytes / 1024**2:.1f} MiB"
+        model_choice = gr.Dropdown(
+            choices=rag.model_choices(),
+            value=settings.default_settings.get("rag_embedding_model", rag.MODEL_ID),
+            label=t("Model"),
         )
+        add_setting("rag_embedding_model", model_choice)
+        description = gr.Markdown(rag.model_description(model_choice.value))
         device = gr.Radio(
             choices=list(RAG_EMBEDDING_DEVICES),
             value=settings.default_settings.get("rag_embedding_device", "Auto"),
@@ -100,11 +102,11 @@ def create_rag_settings(tab, settings, launch_args, add_setting):
             EmbeddingPreparationSession(), delete_callback=lambda item: item.cancel()
         )
 
-    def refresh_status(item, request: gr.Request):
+    def refresh_status(item, selected_model, request: gr.Request):
         from ruinedfooocus.app.resource_lifecycle import service_pipeline
 
         locale = resolve_locale(request=request)
-        values = settings.default_settings
+        values = dict(settings.default_settings, rag_embedding_model=selected_model)
         selected, reason = rag.embedding_device_policy(values, launch_args)
         policy = localize("Placement for new requests: {device}.", locale, device=selected)
         if reason == "global":
@@ -142,19 +144,20 @@ def create_rag_settings(tab, settings, launch_args, add_setting):
             policy,
             gr.update(interactive=can_prepare),
             gr.update(interactive=item.running),
+            gr.update(interactive=not item.running),
         )
 
-    status_outputs = [status, placement, prepare, cancel]
+    status_outputs = [status, placement, prepare, cancel, model_choice]
 
-    def show_when_selected(item, request: gr.Request, event: gr.SelectData):
+    def show_when_selected(item, selected_model, request: gr.Request, event: gr.SelectData):
         return (
-            refresh_status(item, request)
+            refresh_status(item, selected_model, request)
             if event.selected
             else tuple(gr.skip() for _ in status_outputs)
         )
 
     events = dict(
-        inputs=[session],
+        inputs=[session, model_choice],
         outputs=status_outputs,
         queue=False,
         api_visibility="private",
@@ -163,10 +166,22 @@ def create_rag_settings(tab, settings, launch_args, add_setting):
     tab.select(show_when_selected, **events)
     refresh.click(refresh_status, **events)
 
-    def prepare_model(item, request: gr.Request, progress=gr.Progress()):
+    def refresh_model(item, selected_model, request: gr.Request):
+        return rag.model_description(selected_model), *refresh_status(item, selected_model, request)
+
+    model_choice.change(
+        refresh_model,
+        **(events | {"outputs": [description, *status_outputs]}),
+    )
+
+    def prepare_model(item, selected_model, request: gr.Request, progress=gr.Progress()):
         locale = resolve_locale(request=request)
         try:
             with item.preparing() as cancelled:
+                model = rag.capture_embedding_model(
+                    dict(settings.default_settings, rag_embedding_model=selected_model),
+                    launch_args=launch_args,
+                )
                 busy = localize("Preparing embedding model files…", locale)
                 yield (
                     busy,
@@ -174,9 +189,7 @@ def create_rag_settings(tab, settings, launch_args, add_setting):
                     gr.skip(),
                     gr.update(interactive=False),
                     gr.update(interactive=True),
-                )
-                model = rag.capture_embedding_model(
-                    settings.default_settings, launch_args=launch_args
+                    gr.update(interactive=False),
                 )
 
                 def report(received, total, speed):
@@ -196,11 +209,11 @@ def create_rag_settings(tab, settings, launch_args, add_setting):
                 "Embedding preparation failed. Check the local files or connection and try again.",
                 locale,
             )
-        yield message, *refresh_status(item, request)
+        yield message, *refresh_status(item, selected_model, request)
 
     prepare.click(
         prepare_model,
-        inputs=[session],
+        inputs=[session, model_choice],
         outputs=[progress_text, *status_outputs],
         api_visibility="private",
         show_progress="hidden",

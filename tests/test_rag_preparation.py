@@ -203,7 +203,9 @@ class RagPreparationTests(unittest.TestCase):
         )
         prepared = captured["_rag_preparation"]
         args.cpu, args.offline, values["cpu_everywhere"] = False, False, True
-        self.assertEqual(prepared.settings, {"gpu": False, "offline": True})
+        self.assertEqual(
+            prepared.settings, {"gpu": False, "offline": True, "encoder": rag.model_spec().identity}
+        )
         with patch.object(rag, "prepare_rag", return_value=prepared) as prepare:
             self.assertIs(prepare_chat_request(captured), captured)
         prepare.assert_called_once_with(prepared, progress=None, cancelled=None)
