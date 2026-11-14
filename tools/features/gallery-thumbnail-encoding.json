@@ -1,0 +1,13 @@
+{
+  "id": "gallery-thumbnail-encoding",
+  "subject": "Reduce cold Gallery thumbnail encoding time without resizing previews",
+  "requires": ["gallery-cached-view-ownership"],
+  "tests": [
+    "test_gallery_page_work.py",
+    "test_gallery_thumbnails.py",
+    "test_gallery_scheduling.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

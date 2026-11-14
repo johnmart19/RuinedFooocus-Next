@@ -50,6 +50,12 @@ on that first visit. Action buttons remain disabled until a current image is
 selected. `test_gallery_scheduling.py` exercises both empty and existing indexes
 through native image preparation and Gradio output processing.
 
+Grid and enlarged Gallery previews retain their 1024-pixel bound and WebP quality 82. New thumbnails use the faster encoder method 0; existing cache keys and copies
+remain valid. In a private 100-entry CPU fixture, cold preparation fell from 9.92s
+to 8.11s while thumbnail bytes increased 23.5%; cached opening was unchanged.
+This trades compression efficiency for first-open CPU time. Image actions and
+Editor handoffs still use the full original, including its alpha and metadata.
+
 | Entry point                                        | Preparation and execution                                                                                                            |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Use prompt in Create                               | Original or rendered text into Create; clear old source/reference/mask state; wait for Generate                                      |

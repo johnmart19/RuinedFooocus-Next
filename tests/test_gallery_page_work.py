@@ -127,6 +127,29 @@ class GalleryPageWorkTests(unittest.TestCase):
             self.assertEqual(hashed.call_count, 6)
         self.assertEqual(gallery.temp_files, {path for path, _ in images})
 
+    def test_native_gallery_preview_keeps_full_original_for_image_actions(self):
+        from ruinedfooocus.features.gallery.actions import source_path
+
+        original = self.root / "5.png"
+        with Image.new("RGBA", (1600, 800), (20, 40, 60, 127)) as image:
+            image.save(original)
+        original_bytes = original.read_bytes()
+        with patch.object(thumbnails, "GRID_THUMBNAIL_SIDE", 1024):
+            images, _, records = self.load()
+        index = next(i for i, record in enumerate(records) if Path(record["path"]) == original)
+        gallery = gr.Gallery(render=False)
+        data = gallery.postprocess(images)
+        self.assertIsInstance(data, gallery.data_model)
+        self.assertEqual(data.root[index].image.path, images[index][0])
+        with Image.open(data.root[index].image.path) as preview:
+            self.assertEqual(preview.size, (1024, 512))
+            self.assertIn("A", preview.getbands())
+        self.assertEqual(source_path(records[index]), original)
+        with Image.open(source_path(records[index])) as full_image:
+            self.assertEqual(full_image.size, (1600, 800))
+            self.assertEqual(full_image.getpixel((0, 0)), (20, 40, 60, 127))
+        self.assertEqual(original.read_bytes(), original_bytes)
+
     def test_source_replacement_missing_delivery_and_upload_root_each_invalidate_reuse(self):
         with patch.object(
             processing_utils, "hash_file", wraps=processing_utils.hash_file

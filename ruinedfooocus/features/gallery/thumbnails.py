@@ -87,7 +87,7 @@ def _thumbnail(path, directory):
                         dir=directory, prefix=f"{key}.", suffix=".tmp", delete=False
                     ) as temporary:
                         partial = Path(temporary.name)
-                    thumbnail.save(partial, "WEBP", quality=82, method=2)
+                    thumbnail.save(partial, "WEBP", quality=82, method=0)
                     if (
                         partial.stat().st_size > LIBRARY_THUMBNAIL_MAX_BYTES
                         or file_identity(path) != identity
