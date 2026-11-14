@@ -74,6 +74,25 @@ class EditorSessionTests(unittest.TestCase):
         result = self.image(name)
         return self.store.complete(ticket, result, owner=self.owner, **kwargs)
 
+    def test_guide_result_keeps_the_image_head_and_existing_redo_history(self):
+        changed = self.complete(self.capture(), "edited.png")
+        previous = self.store.undo(changed.session_id, changed.revision, owner=self.owner)
+        ticket = self.capture(previous, operation="depth-map")
+        guide = self.image("depth.png")
+        current = self.store.complete(ticket, guide, owner=self.owner)
+        self.assertEqual(current.current, previous.current)
+        self.assertEqual(current.steps, previous.steps)
+        self.assertEqual(current.revision, previous.revision + 1)
+        self.assertEqual(current.derived_results["output"], "guide")
+        self.assertFalse(current.derived_results["selection_eligible"])
+        derived = self.store.artifact(
+            current.session_id, current.derived_results["result_ids"][0], owner=self.owner
+        )
+        self.assertEqual(derived.path, str(guide.resolve()))
+        replayed = self.store.redo(current.session_id, current.revision, owner=self.owner)
+        self.assertEqual(replayed.current, changed.current)
+        self.assertEqual(self.original.read_bytes(), self.original_bytes)
+
     def test_real_operation_preserves_original_alpha_odd_size_and_inherited_provenance(self):
         parameters = {"prompt": "own requested prompt", "denoise": 0.25}
         ticket = self.store.capture(

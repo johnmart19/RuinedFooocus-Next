@@ -657,9 +657,12 @@ class EditorSessionStore:
 
     def complete(self, ticket, result_path, *, execution=None, owner=None, check_cancelled=None):
         from ruinedfooocus.app.resource_lifecycle import current_job, registry
+        from ruinedfooocus.features.image_processing.native_image_outputs import output_role
 
         self.validate(ticket, owner=owner)
         execution = json.loads(_mapping_json(execution, "execution"))
+        role = output_role({"controlnet": {"type": ticket.operation}, **execution})
+        derived = role in ("guide", "helper", "preview", "placeholder")
         result = self._ref(result_path)
         if Path(result.path) == Path(ticket.source.path):
             raise ValueError(
@@ -696,17 +699,30 @@ class EditorSessionStore:
             with self._edit(ticket.session_id, owner) as value:
                 self._validate(value, ticket)
                 value["artifacts"][result.artifact_id] = result.to_dict(public=False)
-                step = ticket.metadata() | dict(
-                    parent_id=ticket.source_id,
-                    result_id=result.artifact_id,
-                    execution=execution,
-                    completed_at=self.clock(),
-                )
-                value["steps"].append(step)
+                revision = value["revision"] + 1
+                if derived:
+                    value["derived_results"] = dict(
+                        operation=ticket.operation,
+                        operation_id=ticket.operation_id,
+                        source_id=ticket.source_id,
+                        source_frame_id=ticket.source.frame_id,
+                        revision=revision,
+                        result_ids=[result.artifact_id],
+                        output=role,
+                        selection_eligible=False,
+                        execution=execution,
+                    )
+                else:
+                    step = ticket.metadata() | dict(
+                        parent_id=ticket.source_id,
+                        result_id=result.artifact_id,
+                        execution=execution,
+                        completed_at=self.clock(),
+                    )
+                    value["steps"].append(step)
+                    value.update(head_id=result.artifact_id, redo=[])
                 value.update(
-                    head_id=result.artifact_id,
-                    revision=value["revision"] + 1,
-                    redo=[],
+                    revision=revision,
                     pending=None,
                     last_outcome={"status": "completed", "operation_id": ticket.operation_id},
                 )

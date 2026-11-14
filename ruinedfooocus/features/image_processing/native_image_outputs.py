@@ -22,7 +22,7 @@ class NativeImageOutput:
 
 
 def output_role(metadata):
-    """Classify terminal semantics for the Latest shortcut; never hide/delete outputs."""
+    """Classify Latest/editor publication semantics; never hide or delete outputs."""
     if isinstance(metadata, str):
         try:
             metadata = json.loads(metadata)

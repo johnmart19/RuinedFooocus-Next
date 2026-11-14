@@ -174,6 +174,7 @@ class OwnedEditorPublicationTests(unittest.TestCase):
         )
         for name in (
             "validate_editor_data",
+            "_source_has_opaque_alpha",
             "stage_editor_result",
             "publish_editor_result",
             "discard_editor_result",
@@ -249,6 +250,130 @@ class OwnedEditorPublicationTests(unittest.TestCase):
         self.scope["discard_editor_result"](self.item, status="cancelled")
         self.assertEqual(self.store.snapshot(self.snapshot.session_id, owner=self.owner).steps, ())
         self.assertEqual(self.scope["editor_result"](self.item.task_id)["status"], "cancelled")
+
+    def test_depth_publication_keeps_color_for_restore_pipeline_and_following_inpaint(self):
+        from ruinedfooocus.features.image_processing.native_image_outputs import result_presentation
+
+        color = (203, 71, 29)
+        Image.new("RGBA", (17, 23), (*color, 255)).save(self.source)
+        original = self.source.read_bytes()
+        self.snapshot = self.store.start(self.source, owner=self.owner)
+        depth = self.folder / "depth.png"
+        info = PngInfo()
+        info.add_text(
+            "parameters",
+            json.dumps(
+                {"controlnet": {"type": "depth-map"}, "native_vision_source": {"native": "DA3"}}
+            ),
+        )
+        Image.new("L", (17, 23), 127).save(depth, pnginfo=info)
+        data = self.request(operation="depth-map")
+        self.scope["validate_editor_data"](data, start=True)
+        self.scope["stage_editor_result"](data, [str(depth)])
+        self.scope["add_result"](self.item.task_id, "results", [str(depth)])
+        current = self.store.snapshot(self.snapshot.session_id, owner=self.owner)
+        self.assertEqual(current.current, self.snapshot.current)
+        self.assertEqual(current.steps, ())
+        self.assertEqual(current.derived_results["output"], "guide")
+        retained = self.store.artifact(
+            current.session_id, current.derived_results["result_ids"][0], owner=self.owner
+        )
+        self.assertEqual(retained.path, str(depth.resolve()))
+        self.assertEqual(result_presentation([str(depth)])[2][0]["output_role"], "guide")
+
+        context = dict(
+            session_id=current.session_id,
+            revision=current.revision,
+            source_id=current.current.artifact_id,
+        )
+        bound = api_runtime.bind_editor_source({}, context, owner=self.owner)
+        self.assertEqual(bound["image_source"]["filename"], self.source.name)
+        self.assertEqual(bound["input_image"].getpixel((0, 0))[:3], color)
+        self.item = self.registry.create(owner=self.owner)
+        with life.job_scope(self.item):
+            data = editor_session.capture_request(
+                bound, context, "restore-seedvr2", owner=self.owner, store=self.store
+            )
+            output = self.folder / "restored.png"
+            data.update(
+                task_type="tool_call",
+                task_id=self.item.task_id,
+                _job=self.item,
+                silent=True,
+                image_number=1,
+                _sampling_captured=False,
+                controlnet={"type": "restore-seedvr2"},
+                seedvr2_model="fixture.safetensors",
+                seedvr2_scale=1.0,
+                seedvr2_color="none",
+                custom_width=17,
+                custom_height=23,
+            )
+            forbidden = Mock(side_effect=AssertionError("Utility used diffusion resources"))
+            pipeline = SimpleNamespace(
+                pipeline_type=["sdxl"],
+                parse_gen_data=lambda value: value,
+                load_base_model=Mock(),
+                process=Mock(
+                    side_effect=lambda **kw: [kw["gen_data"]["input_image"].convert("RGBA")]
+                ),
+            )
+            process = function_from(
+                WORKER,
+                "_process",
+                dict(
+                    self.scope,
+                    shared=SimpleNamespace(
+                        state={},
+                        shared_cache={},
+                        models=SimpleNamespace(get_file=forbidden),
+                        path_manager=SimpleNamespace(
+                            model_paths={"temp_outputs_path": self.folder}
+                        ),
+                    ),
+                    settings=SimpleNamespace(default_settings={}),
+                    control_tools=SimpleNamespace(
+                        get_settings=lambda value: value.get("controlnet") or {}
+                    ),
+                    pipelines=SimpleNamespace(update=lambda value: pipeline),
+                    process_metadata=forbidden,
+                    process_prompt=forbidden,
+                    parse_loras=forbidden,
+                    get_checkpoint_hashes=forbidden,
+                    get_lora_hashes=forbidden,
+                    generate_temp_filename=lambda **kw: str(output),
+                    TimeIt=nullcontext,
+                    resource_path=resource_path,
+                    random=random,
+                    Path=Path,
+                    pathlib=pathlib,
+                    Image=Image,
+                    PngInfo=PngInfo,
+                    model_management=SimpleNamespace(InterruptProcessingException=InterruptedError),
+                ),
+            )
+            self.scope["validate_editor_data"](data, start=True)
+            outputs = process(data)
+            actual = pipeline.process.call_args.kwargs["gen_data"]
+            self.assertEqual(actual["image_source"]["filename"], self.source.name)
+            self.assertEqual(actual["input_image"].getpixel((0, 0))[:3], color)
+            self.scope["stage_editor_result"](data, outputs)
+            self.scope["add_result"](self.item.task_id, "results", outputs)
+        current = self.store.snapshot(current.session_id, owner=self.owner)
+        following = api_runtime.bind_editor_source(
+            {},
+            dict(
+                session_id=current.session_id,
+                revision=current.revision,
+                source_id=current.current.artifact_id,
+            ),
+            owner=self.owner,
+        )
+        self.assertEqual(following["image_source"]["filename"], output.name)
+        self.assertEqual(following["input_image"].getpixel((0, 0))[:3], color)
+        self.assertEqual(self.source.read_bytes(), original)
+        self.assertTrue(depth.is_file())
+        forbidden.assert_not_called()
 
     def test_native_background_output_publishes_without_diffusion_metadata_or_lookup(self):
         source_generation = {
