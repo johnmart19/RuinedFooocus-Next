@@ -56,6 +56,13 @@ to 8.11s while thumbnail bytes increased 23.5%; cached opening was unchanged.
 This trades compression efficiency for first-open CPU time. Image actions and
 Editor handoffs still use the full original, including its alpha and metadata.
 
+Paging retains at most two pages of prepared assets. Each visit reads the current
+index and original path/stat signatures; an unchanged back page reuses its files
+without re-opening source headers, encoding or hashing delivery copies. Changed
+sources, cache/upload roots or a recreated index invalidate that reuse. Native
+Gallery property updates serialize images once and retain the explicit selection
+reset. Request/selection fences and private, no-store HTTP responses stay intact.
+
 | Entry point                                        | Preparation and execution                                                                                                            |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Use prompt in Create                               | Original or rendered text into Create; clear old source/reference/mask state; wait for Generate                                      |

@@ -220,7 +220,7 @@ class ImageBrowser:
         self.path_manager = path_manager
         self.base_path = Path(self.path_manager.model_paths["temp_outputs_path"])
         self._database_path = configured_cache_root(self.path_manager) / "images.db"
-        self.sql_conn = connect_database(self._database_path)
+        connect_database(self._database_path).close()
         self.images_per_page = min(
             100, max(1, int(settings.default_settings.get("images_per_page", 100)))
         )
@@ -258,6 +258,16 @@ class ImageBrowser:
         size = self.images_per_page if page_size is None else min(100, max(1, int(page_size)))
         with index_connection(self) as connection:
             count, pages, page, rows = page_snapshot(connection, page, search, size)
+            database = getattr(self, "_database_path", None)
+            if database is None:
+                generation = (id(connection),)
+            else:
+                stat = Path(database).stat()
+                generation = (
+                    stat.st_dev,
+                    stat.st_ino,
+                    getattr(stat, "st_birthtime_ns", stat.st_ctime_ns),
+                )
         image_paths = []
         cached_paths = []
         records = []
@@ -265,7 +275,11 @@ class ImageBrowser:
         import os
         from ruinedfooocus.core.cache_contract import configured_cache_root
         from ruinedfooocus.features.gallery.actions import source_record
-        from ruinedfooocus.features.gallery.thumbnails import grid_thumbnail_batch
+        from ruinedfooocus.features.gallery.thumbnails import (
+            GRID_THUMBNAIL_SIDE,
+            grid_thumbnail_batch,
+        )
+        from ruinedfooocus.features.models.model_identity import file_signature
 
         manager = getattr(self, "path_manager", None)
         cache = configured_cache_root(manager) if manager is not None else None
@@ -273,24 +287,26 @@ class ImageBrowser:
             grid_thumbnail_batch(cache) if cache is not None else nullcontext(lambda path: path)
         )
         upload = get_upload_folder()
-        previous_copies = getattr(self, "_page_copies", {})
-        page_copies = {}
+        generation = (
+            str(cache),
+            str(upload),
+            GRID_THUMBNAIL_SIDE,
+            getattr(self, "_output_storage_generation", 0),
+            generation,
+        )
+        previous_assets = (
+            getattr(self, "_page_assets", {})
+            if getattr(self, "_page_generation", None) == generation
+            else {}
+        )
+        page_assets = {}
         with copies as thumbnail:
             for fullpath, relpath, *_ in rows:
                 check_cancelled(cancelled)
                 try:
-                    record = source_record(fullpath)
-                    from ruinedfooocus.features.image_processing.native_image_formats import (
-                        display_image,
-                        needs_preview,
-                    )
-
-                    display = (
-                        display_image(fullpath, cache) if needs_preview(fullpath) else fullpath
-                    )
-                    display = thumbnail(display)
-                    key = (str(upload), str(display), tuple(record["signature"]))
-                    cached = previous_copies.get(key)
+                    signature = tuple(file_signature(fullpath))
+                    asset = previous_assets.get(signature)
+                    cached = asset[0] if asset is not None else None
                     if cached is not None:
                         try:
                             if Path(cached).is_file():
@@ -301,17 +317,37 @@ class ImageBrowser:
                         except OSError:
                             cached = None
                     if cached is None:
+                        record = source_record(fullpath)
+                        signature = tuple(record["signature"])
+                        from ruinedfooocus.features.image_processing.native_image_formats import (
+                            display_image,
+                            needs_preview,
+                        )
+
+                        display = (
+                            display_image(fullpath, cache) if needs_preview(fullpath) else fullpath
+                        )
+                        display = thumbnail(display)
                         cached = save_file_to_cache(str(display), upload)
-                    page_copies[key] = cached
+                    else:
+                        record = dict(
+                            path=signature[0], signature=list(signature), caption=asset[1]
+                        )
+                    page_assets[signature] = (cached, record["caption"])
                     cached_paths.append((cached, record["caption"]))
                     records.append(record)
                     image_paths.append((fullpath, relpath))
                 except (OSError, ValueError):
                     # Files can disappear or be rejected between query and cache copy.
                     continue
-        # Immutable replacement keeps concurrent readers independent and bounds
-        # reuse to one page (at most 100 files); stale workers can only lose hits.
-        self._page_copies = page_copies
+        # Immutable snapshots retain two pages (at most 200 assets). Every visit
+        # still reads the index and current source signatures; stale workers can
+        # only lose hits, never publish an old UI view or resurrect index rows.
+        retained = [
+            (key, value) for key, value in previous_assets.items() if key not in page_assets
+        ]
+        self._page_assets = dict(retained[-size:] + list(page_assets.items()))
+        self._page_generation = generation
         if image_paths:
             first = (page - 1) * size + 1
             last = first + len(image_paths) - 1
@@ -331,14 +367,15 @@ class ImageBrowser:
         return (*result, records) if include_paths else result
 
     def add_image(self, full_path, rel_path, metadata, commit=False):
-        if commit:
-            self.sql_conn.cursor()
-        self.sql_conn.execute(
-            "INSERT INTO images (fullpath, path, json) VALUES (?, ?, ?)",
-            (str(full_path), str(rel_path), json.dumps(metadata)),
-        )
-        if commit:
-            self.sql_conn.commit()
+        from ruinedfooocus.features.gallery.index_store import index_connection
+
+        with index_connection(self) as connection:
+            connection.execute(
+                "INSERT INTO images (fullpath, path, json) VALUES (?, ?, ?)",
+                (str(full_path), str(rel_path), json.dumps(metadata)),
+            )
+            if commit:
+                connection.commit()
 
     def update_images(
         self,

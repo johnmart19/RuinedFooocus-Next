@@ -1,0 +1,15 @@
+{
+  "id": "gallery-page-reuse",
+  "subject": "Reuse prepared Gallery pages without reopening or hashing every image",
+  "requires": ["default-storage-recovery", "gallery-thumbnail-encoding"],
+  "tests": [
+    "test_gallery_page_work.py",
+    "test_gallery_scheduling.py",
+    "test_gallery_thumbnails.py",
+    "test_gallery_scan.py",
+    "test_gallery_index.py",
+    "test_gallery_media_diagnostics.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

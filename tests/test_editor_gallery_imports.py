@@ -13,7 +13,7 @@ from PIL import Image
 from PIL.PngImagePlugin import PngImageFile, PngInfo
 
 from ruinedfooocus.features.gallery.actions import source_record
-from ruinedfooocus.features.gallery.index_store import connect_index
+from ruinedfooocus.features.gallery.index_store import connect_index, index_connection
 from ruinedfooocus.features.image_processing.native_image_outputs import (
     latest_generated_result,
     output_role,
@@ -99,7 +99,9 @@ class EditorGalleryImports(unittest.TestCase):
             for name in ("__init__", "load_images", "update_images")
         }
         browser = type("NativePickerBrowser", (), methods)()
-        self.addCleanup(browser.sql_conn.close)
+        connection = getattr(browser, "sql_conn", None)
+        if connection is not None:
+            self.addCleanup(connection.close)
         self.browser.load_images = browser.load_images
         self.browser.update_images = Mock(wraps=browser.update_images)
         return browser, scope
@@ -161,9 +163,10 @@ class EditorGalleryImports(unittest.TestCase):
             finally:
                 release.set()
             pending.result(5)
-        self.assertEqual(
-            browser.sql_conn.execute("SELECT revision FROM library_snapshot").fetchone()[0], 0
-        )
+        with index_connection(browser) as connection:
+            self.assertEqual(
+                connection.execute("SELECT revision FROM library_snapshot").fetchone()[0], 0
+            )
         self.assertEqual(self.fixture.value(self.session, self.workspace.picker_records), [])
         self.fixture.call(self.session, prepare)
         self.assertEqual((browser.last_scan.count, browser.last_scan.parsed), (9, 9))

@@ -571,6 +571,7 @@ def prepare_image(
 
 
 def create_image_gallery():
+    from types import SimpleNamespace
     import asyncio
     from concurrent.futures import CancelledError
     from ruinedfooocus.app.preparation_admission import preparation_admission
@@ -789,9 +790,14 @@ def create_image_gallery():
             )
             count, pages, page = snapshot["count"], snapshot["pages"], snapshot["page"]
             return availability(None, {}) | {
-                # Constructor updates preserve explicit None; gr.update drops it.
-                gallery: gr.Gallery(
-                    value=images, selected_index=None, preview=False, elem_classes=[], render=False
+                # Native component props preserve explicit None and serialize
+                # images once, when Blocks postprocesses the output.
+                gallery: SimpleNamespace(
+                    _is_component_update=True,
+                    value=images,
+                    selected_index=None,
+                    preview=False,
+                    elem_classes=[],
                 ),
                 ib_page: gr.update(value=page, maximum=pages, interactive=True),
                 status_output: gr.update(

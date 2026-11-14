@@ -127,6 +127,60 @@ class GalleryPageWorkTests(unittest.TestCase):
             self.assertEqual(hashed.call_count, 6)
         self.assertEqual(gallery.temp_files, {path for path, _ in images})
 
+    def test_back_page_reuses_assets_and_native_delivery_without_rehashing(self):
+        from ruinedfooocus.features.gallery import actions
+
+        self.browser.images_per_page = 2
+        with (
+            patch.object(processing_utils, "hash_file", wraps=processing_utils.hash_file) as hashed,
+            patch.object(actions, "source_record", wraps=actions.source_record) as inspected,
+        ):
+            first = self.load(1)
+            self.load(2)
+            returned = self.load(1)
+            self.assertEqual(returned, first)
+            self.assertEqual(hashed.call_count, 4)
+            signature = first[2][0]["signature"].copy()
+            returned[2][0]["signature"][1] = -1
+            self.assertEqual(self.load(1)[2][0]["signature"], signature)
+            self.assertEqual(inspected.call_count, 4)
+            gallery = gr.Gallery(render=False)
+            gallery.GRADIO_CACHE = str(self.delivery)
+            first_delivery = processing_utils.move_files_to_cache(
+                gallery.postprocess(first[0]), gallery, postprocess=True
+            )
+            returned_delivery = processing_utils.move_files_to_cache(
+                gallery.postprocess(returned[0]), gallery, postprocess=True
+            )
+            self.assertEqual(returned_delivery, first_delivery)
+            self.assertEqual(hashed.call_count, 4)
+
+    def test_back_page_revalidates_sources_and_rebuilds_only_a_changed_asset(self):
+        self.browser.images_per_page = 2
+        with patch.object(
+            processing_utils, "hash_file", wraps=processing_utils.hash_file
+        ) as hashed:
+            first = self.load(1)
+            self.load(2)
+            original = Path(first[2][0]["path"])
+            Image.new("RGBA", (84, 64), "yellow").save(original)
+            changed = self.load(1)
+            self.assertEqual(hashed.call_count, 5)
+        self.assertNotEqual(changed[0][0][0], first[0][0][0])
+        self.assertNotEqual(changed[2][0]["signature"], first[2][0]["signature"])
+        self.assertEqual(changed[0][1], first[0][1])
+
+    def test_output_storage_recovery_invalidates_remembered_assets(self):
+        self.browser.images_per_page = 2
+        with patch.object(
+            processing_utils, "hash_file", wraps=processing_utils.hash_file
+        ) as hashed:
+            first = self.load(1)
+            self.assertEqual(hashed.call_count, 2)
+            self.browser._output_storage_generation = 1
+            self.assertEqual(self.load(1), first)
+            self.assertEqual(hashed.call_count, 4)
+
     def test_native_gallery_preview_keeps_full_original_for_image_actions(self):
         from ruinedfooocus.features.gallery.actions import source_path
 
@@ -208,14 +262,14 @@ class GalleryPageWorkTests(unittest.TestCase):
         self.assertEqual(hashed.call_count, 0)
         self.assertFalse(self.directory.exists())
 
-    def test_delivery_reuse_is_bounded_to_the_most_recent_page(self):
+    def test_delivery_reuse_is_bounded_to_two_pages(self):
         self.browser.images_per_page = 2
         with patch.object(
             processing_utils, "hash_file", wraps=processing_utils.hash_file
         ) as hashed:
             for page in (1, 2, 3):
                 self.load(page)
-                self.assertEqual(len(self.browser._page_copies), 2)
+                self.assertEqual(len(self.browser._page_assets), min(4, page * 2))
             self.assertEqual(hashed.call_count, 6)
             self.load(3)
             self.assertEqual(hashed.call_count, 6)

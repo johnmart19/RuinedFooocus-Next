@@ -150,6 +150,7 @@ class GallerySchedulingTests(unittest.TestCase):
             Path=Path,
             Image=Image,
             PngImageFile=PngImageFile,
+            json=json,
             Dict=dict,
             settings=SimpleNamespace(default_settings={"images_per_page": 2}),
             path_manager=manager,
@@ -161,10 +162,16 @@ class GallerySchedulingTests(unittest.TestCase):
         function_from(source, "get_png_metadata", scope)
         methods = {
             name: function_from(source, name, scope)
-            for name in ("__init__", "num_images_pages", "load_images", "update_images")
+            for name in (
+                "__init__",
+                "num_images_pages",
+                "load_images",
+                "update_images",
+                "add_image",
+            )
         }
         browser = type("NativeGalleryBrowser", (), methods)()
-        self.addCleanup(browser.sql_conn.close)
+        self.assertFalse(hasattr(browser, "sql_conn"))
         return browser, scope, originals
 
     def check_native_first_visit(self, *, indexed):
@@ -327,6 +334,51 @@ class GallerySchedulingTests(unittest.TestCase):
 
     def test_first_gallery_visit_initializes_native_index_then_pages_and_searches(self):
         self.check_native_first_visit(indexed=False)
+
+    def test_native_page_serializes_images_once_and_preserves_selection_reset(self):
+        browser, _, _ = self.native_browser()
+        browser.update_images()
+        self.scope["browser"] = browser
+        prepare = self.functions["prepare_view"]
+        descriptor = self.functions["request_page"].fn(1, "", 1, self.request)
+        calls = []
+        postprocess = gr.Gallery.postprocess
+
+        def counted(control, value):
+            if value:
+                calls.append(value)
+            return postprocess(control, value)
+
+        async def visit():
+            with patch.object(gr.Gallery, "postprocess", counted):
+                result = await prepare.fn(descriptor, self.request)
+                return await self.app.postprocess_data(prepare, result, SessionState(self.app))
+
+        serialized = asyncio.run(visit())
+        gallery = serialized[prepare.outputs.index(self.gallery)]
+        self.assertEqual(len(gallery["value"]), 2)
+        self.assertIsNone(gallery["selected_index"])
+        self.assertEqual(len(calls), 1)
+
+    def test_recreated_index_invalidates_page_assets_and_keeps_no_database_handle(self):
+        browser, _, originals = self.native_browser()
+        browser.update_images()
+        self.assertEqual(len(browser.load_images(1, include_paths=True)[2]), 2)
+        self.assertEqual(len(browser._page_assets), 2)
+        generation = browser._page_generation
+        database = browser._database_path
+        self.assertTrue(database.resolve().is_relative_to(self.root.resolve()))
+        database.unlink()
+        self.assertEqual(browser.load_images(1, include_paths=True)[2], [])
+        self.assertNotEqual(browser._page_generation, generation)
+        self.assertEqual(browser._page_assets, {})
+        source = next(iter(originals))
+        browser.add_image(source, source.name, {"parameters": "{}"}, commit=True)
+        self.assertEqual(browser.num_images_pages(), (1, 1))
+        self.assertIsNone(getattr(browser, "sql_conn", None))
+        database.unlink()
+        self.assertEqual(browser.num_images_pages(), (0, 1))
+        self.assertTrue(all(path.read_bytes() == value for path, value in originals.items()))
 
     def test_actual_gradio_event_configuration_has_independent_ack_cancel_and_bounded_work(self):
         for name in (
