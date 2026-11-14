@@ -1,6 +1,7 @@
 """Model size changes preserve explicit controls and source/replay ownership."""
 
 import ast
+import asyncio
 import copy
 import json
 from pathlib import Path
@@ -236,13 +237,125 @@ class ResolutionSettingsTests(unittest.TestCase):
             1024,
             1024,
             False,
-            SimpleNamespace(size=(1600, 900)),
+            {"width": 1600, "height": 900},
             "Image to image",
             "Img2img",
             "preserve",
         )
         self.assertIsNone(describe(*values, True)["source_size"])
         self.assertEqual(describe(*values, False)["source_size"], (1600, 900))
+
+    def test_resolution_display_uses_frame_state_without_decoding_transient_image_cache(self):
+        from gradio.state_holder import SessionState
+
+        broken = self.root / "inflight.png"
+        broken.write_bytes(b"\x89PNG\r\n\x1a\npartial image cache write")
+        scope = dict(
+            gr=gr,
+            ui_controlnet=SimpleNamespace(tool_kind=lambda selection, kind: kind.lower()),
+            resolution_settings=SimpleNamespace(
+                recommendation_text=lambda *args, **values: (
+                    list(values["source_size"]) if values["source_size"] else None
+                )
+            ),
+            performance_settings=self.performance,
+            resolve_locale=lambda **kwargs: "en",
+        )
+        scope["describe_resolution"] = callback("describe_resolution", scope)
+        scope["resolution_recommendation_text"] = callback("resolution_recommendation_text", scope)
+        tree = ast.parse(
+            (Path(__file__).parents[1] / "ruinedfooocus/ui/app.py").read_text(encoding="utf-8")
+        )
+        inputs = next(
+            node
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == "resolution_description_inputs"
+                for target in node.targets
+            )
+        )
+        binding = next(
+            node
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Call)
+            and any(
+                key.arg == "fn"
+                and isinstance(key.value, ast.Name)
+                and key.value.id == "resolution_recommendation_text"
+                for key in node.keywords
+            )
+        )
+        with gr.Blocks(analytics_enabled=False) as demo:
+            image = gr.Image(type="pil")
+            frame = gr.State({"width": 1664, "height": 2432, "path": str(broken)})
+            scope.update(
+                model_family=gr.State("SDXL"),
+                base_model=gr.Textbox("fixture"),
+                aspect_ratios_selection=gr.Textbox("Custom..."),
+                custom_width=gr.Number(832),
+                custom_height=gr.Number(1216),
+                resolution_auto=gr.Checkbox(True),
+                inpaint_toggle=gr.Checkbox(False),
+                model_metadata_refresh=gr.Number(0),
+                resolution_recommendation=gr.JSON(),
+                shared=SimpleNamespace(
+                    get_ctrl={
+                        "input_image": image,
+                        "image_source": frame,
+                        "cn_selection": gr.Textbox("Custom..."),
+                        "cn_type": gr.Textbox("Img2img"),
+                        "image_resize_mode": gr.Textbox("preserve"),
+                    }.get
+                ),
+            )
+            exec(
+                compile(
+                    ast.fix_missing_locations(
+                        ast.Module(body=[inputs, ast.Expr(binding)], type_ignores=[])
+                    ),
+                    "actual_resolution_binding",
+                    "exec",
+                ),
+                scope,
+            )
+            run = gr.Button().click(lambda value: value, image, gr.JSON())
+        event = next(
+            fn for fn in demo.fns.values() if fn.fn.__name__ == "resolution_recommendation_text"
+        )
+        state = SessionState(demo)
+        values = [
+            None,
+            "fixture",
+            "Custom...",
+            832,
+            1216,
+            True,
+            None,
+            "Custom...",
+            "Img2img",
+            "preserve",
+            False,
+        ]
+        with patch.object(
+            gr.Image, "preprocess", side_effect=SyntaxError("broken PNG file")
+        ) as decode:
+            result = asyncio.run(demo.process_api(event, values, state=state))["data"][0]
+            self.assertEqual(result.root if hasattr(result, "root") else result, [1664, 2432])
+            self.assertNotIn(image, event.inputs)
+            self.assertIs(event.inputs[6], frame)
+            decode.assert_not_called()
+            for invalid in (
+                {},
+                {"width": True, "height": 2432},
+                {"width": 20_000_000, "height": 1},
+            ):
+                state[frame._id] = invalid
+                result = asyncio.run(demo.process_api(event, values, state=state))["data"][0]
+                self.assertIsNone(result.root if hasattr(result, "root") else result)
+            decode.assert_not_called()
+            with self.assertRaisesRegex(Exception, "broken PNG|preprocess"):
+                asyncio.run(demo.process_api(run["id"], [None], state=state))
 
     def test_depth_map_size_hints_ignore_checkpoint_and_input_upscale(self):
         tools = SimpleNamespace(tool_kind=lambda *_: "depth-map")

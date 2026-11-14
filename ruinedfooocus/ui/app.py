@@ -2262,7 +2262,7 @@ with shared.gradio_root as block:
                 width,
                 height,
                 automatic,
-                image,
+                source_info,
                 tool_selection,
                 tool_type,
                 framing,
@@ -2280,7 +2280,7 @@ with shared.gradio_root as block:
                 source_size = None
                 if (
                     not inpainting
-                    and image is not None
+                    and isinstance(source_info, dict)
                     and kind
                     in (
                         "img2img",
@@ -2291,7 +2291,16 @@ with shared.gradio_root as block:
                         "recolour",
                     )
                 ):
-                    source_size = image.size
+                    from ruinedfooocus.features.image_processing.native_image_formats import (
+                        MAX_PIXELS,
+                    )
+
+                    frame = source_info.get("width"), source_info.get("height")
+                    if (
+                        all(type(value) is int and value > 0 for value in frame)
+                        and frame[0] * frame[1] <= MAX_PIXELS
+                    ):
+                        source_size = frame
                 return resolution_settings.recommendation_text(
                     family,
                     locale=locale,
@@ -2312,7 +2321,7 @@ with shared.gradio_root as block:
                 width,
                 height,
                 automatic,
-                image,
+                source_info,
                 tool_selection,
                 tool_type,
                 framing,
@@ -2327,13 +2336,15 @@ with shared.gradio_root as block:
                     width,
                     height,
                     automatic,
-                    image,
+                    source_info,
                     tool_selection,
                     tool_type,
                     framing,
                     inpainting,
                 )
 
+            # Display dimensions come from the captured frame, not a pixel
+            # decode that could race Gradio's derived-image cache population.
             resolution_description_inputs = [
                 model_family,
                 base_model,
@@ -2341,7 +2352,7 @@ with shared.gradio_root as block:
                 custom_width,
                 custom_height,
                 resolution_auto,
-                shared.get_ctrl("input_image"),
+                shared.get_ctrl("image_source"),
                 shared.get_ctrl("cn_selection"),
                 shared.get_ctrl("cn_type"),
                 shared.get_ctrl("image_resize_mode"),
