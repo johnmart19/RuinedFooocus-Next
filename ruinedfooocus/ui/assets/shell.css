@@ -1012,3 +1012,33 @@
 #browser-page-total :is(.prose, p) {
   margin: 0;
 }
+/* Chat attach row: the button and its accepted formats line up on one row. */
+#chat-attachment-picker .prose {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+}
+/* Radio labels keep one spacing whether their help text is inline or behind "?". */
+:is(#app-tabs, #image-stage) fieldset > span:not(.rf-control-help) {
+  margin-bottom: 0.5rem !important;
+}
+/* Chat's per-turn switches: three cards on the page surface (not cards inside a
+   card), with the follow-up actions spaced below them. */
+#app-tabs #chat-conversation .form:has(> .rf-chat-permission) {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin-bottom: 0.5rem;
+}
+#app-tabs #chat-conversation .form > .rf-chat-permission {
+  background: var(--block-background-fill) !important;
+  border: 1px solid var(--border-color-primary) !important;
+  border-radius: var(--rf-radius) !important;
+  padding: 0.75rem 0.875rem !important;
+}
+/* Chat's conversation column stays on the page surface: its groups (the prompt
+   actions around Undo included) draw no card; fields and switches keep theirs. */
+#app-tabs #chat-conversation :is(.gr-group, .styler):not(.rf-chat-permission) {
+  background: transparent !important;
+}

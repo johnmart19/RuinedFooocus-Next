@@ -1,0 +1,15 @@
+{
+  "id": "chat-attach-and-switches",
+  "subject": "Match Chat's attach control and per-turn switches to the app's card and button styles",
+  "requires": [
+    "page-headers-and-gallery-open"
+  ],
+  "tests": [
+    "test_chat_presentation.py",
+    "test_chat_attachments.py",
+    "test_responsive_ui_layout.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

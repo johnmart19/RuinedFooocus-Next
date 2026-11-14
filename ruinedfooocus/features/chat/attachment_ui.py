@@ -132,11 +132,16 @@ watch(["value", "remove", "ready", "export_label"], render);
 render();
 """
 
+# Same size, weight, padding and corners as the app's other secondary buttons;
+# the accepted formats read as help text beside it.
 _BUTTON_STYLE = """
-button { padding: .35rem .75rem; border-radius: var(--radius-md); background: var(--button-secondary-background-fill);
-    color: var(--button-secondary-text-color); border: 1px solid var(--border-color-primary); cursor: pointer; }
+button { min-height: 44px; padding: 0 1rem; border-radius: var(--rf-radius-sm, 10px);
+    background: var(--button-secondary-background-fill); color: var(--button-secondary-text-color);
+    border: 1px solid var(--border-color-primary); cursor: pointer;
+    font-size: var(--text-sm); font-weight: 600; line-height: 1.25; }
 button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 button:disabled { opacity: .6; cursor: wait; }
+.attachment-formats { font-size: var(--text-sm); color: var(--body-text-color-subdued); }
 [role=status] { overflow-wrap: anywhere; }
 """
 
