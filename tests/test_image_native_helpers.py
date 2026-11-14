@@ -239,7 +239,11 @@ class NativeImageHelperTests(unittest.TestCase):
             shared = SimpleNamespace(
                 path_manager=SimpleNamespace(model_paths={"vae_approx_path": "custom-previews"})
             )
-            with patch.dict("sys.modules", {"ruinedfooocus.app.state": shared}):
+            with (
+                patch.dict("sys.modules", {"ruinedfooocus.app.state": shared}),
+                # Patch the package attribute too: 'import ruinedfooocus.app.state as x' reads it.
+                patch.object(ruinedfooocus.app, "state", shared, create=True),
+            ):
                 previewer = run("cpu", SimpleNamespace(taesd_decoder_name="taesdxl"))
             self.assertIs(previewer, selected)
             self.assertEqual(args.preview_method, "Auto")
@@ -264,7 +268,11 @@ class NativeImageHelperTests(unittest.TestCase):
             shared = SimpleNamespace(
                 path_manager=SimpleNamespace(model_paths={"vae_approx_path": "previews"})
             )
-            with patch.dict("sys.modules", {"ruinedfooocus.app.state": shared}):
+            with (
+                patch.dict("sys.modules", {"ruinedfooocus.app.state": shared}),
+                # Patch the package attribute too: 'import ruinedfooocus.app.state as x' reads it.
+                patch.object(ruinedfooocus.app, "state", shared, create=True),
+            ):
                 if fallback_fails:
                     with self.assertRaisesRegex(ValueError, "bad decoder"):
                         run("cpu", SimpleNamespace(taesd_decoder_name="taesdxl"))

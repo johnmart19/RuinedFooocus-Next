@@ -7,7 +7,6 @@ import re
 import shutil
 import stat
 import struct
-import sys
 from tempfile import TemporaryDirectory
 import time
 
@@ -66,11 +65,9 @@ def _image_category(header, gguf_arch=None):
         IMAGE_COMPONENTS,
     )
 
-    image = (
-        inspect_tensor_model(header, include_config=True)
-        if "comfy.model_detection" in sys.modules
-        else None
-    )
+    from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
+    image = inspect_tensor_model(header, include_config=True) if native_detector_ready() else None
     if image:
         native_class = image["native_class"]
         if native_class == "MiniMaxH3Image":

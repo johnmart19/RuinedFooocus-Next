@@ -10,7 +10,6 @@ import inspect
 import math
 import os
 from pathlib import Path
-import sys
 from urllib.parse import urlparse
 
 from ruinedfooocus.core.preparation import PreparationRequest, preparation_service, verify_file
@@ -271,8 +270,10 @@ def _validate_primary_source(pending, path, cache_root):
         require_available_image_workflow,
     )
 
+    from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
     details = {}
-    if sys.modules.get("comfy.model_detection") is not None:
+    if native_detector_ready():
         from ruinedfooocus.features.models.model_architecture import inspect_model_file
 
         details = inspect_model_file(path)
@@ -1079,7 +1080,8 @@ def capture_image_assets(
             result.setdefault("image_engine", (values or {}).get("image_engine", "auto"))
             result, bernini_assets = capture_assets(result, checkpoint, manager, values)
             pending_loras = tuple(
-                item for item in _plan_component_assets(result, manager, ()) or ()
+                item
+                for item in _plan_component_assets(result, manager, ()) or ()
                 if item.role == "loras"
             )
             result[KEY] = captured((*bernini_assets, *pending_loras))

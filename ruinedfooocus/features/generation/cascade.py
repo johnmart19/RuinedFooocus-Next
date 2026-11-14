@@ -124,7 +124,9 @@ def stage_b_defaults(name, models):
     ):
         return STAGE_B_RECIPE.copy()
     # Menu/default lookup may reuse initialized native detection, never start it.
-    if sys.modules.get("comfy.model_detection") is None:
+    from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
+    if not native_detector_ready():
         return {}
     from ruinedfooocus.features.models.model_architecture import inspect_model_file
     from ruinedfooocus.features.models.native_recipes import _VARIANT_KEYS

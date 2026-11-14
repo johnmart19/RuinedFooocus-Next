@@ -1,7 +1,5 @@
 """Current source/configuration recipes, independent of exact-file qualification."""
 
-import sys
-
 from ruinedfooocus.features.models.model_registry import RegistryError
 from ruinedfooocus.features.models.resource_defaults import (
     load_family_recipe,
@@ -64,7 +62,9 @@ def compatible_native_recipe(path, metadata, *, root=None):
                 )
                 return recipe if signature == file_signature(path) else {}
         # Browsing/default lookup must not initialize the native runtime.
-        if sys.modules.get("comfy.model_detection") is None:
+        from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
+        if not native_detector_ready():
             return {}
         from ruinedfooocus.features.models.model_architecture import inspect_model_file
 

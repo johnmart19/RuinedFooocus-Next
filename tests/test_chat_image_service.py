@@ -339,6 +339,10 @@ class ChatImageServiceTests(unittest.TestCase):
         self.worker.image_handoff = handoff
         self.worker._process = self.compute
         self.enterContext(patch.dict(sys.modules, {"ruinedfooocus.app.async_worker": self.worker}))
+        # "from ruinedfooocus.app import async_worker" reads the package attribute.
+        self.enterContext(
+            patch.object(sys.modules["ruinedfooocus.app"], "async_worker", self.worker, create=True)
+        )
         self.pipeline = SimpleNamespace(
             image_tool_capability=lambda: CAPABILITY,
             vision_projector=None,

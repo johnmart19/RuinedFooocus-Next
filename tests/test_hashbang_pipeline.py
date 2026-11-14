@@ -30,15 +30,20 @@ class HashbangTests(unittest.TestCase):
                     ),
                     update_cfg=Mock(),
                 )
-                with patch.dict(
-                    sys.modules,
-                    {
-                        "ruinedfooocus.app.state": state,
-                        "ruinedfooocus.app.async_worker": Mock(),
-                        "comfy.samplers": SimpleNamespace(
-                            KSampler=SimpleNamespace(SAMPLERS=["uni_pc"], SCHEDULERS=["simple"])
-                        ),
-                    },
+                # "import ruinedfooocus.app.state as shared" reads the package
+                # attribute, so patch it as well as sys.modules.
+                with (
+                    patch.dict(
+                        sys.modules,
+                        {
+                            "ruinedfooocus.app.state": state,
+                            "ruinedfooocus.app.async_worker": Mock(),
+                            "comfy.samplers": SimpleNamespace(
+                                KSampler=SimpleNamespace(SAMPLERS=["uni_pc"], SCHEDULERS=["simple"])
+                            ),
+                        },
+                    ),
+                    patch.object(ruinedfooocus.app, "state", state, create=True),
                 ):
                     sys.modules.pop("ruinedfooocus.features.automation.hashbang_pipeline", None)
                     module = importlib.import_module(
@@ -72,7 +77,10 @@ class HashbangTests(unittest.TestCase):
             "ruinedfooocus.app.async_worker": Mock(),
             "comfy.samplers": samplers,
         }
-        with patch.dict(sys.modules, stubs):
+        with (
+            patch.dict(sys.modules, stubs),
+            patch.object(ruinedfooocus.app, "state", shared, create=True),
+        ):
             sys.modules.pop("ruinedfooocus.features.automation.hashbang_pipeline", None)
             module = importlib.import_module("ruinedfooocus.features.automation.hashbang_pipeline")
             prompt = "#!add performance\nname: WAN\nsteps: 12\ncfg: 4\nscheduler: simple\nsampler: uni_pc"

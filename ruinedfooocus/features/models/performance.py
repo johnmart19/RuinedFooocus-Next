@@ -311,8 +311,10 @@ class PerformanceSettings:
 
     @staticmethod
     def _native_ready():
+        from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
         return (
-            sys.modules.get("comfy.model_detection") is not None
+            native_detector_ready()
             and getattr(sys.modules.get("comfy.samplers"), "KSampler", None) is not None
         )
 

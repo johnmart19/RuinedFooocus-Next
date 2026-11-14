@@ -112,16 +112,16 @@ class ProductionGradioExampleTests(unittest.TestCase):
             "get_last_image": lambda: str(cls.media),
         }
         exec(compile(ast.Module(body=definitions, type_ignores=[]), "app/api.py", "exec"), scope)
-        previous_runtime = sys.modules.get(cls.runtime.__name__)
-        sys.modules[cls.runtime.__name__] = cls.runtime
-        try:
-            with gr.Blocks(analytics_enabled=False) as cls.demo:
-                scope["add_api"]()
-        finally:
-            if previous_runtime is None:
-                sys.modules.pop(cls.runtime.__name__, None)
-            else:
-                sys.modules[cls.runtime.__name__] = previous_runtime
+        # Callbacks look the runtime up when called, so the inert stand-in stays
+        # installed (module and package attribute) until tearDownClass.
+        cls.runtime_patches = [
+            patch.dict(sys.modules, {cls.runtime.__name__: cls.runtime}),
+            patch.object(ruinedfooocus.app, "api_runtime", cls.runtime, create=True),
+        ]
+        for runtime_patch in cls.runtime_patches:
+            runtime_patch.start()
+        with gr.Blocks(analytics_enabled=False) as cls.demo:
+            scope["add_api"]()
         try:
             cls.demo.launch(
                 server_name="127.0.0.1",
@@ -135,12 +135,16 @@ class ProductionGradioExampleTests(unittest.TestCase):
         except BaseException:
             cls.demo.close()
             cls.folder.cleanup()
+            for runtime_patch in reversed(cls.runtime_patches):
+                runtime_patch.stop()
             raise
 
     @classmethod
     def tearDownClass(cls):
         cls.demo.close()
         cls.folder.cleanup()
+        for runtime_patch in reversed(cls.runtime_patches):
+            runtime_patch.stop()
 
     def options(self, command, *args):
         return parser().parse_args([command, *args, "--base-url", self.url, "--timeout", "20"])

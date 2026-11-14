@@ -13,6 +13,7 @@ import numpy as np
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 from ruinedfooocus.app import api_runtime
+import ruinedfooocus.app
 
 
 class ApiUpscaleMetadataTests(unittest.TestCase):
@@ -46,6 +47,8 @@ class ApiUpscaleMetadataTests(unittest.TestCase):
                 )
             )
             with (
+                # Patch the package attribute too: 'import ruinedfooocus.app.state as x' reads it.
+                patch.object(ruinedfooocus.app, "state", shared, create=True),
                 patch.dict(
                     "sys.modules",
                     {

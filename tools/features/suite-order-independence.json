@@ -1,0 +1,32 @@
+{
+  "id": "suite-order-independence",
+  "subject": "Make native detector readiness and test stand-ins independent of test order",
+  "requires": [
+    "stale-suite-contracts-and-ui-wiring"
+  ],
+  "tests": [
+    "test_api_examples.py",
+    "test_api_upscale_metadata.py",
+    "test_chat_image_service.py",
+    "test_effective_image_plan.py",
+    "test_gligen_hook_scheduling.py",
+    "test_hashbang_pipeline.py",
+    "test_image_components.py",
+    "test_image_hidream_i1.py",
+    "test_image_hidream_options.py",
+    "test_image_native_helpers.py",
+    "test_model_recommendations.py",
+    "test_native_auxiliary_guidance.py",
+    "test_native_cascade.py",
+    "test_native_lora_hook_sources.py",
+    "test_native_recipe_contracts.py",
+    "test_native_tensor_patch_contexts.py",
+    "test_qwen_image21_enhancement.py",
+    "test_sensenova_bundle.py",
+    "test_specialized_lora_clip.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": true,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+  "native_gguf_revision": "da5f435cd9a9e54ad27eed417ed72b1f2543ef41"
+}

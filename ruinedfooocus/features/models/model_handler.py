@@ -442,10 +442,12 @@ class Models:
 
         if model_type == "checkpoints" and is_sensenova_index(path):
             return sense_metadata(path)
+        from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
         if model_type == "checkpoints" and is_diffusers_index(path):
             return bundle_metadata(
                 path,
-                self.detect_checkpoint_base if "comfy.model_detection" in sys.modules else None,
+                self.detect_checkpoint_base if native_detector_ready() else None,
             )
 
         json_path = (self.cache_paths[model_type] / path.name).with_suffix(".json")

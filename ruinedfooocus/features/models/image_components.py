@@ -2,7 +2,6 @@
 
 from pathlib import Path
 import shutil
-import sys
 
 from ruinedfooocus.features.models.resource_defaults import resource_name
 from ruinedfooocus.core.model_folders import model_folders
@@ -233,7 +232,9 @@ def inventory(checkpoint, family, settings, paths, component_overrides=None):
     # The detector creates meta tensors, but imports backend/device modules.
     # Reuse it only in an initialized app; standalone inventory stays Torch-free.
     native_info = None
-    if tensors is not None and "comfy.model_detection" in sys.modules:
+    from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
+    if tensors is not None and native_detector_ready():
         from ruinedfooocus.features.models.model_architecture import inspect_tensor_model
 
         native_info = inspect_tensor_model(tensors)

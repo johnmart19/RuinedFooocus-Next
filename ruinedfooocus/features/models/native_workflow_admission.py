@@ -2,7 +2,6 @@
 
 from functools import lru_cache
 from pathlib import Path
-import sys
 
 from ruinedfooocus.features.models.utility_models import (
     _native_predicates,
@@ -31,12 +30,10 @@ def planned_image_family(path):
     try:
         if path is None or not _has_pending_class(_native_source_signatures()):
             return None
+        from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
         family = passive_native_class(path, PLANNED_IMAGE_WORKFLOWS)
-        if (
-            family is None
-            and Path(path).suffix.lower() == ".gguf"
-            and "comfy.model_detection" in sys.modules
-        ):
+        if family is None and Path(path).suffix.lower() == ".gguf" and native_detector_ready():
             from ruinedfooocus.features.models.model_architecture import inspect_model_file
 
             family = inspect_model_file(path).get("native_class")

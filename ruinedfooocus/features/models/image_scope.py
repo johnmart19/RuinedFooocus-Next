@@ -136,9 +136,10 @@ def require_image_checkpoint(path, family=None):
         return
     require_image_family(unsupported_tensor_family(tensors))
     # Native classification is metadata-only, and is available after app startup.
-    import sys
 
-    if "comfy.model_detection" in sys.modules:
+    from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
+    if native_detector_ready():
         from ruinedfooocus.features.models.model_architecture import inspect_tensor_model
 
         details = inspect_tensor_model(tensors)

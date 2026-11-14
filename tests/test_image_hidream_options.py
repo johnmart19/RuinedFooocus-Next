@@ -15,6 +15,7 @@ from ruinedfooocus.features.image_editing.image_geometry import (
     prepare_reference,
     restore_reference_frame,
 )
+import ruinedfooocus.app
 from ruinedfooocus.features.image_editing.image_guidance import (
     FIELD_SCHEMA,
     resolve_guidance,
@@ -347,6 +348,8 @@ class HiDreamOptionsTests(unittest.TestCase):
             patch.dict(
                 sys.modules, {"ruinedfooocus.app.state": shared, "comfy.samplers": samplers}
             ),
+            # Patch the package attribute too: 'import ruinedfooocus.app.state as x' reads it.
+            patch.object(ruinedfooocus.app, "state", shared, create=True),
             patch.object(api_runtime, "image_defaults", defaults),
             patch.object(api_runtime, "submit", side_effect=lambda run: run),
             patch(

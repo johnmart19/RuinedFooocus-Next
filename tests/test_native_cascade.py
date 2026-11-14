@@ -3,6 +3,7 @@
 from contextlib import contextmanager
 from concurrent.futures import CancelledError
 import ast
+import ruinedfooocus.app
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace as NS
@@ -255,6 +256,13 @@ class NativeCascadeTests(unittest.TestCase):
             }
             with (
                 patch.dict("sys.modules", modules),
+                # "from ruinedfooocus.app import async_worker" reads the package attribute.
+                patch.object(
+                    ruinedfooocus.app,
+                    "async_worker",
+                    modules["ruinedfooocus.app.async_worker"],
+                    create=True,
+                ),
                 patch("ruinedfooocus.features.generation.cascade.decode_stage_b", decoded),
             ):
                 exec(

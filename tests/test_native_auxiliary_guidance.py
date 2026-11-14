@@ -180,6 +180,10 @@ class AuxiliaryTests(unittest.TestCase):
                 },
             )
         )
+        # The stand-in comfy package is not an initialized native runtime. An
+        # earlier test may have imported the real detector; hide it so callers
+        # do not import it from this stand-in (patch.dict restores it).
+        sys.modules.pop("comfy.model_detection", None)
         self.enterContext(
             patch(
                 "ruinedfooocus.features.models.yaml_recipes.apply_clip_recipe",

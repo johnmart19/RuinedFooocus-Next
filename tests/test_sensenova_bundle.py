@@ -67,6 +67,8 @@ class SenseNovaBundleTests(unittest.TestCase):
             )
             with (
                 patch.dict("sys.modules", {"ruinedfooocus.app.state": shared}),
+                # Patch the package attribute too: 'import ruinedfooocus.app.state as x' reads it.
+                patch.object(ruinedfooocus.app, "state", shared, create=True),
                 patch("torch.load", side_effect=AssertionError("No weight loading")),
             ):
                 result = ui.refresh(name)

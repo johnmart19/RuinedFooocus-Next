@@ -44,6 +44,20 @@ def _inspect_model_file(path, signature):
     return (details or {}) | {"metadata": metadata.copy() if isinstance(metadata, dict) else {}}
 
 
+def native_detector_ready():
+    """Whether native architecture detection is initialized in this process.
+
+    The detector must be registered and importable from the current comfy
+    package, which is what inspect_tensor_model imports it from.
+    """
+    import sys
+
+    if sys.modules.get("comfy.model_detection") is None:
+        return False
+    package = sys.modules.get("comfy")
+    return package is None or getattr(package, "model_detection", None) is not None
+
+
 def detect_tensor_architecture(header):
     result = inspect_tensor_model(header)
     return result["architecture"] if result is not None else None

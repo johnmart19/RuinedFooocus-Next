@@ -10,7 +10,6 @@ from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
-import sys
 
 from ruinedfooocus.core.preparation import PreparationRequest
 from ruinedfooocus.features.models.model_identity import file_signature
@@ -903,7 +902,9 @@ def capture_effective_image_plan(
     signature = tuple(file_signature(checkpoint))
     identity = checkpoint_identity(checkpoint)
     native = {}
-    if "comfy.model_detection" in sys.modules and checkpoint.suffix.lower() in (
+    from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
+    if native_detector_ready() and checkpoint.suffix.lower() in (
         ".safetensors",
         ".sft",
         ".gguf",

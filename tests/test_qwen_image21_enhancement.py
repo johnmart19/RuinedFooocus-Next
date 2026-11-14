@@ -4,6 +4,8 @@ import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+
+import ruinedfooocus.app
 from unittest.mock import Mock, patch
 
 import gradio as gr
@@ -132,6 +134,9 @@ class QwenEnhancementTests(unittest.TestCase):
                         "comfy": SimpleNamespace(model_management=models),
                     },
                 ),
+                # "from ruinedfooocus.app import async_worker" reads the package
+                # attribute, so patch it as well as sys.modules.
+                patch.object(ruinedfooocus.app, "async_worker", worker, create=True),
             ):
                 with self.assertRaisesRegex(RuntimeError, "native failure"):
                     pe.rewrite_prompt("A bird")

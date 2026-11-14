@@ -38,6 +38,23 @@ class HiDreamI1Tests(unittest.TestCase):
         self.performance.model_recommendations = ModelRecommendations(
             self.root, self.root / "settings.json", offline=True
         )
+
+        # Relative checkpoint names resolve through app state when it is loaded;
+        # bind them to this test's folder whatever earlier tests left loaded.
+        def installed(kind, name):
+            path = self.root / name
+            return path if path.is_file() else None
+
+        self.enterContext(
+            patch.dict(
+                sys.modules,
+                {
+                    "ruinedfooocus.app.state": SimpleNamespace(
+                        models=SimpleNamespace(get_file=installed)
+                    )
+                },
+            )
+        )
         self.declare("hidream_i1_dev_fp8.safetensors", "dev")
 
     def declare(self, checkpoint, variant):

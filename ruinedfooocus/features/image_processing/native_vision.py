@@ -3,7 +3,6 @@
 import json
 import math
 import ast
-import sys
 from functools import lru_cache
 from pathlib import Path
 
@@ -70,7 +69,9 @@ def validate_model(path, kind):
     if kind not in KINDS or Path(path).suffix.lower() not in (".safetensors", ".sft"):
         raise ValueError("Select an installed native vision safetensors model for this image tool.")
     native = passive_utility_file(path)
-    if native is None and sys.modules.get("comfy.model_detection") is not None:
+    from ruinedfooocus.features.models.model_architecture import native_detector_ready
+
+    if native is None and native_detector_ready():
         from ruinedfooocus.features.models.model_architecture import inspect_model_file
 
         native = inspect_model_file(path).get("native_class")
