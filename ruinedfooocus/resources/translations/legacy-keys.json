@@ -957,7 +957,7 @@
   "Leave blank for the built-in theme; otherwise enter a Gradio theme ID. Restart required.": "settings.leave_blank_for_the_built_in_theme_otherwise_enter_a_gradio_theme_id_restart_required",
   "Startup preferences": "settings.startup_preferences",
   "Default listen port": "settings.default_listen_port",
-  "Blank uses automatic port selection. --port takes priority. Restart required.": "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required",
+  "0 uses automatic port selection. --port takes priority. Restart required.": "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required",
   "Save writes the current profile. Save as profile writes a named copy. Use next launch selects an already saved profile. Existing --settings launcher arguments override that selection.": "settings.save_writes_the_current_profile_save_as_profile_writes_a_named_copy_use_next_launch_selects_an_already_saved_profile_existing_settings_launcher_arguments_override_that_selection",
   "Geometry models folder": "settings.geometry_models_folder",
   "Model patches folder": "settings.model_patches_folder",

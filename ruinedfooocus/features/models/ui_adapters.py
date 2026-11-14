@@ -138,18 +138,23 @@ def create_ui(
     selected = gr.State(None)
     destinations = gr.State({})
     insertions = gr.State({})
-    search = gr.Textbox(
-        label=t("Search LoRAs & embeddings"),
-        placeholder=t("Search name or metadata"),
-        lines=1,
-        max_lines=1,
-    )
-    kind = gr.Radio(
-        choices=[(t("All"), "All"), (t("LoRA"), "LoRA"), (t("Embedding"), "Embedding")],
-        value="All",
-        label=t("Filter"),
-        container=False,
-    )
+    # Search and type filter narrow the same list, so they share one row.
+    with gr.Row(elem_id="adapter-filters", equal_height=True):
+        search = gr.Textbox(
+            label=t("Search LoRAs & embeddings"),
+            placeholder=t("Search name or metadata"),
+            lines=1,
+            max_lines=1,
+            scale=3,
+            min_width=220,
+        )
+        kind = gr.Radio(
+            choices=[(t("All"), "All"), (t("LoRA"), "LoRA"), (t("Embedding"), "Embedding")],
+            value="All",
+            label=t("Filter"),
+            scale=2,
+            min_width=220,
+        )
     available = gr.Gallery(
         value=tiles(records),
         label=t("Available LoRAs & embeddings"),

@@ -200,7 +200,11 @@ def validate_known(values):
         if key in BOOLEAN_FIELDS and type(value) is not bool:
             raise ValueError(f"{key}: choose enabled or disabled (a boolean).")
         if key in INTEGER_RANGES or key in FLOAT_RANGES:
-            if value is None and key == "startup_port":
+            if key == "startup_port" and (
+                value is None or value == "" or (type(value) is int and value == 0)
+            ):
+                # The port field shows 0 for "automatic"; store it as unset.
+                result[key] = None
                 continue
             if isinstance(value, bool):
                 raise ValueError(f"{key}: enter a number, not a boolean.")

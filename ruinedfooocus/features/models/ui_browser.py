@@ -63,19 +63,23 @@ def create_ui(base_model, models, model_refresh=None, catalogue_button=None):
         result = project("checkpoint-identity", version, request, build, outputs=1, source=name)
         return result[0] if isinstance(result, tuple) else result
 
-    current_identity = gr.Textbox(
-        label=translate_ui("Selected model"),
-        value=selected_identity(base_model.value),
-        interactive=False,
-        lines=1,
-        elem_id="selected-checkpoint-identity",
-    )
-    query = gr.Textbox(
-        label=translate_ui("Search checkpoints"),
-        placeholder=translate_ui("Search model name or filename"),
-        value="",
-        elem_id="model-search",
-    )
+    # The chosen model and the search that finds another share one row.
+    with gr.Row(elem_id="model-browser-head", equal_height=True):
+        current_identity = gr.Textbox(
+            label=translate_ui("Selected model"),
+            value=selected_identity(base_model.value),
+            interactive=False,
+            lines=1,
+            elem_id="selected-checkpoint-identity",
+            min_width=240,
+        )
+        query = gr.Textbox(
+            label=translate_ui("Search checkpoints"),
+            placeholder=translate_ui("Search model name or filename"),
+            value="",
+            elem_id="model-search",
+            min_width=240,
+        )
     query_version = gr.Number(1, visible=False, precision=0)
     cards_version = gr.Number(0, visible=False, precision=0)
     identity_version = gr.Number(0, visible=False, precision=0)
@@ -312,6 +316,7 @@ def create_ui(base_model, models, model_refresh=None, catalogue_button=None):
     with gr.Accordion(translate_ui("Selected model details"), open=False):
         current = gr.Textbox(
             label=translate_ui("Selected model"),
+            show_label=False,
             value=describe(base_model.value),
             lines=3,
             interactive=False,

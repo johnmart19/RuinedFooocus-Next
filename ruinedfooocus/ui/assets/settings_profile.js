@@ -1,7 +1,9 @@
 const status = () => element.querySelector('[role="status"]');
 const terms = () => element.querySelector("dl");
 function draftStatus() {
-  const dirty = JSON.stringify(props.value) !== JSON.stringify(props.saved);
+  // A mounted empty field reports "" for a saved null; both mean "not set".
+  const plain = (values) => JSON.stringify((values || []).map((value) => value ?? ""));
+  const dirty = plain(props.value) !== plain(props.saved);
   status().textContent = dirty ? props.dirty_label : props.clean_label;
   element.dataset.dirty = String(dirty);
 }

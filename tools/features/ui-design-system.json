@@ -1,0 +1,24 @@
+{
+  "id": "ui-design-system",
+  "subject": "Apply one card, type and control system to Create, Models and Settings",
+  "requires": ["ui-grouped-panels"],
+  "tests": [
+    "test_navigation_shell.py",
+    "test_responsive_ui_layout.py",
+    "test_prompt_action_layout.py",
+    "test_compact_model_profile_controls.py",
+    "test_adapter_browser.py",
+    "test_embedding_adapters.py",
+    "test_model_acquisition.py",
+    "test_model_acquisition_ui.py",
+    "test_checkpoint_cards.py",
+    "test_model_resource_ui.py",
+    "test_settings_navigation.py",
+    "test_profile_transactions.py",
+    "test_startup_port.py",
+    "test_localization.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

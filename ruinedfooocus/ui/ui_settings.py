@@ -356,13 +356,12 @@ def create_settings(*, models_in_settings=True):
                         add_setting(key, control)
                     startup_port = gr.Number(
                         label=t("Default listen port"),
-                        value=settings.default_settings.get("startup_port"),
-                        placeholder=t("Automatic"),
-                        minimum=1,
+                        value=settings.default_settings.get("startup_port") or 0,
+                        minimum=0,
                         maximum=65535,
                         step=1,
                         info=t(
-                            "Blank uses automatic port selection. --port takes priority. Restart required."
+                            "0 uses automatic port selection. --port takes priority. Restart required."
                         ),
                     )
                     add_setting("startup_port", startup_port)

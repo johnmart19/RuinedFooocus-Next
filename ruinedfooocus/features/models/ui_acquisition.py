@@ -280,47 +280,50 @@ def create_ui(manager, models, *, offline):
                 "Browse installed files and available downloads. Downloading never changes your active model."
             )
         )
-        with gr.Row(elem_classes=["rf-filters"]):
-            query = gr.Textbox(
-                label=t("Search models and components"),
-                placeholder=t("Name, filename or workflow"),
-                scale=3,
-            )
-            view = gr.Radio(
-                [(t("Discover"), "discover"), (t("On device"), "on-device")],
-                value="discover",
-                label=t("Model library"),
-                scale=2,
-                min_width=160,
-            )
-        with gr.Row(elem_classes=["rf-filters"]):
-            category = gr.Dropdown(
-                ["All", *sorted({"Image tools", *CATEGORIES.values()})],
-                value="All",
-                label=t("Category"),
-            )
-            task = gr.Dropdown(
-                [
-                    "All",
-                    "Image",
-                    "Chat",
-                    "Component",
-                    "Image tools",
-                    "Local import",
-                    "Bundle",
-                ],
-                value="All",
-                label=t("Workflow"),
-            )
-            quantization = gr.Dropdown(["All"], value="All", label=t("Quantization"))
+        # Search, library and the three filters are one "find" card.
+        with gr.Group(elem_classes=["rf-section"]):
+            with gr.Row(elem_classes=["rf-filters"]):
+                query = gr.Textbox(
+                    label=t("Search models and components"),
+                    placeholder=t("Name, filename or workflow"),
+                    scale=3,
+                )
+                view = gr.Radio(
+                    [(t("Discover"), "discover"), (t("On device"), "on-device")],
+                    value="discover",
+                    label=t("Model library"),
+                    scale=2,
+                    min_width=160,
+                )
+            with gr.Row(elem_classes=["rf-filters"]):
+                category = gr.Dropdown(
+                    ["All", *sorted({"Image tools", *CATEGORIES.values()})],
+                    value="All",
+                    label=t("Category"),
+                )
+                task = gr.Dropdown(
+                    [
+                        "All",
+                        "Image",
+                        "Chat",
+                        "Component",
+                        "Image tools",
+                        "Local import",
+                        "Bundle",
+                    ],
+                    value="All",
+                    label=t("Workflow"),
+                )
+                quantization = gr.Dropdown(["All"], value="All", label=t("Quantization"))
+        # Result count and catalogue refresh share one line above the cards.
         with gr.Row(
             elem_id="model-catalogue-actions",
-            equal_height=False,
+            equal_height=True,
             elem_classes=["rf-actions", "rf-actions-compact"],
         ):
+            count = gr.Markdown(elem_id="model-catalogue-count")
             refresh = gr.Button(t("Refresh local catalogue"), size="sm", scale=0, min_width=0)
         page = gr.State(1)
-        count = gr.Markdown()
         assets = Path(__file__).resolve().parents[2] / "ui/assets"
         cards = gr.HTML(
             value=dict(

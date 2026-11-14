@@ -89,8 +89,8 @@ Settings keeps a server-held base for that session and merges the latest saved p
 from its own profile. Unknown settings and path keys survive; an unrelated profile
 saved by another browser is not used as its source.
 
-Leave **Default listen port** blank for **Automatic**. Explicit `--port` remains
-authoritative; an automatic port is not stored as zero.
+Set **Default listen port** to 0 for automatic selection. Explicit `--port` remains
+authoritative; 0 is saved as unset, never as port zero.
 
 The writable root defaults to the clone directory. `RF_DATA_DIR` selects another
 root; the default profile is `settings/settings.json`, named profiles are

@@ -303,7 +303,7 @@ browser.input(null);assert.equal(status.textContent,props.clean_label);
 browser.input('typed-local-model.gguf');assert.equal(status.textContent,props.dirty_label);
 browser.update({props:{...props,saved:[null]}});
 assert.equal(props.value[0],'typed-local-model.gguf');assert.equal(status.textContent,props.dirty_label);
-browser.input('');assert.equal(status.textContent,props.dirty_label);
+browser.input('');assert.equal(status.textContent,props.clean_label);
 browser.update({props:{...props,saved:['']}});assert.equal(status.textContent,props.clean_label);
 """,
         )

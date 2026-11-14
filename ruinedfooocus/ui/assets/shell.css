@@ -812,3 +812,92 @@
 :is(#app-tabs, #image-stage) .rf-actions > .rf-group-start {
   margin-inline-start: auto;
 }
+
+/* ==== One visual system for every page ====
+   Cards: one surface, border and radius; nothing inside a card draws another card.
+   Type: page title > section header (16px/600) > field label (14px/500) > help text (14px, muted). */
+:is(#app-tabs, #image-stage) .form {
+  background: var(--block-background-fill) !important;
+  border-radius: var(--rf-radius) !important;
+}
+:is(#app-tabs, #image-stage) .form > .block:not(.gr-accordion) {
+  background: transparent !important;
+}
+:is(#app-tabs, #image-stage) button.label-wrap > span:first-child {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--body-text-color);
+}
+:is(#app-tabs, #image-stage) [data-testid="block-info"],
+:is(#app-tabs, #image-stage) fieldset > span:first-child {
+  font-size: var(--text-sm) !important;
+  font-weight: 500 !important;
+}
+/* Explanations and status lines are secondary to the controls they describe. */
+:is(#app-tabs, #image-stage)
+  .block:not(.rf-page-head):not(#chat-messages *)
+  .prose
+  :is(p, li, td, th) {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+:is(#app-tabs, #image-stage)
+  :is(.gr-accordion, .form, #settings-content, #models-panel)
+  .prose:not(#chat-messages .prose)
+  :is(p, li) {
+  color: var(--body-text-color-subdued);
+}
+:is(#app-tabs, #image-stage) .block:not(.rf-page-head) .prose :is(h1, h2, h3, h4) {
+  font-size: var(--text-md);
+  font-weight: 600;
+  margin: 0.25rem 0;
+}
+/* Number fields match text fields and dropdowns. */
+:is(#app-tabs, #image-stage) input[type="number"] {
+  box-sizing: border-box;
+  min-height: var(--rf-control);
+  height: var(--rf-control);
+}
+/* Custom HTML pagers use the same button text as native buttons. */
+:is(#app-tabs, #image-stage) .adapter-card-pager button {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--rf-radius-sm);
+}
+/* Model cards: two-line names keep every card in a row the same height. */
+:is(#app-tabs, #image-stage) .adapter-card {
+  font-size: var(--text-sm);
+  border-radius: var(--rf-radius);
+}
+:is(#app-tabs, #image-stage) .adapter-card-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+#model-catalogue-actions {
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+}
+#model-catalogue-actions > #model-catalogue-count {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+}
+#adapter-filters,
+#model-browser-head {
+  gap: 0.75rem;
+  align-items: end;
+}
+/* Groups use the same card surface as sections and grouped fields. */
+:is(#app-tabs, #image-stage) .gr-group:not(.rf-section) {
+  background: var(--block-background-fill) !important;
+  border-radius: var(--rf-radius) !important;
+}
+:is(#app-tabs, #image-stage) .gr-group:not(.rf-section) > .styler {
+  background: transparent !important;
+}
+/* The profile name stays a plain field beside its buttons (overrides the card rule). */
+#settings-content #settings-actions > .form {
+  background: transparent !important;
+}
