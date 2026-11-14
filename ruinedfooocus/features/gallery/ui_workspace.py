@@ -599,7 +599,7 @@ class EditorWorkspace:
                 if not chosen or latest_generated_result([chosen]) is None:
                     # Nothing finished in this session: an empty Editor opens the
                     # newest Gallery image; an open image is never replaced.
-                    chosen = None if current else self._newest_gallery_record()
+                    chosen = None if current else self._newest_gallery_record(request=request)
                     if chosen is None:
                         return {
                             self.notice: t(
@@ -1112,13 +1112,28 @@ class EditorWorkspace:
         for button, result in self.chat_open_events:
             self._bind_chat_open(button, result)
 
-    def _newest_gallery_record(self):
-        """First record of the Gallery's newest-first index, or None without one."""
+    def _newest_gallery_record(self, *, request=None):
+        """Prepare the existing cold index, then read its newest owned candidate."""
         browser = getattr(self, "_picker_browser", None)
         if browser is None:
             return None
+        ticket = latest_ui_requests.peek(ui_request_owner(request), self.channel)
+        locale = resolve_locale(request=request)
         try:
-            records = browser.load_images(1, include_paths=True, include_page=True, page_size=1)[2]
+            browser.update_images(
+                locale=locale,
+                only_if_uninitialized=True,
+                cancelled=ticket.cancelled,
+                publish=lambda commit: latest_ui_requests.publish(ticket, commit),
+            )
+            records = browser.load_images(
+                1,
+                include_paths=True,
+                include_page=True,
+                page_size=1,
+                locale=locale,
+                cancelled=ticket.cancelled,
+            )[2]
         except (OSError, ValueError):
             return None
         return dict(records[0]) if records else None

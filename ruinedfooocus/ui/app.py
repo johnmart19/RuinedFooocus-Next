@@ -772,6 +772,33 @@ def launch_app(args):
             guide_checkpoint=effective_image_checkpoint,
             guide_control_plan=guide_control_plan,
         )
+
+        def render_run_label(locale, action, destination, tool, upscale, target):
+            from gradio.i18n import I18nData
+
+            label = editor_workspace.action_label(action, destination)
+            kind = ui_controlnet.controlnet.cn_options.get(tool, {}).get("type")
+            utility = tool in {
+                value for _, value in editor_workspace.quick_tool.choices
+            } or kind in ("detect", "segment", "rembg", "depth-map", "restore-seedvr2")
+            if destination == "editor" and action == "generate" and utility:
+                label = translate_ui(tool)
+            elif destination != "editor" and upscale != "Off" and target == "Input image only":
+                label = translate_ui("Upscale")
+            key = label.key.removeprefix("ruinedfooocus.") if isinstance(label, I18nData) else label
+            return gr.update(value=catalogue().translate(key, locale=locale))
+
+        localized_output(
+            render_run_label,
+            [
+                editor_workspace.action,
+                editor_workspace.destination,
+                shared.get_ctrl("cn_selection"),
+                automatic_upscale,
+                automatic_upscale_target,
+            ],
+            [run_button],
+        )
         bind_gallery_actions(
             top_tabs,
             create_tabs,
@@ -844,14 +871,17 @@ def launch_app(args):
             return run
 
         for render, inputs, outputs in localized_outputs():
-            main_tabs.load(
-                localized_renderer(render, False),
-                inputs=inputs,
-                outputs=outputs,
-                queue=False,
-                show_progress="hidden",
-                api_visibility="private",
-            )
+            # Run starts with native locale metadata. Do not race the startup
+            # browser choice with an old-cookie plain-text load response.
+            if render is not render_run_label:
+                main_tabs.load(
+                    localized_renderer(render, False),
+                    inputs=inputs,
+                    outputs=outputs,
+                    queue=False,
+                    show_progress="hidden",
+                    api_visibility="private",
+                )
             app_settings.language_control.change(
                 localized_renderer(render, True),
                 inputs=[app_settings.language_control, *inputs],

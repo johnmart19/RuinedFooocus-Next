@@ -1,6 +1,8 @@
 """New UI messages retain per-browser language and literal user/device data."""
 
 from pathlib import Path
+import ast
+import asyncio
 from types import ModuleType, SimpleNamespace
 import sys
 import unittest
@@ -12,6 +14,100 @@ from ui_test_helpers import function_from
 
 
 class NewUiLocalizationTests(unittest.TestCase):
+    def test_staged_russian_run_label_refreshes_for_explicit_english_without_changing_other_client(
+        self,
+    ):
+        import gradio as gr
+        from gradio.state_holder import SessionState
+        from ruinedfooocus.core import translation_manager as translations
+        from ruinedfooocus.core.translation_manager import translate_ui
+        import test_navigation_shell as navigation
+
+        shell, workspace, *_ = navigation.NavigationShellTests().shell(translate=translate_ui)
+        event = next(
+            row
+            for row in shell.app.config["dependencies"]
+            if row["targets"] == [(shell.create._id, "select")]
+        )
+        request = gr.Request(session_hash="russian-client", cookies={"rf_ui_locale": "ru"})
+        result = asyncio.run(
+            shell.app.process_api(
+                event["id"], ["generate", 1], state=SessionState(shell.app), request=request
+            )
+        )
+        envelope = result["data"][0].model_dump()
+        self.assertEqual(envelope["updates"][-1]["value"], localize("Generate", "ru"))
+        # Staged navigation emits a plain string; the native locale store cannot
+        # retranslate it. It must be registered with the existing dynamic refresh.
+        path = Path(__file__).resolve().parents[1] / "ruinedfooocus/ui/app.py"
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        binding = next(
+            node
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Expr)
+            and isinstance(node.value, ast.Call)
+            and isinstance(node.value.func, ast.Name)
+            and node.value.func.id == "localized_output"
+            and isinstance(node.value.args[0], ast.Name)
+            and node.value.args[0].id == "render_run_label"
+        )
+        with gr.Blocks():
+            tool, scale, target = gr.Textbox(), gr.Textbox(), gr.Textbox()
+        scope = dict(
+            gr=gr,
+            editor_workspace=workspace,
+            translate_ui=translate_ui,
+            catalogue=catalogue,
+            localized_output=translations.localized_output,
+            shared=SimpleNamespace(get_ctrl=lambda name: tool),
+            automatic_upscale=scale,
+            automatic_upscale_target=target,
+            run_button=shell.outputs[-1],
+            ui_controlnet=SimpleNamespace(
+                controlnet=SimpleNamespace(
+                    cn_options={
+                        "Segment by points": {"type": "segment"},
+                    }
+                )
+            ),
+        )
+        function_from("ruinedfooocus/ui/app.py", "render_run_label", scope)
+        with patch.object(translations, "_LOCALIZED_OUTPUTS", []):
+            exec(compile(ast.Module(body=[binding], type_ignores=[]), str(path), "exec"), scope)
+            render, inputs, outputs = translations.localized_outputs()[0]
+        self.assertEqual(outputs, [shell.outputs[-1]])
+        self.assertEqual(inputs[:2], [workspace.action, workspace.destination])
+        wrapper = function_from(
+            "ruinedfooocus/ui/app.py",
+            "localized_renderer",
+            dict(resolve_locale=resolve_locale, gr=gr),
+        )(render, True)
+        self.assertEqual(
+            wrapper(request, "en", "generate", "create", "None", "Off", "Generated image")["value"],
+            "Generate",
+        )
+        self.assertEqual(
+            wrapper(request, "en", "prompt-edit", "editor", "None", "Off", "Generated image")[
+                "value"
+            ],
+            "Edit image",
+        )
+        self.assertEqual(
+            wrapper(request, "en", "generate", "create", "None", "2×", "Input image only")["value"],
+            "Upscale",
+        )
+        self.assertEqual(
+            wrapper(
+                request, "en", "generate", "editor", "Segment by points", "Off", "Generated image"
+            )["value"],
+            "Segment by points",
+        )
+        self.assertEqual(
+            wrapper(request, "ru", "generate", "create", "None", "Off", "Generated image")["value"],
+            localize("Generate", "ru"),
+        )
+        self.assertEqual(catalogue().language, "en")
+
     def test_automatic_llama_fallback_note_uses_each_browser_locale(self):
         manager = catalogue()
         message = (

@@ -1,0 +1,13 @@
+{
+  "id": "release-ui-localization",
+  "subject": "Fix interface language changes and cold-start Editor image selection",
+  "requires": ["release-ui-review-fixes"],
+  "tests": [
+    "test_new_ui_localization.py",
+    "test_navigation_shell.py",
+    "test_editor_workspace_events.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

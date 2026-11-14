@@ -613,6 +613,69 @@ process.stdout.write(JSON.stringify({output,memory}));
         self.assertEqual(context["revision"], 1)
         self.run_request.assert_not_called()
 
+    def cold_latest_browser(self):
+        import test_editor_gallery_imports as gallery_imports
+
+        fixture = SimpleNamespace(
+            root=self.root, browser=SimpleNamespace(), addCleanup=self.addCleanup
+        )
+        browser, scope = gallery_imports.EditorGalleryImports.native_browser(fixture)
+        self.workspace._picker_browser = browser
+        return browser, scope, fixture.originals
+
+    def test_latest_cold_index_opens_newest_original_without_visiting_gallery(self):
+        browser, _, originals = self.cold_latest_browser()
+        for number, path in enumerate(originals):
+            timestamp = 1_700_000_000_000_000_000 + number * 1_000_000_000
+            os.utime(path, ns=(timestamp, timestamp))
+        self.assertEqual(len({path.stat().st_mtime_ns for path in originals}), len(originals))
+        self.assertEqual(browser.load_images(1, include_paths=True)[2], [])
+        newest = max(originals, key=lambda path: path.stat().st_mtime_ns)
+        session = self.session("latest-cold-index")
+        self.call(session, self.event(self.workspace.open_latest))
+        context = self.value(session, self.workspace.context)
+        snapshot = self.store.snapshot(context["session_id"], owner=session.owner)
+        self.assertEqual(Path(snapshot.original.path), newest)
+        self.assertEqual(browser.last_scan.count, 9)
+        self.assertEqual(browser.last_scan.parsed, 9)
+        with patch(
+            "ruinedfooocus.features.gallery.index_store.os.walk",
+            side_effect=AssertionError("Warm Latest must not rescan"),
+        ):
+            other = self.session("latest-warm-index")
+            self.call(other, self.event(self.workspace.open_latest))
+        self.assertTrue(all(path.read_bytes() == data for path, data in originals.items()))
+        self.run_request.assert_not_called()
+
+    def test_cold_latest_scan_cancels_before_index_commit_or_source_adoption(self):
+        browser, scope, _ = self.cold_latest_browser()
+        session = self.session("latest-cold-cancel")
+        entered, release = threading.Event(), threading.Event()
+        parse = scope["get_png_metadata"]
+
+        def held(path):
+            entered.set()
+            self.assertTrue(release.wait(5))
+            return parse(path)
+
+        with (
+            patch.dict(scope, {"get_png_metadata": held}),
+            ThreadPoolExecutor(max_workers=1) as pool,
+        ):
+            pending = pool.submit(self.call, session, self.event(self.workspace.open_latest))
+            self.assertTrue(entered.wait(5))
+            try:
+                self.call(
+                    session,
+                    self.event(self.controls["input_image"], "upload", "input_source_changed"),
+                )
+            finally:
+                release.set()
+            pending.result(5)
+        self.assertIsNone(self.value(session, self.workspace.context))
+        self.assertEqual(browser.load_images(1, include_paths=True)[2], [])
+        self.run_request.assert_not_called()
+
     def test_view_projections_track_no_progress_outputs_but_source_import_keeps_its_notice(self):
         adjustment = self.event(self.workspace.action, "change", "adjustment_action")
         quick = self.event(self.workspace.quick_tool, "input", "select_quick_tool")
