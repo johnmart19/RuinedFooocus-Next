@@ -1,0 +1,15 @@
+{
+  "id": "release-status-wording",
+  "subject": "Keep routine model status concise without qualification badges",
+  "requires": ["gallery-cached-view-ownership"],
+  "tests": [
+    "test_release_status_wording.py",
+    "test_component_overrides.py",
+    "test_chat_model_browser.py",
+    "test_chat_sampling_sources.py",
+    "test_depth_utilities_ui.py",
+    "test_gpu_support_matrix.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

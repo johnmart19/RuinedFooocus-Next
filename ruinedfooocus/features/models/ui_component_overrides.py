@@ -63,8 +63,7 @@ def role_choices(name, key, overrides, scope, advanced=False, locale=None):
                     )
                     if is_choice(candidate["name"])
                     else candidate["name"]
-                )
-                + (" · Unverified" if candidate["compatibility"] == "unknown" else ""),
+                ),
                 candidate["name"],
             )
             for candidate in candidates
@@ -84,11 +83,11 @@ def role_choices(name, key, overrides, scope, advanced=False, locale=None):
                 if candidate and candidate["compatibility"] == "incompatible"
                 else "Missing"
                 if row["status"] == "Missing"
-                else "Unverified"
+                else None
             )
             # Retain the actual choice until an explicit save. Validation still
             # rejects missing/incompatible files and requires consent for unknowns.
-            options.append((f"Current: {value} · {status}", value))
+            options.append((f"Current: {value}" + (f" · {status}" if status else ""), value))
         return gr.update(
             choices=options,
             value=value,
@@ -159,9 +158,8 @@ def create_ui(base_model, overrides, scope, refresh_callback, refresh_outputs):
             label=translate_ui("Installed alternative"), choices=[], interactive=False
         )
         advanced = gr.Checkbox(
-            label=translate_ui("Include unverified installed files (advanced)"),
+            label=translate_ui("Show all component files (advanced)"),
             value=False,
-            info=translate_ui("Unverified files may fail to load."),
         )
         save = gr.Button(translate_ui("Save this component choice"), size="sm", interactive=False)
 

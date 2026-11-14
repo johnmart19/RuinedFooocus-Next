@@ -17,15 +17,13 @@ from test_utility_sampling_capture import function
 
 
 class DepthUtilitiesUI(unittest.TestCase):
-    def test_provenance_and_missing_file_labels_resolve_real_i18n_before_filename_combination(self):
+    def test_model_names_omit_proof_badges_and_missing_files_keep_localized_status(self):
         from gradio.i18n import I18nData
         from ruinedfooocus.core import translation_manager as translations
         from ruinedfooocus.features.image_processing import utility_marigold
 
         manager = translations.TranslationManager()
         phrases = {
-            "Edit2509 source verified": "Джерело Edit2509 підтверджено",
-            "Edit2509 source unverified": "Джерело Edit2509 не підтверджено",
             "Unavailable: {name}": "Недоступно: {name}",
         }
         for text, translated in phrases.items():
@@ -33,16 +31,14 @@ class DepthUtilitiesUI(unittest.TestCase):
             manager.translations["en"][text] = text
             manager.translations.setdefault("uk", {})[text] = translated
         with patch.object(translations, "catalogue", return_value=manager):
-            self.assertIsInstance(translations.translate_ui("Edit2509 source verified"), I18nData)
-            for proof, text in (
-                ({"verified": True}, "Edit2509 source verified"),
-                (None, "Edit2509 source unverified"),
-            ):
-                with patch.object(utility_marigold, "backbone_proof", return_value=proof):
+            self.assertIsInstance(translations.translate_ui("Unavailable: {name}"), I18nData)
+            for locale in ("en", "uk"):
+                with patch.object(utility_marigold, "backbone_proof") as proof:
                     label = utility_marigold.component_label(
-                        "image_utility_model", object(), "chosen.safetensors", locale="uk"
+                        "image_utility_model", object(), "chosen.safetensors", locale=locale
                     )
-                self.assertEqual(label, "chosen.safetensors (" + phrases[text] + ")")
+                self.assertEqual(label, "chosen.safetensors")
+                proof.assert_not_called()
                 self.assertNotIn("__i18n__", label)
             with patch.object(ui, "component_choices", return_value=[]):
                 values = ui.choices(

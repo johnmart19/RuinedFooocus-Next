@@ -131,16 +131,7 @@ def backbone_proof(path, *, verify_hash=False):
 
 
 def component_label(field, path, name, *, locale=None):
-    from ruinedfooocus.core.translation_manager import localize
-
-    if field != "image_utility_model":
-        return name
-    status = (
-        localize("Edit2509 source verified", locale)
-        if backbone_proof(path)
-        else localize("Edit2509 source unverified", locale)
-    )
-    return f"{name} ({status})"
+    return name
 
 
 def verify_captured_request(request):

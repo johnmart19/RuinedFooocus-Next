@@ -121,17 +121,29 @@ def support_table(locale=None, refresh=False):
     from ruinedfooocus.packaging.support_matrix import support_rows
 
     gpus = inventory.detect_gpus(refresh=refresh)
-    return {
-        "headers": [localize(header, locale) for header in SUPPORT_HEADERS],
-        "data": [
+    statuses = {
+        "Installed (unverified)": "Installed",
+        "Usable (workload unverified)": "Available",
+        "Qualified": "Available",
+    }
+    rows = []
+    for row in support_rows(gpus):
+        note = "; ".join(
+            part
+            for part in row["note"].split("; ")
+            if part != "Exact runtime/device eligibility has not been verified"
+        )
+        rows.append(
             [
                 row["component"],
                 row["option"],
-                localize(row["status"], locale),
-                localize(row["note"], locale) if row["note"] else "",
+                localize(statuses.get(row["status"], row["status"]), locale),
+                localize(note, locale) if note else "",
             ]
-            for row in support_rows(gpus)
-        ],
+        )
+    return {
+        "headers": [localize(header, locale) for header in SUPPORT_HEADERS],
+        "data": rows,
     }
 
 
@@ -387,7 +399,7 @@ def background_status_text(locale=None, cpu_forced=False, choice=None):
     if status["windows_ml"]:
         lines.append(
             localize(
-                "Windows ML provider acquired (workload unverified): {name}",
+                "Windows ML provider installed: {name}",
                 locale,
                 name=status["windows_ml"],
             )
@@ -1165,7 +1177,7 @@ def windows_ml_choices(providers, gpus, saved="Auto", device_type="Auto"):
         )
     ]
     names = offered if device_type == "CPU" else windows_ml_provider_names(offered, gpus, "Auto")
-    choices = [(t("Automatic qualified provider"), "Auto")] + [
+    choices = [(t("Automatic (recommended)"), "Auto")] + [
         (name.replace("ExecutionProvider", "") + " · Catalogue candidate", name)
         for name in dict.fromkeys(names)
     ]
@@ -1204,9 +1216,6 @@ def create_windows_ml_controls(
         label=t("Windows background provider"),
         choices=["Auto", "Windows ML", ("DirectML (deprecated)", "DirectML")],
         value=provider_preference(saved),
-        info=t(
-            "Windows ML vendor providers remain explicit until real-model qualification passes. DirectML is deprecated and is never an automatic fallback."
-        ),
     )
     add_setting("rembg_provider", background_provider)
     with gr.Accordion(t("Optional Windows ML providers"), open=False):
@@ -1219,9 +1228,6 @@ def create_windows_ml_controls(
                 saved.get("rembg_winml_type", "Auto"),
             ),
             value=saved.get("rembg_winml_provider", "Auto"),
-            info=t(
-                "Only certified compatible providers from the last local catalogue inspection are candidates. A saved unavailable choice is retained; catalogue availability is not model qualification."
-            ),
         )
         add_setting("rembg_winml_provider", winml_provider)
         winml_type = gr.Dropdown(

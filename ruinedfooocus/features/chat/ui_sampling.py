@@ -5,9 +5,12 @@ from ruinedfooocus.features.chat.sampling_sources import cached_sampling_source,
 
 
 def active_runtime_status(model, result):
+    runtime = result.get("runtime_name") or "Unknown"
+    if result.get("runtime_label"):
+        runtime += " · " + result["runtime_label"]
     rows = [
         f"Active: {model}",
-        f"Runtime: {result.get('runtime_name') or 'Unknown'} · {result.get('runtime_label') or 'Unverified'}",
+        f"Runtime: {runtime}",
     ]
     if result.get("fallback_reason"):
         rows.append("Backend selection: " + result["fallback_reason"])
@@ -20,7 +23,7 @@ def source_evidence(path):
     messages = {
         "reviewed": "Exact content verified; packaged publisher recommendations, when published, apply on load.",
         "reviewed_variant": "Exact content matched the reviewed variant revision; its packaged sampling advice, when published, applies on load. Runtime and reasoning support remain separate.",
-        "source_unverified": "Source found, publisher/variant unverified; these hints do not supply automatic defaults.",
+        "source_unverified": "No publisher defaults for this file; runtime defaults and explicit overrides remain usable.",
         "offline": "Recommendations unavailable offline; runtime defaults and explicit overrides remain usable.",
         "not_found": "No qualified publisher recommendations found; runtime defaults and explicit overrides remain usable.",
         "not_prepared": "Source not prepared. Import, Load or Refresh sampling recommendations to inspect it.",

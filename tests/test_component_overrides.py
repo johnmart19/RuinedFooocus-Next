@@ -97,19 +97,22 @@ class ComponentOverrideTests(unittest.TestCase):
         self.assertFalse((self.folder / "paths.json").exists())
         self.assertEqual(pending, {"clip_g": "stale-session.safetensors"})
 
-    def test_saved_missing_or_unverified_choice_is_shown_instead_of_automatic(self):
+    def test_saved_missing_or_unknown_choice_is_shown_without_default_proof_badges(self):
         self.header(self.root / "encoders" / "custom.safetensors", {})
         with patch.dict("sys.modules", {"comfy.sd": None}):
             for value, status in (
                 ("gone.safetensors", "Missing"),
-                ("custom.safetensors", "Unverified"),
+                ("custom.safetensors", None),
             ):
                 with self.subTest(value=value):
                     choices = {"clip_l": value}
                     result = self.module["role_choices"]("model", "clip_l", choices, self.identity)
                     self.assertEqual(result["value"], value)
                     label = next(label for label, item in result["choices"] if item == value)
-                    self.assertIn(status, label)
+                    if status:
+                        self.assertIn(status, label)
+                    else:
+                        self.assertEqual(label, "Current: custom.safetensors")
                     self.assertIn(("Automatic", ""), result["choices"])
                     self.assertEqual(choices, {"clip_l": value})
 
@@ -128,7 +131,7 @@ class ComponentOverrideTests(unittest.TestCase):
             advanced = self.module["role_choices"]("model", "clip_l", {}, self.identity, True)
         self.assertIn(("compatible.safetensors", "compatible.safetensors"), ordinary["choices"])
         self.assertNotIn("unknown.gguf", {value for _, value in ordinary["choices"]})
-        self.assertIn(("unknown.gguf · Unverified", "unknown.gguf"), advanced["choices"])
+        self.assertIn(("unknown.gguf", "unknown.gguf"), advanced["choices"])
         self.assertNotIn("other-family.safetensors", {value for _, value in advanced["choices"]})
         self.assertIn("Effective: legacy.safetensors", ordinary["info"])
         self.assertEqual(scan.call_args.args, ("clip_l", self.manager))

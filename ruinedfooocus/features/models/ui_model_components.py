@@ -92,13 +92,7 @@ def refresh(name, overrides=None, scope=None, message=""):
                 else row["status"]
                 + " · "
                 + selection_source(row, choices, shared.settings.default_settings)
-                + (
-                    " · Incompatible"
-                    if row.get("compatibility") == "incompatible"
-                    else " · Unverified"
-                    if row.get("compatibility") == "unknown"
-                    else ""
-                )
+                + (" · Incompatible" if row.get("compatibility") == "incompatible" else "")
                 + "\n"
                 + (
                     f"{row['bytes'] / 1024**3:.2f} GiB (local)"

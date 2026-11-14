@@ -265,7 +265,8 @@ assert.deepEqual(events, []);
                 rows = bundle_presence(
                     items, downloads, {"path_llm": [root / "first", root / "second"]}
                 )
-            self.assertIn("Present by path/size; checksum unverified", rows[0][1])
+            self.assertIn("Installed", rows[0][1])
+            self.assertNotIn("unverified", rows[0][1].lower())
             self.assertIn("Missing", rows[1][1])
             self.assertIn("(4 bytes)", rows[-1][1])  # One missing payload, two target aliases.
 
@@ -317,6 +318,9 @@ assert.deepEqual(events, []);
             path.write_bytes(b"custom fixture")
             evidence = dict(safe_model_evidence(str(path), self.downloads, self.native))
             self.assertIn("local content is verified only when loaded", evidence["Evidence scope"])
+            self.assertNotIn("unverified", evidence["Runtime source"].lower())
+            self.assertNotIn("Text support", evidence)
+            self.assertIn("Image support", evidence)
             self.assertIn("Unmeasured planning envelope", evidence)
             paired = dict(
                 safe_model_evidence("SmolVLM-256M-Instruct-Q8_0.gguf", self.downloads, self.native)

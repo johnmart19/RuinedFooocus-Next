@@ -37,7 +37,7 @@ def bundle_presence(items, downloads, roots, selected=None):
                 state = "Present, size differs; content verification required"
                 unresolved = True
             else:
-                state = "Present by path/size; checksum unverified"
+                state = "Installed"
             location = found
         else:
             state = "Missing"
@@ -63,7 +63,7 @@ def model_evidence(value, downloads, runtime, *, roots=None, projector="Auto"):
     local = Path(value).is_absolute()
     result = [
         ["Selection", str(value)],
-        ["Runtime source", f"{runtime.name} / {runtime.build or 'unknown'} ({runtime.origin})"],
+        ["Runtime source", f"{runtime.name} / {runtime.build or 'unknown'}"],
     ]
     if row is None:
         return result + [
@@ -80,18 +80,20 @@ def model_evidence(value, downloads, runtime, *, roots=None, projector="Auto"):
             "Evidence scope",
             "Catalogue candidate by filename; local content is verified only when loaded."
             if local
-            else "Exact registered download tuple; device execution remains unverified.",
+            else "Registered download; local content is verified when loaded.",
         ],
         ["Architecture", row["architecture"] or "Unknown"],
         ["Published file size", size_label(row["artifact"]["bytes"])],
-        ["Text support", task_eligibility(row, runtime).reason],
-        ["Image support", task_eligibility(row, runtime, "image").reason],
         [
             "Download observation",
             f"{row['artifact'].get('availability', 'unknown')} ({row['artifact'].get('checked_utc', 'unknown')}); not an access guarantee",
         ],
         ["Weight source", row["artifact"].get("pinned_url") or "Unknown"],
     ]
+    for task in ("text", "image"):
+        decision = task_eligibility(row, runtime, task)
+        if not decision.allowed:
+            result.append([f"{task.capitalize()} support", decision.reason])
     license_info = profile.get("license", {})
     result.append(["Underlying license", license_info.get("declared_upstream") or "Unknown"])
     if license_info.get("restriction_summary"):
