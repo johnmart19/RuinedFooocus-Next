@@ -98,7 +98,7 @@ class GallerySchedulingTests(unittest.TestCase):
             patch("ruinedfooocus.app.preparation_admission.preparation_admission", self.pool),
             patch("ruinedfooocus.app.resource_lifecycle.latest_ui_requests", self.fence),
         ):
-            self.app, *_ = self.scope["create_image_gallery"]()
+            self.app, self.open_view, *_ = self.scope["create_image_gallery"]()
         self.functions = {
             function.fn.__name__: function
             for function in self.app.fns.values()
@@ -275,6 +275,55 @@ class GallerySchedulingTests(unittest.TestCase):
 
     def test_existing_index_defers_native_page_work_until_gallery_visit(self):
         self.check_native_first_visit(indexed=True)
+
+    def test_slow_cached_open_cannot_overwrite_a_newer_search_page(self):
+        entered, release = threading.Event(), threading.Event()
+        load = self.browser.load_images
+
+        def held(page, term="", **kwargs):
+            if not term:
+                entered.set()
+                self.assertTrue(release.wait(5))
+            return load(page, term, **kwargs)
+
+        self.browser.load_images = held
+
+        async def journey():
+            old = asyncio.create_task(asyncio.to_thread(self.open_view, 1, "", 1, self.request))
+            self.assertTrue(await asyncio.to_thread(entered.wait, 5))
+            try:
+                newer = self.functions["request_search"].fn(1, "needle", 2, self.request)
+                result = await self.functions["prepare_view"].fn(newer, self.request)
+                records = next(
+                    control
+                    for control in result
+                    if isinstance(control, gr.State) and isinstance(result[control], list)
+                )
+                self.assertEqual(result[records][0]["_view_version"], 2)
+            finally:
+                release.set()
+            self.assertEqual(await old, gr.skip())
+
+        asyncio.run(journey())
+
+    def test_cold_failed_refresh_keeps_the_original_folder_error(self):
+        browser, _, _ = self.native_browser()
+        self.assertFalse(hasattr(browser, "last_scan"))
+        browser.path_manager.paths["path_outputs"] = self.root / "unavailable-output-folder"
+        self.scope["browser"] = browser
+        descriptor = self.functions["request_refresh"].fn(1, "", 1, self.request)
+        result = asyncio.run(self.functions["prepare_view"].fn(descriptor, self.request))
+        messages = [value.get("value") for value in result.values() if isinstance(value, dict)]
+        message = next(
+            (
+                text
+                for text in messages
+                if isinstance(text, str) and "Error updating folder" in text
+            ),
+            "",
+        )
+        self.assertIn("Library folder is unavailable", message)
+        self.assertNotIn("last_scan", message)
 
     def test_first_gallery_visit_initializes_native_index_then_pages_and_searches(self):
         self.check_native_first_visit(indexed=False)

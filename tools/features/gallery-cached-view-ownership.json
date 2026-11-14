@@ -1,0 +1,9 @@
+{
+  "id": "gallery-cached-view-ownership",
+  "subject": "Keep cached Gallery pages current and preserve refresh errors",
+  "requires": ["page-headers-and-gallery-open"],
+  "tests": ["test_gallery_scheduling.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

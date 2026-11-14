@@ -869,13 +869,26 @@ def create_image_gallery():
             descriptor = acknowledge(page, term, version, True, request)
             if not isinstance(descriptor, dict):
                 return {view_request: gr.skip()}
-            updates = render_page(descriptor["page"], descriptor["term"], request=request)
-            updates[page_records] = [
-                record | {"_view_version": descriptor["version"]}
-                for record in updates[page_records]
-            ]
-            # The scan re-renders only when it finds new, changed or removed files.
-            return {view_request: dict(descriptor, shown=True), **updates}
+            try:
+                ticket = latest_ui_requests.get(
+                    owner(request), "library-view", descriptor["version"]
+                )
+                updates = render_page(
+                    descriptor["page"],
+                    descriptor["term"],
+                    request=request,
+                    cancelled=ticket.cancelled,
+                )
+                updates[page_records] = [
+                    record | {"_view_version": descriptor["version"]}
+                    for record in updates[page_records]
+                ]
+                # Keep the cached fast path, but never publish an older page.
+                return latest_ui_requests.publish(
+                    ticket, lambda: {view_request: dict(descriptor, shown=True), **updates}
+                )
+            except CancelledError:
+                return gr.skip()
 
         def request_page(page, term, version, request: gr.Request = None):
             return acknowledge(page, term, version, False, request)
@@ -944,7 +957,9 @@ def create_image_gallery():
                             ),
                             publish=lambda commit: latest_ui_requests.publish(ticket, commit),
                         )
-                    scan = browser.last_scan if descriptor.get("refresh") else None
+                    scan = (
+                        getattr(browser, "last_scan", None) if descriptor.get("refresh") else None
+                    )
                     if (
                         descriptor.get("shown")
                         and scan is not None
