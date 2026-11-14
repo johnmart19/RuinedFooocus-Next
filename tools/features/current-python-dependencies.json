@@ -1,0 +1,16 @@
+{
+  "id": "current-python-dependencies",
+  "subject": "Allow current compatible FastAPI and Kornia releases",
+  "requires": ["source-distribution"],
+  "tests": [
+    "test_package_plan.py",
+    "test_dependency_requirements.py",
+    "test_bootstrap_package_contract.py",
+    "test_runtime_bundles.py",
+    "test_installer_gpu.py",
+    "test_installer_rocm.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

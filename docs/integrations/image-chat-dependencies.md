@@ -40,13 +40,20 @@ the existing bounded standard-library XML/ZIP parser and needs no new package.
 
 ## Current package branches
 
-The November 13, 2026 requirement audit uses published PyPI release metadata and
+The November 15, 2026 requirement audit uses published PyPI release metadata and
 the exact pinned ComfyUI requirements, rather than replacing the native base.
 Python 3.11 and later select Diffusers 0.43, Transformers through 5.23, ONNX Runtime
-1.32, FastAPI 0.162.7 and filelock 4.2.10. Python 3.10 retains Diffusers 0.41,
+1.32, FastAPI 0.163.0 and filelock 4.2.10. Python 3.10 retains Diffusers 0.41,
 Transformers through 5.20.2 and ONNX Runtime 1.23.2, and selects FastAPI 0.162.5,
 python-multipart 0.0.32 and filelock 4.1. The later filelock releases require
 Python 3.11; an unconditional 4.2 pin cannot resolve a Python 3.10 environment.
+
+The modern Kornia range permits 0.9.1, whose Torch floor remains 2.5.1, while
+retaining 0.8.3 for the explicit DirectML Torch 2.4 recipe. Python 3.10 retains
+Kornia 0.8.2. SoupSieve 4.1.1 remains a BeautifulSoup transitive dependency rather
+than an additional application pin. These candidate versions have matching
+Python 3.12 Windows wheels and compatible dependency metadata; installation and
+actual API/image execution are separate acceptance steps.
 
 ONNX Runtime 1.24.3 still advertises Python 3.10 in metadata but publishes no
 compatible Windows CPython 3.10 wheel. The overlay retains the last such wheel
