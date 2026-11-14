@@ -15,16 +15,22 @@ setup does not expand its API, folder, installation or media permissions.
 
 English is the complete fallback. Swedish, German, French, Spanish, Portuguese
 (Brazil), Ukrainian, Russian, Japanese, Simplified Chinese, Traditional Chinese,
-Korean, Italian, Polish, Dutch and Turkish contain translated UI catalogues and
-are marked **draft**: they have not received native-speaker linguistic review.
-Advanced messages without a translation remain English. Backend exception details
-and dynamic runtime diagnostics remain English rather than leaking frontend
-translation markers into error messages. This is not a claim that every visible
-runtime string is translated.
+Korean, Italian, Polish, Dutch and Turkish cover every current English message ID
+in the shipped UI catalogues. All are marked **draft**: they have not received
+native-speaker linguistic review. English fallback remains available for missing
+or malformed custom locale data. Backend exceptions, native diagnostics and
+dynamic runtime messages may remain English rather than leaking frontend
+translation markers into error messages. Complete catalogue coverage does not
+mean that every visible runtime string is translated.
 
 The current Library thumbnail, live-theme feedback and automatic backend
 installation messages are included in these draft catalogues. Their new
 translations still require human linguistic review.
+
+Coverage includes the one-step Editor, explicit prompt tools, primary page
+headings and Chat image controls. A shipped-catalogue regression follows the
+current English source IDs and placeholder counts, so coverage is not tied to a
+fixed release message count. Custom overrides can still be partial.
 
 UI locale has no bearing on a model's language capabilities. No locale selection
 rewrites prompts, model filenames, sampler protocol values, dataset rows or saved

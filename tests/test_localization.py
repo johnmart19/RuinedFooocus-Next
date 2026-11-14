@@ -1,7 +1,9 @@
 """CPU-only catalogue and installed native Gradio integration contracts."""
 
 import json
+from collections import Counter
 from pathlib import Path
+from string import Formatter
 import tempfile
 import unittest
 import shutil
@@ -73,6 +75,30 @@ class LocalizationTests(unittest.TestCase):
             for locale in manager.manifest["locales"]:
                 with self.subTest(locale=locale, text=text):
                     self.assertIn(manager.aliases[text], manager.translations[locale])
+
+    def test_shipped_catalogues_cover_current_source_with_exact_placeholder_counts(self):
+        manager = TranslationManager(legacy_root=Path("no-custom-shipped-catalogue-test"))
+        self.assertFalse(manager.errors)
+        english = manager.translations["en"]
+        self.assertTrue(english)
+
+        def fields(text):
+            return Counter(
+                (name, spec, conversion)
+                for _, name, spec, conversion in Formatter().parse(text)
+                if name is not None
+            )
+
+        for locale in manager.manifest["locales"]:
+            with self.subTest(locale=locale):
+                self.assertIn(locale, manager.translations)
+                shipped = validate_catalogue(read_json(manager.root / f"{locale}.json"), english)
+                self.assertEqual(set(shipped), set(english))
+                self.assertTrue(all(value.strip() for value in shipped.values()))
+                self.assertEqual(manager.translations[locale], shipped)
+                for key, source in english.items():
+                    with self.subTest(message=key):
+                        self.assertEqual(fields(shipped[key]), fields(source))
 
     def test_non_ui_translation_helpers_extract_without_changing_existing_ids_or_locales(self):
         with tempfile.TemporaryDirectory() as tmp:
