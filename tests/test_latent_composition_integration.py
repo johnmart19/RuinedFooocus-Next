@@ -164,7 +164,7 @@ class LatentCompositionIntegration(unittest.TestCase):
     def test_actual_capture_and_execution_callers_bypass_checkpoint_defaults_and_prompt_processing(
         self,
     ):
-        shared = NS(path_manager=self.manager, state={})
+        shared = NS(path_manager=self.manager, models=NS(offline=True), state={})
         controls = NS(
             get_settings=lambda data: data.get("controlnet") or {"type": composition.KIND}
         )
@@ -195,7 +195,7 @@ class LatentCompositionIntegration(unittest.TestCase):
     def test_actual_api_operation_prepares_and_executes_without_reading_global_generation_settings(
         self,
     ):
-        shared = NS(path_manager=self.manager, state={})
+        shared = NS(path_manager=self.manager, models=NS(offline=True), state={})
         controls = NS(get_settings=lambda data: data["controlnet"])
         execute = function(
             "ruinedfooocus/app/async_worker.py",
@@ -280,7 +280,7 @@ class LatentCompositionIntegration(unittest.TestCase):
     def test_api_refuses_a_different_canvas_and_other_source_operations_without_model_resolution(
         self,
     ):
-        shared = NS(path_manager=self.manager, state={})
+        shared = NS(path_manager=self.manager, models=NS(offline=True), state={})
         with (
             patch.dict(sys.modules, {"ruinedfooocus.app.state": shared}),
             patch.object(ruinedfooocus.app, "state", shared, create=True),

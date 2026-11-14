@@ -719,7 +719,7 @@ class NativeTensorIOTests(unittest.TestCase):
         namespace = dict(
             gr=gr,
             shared=NS(get_ctrl=lambda name: name),
-            editor_workspace=NS(latest_generated="latest_generated"),
+            editor_workspace=NS(latest_generated="latest_generated", source_input="source_input"),
         )
         for name in (
             "run_button",

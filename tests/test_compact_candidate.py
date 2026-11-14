@@ -181,6 +181,10 @@ class CompactCandidateTests(unittest.TestCase):
         class Native:
             runtime_label = "fixture"
             fallback_reason = ""
+            runtime_snapshot = {
+                "runtime_identity": {"manifest_verified": False},
+                "model_identity": {},
+            }
 
             def __init__(self, model, settings, **kwargs):
                 captured["native"] = (deepcopy(settings), kwargs)
@@ -190,13 +194,14 @@ class CompactCandidateTests(unittest.TestCase):
 
         def embedded(params):
             captured["embedded"] = params
-            return Mock()
+            return Mock(runtime_snapshot=None)
 
         manager = SimpleNamespace(DOWNLOADABLE_FILES={})
         state = SimpleNamespace(path_manager=manager)
         function = function_from(
             "ruinedfooocus/features/chat/llama_pipeline.py",
-            "load_base_model",
+            # load_base_model owns cancellation; the runtime branches live here.
+            "_initialize_model",
             {
                 "settings": SimpleNamespace(default_settings={}),
                 "DEFAULT_MODEL": "unused",
@@ -240,6 +245,7 @@ class CompactCandidateTests(unittest.TestCase):
                     caps, "architecture_eligibility", return_value=Eligibility("unknown", "fixture")
                 ),
                 patch.object(caps, "verified_local_artifact", return_value=self.artifact()),
+                patch("ruinedfooocus.app.resource_lifecycle.require_compute_owner"),
                 patch.object(gpu_installer, "ensure_xllamacpp", return_value={}),
                 patch.object(gpu_installer, "installed_torch_constraints", return_value={}),
                 patch.object(
@@ -254,7 +260,10 @@ class CompactCandidateTests(unittest.TestCase):
                     owner = SimpleNamespace(
                         unload=Mock(), current_model_settings=lambda *a, **k: ()
                     )
-                    function(owner, str(weight), prepared=prepared, _leased=True)
+                    runtime_load = SimpleNamespace(
+                        check=lambda: None, emit=lambda *a, **k: None, load_id=None
+                    )
+                    function(owner, str(weight), prepared=prepared, runtime_load=runtime_load)
                     self.assertEqual(prepared.settings, values)
                     self.assertEqual(
                         owner.llm.reasoning_capability["template_sha256"], COMPACT_TEMPLATE_SHA256

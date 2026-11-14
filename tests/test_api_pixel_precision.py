@@ -73,6 +73,7 @@ class PixelPrecisionAdmission(unittest.TestCase):
             models=NS(offline=True),
             settings=NS(default_settings={}),
         )
+        self.shared = shared
         self.enterContext(patch.dict(sys.modules, {"ruinedfooocus.app.state": shared}))
         self.enterContext(patch.object(ruinedfooocus.app, "state", shared, create=True))
         backend = NS(
@@ -223,6 +224,9 @@ class PixelPrecisionAdmission(unittest.TestCase):
             patch.object(api_runtime, "submit") as submit,
             patch.object(formats, "encoded_precision") as precision,
             patch.object(Image, "open") as pillow,
+            # A named image model is first checked against pending catalogue
+            # downloads; that local folder check happens before input decoding.
+            patch.object(self.shared.path_manager, "get_model_folders", return_value=[]),
         ):
             for malformed in ("data:image/png;base64", "data:image/png", "data:image/"):
                 for route, options in (

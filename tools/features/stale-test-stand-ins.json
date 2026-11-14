@@ -1,0 +1,15 @@
+{
+  "id": "stale-test-stand-ins",
+  "subject": "Bring five test stand-ins up to the current loader, API and Editor contracts",
+  "requires": ["api-utility-discovery-fixture"],
+  "tests": [
+    "test_api_pixel_precision.py",
+    "test_compact_candidate.py",
+    "test_image_shaders.py",
+    "test_latent_composition_integration.py",
+    "test_native_tensor_io.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

@@ -528,9 +528,15 @@ class ImageShaders(unittest.TestCase):
             self.capture("glsl-effect")
 
     def test_rgba_utility_avif_is_rejected_before_any_processing(self):
+        # Single-image operations reach each tool's own output check; every
+        # tool that keeps alpha or a reusable mask points to PNG or EXR.
+        single_image = {
+            "image-mask": {"mask_operation": "channel"},
+            "image-color": {"color_operation": "morphology"},
+        }
         for kind in dispatch.KINDS:
-            with self.subTest(kind=kind), self.assertRaisesRegex(ValueError, "RGBA"):
-                self.capture(kind, output_format="avif")
+            with self.subTest(kind=kind), self.assertRaisesRegex(ValueError, "PNG or EXR"):
+                self.capture(kind, output_format="avif", **single_image.get(kind, {}))
         self.assertFalse(self.calls)
 
     def test_precision_output_and_library_replay_keep_exact_recipe_intent(self):
