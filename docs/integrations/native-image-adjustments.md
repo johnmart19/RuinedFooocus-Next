@@ -66,6 +66,12 @@ selection; they do not pass through a color transfer curve or source alpha.
 Original precision images and mask artifacts stay unchanged, and native
 adjustments/export continue to use original samples rather than display previews.
 
+Blend accepts a reference with different dimensions: pinned native ImageBlend
+uses bicubic resizing and a center crop to fit it to the oriented source frame.
+The source canvas, source alpha and frozen original/reference pixels remain
+unchanged; metadata records the native fitting policy and original reference size.
+ColorTransfer already accepts an independent reference frame for its statistics.
+
 Blend uses the native RGB clamp to 0–1. Transfer requires encoded sRGB in range,
 and its Histogram choice is labeled **Histogram (256-bin)**. Quantize explicitly
 uses the native RGB8 palette conversion. These are explicit effect policies;

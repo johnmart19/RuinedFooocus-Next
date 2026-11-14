@@ -11,6 +11,7 @@ FILES = (
     "comfy_extras/nodes_text_overlay.py",
     "comfy_extras/nodes_morphology.py",
     "comfy_extras/nodes_images.py",
+    "comfy/utils.py",
 )
 
 
@@ -80,8 +81,8 @@ def operations(signatures, check_cancelled, *, policy, transfer=False, finishing
         def update(self, count):
             check_cancelled()
 
-    def reject_resize(*args, **kwargs):
-        raise ValueError("Blend images must share one frame; resize explicitly first.")
+    resize = next(node for node in trees[5].body if getattr(node, "name", None) == "common_upscale")
+    compile_nodes([resize], FILES[5])
 
     # The job's configured native device/intermediate policy is injected without
     # importing device management while constructing this pure namespace.
@@ -92,7 +93,7 @@ def operations(signatures, check_cancelled, *, policy, transfer=False, finishing
             intermediate_device=lambda: policy.intermediate_device,
             intermediate_dtype=lambda: policy.intermediate_dtype,
         ),
-        utils=NS(ProgressBar=Progress, common_upscale=reject_resize),
+        utils=NS(ProgressBar=Progress, common_upscale=scope["common_upscale"]),
     )
 
     def compile_class(index, name):

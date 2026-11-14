@@ -73,6 +73,37 @@ class ImageColorToolsTests(unittest.TestCase):
         self.assertEqual(result.shape, (5, 5, 3))
         np.testing.assert_allclose(result, 0.5)
 
+    def test_native_blend_center_fits_different_reference_frame_and_keeps_original_alpha(self):
+        source = np.full((6, 4, 4), (0.1, 0.2, 0.3, 0.1234567), dtype=np.float32)
+        reference = np.full((3, 8, 4), (1, 0, 0, 0), dtype=np.float32)
+        reference[:, 3:5, :3] = (0, 1, 0)
+        before_source, before_reference = source.copy(), reference.copy()
+        data = self.capture(
+            source=source,
+            reference=reference,
+            color_blend_factor=1,
+            output_bit_depth="16-bit",
+        )
+        result = self.run_color(data)
+        self.assertEqual(result.shape, source.shape)
+        np.testing.assert_allclose(result[..., :3], np.broadcast_to((0, 1, 0), (6, 4, 3)))
+        np.testing.assert_array_equal(result[..., 3], source[..., 3])
+        np.testing.assert_array_equal(source, before_source)
+        np.testing.assert_array_equal(reference, before_reference)
+        self.assertEqual(data["image_utility_source"]["reference_size"], [8, 3])
+        self.assertIn("bicubic center crop", data["image_utility_source"]["frame"])
+
+    def test_native_blend_accepts_cropped_canvas_with_generated_reference_dimensions(self):
+        source = Image.new("RGBA", (480, 640), (20, 40, 60, 123))
+        reference = Image.new("RGB", (832, 1216), (60, 80, 100))
+        before_source, before_reference = source.tobytes(), reference.tobytes()
+        result = self.run_color(self.capture(source=source, reference=reference))
+        self.assertEqual(result.shape, (640, 480, 4))
+        np.testing.assert_array_equal(result[0, 0], [40, 60, 80, 123])
+        self.assertTrue((result[..., 3] == 123).all())
+        self.assertEqual(source.tobytes(), before_source)
+        self.assertEqual(reference.tobytes(), before_reference)
+
     def test_real_transfer_methods_allow_independent_reference_frame_and_preserve_alpha(self):
         source = np.full((5, 5, 4), (0.2, 0.3, 0.4, 0.1234567), dtype=np.float32)
         reference = np.full((3, 7, 3), (0.6, 0.5, 0.4), dtype=np.float32)
@@ -183,10 +214,9 @@ class ImageColorToolsTests(unittest.TestCase):
         for name in ("input_image", "image_source", "color_reference"):
             self.assertIsNone(replay[name])
 
-    def test_rejects_missing_reference_mismatched_blend_frames_and_raw_paths(self):
-        for options in (dict(reference=Image.new("RGB", (4, 5))), dict(reference="private.png")):
-            with self.subTest(options=options), self.assertRaises(ValueError):
-                self.capture(**options)
+    def test_rejects_missing_reference_and_raw_paths(self):
+        with self.assertRaises(ValueError):
+            self.capture(reference="private.png")
         with self.assertRaisesRegex(ValueError, "Add a reference"):
             colors.capture_assets(dict(input_image=Image.new("RGB", (5, 5))), None)
         with self.assertRaises(ValueError):

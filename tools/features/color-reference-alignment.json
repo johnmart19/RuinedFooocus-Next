@@ -1,0 +1,14 @@
+{
+  "id": "color-reference-alignment",
+  "subject": "Fit color blend references through native ComfyUI resizing",
+  "requires": ["editor-action-controls"],
+  "tests": [
+    "test_image_color_tools.py",
+    "test_image_color_device_policy.py",
+    "test_image_color_finishing.py",
+    "test_image_adjustment_integration.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

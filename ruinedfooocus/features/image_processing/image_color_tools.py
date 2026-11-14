@@ -136,8 +136,6 @@ def capture_assets(data, manager, models=None):
         if data.get("color_reference") is None:
             raise ValueError("Add a reference image for blending or color transfer.")
         reference = capture_source(data["color_reference"])
-        if operation == "blend" and reference.size != source.size:
-            raise ValueError("Blend images must share one oriented frame; resize explicitly first.")
         if source.color_space != reference.color_space:
             raise ValueError(
                 "The source and reference color spaces must match; convert color explicitly first."
@@ -385,7 +383,9 @@ def process(owner, data, manager, check_cancelled):
         has_icc_profile=request.source.has_icc_profile,
         reference_sha256=request.reference.source_sha256 if request.reference else None,
         reference_size=list(request.reference.size) if request.reference else None,
-        frame="oriented source frame; no implicit reference resize or crop",
+        frame="oriented source frame; native bicubic center crop fits the reference"
+        if operation == "blend" and request.reference.size != request.source.size
+        else "oriented source frame; no implicit reference resize or crop",
         alpha="native source-over glyph alpha union; alpha outside glyphs unchanged"
         if operation == "text-overlay"
         else "source alpha samples preserved; reference alpha does not select pixels",
