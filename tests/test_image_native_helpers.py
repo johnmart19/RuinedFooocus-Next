@@ -2,6 +2,7 @@ from ruinedfooocus.core.paths import asset_path, resource_path
 
 """Native preview selection/fallback and image-upscale error boundaries."""
 import ast
+from contextlib import nullcontext
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
@@ -105,12 +106,19 @@ class NativeImageHelperTests(unittest.TestCase):
             if isinstance(n, ast.Assign)
             and any(isinstance(t, ast.Name) and t.id == "previewer" for t in n.targets)
         )
-        stop = next(
+        lcm = next(
             i
             for i, n in enumerate(process.body)
             if isinstance(n, ast.If) and ast.unparse(n.test) == "sampler_name == 'lcm'"
         )
-        method = ast.parse("def sample(self, gen_data, callback=None): pass").body[0]
+        # Sampling runs inside the model-patch scope that follows the LCM check.
+        stop = next(
+            i for i in range(lcm, len(process.body)) if isinstance(process.body[i], ast.With)
+        )
+        # The patch scope rebinds sampling_model, so it is a parameter of the slice.
+        method = ast.parse(
+            "def sample(self, gen_data, callback=None, sampling_model=sampling_model): pass"
+        ).body[0]
         method.body = process.body[start : stop + 1] + ast.parse("return samples").body
         progress, decoder, callback = Mock(), Mock(), Mock()
         load = Mock(return_value=decoder)
@@ -140,6 +148,15 @@ class NativeImageHelperTests(unittest.TestCase):
             seed=1,
             sampling_model=object(),
             noise=object(),
+            fixed_sigmas=None,
+            # No refiner hand-off or native sampling plan in this ordinary request.
+            native_plan=None,
+            positive_prompt="",
+            negative_prompt="",
+            path_manager=SimpleNamespace(),
+            model_patches=SimpleNamespace(
+                apply_scope=lambda owner, model, *args: nullcontext(model)
+            ),
             comfy=SimpleNamespace(
                 sample=SimpleNamespace(sample=sample),
                 utils=SimpleNamespace(
@@ -157,7 +174,8 @@ class NativeImageHelperTests(unittest.TestCase):
         )
         owner = SimpleNamespace(
             xl_base_patched=SimpleNamespace(
-                unet=SimpleNamespace(model=SimpleNamespace(latent_format="format"))
+                unet=SimpleNamespace(model=SimpleNamespace(latent_format="format")),
+                vae=SimpleNamespace(),
             )
         )
         with patch("ruinedfooocus.features.generation.image_sampling.sample_lcm", sample):

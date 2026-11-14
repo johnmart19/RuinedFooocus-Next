@@ -134,9 +134,10 @@ class QwenImage21LocalEditTests(unittest.TestCase):
 
         preflight = process.body[index("qwen_local_edit") : index("checkpoint")]
         control_route = process.body[index("controlnet") : index("device")]
+        # The Qwen reference test is an elif after the named-source branch.
         prepare_reference = next(
             node
-            for node in process.body
+            for node in ast.walk(process)
             if isinstance(node, ast.If) and ast.unparse(node.test) == "qwen_reference_edit"
         )
         source = Image.new("RGBA", (81, 67), (12, 30, 70, 50))

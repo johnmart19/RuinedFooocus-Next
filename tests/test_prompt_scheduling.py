@@ -156,9 +156,10 @@ class PromptPreservationTests(unittest.TestCase):
         process = next(
             n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == "process"
         )
+        # The edit-reference test is an elif after the ordered-reference branch.
         branch = next(
             n
-            for n in process.body
+            for n in ast.walk(process)
             if isinstance(n, ast.If) and ast.unparse(n.test) == "image_edit and input_images > 0"
         )
         owner = SimpleNamespace(
@@ -187,6 +188,7 @@ class PromptPreservationTests(unittest.TestCase):
             negative_prompt="",
             clip_skip=1,
             switched_prompt=[],
+            tensor_conditions={},
             gen_data={"steps": 30},
             pp=SimpleNamespace(prompt_switch_per_step=prompt_switch_per_step),
         )

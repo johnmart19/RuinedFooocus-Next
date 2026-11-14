@@ -194,11 +194,11 @@ class OutputBatchTests(unittest.TestCase):
             self.assertIsInstance(result, ImageBatchArtifacts)
             self.assertEqual(result, [])
             validate_artifacts(data, result)
+        # An API job re-raises the pipeline error to its caller instead of
+        # returning an empty batch that could look like zero matches.
         with tempfile.TemporaryDirectory() as folder:
-            data, result = self.worker(folder, 0, fail=True)
-            self.assertNotIsInstance(result, ImageBatchArtifacts)
-            with self.assertRaises(RuntimeError):
-                validate_artifacts(data, result)
+            with self.assertRaisesRegex(RuntimeError, "owned pipeline failure"):
+                self.worker(folder, 0, fail=True)
 
 
 if __name__ == "__main__":

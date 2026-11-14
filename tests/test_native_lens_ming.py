@@ -396,6 +396,7 @@ class LensMingTests(unittest.TestCase):
             normalization_auto_default=ui.normalization_auto_default,
             control_value=control_value,
             LCM_FIELDS=ui.LCM_FIELDS,
+            qwen_schedule_for_family=ui.qwen_schedule_for_family,
         )
         exec(compile(ast.Module(body=[callback], type_ignores=[]), str(source), "exec"), scope)
         with patch(
@@ -406,7 +407,8 @@ class LensMingTests(unittest.TestCase):
                 performance_selection="Model Defaults",
                 base_model_name="lens",
                 cfg_norm_strength=updates[3]["value"],
-                cfg_norm_auto=updates[-1]["value"],
+                # The Qwen Image 2.1 schedule follows the normalization switch.
+                cfg_norm_auto=updates[-2]["value"],
             )
             self.assertEqual(captured["cfg_norm_strength"], "")
             self.assertTrue(captured["cfg_norm_auto"])
@@ -430,7 +432,7 @@ class LensMingTests(unittest.TestCase):
                         queued,
                         base_model_name="flux",
                         cfg_norm_strength=other_updates[3]["value"],
-                        cfg_norm_auto=other_updates[-1]["value"],
+                        cfg_norm_auto=other_updates[-2]["value"],
                     ),
                     "Flux",
                 )

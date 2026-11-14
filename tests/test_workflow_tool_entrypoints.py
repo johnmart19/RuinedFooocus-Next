@@ -69,8 +69,11 @@ class WorkflowToolEntrypointTests(unittest.TestCase):
 
         # The feature validator exports these complete immutable Git snapshots.
         # Never hide an incomplete application closure behind synthetic modules.
-        native = Path(os.environ["RF_TEST_COMFY_SOURCE"])
-        gguf = Path(os.environ["RF_TEST_GGUF_SOURCE"])
+        # Ordinary CPU runs use the pinned checkouts under repositories/.
+        native = Path(os.environ.get("RF_TEST_COMFY_SOURCE", ROOT / "repositories/ComfyUI"))
+        gguf = Path(
+            os.environ.get("RF_TEST_GGUF_SOURCE", ROOT / "repositories/molbal_comfyui_gguf")
+        )
         self.assertTrue((native / "comfy" / "cli_args.py").is_file())
         self.assertTrue((gguf / "__init__.py").is_file())
         sys.path.insert(0, str(native))

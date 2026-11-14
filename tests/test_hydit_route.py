@@ -250,7 +250,8 @@ class HyDiTRouteTests(unittest.TestCase):
             for n in ast.walk(tree)
             if isinstance(n, ast.If)
             and ast.unparse(n.test)
-            == "bundle is not None or Path(filename).suffix.lower() == '.gguf' or unet_only"
+            == "sense_bundle is not None or bundle is not None or "
+            "Path(filename).suffix.lower() == '.gguf' or unet_only"
         )
         scope.update(
             filename="official1.2.safetensors",
@@ -266,13 +267,22 @@ class HyDiTRouteTests(unittest.TestCase):
             ),
             choices={},
             validate_component_slots=validate_component_slots,
+            # No approximate preview codec was captured for this request.
+            approximate=None,
+            layout=None,
+            name="official1.2.safetensors",
+            hash=None,
+            prepared_data={},
         )
         wrapper = ast.parse("def run_native_checkpoint():\n    pass\n    return locals()")
         wrapper.body[0].body = full.orelse + wrapper.body[0].body[1:]
         exec(compile(ast.fix_missing_locations(wrapper), PIPELINE, "exec"), scope)
         scope.update(scope["run_native_checkpoint"]())
         checkpoint.assert_called_once_with(
-            "official1.2.safetensors", embedding_directory=["embeddings"], output_clipvision=True
+            "official1.2.safetensors",
+            embedding_directory=["embeddings"],
+            output_clipvision=True,
+            output_vae=True,
         )
         self.assertIsInstance(scope["clip"], CLIP)
         load.assert_called_once()
@@ -342,6 +352,7 @@ class HyDiTRouteTests(unittest.TestCase):
             noise_mask=None,
             callback_function=None,
             seed=37,
+            fixed_sigmas=None,
         )
         exec(compile(ast.Module(body=[sample], type_ignores=[]), PIPELINE, "exec"), scope)
         self.assertEqual(sampler.call_args.kwargs["cfg"], 3.25)
@@ -380,7 +391,10 @@ class HyDiTRouteTests(unittest.TestCase):
         )
         with (
             tempfile.TemporaryDirectory() as folder,
-            patch.dict("sys.modules", {"comfy.samplers": registry}),
+            patch.dict(
+                "sys.modules",
+                {"comfy.samplers": registry, "comfy.model_detection": NS()},
+            ),
             patch(
                 "ruinedfooocus.features.models.model_architecture.inspect_model_file",
                 return_value={

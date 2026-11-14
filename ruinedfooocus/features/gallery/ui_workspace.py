@@ -771,14 +771,14 @@ class EditorWorkspace:
             return source_changed(task_id, version, request, source="input")
 
         source_events = []
-        for triggers, callback in (
+        for triggers, on_source in (
             ([run_controls["preview"].upload, run_controls["gallery"].select], source_changed),
             ([controls["input_image"].upload], input_source_changed),
         ):
             source_events.append(
                 gr.on(
                     triggers=triggers,
-                    fn=callback,
+                    fn=on_source,
                     inputs=[run_controls["task"], self.version],
                     outputs=[
                         self.context,
@@ -1177,14 +1177,14 @@ class EditorWorkspace:
 
         from functools import partial
 
-        for trigger, callback in (
+        for trigger, page_callback in (
             (self.choose_gallery.click, partial(page_request, first=True)),
             (self.picker_page.input, page_request),
             (self.picker_previous.click, partial(page_request, delta=-1)),
             (self.picker_next.click, partial(page_request, delta=1)),
         ):
             trigger(
-                callback,
+                page_callback,
                 inputs=[self.picker_page, self.picker_version],
                 outputs=[self.picker, descriptor],
                 js=begin_js,

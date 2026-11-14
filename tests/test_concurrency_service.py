@@ -195,8 +195,28 @@ class ConcurrencyServiceTests(unittest.TestCase):
                 (),
                 {"get_ctrl": staticmethod(lambda name: scope.setdefault(name, gr.Textbox()))},
             )()
+            # The Editor workspace contributes its own controls to this event.
+            scope["editor_workspace"] = type(
+                "Workspace",
+                (),
+                {
+                    **{
+                        name: gr.Textbox()
+                        for name in (
+                            "context",
+                            "latest_generated",
+                            "mask",
+                            "notice",
+                            "source_input",
+                            "version",
+                        )
+                    },
+                    "reference_outputs_from": staticmethod(lambda *args: []),
+                    "run_version_js": staticmethod(lambda index: None),
+                },
+            )()
             scope.update(
-                state={"ctrls_obj": []},
+                state={"ctrls_obj": [], "ctrls_name": ["_editor_destination"]},
                 generate_clicked=lambda: None,
                 refresh_seed=lambda *args: None,
             )

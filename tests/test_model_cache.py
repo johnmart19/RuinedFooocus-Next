@@ -33,15 +33,31 @@ def method(source, name, scope):
     namespace = dict(
         vars(model_identity), asset_path=asset_path, resource_path=resource_path, **scope
     )
-    if "lora_hooks" not in namespace and any(
-        isinstance(decorator, ast.Attribute)
-        and isinstance(decorator.value, ast.Name)
-        and decorator.value.id == "lora_hooks"
-        for decorator in node.decorator_list
-    ):
-        from importlib import import_module
-
-        namespace["lora_hooks"] = import_module("ruinedfooocus.features.image_editing.lora_hooks")
+    # Decorators run while the method is defined, so resolve any decorator name
+    # the test did not supply through the source module's own imports.
+    imported = {}
+    for statement in tree.body:
+        if isinstance(statement, ast.ImportFrom) and statement.module and not statement.level:
+            for alias in statement.names:
+                imported[alias.asname or alias.name] = (statement.module, alias.name)
+        elif isinstance(statement, ast.Import):
+            for alias in statement.names:
+                imported[alias.asname or alias.name.split(".")[0]] = (alias.name, None)
+    for decorator in node.decorator_list:
+        root = decorator.func if isinstance(decorator, ast.Call) else decorator
+        while isinstance(root, ast.Attribute):
+            root = root.value
+        if isinstance(root, ast.Name) and root.id not in namespace and root.id in imported:
+            module, attribute = imported[root.id]
+            if attribute is None:
+                namespace[root.id] = importlib.import_module(module)
+            else:
+                owner = importlib.import_module(module)
+                namespace[root.id] = (
+                    getattr(owner, attribute)
+                    if hasattr(owner, attribute)
+                    else importlib.import_module(f"{module}.{attribute}")
+                )
     from ruinedfooocus.features.generation.image_preparation import (
         component_read_leases,
         component_file,

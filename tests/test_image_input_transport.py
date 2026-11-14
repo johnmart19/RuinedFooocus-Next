@@ -10,6 +10,7 @@ import numpy as np
 from PIL import Image
 
 from ruinedfooocus.features.image_editing.inpaint_utils import editor_payload
+from ruinedfooocus.features.image_editing.qwen_image21_local_edit import PAINT_COLOR
 from ruinedfooocus.core.translation_manager import translate_ui
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,6 +33,7 @@ def component(path, name):
         family="QwenImage",
         edit_format=SimpleNamespace(value="Disabled"),
         references_visible=lambda *args: True,
+        PAINT_COLOR=PAINT_COLOR,
     )
     return eval(compile(ast.Expression(call), path, "eval"), scope)
 

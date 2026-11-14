@@ -248,7 +248,14 @@ class SpecializedClipHookTests(unittest.TestCase):
         )
 
     def test_every_reviewed_external_clip_family_captures_constant_and_scheduled_targets(self):
-        expected = {name for name, config in IMAGE_COMPONENTS.items() if config["clip_names"]}
+        # Bernini applies its own fixed LoRA pair and MiniMax's graph rejects
+        # LoRAs, so neither goes through the shared CLIP hooks.
+        own_graph = {"BerniniImage", "MiniMaxH3Image"}
+        expected = {
+            name
+            for name, config in IMAGE_COMPONENTS.items()
+            if config["clip_names"] and name not in own_graph
+        }
         self.assertEqual(lora_hooks.CLIP_FAMILIES, expected)
         for family in sorted(expected):
             self.hooks.family = family

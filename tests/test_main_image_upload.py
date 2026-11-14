@@ -36,12 +36,14 @@ def upload_fixture():
             "native_main_source": gr.State(None),
             "generation_originals": gr.File(file_count="multiple", visible=False),
             "image_source": gr.State(None),
+            "destination": gr.State("create"),
         }
         scope = dict(
             controls,
             gr=gr,
             Image=Image,
-            look=interrogate.look,
+            metadata_prompt=interrogate.metadata_prompt,
+            editor_workspace=SimpleNamespace(destination=controls["destination"]),
             shared=SimpleNamespace(get_ctrl=controls.__getitem__),
         )
         exec(compile(ast.Module(body=[callback], type_ignores=[]), str(source), "exec"), scope)
@@ -110,7 +112,10 @@ class MainImageUploadTests(unittest.TestCase):
 
     def test_registered_upload_callback_serializes_prompt_and_clears_stale_sources(self):
         app, event, controls = upload_fixture()
-        self.assertEqual(event["inputs"], [controls[name]._id for name in ("main_view", "prompt")])
+        self.assertEqual(
+            event["inputs"],
+            [controls[name]._id for name in ("main_view", "prompt", "destination")],
+        )
         self.assertEqual(
             event["outputs"],
             [
@@ -127,18 +132,24 @@ class MainImageUploadTests(unittest.TestCase):
         )
         with tempfile.TemporaryDirectory() as folder:
             original = Path(folder) / "original.png"
-            for parameters, draft, expected in (
+            # Create with an empty prompt reads the saved prompt text only; a
+            # draft, or an upload into the Editor, leaves the prompt unchanged.
+            # Uploading never starts a caption job.
+            kept = None
+            for parameters, draft, destination, expected in (
                 (
                     json.dumps(
                         {"Prompt": "rendered fox", "raw_prompt": "original fox", "width": 832}
                     ),
                     "",
+                    "create",
                     "rendered fox",
                 ),
-                ('{"Prompt":"saved"}', "  current\ndraft  ", "  current\ndraft  "),
-                ('{"raw_prompt":"original fox"}', "", "original fox"),
-                ("  free text\nparameters  ", "", "  free text\nparameters  "),
-                (None, "", "caption"),
+                ('{"Prompt":"saved"}', "  current\ndraft  ", "create", kept),
+                ('{"Prompt":"saved"}', "", "editor", kept),
+                ('{"raw_prompt":"original fox"}', "", "create", "original fox"),
+                ("  free text\nparameters  ", "", "create", "  free text\nparameters  "),
+                (None, "", "create", ""),
             ):
                 metadata = PngImagePlugin.PngInfo()
                 if parameters is not None:
@@ -154,11 +165,19 @@ class MainImageUploadTests(unittest.TestCase):
                     state = SessionState(app)
                     for name in ("generation_artifacts", "native_main_source", "image_source"):
                         state[controls[name]._id] = ["stale"]
+                    state[controls["destination"]._id] = destination
                     result = asyncio.run(
-                        app.process_api(event["id"], [{"path": cached}, draft], state=state)
+                        app.process_api(
+                            event["id"], [{"path": cached}, draft, destination], state=state
+                        )
                     )
                     projected = dict(zip(event["outputs"], result["data"]))
-                    self.assertEqual(projected[controls["prompt"]._id], expected)
+                    prompt = projected[controls["prompt"]._id]
+                    if expected is kept:
+                        self.assertNotIn("value", prompt)
+                    else:
+                        self.assertEqual(prompt, expected)
+                    caption.assert_not_called()
                     self.assertEqual(len(projected[controls["gallery"]._id]), 1)
                     self.assertEqual(original.read_bytes(), original_bytes)
                     self.assertEqual(state[controls["generation_artifacts"]._id], [])
@@ -168,7 +187,6 @@ class MainImageUploadTests(unittest.TestCase):
                         projected[controls["generation_originals"]._id],
                         gr.update(value=[], visible=False),
                     )
-                    self.assertEqual(caption.call_count, int(parameters is None))
 
 
 if __name__ == "__main__":

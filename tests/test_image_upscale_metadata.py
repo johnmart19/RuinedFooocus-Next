@@ -113,6 +113,8 @@ def saved_parameters(
         used_loras=[],
         settings=SimpleNamespace(default_settings={}),
         pipeline=SimpleNamespace(pipeline_type=["sdxl"]),
+        # The worker sets this for every sampling generation (not image utilities).
+        sampling=True,
     )
     exec(
         compile(ast.Module(body=loop.body[start:end], type_ignores=[]), "output_metadata", "exec"),

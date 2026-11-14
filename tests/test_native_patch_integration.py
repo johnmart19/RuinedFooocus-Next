@@ -465,6 +465,7 @@ class NativePatchIntegrationTests(unittest.TestCase):
                 decoded_latent=torch.zeros_like(pixels),
                 outpaint_composite=None,
                 restore_reference_frame=generic_restore,
+                guided_edit=False,
             )
             execute(body[index : index + 2], scope)
             result = scope["decoded_latent"]

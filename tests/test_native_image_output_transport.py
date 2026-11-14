@@ -58,8 +58,11 @@ class NativeOutputTransportTests(unittest.TestCase):
             namespace["generation_artifacts"] = gr.State([])
             namespace["native_main_source"] = gr.State(None)
             namespace["latest_generated"] = gr.State(None)
+            # Create results also mark the Editor source as the new preview.
+            namespace["source_input"] = gr.State(None)
             namespace["editor_workspace"] = SimpleNamespace(
-                latest_generated=namespace["latest_generated"]
+                latest_generated=namespace["latest_generated"],
+                source_input=namespace["source_input"],
             )
             namespace["image_source"] = gr.State({"filename": "previous.png"})
             namespace["shared"] = SimpleNamespace(get_ctrl=lambda _: namespace["image_source"])

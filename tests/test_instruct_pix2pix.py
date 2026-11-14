@@ -23,6 +23,7 @@ from ruinedfooocus.features.image_editing.native_conditioning import (
     require_instruct_edit,
 )
 from ruinedfooocus.features.models.image_components import inventory
+from ruinedfooocus.features.generation.size_plan import SizePlan
 from ruinedfooocus.features.image_editing.sd4x_conditioning import require_sd4x_source
 from ruinedfooocus.features.image_editing.image_guidance import normalize_reference_images
 from test_model_cache import method
@@ -209,9 +210,10 @@ class InstructPix2PixTests(unittest.TestCase):
             and isinstance(n.test, ast.Name)
             and n.test.id == "instruct_model"
         )
+        # The edit-latent test is an elif of the latent-initialization chain.
         target = next(
             n
-            for n in body
+            for n in ast.walk(ast.Module(body=body, type_ignores=[]))
             if isinstance(n, ast.If)
             and ast.unparse(n.test) == "edit_latent is not None and (not img2img_mode)"
         )
@@ -241,6 +243,15 @@ class InstructPix2PixTests(unittest.TestCase):
                 image_edit=False,
                 hidream_edit=False,
                 instruct_model=True,
+                cascade_model=False,
+                guided_edit=False,
+                guided_request=None,
+                cascade_latents=None,
+                ordered_recipe=None,
+                size_plan=None,
+                SizePlan=SizePlan,
+                tensor_latent=None,
+                named_source_latent=None,
                 sd4x_model=False,
                 pid_model=False,
                 refiner_model=False,

@@ -92,23 +92,22 @@ class Comfy045ReleaseTests(unittest.TestCase):
             )
 
     def test_official_recipe_reader_keeps_reviewed_target_data_separate_from_live_packages(self):
-        index = json.loads(
-            (ROOT / "ruinedfooocus/resources/model_metadata/native_coverage/index.json").read_text()
+        # The reviewed template identity is recorded in the accepted native snapshot.
+        snapshot = json.loads(
+            (ROOT / "ruinedfooocus/features/models/native_snapshot.json").read_text(
+                encoding="utf-8"
+            )
         )
-        contract = index["source"]["workflow_templates"]
-        target = contract["reviewed_release_target"]
-        self.assertEqual(target["packages"]["comfyui_workflow_templates"], "0.11.105")
-        self.assertEqual(target["recipe_counts"]["recipes"], 672)
-        self.assertTrue(target["recipe_assets_match_manifest"])
+        target = snapshot["manifest"]["source_manifest"]["template_identity"]
         self.assertEqual(
-            {row["name"] for row in contract["prepared_data_changes"]},
+            target["packages"],
             {
-                "comfyui-workflow-templates",
-                "comfyui-workflow-templates-core",
-                "comfyui-workflow-templates-json",
-                "comfyui-workflow-templates-media-assets-02",
+                "comfyui_workflow_templates": "0.11.105",
+                "comfyui_workflow_templates_core": "0.3.396",
+                "comfyui_workflow_templates_json": "0.1.131",
             },
         )
+        self.assertTrue(target["recipe_assets_match_manifest"])
         raw = b'{"nodes":[{"id":1,"type":"MiniMaxH3ImageConditioning"}]}'
         digest = hashlib.sha256(raw).hexdigest()
         with tempfile.TemporaryDirectory() as folder:
@@ -257,8 +256,15 @@ assert torch.cuda.is_available is forbidden and torch.xpu.device_count is forbid
 assert not torch.cuda.is_initialized()
 print('actual native CombinedLinear cases: 2 passed; accelerator initialization: absent')
 """
+        # The child reads the same native source as this module: the feature
+        # validator's snapshot when exported, otherwise the pinned checkout.
         result = subprocess.run(
-            [sys.executable, "-c", script], cwd=ROOT, capture_output=True, text=True, timeout=60
+            [sys.executable, "-c", script],
+            cwd=ROOT,
+            env=dict(os.environ, RF_TEST_COMFY_SOURCE=str(SOURCE)),
+            capture_output=True,
+            text=True,
+            timeout=60,
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn("actual native CombinedLinear cases: 2 passed", result.stdout)

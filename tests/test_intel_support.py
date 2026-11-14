@@ -1,6 +1,7 @@
 """Intel Arc / Core Ultra GPUs get pinned XPU PyTorch and the SYCL llama.cpp build."""
 
 import os
+from pathlib import Path
 import sys
 import unittest
 from types import SimpleNamespace
@@ -32,8 +33,13 @@ class XpuTorch(unittest.TestCase):
         args = SimpleNamespace(directml=None, rocm10=False, cuda_nightly=False, legacy=False)
         with (
             patch.dict(os.environ, {}, clear=False),
+            # The bootstrap hook reads the full saved profile.
             patch(
-                "ruinedfooocus.packaging.startup_options.saved_startup_policy",
+                "ruinedfooocus.packaging.startup_options.saved_profile_path",
+                return_value=Path("saved-profile"),
+            ),
+            patch(
+                "ruinedfooocus.core.profile_store.read_profile",
                 return_value={"image_backend": "xpu"},
             ),
             patch.object(backend_preferences, "installed_torch_kind", return_value="cpu"),

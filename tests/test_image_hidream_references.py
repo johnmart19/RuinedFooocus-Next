@@ -130,6 +130,7 @@ class HiDreamReferenceTests(unittest.TestCase):
             control_type="None",
             controlnet={"type": "None"},
             switched_prompt=[],
+            tensor_conditions={},
             gen_data={"steps": 2},
             pp=SimpleNamespace(prompt_switch_per_step=lambda *args: ["first", "second"]),
         )
@@ -236,6 +237,7 @@ class HiDreamReferenceTests(unittest.TestCase):
             positive_conditioning=positive,
             negative_conditioning=negative,
             switched_prompt=[],
+            tensor_conditions={},
             input_images=0,
         )
         exec(
@@ -271,6 +273,10 @@ class HiDreamReferenceTests(unittest.TestCase):
             sd4x_model=False,
             refiner_model=False,
             instruct_model=False,
+            cascade_model=False,
+            guided_edit=False,
+            guided_request=None,
+            cascade_latents=None,
             size_plan=None,
             SizePlan=SizePlan,
             hidream_edit=True,
@@ -287,11 +293,10 @@ class HiDreamReferenceTests(unittest.TestCase):
         self.assertEqual(tuple(scope["input_image"].shape), (1, 256, 128, 3))
         restored = restore_reference_frame(scope["input_image"], scope["reference_frame"])
         self.assertTrue(torch.equal(restored, torch.from_numpy(np.array(image)).unsqueeze(0) / 255))
-        branch = next(
-            n
-            for n in process.body
-            if isinstance(n, ast.If) and ast.unparse(n.test).startswith("edit_latent is not None")
-        )
+        from test_image_edit_contracts import EARLIER_LATENTS, latent_chain
+
+        # The edit-latent branch is one elif of the latent-initialization chain.
+        branch = latent_chain(process, "edit_latent is not None and (not img2img_mode)")
         source = {"samples": torch.zeros(1, 3, 256, 128, device="cpu")}
         encoder = Mock(return_value=[source])
         empty = Mock(return_value=[{"samples": torch.zeros(1, 3, 256, 128, device="cpu")}])
@@ -302,6 +307,7 @@ class HiDreamReferenceTests(unittest.TestCase):
             model_info={"latent": "HiDreamO1"},
         )
         scope.update(
+            EARLIER_LATENTS,
             self=owner,
             edit_latent=None,
             VAEEncode=lambda: SimpleNamespace(encode=encoder),

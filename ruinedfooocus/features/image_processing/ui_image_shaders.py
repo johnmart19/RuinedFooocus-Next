@@ -45,7 +45,8 @@ def create_ui(selection, control_type, kind_for):
                         curve_controls[field] = gr.Dataframe(
                             headers=[translate_ui("Input"), translate_ui("Output")],
                             datatype=["number", "number"],
-                            row_count=(2, "dynamic"),
+                            # Curve points: any number of rows, exactly two columns.
+                            row_count=2,
                             column_count=(2, "fixed"),
                             type="array",
                             value=deepcopy(saved.get(field, DEFAULTS[field])),

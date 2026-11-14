@@ -1,5 +1,7 @@
 """YAML reaches real capture/load/cache/metadata callers without weight loading."""
 
+import struct
+import json
 import ast
 from contextlib import contextmanager
 from dataclasses import replace
@@ -88,7 +90,9 @@ class YamlCallerTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name).resolve()
         self.checkpoint = self.root / "checkpoint.safetensors"
-        self.checkpoint.write_bytes(b"opaque checkpoint, no load")
+        # A valid, weightless safetensors header: callers inspect it, never load it.
+        header = json.dumps({"__metadata__": {"fixture": "inert recipe checkpoint"}}).encode()
+        self.checkpoint.write_bytes(struct.pack("<Q", len(header)) + header)
         self.recipe = self.root / "chosen.yaml"
         self.recipe.write_text(TEXT, encoding="utf-8")
         self.manager = NS(get_model_folders=lambda category: [self.root], DOWNLOADABLE_FILES={})

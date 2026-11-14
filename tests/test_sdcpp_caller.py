@@ -461,8 +461,10 @@ class SdcppCallerTests(unittest.TestCase):
             dict(self.data, controlnet={"type": "rembg"}),
         ):
             self.assertNotIn(caller.SNAPSHOT_KEY, self.capture(data))
+        # Video checkpoints are outside the still-image scope and are rejected.
         self.metadata["baseModel"] = "Wan Video"
-        self.assertNotIn(caller.SNAPSHOT_KEY, self.capture())
+        with self.assertRaisesRegex(ValueError, "supports still images and local Chat"):
+            self.capture()
 
     def test_registry_selects_optional_only_on_nonvideo_image_branch(self):
         source = (
@@ -499,7 +501,8 @@ class SdcppCallerTests(unittest.TestCase):
         self.accepted()
         self.assertIn("sdcpp", scope["update"](self.prepare()).pipeline_type)
         self.metadata["baseModel"] = "Wan Video"
-        self.assertEqual(scope["update"](dict(self.data)).pipeline_type, ["wan_video"])
+        with self.assertRaisesRegex(RuntimeError, "supports still images and local Chat"):
+            scope["update"](dict(self.data))
 
 
 if __name__ == "__main__":

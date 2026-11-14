@@ -357,8 +357,22 @@ class UnionTests(unittest.TestCase):
                 for target in node.targets
             )
         )
+        # The field lists are imported just above the binding in the same function.
+        owner = next(
+            node
+            for node in ast.walk(tree)
+            if isinstance(node, ast.FunctionDef) and binding in node.body
+        )
+        imports = [
+            node
+            for node in owner.body[: owner.body.index(binding)]
+            if isinstance(node, ast.ImportFrom)
+        ]
         namespace = {"METADATA_CONTROLS": {}, "FIELD_SCHEMA": {}}
-        exec(compile(ast.Module(body=[binding], type_ignores=[]), str(source), "exec"), namespace)
+        exec(
+            compile(ast.Module(body=[*imports, binding], type_ignores=[]), str(source), "exec"),
+            namespace,
+        )
         self.assertTrue(set(union.replay_values(metadata)) <= set(namespace["metadata_names"]))
 
 

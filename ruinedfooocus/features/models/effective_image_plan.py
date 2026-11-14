@@ -946,6 +946,9 @@ def capture_effective_image_plan(
             ),
             result.get("image_component_overrides"),
         )
+        # Components captured here belong to this checkpoint; record that so a
+        # later capture of the same request recognizes them.
+        result[SCOPE_KEY] = identity
     if not isinstance(components, tuple) or any(
         not isinstance(row, ImagePlanComponent) for row in components
     ):

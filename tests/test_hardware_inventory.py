@@ -5,6 +5,9 @@ from unittest.mock import patch
 
 from ruinedfooocus.packaging import hardware_inventory as inventory
 
+# The pinned llama.cpp build chooses the newest CUDA 13 package label.
+from ruinedfooocus.backends.llama.llama_installer import CUDA_BACKEND as CUDA13
+
 NVIDIA = {"vendor": "nvidia", "name": "GeForce RTX 4090", "pci_id": "10de:2684"}
 AMD = {"vendor": "amd", "name": "Radeon RX 7900 XTX", "pci_id": "1002:744c"}
 INTEL = {"vendor": "intel", "name": "Arc A770", "pci_id": "8086:56a0"}
@@ -45,17 +48,15 @@ class ImageChoices(unittest.TestCase):
 
 class LlmChoices(unittest.TestCase):
     def test_cuda_and_rocm_labels_need_matching_hardware(self):
-        self.assertEqual(llm([NVIDIA]), ["Auto", "CPU", "Vulkan", "CUDA 12.4", "CUDA 13.4"])
+        self.assertEqual(llm([NVIDIA]), ["Auto", "CPU", "Vulkan", "CUDA 12.4", CUDA13])
         self.assertEqual(llm([AMD]), ["Auto", "CPU", "Vulkan", "ROCm"])
         self.assertEqual(llm([INTEL]), ["Auto", "CPU", "Vulkan", "SYCL"])
         self.assertEqual(llm([]), ["Auto", "CPU"])
-        self.assertEqual(
-            llm([AMD, NVIDIA]), ["Auto", "CPU", "Vulkan", "ROCm", "CUDA 12.4", "CUDA 13.4"]
-        )
+        self.assertEqual(llm([AMD, NVIDIA]), ["Auto", "CPU", "Vulkan", "ROCm", "CUDA 12.4", CUDA13])
 
     def test_linux_and_wsl_use_the_linux_package_names(self):
         self.assertEqual(
-            llm([NVIDIA], "Linux", "x86_64"), ["Auto", "CPU", "Vulkan", "CUDA 12.8", "CUDA 13.4"]
+            llm([NVIDIA], "Linux", "x86_64"), ["Auto", "CPU", "Vulkan", "CUDA 12.8", CUDA13]
         )
         self.assertEqual(llm([AMD], "Linux", "x86_64"), ["Auto", "CPU", "Vulkan", "ROCm"])
 

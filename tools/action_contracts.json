@@ -104,7 +104,7 @@
     {
       "id": "editor-workspace-source-history",
       "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
-      "callbacks": "open_chat$|open_current$|open_library$|^partial\\(history,",
+      "callbacks": "open_chat$|open_current$|open_library$|^partial\\(history,|open_latest$|prepare_picker$|pick$|open_after_pick$|open_pick$|close_picker$|page_callback$",
       "work": "Open an authenticated current source or completed Chat/Gallery result, or move through owned image history; no implicit generation.",
       "resource_owner": "EditorWorkspace LatestUIRequests channel, EditorSessionStore authenticated owner/revision and PreparationService artifact read leases; Gallery draft publication also uses its prompt fence",
       "persistence": "New source adoption copies bounded original pixels/files into owned editor artifacts and atomically records the session manifest; undo/redo/reopen changes only that owned history. Library prompt/setup publication preserves a newer edited draft.",
@@ -154,7 +154,7 @@
     {
       "id": "editor-workspace-local-controls",
       "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
-      "callbacks": "invalidate$|source_changed$|action_context$|adjustment_action$|<lambda>",
+      "callbacks": "invalidate$|source_changed$|action_context$|adjustment_action$|<lambda>|select_quick_tool$|mark_output_explicit$|preview_source$|on_source$",
       "work": "Project action-specific inputs and Run label, open More tools for explicit Adjust image intent, reset stale source context and advance the browser-owned Editor intent version.",
       "resource_owner": "Per-browser Editor controls and LatestUIRequests authenticated workspace channel; optional cancellation targets only its bound task ID",
       "persistence": "Control/version updates only; no editor artifact, profile or generated image is published by these callbacks. The tool selector sets explicit Adjust image intent for that alias and Generate intent for other tools.",

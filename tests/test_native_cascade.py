@@ -217,6 +217,7 @@ class NativeCascadeTests(unittest.TestCase):
                 native_control_recipes=NS(has_source=lambda data: False),
                 input_image=source,
                 cascade_model=True,
+                guided_edit=False,
                 cascade_latents=None,
                 input_images=0,
                 self=NS(xl_base_patched=NS(vae=vae)),

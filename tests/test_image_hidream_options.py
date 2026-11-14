@@ -324,7 +324,7 @@ class HiDreamOptionsTests(unittest.TestCase):
             settings=SimpleNamespace(default_settings={"performance": "Own settings"}),
             performance_settings=perf,
             models=SimpleNamespace(offline=True, get_file=lambda *args: None),
-            path_manager=object(),
+            path_manager=SimpleNamespace(get_model_folders=lambda category: []),
             resolution_settings=SimpleNamespace(CUSTOM_RESOLUTION="Custom...", aspect_ratios={}),
         )
         samplers = SimpleNamespace(
@@ -359,6 +359,11 @@ class HiDreamOptionsTests(unittest.TestCase):
             ),
             patch(
                 "ruinedfooocus.features.generation.image_preparation.capture_image_assets",
+                side_effect=lambda data, *a, **kw: data,
+            ),
+            # The checkpoint plan reads an installed file; this test covers options only.
+            patch(
+                "ruinedfooocus.features.models.effective_image_plan.capture_effective_image_plan",
                 side_effect=lambda data, *a, **kw: data,
             ),
             patch(

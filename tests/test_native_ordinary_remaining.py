@@ -222,6 +222,7 @@ class RemainingOrdinaryTests(unittest.TestCase):
             pp=NS(prompt_switch_per_step=lambda *a: ["cat", "dog", "cat"]),
             conditioning_set_values=lambda cond, values: [[x, meta | values] for x, meta in cond],
             switched_prompt=[],
+            tensor_conditions={},
         )
         exec(compile(ast.Module(body=outer.orelse, type_ignores=[]), PIPELINE, "exec"), scope)
         self.assertEqual(

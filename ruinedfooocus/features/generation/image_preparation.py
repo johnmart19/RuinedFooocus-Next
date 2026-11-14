@@ -1055,6 +1055,15 @@ def capture_image_assets(
         )
 
         require_image_family(family)
+        if family == "SD_X4Upscaler":
+            # Reject a missing SD4x source before any checkpoint or component lookup.
+            from ruinedfooocus.features.image_editing.sd4x_conditioning import (
+                require_sd4x_input,
+            )
+
+            require_sd4x_input(
+                kind, result.get("input_image"), inpainting=result.get("inpaint_toggle", False)
+            )
 
         from ruinedfooocus.features.models.native_workflow_admission import (
             require_available_image_workflow,

@@ -117,7 +117,8 @@ class JoyImageReferenceTests(unittest.TestCase):
             for node in ast.walk(tree)
             if isinstance(node, ast.FunctionDef) and node.name == "process"
         )
-        branches = [node for node in process.body if isinstance(node, ast.If)]
+        # Some of these tests are elif branches, so collect every if in process.
+        branches = [node for node in ast.walk(process) if isinstance(node, ast.If)]
         encode_branch = next(
             node for node in branches if ast.unparse(node.test) == "image_edit and input_images > 0"
         )
@@ -176,7 +177,8 @@ class JoyImageReferenceTests(unittest.TestCase):
     def test_edit_admits_one_joy_source_without_advertising_longcat_edit(self):
         self.assertEqual(edit_control("JoyImage"), {"type": "edit"})
         self.assertEqual(edit_control("joyimage"), {"type": "edit"})
-        self.assertEqual(edit_control("LongCatImage")["type"], "img2img")
+        # LongCat Image edits natively through its LongCat Image Edit recipe.
+        self.assertEqual(edit_control("LongCatImage")["type"], "edit")
         primary = Image.new("RGB", (32, 32))
         with self.assertRaisesRegex(ValueError, "Additional references require"):
             normalize_reference_images([primary], primary, "JoyImage")

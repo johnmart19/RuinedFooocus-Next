@@ -42,9 +42,11 @@ class PresetComponentCallbacks(unittest.TestCase):
                 settings=SimpleNamespace(default_settings=values),
                 state={},
             )
+            # generate_clicked hands its values to the Editor workspace, which
+            # streams this request through generate_request.
             callback = function_from(
                 "ruinedfooocus/ui/app.py",
-                "generate_clicked",
+                "generate_request",
                 {
                     "state": {"ctrls_name": list(controls)},
                     "generation_task": "generation-task-state",
@@ -56,8 +58,11 @@ class PresetComponentCallbacks(unittest.TestCase):
                     "ui_controlnet": SimpleNamespace(
                         tool_kind=lambda selection, control_type: (
                             (control_type or "").lower() if selection == "Custom..." else None
-                        )
+                        ),
+                        family_for_checkpoint=lambda name: "SDXL",
                     ),
+                    "main_view": "main_view",
+                    "update_preview": lambda _: {},
                     "update_clicked": lambda: {},
                     "update_results": lambda _: {},
                     "worker": SimpleNamespace(task_result=lambda _: ("results", [])),
@@ -66,7 +71,7 @@ class PresetComponentCallbacks(unittest.TestCase):
                     "time": SimpleNamespace(sleep=lambda _: None),
                 },
             )
-            list(callback(*controls.values()))
+            list(callback(dict(controls)))
             return submitted, warning
 
     def test_model_replay_uses_saved_choices_when_old_png_has_no_mapping(self):

@@ -20,6 +20,23 @@ ROOT = Path(__file__).resolve().parents[1]
 NATIVE = Path(os.environ.get("RF_TEST_COMFY_SOURCE", ROOT / "repositories/ComfyUI"))
 
 
+def latent_chain(process, condition):
+    """Return the latent-initialization if/elif chain holding ``condition``.
+
+    Earlier branches (tensor, named-source and Cascade latents) take ``None``.
+    """
+    for node in process.body:
+        branch = node
+        while isinstance(branch, ast.If):
+            if ast.unparse(branch.test) == condition:
+                return node
+            branch = branch.orelse[0] if len(branch.orelse) == 1 else None
+    raise LookupError(condition)
+
+
+EARLIER_LATENTS = dict(tensor_latent=None, named_source_latent=None, cascade_latents=None)
+
+
 class ImageEditTests(unittest.TestCase):
     def test_moss_edit_settings_match_native_formats_and_strength_bounds(self):
         tree = ast.parse((NATIVE / "comfy_extras/nodes_moss_image.py").read_text(encoding="utf-8"))
@@ -238,11 +255,7 @@ class ImageEditTests(unittest.TestCase):
         process = next(
             n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == "process"
         )
-        branch = next(
-            n
-            for n in process.body
-            if isinstance(n, ast.If) and ast.unparse(n.test).startswith("edit_latent is not None")
-        )
+        branch = latent_chain(process, "edit_latent is not None and (not img2img_mode)")
         source_latent = {"samples": torch.zeros(1, 4, 7, 4)}
         edit_target = {"samples": torch.ones(1, 4, 7, 4)}
         encoder = Mock(return_value=[source_latent])
@@ -262,6 +275,8 @@ class ImageEditTests(unittest.TestCase):
             controlnet={"type": "img2img", "denoise": 0.25},
             gen_data={},
             VAEEncode=lambda: SimpleNamespace(encode=encoder),
+            guided_edit=False,
+            **EARLIER_LATENTS,
         )
         code = compile(ast.Module(body=[branch], type_ignores=[]), "edit_sampling", "exec")
         exec(code, scope)
@@ -302,6 +317,10 @@ class ImageEditTests(unittest.TestCase):
             sd4x_model=False,
             refiner_model=False,
             instruct_model=False,
+            cascade_model=False,
+            guided_edit=False,
+            guided_request=None,
+            cascade_latents=None,
             size_plan=None,
             SizePlan=SizePlan,
             hidream_edit=False,
@@ -361,13 +380,11 @@ class ImageEditTests(unittest.TestCase):
         process = next(
             n for n in cls.body if isinstance(n, ast.FunctionDef) and n.name == "process"
         )
-        branch = next(
-            n
-            for n in process.body
-            if isinstance(n, ast.If)
-            and ast.unparse(n.test) == "edit_latent is not None and (not img2img_mode)"
-        )
-        function = ast.parse("def initialize(edit_latent, img2img_mode=False): pass").body[0]
+        branch = latent_chain(process, "edit_latent is not None and (not img2img_mode)")
+        function = ast.parse(
+            "def initialize(edit_latent, img2img_mode=False, tensor_latent=None,"
+            " named_source_latent=None, cascade_latents=None): pass"
+        ).body[0]
         function.body = [branch] + ast.parse("return latent, denoise").body
         namespace = {
             "asset_path": asset_path,

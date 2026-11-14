@@ -179,6 +179,8 @@ class LocalModelRefreshTests(unittest.TestCase):
             load_styles=lambda: {"style": {}},
             path_manager=SimpleNamespace(get_presets=lambda: []),
             checkpoint_choices=lambda choices, selected, metadata: choices,
+            # Refresh keeps an ordinary selected checkpoint as the primary choice.
+            primary_checkpoint_selection=lambda selected, metadata=None, **kwargs: selected,
         )
         exec(
             compile(ast.Module(body=[node], type_ignores=[]), "refresh_callback", "exec"), namespace

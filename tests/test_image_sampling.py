@@ -379,7 +379,7 @@ class NativeSamplingTests(unittest.TestCase):
             performance_settings=perf,
             resolution_settings=resolution,
             models=SimpleNamespace(offline=True),
-            path_manager=object(),
+            path_manager=SimpleNamespace(get_model_folders=lambda category: []),
         )
         registry = SimpleNamespace(
             KSampler=SimpleNamespace(SAMPLERS=["lcm"], SCHEDULERS=["normal"])
@@ -401,6 +401,11 @@ class NativeSamplingTests(unittest.TestCase):
             ),
             patch(
                 "ruinedfooocus.features.generation.image_preparation.capture_image_assets",
+                side_effect=lambda data, *a, **kw: data,
+            ),
+            # The checkpoint plan reads an installed file; this test covers sizes only.
+            patch(
+                "ruinedfooocus.features.models.effective_image_plan.capture_effective_image_plan",
                 side_effect=lambda data, *a, **kw: data,
             ),
             patch(

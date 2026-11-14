@@ -285,7 +285,7 @@ class OmniGen2NativeTests(unittest.TestCase):
             ],
         )
         owner = SimpleNamespace(
-            xl_base_patched=SimpleNamespace(unet=unet, clip=clip),
+            xl_base_patched=SimpleNamespace(unet=unet, clip=clip, vae=SimpleNamespace()),
             xl_base=SimpleNamespace(unet=unet),
             known_models=route_info().keys(),
             model_info=dict(latent="SD3"),
@@ -335,6 +335,9 @@ class OmniGen2NativeTests(unittest.TestCase):
             EmptySD3LatentImage=empty,
             fix_empty_latent_channels=fix,
             restore_reference_frame=lambda pixels, frame: pixels,
+            # No reference adapter is active, so apply_reference never reads folders.
+            path_manager=SimpleNamespace(),
+            reference_tensor=lambda image, *size: image,
         )
         process = method(PIPELINE, "process", scope)
         request = dict(
@@ -382,7 +385,11 @@ class OmniGen2NativeTests(unittest.TestCase):
         )
         with (
             tempfile.TemporaryDirectory() as folder,
-            patch.dict("sys.modules", {"comfy.samplers": registry}),
+            # Native readiness also requires model detection to be importable.
+            patch.dict(
+                "sys.modules",
+                {"comfy.samplers": registry, "comfy.model_detection": SimpleNamespace()},
+            ),
             patch(
                 "ruinedfooocus.features.models.model_architecture.inspect_model_file",
                 return_value={
