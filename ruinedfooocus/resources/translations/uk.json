@@ -611,7 +611,7 @@
   "settings.leave_blank_for_the_built_in_theme_otherwise_enter_a_gradio_theme_id_restart_required": "Залиште порожнім для вбудованої теми або введіть ідентифікатор теми Gradio. Потрібен перезапуск.",
   "settings.startup_preferences": "Параметри запуску",
   "settings.default_listen_port": "Порт прослуховування за замовчуванням",
-  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "Порожнє значення використовує автоматичний вибір порту. Прапорець --port має пріоритет. Потрібен перезапуск.",
+  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "Значення 0 вмикає автоматичний вибір порту. Прапорець --port має пріоритет. Потрібен перезапуск.",
   "settings.save_writes_the_current_profile_save_as_profile_writes_a_named_copy_use_next_launch_selects_an_already_saved_profile_existing_settings_launcher_arguments_override_that_selection": "«Зберегти» записує поточний профіль. «Зберегти як профіль» створює іменовану копію. «Використати під час наступного запуску» вибирає вже збережений профіль. Наявні аргументи запуску --settings мають пріоритет над цим вибором.",
   "settings.geometry_models_folder": "Папка геометричних моделей",
   "settings.depth_preprocessing_models_restart_after_changing_folders": "Моделі попередньої обробки глибини. Перезапустіть програму після зміни папок.",

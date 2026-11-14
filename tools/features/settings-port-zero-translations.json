@@ -1,0 +1,8 @@
+{
+  "id": "settings-port-zero-translations",
+  "subject": "Update automatic port guidance in every interface language",
+  "requires": ["ui-review-closure"],
+  "tests": ["test_localization.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}

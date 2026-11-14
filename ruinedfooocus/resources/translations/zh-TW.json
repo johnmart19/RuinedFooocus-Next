@@ -611,7 +611,7 @@
   "settings.leave_blank_for_the_built_in_theme_otherwise_enter_a_gradio_theme_id_restart_required": "留空以使用內建佈景主題；否則請輸入 Gradio 佈景主題 ID。需重新啟動。",
   "settings.startup_preferences": "啟動偏好設定",
   "settings.default_listen_port": "預設監聽連接埠",
-  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "留空會自動選擇連接埠。--port 參數具有優先權。需重新啟動。",
+  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "設為 0 時會自動選擇連接埠。--port 參數具有優先權。需重新啟動。",
   "settings.save_writes_the_current_profile_save_as_profile_writes_a_named_copy_use_next_launch_selects_an_already_saved_profile_existing_settings_launcher_arguments_override_that_selection": "「儲存」會寫入目前的設定檔。「另存為設定檔」會建立具名副本。「下次啟動時使用」會選擇已儲存的設定檔。現有的 --settings 啟動器參數會覆寫該選擇。",
   "settings.geometry_models_folder": "幾何模型資料夾",
   "settings.depth_preprocessing_models_restart_after_changing_folders": "深度前處理模型。變更資料夾後請重新啟動。",

@@ -611,7 +611,7 @@
   "settings.leave_blank_for_the_built_in_theme_otherwise_enter_a_gradio_theme_id_restart_required": "Für das integrierte Design leer lassen; andernfalls eine Gradio-Theme-ID eingeben. Neustart erforderlich.",
   "settings.startup_preferences": "Starteinstellungen",
   "settings.default_listen_port": "Standard-Listen-Port",
-  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "Leer nutzt die automatische Portauswahl. --port hat Vorrang. Neustart erforderlich.",
+  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "0 aktiviert die automatische Portauswahl. --port hat Vorrang. Neustart erforderlich.",
   "settings.save_writes_the_current_profile_save_as_profile_writes_a_named_copy_use_next_launch_selects_an_already_saved_profile_existing_settings_launcher_arguments_override_that_selection": "Speichern schreibt das aktuelle Profil. Als Profil speichern erstellt eine benannte Kopie. Beim nächsten Start verwenden wählt ein bereits gespeichertes Profil aus. Vorhandene --settings-Startargumente überschreiben diese Auswahl.",
   "settings.geometry_models_folder": "Ordner für Geometriemodelle",
   "settings.depth_preprocessing_models_restart_after_changing_folders": "Modelle zur Tiefenvorverarbeitung. Nach Ordneränderungen neu starten.",

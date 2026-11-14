@@ -611,7 +611,7 @@
   "settings.leave_blank_for_the_built_in_theme_otherwise_enter_a_gradio_theme_id_restart_required": "Lämna tomt för det inbyggda temat; ange annars ett Gradio-tema-ID. Omstart krävs.",
   "settings.startup_preferences": "Startinställningar",
   "settings.default_listen_port": "Standardport för lyssning",
-  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "Tomt använder automatiskt portval. --port har företräde. Omstart krävs.",
+  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "0 använder automatiskt portval. --port har företräde. Omstart krävs.",
   "settings.save_writes_the_current_profile_save_as_profile_writes_a_named_copy_use_next_launch_selects_an_already_saved_profile_existing_settings_launcher_arguments_override_that_selection": "Spara skriver till den aktuella profilen. Spara som profil skriver en namngiven kopia. Använd vid nästa start väljer en redan sparad profil. Befintliga --settings-startargument åsidosätter det valet.",
   "settings.geometry_models_folder": "Mapp för geometrimodeller",
   "settings.depth_preprocessing_models_restart_after_changing_folders": "Modeller för djupförbehandling. Starta om efter att mappar har ändrats.",

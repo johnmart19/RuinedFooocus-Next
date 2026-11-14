@@ -611,7 +611,7 @@
   "settings.leave_blank_for_the_built_in_theme_otherwise_enter_a_gradio_theme_id_restart_required": "Оставьте пустым для использования встроенной темы или введите идентификатор темы Gradio. Требуется перезапуск.",
   "settings.startup_preferences": "Параметры запуска",
   "settings.default_listen_port": "Порт прослушивания по умолчанию",
-  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "Пустое поле включает автоматический выбор порта. Флаг --port имеет приоритет. Требуется перезапуск.",
+  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "Значение 0 включает автоматический выбор порта. Флаг --port имеет приоритет. Требуется перезапуск.",
   "settings.save_writes_the_current_profile_save_as_profile_writes_a_named_copy_use_next_launch_selects_an_already_saved_profile_existing_settings_launcher_arguments_override_that_selection": "«Сохранить» записывает текущий профиль. «Сохранить как профиль» создаёт именованную копию. «Использовать при следующем запуске» выбирает уже сохранённый профиль. Аргументы запуска --settings имеют приоритет над этим выбором.",
   "settings.geometry_models_folder": "Папка моделей геометрии",
   "settings.depth_preprocessing_models_restart_after_changing_folders": "Модели предобработки глубины. Перезапустите приложение после изменения папок.",

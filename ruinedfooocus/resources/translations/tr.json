@@ -611,7 +611,7 @@
   "settings.leave_blank_for_the_built_in_theme_otherwise_enter_a_gradio_theme_id_restart_required": "Yerleşik tema için boş bırakın; aksi takdirde bir Gradio tema kimliği (ID) girin. Yeniden başlatma gerekir.",
   "settings.startup_preferences": "Başlangıç tercihleri",
   "settings.default_listen_port": "Varsayılan dinleme bağlantı noktası (port)",
-  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "Boş bırakıldığında otomatik bağlantı noktası seçimi kullanılır. --port önceliklidir. Yeniden başlatma gerekir.",
+  "settings.blank_uses_automatic_port_selection_port_takes_priority_restart_required": "0, otomatik bağlantı noktası seçimini kullanır. --port önceliklidir. Yeniden başlatma gerekir.",
   "settings.save_writes_the_current_profile_save_as_profile_writes_a_named_copy_use_next_launch_selects_an_already_saved_profile_existing_settings_launcher_arguments_override_that_selection": "Kaydet mevcut profili yazar. Profil olarak kaydet adlandırılmış bir kopya yazar. Sonraki başlatmada kullan önceden kaydedilmiş bir profili seçer. Mevcut --settings başlatıcı argümanları bu seçimi geçersiz kılar.",
   "settings.geometry_models_folder": "Geometri modelleri klasörü",
   "settings.depth_preprocessing_models_restart_after_changing_folders": "Derinlik ön işleme modelleri. Klasörleri değiştirdikten sonra yeniden başlatın.",
