@@ -374,7 +374,15 @@ assert all(len(value)==2 and value[0]==dict(offset=0,bytes=8) for value in reads
         shared = NS(
             models=models,
             settings=NS(default_settings={}),
-            path_manager=NS(upscaler_filenames=[], DOWNLOADABLE_FILES={}),
+            path_manager=NS(
+                upscaler_filenames=[],
+                DOWNLOADABLE_FILES={},
+                # Unknown names are checked as pending catalogue downloads first;
+                # the installed utility file must not qualify as one.
+                get_model_folders=lambda category: sorted(
+                    {str(path.parent) for path in paths.values()}
+                ),
+            ),
         )
         with (
             patch.dict(
