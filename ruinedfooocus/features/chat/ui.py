@@ -1,4 +1,4 @@
-from ruinedfooocus.core.translation_manager import translate_ui, resolve_locale
+from ruinedfooocus.core.translation_manager import localize, translate_ui, resolve_locale
 from ruinedfooocus.features.chat.assistants import (
     assistant_choices,
     assistant_info,
@@ -49,6 +49,26 @@ from ruinedfooocus.features.chat.ui_load_state import (
 from ruinedfooocus.features.chat.attachment_ui import AttachmentControls, source_summary
 import time
 from concurrent.futures import CancelledError
+
+
+def empty_download_note(source, choices, query="", request=None, *, static=False):
+    """Explain an empty Download list beside the list instead of leaving it blank.
+
+    The page layout uses a translation marker; event updates need text already
+    translated for the browser, because update properties are not translated.
+    """
+    if source != "Downloadable" or choices:
+        return ""
+    if static:
+        return translate_ui(
+            "Every catalogue model is already installed. Open Installed to load one."
+        )
+    locale = resolve_locale(request=request)
+    if (query or "").strip():
+        return localize("No downloadable models match this search.", locale)
+    return localize(
+        "Every catalogue model is already installed. Open Installed to load one.", locale
+    )
 
 
 def display_history(history, show_reasoning):
@@ -493,6 +513,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                         value=default_model,
                         interactive=True,
                         visible=default_source == "Downloadable",
+                        info=empty_download_note(default_source, catalogue, static=True),
                     )
                     local_picker = gr.HTML(
                         {
@@ -1292,14 +1313,25 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 llama_model_status: message,
             }
 
-        def select_source(source, model=None, selected_quant=None, session=None, *, catalogue=None):
+        def select_source(
+            source,
+            model=None,
+            selected_quant=None,
+            session=None,
+            request: "gr.Request" = None,
+            *,
+            catalogue=None,
+        ):
             catalogue = model_catalogue(source) if catalogue is None else catalogue
             choices = [(model_label(name), name) for name in catalogue]
             if model not in catalogue:
                 model = None
             return {
                 llama_model: gr.update(
-                    choices=choices, value=model, visible=source == "Downloadable"
+                    choices=choices,
+                    value=model,
+                    visible=source == "Downloadable",
+                    info=empty_download_note(source, choices, request=request),
                 ),
                 local_picker: gr.update(
                     value={"choices": choices, "selected": model}, visible=source == "Local models"
@@ -1575,7 +1607,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
             cancel_load,
         ]
 
-        def search_models(source, model, quant, query, session=None):
+        def search_models(source, model, quant, query, session=None, request: "gr.Request" = None):
             if session is not None:
                 with session.lock:
                     version = getattr(session, "model_search_version", 0) + 1
@@ -1616,6 +1648,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                         choices=choices,
                         value=model if model in catalogue else None,
                         visible=source == "Downloadable",
+                        info=empty_download_note(source, choices, query, request),
                     ),
                     local_picker: gr.update(
                         value={
@@ -1632,7 +1665,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     return publish()
             return publish()
 
-        def refresh_model_browser(source, model, quant, session):
+        def refresh_model_browser(source, model, quant, session, request: "gr.Request" = None):
             if session is not None:
                 with session.lock:
                     selection_revision = session.revision
@@ -1647,7 +1680,9 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     or session.model_search_version != version
                 ):
                     return gr.skip()
-                return select_source(source, model, quant, session, catalogue=catalogue)
+                return select_source(
+                    source, model, quant, session, request=request, catalogue=catalogue
+                )
 
             if session is not None:
                 with session.lock:

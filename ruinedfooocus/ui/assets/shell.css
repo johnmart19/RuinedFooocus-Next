@@ -794,7 +794,19 @@
 }
 
 /* A wrapper that only holds a closed confirmation dialog takes no room. */
-:is(#app-tabs, #image-stage) .block:has(dialog):not(:has(dialog[open])):not(:has(:not(dialog, dialog *, .html-container, .prose, [data-testid="status-tracker"], [data-testid="status-tracker"] *))) {
+:is(#app-tabs, #image-stage)
+  .block:has(dialog):not(:has(dialog[open])):not(
+    :has(
+      :not(
+        dialog,
+        dialog *,
+        .html-container,
+        .prose,
+        [data-testid="status-tracker"],
+        [data-testid="status-tracker"] *
+      )
+    )
+  ) {
   min-height: 0 !important;
   block-size: 0;
   padding: 0 !important;
@@ -900,4 +912,51 @@
 /* The profile name stays a plain field beside its buttons (overrides the card rule). */
 #settings-content #settings-actions > .form {
   background: transparent !important;
+}
+/* Folder pickers: a responsive grid of compact cards instead of one long column. */
+#settings-path-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+#settings-path-grid > .rf-folder-picker {
+  margin: 0 !important;
+}
+#settings-path-grid .rf-folder-picker .row:has(> button) {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 640px) {
+  /* Narrow screens keep short labels on one line instead of 24px side padding. */
+  :is(#app-tabs, #image-stage) :is(button.lg, button.md, button.sm) {
+    padding-inline: 0.625rem;
+  }
+}
+/* An empty folder status line takes no space until it has a message. */
+.rf-folder-picker .block:has(> [data-testid="markdown-wrapper"] .md:empty) {
+  display: none !important;
+}
+/* Enlarged text: the image area yields to the source toolbar's real height
+   instead of Gradio's fixed 40px allowance, so the toolbar stays inside. */
+:is(#main_view, #inpaint_view) .image-container {
+  display: flex;
+  flex-direction: column;
+}
+:is(#main_view, #inpaint_view) .image-container > .upload-container {
+  flex: 1 1 auto;
+  min-height: 0 !important;
+  height: auto !important;
+}
+:is(#main_view, #inpaint_view) .image-container > .source-selection {
+  flex: none;
+}
+/* Settings category pills grow with a wrapped label instead of clipping it. */
+[id^="rf-settings-section-"][id$="-button"] {
+  height: auto !important;
+  line-height: 1.25;
+}
+/* One-line fields keep a full line of text inside their padding at any text size. */
+:is(#app-tabs, #image-stage) :is(input[type="number"], input[type="text"], input:not([type])) {
+  line-height: 1.25;
 }

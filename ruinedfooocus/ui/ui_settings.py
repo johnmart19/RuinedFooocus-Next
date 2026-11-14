@@ -374,26 +374,28 @@ def create_settings(*, models_in_settings=True):
                             "Folder changes are saved with the profile and apply after restart. Selecting a folder does not move files."
                         )
                     )
-                    for key, label in (
-                        ("path_checkpoints", t("Checkpoint Folders")),
-                        ("path_diffusion_models", t("Diffusion Model Folders")),
-                        ("path_clip", t("Text Encoder Folders")),
-                        ("path_loras", t("LoRA Folders")),
-                        ("path_embeddings", t("Embedding Folders")),
-                        ("path_inbox", t("Inbox Folder")),
-                        ("path_geometry_estimation", t("Geometry models folder")),
-                        ("path_detection", t("Face detection models folder")),
-                        ("path_model_patches", t("Model patches folder")),
-                        ("path_gligen", t("GLIGEN model folders")),
-                        ("path_hypernetworks", t("Hypernetwork folders")),
-                        ("path_outputs", t("Output Folder")),
-                        ("path_wildcards", t("Wildcard Folders")),
-                    ):
-                        value = path_manager.paths.get(
-                            key, path_manager.DEFAULT_PATHS.get(key, ["wildcards"])
-                        )
-                        control = create_path_control(key, label, value)
-                        add_setting(key, control)
+                    # Folder pickers share a responsive grid: two per row on wide pages.
+                    with gr.Column(elem_id="settings-path-grid"):
+                        for key, label in (
+                            ("path_checkpoints", t("Checkpoint Folders")),
+                            ("path_diffusion_models", t("Diffusion Model Folders")),
+                            ("path_clip", t("Text Encoder Folders")),
+                            ("path_loras", t("LoRA Folders")),
+                            ("path_embeddings", t("Embedding Folders")),
+                            ("path_inbox", t("Inbox Folder")),
+                            ("path_geometry_estimation", t("Geometry models folder")),
+                            ("path_detection", t("Face detection models folder")),
+                            ("path_model_patches", t("Model patches folder")),
+                            ("path_gligen", t("GLIGEN model folders")),
+                            ("path_hypernetworks", t("Hypernetwork folders")),
+                            ("path_outputs", t("Output Folder")),
+                            ("path_wildcards", t("Wildcard Folders")),
+                        ):
+                            value = path_manager.paths.get(
+                                key, path_manager.DEFAULT_PATHS.get(key, ["wildcards"])
+                            )
+                            control = create_path_control(key, label, value)
+                            add_setting(key, control)
 
                 with gr.Accordion(t("Image Browser"), open=False):
                     images_per_page = gr.Number(

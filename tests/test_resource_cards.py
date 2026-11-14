@@ -136,7 +136,11 @@ class ResourceCardTests(unittest.TestCase):
         paths = {
             label: Path(default_preview(label, self.cache)) for label in set(CATEGORIES.values())
         }
-        self.assertEqual(len(set(paths.values())), len(set(CATEGORIES.values())))
+        # Every category has bundled artwork; only Detection shares its role's image.
+        shared = {"Detection": "Vision encoders"}
+        self.assertEqual(len(set(paths.values())), len(set(CATEGORIES.values())) - len(shared))
+        for label, owner in shared.items():
+            self.assertEqual(paths[label], paths[owner])
         generic = Path(default_preview("Component", self.cache))
         self.assertNotIn(generic, paths.values())
         self.assertEqual(default_preview("unrecognized category", self.cache), str(generic))

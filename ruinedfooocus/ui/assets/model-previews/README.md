@@ -30,8 +30,9 @@ the category useful at thumbnail size.
 | `model-component.jpeg`    | Other components — interlocking modular cube                 |
 
 `features/models/resource_cards.py` maps the catalogue's actual category labels
-and singular adapter names to these files. Unknown labels use the component
-illustration. Exact local preview sidecars and valid cached publisher artwork
+and singular adapter names to these files. The Detection category (the face
+detector) has no illustration of its own yet and uses the vision encoder image.
+Unknown labels use the component illustration. Exact local preview sidecars and valid cached publisher artwork
 retain priority. The UI supplies a localized **Default preview** label; no label
 is baked into the images.
 

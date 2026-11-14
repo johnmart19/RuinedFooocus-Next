@@ -10,7 +10,7 @@ from ruinedfooocus.core.translation_manager import localize
 from ruinedfooocus.features.generation.sdcpp_pipeline import cpu_requested
 
 ENGINE_CHOICES = (
-    ("Automatic: native GPU, qualified optional Vulkan, then CPU", "auto"),
+    ("Automatic", "auto"),
     ("Native ComfyUI", "native"),
     ("Optional stable-diffusion.cpp Vulkan", "sdcpp-vulkan"),
     ("Optional stable-diffusion.cpp CPU", "sdcpp-cpu"),

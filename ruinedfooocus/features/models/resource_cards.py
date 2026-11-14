@@ -76,7 +76,8 @@ DEFAULT_PREVIEW_ROLES = {
     "chat-model": ("Chat model", "Chat models"),
     "vision-projector": ("Vision / projectors", "Vision projector"),
     "text-encoder": ("Text encoder", "Text encoders"),
-    "vision-encoder": ("Vision encoder", "Vision encoders"),
+    # Detection (the face detector) reuses the lens-and-sensor artwork until it has its own.
+    "vision-encoder": ("Vision encoder", "Vision encoders", "Detection"),
     "vae": ("VAE", "VAEs"),
     "lora": ("LoRA", "LoRAs"),
     "embedding": ("Embedding", "Embeddings"),

@@ -31,7 +31,8 @@ def format_metadata(metadata: Dict) -> Dict:
             # Model information
             if "base_model_name" in params:
                 formatted["Model"] = params["base_model_name"]
-            if "base_model_hash" in params:
+            # Optional rows are omitted when empty instead of printing a blank value.
+            if params.get("base_model_hash"):
                 formatted["Model Hash"] = params["base_model_hash"]
 
             # Generation settings
@@ -64,11 +65,11 @@ def format_metadata(metadata: Dict) -> Dict:
                 }
 
             # Comment info
-            if "meta_comment" in params:
+            if params.get("meta_comment"):
                 formatted["Meta_Comment"] = params["meta_comment"]
 
             # Software info
-            if "software" in params:
+            if params.get("software"):
                 formatted["Software"] = params["software"]
 
             # LoRAs if present

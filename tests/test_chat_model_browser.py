@@ -20,6 +20,17 @@ from ui_test_helpers import function_from
 from types import SimpleNamespace
 import gradio as gr
 
+# The empty Download note is a module helper the extracted callbacks call.
+EMPTY_DOWNLOAD_NOTE = function_from(
+    "ruinedfooocus/features/chat/ui.py",
+    "empty_download_note",
+    {
+        "translate_ui": lambda text: text,
+        "localize": lambda text, locale=None: text,
+        "resolve_locale": lambda request=None: "en",
+    },
+)
+
 
 class ChatModelBrowserTests(unittest.TestCase):
     def test_hub_selection_reuses_exact_local_family_and_quant_without_loading_or_replacing_draft(
@@ -105,6 +116,7 @@ class ChatModelBrowserTests(unittest.TestCase):
                 gr=gr,
                 model_catalogue=lambda _: self.catalogue,
                 model_label=lambda name: name,
+                empty_download_note=EMPTY_DOWNLOAD_NOTE,
                 model_action_state=model_action_state,
                 model_roots=lambda: {},
                 path_manager=SimpleNamespace(DOWNLOADABLE_FILES=self.downloads),
@@ -345,6 +357,7 @@ assert.deepEqual(events, []);
             gr=SimpleNamespace(update=lambda **values: values),
             model_catalogue=lambda _: self.catalogue,
             model_label=lambda name: name,
+            empty_download_note=EMPTY_DOWNLOAD_NOTE,
             path_manager=SimpleNamespace(DOWNLOADABLE_FILES=self.downloads),
             settings=SimpleNamespace(default_settings={}),
             configured_runtime=lambda _: self.native,
@@ -462,6 +475,14 @@ assert.deepEqual(events, []);
             self.assertTrue(all(value is None or value == gr.skip() for value in result["data"]))
             self.assertEqual(state[scope["llama_selection"]._id], "preserved")
             self.assertEqual(state[scope["llama_selected_quant"]._id], "preserved")
+
+
+class EmptyDownloadNoteTests(unittest.TestCase):
+    def test_note_explains_only_an_empty_download_list(self):
+        self.assertEqual(EMPTY_DOWNLOAD_NOTE("Local models", []), "")
+        self.assertEqual(EMPTY_DOWNLOAD_NOTE("Downloadable", [("A", "a")]), "")
+        self.assertIn("already installed", EMPTY_DOWNLOAD_NOTE("Downloadable", []))
+        self.assertIn("match this search", EMPTY_DOWNLOAD_NOTE("Downloadable", [], " qwen "))
 
 
 if __name__ == "__main__":

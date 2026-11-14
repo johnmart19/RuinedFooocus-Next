@@ -990,6 +990,7 @@ def create_optional_image_controls(saved, cpu_everywhere, image_backend):
             label=t("Image engine"),
             choices=[(t(label), value) for label, value in ENGINE_CHOICES],
             value=saved.get("image_engine", "auto"),
+            info=t("Automatic tries native GPU first, then qualified optional Vulkan, then CPU."),
             interactive=True,
         )
         add_setting("image_engine", engine)

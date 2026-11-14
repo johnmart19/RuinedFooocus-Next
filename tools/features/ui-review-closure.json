@@ -1,0 +1,21 @@
+{
+  "id": "ui-review-closure",
+  "subject": "Close open UI review findings for folders, Chat downloads, metadata and enlarged text",
+  "requires": ["stale-test-stand-ins"],
+  "tests": [
+    "test_localization.py",
+    "test_chat_model_browser.py",
+    "test_chat_model_browser_race.py",
+    "test_chat_model_browser_work.py",
+    "test_gallery_metadata_text.py",
+    "test_resource_cards.py",
+    "test_editor_workspace_actions.py",
+    "test_optional_image_runtime_ui.py",
+    "test_settings_navigation.py",
+    "test_path_picker.py",
+    "test_responsive_ui_layout.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

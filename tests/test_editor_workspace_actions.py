@@ -183,7 +183,7 @@ class EditorWorkspaceActionTests(unittest.TestCase):
 
     def test_quick_tools_adopt_visible_source_instead_of_stale_hidden_input(self):
         visible = self.image("quick-visible.png", "RGBA", (70, 80, 90, 140))
-        for tool in ("Face landmarks", "Whole-body pose", "Depth map"):
+        for tool in ("Face landmarks", "Whole-body pose", "Detect objects", "Segment by points"):
             with self.subTest(tool=tool):
                 data = self.workspace.build_request(
                     dict(

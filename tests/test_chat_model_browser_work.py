@@ -16,6 +16,17 @@ from unittest.mock import Mock, patch
 
 from ui_test_helpers import function_from
 
+# The empty Download note is a module helper the extracted callbacks call.
+EMPTY_DOWNLOAD_NOTE = function_from(
+    "ruinedfooocus/features/chat/ui.py",
+    "empty_download_note",
+    {
+        "translate_ui": lambda text: text,
+        "localize": lambda text, locale=None: text,
+        "resolve_locale": lambda request=None: "en",
+    },
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -63,6 +74,7 @@ def search_callback(catalogue, module):
         dict(
             model_catalogue=catalogue,
             model_label=module["model_label"],
+            empty_download_note=EMPTY_DOWNLOAD_NOTE,
             clear_model_selection=lambda _: {},
             gr=SimpleNamespace(update=lambda **values: values),
             llama_model="model",
@@ -159,7 +171,7 @@ class ChatModelBrowserWorkTests(unittest.TestCase):
             refreshed = refresh("Local models", "Family001", original, session)
             self.assertIn("Added", refreshed)
             selected.assert_called_once_with(
-                "Local models", "Family001", original, session, catalogue=refreshed
+                "Local models", "Family001", original, session, request=None, catalogue=refreshed
             )
 
     def test_verified_hub_gguf_commit_invalidates_warmed_chat_without_selecting_it(self):

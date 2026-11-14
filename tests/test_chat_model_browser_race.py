@@ -9,6 +9,17 @@ import gradio as gr
 from ruinedfooocus.features.chat.model_preparation import ChatModelSession
 from ui_test_helpers import function_from
 
+# The empty Download note is a module helper the extracted callbacks call.
+EMPTY_DOWNLOAD_NOTE = function_from(
+    "ruinedfooocus/features/chat/ui.py",
+    "empty_download_note",
+    {
+        "translate_ui": lambda text: text,
+        "localize": lambda text, locale=None: text,
+        "resolve_locale": lambda request=None: "en",
+    },
+)
+
 
 class ChatModelBrowserRaceTests(unittest.TestCase):
     def test_delayed_refresh_or_transfer_projection_cannot_restore_an_old_candidate(self):
@@ -77,6 +88,7 @@ class ChatModelBrowserRaceTests(unittest.TestCase):
             dict(
                 model_catalogue=catalogue,
                 model_label=lambda value: value,
+                empty_download_note=EMPTY_DOWNLOAD_NOTE,
                 clear_model_selection=clear,
                 gr=gr,
                 llama_model="model",
