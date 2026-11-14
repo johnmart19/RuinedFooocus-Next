@@ -1,0 +1,8 @@
+{
+  "id": "persistent-rag-model",
+  "subject": "Store Chat embedding weights under the models directory",
+  "requires": ["recent-feature-formatting", "native-runtime-storage"],
+  "tests": ["test_rag_cache_migration.py", "test_rag_preparation.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}

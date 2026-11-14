@@ -93,7 +93,9 @@ def capture_rag(sources, *, cpu=False, offline=False, cache_root=None, cpu_reaso
 def _capture_embedding_model(*, cpu, offline, cache_root=None, cpu_reason=""):
     """No acquisition/runtime import; reuse an already complete pinned snapshot."""
     directory = (
-        Path(cache_root) if cache_root is not None else data_path("cache", "rag", MODEL_REVISION)
+        Path(cache_root)
+        if cache_root is not None
+        else data_path("models", "rag_embeddings", MODEL_REVISION)
     )
     if not all((directory / name).is_file() for name, _, _ in MODEL_FILES):
         try:

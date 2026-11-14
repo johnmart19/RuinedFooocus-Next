@@ -21,6 +21,14 @@ All paths below are relative to this directory. Validation filenames are in
 `tests/` and run through `check_cpu.py`. Heavy inference commands need a separate
 explicit workload scope; this tool pass ran no video, model or GPU workloads.
 
+The copy-only [RAG model migration](migrate_rag_model.py) moves the eight pinned
+MiniLM files from legacy cache storage into `models/rag_embeddings/<revision>`.
+It uses the existing preparation verifier and leases (S + H), performs no network
+or inference, and preserves every source and existing destination. Run with
+`--data-root PATH` to inspect the plan; add `--apply --idle` only after the app
+owner confirms it is idle. Private fixture proof lives in
+`test_rag_cache_migration.py`; see the [cache contract](../docs/integrations/cache-contract.md).
+
 | Tool                                                                 | Consumer / owner                                    | CLI and dependencies                                                                                                                             | Mutation / network                                                                                                                                                                                                         | Verification disposition                                                                                                |
 | -------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | [api_examples.py](api_examples.py)                                   | Shell examples; developer/API                       | `search`, `llama`, `image`, `--base-url`, `--timeout`; G                                                                                         | Server request; llama/image execute configured models; no local file download; app network                                                                                                                                 | `test_api_examples.py`; real private authenticated Gradio with inert services                                           |
