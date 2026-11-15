@@ -1639,8 +1639,9 @@ class EditorWorkspace:
                         check_cancelled=ticket.cancelled.is_set,
                     ),
                 )
+                retained = (values.get("_editor_context") or {}).get("additional_image_ids")
                 yield self.snapshot_updates(
-                    snapshot, additional=[selection.ticket.source.artifact_id]
+                    snapshot, additional=retained or [selection.ticket.source.artifact_id]
                 )
                 return
             with self._request_stream(data) as stream:
@@ -1975,13 +1976,15 @@ class EditorWorkspace:
         if action == "compose":
             additional = context.get("additional_image_ids") or []
             background = values.get("_editor_background")
-            if background:
+            if additional:
+                # Select/generate background already captured both roles. Its
+                # upload can remain populated; it is not the foreground.
+                parameters["foreground_id"] = additional[0]
+            elif background:
                 with self._staged_input(background) as path:
                     parameters["background_id"] = store.bind_image(
                         context["session_id"], path, owner=owner
                     ).artifact_id
-            elif additional:
-                parameters["foreground_id"] = additional[0]
             else:
                 raise ValueError("Choose a background image to compose with this foreground.")
             parameters.setdefault("composition_mode", "SRC_OVER")

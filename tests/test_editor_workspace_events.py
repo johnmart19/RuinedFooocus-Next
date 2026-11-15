@@ -1666,7 +1666,12 @@ process.stdout.write(JSON.stringify({output,memory}));
             result, _ = await self.api(
                 session,
                 function,
-                {self.values: self.request_values(session, "compose"), self.workspace.version: 2},
+                {
+                    self.values: self.request_values(
+                        session, "compose", background=self.background()
+                    ),
+                    self.workspace.version: 2,
+                },
             )
             task_id = self.value(session, self.remote["task"])
             self.assertEqual(self.jobs.get(task_id, owner=session.owner).owner, session.owner)
@@ -1676,6 +1681,8 @@ process.stdout.write(JSON.stringify({output,memory}));
         self.assertEqual(len(self.requests), 1)
         ticket = self.requests[0][editor_session.KEY]
         self.assertEqual(ticket.session_id, original["session_id"])
+        self.assertEqual(ticket.additional_images[0].artifact_id, original["source_id"])
+        self.assertNotEqual(ticket.source.sha256, ticket.additional_images[0].sha256)
         context = self.value(session, self.workspace.context)
         self.assertEqual(context["session_id"], original["session_id"])
         self.assertEqual(context["additional_image_ids"], [])
@@ -1700,6 +1707,20 @@ process.stdout.write(JSON.stringify({output,memory}));
         )
         self.assertEqual(self.value(session, self.controls["prompt"]), "Keep this current draft")
         self.assertEqual(self.legacy.path.read_bytes(), original_bytes)
+
+    def test_native_reselect_background_retains_original_foreground(self):
+        session = self.session()
+        self.open_library(session)
+        original = copy.deepcopy(self.value(session, self.workspace.context))
+
+        async def journey():
+            await self.select_background(session)
+            await self.select_background(session)
+
+        asyncio.run(journey())
+        selected = self.value(session, self.workspace.context)
+        self.assertEqual(selected["additional_image_ids"], [original["source_id"]])
+        self.run_request.assert_not_called()
 
     def test_browsing_and_source_adoption_defer_without_cancelling_accepted_run(self):
         session = self.session()

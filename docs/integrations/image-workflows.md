@@ -108,6 +108,12 @@ The existing current-background plus `foreground_id` route remains supported;
 the two role selectors are mutually exclusive. Neither route invents an
 intermediate history step.
 
+After Select background or Generate background, Compose reuses the captured
+foreground even when the background upload remains populated. Selecting a
+background again keeps that same foreground. The retained upload cannot bind
+the background into both native composition slots; no clearing or reopening
+of the foreground is required.
+
 ## Finite presets and lineage
 
 `preset_values` permits only the named preset's scalar intent. Background

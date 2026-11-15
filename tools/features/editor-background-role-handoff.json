@@ -1,0 +1,13 @@
+{
+  "id": "editor-background-role-handoff",
+  "subject": "Preserve the selected foreground when composing an uploaded background",
+  "requires": ["editor-action-controls"],
+  "tests": [
+    "test_editor_workspace_events.py",
+    "test_image_workflow_handoffs.py",
+    "test_image_composition.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
