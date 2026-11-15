@@ -37,6 +37,7 @@ import traceback
 import version
 from ruinedfooocus.features.models.selection import checkpoint_choices, primary_checkpoint_selection
 from ruinedfooocus.features.models.resolution_dropdown import ResolutionDropdown
+from ruinedfooocus.features.generation.dimension_number import DimensionNumber
 
 if args.guest:
     from ruinedfooocus.ui.ui_guest import launch_guest
@@ -1643,8 +1644,9 @@ with shared.gradio_root as block:
                         initial_resolution,
                         (settings.get("custom_width", 1024), settings.get("custom_height", 1024)),
                     )
-                    custom_width = gr.Number(
+                    custom_width = DimensionNumber(
                         label=t("Target width"),
+                        elem_id="output-target-width",
                         minimum=1,
                         maximum=32768,
                         precision=0,
@@ -1652,8 +1654,9 @@ with shared.gradio_root as block:
                         value=default_resolution[0],
                     )
                     add_ctrl("custom_width", custom_width)
-                    custom_height = gr.Number(
+                    custom_height = DimensionNumber(
                         label=t("Target height"),
+                        elem_id="output-target-height",
                         minimum=1,
                         maximum=32768,
                         precision=0,

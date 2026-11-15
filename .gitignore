@@ -1,4 +1,5 @@
 __pycache__
+/ruinedfooocus/features/generation/dimension_number.pyi
 *.ckpt
 *.safetensors
 *.pth

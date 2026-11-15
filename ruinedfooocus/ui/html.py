@@ -141,6 +141,7 @@ window.rfApplyTheme(null, window.__rfThemed);
 """
 
 scripts += "\n" + asset_path("image_layout.js").read_text(encoding="utf-8")
+scripts += "\n" + asset_path("dimension_inputs.js").read_text(encoding="utf-8")
 scripts += "\n" + asset_path("control_help.js").read_text(encoding="utf-8")
 
 import html as html_text

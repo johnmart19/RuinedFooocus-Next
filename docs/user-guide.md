@@ -192,8 +192,10 @@ files, dedicated inputs, source denoise and Library/API behavior.
   controls, and require fresh image uploads. See [framing, alpha and limits](integrations/native-image-composition.md).
 - **Generation → Size and upscale → Output target** lists the selected model's recommended sizes and
   **Custom...**. Custom opens integer **Target width** and **Target height**, plus **1080p**, **1440p**
-  and **4K** shortcuts. **Use model recommended size** restores automatic following. A deliberate size
-  survives model refreshes and model switches; **Size details** identifies the recommendation source.
+  and **4K** shortcuts. **Use model recommended size** restores automatic following.
+  Pasting a number replaces the field; pasting `1440x2560` fills both dimensions.
+  Out-of-range pastes show local validation without submitting the invalid size.
+  A deliberate size survives model refreshes and model switches; **Size details** identifies the recommendation source.
   **Save size** stores a named size for the current profile and image model family.
   Existing profiles retain their saved size; **Save current defaults** remembers the follow setting too.
   New PNGs retain final target intent; older PNGs retain their recorded generation size. For image to image and native editing, the
