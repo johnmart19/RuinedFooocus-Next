@@ -264,7 +264,11 @@ class NavigationShellTests(unittest.TestCase):
                         result = asyncio.run(
                             shell.app.process_api(
                                 event["id"],
-                                ["generate", round_number * 6 + routes.index(destination) + 1],
+                                [
+                                    "generate",
+                                    round_number * 6 + routes.index(destination) + 1,
+                                    None,
+                                ],
                                 state=state,
                             )
                         )
@@ -369,7 +373,7 @@ class NavigationShellTests(unittest.TestCase):
                 for row in shell.app.config["dependencies"]
                 if row["targets"] == [(routes[destination]._id, "select")]
             )
-            args = self.navigation_script(event["js"], ["prompt-edit", 0], memory)
+            args = self.navigation_script(event["js"], ["prompt-edit", 0, None], memory)
             response = asyncio.run(shell.app.process_api(event["id"], args, state=state))
             pending[destination] = (event, response)
 
@@ -406,6 +410,46 @@ class NavigationShellTests(unittest.TestCase):
             memory["selected"] = destination
             captured = self.navigation_script(workspace.run_version_js(0), ["library", 0], memory)
             self.assertEqual(captured[0], destination)
+
+    def test_editor_return_preserves_selected_quick_tool_label_and_sidebar(self):
+        from ruinedfooocus.core.translation_manager import localize
+
+        for tool in ("Face landmarks", "Whole-body pose"):
+            for locale in ("en", "uk"):
+                with self.subTest(tool=tool, locale=locale):
+                    shell, workspace, _, scope, *_ = self.shell(translate=translate_ui)
+                    state = SessionState(shell.app)
+                    context = {"session_id": "retained-color-source", "revision": 4}
+                    state[workspace.context._id] = context
+                    state[workspace.quick_tool._id].value = tool
+                    memory = {"selected": "editor", "window": {}}
+                    request = gr.Request(
+                        session_hash="utility-return", cookies={"rf_ui_locale": locale}
+                    )
+                    for serial, destination in enumerate(("settings", "editor"), 1):
+                        tab = next(tab for tab in shell.tabs.children if tab.id == destination)
+                        event = next(
+                            row
+                            for row in shell.app.config["dependencies"]
+                            if row["targets"] == [(tab._id, "select")]
+                        )
+                        values = {workspace.action._id: "generate", workspace.quick_tool._id: tool}
+                        memory["selected"] = destination
+                        args = self.navigation_script(
+                            event["js"],
+                            [values.get(identity, serial) for identity in event["inputs"]],
+                            memory,
+                        )
+                        result = asyncio.run(
+                            shell.app.process_api(event["id"], args, state=state, request=request)
+                        )
+                        updates = self.navigation_presentation(shell, event, result, state)
+                    self.assertEqual(
+                        updates[scope["run_button"]._id]["value"], localize(tool, locale)
+                    )
+                    self.assertEqual(updates[scope["create_tabs"]._id]["selected"], "image-tools")
+                    self.assertEqual(state[workspace.quick_tool._id].value, tool)
+                    self.assertEqual(state[workspace.context._id], context)
 
     def test_create_projects_new_image_intent_without_clearing_editor_widgets(self):
         with gr.Blocks(analytics_enabled=False):

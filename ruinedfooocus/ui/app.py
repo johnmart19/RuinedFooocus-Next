@@ -205,9 +205,20 @@ def create_navigation_shell(
             run_button,
         ]
 
-        def navigate(destination, inner=None, *, select=True, action=None):
+        def navigate(destination, inner=None, *, select=True, action=None, tool=None):
             editing = destination == "editor"
             image = destination in ("create", "editor")
+            quick_tool = (
+                editing
+                and action == "generate"
+                and tool in {value for _, value in workspace.quick_tool.choices}
+            )
+            utility = quick_tool or action in (
+                "depth-map",
+                "restore-seedvr2",
+                "remove-background",
+                "adjust-image",
+            )
             updates = {
                 # A visibility update on this container would also reveal
                 # its visible="hidden" descendants; a class leaves them alone.
@@ -221,13 +232,17 @@ def create_navigation_shell(
             if select:
                 updates[top_tabs] = gr.update(selected=destination)
             if image:
-                updates[create_tabs] = gr.update(selected=inner or "generation")
+                updates[create_tabs] = gr.update(
+                    selected=inner or ("image-tools" if editing and utility else "generation")
+                )
             if destination == "create" or editing and action is not None:
-                updates[run_button] = gr.update(value=workspace.action_label(action, destination))
+                updates[run_button] = gr.update(
+                    value=t(tool) if quick_tool else workspace.action_label(action, destination)
+                )
             return updates
 
         navigation_version = gr.Number(0, visible=False, precision=0)
-        capture_navigation = "(action, version) => { window.__rfNavigationSerial = (window.__rfNavigationSerial || 0) + 1; return [action, window.__rfNavigationSerial]; }"
+        capture_navigation = "(...values) => { window.__rfNavigationSerial = (window.__rfNavigationSerial || 0) + 1; values[1] = window.__rfNavigationSerial; return values; }"
         publish_navigation = """(result) => {
             const button = document.getElementById(result.button);
             if (result.version !== window.__rfNavigationSerial || button?.getAttribute('aria-selected') !== 'true')
@@ -245,9 +260,9 @@ def create_navigation_shell(
             navigation_result = gr.JSON(None, visible=False)
 
             def select_destination(
-                action, version, destination=destination, request: gr.Request = None
+                action, version, tool=None, destination=destination, request: gr.Request = None
             ):
-                updates = navigate(destination, select=False, action=action)
+                updates = navigate(destination, select=False, action=action, tool=tool)
                 from gradio.i18n import I18nData
 
                 button = updates.get(run_button)
@@ -269,7 +284,7 @@ def create_navigation_shell(
 
             event = tab.select(
                 select_destination,
-                inputs=[workspace.action, navigation_version],
+                inputs=[workspace.action, navigation_version, workspace.quick_tool],
                 outputs=navigation_result,
                 js=capture_navigation,
                 queue=False,

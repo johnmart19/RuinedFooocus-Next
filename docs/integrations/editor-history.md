@@ -77,6 +77,8 @@ localized action renderer keeps the Run button's action name while image and
 inpaint preview visibility changes.
 Explicitly selecting **Generate** clears the previous image utility; selecting
 a quick tool still preserves its programmatic Generate route.
+Returning from another page restores the selected quick tool's action label and
+More tools controls without changing the image, source context or draft.
 
 Gallery has a separate prompt/setup/edit draft. Prompt/setup reuse changes local
 controls through the same final-paint draft fence as metadata selection. Trusted

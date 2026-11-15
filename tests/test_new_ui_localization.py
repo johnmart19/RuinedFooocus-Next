@@ -32,7 +32,7 @@ class NewUiLocalizationTests(unittest.TestCase):
         request = gr.Request(session_hash="russian-client", cookies={"rf_ui_locale": "ru"})
         result = asyncio.run(
             shell.app.process_api(
-                event["id"], ["generate", 1], state=SessionState(shell.app), request=request
+                event["id"], ["generate", 1, None], state=SessionState(shell.app), request=request
             )
         )
         envelope = result["data"][0].model_dump()

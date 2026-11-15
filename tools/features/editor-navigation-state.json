@@ -1,0 +1,12 @@
+{
+  "id": "editor-navigation-state",
+  "subject": "Restore the active Editor tool when returning from another page",
+  "requires": ["resolution-display-metadata", "gallery-page-reuse"],
+  "tests": [
+    "test_navigation_shell.py",
+    "test_new_ui_localization.py",
+    "test_editor_gallery_imports.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
