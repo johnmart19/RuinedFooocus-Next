@@ -81,7 +81,11 @@ class ImageMaskToolsTests(unittest.TestCase):
         floating = image.astype(np.float32) / 65535
         floating[..., 3] = 0.1234567
         data = self.capture(
-            "channel", source=floating, output_format="exr", output_bit_depth="32-bit float"
+            "channel",
+            source=floating,
+            output_format="exr",
+            output_bit_depth="32-bit float",
+            output_color_space="linear",
         )
         np.testing.assert_array_equal(self.run_mask(data)[..., 0], floating[..., 3])
 
@@ -211,6 +215,7 @@ class ImageMaskToolsTests(unittest.TestCase):
             dict(inpaint_toggle=True),
             dict(output_format="avif"),
             dict(output_color_space="HDR"),
+            dict(output_format="exr", output_color_space="sRGB"),
         ):
             with self.subTest(options=options), self.assertRaises(ValueError):
                 self.capture(**options)

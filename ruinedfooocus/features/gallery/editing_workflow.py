@@ -171,7 +171,7 @@ def working_image(path):
 
 
 def _automatic_adjustment_output(data, original, action):
-    """Preserve native samples when an Editor request still owns untouched defaults."""
+    """Derive request-local Editor output semantics without changing the format draft."""
     from ruinedfooocus.features.image_processing.native_image_formats import (
         ImportedImage,
         format_settings,
@@ -181,20 +181,32 @@ def _automatic_adjustment_output(data, original, action):
     if type(explicit) is not bool:
         return
     choice = format_settings(data)
+    pixels = original.pixels if isinstance(original, ImportedImage) else np.asarray(original)
+    space = original.color_space if isinstance(original, ImportedImage) else "sRGB"
     if action == "image-mask" and choice["output_format"] in ("png", "exr"):
-        if choice["output_color_space"] != "sRGB":
-            choice = dict(choice, output_color_space="sRGB")
+        scalar_space = "linear" if choice["output_format"] == "exr" else "sRGB"
+        if choice["output_color_space"] != scalar_space:
+            choice = dict(choice, output_color_space=scalar_space)
             data.update(choice)
             data["image_source"]["output_selection"] = dict(
                 policy="scalar Editor mask output without color conversion",
                 selected=choice.copy(),
             )
+    elif (
+        action == "image-transform"
+        and (explicit or choice != format_settings())
+        and choice["output_color_space"] != space
+    ):
+        choice = format_settings(dict(choice, output_color_space=space))
+        data.update(choice)
+        data["image_source"]["output_selection"] = dict(
+            policy="Editor transform preserves captured source color space",
+            selected=choice.copy(),
+        )
     if explicit:
         return
     if choice != format_settings():
         return
-    pixels = original.pixels if isinstance(original, ImportedImage) else np.asarray(original)
-    space = original.color_space if isinstance(original, ImportedImage) else "sRGB"
     hdr = action == "image-color" and data.get("color_operation") == "sdr-to-hdr"
     if pixels.dtype == np.uint8 and space == "sRGB" and not hdr:
         return
@@ -203,7 +215,11 @@ def _automatic_adjustment_output(data, original, action):
     selected = dict(
         output_format="exr" if floating else "png",
         output_bit_depth="32-bit float" if floating else "16-bit",
-        output_color_space="sRGB" if scalar else "HDR" if hdr else space,
+        output_color_space=("linear" if floating else "sRGB")
+        if scalar
+        else "HDR"
+        if hdr
+        else space,
         output_crf=choice["output_crf"],
     )
     data.update(format_settings(selected))

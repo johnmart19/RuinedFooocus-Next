@@ -178,9 +178,10 @@ def capture_assets(data, manager, models=None):
         )
     ):
         raise ValueError("Precision masks require PNG16 or EXR output.")
-    if choice["output_color_space"] != "sRGB":
+    scalar_space = "linear" if choice["output_format"] == "exr" else "sRGB"
+    if choice["output_color_space"] != scalar_space:
         raise ValueError(
-            "Masks are scalar selections; choose sRGB output without color conversion."
+            "Masks are scalar selections; choose sRGB PNG or linear EXR without color conversion."
         )
     if choice["output_format"] == "avif":
         raise ValueError("Save reusable selection masks as PNG or EXR.")

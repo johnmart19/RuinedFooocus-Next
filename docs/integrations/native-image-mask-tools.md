@@ -21,8 +21,9 @@ result remain in history; no manual working-copy export is needed.
 Color-key extraction uses native rounded RGB8 equality;
 it ignores source alpha. Extracting the alpha channel is a separate operation.
 
-Editor mask requests use sRGB as the scalar-data output convention even after
-an HDR image export. Supported selected PNG/EXR container and precision choices
+Editor mask requests use sRGB PNG or linear EXR as the scalar-data output convention,
+including after an HDR image export. Fractional coverage passes through without
+an image transfer function. Supported selected PNG/EXR container and precision choices
 are retained, and the shared format draft is unchanged. Direct API capture keeps
 its strict output validation; it does not silently repair invalid format choices.
 
@@ -65,8 +66,8 @@ or genuine fallback reason. Source capture and replay do not select a device.
 Every input mask must be grayscale, finite, in [0, 1], and in the main image's
 frame. RGB masks must contain equal R/G/B samples; alpha is ignored rather than
 silently replacing the grayscale selection. Precision inputs require PNG16 or
-EXR, including a precision reference in a combination. Masks have scalar sRGB
-export semantics without ICC conversion. Native still AVIF is excluded for
+EXR, including a precision reference in a combination. Scalar PNG output requires
+sRGB and scalar EXR requires linear; neither applies color conversion. Native still AVIF is excluded for
 reusable masks. Metadata records input hashes/dtypes, frame, native operation,
 selection semantics, output precision and explicit input inversion.
 

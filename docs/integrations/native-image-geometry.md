@@ -92,7 +92,11 @@ Lanczos implementation.
 
 Precision inputs require PNG16 or EXR output. Output color space must match the
 captured source; linear/HDR inputs require EXR, and out-of-range floating samples
-require EXR. The existing encoder owns transfer tags and quantization. Native
+require EXR. Marked Editor requests derive this color space from the captured
+source while retaining the selected supported container/precision and the global
+format draft. Direct API requests still reject a mismatched color space.
+Scene-linear Rec.2020 EXR keeps its samples and native Rec.2020 chromaticities;
+the HDR transfer function is not applied again. The existing encoder owns transfer tags and quantization. Native
 AVIF cannot export RGBA. Original uploads remain unchanged. Utility metadata
 records operation/scalars, source digest, dtype, dimensions, color/alpha policy
 and native revision; it contains no local paths or invented generation recipe.

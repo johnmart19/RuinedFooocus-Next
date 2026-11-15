@@ -1,0 +1,14 @@
+{
+  "id": "hdr-edit-fidelity",
+  "subject": "Preserve HDR gamut and fractional mask values across Editor actions",
+  "requires": ["scalar-mask-output"],
+  "tests": [
+    "test_image_adjustment_integration.py",
+    "test_image_mask_tools.py",
+    "test_image_geometry_tools.py",
+    "test_native_image_formats.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

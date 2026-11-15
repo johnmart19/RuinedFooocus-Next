@@ -120,6 +120,14 @@ class NativeImageFormatsTests(unittest.TestCase):
         np.testing.assert_array_equal(imported.pixels, expected)
         self.assertEqual(imported.pixels[0, 0, 3], np.float32(np.float16(0.4)))
 
+    def test_scene_linear_rec2020_preserves_samples_and_native_chromaticities(self):
+        pixels = np.array([[[2.75, -0.25, 0.5, 0.375]]], np.float32)
+        for depth in ("16-bit float", "32-bit float"):
+            with self.subTest(depth=depth):
+                imported = formats.read_image(self.write(pixels, "exr", depth, "linear Rec.2020"))
+                self.assertEqual(imported.color_space, "linear Rec.2020")
+                np.testing.assert_array_equal(imported.pixels, pixels)
+
     def test_pipeline_keeps_float_precision_only_for_explicit_advanced_output(self):
         image = torch.tensor([[[[0.12345, 0.23456, 0.34567]]]])
         ordinary = formats.pipeline_images(image, {})[0]

@@ -7,16 +7,19 @@ Depth Anything 3, detection and segmentation; quantization happens at the encode
 Other pipelines that already return an 8-bit image can export that image, but a
 higher bit depth does not restore detail that was already discarded.
 
-| Format     | Native depths                     | Input color space                            | Alpha               |
-| ---------- | --------------------------------- | -------------------------------------------- | ------------------- |
-| PNG        | 8-bit, 16-bit                     | sRGB                                         | Preserved           |
-| OpenEXR    | 16-bit float, 32-bit float        | sRGB, HDR/HLG, linear Rec.709, linear ACEScg | Preserved           |
-| Still AVIF | Auto, 8-bit YUV420, 10-bit YUV420 | sRGB, HDR/HLG, HDR PQ                        | Rejected explicitly |
+| Format     | Native depths                     | Input color space                                             | Alpha               |
+| ---------- | --------------------------------- | ------------------------------------------------------------- | ------------------- |
+| PNG        | 8-bit, 16-bit                     | sRGB                                                          | Preserved           |
+| OpenEXR    | 16-bit float, 32-bit float        | sRGB, HDR/HLG, linear Rec.709, linear Rec.2020, linear ACEScg | Preserved           |
+| Still AVIF | Auto, 8-bit YUV420, 10-bit YUV420 | sRGB, HDR/HLG, HDR PQ                                         | Rejected explicitly |
 
 EXR stores scene-linear values: the pinned encoder applies the inverse sRGB or
 HLG transfer function when requested. Linear inputs pass through. Its native
 chromaticities metadata identifies Rec.709, Rec.2020 or ACEScg primaries. EXR32
 retains negative and above-one finite samples. EXR16 rounds to half precision.
+The decoded `linear Rec.2020` choice uses the native linear encoder path and
+native HDR chromaticities tag, preserving already-linear HDR EXR samples without
+another transfer-function conversion.
 AVIF uses the native SVT-AV1 encoder, CRF 1–63, minimum 64 pixels per side, and
 exactly one still frame. The native encoder owns transfer/color tags and YUV420
 subsampling. This format is lossy even when its source has more precision.

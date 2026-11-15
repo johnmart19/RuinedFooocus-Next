@@ -20,7 +20,10 @@ MAX_PIXELS = 16_777_216
 MAX_METADATA = 2 * 1024 * 1024
 OPTIONS = {
     "png": (("8-bit", "16-bit"), ("sRGB",)),
-    "exr": (("16-bit float", "32-bit float"), ("sRGB", "HDR", "linear", "linear ACEScg")),
+    "exr": (
+        ("16-bit float", "32-bit float"),
+        ("sRGB", "HDR", "linear", "linear Rec.2020", "linear ACEScg"),
+    ),
     "avif": (("auto", "8-bit YUV420", "10-bit YUV420"), ("sRGB", "HDR", "HDR PQ")),
 }
 
@@ -128,12 +131,19 @@ def write_image(path, pixels, values=None, metadata=None):
                 metadata={"parameters": information},
             )
         else:
-            encoded = native._encode_image(tensor, kind, depth, space)
+            # Decoded HDR EXR samples are already scene-linear Rec.2020. Keep the
+            # native linear pixel path and independently retain its native gamut tag.
+            linear_rec2020 = kind == "exr" and space == "linear Rec.2020"
+            encoded = native._encode_image(
+                tensor, kind, depth, "linear" if linear_rec2020 else space
+            )
             inject = native.inject_png_metadata if kind == "png" else native.inject_exr_metadata
             if kind == "png":
                 encoded = inject(encoded, None, {"parameters": information})
             else:
-                encoded = inject(encoded, None, {"parameters": information}, space)
+                encoded = inject(
+                    encoded, None, {"parameters": information}, "HDR" if linear_rec2020 else space
+                )
             Path(temporary).write_bytes(encoded)
         # Reuse the platform's atomic, no-clobber publication contract.
         if Path(temporary).stat().st_size > MAX_BYTES:
