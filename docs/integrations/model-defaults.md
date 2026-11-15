@@ -15,18 +15,36 @@ It never inherits a claim about an exact artifact's visual quality or hardware
 qualification. Explicit checkpoint overrides remain last in the sampling merge;
 current saved dimensions remain a user decision.
 
-Resolution recommendations keep an explicit publisher default first, retain the
-full downloaded size list, then append distinct sizes from the compatible family
-recipe. One cached square no longer hides portrait and landscape presets. Hash
+Resolution recommendations retain the full explicit publisher size list without
+appending unrelated family buckets. When a model supplies only a default canvas
+or leaves an orientation out of its list,
+the pinned ComfyUI `ResolutionSelector` calculates orientation presets at that
+canvas's pixel area. Its native ratios and rounding are reused; the pixel multiple
+respects that family's native latent scale and empty-latent node grids (for
+example, 8 for Anima and 16 for FLUX.2/FLUX.3). Without family geometry, the native
+selector's default multiple is used;
+there is no copied cross-family dimension table. These choices are labelled
+**ComfyUI preset**, separately from publisher recommendations. Hash
 and current-file signature checks still apply; acquisition uses the existing
 bounded metadata refresh, never dropdown rendering. Resolution-only HF cards do
 not trigger extra parent-repository searches. Offline mode reuses local lists.
-Common SDXL derivatives, Anima, FLUX.1, SD3.5 and Z-Image presets include nine
-local aspect buckets; Kontext uses the 17 preferred sizes from pinned ComfyUI
-`nodes_flux.py`. Local buckets are recorded separately from publisher geometry;
-Anima buckets stay within its publisher's 512²–1536² pixel range. Layered Qwen
-and fixed-scale PiD keep their specialized geometry. Unknown models receive
-generic square, portrait and landscape choices, plus Custom.
+Automatic metadata refresh also runs with **Own settings**, so size
+recommendations are available independently of sampling mode. It does not replace
+manual sampling values or dimensions; disabling automatic refresh prevents the lookup.
+SDXL and its compatible derivatives share Stability's SDXL aspect buckets;
+Kontext uses the 17 preferred sizes from pinned ComfyUI `nodes_flux.py`. Other
+families do not inherit those lists. Anima uses its 1024² native canvas as the
+fallback budget; the resulting native orientations stay within the publisher's
+512²–1536² pixel range. Explicit Chinese/Japanese recommendation headings are
+also recognized. Layered Qwen and fixed-scale PiD declare fixed geometry and do
+not gain orientation presets. Unknown models receive generic native orientation
+defaults, plus Custom. No menu render downloads metadata or initializes a device.
+
+Anima's fallback sampler/scheduler comes from the pinned **Anima Base 1.0**
+blueprint (`er_sde` / `simple`, 30 steps, CFG4). Exact checkpoint recommendations
+and user overrides keep precedence. Its native Qwen3 encoder, Qwen Image VAE,
+sampling shift, LoRA and LLLite model-patch routes remain native backend adapters;
+LLLite is exposed under **Editor → More tools → Native model patch**.
 
 Sources checked 2026-11-15: [Stability's SDXL aspect table](https://github.com/Stability-AI/generative-models/blob/main/scripts/demo/sampling.py),
 [Anima generation settings](https://huggingface.co/circlestone-labs/Anima), and the
@@ -45,7 +63,7 @@ settings as `sampling_defaults_source`; Own settings clears the automatic label.
 
 The retained 26 image presets are projected from indexed image resources. The
 compatibility snapshot and its index share canonical digest
-`92d51b63b840e70e2b076a0806864161c0ed3f97ad46ff47e491c909b1d12707`.
+`fb1a37b8f42d2b14e8d5c556a909e9c35715c22912c905a5edd5df258a980789`.
 The eight video presets and dedicated resolution data are retired. Existing saved
 video-only rows are ignored and preserved when a profile is written; shared rows
 with valid image consumers retain their image settings. The current index has

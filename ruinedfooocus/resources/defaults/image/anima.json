@@ -8,21 +8,11 @@
   "sampling": {
     "custom_steps": 30,
     "cfg": 4,
-    "sampler_name": "euler",
-    "scheduler": "normal",
+    "sampler_name": "er_sde",
+    "scheduler": "simple",
     "clip_skip": 1
   },
-  "recommended_sizes": [
-    [1024, 1024],
-    [832, 1216],
-    [1216, 832],
-    [896, 1152],
-    [1152, 896],
-    [768, 1344],
-    [1344, 768],
-    [640, 1536],
-    [1536, 640]
-  ],
+  "recommended_sizes": [[1024, 1024]],
   "default_size": [1024, 1024],
   "applicability": {
     "behavioral_variants": ["base"],
@@ -37,25 +27,19 @@
     }
   },
   "provenance": {
-    "kind": "local_family_recipe",
-    "label": "Local Anima family recipe",
-    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
-    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Anima blueprint",
+    "source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/blueprints/Text%20to%20Image%20(Anima%20Base%201.0).json",
+    "source_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
     "fetched_at_utc": null,
     "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
   },
   "legacy": {
     "custom_steps": 30,
     "cfg": 4,
-    "sampler_name": "euler",
-    "scheduler": "normal",
+    "sampler_name": "er_sde",
+    "scheduler": "simple",
     "clip_skip": 1,
-    "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
-  },
-  "resolution_provenance": {
-    "kind": "local_aspect_buckets",
-    "label": "Local aspect buckets near the family default pixel area",
-    "source_url": "https://huggingface.co/circlestone-labs/Anima",
-    "note": "Local aspect buckets within the publisher 512^2 to 1536^2 pixel range."
+    "recommended_resolutions": "1024x1024"
   }
 }

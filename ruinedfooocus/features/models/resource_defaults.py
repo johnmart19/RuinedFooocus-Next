@@ -135,6 +135,7 @@ def _recipe_file(path, modified, size, digest):
             "Invalid family sampling name.",
         )
     applicability = document["applicability"]
+    _require(document.get("resolution_mode") in (None, "fixed"), "Invalid family resolution mode.")
     if "native_class" in applicability:
         _require(
             isinstance(applicability["native_class"], str)

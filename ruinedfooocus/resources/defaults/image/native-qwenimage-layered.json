@@ -63,5 +63,6 @@
       "values": [1]
     }
   ],
-  "legacy": null
+  "legacy": null,
+  "resolution_mode": "fixed"
 }

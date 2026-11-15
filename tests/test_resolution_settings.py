@@ -146,10 +146,7 @@ class ResolutionSettingsTests(unittest.TestCase):
         }
         self.publisher.metadata.return_value = metadata
         sizes, source = self.resolutions.recommendation("SDXL", str(model), self.performance)
-        self.assertEqual(sizes[0], (896, 1152))
-        self.assertIn((832, 1216), sizes)
-        self.assertIn((1216, 832), sizes)
-        self.assertEqual(len(sizes), len(set(sizes)))
+        self.assertEqual(sizes, [(896, 1152)])
         self.assertIn("publisher", source)
         model.write_bytes(b"replacement with distinct signature")
         self.assertEqual(
@@ -175,8 +172,7 @@ class ResolutionSettingsTests(unittest.TestCase):
         sizes, source = self.resolutions.recommendation("SDXL", str(model), self.performance)
         self.assertEqual(sizes[0], (768, 1024))
         self.assertIn("Civitai version 123", source)
-        self.assertIn("Local SDXL family recipe", source)
-        self.assertIn((1216, 832), sizes)
+        self.assertEqual(sizes, [(768, 1024)])
 
     def test_successful_refresh_with_no_size_does_not_resurrect_old_local_publisher_size(self):
         model = self.root / "model.safetensors"
@@ -187,7 +183,10 @@ class ResolutionSettingsTests(unittest.TestCase):
         }
         self.publisher.cached_resolutions.return_value = ([], "Civitai version 123")
         sizes, source = self.resolutions.recommendation("SDXL", str(model), self.performance)
-        self.assertEqual((sizes[0], source), ((1024, 1024), "Local SDXL family recipe"))
+        self.assertEqual(
+            (sizes[0], source),
+            ((1024, 1024), "Stability SDXL aspect buckets (shared SDXL architecture)"),
+        )
 
     def test_source_frame_preview_uses_native_geometry_without_mutating_guidance(self):
         guidance = {"denoise": 0.31, "image_resize_mode": "preserve"}

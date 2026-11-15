@@ -16,7 +16,7 @@ from pathlib import Path
 from ruinedfooocus.core.config_io import save_json
 
 FIELDS = ("custom_steps", "cfg", "sampler_name", "scheduler", "clip_skip")
-RECOMMENDATION_SCHEMA = 7
+RECOMMENDATION_SCHEMA = 8
 QWEN_IMAGE21_FAMILIES = ("QwenImage21", "Qwen Image 2.1")
 _QWEN_IMAGE21_WORKFLOW = "https://comfy.org/hub/workflows/qwen-image-2-1-image-edit-5fbe136ba6f9/"
 _QWEN_IMAGE21_TURBO_WORKFLOW = (
@@ -156,7 +156,8 @@ def published_resolutions(metadata):
         if fenced:
             continue
         named = re.search(
-            r"\b(?:recommended|supported)\s+(?:(?:image|output|generation)\s+)?(?:resolutions?|sizes?)\b",
+            r"\b(?:recommended|supported)\s+(?:(?:image|output|generation)\s+)?(?:resolutions?|sizes?)\b"
+            r"|(?:推荐|推薦|建议|建議|推奨)\s*(?:生成)?\s*(?:分辨率|解析度|解像度|尺寸|サイズ)",
             line,
             re.I,
         )

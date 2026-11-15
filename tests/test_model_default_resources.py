@@ -20,7 +20,7 @@ class FamilyResourceTests(unittest.TestCase):
         self.assertEqual(len(presets), 26)
         self.assertEqual(
             metadata_digest(presets),
-            "92d51b63b840e70e2b076a0806864161c0ed3f97ad46ff47e491c909b1d12707",
+            "fb1a37b8f42d2b14e8d5c556a909e9c35715c22912c905a5edd5df258a980789",
         )
         index = json.loads(resource_path("defaults", "index.json").read_text(encoding="utf-8"))
         self.assertEqual(index["legacy_sha256"], metadata_digest(presets))

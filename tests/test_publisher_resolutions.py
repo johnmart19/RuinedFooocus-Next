@@ -167,11 +167,6 @@ Recommended sizes: 4096x4096
                 "Illustrious",
                 "NoobAI",
                 "Pony",
-                "Anima",
-                "Flux.1 D",
-                "Flux.1 S",
-                "SD3.5",
-                "Z-Image Turbo",
             ):
                 sizes = settings.recommended_sizes(family)
                 with self.subTest(family=family):
@@ -179,7 +174,7 @@ Recommended sizes: 4096x4096
                     self.assertTrue(any(w < h for w, h in sizes))
                     self.assertTrue(any(w > h for w, h in sizes))
             choices = settings.choices_for_model("Flux3")
-            self.assertGreaterEqual(len(choices), 10)
+            self.assertGreaterEqual(len(choices), 4)
             self.assertEqual(choices[-1], "Custom...")
             self.assertTrue(all("Generic fallback" in choice for choice in choices[:-1]))
             self.assertEqual(
@@ -192,6 +187,17 @@ Recommended sizes: 4096x4096
             self.assertEqual(
                 len(load_family_recipe("native-flux-1-d-kontext-dev")["recommended_sizes"]), 17
             )
+
+    def test_multilingual_card_recommendations_are_kept_as_published(self):
+        self.assertEqual(
+            published_resolutions({"description": "<p>推荐分辨率：812×1216、1152×1536</p>"}),
+            [(812, 1216), (1152, 1536)],
+        )
+        self.assertEqual(
+            published_resolutions({"description": "推奨解像度: 896x1152、1152x896"}),
+            [(896, 1152), (1152, 896)],
+        )
+        self.assertEqual(published_resolutions({"description": "Example output 812×1216"}), [])
 
 
 if __name__ == "__main__":

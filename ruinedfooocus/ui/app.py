@@ -2601,7 +2601,7 @@ with shared.gradio_root as block:
             ):
                 locale = resolve_locale(request=request)
                 store = performance_settings.model_recommendations
-                if force or (automatic and selection == performance_settings.MODEL_PERFORMANCE):
+                if force or automatic:
                     store.refresh(checkpoint, KSampler.SAMPLERS, KSampler.SCHEDULERS, force)
                 from ruinedfooocus.features.models.model_recommendations import FAMILY_PRESETS
 

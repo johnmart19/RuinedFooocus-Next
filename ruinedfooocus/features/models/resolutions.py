@@ -169,19 +169,39 @@ class ResolutionSettings:
                 and self.is_custom(f"{width}x{height} ({name})")
             )
         ]
-        recommended = self.recommended_sizes(family, checkpoint, performance)
+        recommended, source, recipe = self._recommendation(family, checkpoint, performance)
+        native_canvas = recipe.get("provenance", {}).get("kind") == "native_workflow"
         for width, height in recommended:
             self.aspect_ratios[f"{width}x{height}"] = (width, height)
             if not any(self.aspect_ratios[value] == (width, height) for value in choices):
-                label = f"{width}x{height} ({family} recommended)"
+                label = (
+                    f"{width}x{height} (ComfyUI preset)"
+                    if native_canvas
+                    and not source.startswith(("Civitai", "Hugging Face", "Cached publisher"))
+                    else f"{width}x{height} ({family} recommended)"
+                )
                 self.aspect_ratios[label] = (width, height)
                 choices.append(label)
-        if not recommended:
-            # Unknown models still need practical orientations, without claiming
-            # that generic defaults were published for that checkpoint.
-            recommended = self.recommended_sizes("SDXL") or [(1024, 1024), (832, 1216), (1216, 832)]
-            for width, height in recommended:
-                label = f"{width}x{height} (Generic fallback)"
+        missing_orientation = not (
+            any(width < height for width, height in recommended)
+            and any(width > height for width, height in recommended)
+        )
+        if missing_orientation and recipe.get("resolution_mode") != "fixed":
+            from ruinedfooocus.features.models.native_resolutions import (
+                aspect_presets,
+                canvas_multiple,
+            )
+
+            # A default canvas is not an exhaustive publisher size list. Native
+            # presets keep that model's pixel budget instead of copying SDXL.
+            seed = recommended[0] if recommended else (1024, 1024)
+            presets = aspect_presets(*seed, canvas_multiple(recipe, family))
+            if not recommended and not presets:
+                presets = ((1024, 1024), (832, 1216), (1216, 832))
+            for width, height in presets:
+                label = (
+                    f"{width}x{height} ({'ComfyUI preset' if recommended else 'Generic fallback'})"
+                )
                 self.aspect_ratios[label] = (width, height)
                 self.aspect_ratios[f"{width}x{height}"] = (width, height)
                 if not any(self.aspect_ratios[value] == (width, height) for value in choices):
@@ -190,6 +210,10 @@ class ResolutionSettings:
         return choices + [self.CUSTOM_RESOLUTION]
 
     def recommendation(self, family, checkpoint=None, performance=None):
+        sizes, source, _ = self._recommendation(family, checkpoint, performance)
+        return sizes, source
+
+    def _recommendation(self, family, checkpoint=None, performance=None):
         """Read bounded, local recommendation data without fetching or sampling."""
         import re
         from ruinedfooocus.features.models.model_recommendations import (
@@ -230,16 +254,14 @@ class ResolutionSettings:
             if default:
                 default = tuple(default)
                 sizes = [default] + [size for size in sizes if size != default]
-            source = model_recipe.get("provenance", {}).get("label", f"Local {preset} recipe")
+            source = model_recipe.get("resolution_provenance", {}).get("label") or model_recipe.get(
+                "provenance", {}
+            ).get("label", f"Local {preset} recipe")
             if publisher_sizes:
-                source = (
-                    f"{publisher_source}; {source}"
-                    if any(size not in publisher_sizes for size in sizes)
-                    else publisher_source
-                )
-            return list(dict.fromkeys(publisher_sizes + sizes)), source
+                return publisher_sizes, publisher_source, model_recipe
+            return sizes, source, model_recipe
         if publisher_sizes:
-            return publisher_sizes, publisher_source
+            return publisher_sizes, publisher_source, {}
         example_reader = getattr(performance, "native_example", None)
         if checkpoint and callable(example_reader):
             example = example_reader(family, checkpoint)
@@ -251,9 +273,11 @@ class ResolutionSettings:
                     type(value) is int and 256 <= value <= 4096 and value % 2 == 0 for value in size
                 )
             ):
-                return [
-                    tuple(size)
-                ], "Native workflow example canvas; no publisher size recommendation"
+                return (
+                    [tuple(size)],
+                    "Native ComfyUI workflow canvas",
+                    {"provenance": {"kind": "native_workflow"}},
+                )
         from ruinedfooocus.features.models.resource_defaults import performance_defaults
 
         recipes = performance_defaults()
@@ -262,7 +286,7 @@ class ResolutionSettings:
             (int(w), int(h))
             for w, h in re.findall(r"(\d+)x(\d+)", recipe.get("recommended_resolutions", ""))
         ]
-        return sizes, f"Local {preset} recipe" if sizes else ""
+        return sizes, f"Local {preset} recipe" if sizes else "", {}
 
     @staticmethod
     def _current_metadata(checkpoint, metadata):

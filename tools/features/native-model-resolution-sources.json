@@ -1,0 +1,18 @@
+{
+  "id": "native-model-resolution-sources",
+  "subject": "Use native model geometry for presets and preserve publisher resolution recommendations",
+  "requires": ["complete-resolution-recommendations"],
+  "tests": [
+    "test_native_resolution_presets.py",
+    "test_publisher_resolutions.py",
+    "test_resolution_settings.py",
+    "test_resolution_ui_events.py",
+    "test_resolution_transitions.py",
+    "test_model_control_events.py",
+    "test_model_default_resources.py",
+    "test_model_recommendations.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

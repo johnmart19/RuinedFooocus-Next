@@ -56,10 +56,10 @@
   "Anima": {
     "custom_steps": 30,
     "cfg": 4,
-    "sampler_name": "euler",
-    "scheduler": "normal",
+    "sampler_name": "er_sde",
+    "scheduler": "simple",
     "clip_skip": 1,
-    "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
+    "recommended_resolutions": "1024x1024"
   },
   "Qwen Image Edit": {
     "custom_steps": 20,
@@ -107,7 +107,7 @@
     "sampler_name": "res_multistep",
     "scheduler": "simple",
     "clip_skip": 1,
-    "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
+    "recommended_resolutions": "1024x1024"
   },
   "SDXL": {
     "custom_steps": 30,
@@ -147,7 +147,7 @@
     "sampler_name": "euler",
     "scheduler": "simple",
     "clip_skip": 1,
-    "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
+    "recommended_resolutions": "1024x1024"
   },
   "FLUX.1 schnell": {
     "custom_steps": 4,
@@ -155,7 +155,7 @@
     "sampler_name": "euler",
     "scheduler": "simple",
     "clip_skip": 1,
-    "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
+    "recommended_resolutions": "1024x1024"
   },
   "FLUX 3 Klein": {
     "custom_steps": 15,
@@ -198,7 +198,7 @@
     "sampler_name": "euler",
     "scheduler": "sgm_uniform",
     "clip_skip": 1,
-    "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
+    "recommended_resolutions": "1024x1024"
   },
   "HiDream O1": {
     "custom_steps": 40,

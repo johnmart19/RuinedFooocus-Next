@@ -265,14 +265,14 @@ class ModelControlEventTests(unittest.TestCase):
             self, selection="Own settings", current="1216x832", automatic=False
         )
         graph.run()
-        self.assertEqual(graph.value("aspect_ratios_selection"), "1216x832 (SDXL recommended)")
+        self.assertEqual(graph.value("aspect_ratios_selection"), "1216x832")
         updated = graph.state.blocks_config.blocks[graph.scope["aspect_ratios_selection"]._id]
         self.assertEqual(updated.preprocess(graph.value("aspect_ratios_selection")), "1216x832")
         self.assertFalse(graph.value("resolution_auto"))
         self.assertEqual(graph.value("performance_selection"), "Own settings")
         self.assertEqual(graph.value("cfg"), 9)
         self.assertEqual(graph.value("custom_steps"), 22)
-        graph.publisher.refresh.assert_not_called()
+        graph.publisher.refresh.assert_called_once()
         self.assertEqual(graph.resolutions.model_selection.call_count, 1)
 
     def test_custom_replay_is_retained_until_restore_recommendation_is_clicked(self):

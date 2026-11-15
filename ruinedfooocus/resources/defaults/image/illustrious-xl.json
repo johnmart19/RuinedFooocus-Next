@@ -53,9 +53,8 @@
     "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
   },
   "resolution_provenance": {
-    "kind": "local_aspect_buckets",
-    "label": "Local aspect buckets near the family default pixel area",
-    "source_url": "https://github.com/Stability-AI/generative-models/blob/main/scripts/demo/sampling.py",
-    "note": "Family presets, not checkpoint-specific publisher recommendations."
+    "kind": "publisher_family_geometry",
+    "label": "Stability SDXL aspect buckets (shared SDXL architecture)",
+    "source_url": "https://github.com/Stability-AI/generative-models/blob/main/scripts/demo/sampling.py"
   }
 }

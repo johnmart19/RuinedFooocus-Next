@@ -63,7 +63,7 @@
       "family": "Anima",
       "variant": "base",
       "media": "image",
-      "sha256": "6ec8d09a28a1a6c608655b50b12d7d871f7c382b69aac2605043c68a65f8a46f"
+      "sha256": "b9394a9885cafc8edad742be8f43cf6d51a6c0b3a5a656a9831fd150ad79cfe1"
     },
     "Qwen Image Edit": {
       "path": "image/qwen-image-edit.json",
@@ -111,7 +111,7 @@
       "family": "Z-Image Turbo",
       "variant": "base",
       "media": "image",
-      "sha256": "4387dfb2bef34de3f950fd9168896f99d16ddafe9488ab911fdc578714b89a3b"
+      "sha256": "f6c2b6e2796550cfb12c3504d72c74dc65f336e7b955dafc2c0feba516cd51cf"
     },
     "SDXL": {
       "path": "image/sdxl.json",
@@ -119,7 +119,7 @@
       "family": "SDXL",
       "variant": "base",
       "media": "image",
-      "sha256": "7c3b363708a726568d7f8be4656b2cf3b9add4a5b45ecdb807db5c546e927941"
+      "sha256": "fd84f6f68abf2656890b330728fa60682c2d0a3cbc1e4a37f7cd3cace0188b60"
     },
     "Illustrious XL": {
       "path": "image/illustrious-xl.json",
@@ -127,7 +127,7 @@
       "family": "Illustrious XL",
       "variant": "base",
       "media": "image",
-      "sha256": "b956515eaf7466e3aa52030115fd1f418af37de6fda1bcd3f62187fa301ac087"
+      "sha256": "fe312304eeb8478bd0251165f848410f0d2e8338cf2460e6e65c901b0d2c16f3"
     },
     "Pony XL": {
       "path": "image/pony-xl.json",
@@ -135,7 +135,7 @@
       "family": "Pony XL",
       "variant": "base",
       "media": "image",
-      "sha256": "146221f9ff4de8d5a4639152a795219c6e14b4469cdf73f2abc39c02ec2ccae0"
+      "sha256": "4fd937cf20f9c5d9ae6bdee7388d2915b56f7e35fb116420331b85ec75a6f6ab"
     },
     "NoobAI XL": {
       "path": "image/noobai-xl.json",
@@ -143,7 +143,7 @@
       "family": "NoobAI XL",
       "variant": "base",
       "media": "image",
-      "sha256": "f46be15c7e22cd3cde3014cc3bb65007696f32ce8e3d12a083e6580bd9c7493e"
+      "sha256": "2c7b99b29d589d31b2f97e466bef020701fa0f0c7462bb4b8734ed63adf0a5ff"
     },
     "FLUX.1 dev": {
       "path": "image/flux-1-dev.json",
@@ -151,7 +151,7 @@
       "family": "FLUX.1 dev",
       "variant": "base",
       "media": "image",
-      "sha256": "9efbd69a86d73909410c8241f91ef263c5e55bed5e7abfb170dd58d0be970e81"
+      "sha256": "0e39a8b7bdac2a53e2ab893d88f7c1b60f3e9e6e6703deec1327fb927a89670f"
     },
     "FLUX.1 schnell": {
       "path": "image/flux-1-schnell.json",
@@ -159,7 +159,7 @@
       "family": "FLUX.1 schnell",
       "variant": "base",
       "media": "image",
-      "sha256": "6d143b4ac5cba201c7a8552c454eadccee35b127324cc1454df3a4066758731a"
+      "sha256": "328882194030df0d220b3ceaaf6fabfd24e9732e05ee335539ae82b55b87b10a"
     },
     "FLUX 3 Klein": {
       "path": "image/flux-3-klein.json",
@@ -199,7 +199,7 @@
       "family": "SD3.5",
       "variant": "base",
       "media": "image",
-      "sha256": "975aa1343c8486ccaebd9a8d41a577dce345a44a8173daadd589b461b5612834"
+      "sha256": "b11b640dbb2769956eb16f537ae62492783167b2efada5e469705640d96396a8"
     },
     "HiDream O1": {
       "path": "image/hidream-o1.json",
@@ -295,7 +295,7 @@
       "family": "Flux.1 D",
       "variant": "krea-dev",
       "media": "image",
-      "sha256": "40f9303f915cb24ffd793ea012e79184458ca2f6becfb3b42d0268e796057b50"
+      "sha256": "f0ee09ec6f994250671a9d6ed3c8b572c25551474c8904121f193b1e60b5d1c4"
     },
     "Native Flux.1 D kontext-dev": {
       "path": "image/native-flux-1-d-kontext-dev.json",
@@ -311,7 +311,7 @@
       "family": "FluxInpaint",
       "variant": "fill-dev",
       "media": "image",
-      "sha256": "3df892d69ea469345f465b3f57dd2fab01cf75bd9da68a0657778fa3b1e21ce0"
+      "sha256": "2719eabcb865da5a06f56dd1052990888ec5ce94d3882c9e3302b3c546f04b50"
     },
     "Native Flux2Klein4B klein-base-4b": {
       "path": "image/native-flux2klein4b-klein-base-4b.json",
@@ -423,7 +423,7 @@
       "family": "PiD",
       "variant": "flux1-1024-to-4096-4step",
       "media": "image",
-      "sha256": "19022392293ff412d301677ab04494a11ad7dbefdb356277e8e98d24408ecc90"
+      "sha256": "55405ff6ccbd3654bca905a7425f0bdff776cc7bd720156343285d1d1de0a48a"
     },
     "Native QwenImage 2512": {
       "path": "image/native-qwenimage-2512.json",
@@ -431,7 +431,7 @@
       "family": "QwenImage",
       "variant": "2512",
       "media": "image",
-      "sha256": "508d0f6b863345602b822718116cd2809a4e3290a30753ef3a3eb422898162c9"
+      "sha256": "5c12f325b1e1dc5f94e1ac74379a0c0d7c837047bbe792de4f332022733846bc"
     },
     "Native QwenImage edit-2511": {
       "path": "image/native-qwenimage-edit-2511.json",
@@ -439,7 +439,7 @@
       "family": "QwenImage",
       "variant": "edit-2511",
       "media": "image",
-      "sha256": "e43a3594fc320d9745f5a8d6fff7322618f589f4c2765ebe5e5db98dde2417e6"
+      "sha256": "f94650b230e223f5af4b2ded1e1d3126fabc3ef75f512eea70461df59ccda0a8"
     },
     "Native QwenImage layered": {
       "path": "image/native-qwenimage-layered.json",
@@ -447,7 +447,7 @@
       "family": "QwenImage",
       "variant": "layered",
       "media": "image",
-      "sha256": "f867c7f29fd31beb159d251157c999398d6d6bae83938a873cbce2c0260a339a"
+      "sha256": "926b9b27be0b3ceedd5635cd3b5445e3fbf8b57895ec1b7db91565e6aae512bc"
     },
     "Native ZImage base": {
       "path": "image/native-zimage-base.json",
@@ -455,7 +455,7 @@
       "family": "ZImage",
       "variant": "base",
       "media": "image",
-      "sha256": "941c358dd7820a584fc203e6bfb9bc32b2dcc40ed2d8aa0df7c483210166637d"
+      "sha256": "da7ce9306fa6b7552ab92895a2dbc79d795599ca7df2ff44b03bf2e0afbffebb"
     },
     "Native ZImage turbo": {
       "path": "image/native-zimage-turbo.json",
@@ -463,7 +463,7 @@
       "family": "ZImage",
       "variant": "turbo",
       "media": "image",
-      "sha256": "1baaf74987f1194db79d353b09755bc5afd712fbcbdb464807e546851c6c5aa0"
+      "sha256": "fccc3a1e713257656672214cd26f6525e93b342da83ee63bb6dea12fd06451e3"
     },
     "Native ErnieImage base": {
       "path": "image/native-ernieimage-base.json",
@@ -487,7 +487,7 @@
       "family": "Flux.1 D",
       "variant": "dev",
       "media": "image",
-      "sha256": "628510fb3ac78019e5b30aaf2f0eec4c9b57c7199256ee8fef98fa669866a0d0"
+      "sha256": "871b4ae8abf83faa984ec5a6b8c9867cc0c257f49601a74bd355180bdecd423b"
     },
     "Native QwenImage base": {
       "path": "image/native-qwenimage-base.json",
@@ -1020,7 +1020,7 @@
       "7b-int8": "Native extended SeedVR2 7b-int8"
     }
   },
-  "legacy_sha256": "92d51b63b840e70e2b076a0806864161c0ed3f97ad46ff47e491c909b1d12707",
+  "legacy_sha256": "fb1a37b8f42d2b14e8d5c556a909e9c35715c22912c905a5edd5df258a980789",
   "provenance": {
     "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
     "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",

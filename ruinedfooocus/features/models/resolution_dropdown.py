@@ -8,7 +8,9 @@ import gradio as gr
 def dimension_value(value):
     if not isinstance(value, str):
         return value
-    match = re.fullmatch(r"([0-9]+)x([0-9]+)(?: \((?:.+ recommended|Generic fallback)\))?", value)
+    match = re.fullmatch(
+        r"([0-9]+)x([0-9]+)(?: \((?:.+ recommended|Generic fallback|ComfyUI preset)\))?", value
+    )
     if match is None:
         return value  # Named saved sizes and Custom keep their selection identity.
     return f"{int(match[1])}x{int(match[2])}"
