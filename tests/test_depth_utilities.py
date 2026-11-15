@@ -897,7 +897,7 @@ class DepthUtilities(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "source-verified"):
                 utility_marigold.verify_component(field, alternate)
 
-    def test_marigold_picker_retains_unverified_architecture_without_hashing_or_default_migration(
+    def test_marigold_picker_retains_unknown_architecture_without_hashing_or_default_migration(
         self,
     ):
         unverified = write_header(
@@ -911,7 +911,7 @@ class DepthUtilities(unittest.TestCase):
                 self.manager, "marigold-albedo", "image_utility_model"
             )
         self.assertTrue(
-            any(value == str(unverified) and "unverified" in label for label, value in choices)
+            any(value == str(unverified) and label == unverified.name for label, value in choices)
         )
         with self.assertRaisesRegex(ValueError, "backbone provenance"):
             self.capture("marigold-albedo", image_utility_model=str(unverified))

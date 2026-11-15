@@ -1,0 +1,32 @@
+{
+  "id": "release-ui-fixture-contracts",
+  "subject": "Align UI and API fixtures with current storage and event contracts",
+  "requires": [
+    "maintenance-reset",
+    "editor-action-controls",
+    "editor-navigation-state",
+    "release-status-wording",
+    "cached-native-runtime-reuse",
+    "stale-suite-contracts-and-ui-wiring"
+  ],
+  "tests": [
+    "test_api_precomputed_guides.py",
+    "test_model_acquisition.py",
+    "test_model_acquisition_ui.py",
+    "test_model_ui_requests.py",
+    "test_plan_acquisition_transport.py",
+    "test_api_local_components.py",
+    "test_wevisone_catalogue.py",
+    "test_compact_model_profile_controls.py",
+    "test_moe_cache_settings_ui.py",
+    "test_create_mode_isolation.py",
+    "test_gallery_actions.py",
+    "test_ui_workflows.py",
+    "test_depth_utilities.py",
+    "test_hardware_provider_ui.py",
+    "test_action_contract_audit.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

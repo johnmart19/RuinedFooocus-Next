@@ -14,7 +14,6 @@ from ruinedfooocus.core.path import PathManager
 from ruinedfooocus.core.preparation import PreparationService
 from ruinedfooocus.features.models.acquisition import (
     Catalogue,
-    CATEGORIES,
     AcquisitionSession,
     checkpoint_name,
     DownloadPlan,
@@ -33,7 +32,9 @@ class AcquisitionTests(unittest.TestCase):
         self.addCleanup(self.folder.cleanup)
         self.root = Path(self.folder.name).resolve()
         self.manager = PathManager.__new__(PathManager)
-        self.manager.paths = {"path_" + kind: str(self.root / kind) for kind in CATEGORIES}
+        self.manager.paths = {
+            key: str(self.root / key.removeprefix("path_")) for key in PathManager.DEFAULT_PATHS
+        }
         self.manager.model_paths = {"cache_path": self.root / "cache"}
         self.manager.DOWNLOADABLE_FILES = {
             "checkpoints/a.safetensors": {

@@ -390,6 +390,7 @@ class WorkflowControlsTests(unittest.TestCase):
             num_images_pages=Mock(return_value=(1, 1)),
         )
         namespace = {
+            "SimpleNamespace": SimpleNamespace,
             "gr": SimpleNamespace(
                 update=lambda **values: values, Gallery=lambda **values: values, Request=object
             ),

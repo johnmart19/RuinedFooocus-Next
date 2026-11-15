@@ -470,6 +470,7 @@ class GalleryActionsTests(unittest.TestCase):
         )
         scope = dict(
             browser=browser,
+            SimpleNamespace=SimpleNamespace,
             gr=SimpleNamespace(update=lambda **values: values, Gallery=lambda **values: values),
             availability=lambda *_: {},
             localize=localize,
@@ -523,6 +524,7 @@ class GalleryActionsTests(unittest.TestCase):
                 button.click(lambda: None, outputs=gallery, api_visibility="undocumented")
             scope = dict(
                 gr=gr,
+                SimpleNamespace=SimpleNamespace,
                 gallery=gallery,
                 browser=SimpleNamespace(
                     load_images=lambda *args, **kwargs: (

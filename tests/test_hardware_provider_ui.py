@@ -46,7 +46,7 @@ class HardwareProviderUiTests(unittest.TestCase):
         remembered = self.choices()(rows, [], "AMDGPUExecutionProvider")
         self.assertIn("Unavailable saved choice", remembered[-1][0])
         self.assertEqual(remembered[-1][1], "AMDGPUExecutionProvider")
-        self.assertEqual(self.choices()([], []), [("Automatic qualified provider", "Auto")])
+        self.assertEqual(self.choices()([], []), [("Automatic (recommended)", "Auto")])
 
     def test_cpu_class_candidates_do_not_include_gpu_or_npu_only_providers(self):
         rows = [

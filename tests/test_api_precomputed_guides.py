@@ -37,7 +37,10 @@ class UploadedGuideApiTests(unittest.TestCase):
         self.addCleanup(self.fixture.doCleanups)
         self.root = self.fixture.root
         self.manager = PathManager.__new__(PathManager)
-        self.manager.paths = {"path_controlnet": str(self.root)}
+        self.manager.paths = {
+            key: str(self.root / key.removeprefix("path_")) for key in PathManager.DEFAULT_PATHS
+        }
+        self.manager.paths["path_controlnet"] = str(self.root)
         self.manager.model_paths = {}
         self.manager.DOWNLOADABLE_FILES = {}
         self.checkpoint = self.root / "bundled-sdxl.safetensors"

@@ -154,7 +154,7 @@
     {
       "id": "editor-workspace-local-controls",
       "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
-      "callbacks": "invalidate$|source_changed$|action_context$|adjustment_action$|<lambda>|select_quick_tool$|mark_output_explicit$|preview_source$|on_source$",
+      "callbacks": "invalidate$|source_changed$|action_context$|adjustment_action$|<lambda>|select_quick_tool$|select_action$|capture_upscale_target$|mark_output_explicit$|preview_source$|on_source$",
       "work": "Project action-specific inputs and Run label, open More tools for explicit Adjust image intent, reset stale source context and advance the browser-owned Editor intent version.",
       "resource_owner": "Per-browser Editor controls and LatestUIRequests authenticated workspace channel; optional cancellation targets only its bound task ID",
       "persistence": "Control/version updates only; no editor artifact, profile or generated image is published by these callbacks. The tool selector sets explicit Adjust image intent for that alias and Generate intent for other tools.",
@@ -215,6 +215,26 @@
       "persistence": "Explicit style/preset save uses its configuration owner; computed result cannot overwrite an edited prompt draft.",
       "cancellation": "UI draft tokens fence helper publication; explicit helper cancellation/compute owner remains authoritative.",
       "acceptance": "Prompt draft/preparation CPU contracts exist; live tool delivery and draft preservation tracked separately."
+    },
+    {
+      "id": "storage-reset-local-controls",
+      "sources": ["ruinedfooocus/ui/storage_reset.py"],
+      "callbacks": "<lambda>|confirm$|cancel_reset$",
+      "work": "Localize the current preview, enable only a confirmed current plan, or cancel this browser's reset intent.",
+      "resource_owner": "Per-browser ResetSession cancellation token, previewed ResetPlan and localized Gradio controls",
+      "persistence": "Control projection only; confirmation never changes files. Cancellation signals only this session's active operation.",
+      "cancellation": "Queue-free cancellation invalidates pending preview publication; accepted atomic mutations retain their owning maintenance contracts.",
+      "acceptance": "Maintenance UI and source ownership CPU checks cover these callbacks; browser delivery remains separate."
+    },
+    {
+      "id": "storage-reset-operations",
+      "sources": ["ruinedfooocus/ui/storage_reset.py"],
+      "callbacks": "^callback$|check_folders$|apply_reset$",
+      "work": "Preview the chosen allowlisted cache/output/profile reset, recheck owned folders, or execute the explicitly confirmed current plan.",
+      "resource_owner": "Bounded PreparationAdmission, cache_maintenance callback lane and core/maintenance_reset.py idle barrier, target fingerprint and artifact write leases",
+      "persistence": "Only re-derived allowlisted targets are changed; profile factory reset uses its paired atomic profile/path save. Models, unrelated profiles and source inputs remain protected.",
+      "cancellation": "ResetSession tokens reject superseded UI results; maintenance checks cancellation between owned targets and reports completed work. Changed previews or active resource owners reject execution.",
+      "acceptance": "Private maintenance-reset and storage-recovery CPU callers cover preview, mutation, retention and cancellation; real-folder browser acceptance remains separate."
     },
     {
       "id": "cache-maintenance",

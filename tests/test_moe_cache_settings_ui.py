@@ -67,7 +67,10 @@ class MoeCacheSettingsUiTests(unittest.TestCase):
                 self.assertEqual(
                     (config["value"], config["minimum"], config["maximum"]), (share, 0, 1)
                 )
-                self.assertIn("b12110", controls["status"].value)
+                self.assertIn(
+                    "support has not been established for the selected runtime",
+                    controls["status"].value,
+                )
                 self.assertIsNot(controls["enabled"].interactive, False)
                 self.assertEqual(callback.outputs, [controls["status"]])
                 dependency = next(
@@ -198,12 +201,12 @@ class MoeCacheSettingsUiTests(unittest.TestCase):
                     ["llama.cpp", False, 0.333, "--moe-cache-cpu-share=0.8", None],
                 )
             reloaded = SettingsManager("moe-ui")
-        self.assertFalse(reloaded.default_settings[ui.ENABLED])
-        self.assertEqual(reloaded.default_settings[ui.SHARE], 0.333)
-        self.assertEqual(reloaded.default_settings["unrelated"], "retained")
+            self.assertFalse(reloaded.default_settings[ui.ENABLED])
+            self.assertEqual(reloaded.default_settings[ui.SHARE], 0.333)
+            self.assertEqual(reloaded.default_settings["unrelated"], "retained")
         self.assertIn("Saved: Off · share 0.333", text)
         self.assertIn("Form selected share: 0.8", text)
-        self.assertIn("b12110", text)
+        self.assertIn("support has not been established for the selected runtime", text)
 
     def test_locale_refresh_updates_only_status_and_keeps_preferences_literal(self):
         with patch.object(ui, "initialized_state", return_value=None):

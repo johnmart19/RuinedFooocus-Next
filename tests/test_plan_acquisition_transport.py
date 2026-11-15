@@ -40,8 +40,7 @@ class PlanAcquisitionTransportTests(unittest.TestCase):
         self.enterContext(patch.dict(os.environ, RF_OFFLINE="0", HF_HUB_OFFLINE="0"))
         self.manager = PathManager.__new__(PathManager)
         self.manager.paths = {
-            "path_" + category: str(self.root / category)
-            for category in ("checkpoints", "clip", "vae", "loras")
+            key: str(self.root / key.removeprefix("path_")) for key in PathManager.DEFAULT_PATHS
         }
         self.manager.model_paths = {}
         self.manager.DOWNLOADABLE_FILES = {}

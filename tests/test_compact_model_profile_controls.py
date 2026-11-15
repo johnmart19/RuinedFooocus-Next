@@ -4,6 +4,7 @@ import asyncio
 import ast
 from concurrent.futures import ThreadPoolExecutor
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -24,7 +25,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class CompactControlsTests(unittest.TestCase):
-    setUp = fixtures.AcquisitionTests.setUp
+    def setUp(self):
+        fixtures.AcquisitionTests.setUp(self)
+        self.enterContext(patch.dict(os.environ, RF_DATA_DIR=str(self.root)))
+        self.manager.paths = {**self.manager.DEFAULT_PATHS, **self.manager.paths}
+        self.manager.paths.update(
+            path_outputs=str(self.root / "outputs"), path_cache=str(self.root / "cache")
+        )
 
     def ui(self):
         fence, pool = LatestUIRequests(), PreparationAdmission(max_workers=2, max_jobs=4)

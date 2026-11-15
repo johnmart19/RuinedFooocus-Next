@@ -16,7 +16,7 @@ from safetensors.numpy import save_file
 
 from ruinedfooocus.core.path import PathManager
 from ruinedfooocus.core.paths import resource_path
-from ruinedfooocus.features.models.acquisition import CATEGORIES, Catalogue
+from ruinedfooocus.features.models.acquisition import Catalogue
 from ruinedfooocus.features.models.component_candidates import (
     TEXT_TYPES,
     classify_shapes,
@@ -41,7 +41,7 @@ class WeVisOneCatalogueTests(unittest.TestCase):
         self.root = Path(self.enterContext(tempfile.TemporaryDirectory())).resolve()
         self.manager = PathManager.__new__(PathManager)
         self.manager.paths = {
-            "path_" + category: str(self.root / category) for category in CATEGORIES
+            key: str(self.root / key.removeprefix("path_")) for key in PathManager.DEFAULT_PATHS
         }
         self.manager.model_paths = {"cache_path": self.root / "cache"}
         self.manager.DOWNLOADABLE_FILES = json.loads(

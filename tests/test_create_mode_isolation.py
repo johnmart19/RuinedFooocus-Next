@@ -113,7 +113,11 @@ class CreateModeIsolationTests(unittest.TestCase):
         self.navigation_serial = getattr(self, "navigation_serial", 0) + 1
         result = await self.shell.app.process_api(
             function,
-            [self.state[self.workspace.action._id].value, self.navigation_serial],
+            [
+                self.state[self.workspace.action._id].value,
+                self.navigation_serial,
+                self.state[self.workspace.quick_tool._id].value,
+            ],
             state=self.state,
             request=self.request,
         )
