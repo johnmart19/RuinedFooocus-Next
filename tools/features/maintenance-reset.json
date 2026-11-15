@@ -1,0 +1,19 @@
+{
+  "id": "maintenance-reset",
+  "subject": "Preview and confirm safe cache output and profile maintenance",
+  "requires": ["gallery-page-reuse"],
+  "tests": [
+    "test_maintenance_reset.py",
+    "test_maintenance_reset_ui.py",
+    "test_cache_maintenance.py",
+    "test_cache_maintenance_ui.py",
+    "test_storage_recovery.py",
+    "test_settings_store.py",
+    "test_profile_transactions.py",
+    "test_preparation_queue.py",
+    "test_preparation_service.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

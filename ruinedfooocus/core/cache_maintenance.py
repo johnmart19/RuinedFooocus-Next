@@ -284,7 +284,9 @@ def _owned_json(path, category):
         return False
 
 
-def clear_category(category_id, manager=None, *, service=preparation_service):
+def clear_category(
+    category_id, manager=None, *, service=preparation_service, selected_paths=None, cancelled=None
+):
     categories = {item.id: item for item in _categories(manager)}
     category = categories.get(category_id)
     if category is None or category.protected:
@@ -292,6 +294,9 @@ def clear_category(category_id, manager=None, *, service=preparation_service):
     protected = _protected_roots(manager)
     result = {"removed": 0, "bytes": 0, "skipped": 0, "errors": []}
     root = data_path("cache") if category_id == "startup-checks" else configured_cache_root(manager)
+    selected = (
+        None if selected_paths is None else {canonical_path_key(path) for path in selected_paths}
+    )
     # Only direct owned directories or exact marker/index are eligible; never recurse.
     if category_id in {"model-hashes", "library-thumbnails"}:
         directory = category.paths[0]
@@ -303,7 +308,9 @@ def clear_category(category_id, manager=None, *, service=preparation_service):
         if category_id == "library-thumbnails":
             try:
                 with service.artifact_lease(directory, write=True, blocking=False):
-                    return _clear_thumbnails(directory, root, protected)
+                    return _clear_thumbnails(
+                        directory, root, protected, selected=selected, cancelled=cancelled
+                    )
             except PreparationBusy:
                 result["skipped"] += 1
                 return result
@@ -314,6 +321,11 @@ def clear_category(category_id, manager=None, *, service=preparation_service):
     else:
         candidates = category.paths
     for path in candidates:
+        if cancelled is not None and cancelled.is_set():
+            result["cancelled"] = True
+            return result
+        if selected is not None and canonical_path_key(path) not in selected:
+            continue
         if not path.exists():
             continue
         if not _safe_path(path, root, protected):
@@ -342,7 +354,7 @@ def clear_category(category_id, manager=None, *, service=preparation_service):
                             "SELECT 1 FROM sqlite_master WHERE name='library_snapshot'"
                         ).fetchone():
                             connection.execute(
-                                "UPDATE library_snapshot SET revision=revision+1,roots='[]' WHERE id=1"
+                                "UPDATE library_snapshot SET revision=0,roots='[]' WHERE id=1"
                             )
                     result["removed"] += 1
                 elif _owned_json(path, category_id):
@@ -359,9 +371,14 @@ def clear_category(category_id, manager=None, *, service=preparation_service):
     return result
 
 
-def _clear_thumbnails(directory, root, protected):
+def _clear_thumbnails(directory, root, protected, *, selected=None, cancelled=None):
     result = {"removed": 0, "bytes": 0, "skipped": 0, "errors": []}
     for path in islice(directory.iterdir(), MAX_ENTRIES):
+        if cancelled is not None and cancelled.is_set():
+            result["cancelled"] = True
+            return result
+        if selected is not None and canonical_path_key(path) not in selected:
+            continue
         if not _safe_path(path, root, protected) or not owned_library_thumbnail(path):
             result["skipped"] += 1
             continue

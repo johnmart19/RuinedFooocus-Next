@@ -283,6 +283,34 @@ class PreparationService:
             return subscriber
 
     @contextmanager
+    def quiescent(self, destinations=None):
+        """Exclude new work and affected leases; unrelated resident models stay usable."""
+        if not self._condition.acquire(blocking=False):
+            raise PreparationBusy("Preparation is busy; retry after it finishes")
+        try:
+            targets = (
+                None
+                if destinations is None
+                else tuple(Path(self._key(path)) for path in destinations)
+            )
+            affected = lambda key: (
+                targets is None
+                or any(
+                    Path(key).is_relative_to(target) or target.is_relative_to(Path(key))
+                    for target in targets
+                )
+            )
+            if self._jobs or any(
+                artifact.users and affected(key) for key, artifact in self._artifacts.items()
+            ):
+                raise PreparationBusy(
+                    "Preparation or an artifact is in use; retry after it finishes"
+                )
+            yield
+        finally:
+            self._condition.release()
+
+    @contextmanager
     def artifact_lease(self, destination, *, write=False, cancelled=None, blocking=True):
         """Read leases protect loaded files; write leases cover import/delete/replace.
 

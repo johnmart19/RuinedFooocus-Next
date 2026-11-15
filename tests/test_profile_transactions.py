@@ -9,6 +9,7 @@ from pathlib import Path
 import runpy
 import sys
 import tempfile
+import traceback
 from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
@@ -128,14 +129,52 @@ class ProfileTransactionTests(unittest.TestCase):
                 self.subTest(failing=failing),
                 patch("ruinedfooocus.core.profile_store.save_json", side_effect=write),
             ):
-                with self.assertRaises(OSError):
+                with self.assertRaises(OSError) as failure:
                     manager.save_profile({"prompt": "new"}, {"custom": "new"}, profile="copy")
             self.assertEqual(manager.name, "old")
             self.assertEqual(manager.default_settings, {"prompt": "old"})
             manager._on_change.assert_not_called()
             for name, content in originals.items():
                 self.assertEqual((folder / name).read_bytes(), content)
-            self.assertFalse((folder / ".profile-save.json").exists())
+            self.assertFalse(
+                (folder / ".profile-save.json").exists(),
+                "Rollback did not finish: "
+                + "".join(traceback.format_exception(failure.exception)),
+            )
+
+    def test_failed_rollback_keeps_journal_until_a_reader_restores_exact_documents(self):
+        manager = SettingsManager("old", defaults={"prompt": "old"}, on_change=Mock())
+        folder = profile_folder("copy")
+        folder.mkdir()
+        originals = {
+            "settings.json": b'\xef\xbb\xbf{"prompt":"previous"}',
+            "paths.json": b'{"custom":"old"}',
+        }
+        for name, content in originals.items():
+            (folder / name).write_bytes(content)
+
+        def write(path, values):
+            if Path(path).name == "paths.json":
+                raise OSError("private second-document failure")
+            return save_json(path, values)
+
+        with (
+            patch("ruinedfooocus.core.profile_store.save_json", side_effect=write),
+            patch(
+                "ruinedfooocus.core.profile_store.save_bytes",
+                side_effect=PermissionError("private rollback failure"),
+            ),
+            self.assertRaisesRegex(PermissionError, "private rollback failure"),
+        ):
+            manager.save_profile({"prompt": "new"}, {"custom": "new"}, profile="copy")
+        self.assertTrue((folder / ".profile-save.json").is_file())
+        self.assertEqual(manager.name, "old")
+        self.assertEqual(manager.default_settings, {"prompt": "old"})
+        manager._on_change.assert_not_called()
+        self.assertEqual(read_profile_pair("copy"), ({"prompt": "previous"}, {"custom": "old"}))
+        for name, content in originals.items():
+            self.assertEqual((folder / name).read_bytes(), content)
+        self.assertFalse((folder / ".profile-save.json").exists())
 
     def test_first_save_failure_removes_new_partial_documents(self):
         manager = SettingsManager()

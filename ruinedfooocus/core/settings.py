@@ -78,23 +78,25 @@ class SettingsManager:
         self._default_settings = values
 
     def save_settings(self):
-        save_json(self.settings_path, self.default_settings)
-        self._storage_signature = self._signature()
-        if self._on_change:
-            self._on_change()
+        with self._lock:
+            save_json(self.settings_path, self.default_settings)
+            self._storage_signature = self._signature()
+            if self._on_change:
+                self._on_change()
 
     def save_profile(self, values, paths, *, profile=None, on_publish=None):
         """Publish new memory/profile identity only after the paired disk commit."""
-        profile = profile_name(profile)
-        save_profile(profile_folder(profile), values, paths)
-        self.default_settings = copy.deepcopy(values)
-        self.name = profile
-        self.set_settings_path(profile)
-        self._storage_signature = self._signature()
-        if on_publish:
-            on_publish()
-        if self._on_change:
-            self._on_change()
+        with self._lock:
+            profile = profile_name(profile)
+            save_profile(profile_folder(profile), values, paths)
+            self.default_settings = copy.deepcopy(values)
+            self.name = profile
+            self.set_settings_path(profile)
+            self._storage_signature = self._signature()
+            if on_publish:
+                on_publish()
+            if self._on_change:
+                self._on_change()
 
 
 def prospective_profile(current, current_paths, values, path_keys):

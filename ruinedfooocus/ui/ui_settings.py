@@ -960,6 +960,9 @@ def create_settings(*, models_in_settings=True):
                 from ruinedfooocus.ui.cache_maintenance import create_cache_maintenance
 
                 create_cache_maintenance(path_manager)
+                from ruinedfooocus.ui.storage_reset import create_storage_reset
+
+                create_storage_reset(path_manager, settings)
                 with gr.Accordion(t("Reinstall"), open=False):
                     gr.Markdown(t("Reinstallation runs on the next online restart."))
                     with gr.Row(elem_classes=["rf-actions"]):
