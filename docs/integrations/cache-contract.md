@@ -118,6 +118,9 @@ legacy record is removed merely because the new writer exists.
 
 ## Legacy RAG model copy
 
+Cache directories are created by their owning writers. No tracked placeholder
+files are needed; removing disposable cache does not delete application source.
+
 New pinned Chat embedding preparations target
 `models/rag_embeddings/1110a243fdf4706b3f48f1d95db1a4f5529b4d41`. Clearing cache
 must not remove these weights. Their model directory is separate from the image

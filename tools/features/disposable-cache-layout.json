@@ -1,0 +1,8 @@
+{
+  "id": "disposable-cache-layout",
+  "subject": "Stop tracking disposable cache directory markers",
+  "requires": ["default-storage-recovery", "persistent-rag-model"],
+  "tests": ["test_storage_recovery.py", "test_resource_paths.py", "test_distribution.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
