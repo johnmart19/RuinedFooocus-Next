@@ -1,7 +1,7 @@
 {
   "id": "gallery-checks-and-maintenance-tables",
   "subject": "Halve Gallery page changes and make the maintenance previews readable",
-  "requires": ["mcp-and-api-descriptions"],
+  "requires": ["mcp-and-api-descriptions", "maintenance-reset-locales"],
   "tests": [
     "test_media_paths.py",
     "test_maintenance_reset_ui.py",
