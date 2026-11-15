@@ -80,3 +80,7 @@ An isolated closure reports unresolved function-body integration imports in
 candidate requires a separate strict `python_contracts` audit. Native fixture
 revisions can be declared by feature metadata before bootstrap exists and must
 match bootstrap whenever it is present; no mutable vendor HEAD is a fallback.
+
+CPU child output uses UTF-8 regardless of the host code page or inherited Python
+I/O encoding. Valid stdout/stderr and exit status are retained exactly. Both
+streams are decoded strictly; invalid wire bytes fail with a decoding error.

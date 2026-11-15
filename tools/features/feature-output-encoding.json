@@ -1,0 +1,12 @@
+{
+  "id": "feature-output-encoding",
+  "subject": "Capture feature test output through a strict UTF8 protocol",
+  "requires": ["recent-feature-formatting"],
+  "tests": [
+    "test_feature_output_encoding.py",
+    "test_feature_validation_reuse.py",
+    "test_feature_cherry_pick_manifest.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

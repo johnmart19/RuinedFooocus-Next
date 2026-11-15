@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import tarfile
 import re
@@ -245,6 +246,25 @@ def module_exports(tree):
 
     visit(tree)
     return exports
+
+
+def _run_cpu_test_process(code, folder, environment):
+    """Keep the CPU child's text protocol independent of the Windows code page."""
+    environment = dict(environment, PYTHONUTF8="1", PYTHONIOENCODING="utf-8:strict")
+    result = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=folder,
+        env=environment,
+        capture_output=True,
+    )
+    # Decode after collection: a strict failure must reach the feature result,
+    # rather than dying in a Windows pipe-reader thread and leaving None output.
+    return subprocess.CompletedProcess(
+        result.args,
+        result.returncode,
+        result.stdout.decode("utf-8", errors="strict"),
+        result.stderr.decode("utf-8", errors="strict"),
+    )
 
 
 def cpu_test_code(patterns):
@@ -758,15 +778,7 @@ def run(root, manifest, selected, ref="HEAD", tests=False):
                     record["native_gguf_revision"] = native_revision
                 env["TEMP"] = env["TMP"] = str(temp_root)
                 code = cpu_test_code(test_patterns)
-                import sys
-
-                result = subprocess.run(
-                    [sys.executable, "-c", code],
-                    cwd=scratch,
-                    env=env,
-                    capture_output=True,
-                    text=True,
-                )
+                result = _run_cpu_test_process(code, scratch, env)
                 record["test_output"] = result.stdout + result.stderr
                 if result.returncode:
                     raise RuntimeError("CPU tests failed:\n" + record["test_output"])
