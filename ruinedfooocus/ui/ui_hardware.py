@@ -597,12 +597,14 @@ def create_hardware_tab(device_name=""):
             locale = locale_of(request)
             backend = llama_installer.canonical_backend(choice)
             if backend == "Auto":
-                raise gr.Error(
+                yield (
+                    gr.update(interactive=True),
                     localize(
                         "Choose a specific backend to install. Automatic selection installs on the first Chat load.",
                         locale,
-                    )
+                    ),
                 )
+                return
             if backend not in llama_values:
                 raise gr.Error(
                     localize("This backend is not available on the detected hardware.", locale)
@@ -617,12 +619,11 @@ def create_hardware_tab(device_name=""):
                 gr.Info(localize("{backend} is already installed.", locale, backend=backend))
                 return
             if skip_dependency_install():
-                raise gr.Error(
-                    localize(
-                        "Installation is disabled (offline or --skip-dependency-install). Restart online to install it.",
-                        locale,
-                    )
+                yield (
+                    gr.update(interactive=True),
+                    localize("Installation is disabled by offline/skip-install policy.", locale),
                 )
+                return
             yield (
                 gr.update(interactive=False),
                 localize("Downloading llama.cpp {backend}…", locale, backend=backend),
@@ -776,12 +777,11 @@ def create_hardware_tab(device_name=""):
                     localize("This backend is not available on the detected hardware.", locale)
                 )
             if skip_dependency_install():
-                raise gr.Error(
-                    localize(
-                        "Installation is disabled (offline or --skip-dependency-install). Restart online to install it.",
-                        locale,
-                    )
+                yield (
+                    gr.update(interactive=True),
+                    localize("Installation is disabled by offline/skip-install policy.", locale),
                 )
+                return
             yield (
                 gr.update(interactive=False),
                 localize("Installing xllamacpp {backend}…", locale, backend=choice),
@@ -881,17 +881,41 @@ def create_hardware_tab(device_name=""):
                 t("Refresh background runtime status"), size="sm", min_width=200
             )
 
-        def install_selected_background(choice, cpu, session, request: gr.Request):
+        winml_controls = (
+            create_windows_ml_controls(
+                saved, gpus, support, cpu_everywhere, background_backend, background_actions
+            )
+            if system == "Windows"
+            else None
+        )
+
+        def install_selected_background(
+            choice,
+            cpu,
+            session,
+            provider_name="Auto",
+            device_type="Auto",
+            request: gr.Request = None,
+        ):
             from ruinedfooocus.backends.onnx.onnx_installer import (
                 NATIVE_RUNTIMES,
                 install_native_runtime,
             )
 
             locale = locale_of(request)
-            if auxiliary_cpu(cpu):
+            if auxiliary_cpu(cpu) or choice in ("Auto", "CPU"):
+                yield gr.update(interactive=True), background_status_text(locale, cpu, choice)
+                return
+            if choice not in background_values:
                 raise gr.Error(
-                    "CPU authority is active; no accelerated provider install/canary was started."
+                    localize("This backend is not available on the detected hardware.", locale)
                 )
+            if choice == "Windows GPU" and winml_controls is not None:
+                for button, status, _ in winml_controls["install"](
+                    provider_name, device_type, cpu, choice, session, request
+                ):
+                    yield button, status
+                return
             if choice not in NATIVE_RUNTIMES:
                 raise gr.Error(
                     localize(
@@ -899,17 +923,12 @@ def create_hardware_tab(device_name=""):
                         locale,
                     )
                 )
-            if choice not in background_values:
-                raise gr.Error(
-                    localize("This backend is not available on the detected hardware.", locale)
-                )
             if skip_dependency_install():
-                raise gr.Error(
-                    localize(
-                        "Installation is disabled (offline or --skip-dependency-install). Restart online to install it.",
-                        locale,
-                    )
+                yield (
+                    gr.update(interactive=True),
+                    localize("Installation is disabled by offline/skip-install policy.", locale),
                 )
+                return
             yield (
                 gr.update(interactive=False),
                 localize("Installing the {backend} ONNX runtime…", locale, backend=choice),
@@ -926,12 +945,17 @@ def create_hardware_tab(device_name=""):
                 return
             yield (
                 gr.update(interactive=True),
-                result + "\n\n" + background_status_text(locale, cpu),
+                result + "\n\n" + background_status_text(locale, cpu, choice),
             )
 
         install_background.click(
             install_selected_background,
-            inputs=[background_backend, cpu_everywhere, background_actions],
+            inputs=[background_backend, cpu_everywhere, background_actions]
+            + (
+                [winml_controls["provider"], winml_controls["device_type"]]
+                if winml_controls is not None
+                else []
+            ),
             outputs=[install_background, background_status],
             trigger_mode="once",
             show_progress="minimal",
@@ -944,10 +968,6 @@ def create_hardware_tab(device_name=""):
             show_progress="hidden",
             api_visibility="undocumented",
         )
-        if system == "Windows":
-            create_windows_ml_controls(
-                saved, gpus, support, cpu_everywhere, background_backend, background_actions
-            )
     else_outputs = [hardware, image_status, llama_status, background_status, support]
 
     def refresh_all(choice, llama_choice, cpu, background_choice, request: gr.Request):
@@ -1537,3 +1557,9 @@ def create_windows_ml_controls(
             show_progress="hidden",
             api_visibility="undocumented",
         )
+
+    return {
+        "provider": winml_provider,
+        "device_type": winml_type,
+        "install": install_winml_provider,
+    }

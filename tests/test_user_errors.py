@@ -10,6 +10,37 @@ from ruinedfooocus.ui.user_errors import as_user_errors, apply
 
 
 class UserErrorTests(unittest.TestCase):
+    def test_existing_gradio_errors_are_preserved_for_every_callback_kind(self):
+        error = gr.Error("Choose an available provider.", duration=7, print_exception=False)
+
+        def plain():
+            raise error
+
+        def stream():
+            yield "ready"
+            raise error
+
+        async def answer():
+            raise error
+
+        async def updates():
+            yield "ready"
+            raise error
+
+        async def drain():
+            return [item async for item in as_user_errors(updates)()]
+
+        for invoke in (
+            lambda: as_user_errors(plain)(),
+            lambda: list(as_user_errors(stream)()),
+            lambda: asyncio.run(as_user_errors(answer)()),
+            lambda: asyncio.run(drain()),
+        ):
+            with self.subTest(invoke=invoke), self.assertRaises(gr.Error) as raised:
+                invoke()
+            self.assertIs(raised.exception, error)
+            self.assertIsNone(raised.exception.__cause__)
+
     def test_app_messages_become_gradio_errors_with_the_same_text(self):
         for error in (
             ValueError("Select an image in Library first."),

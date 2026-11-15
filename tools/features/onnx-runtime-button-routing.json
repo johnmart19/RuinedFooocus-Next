@@ -1,0 +1,16 @@
+{
+  "id": "onnx-runtime-button-routing",
+  "subject": "Route runtime buttons by selection and preserve existing UI errors",
+  "requires": ["onnx-installer", "ui-generator-cleanup"],
+  "tests": [
+    "test_background_runtime_ui.py",
+    "test_hardware_provider_ui.py",
+    "test_settings_ui.py",
+    "test_user_errors.py",
+    "test_windows_ml_catalog_ui.py",
+    "test_legacy_onnx_install_cancellation.py",
+    "test_onnx_install_transactions.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

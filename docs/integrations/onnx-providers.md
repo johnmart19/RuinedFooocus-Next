@@ -21,6 +21,16 @@ wheel update does not replace that catalogue environment or qualify AMDGPU.
 
 ## Current app boundary
 
+The Hardware page's **Install / verify selected ONNX runtime** button follows its
+current selection. Auto and CPU report local status without installation; CUDA,
+MIGraphX and OpenVINO use their isolated installers. Windows ML reuses its provider
+installer with the live provider and CPU/GPU/NPU selection from the controls below.
+Both Windows ML entry points share the same admission, cancellation and offline
+policy. A disabled installation policy returns status rather than an error popup.
+The llama.cpp and xllamacpp install buttons also report disabled installation as
+status. Selecting Auto for llama.cpp explains its existing first-Chat-load path
+without starting installation or raising an error.
+
 `ruinedfooocus/backends/onnx/` owns optional environment installation
 (`onnx_installer.py`), worker sessions (`onnx_worker.py`), Windows ML acquisition
 and device records (`windows_ml.py`), client/recovery (`onnx_runtime.py`) and
