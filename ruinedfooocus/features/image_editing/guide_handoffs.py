@@ -259,14 +259,46 @@ def classify_map_metadata(metadata):
     )
 
 
-def _step_spec(store, value, result_id):
+def _guide_result_id(value, current_id):
+    """Resolve only the exact owned guide receipt attached to this color head."""
+    if any(
+        row.get("result_id") == current_id and row.get("operation") in ("moge-depth", "lotus-depth")
+        for row in value["steps"]
+    ):
+        return current_id
+    derived = value.get("derived_results") or {}
+    if derived.get("output") != "guide":
+        return current_id
+    results = derived.get("result_ids")
+    if not isinstance(results, list) or len(results) != 1 or not isinstance(results[0], str):
+        raise ValueError("Choose one owned depth or normal utility result.")
+    return results[0]
+
+
+def _step_spec(store, value, result_id, *, derived_revision=None):
     step = next((row for row in reversed(value["steps"]) if row["result_id"] == result_id), None)
+    derived = None
+    if step is None:
+        derived = value.get("derived_results") or {}
+        expected_revision = value["revision"] if derived_revision is None else derived_revision
+        if (
+            derived.get("output") != "guide"
+            or derived.get("result_ids") != [result_id]
+            or derived.get("revision") != expected_revision
+            or derived.get("source_id") != value["head_id"]
+            or result_id == derived.get("source_id")
+            or not derived.get("operation_id")
+        ):
+            raise ValueError("Choose a current owned depth or normal utility result.")
+        step = derived
     info = (step or {}).get("execution", {}).get("image_utility_source", {})
     facts = classify_map_metadata(info)
     if (step or {}).get("operation") != facts["producer"]:
         raise ValueError("Choose an owned depth or normal utility result, not an arbitrary image.")
     source = store._get(value, step["source_id"], kind="image")
     guide = store._get(value, result_id, kind="image")
+    if derived is not None and derived.get("source_frame_id") != source.frame_id:
+        raise ValueError("The guide receipt does not match its exact original source frame.")
     if source.frame.size != guide.frame.size or source.frame.orientation != guide.frame.orientation:
         raise ValueError("The guide must match its exact oriented original source frame.")
     if any(
@@ -292,7 +324,7 @@ def describe_result_guide(store, session_id, revision, result_id, *, owner):
             raise ValueError(
                 "The current guide result changed or another image operation is pending."
             )
-        return _step_spec(store, value, result_id)[2]
+        return _step_spec(store, value, _guide_result_id(value, result_id))[2]
 
 
 def restore_result_guide(store, session_id, revision, result_id, *, owner):
@@ -303,7 +335,8 @@ def restore_result_guide(store, session_id, revision, result_id, *, owner):
             raise ValueError(
                 "The current guide result changed or another image operation is pending."
             )
-        source, guide, spec = _step_spec(store, value, result_id)
+        guide_id = _guide_result_id(value, result_id)
+        source, guide, spec = _step_spec(store, value, guide_id)
         handoff = ResultGuideHandoff(
             session_id,
             revision + 1,
@@ -317,9 +350,11 @@ def restore_result_guide(store, session_id, revision, result_id, *, owner):
             guide.signature,
             spec,
         )
-        value.update(
-            head_id=source.artifact_id, revision=revision + 1, pending=None, redo=[result_id]
-        )
+        if value["head_id"] == guide.artifact_id:
+            # Historical map steps used the guide as head. Derived guides must
+            # never enter the color-image redo stack or replace its existing tail.
+            value["redo"] = [guide.artifact_id]
+        value.update(head_id=source.artifact_id, revision=revision + 1, pending=None)
         restored = store._snapshot(value)
         store._save(value)
     return restored, handoff
@@ -332,7 +367,9 @@ def _refs(store, handoff, owner):
         store._revision(value, handoff.revision)
         if value["head_id"] != handoff.source_id:
             raise ValueError("The original source changed; adopt the current guide again.")
-        source, guide, spec = _step_spec(store, value, handoff.guide_id)
+        source, guide, spec = _step_spec(
+            store, value, handoff.guide_id, derived_revision=handoff.revision - 1
+        )
         if (
             spec != handoff.spec
             or source.artifact_id != handoff.source_id

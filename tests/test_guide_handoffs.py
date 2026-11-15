@@ -96,6 +96,7 @@ class GuideHandoffTests(unittest.TestCase):
             execution["geometry"] = dict(
                 policy="explicit fixture crop", source=[7, 5], result=list(size)
             )
+        self.latest_map_ticket = ticket
         return self.store.complete(ticket, path, execution=execution, owner=self.owner)
 
     def adopt(self, **kwargs):
@@ -154,7 +155,9 @@ class GuideHandoffTests(unittest.TestCase):
         self.assertEqual(restored.revision, 3)
         self.assertEqual(restored.current.artifact_id, self.initial.current.artifact_id)
         self.assertEqual(restored.source_generation["prompt"], "original prompt")
-        self.assertEqual(len(restored.steps), 1)
+        self.assertEqual(len(restored.steps), 0)
+        self.assertEqual(result.current.artifact_id, self.initial.current.artifact_id)
+        self.assertEqual(handoff.guide_id, result.derived_results["result_ids"][0])
         images = guides.handoff_images(self.store, handoff, owner=self.owner)
         np.testing.assert_array_equal(np.asarray(images["main_view"]), self.source)
         self.assertFalse(np.array_equal(np.asarray(images["input_image"]), self.source[..., :3]))
@@ -181,7 +184,16 @@ class GuideHandoffTests(unittest.TestCase):
                 replace(handoff, spec=replace(handoff.spec, convention="native-directx")),
                 owner=self.owner,
             )
-        self.store.redo(restored.session_id, restored.revision, owner=self.owner)
+        ticket = self.store.capture(
+            restored.session_id,
+            restored.revision,
+            "edit",
+            source_id=restored.current.artifact_id,
+            owner=self.owner,
+        )
+        changed = self.root / "changed-source.png"
+        Image.fromarray(self.source).save(changed)
+        self.store.complete(ticket, changed, owner=self.owner)
         with self.assertRaises(CancelledError):
             guides.handoff_images(self.store, handoff, owner=self.owner)
         with self.assertRaises(CancelledError):
@@ -192,6 +204,72 @@ class GuideHandoffTests(unittest.TestCase):
                 result.current.artifact_id,
                 owner=self.owner,
             )
+
+    def test_derived_guide_keeps_color_redo_and_rejects_receipt_identity_changes(self):
+        ticket = self.store.capture(
+            self.initial.session_id,
+            self.initial.revision,
+            "edit",
+            source_id=self.initial.current.artifact_id,
+            owner=self.owner,
+        )
+        path = self.root / "color-edit.png"
+        Image.fromarray(self.source).save(path)
+        edited = self.store.complete(ticket, path, owner=self.owner)
+        self.store.undo(edited.session_id, edited.revision, owner=self.owner)
+        _, restored, handoff = self.adopt()
+        redone = self.store.redo(restored.session_id, restored.revision, owner=self.owner)
+        self.assertEqual(redone.current.artifact_id, edited.current.artifact_id)
+        with self.assertRaises(CancelledError):
+            guides.handoff_images(self.store, handoff, owner=self.owner)
+
+        for changes in (
+            {"operation": "edit"},
+            {"operation_id": None},
+            {"source_id": "foreign-source"},
+            {"source_frame_id": "changed-frame"},
+            {"revision": -1},
+            {"output": "image"},
+            {"result_ids": []},
+            {"result_ids": [redone.current.artifact_id]},
+        ):
+            with self.subTest(changes=changes):
+                result = self.result()
+                with self.store._edit(result.session_id, self.owner) as value:
+                    value["derived_results"].update(changes)
+                    self.store._save(value)
+                with self.assertRaises(ValueError):
+                    guides.describe_result_guide(
+                        self.store,
+                        result.session_id,
+                        result.revision,
+                        result.current.artifact_id,
+                        owner=self.owner,
+                    )
+
+    def test_historical_map_head_keeps_its_guarded_restore_and_redo_path(self):
+        result = self.result()
+        guide_id = result.derived_results["result_ids"][0]
+        # Reconstruct the previous persisted layout from the same owned ticket
+        # and execution, rather than bypassing current producer classification.
+        with self.store._edit(result.session_id, self.owner) as value:
+            value["steps"].append(
+                self.latest_map_ticket.metadata()
+                | dict(
+                    parent_id=self.initial.current.artifact_id,
+                    result_id=guide_id,
+                    execution=result.derived_results["execution"],
+                )
+            )
+            value.update(head_id=guide_id, derived_results=None)
+            self.store._save(value)
+        restored, handoff = guides.restore_result_guide(
+            self.store, result.session_id, result.revision, guide_id, owner=self.owner
+        )
+        self.assertEqual(restored.current.artifact_id, self.initial.current.artifact_id)
+        self.assertEqual(handoff.guide_id, guide_id)
+        redone = self.store.redo(restored.session_id, restored.revision, owner=self.owner)
+        self.assertEqual(redone.current.artifact_id, guide_id)
 
     def test_pending_and_wrong_frame_never_restore_original(self):
         result = self.result(size=(6, 5))

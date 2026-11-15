@@ -1,0 +1,16 @@
+{
+  "id": "owned-derived-guide-consumption",
+  "subject": "Attach owned derived guides without replacing the color image",
+  "requires": ["editor-guide-source-handoff"],
+  "tests": [
+    "test_guide_handoffs.py",
+    "test_guided_result_ui.py",
+    "test_guide_effective_plan.py",
+    "test_guided_pipeline_contract.py",
+    "test_guided_worker_capture.py",
+    "test_utility_source_provenance.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

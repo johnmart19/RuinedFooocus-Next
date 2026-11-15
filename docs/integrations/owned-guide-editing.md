@@ -13,6 +13,13 @@ original source pixels, alpha, history and generation provenance. An ordinary
 image, stale or foreign handle, pending operation, changed file, mismatched
 frame, unknown convention or precision working-copy mismatch is rejected.
 
+New map results remain in the store's owned derived-result receipt beside the
+unchanged color head. The guide consumer checks its exact operation, source and
+frame IDs, revision and single result ID before reading producer conventions.
+Attaching that map preserves the existing color-image undo/redo tail; it never
+adds a depth or normal map to that tail. Historical map-as-head steps keep their
+original guarded restoration path.
+
 The opaque `_editor_guide_handoff` stays in server state. Its public context uses
 the existing session/revision/source handles. Capture independently rereads both
 owned files, verifies signatures and SHA-256, and freezes separate original RGBA

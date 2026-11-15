@@ -167,6 +167,18 @@ class GuidedResultUiTests(unittest.TestCase):
         )
         return values
 
+    def change_source(self, snapshot, owner):
+        ticket = self.store.capture(
+            snapshot.session_id,
+            snapshot.revision,
+            "edit",
+            source_id=snapshot.current.artifact_id,
+            owner=owner,
+        )
+        path = self.case.root / (snapshot.session_id + "-changed-color.png")
+        Image.new("RGBA", (17, 13), (47, 19, 81, 117)).save(path)
+        return self.store.complete(ticket, path, owner=owner)
+
     def captured_request(self, session):
         """Real UI values/build/capture; the trained artifact identity is fixture-owned."""
         values = self.request_values(session)
@@ -207,12 +219,13 @@ class GuidedResultUiTests(unittest.TestCase):
                 updates = self.case.call(session, self.event)
                 handoff = self.case.value(session, self.helper.handoff)
                 self.assertIsInstance(handoff, guide_handoffs.ResultGuideHandoff)
-                self.assertEqual(handoff.guide_id, result.current.artifact_id)
+                self.assertEqual(handoff.guide_id, result.derived_results["result_ids"][0])
+                self.assertEqual(result.current.artifact_id, original.current.artifact_id)
                 context = self.case.value(session, self.workspace.context)
                 self.assertEqual(context["source_id"], original.current.artifact_id)
                 self.assertEqual(context["revision"], result.revision + 1)
                 self.assertNotIn("guide_id", context)
-                self.assertEqual(context["additional_image_ids"], [result.current.artifact_id])
+                self.assertEqual(context["additional_image_ids"], [handoff.guide_id])
                 with Image.open(
                     self.case.value(session, self.case.remote["preview"])["path"]
                 ) as preview:
@@ -490,7 +503,7 @@ class GuidedResultUiTests(unittest.TestCase):
                 self.event,
                 {self.workspace.context: self.workspace.public_context(completed)},
             )
-        self.store.undo(completed.session_id, completed.revision, owner=session.owner)
+        self.change_source(completed, session.owner)
         with self.assertRaises(CancelledError):
             self.case.call(session, self.event)
 
@@ -503,7 +516,7 @@ class GuidedResultUiTests(unittest.TestCase):
 
         def delayed(*args, **kwargs):
             spec = describe(*args, **kwargs)
-            self.store.undo(completed.session_id, completed.revision, owner=session.owner)
+            self.change_source(completed, session.owner)
             return spec
 
         with patch.object(guide_handoffs, "describe_result_guide", side_effect=delayed):

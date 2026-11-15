@@ -344,5 +344,13 @@ class UtilityOpaqueAlphaTests(unittest.TestCase):
                     self.assertIn("fully opaque", execution["alpha_policy"])
                     completed = store.complete(ticket, path, execution=execution, owner=OWNER)
                     self.assertEqual(completed.current.frame.size, (12, 10))
-                    self.assertEqual(completed.current.frame.alpha, "none")
+                    self.assertEqual(completed.current.frame.alpha, "straight")
+                    self.assertEqual(completed.current.artifact_id, snapshot.current.artifact_id)
+                    result = store.artifact(
+                        completed.session_id,
+                        completed.derived_results["result_ids"][0],
+                        revision=completed.revision,
+                        owner=OWNER,
+                    )
+                    self.assertEqual(result.frame.alpha, "none")
                 self.assertEqual(source.read_bytes(), before)
