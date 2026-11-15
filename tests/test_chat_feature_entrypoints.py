@@ -88,7 +88,7 @@ class ChatFeatureEntrypointTests(unittest.TestCase):
             self.assertEqual(plain["_context_preparation"], ())
 
             # Capture needs the finite local snapshot identities, never embedding execution.
-            cache = data_path("cache", "rag", rag_preparation.MODEL_REVISION)
+            cache = data_path("models", "rag_embeddings", rag_preparation.MODEL_REVISION)
             for name, _, _ in rag_preparation.MODEL_FILES:
                 target = cache / name
                 target.parent.mkdir(parents=True, exist_ok=True)
@@ -120,12 +120,29 @@ class ChatFeatureEntrypointTests(unittest.TestCase):
             )
             self.assertFalse(request.destination.exists())
             self.assertEqual(captured["_chat_attachments"].files[0].text, "literal 0007")
-            self.assertEqual(captured["_rag_preparation"].settings, {"gpu": False, "offline": True})
+            prepared = captured["_rag_preparation"]
+            self.assertEqual(prepared.model, cache)
+            self.assertEqual(
+                prepared.settings,
+                {"gpu": False, "offline": True, "encoder": rag_preparation.model_spec().identity},
+            )
+            self.assertEqual(
+                prepared.settings["encoder"]["revision"], rag_preparation.MODEL_REVISION
+            )
+            self.assertTrue(
+                all(rag_preparation.MODEL_REVISION in item.url for item in prepared.artifacts)
+            )
+            # Caller edits cannot mutate the accepted encoder's index identity.
+            values["rag_embedding_model"] = "sentence-transformers/all-MiniLM-L12-v2"
+            returned = prepared.settings
+            returned["encoder"]["max_length"] = 1
+            self.assertEqual(prepared.settings["encoder"]["model_id"], rag_preparation.MODEL_ID)
+            self.assertEqual(prepared.settings["encoder"]["max_length"], 512)
 
     def test_runtime_choices_and_metadata_reach_declared_state(self):
         from ruinedfooocus.app import state as shared
         from ruinedfooocus.backends.llama import llama_runtime_info as info
-        from ruinedfooocus.core.paths import data_path
+        from ruinedfooocus.core.native_runtime_paths import native_runtime_root
 
         previous = shared.state.get("pipeline")
         self.addCleanup(shared.state.__setitem__, "pipeline", previous)
@@ -134,7 +151,7 @@ class ChatFeatureEntrypointTests(unittest.TestCase):
         )
         self.assertIn(("xllamacpp [CPU]", "xllamacpp"), info.runtime_choices())
         name = "llama-server.exe" if os.name == "nt" else "llama-server"
-        binary = data_path("cache", "llama.cpp", "b-entrypoint", "CPU", name)
+        binary = native_runtime_root("llama.cpp", "b-entrypoint", "CPU", name)
         binary.parent.mkdir(parents=True, exist_ok=True)
         binary.write_bytes(b"not an executable; passive identity only")
         self.addCleanup(binary.unlink)

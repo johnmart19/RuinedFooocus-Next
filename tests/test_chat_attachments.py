@@ -160,7 +160,12 @@ class AttachmentRetrievalTests(unittest.TestCase):
                 launch_args=args,
             )
         self.assertFalse(capture.call_args.kwargs["vision"])
-        rag.assert_called_once_with(self.turn.files, cpu=True, offline=True)
+        rag.assert_called_once_with(
+            self.turn.files,
+            cpu=True,
+            offline=True,
+            model_id="sentence-transformers/all-MiniLM-L6-v2",
+        )
         self.assertIs(data["_chat_attachments"], self.turn)
         data["_job"] = SimpleNamespace(owner=OWNER)
         prepare_chat_request(data, cancelled=Event())

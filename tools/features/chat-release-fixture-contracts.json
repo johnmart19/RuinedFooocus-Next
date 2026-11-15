@@ -1,0 +1,8 @@
+{
+  "id": "chat-release-fixture-contracts",
+  "subject": "Align Chat caller fixtures with pinned encoder and runtime storage contracts",
+  "requires": ["rag-model-selection", "chat-attach-and-switches"],
+  "tests": ["test_chat_feature_entrypoints.py", "test_chat_attachments.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
