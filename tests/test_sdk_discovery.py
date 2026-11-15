@@ -35,14 +35,14 @@ class SdkDiscoveryTests(unittest.TestCase):
         self.addCleanup(environment.stop)
 
     def sdk(self, suffix=""):
-        directory = self.root / "cache/llama.cpp" / ("rocm-10.0" + suffix)
+        directory = self.root / "repositories/llama.cpp" / ("rocm-10.0" + suffix)
         for package in ("_rocm_sdk_core", "_rocm_sdk_libraries"):
             (directory / "lib/python3.12/site-packages" / package / "lib").mkdir(parents=True)
         (directory / "gfx1100.ready").touch()
         return directory
 
     def runtime_binary(self):
-        binary = self.root / "cache/llama.cpp/b1234/rocm-gfx1100/llama-server"
+        binary = self.root / "repositories/llama.cpp/b1234/rocm-gfx1100/llama-server"
         binary.parent.mkdir(parents=True)
         binary.write_bytes(b"private metadata fixture; never executed")
         return binary
@@ -82,8 +82,10 @@ class SdkDiscoveryTests(unittest.TestCase):
         active = self.sdk("-new")
         pointer = base.parent / (base.name + ".active.json")
         pointer.write_text(json.dumps({"directory": str(active)}), encoding="utf-8")
-        self.runtime_binary()
+        binary = self.runtime_binary()
         result, calls = self.diagnostic()
+        version_query = next(command for command, _ in calls if "--version" in command)
+        self.assertEqual(Path(version_query[0]), binary.resolve())
         environments = [env for command, env in calls if "--list-devices" in command]
         self.assertEqual(len(environments), 1)
         library_path = environments[0]["LD_LIBRARY_PATH"]
@@ -125,6 +127,8 @@ class SdkDiscoveryTests(unittest.TestCase):
         self.assertTrue(all(call.kwargs == {"acquire": False} for call in select.call_args_list))
 
     def test_diagnostic_falls_back_to_legacy_sdk_when_active_pointer_is_unusable(self):
+        # Legacy means the base SDK beside staged replacements, not the former
+        # disposable cache root. Migration moves the whole runtime family.
         base = self.sdk()
         self.runtime_binary()
         pointer = base.parent / (base.name + ".active.json")
@@ -132,7 +136,7 @@ class SdkDiscoveryTests(unittest.TestCase):
             None,
             "[]",
             json.dumps({"directory": None}),
-            json.dumps({"directory": str(self.root / "outside-cache")}),
+            json.dumps({"directory": str(self.root / "outside-runtime-family")}),
         ):
             if value is not None:
                 pointer.write_text(value, encoding="utf-8")
@@ -142,7 +146,7 @@ class SdkDiscoveryTests(unittest.TestCase):
                 str(base / "lib/python3.12/site-packages/_rocm_sdk_core/lib"),
                 environment["LD_LIBRARY_PATH"],
             )
-            self.assertNotIn("outside-cache", environment["LD_LIBRARY_PATH"])
+            self.assertNotIn("outside-runtime-family", environment["LD_LIBRARY_PATH"])
 
     def test_query_failure_is_visible_and_does_not_trigger_installation(self):
         self.runtime_binary()

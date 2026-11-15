@@ -1,6 +1,7 @@
 """Per-GPU and per-OS choices for every component; nothing installs, probes or loads."""
 
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -140,16 +141,18 @@ class ComponentChoices(unittest.TestCase):
 
     def test_installed_xllamacpp_backend_comes_from_the_install_record(self):
         with tempfile.TemporaryDirectory() as folder:
-            marker = Path(folder) / "xllamacpp-backend.json"
+            marker = Path(folder) / "repositories/llama.cpp/xllamacpp-backend.json"
+            marker.parent.mkdir(parents=True)
             marker.write_text(json.dumps({"index": "https://x/whl/vulkan"}), encoding="utf-8")
             with (
                 patch("importlib.metadata.version", return_value="2026.10.11870"),
-                patch("ruinedfooocus.core.paths.data_path", return_value=marker),
+                patch.dict(os.environ, RF_DATA_DIR=folder),
             ):
                 self.assertEqual(
                     inventory.xllamacpp_installed(),
                     {"version": "2026.10.11870", "backend": "Vulkan"},
                 )
+            self.assertFalse((Path(folder) / "cache").exists())
 
 
 class IsolatedOnnxRuntimes(unittest.TestCase):

@@ -1,0 +1,8 @@
+{
+  "id": "native-storage-fixture-contracts",
+  "subject": "Exercise native SDK and runtime receipts in persistent storage",
+  "requires": ["cached-native-runtime-reuse"],
+  "tests": ["test_sdk_discovery.py", "test_gpu_support_matrix.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
