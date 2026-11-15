@@ -1,0 +1,14 @@
+{
+  "id": "resolution-settings-integration",
+  "subject": "Construct real settings for resolution and profile integration checks",
+  "requires": ["resolution-display-label", "maintenance-reset"],
+  "tests": [
+    "test_resolution_transitions.py",
+    "test_resolution_ui_events.py",
+    "test_model_control_events.py",
+    "test_resolution_settings.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

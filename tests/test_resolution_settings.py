@@ -4,6 +4,7 @@ import ast
 import asyncio
 import copy
 import json
+import os
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -389,16 +390,14 @@ class ResolutionSettingsTests(unittest.TestCase):
             ({"resolution": "1152x896 (4:3)"}, False),
             ({"resolution": "Custom...", "resolution_auto": True}, True),
         ):
-            manager = SettingsManager.__new__(SettingsManager)
-            manager.settings_path = self.root / "settings.json"
-            manager._defaults = copy.deepcopy(STARTUP_DEFAULTS)
             with (
+                patch.dict(os.environ, RF_DATA_DIR=str(self.root)),
                 patch(
                     "ruinedfooocus.core.settings.read_profile", return_value=copy.deepcopy(stored)
                 ),
                 patch("ruinedfooocus.core.settings.save_json"),
             ):
-                manager.load_settings()
+                manager = SettingsManager(defaults=STARTUP_DEFAULTS)
             with self.subTest(stored=stored):
                 self.assertIs(manager.default_settings["resolution_auto"], expected)
         for automatic in (True, False):
