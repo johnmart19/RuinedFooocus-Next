@@ -372,17 +372,16 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 js_on_load=(ASSET_ROOT / "chat_splitter.js").read_text(encoding="utf-8"),
             )
             with gr.Column(scale=2, min_width=0, elem_id="chat-controls"):
-                # Portrait and picker share one row; the picker already names the assistant.
-                with gr.Row(elem_id="chat-assistant-head", equal_height=False):
+                with gr.Column(elem_id="chat-assistant-head", min_width=0, scale=0):
                     llama_avatar = gr.Image(
                         buttons=["fullscreen"],
                         value=assistant_avatar(assistant_info(default_bot)),
                         label=assistant_info(default_bot)["name"],
-                        height=88,
+                        height="clamp(10rem, 28dvh, 18rem)",
                         elem_id="chat-avatar",
                         show_label=False,
                         container=False,
-                        min_width=88,
+                        min_width=0,
                         scale=0,
                         visible=assistant_info(default_bot)["avatar"] is not None,
                     )

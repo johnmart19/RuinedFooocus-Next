@@ -1,0 +1,8 @@
+{
+  "id": "chat-portrait-and-scrollbars",
+  "subject": "Show full-width Chat portraits above the assistant selector",
+  "requires": ["ui-release-polish"],
+  "tests": ["test_responsive_ui_layout.py", "test_chatbots.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}

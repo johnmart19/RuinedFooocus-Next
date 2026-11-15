@@ -1,5 +1,9 @@
 # Chat assistants and local models
 
+The Chat sidebar shows the selected assistant's full-width portrait above the
+Assistant selector. The portrait fits the available width without cropping;
+sidebar scrolling follows the current theme.
+
 In **Chat**, choose an assistant, with **New**, **Edit**, **Delete**, and **Refresh** directly
 below the selector. Assistant and model actions wrap into separate buttons on
 narrow screens. **Use at startup** remains a secondary action.

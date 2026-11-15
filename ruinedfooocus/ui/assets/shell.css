@@ -436,7 +436,6 @@
     inset-block-start: 1.5rem;
     max-block-size: calc(100dvh - 10rem);
     overflow-y: auto;
-    scrollbar-width: thin;
     padding-inline-end: 0.25rem;
   }
   :is(#generation-controls, #browser-controls, #chat-controls) > * {
@@ -538,9 +537,6 @@
   min-height: var(--rf-inline-control-height);
   padding: 0.25rem 0.875rem;
   white-space: normal;
-}
-#chat-avatar {
-  max-block-size: 9rem;
 }
 @media (max-width: 1000px) {
   #chat-conversation-context {
@@ -749,15 +745,38 @@
 /* ---- Chat assistant ---- */
 #chat-assistant-head {
   flex-wrap: nowrap;
-  align-items: flex-end;
-  gap: 0.75rem;
+  gap: var(--rf-space);
 }
 #chat-avatar {
-  inline-size: 88px !important;
-  flex: 0 0 88px !important;
-  max-block-size: 88px;
+  inline-size: 100% !important;
+  max-inline-size: 100%;
+  flex: 0 0 auto !important;
   border-radius: var(--rf-radius-sm);
   overflow: hidden;
+}
+#chat-avatar img {
+  object-fit: contain;
+}
+
+/* Native scroll areas follow the active theme, including nested side panels. */
+:is(#app-tabs, #image-stage),
+:is(#app-tabs, #image-stage) * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color-primary) transparent;
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar-track {
+  background: transparent;
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar-thumb {
+  background: var(--border-color-primary);
+  border-radius: var(--rf-radius-sm);
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar-thumb:hover {
+  background: var(--body-text-color-subdued);
 }
 #chat-assistant-actions {
   display: grid !important;
