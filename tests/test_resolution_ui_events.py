@@ -155,7 +155,7 @@ class ResolutionUiEventTests(unittest.TestCase):
                 ["SDXL", "inert.safetensors", "Custom...", True],
                 state=state,
             )
-            self.assertEqual(automatic["data"][0]["value"], "1024x1024")
+            self.assertEqual(automatic["data"][0]["value"], "1024x1024 (SDXL recommended)")
             self.assertTrue(automatic["data"][1])
             shown = await app.process_api(
                 event("aspect_ratios_selection", "change"), ["1024x1024"], state=state

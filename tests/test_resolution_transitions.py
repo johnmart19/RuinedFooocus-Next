@@ -22,6 +22,40 @@ from ruinedfooocus.features.models.resolutions import ResolutionSettings
 
 
 class ResolutionTransitionTests(unittest.TestCase):
+    def test_same_dimensions_refresh_display_token_and_accept_queued_old_family_label(self):
+        old = "1024x1024 (SDXL 1.0 recommended)"
+        saved = "1920x1080 (Cinema · SDXL)"
+        with gr.Blocks(analytics_enabled=False) as app:
+            size = ResolutionDropdown([old, saved, "Custom..."], value=old)
+            family_label = gr.Textbox()
+            refresh = gr.Button()
+            output = gr.Textbox()
+            refresh.click(
+                lambda label: gr.update(choices=[label, saved, "Custom..."], value=label),
+                inputs=family_label,
+                outputs=size,
+            )
+            size.change(lambda value: value, inputs=size, outputs=output)
+        state = SessionState(app)
+
+        async def transition():
+            previous = old
+            for new in (
+                "1024x1024 (Illustrious recommended)",
+                "1024x1024 (Flux.3 Klein recommended)",
+            ):
+                updated = await app.process_api(0, [new], state=state)
+                self.assertEqual(updated["data"][0]["value"], new)
+                self.assertNotEqual(updated["data"][0]["value"], previous)
+                for token in (old, previous, new, "1024x1024"):
+                    selected = await app.process_api(1, [token], state=state)
+                    self.assertEqual(selected["data"], ["1024x1024"])
+                previous = new
+            for token in (saved, "Custom..."):
+                self.assertEqual((await app.process_api(1, [token], state=state))["data"], [token])
+
+        asyncio.run(transition())
+
     def test_native_config_and_localized_label_survive_dimension_updates(self):
         old = "1024x1024 (SDXL recommended)"
         new = "832x1216 (Flux recommended)"
@@ -37,8 +71,8 @@ class ResolutionTransitionTests(unittest.TestCase):
         with gr.Blocks(analytics_enabled=False) as app:
             size = ResolutionDropdown([old, "Custom..."], value=old, **properties)
             native = gr.Dropdown(
-                [(old, "1024x1024"), ("Custom...", "Custom...")],
-                value="1024x1024",
+                [(old, old), ("Custom...", "Custom...")],
+                value=old,
                 **properties,
             )
             refresh = gr.Button()
@@ -49,8 +83,8 @@ class ResolutionTransitionTests(unittest.TestCase):
         self.assertIn("ruinedfooocus.shell.output_target", str(props["label"]))
         state = SessionState(app)
         result = asyncio.run(app.process_api(0, [], state=state))
-        self.assertEqual(result["data"][0]["value"], "832x1216")
-        self.assertEqual(tuple(result["data"][0]["choices"][0]), (new, "832x1216"))
+        self.assertEqual(result["data"][0]["value"], new)
+        self.assertEqual(tuple(result["data"][0]["choices"][0]), (new, new))
         updated = state.blocks_config.blocks[size._id].get_config()
         for field in properties:
             self.assertEqual(updated[field], native.get_config()[field])
@@ -82,7 +116,7 @@ class ResolutionTransitionTests(unittest.TestCase):
                 result = await app.process_api(1, [previous], state=state)
                 self.assertEqual(result["data"], [previous.split(" ", 1)[0]])
                 previous = label
-            self.assertEqual(state.blocks_config.blocks[size._id].choices[0], (old, "1024x1024"))
+            self.assertEqual(state.blocks_config.blocks[size._id].choices[0], (old, old))
 
         asyncio.run(transitions())
 

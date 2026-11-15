@@ -1,0 +1,12 @@
+{
+  "id": "resolution-display-label",
+  "subject": "Refresh the visible resolution label when model families change",
+  "requires": ["resolution-display-metadata"],
+  "tests": [
+    "test_resolution_transitions.py",
+    "test_resolution_ui_events.py",
+    "test_model_control_events.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

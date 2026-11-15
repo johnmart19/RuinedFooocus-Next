@@ -20,7 +20,9 @@ def choice_values(choices):
         label, value = choice if isinstance(choice, (tuple, list)) else (choice, choice)
         value = dimension_value(value)
         if value not in seen:
-            result.append((label, value))
+            # A family-only relabel must also change the frontend value: native
+            # Dropdown keeps its visible input text when that value is equal.
+            result.append((label, label if dimension_value(label) == value else value))
             seen.add(value)
     return result
 
@@ -38,8 +40,9 @@ class ResolutionDropdown(gr.Dropdown):
 
     def preprocess(self, payload):
         value = dimension_value(payload)
-        if value in [entry for _, entry in self.choices]:
-            return super().preprocess(value)
+        for _, entry in self.choices:
+            if dimension_value(entry) == value:
+                return dimension_value(super().preprocess(entry))
         # A queued callback may carry the preceding model's dimension value.
         # Admit only bounded pixel dimensions; the receiving callback still
         # resolves automatic/manual ownership and the native request size plan.
@@ -54,4 +57,8 @@ class ResolutionDropdown(gr.Dropdown):
         return super().preprocess(payload)
 
     def postprocess(self, value):
-        return super().postprocess(dimension_value(value))
+        value = dimension_value(value)
+        for _, entry in self.choices:
+            if dimension_value(entry) == value:
+                return super().postprocess(entry)
+        return super().postprocess(value)

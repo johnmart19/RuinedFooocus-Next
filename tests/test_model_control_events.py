@@ -247,7 +247,7 @@ class ModelControlEventTests(unittest.TestCase):
                 "workflow_description",
             ],
         )
-        self.assertEqual(graph.value("aspect_ratios_selection"), "832x1216")
+        self.assertEqual(graph.value("aspect_ratios_selection"), "832x1216 (SDXL recommended)")
         self.assertEqual(graph.value("cfg"), 7)
         self.assertEqual(graph.value("custom_steps"), 12)
         self.assertEqual(graph.value("model_family"), "SDXL")
@@ -265,7 +265,9 @@ class ModelControlEventTests(unittest.TestCase):
             self, selection="Own settings", current="1216x832", automatic=False
         )
         graph.run()
-        self.assertEqual(graph.value("aspect_ratios_selection"), "1216x832")
+        self.assertEqual(graph.value("aspect_ratios_selection"), "1216x832 (SDXL recommended)")
+        updated = graph.state.blocks_config.blocks[graph.scope["aspect_ratios_selection"]._id]
+        self.assertEqual(updated.preprocess(graph.value("aspect_ratios_selection")), "1216x832")
         self.assertFalse(graph.value("resolution_auto"))
         self.assertEqual(graph.value("performance_selection"), "Own settings")
         self.assertEqual(graph.value("cfg"), 9)
@@ -284,7 +286,7 @@ class ModelControlEventTests(unittest.TestCase):
             if event["targets"] == [(graph.scope["restore_recommended_size"]._id, "click")]
         )
         graph.run(restore["id"])
-        self.assertEqual(graph.value("aspect_ratios_selection"), "832x1216")
+        self.assertEqual(graph.value("aspect_ratios_selection"), "832x1216 (SDXL recommended)")
         self.assertTrue(graph.value("resolution_auto"))
         self.assertEqual(graph.value("size_mode"), "target")
 
@@ -314,7 +316,7 @@ class ModelControlEventTests(unittest.TestCase):
                 self.assertEqual(graph.value("model_family"), "Flux3")
                 self.assertEqual(
                     graph.value("aspect_ratios_selection"),
-                    "1024x1024" if automatic else "832x1216",
+                    "1024x1024 (Generic fallback)" if automatic else "832x1216",
                 )
                 self.assertEqual(graph.value("resolution_auto"), automatic)
                 self.assertEqual(graph.resolutions.model_selection.call_count, 1)

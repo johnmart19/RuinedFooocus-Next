@@ -15,6 +15,12 @@ Qwen Image 2.1's publisher 2048 default is distinct from the local 1024 working
 recipe; Turbo behavior comes from verified variant identity, independently of
 GGUF or another quantization.
 
+The resolution selector transports its current recommendation label to the
+native Gradio Dropdown, so changing model families refreshes the visible label
+even when dimensions stay the same. Its callbacks receive canonical dimensions;
+bounded queued selections from the preceding family remain accepted. Named saved
+sizes and Custom retain their separate identities and override behavior.
+
 ## Capture and geometry
 
 `features/generation/size_plan.py` owns frozen `SizePlan` version 1. UI worker
