@@ -14,7 +14,12 @@ import re
 from threading import RLock
 from urllib.parse import unquote, urlsplit
 from ruinedfooocus.core.config_io import save_json
-from ruinedfooocus.core.model_folders import FOLDER_SETTINGS, canonical_model_root, model_folders
+from ruinedfooocus.core.model_folders import (
+    FOLDER_SETTINGS,
+    canonical_model_root,
+    model_folders,
+    ensure_model_root,
+)
 from ruinedfooocus.core.model_formats import (
     NATIVE_STATE_DICT_SUFFIXES,
     NATIVE_TORCH_SUFFIXES,
@@ -195,6 +200,17 @@ class PathManager:
                             getattr(self, "_output_storage_generation", 0) + 1
                         )
 
+    def ensure_model_directories(self):
+        """Startup/Recheck recovery; configured custom roots remain untouched."""
+        for setting, value in self.DEFAULT_PATHS.items():
+            first = value[0] if isinstance(value, list) else value
+            if not first.startswith("../models/"):
+                continue
+            category = setting.removeprefix("path_")
+            for root in self.get_model_folders(category):
+                ensure_model_root(canonical_model_root(category, root, self.get_abspath))
+        ensure_model_root(data_path("models", "rag_embeddings"))
+
     def load_paths(self):
         from ruinedfooocus.core.profile_store import read_object, recover_profile
 
@@ -223,6 +239,14 @@ class PathManager:
         return paths
 
     def get_model_paths(self):
+        self.ensure_model_directories()
+
+        def model_path(value):
+            # Resolution is read-only for custom roots, even when unavailable.
+            if isinstance(value, list):
+                return [self.get_abspath(item) for item in value]
+            return self.get_abspath(value)
+
         clip_folders = self.get_model_folders("clip")
         if not clip_folders:
             raise ValueError("path_clip: provide at least one folder.")
@@ -231,42 +255,31 @@ class PathManager:
                 self.get_model_folders("checkpoints") + self.get_model_folders("diffusion_models")
             )
         )
-        # Keep legacy roots searchable without recreating removed alias folders.
-        for category in ("checkpoints", "diffusion_models"):
-            for root in self.get_model_folders(category):
-                self.get_abspath_folder(canonical_model_root(category, root, self.get_abspath))
         return {
             "modelfile_path": model_roots,
-            "diffusers_path": self.get_abspath_folder(self.paths["path_diffusers"]),
-            "diffusers_cache_path": self.get_abspath_folder(
-                self.paths["path_diffusers_cache"], required=True
-            ),
-            "lorafile_path": self.get_abspath_folder(self.paths["path_loras"]),
-            # Embedding discovery must not create/move user folders.
+            "diffusers_path": model_path(self.paths["path_diffusers"]),
+            "diffusers_cache_path": model_path(self.paths["path_diffusers_cache"]),
+            "lorafile_path": model_path(self.paths["path_loras"]),
             "embedding_path": self.get_model_folders("embeddings"),
-            "controlnet_path": self.get_abspath_folder(
-                self.get_model_download_folder("controlnet")
-            ),
-            "geometry_estimation_path": self.get_abspath_folder(
-                self.paths["path_geometry_estimation"]
-            ),
-            "detection_path": self.get_abspath_folder(self.paths["path_detection"]),
-            "vae_approx_path": self.get_abspath_folder(self.paths["path_vae_approx"]),
-            "vae_path": self.get_abspath_folder(self.paths["path_vae"]),
+            "controlnet_path": model_path(self.get_model_download_folder("controlnet")),
+            "geometry_estimation_path": model_path(self.paths["path_geometry_estimation"]),
+            "detection_path": model_path(self.paths["path_detection"]),
+            "vae_approx_path": model_path(self.paths["path_vae_approx"]),
+            "vae_path": model_path(self.paths["path_vae"]),
             "temp_outputs_path": self.get_abspath_folder(self.paths["path_outputs"], required=True),
             "temp_preview_path": self.get_abspath(self.paths["path_preview"]),
-            "faceswap_path": self.get_abspath_folder(self.paths["path_faceswap"]),
-            "upscaler_path": self.get_abspath_folder(self.paths["path_upscalers"]),
-            "latent_upscaler_path": self.get_abspath_folder(self.paths["path_latent_upscalers"]),
+            "faceswap_path": model_path(self.paths["path_faceswap"]),
+            "upscaler_path": model_path(self.paths["path_upscalers"]),
+            "latent_upscaler_path": model_path(self.paths["path_latent_upscalers"]),
             # Older callers use this scalar as a cache/download fallback. File
             # lookup and native registration still search every configured root.
-            "clip_path": self.get_abspath_folder(self.get_model_download_folder("clip")),
-            "clip_vision_path": self.get_abspath_folder(self.paths["path_clip_vision"]),
-            "style_models_path": self.get_abspath_folder(self.paths["path_style_models"]),
-            "photomaker_path": self.get_abspath_folder(self.paths["path_photomaker"]),
+            "clip_path": model_path(self.get_model_download_folder("clip")),
+            "clip_vision_path": model_path(self.paths["path_clip_vision"]),
+            "style_models_path": model_path(self.paths["path_style_models"]),
+            "photomaker_path": model_path(self.paths["path_photomaker"]),
             "cache_path": self.get_abspath_folder(self.paths["path_cache"], required=True),
-            "llm_path": self.get_abspath_folder(self.paths["path_llm"]),
-            "inbox_path": self.get_abspath_folder(self.paths["path_inbox"]),
+            "llm_path": model_path(self.paths["path_llm"]),
+            "inbox_path": model_path(self.paths["path_inbox"]),
             "preset_path": self.get_abspath_folder(
                 data_path(self.paths["path_presets"]), required=True
             ),
@@ -312,7 +325,7 @@ class PathManager:
         return legacy_model_path(path)
 
     def get_model_filenames(self, folder_path, cache=None, isLora=False, *, extensions=None):
-        folder_path = Path(folder_path)
+        folder_path = ensure_model_root(folder_path)
         if not folder_path.is_dir():
             return []
         extensions = self.EXTENSIONS if extensions is None else extensions
@@ -399,6 +412,7 @@ class PathManager:
             if self.DOWNLOADABLE_FILES[file]["path"] == "path_" + folder:
                 result.append(self.DOWNLOADABLE_FILES[file]["filename"])
         for root in self.get_model_folders(folder):
+            ensure_model_root(canonical_model_root(folder, root, self.get_abspath))
             result.extend(
                 str(path.relative_to(root))
                 for path in root.rglob("*")
@@ -434,11 +448,26 @@ class PathManager:
                     if explicit is None and published is not None:
                         info[field] = published
                 info["url"] = _registered_pinned_url(info, annotation["artifact"], file_key)
+        folder = self.get_model_download_folder(info["path"].removeprefix("path_"))
         if destination is None:
-            folder = self.get_model_download_folder(info["path"].removeprefix("path_"))
             destination = folder / info["filename"]
+        # Explicit destinations may select a secondary configured root. Capture
+        # that root so a queued transfer cannot revive it after it disappears.
+        root = next(
+            (
+                root
+                for root in self.get_model_folders(info["path"].removeprefix("path_"))
+                if Path(destination).is_relative_to(root)
+            ),
+            Path(destination).parent,
+        )
+        ensure_model_root(root, required=True)
         return PreparationRequest(
-            info["url"], destination, expected_size=info.get("size"), sha256=info.get("sha256")
+            info["url"],
+            destination,
+            expected_size=info.get("size"),
+            sha256=info.get("sha256"),
+            model_root=root,
         )
 
     def prepare_file(self, file_key, progress=None, *, destination=None):

@@ -63,7 +63,7 @@ class ModelFolderCleanupTests(unittest.TestCase):
         self.assertEqual(self.paths.get_model_download_folder("text_encoders"), custom)
         self.assertEqual(self.paths.get_model_folders("clip"), [custom])
         self.paths.get_model_paths()
-        self.assertTrue(custom.is_dir())
+        self.assertFalse(custom.exists())
         self.assertFalse((self.root / "models/text_encoders").exists())
 
     def test_download_writes_canonical_destination_for_legacy_local_profile(self):

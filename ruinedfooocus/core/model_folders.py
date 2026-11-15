@@ -1,5 +1,57 @@
 """Ordered model roots shared by discovery, component inventory and native loaders."""
 
+import os
+from pathlib import Path
+import stat
+
+from ruinedfooocus.core.paths import APP_ROOT, ensure_app_directory
+
+MODEL_DIRECTORIES = (
+    "checkpoints",
+    "diffusion_models",
+    "diffusers",
+    "diffusers_cache",
+    "loras",
+    "embeddings",
+    "controlnet",
+    "model_patches",
+    "gligen",
+    "hypernetworks",
+    "geometry_estimation",
+    "detection",
+    "background_removal",
+    "vae_approx",
+    "vae",
+    "faceswap",
+    "upscale_models",
+    "latent_upscale_models",
+    "text_encoders",
+    "clip_vision",
+    "style_models",
+    "photomaker",
+    "llm",
+    "vision",
+    "inbox",
+    "rag_embeddings",
+)
+
+
+def ensure_model_root(root, *, required=False):
+    """Recover known owned categories only; never create a custom mount."""
+    root = Path(root)
+    configured = Path(os.environ.get("RF_DATA_DIR") or APP_ROOT).expanduser()
+    base = Path(os.path.abspath(configured if configured.is_absolute() else APP_ROOT / configured))
+    for name in MODEL_DIRECTORIES:
+        owned = base / "models" / name
+        # Keep the lexical path too: a link introduced after request capture
+        # must not turn an owned category into an apparently custom destination.
+        if root == owned or root == owned.resolve():
+            return ensure_app_directory("models", name)
+    if required and not stat.S_ISDIR(root.stat().st_mode):
+        raise NotADirectoryError(f"Model folder is unavailable: {root}")
+    return root
+
+
 # Keep existing profile keys and catalog download identities stable.
 FOLDER_SETTINGS = {
     "text_encoders": "clip",

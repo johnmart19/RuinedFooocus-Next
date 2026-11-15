@@ -50,7 +50,7 @@ class ModelFolderTests(unittest.TestCase):
         self.assertTrue(all(path.is_dir() for path in paths["modelfile_path"][:2]))
         self.assertFalse((self.root / "models/unet").exists())
         self.assertEqual(paths["clip_path"], self.root / "models/text_encoders")
-        self.assertFalse((self.root / "models/embeddings").exists())
+        self.assertTrue((self.root / "models/embeddings").is_dir())
 
     def test_old_clip_setting_keeps_precedence_and_discovers_canonical_encoder(self):
         self.paths.paths["path_clip"] = "../models/clip/"
@@ -235,7 +235,10 @@ class ModelFolderTests(unittest.TestCase):
 
     def test_native_registry_retains_extensions_defaults_and_configured_precedence(self):
         # Use the pinned functions, avoiding folder_paths' device-related imports.
-        source = ROOT / "repositories/ComfyUI/folder_paths.py"
+        source = (
+            Path(os.environ.get("RF_TEST_COMFY_SOURCE", ROOT / "repositories/ComfyUI"))
+            / "folder_paths.py"
+        )
         tree = ast.parse(source.read_text(encoding="utf-8"))
         categories = {
             target.slice.value

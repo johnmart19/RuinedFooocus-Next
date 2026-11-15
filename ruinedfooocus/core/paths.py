@@ -34,7 +34,7 @@ def ensure_app_directory(*parts):
     if (
         relative.is_absolute()
         or not relative.parts
-        or relative.parts[0] not in {"settings", "outputs", "cache", "presets"}
+        or relative.parts[0] not in {"settings", "outputs", "cache", "presets", "models"}
         or ".." in relative.parts
     ):
         raise ValueError("Not an application-owned storage directory")

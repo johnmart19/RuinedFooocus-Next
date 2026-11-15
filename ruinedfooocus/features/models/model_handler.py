@@ -270,6 +270,16 @@ class Models:
             is_bundle_shard,
         )
 
+        # A live folder deletion produces an empty inventory, not a permanently
+        # missing default category. Custom roots and legacy aliases stay untouched.
+        from ruinedfooocus.core.model_folders import ensure_model_root
+
+        recover = getattr(path_manager, "ensure_model_directories", None)
+        if recover is not None:
+            recover()
+        for folders in self.model_dirs.values():
+            for folder in folders:
+                ensure_model_root(folder)
         for model_type, folders in self.model_dirs.items():
             if model_type == "embeddings":
                 entries, _ = scan_embeddings(folders)

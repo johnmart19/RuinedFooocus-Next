@@ -1,5 +1,18 @@
 # Model folders
 
+Startup and **Settings → Maintenance → Recheck folders** recreate missing default
+image and Chat model directories. **Refresh files** and actual model scans also
+recover owned categories after deletion while the app is open; refreshing clears
+a selected checkpoint that is no longer installed. Recovery creates empty folders,
+not deleted weights. Existing weights are never moved or replaced.
+
+Missing custom model locations remain unavailable until their drive or folder is
+restored. Downloads reject a missing custom root, including one removed after a
+request was queued. Automatic recovery rejects links/reparse points in owned
+folders and reports permission errors; it never recreates an absent data-root mount.
+Legacy aliases remain searchable without being recreated. Chat retrieval encoders
+use the separate `models/rag_embeddings` directory, not image textual inversions.
+
 Standalone Image tools additionally use `geometry_estimation` for native MoGe
 and Lotus depth safe tensors; Lotus also needs a compatible SD VAE. The
 `detection` folder holds a complete native MediaPipe face landmarker bundle for

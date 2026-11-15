@@ -40,9 +40,15 @@ class PreparationRequest:
     destination: Path
     expected_size: int | None = None
     sha256: str | None = None
+    model_root: Path | None = None
 
     def __post_init__(self):
         object.__setattr__(self, "destination", resolved_path(self.destination))
+        if self.model_root is not None:
+            root = resolved_path(self.model_root)
+            if not self.destination.is_relative_to(root):
+                raise ValueError("Model destination is outside its captured root")
+            object.__setattr__(self, "model_root", root)
         if self.expected_size is not None and self.expected_size <= 0:
             raise ValueError("Expected size must be positive")
         if self.sha256 is not None:
@@ -382,6 +388,10 @@ class PreparationService:
                 if destination.exists():
                     verify_file(destination, request, job.cancelled)
                 else:
+                    if request.model_root is not None:
+                        from ruinedfooocus.core.model_folders import ensure_model_root
+
+                        ensure_model_root(request.model_root, required=True)
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     # SDK-complete filenames must never appear under model roots.
                     staging = self._staging_directory(request)

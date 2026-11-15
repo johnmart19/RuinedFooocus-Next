@@ -353,6 +353,7 @@ def execute_reset(
 
 def recheck_folders(manager, settings=None):
     manager.ensure_default_storage()
+    manager.ensure_model_directories()
     if settings is not None:
         settings.default_settings
     return [str(ensure_app_directory(name)) for name in ("cache", "outputs", "settings")]

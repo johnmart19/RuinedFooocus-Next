@@ -2075,6 +2075,8 @@ with shared.gradio_root as block:
                 primary = primary_checkpoint_selection(
                     selected_model,
                     lambda name: shared.models.get_models_by_path("checkpoints", name, fetch=False),
+                    names=shared.models.get_names("checkpoints"),
+                    require_installed=True,
                 )
                 results = {
                     model_gallery: gallery_update,

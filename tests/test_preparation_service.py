@@ -507,6 +507,7 @@ class PreparationTests(unittest.TestCase):
 
         manager = PathManager.__new__(PathManager)
         manager.paths = {"path_llm": str(self.root / "old")}
+        (self.root / "old").mkdir()
         manager.DOWNLOADABLE_FILES = {
             "alias": {
                 "url": "https://fixture.test/model",

@@ -83,7 +83,9 @@ def checkpoint_choices(names, selected=None, metadata=None):
     return choices
 
 
-def primary_checkpoint_selection(selected, metadata=None, *, names=()):
+def primary_checkpoint_selection(selected, metadata=None, *, names=(), require_installed=False):
+    if require_installed and selected not in names:
+        return next((record["name"] for record in checkpoint_records(names, metadata)), None)
     info = metadata(selected) if selected and metadata else {}
     if retired_family(info.get("baseModel")) or is_image_utility(info) or is_stage_companion(info):
         return next((record["name"] for record in checkpoint_records(names, metadata)), None)

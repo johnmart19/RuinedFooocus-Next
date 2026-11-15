@@ -153,6 +153,7 @@ def _capture_embedding_model(*, cpu, offline, cache_root=None, cpu_reason="", mo
     """No acquisition/runtime import; reuse an already complete pinned snapshot."""
     spec = model_spec(model_id)
     files = MODEL_FILES if model_id == MODEL_ID else spec.files
+    model_root = data_path("models", "rag_embeddings") if cache_root is None else Path(cache_root)
     directory = (
         Path(cache_root)
         if cache_root is not None
@@ -169,6 +170,7 @@ def _capture_embedding_model(*, cpu, offline, cache_root=None, cpu_reason="", mo
             cached = None
         if cached is not None and all((cached / name).is_file() for name, _, _ in files):
             directory = cached
+            model_root = cached
     directory = directory.resolve()
     policy = {"gpu": not bool(cpu), "offline": bool(offline), "encoder": spec.identity}
     if cpu_reason:
@@ -181,6 +183,7 @@ def _capture_embedding_model(*, cpu, offline, cache_root=None, cpu_reason="", mo
                 directory / name,
                 size,
                 checksum,
+                model_root=model_root,
             )
             for name, size, checksum in files
         ),
