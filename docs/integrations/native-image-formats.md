@@ -1,5 +1,11 @@
 # Native precision still-image files
 
+The main preview uses lossless PNG transport. Cached copies may differ in PNG
+metadata or compression; exact oriented RGBA pixel hashes bind those copies to
+their original. Changed pixels or original file signatures remain rejected.
+Passive Editor synchronization waits for matching preview/source updates without
+logging transient mismatches; explicit editing still validates its source.
+
 Create → **Image file output** selects PNG, OpenEXR or still AVIF. Ordinary
 8-bit PNG keeps its existing saving behavior. Explicit precision output retains
 the decoded floating point pixels through native generation, native pixel upscale,

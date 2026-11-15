@@ -2,6 +2,7 @@
 
 import ast
 import asyncio
+import base64
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -27,6 +28,50 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class NativeOutputTransportTests(unittest.TestCase):
+    def test_real_preview_cache_roundtrip_keeps_lossless_pixels_and_original_identity(self):
+        from PIL.PngImagePlugin import PngInfo
+
+        with Image.open(self.display) as image:
+            pixels = image.copy()
+        metadata = PngInfo()
+        metadata.add_text("Preview note", "Gradio may strip this metadata")
+        pixels.save(self.display, pnginfo=metadata, compress_level=0)
+        _, _, records, _ = result_presentation(self.product)
+        tree = ast.parse((ROOT / "ruinedfooocus/ui/app.py").read_text(encoding="utf-8"))
+        node = next(
+            n
+            for n in ast.walk(tree)
+            if isinstance(n, ast.Assign)
+            and any(
+                isinstance(target, ast.Name) and target.id == "main_view" for target in n.targets
+            )
+            and isinstance(n.value, ast.Call)
+            and isinstance(n.value.func, ast.Attribute)
+            and n.value.func.attr == "Image"
+        )
+        scope = dict(gr=gr, t=str, asset_path=lambda name: ROOT / "ruinedfooocus/ui/assets" / name)
+        with gr.Blocks():
+            exec(compile(ast.Module(body=[node], type_ignores=[]), "actual preview", "exec"), scope)
+        preview = scope["main_view"]
+        self.assertEqual(preview.format, "png")
+        payload = preview.postprocess(str(self.display))
+        payload.url = (
+            "data:image/png;base64," + base64.b64encode(self.display.read_bytes()).decode()
+        )
+        cached = preview.preprocess(payload)
+        self.assertNotEqual(Path(cached).read_bytes(), self.display.read_bytes())
+        captured = capture_original_source(dict(main_view=cached, _native_main_source=records[0]))
+        self.assertIsInstance(captured["main_view"], Image.Image)
+        self.assertEqual(captured["main_view"].size, (7, 5))
+        self.assertEqual(self.source.read_bytes(), self.original)
+
+    def test_changed_display_at_the_same_path_is_not_bound_to_the_original(self):
+        _, _, records, _ = result_presentation(self.product)
+        Image.new("RGB", (7, 5), "red").save(self.display)
+        data = dict(main_view=str(self.display), _native_main_source=records[0])
+        self.assertIs(capture_original_source(data), data)
+        self.assertEqual(self.source.read_bytes(), self.original)
+
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix="rf-native-output-transport-")
         self.addCleanup(self.temporary.cleanup)

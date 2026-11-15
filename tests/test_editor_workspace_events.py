@@ -987,6 +987,28 @@ process.stdout.write(JSON.stringify({output,memory}));
         self.assertEqual(self.value(session, self.controls["input_image"]), before)
         self.run_request.assert_not_called()
 
+    def test_mixed_preview_and_native_marker_waits_without_warning_or_rebinding(self):
+        from ruinedfooocus.features.image_processing.native_image_outputs import NativeImageOutput
+        from ruinedfooocus.features.gallery import ui_workspace
+
+        session = self.session("mixed-native-preview")
+        self.open_library(session)
+        sync = self.event(self.remote["preview"], "change", "preview_source")
+        before = copy.deepcopy(self.value(session, self.controls["input_image"]))
+        original = self.root / "native-original.png"
+        display = self.root / "native-display.png"
+        Image.new("I;16", (73, 121), 12345).save(original)
+        Image.new("RGB", (73, 121), "green").save(display)
+        _, _, records, _ = result_presentation([NativeImageOutput(str(original), str(display))])
+        with patch.object(
+            ui_workspace.logging.getLogger(ui_workspace.__name__), "warning"
+        ) as warning:
+            updates = self.call(session, sync, {self.remote["native_source"]: records[0]})
+        self.assertEqual(updates[self.controls["input_image"]], gr.skip())
+        self.assertEqual(self.value(session, self.controls["input_image"]), before)
+        warning.assert_not_called()
+        self.run_request.assert_not_called()
+
     def test_upscale_target_uses_only_editor_input_and_revalidates_current_dimensions(self):
         session = self.session("explicit-upscale-target")
         self.open_library(session)

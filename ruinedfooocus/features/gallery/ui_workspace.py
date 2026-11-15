@@ -862,7 +862,11 @@ class EditorWorkspace:
                         dict(main_view=path, _native_main_source=native)
                     )
                     if isinstance(bound.get("main_view"), (str, Path)):
-                        raise ValueError("The displayed image no longer matches its original.")
+                        # The preview and its source marker arrive as separate
+                        # change events. Wait for a coherent pair; explicit Edit
+                        # still rejects mismatched originals in adopt_image.
+                        preview_trace("unmatched-native-preview", version=version)
+                        return gr.skip()
                     path = source_path(native)
                 signature = [str(Path(path).resolve()), *file_signature(path)]
                 if signature == previous:

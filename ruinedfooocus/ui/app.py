@@ -1218,6 +1218,7 @@ with shared.gradio_root as block:
                 height="var(--rf-preview-height)",
                 type="filepath",
                 image_mode=None,
+                format="png",
                 visible=True,
                 buttons=["download", "fullscreen"],
             )

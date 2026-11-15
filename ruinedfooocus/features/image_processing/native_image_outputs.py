@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 
 
 @dataclass(frozen=True)
@@ -92,6 +92,18 @@ def latest_generated_result(records, index=None):
     return dict(record, batch_index=index)
 
 
+def _display_pixels_digest(path):
+    from ruinedfooocus.features.image_processing.native_image_formats import MAX_PIXELS
+
+    with Image.open(path) as image:
+        if image.width * image.height > MAX_PIXELS:
+            raise ValueError("The display image exceeds the preview pixel limit.")
+        image = ImageOps.exif_transpose(image).convert("RGBA")
+        digest = hashlib.sha256(f"{image.width}x{image.height}:RGBA\0".encode())
+        digest.update(image.tobytes())
+        return digest.hexdigest()
+
+
 def result_presentation(product):
     from ruinedfooocus.features.gallery.actions import source_record
     from ruinedfooocus.features.image_processing.native_image_formats import image_metadata
@@ -107,6 +119,7 @@ def result_presentation(product):
             if tuple(record["signature"]) != value.signature:
                 raise ValueError("The generated original changed before its result was displayed.")
             record["display_sha256"] = hashlib.sha256(Path(display).read_bytes()).hexdigest()
+            record["display_pixels_sha256"] = _display_pixels_digest(display)
             downloads.append(original)
             information = image_metadata(original)
         else:
@@ -144,13 +157,16 @@ def capture_original_source(data):
     if not isinstance(record, dict) or not isinstance(data.get("main_view"), (str, Path)):
         return data
     candidate = Path(data["main_view"])
-    if str(candidate) != record.get("display"):
-        from ruinedfooocus.features.image_processing.native_image_formats import MAX_BYTES
+    from ruinedfooocus.features.image_processing.native_image_formats import MAX_BYTES
 
+    if not candidate.is_file() or candidate.stat().st_size > MAX_BYTES:
+        return data
+    if hashlib.sha256(candidate.read_bytes()).hexdigest() != record.get("display_sha256"):
+        # Gradio decodes and losslessly re-encodes filepath inputs. Metadata or
+        # compression can change without changing a single displayed pixel.
         if (
-            not candidate.is_file()
-            or candidate.stat().st_size > MAX_BYTES
-            or hashlib.sha256(candidate.read_bytes()).hexdigest() != record.get("display_sha256")
+            not record.get("display_pixels_sha256")
+            or _display_pixels_digest(candidate) != record["display_pixels_sha256"]
         ):
             return data
     from ruinedfooocus.features.gallery.actions import source_path

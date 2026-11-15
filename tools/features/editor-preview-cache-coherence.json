@@ -1,0 +1,13 @@
+{
+  "id": "editor-preview-cache-coherence",
+  "subject": "Keep lossless preview copies and Editor source markers coherent",
+  "requires": ["editor-action-controls"],
+  "tests": [
+    "test_native_image_output_transport.py",
+    "test_editor_workspace_events.py",
+    "test_editor_workspace_actions.py"
+  ],
+  "native_comfy": true,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+  "native_gguf": false
+}
