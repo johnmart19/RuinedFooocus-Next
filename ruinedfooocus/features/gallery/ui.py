@@ -879,9 +879,27 @@ def create_image_gallery():
                 ticket = latest_ui_requests.get(
                     owner(request), "library-view", descriptor["version"]
                 )
+                status = None
+                if getattr(browser, "needs_initial_scan", lambda: False)():
+                    # A reset/new index cannot supply a useful fast page. Finish
+                    # its initial scan here, rather than relying on a later
+                    # hidden JSON change to replace a published empty page.
+                    future = preparation_admission.submit_work(
+                        lambda: browser.update_images(
+                            locale=resolve_locale(request=request),
+                            cancelled=ticket.cancelled,
+                            publish=lambda commit: latest_ui_requests.publish(ticket, commit),
+                            only_if_uninitialized=True,
+                        ),
+                        cancelled=ticket.cancelled,
+                    )
+                    latest_ui_requests.attach(ticket, future)
+                    status = future.result()
+                    descriptor["refresh"] = False
                 updates = render_page(
                     descriptor["page"],
                     descriptor["term"],
+                    status=status,
                     request=request,
                     cancelled=ticket.cancelled,
                 )
@@ -890,9 +908,12 @@ def create_image_gallery():
                     for record in updates[page_records]
                 ]
                 # Keep the cached fast path, but never publish an older page.
-                return latest_ui_requests.publish(
+                result = latest_ui_requests.publish(
                     ticket, lambda: {view_request: dict(descriptor, shown=True), **updates}
                 )
+                if not descriptor["refresh"]:
+                    latest_ui_requests.finish(ticket)
+                return result
             except CancelledError:
                 return gr.skip()
 
@@ -947,6 +968,8 @@ def create_image_gallery():
                 locale = resolve_locale(request=request)
 
                 def work():
+                    if descriptor.get("shown") and not descriptor.get("refresh"):
+                        return gr.skip()  # Initial scan and page were published together.
                     status = descriptor.get("status")
                     if descriptor.get("refresh"):
                         status = browser.update_images(

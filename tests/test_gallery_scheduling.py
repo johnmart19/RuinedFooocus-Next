@@ -165,6 +165,7 @@ class GallerySchedulingTests(unittest.TestCase):
             for name in (
                 "__init__",
                 "num_images_pages",
+                "needs_initial_scan",
                 "load_images",
                 "update_images",
                 "add_image",
@@ -222,7 +223,8 @@ class GallerySchedulingTests(unittest.TestCase):
                 if isinstance(control, gr.State) and control.value == []
             )
             self.assertEqual(state[records._id], [])
-            # Opening Gallery shows the indexed page at once and requests a scan.
+            # A new index is prepared before first publication; a current index
+            # keeps the immediate page plus deferred incremental refresh.
             opened = refresh(1, "", 1, self.request)
             request_output = next(
                 control
@@ -230,8 +232,8 @@ class GallerySchedulingTests(unittest.TestCase):
                 if isinstance(control, gr.JSON) and isinstance(opened[control], dict)
             )
             descriptor = opened[request_output]
-            self.assertTrue(descriptor["refresh"])
-            self.assertEqual(len(opened[records]), 2 if indexed else 0)
+            self.assertEqual(descriptor["refresh"], indexed)
+            self.assertEqual(len(opened[records]), 2)
             self.assertTrue(all(record["_view_version"] == 1 for record in opened[records]))
 
             async def visit():
@@ -253,13 +255,12 @@ class GallerySchedulingTests(unittest.TestCase):
                 self.assertIn(functions["prepare_view"].outputs[2], result)
             else:
                 self.assertEqual(copies.call_count, 2)
-                self.assertEqual(len(state[records._id]), 2)
-                self.assertTrue(all(record["_view_version"] == 1 for record in state[records._id]))
-                self.assertEqual(len(result[gallery].value), 2)
+                self.assertEqual(result, gr.skip())
+                self.assertEqual(len(opened[gallery].value), 2)
             page = next(
                 control for control in app.blocks.values() if control.elem_id == "browser-page"
             )
-            rendered = opened if indexed else result
+            rendered = opened
             self.assertEqual(rendered[page]["maximum"], 2)
             for control in prepare.outputs:
                 if isinstance(control, gr.Button) and str(control.value) in (
@@ -334,6 +335,136 @@ class GallerySchedulingTests(unittest.TestCase):
 
     def test_first_gallery_visit_initializes_native_index_then_pages_and_searches(self):
         self.check_native_first_visit(indexed=False)
+
+    def check_first_open_after_index_loss(self, *, missing):
+        from ruinedfooocus.core import cache_maintenance
+        from ruinedfooocus.features.gallery import index_store
+
+        browser, native, originals = self.native_browser()
+        browser.update_images()
+        # The browser has a completed scan but Gallery has never been opened.
+        self.assertEqual(browser.last_scan.count, 3)
+        if missing:
+            browser._database_path.unlink()
+        else:
+            cleared = cache_maintenance.clear_category("library-index", browser.path_manager)
+            self.assertEqual((cleared["removed"], cleared["errors"]), (1, []))
+        self.scope["browser"] = browser
+        copies = Mock(wraps=native["save_file_to_cache"])
+        with (
+            patch("ruinedfooocus.app.preparation_admission.preparation_admission", self.pool),
+            patch("ruinedfooocus.app.resource_lifecycle.latest_ui_requests", self.fence),
+            patch.dict(native, save_file_to_cache=copies),
+            patch.object(index_store.os, "walk", wraps=os.walk) as walked,
+        ):
+            app, open_view, open_inputs, open_outputs, _ = self.scope["create_image_gallery"]()
+            with app:
+                trigger = gr.Button()
+                open_event = trigger.click(open_view, inputs=open_inputs, outputs=open_outputs)
+            functions = {
+                function.fn.__name__: function
+                for function in app.fns.values()
+                if function.fn is not None
+            }
+            prepare = functions["prepare_view"]
+            records = next(
+                control
+                for control in prepare.outputs
+                if isinstance(control, gr.State) and control.value == []
+            )
+            opened = open_view(1, "", 1, self.request)
+            self.assertEqual(len(opened[records]), 2)
+            # The normal navigation binding must also deliver every native output.
+            state = SessionState(app)
+            processed = asyncio.run(app.postprocess_data(app.fns[open_event["id"]], opened, state))
+            self.assertEqual(len(processed), len(open_outputs))
+            self.assertEqual(len(state[records._id]), 2)
+            descriptor = next(
+                value
+                for control, value in opened.items()
+                if isinstance(control, gr.JSON) and isinstance(value, dict)
+            )
+            self.assertEqual(browser.last_scan.count, 3)
+            self.assertEqual(walked.call_count, 1)
+            self.assertEqual(copies.call_count, 2)
+            self.assertEqual(asyncio.run(prepare.fn(descriptor, self.request)), gr.skip())
+            second = functions["request_next"].fn(1, "", 2, self.request)
+            asyncio.run(prepare.fn(second, self.request))
+            first = functions["request_previous"].fn(2, "", 3, self.request)
+            returned = asyncio.run(prepare.fn(first, self.request))
+            self.assertEqual(len(returned[records]), 2)
+            self.assertEqual(copies.call_count, 3)
+            self.assertEqual(walked.call_count, 1)
+        self.assertTrue(all(path.read_bytes() == value for path, value in originals.items()))
+
+    def test_first_gallery_open_rebuilds_an_index_cleared_after_startup(self):
+        self.check_first_open_after_index_loss(missing=False)
+
+    def test_first_gallery_open_rebuilds_an_index_removed_after_startup(self):
+        self.check_first_open_after_index_loss(missing=True)
+
+    def test_initialized_empty_gallery_does_not_repeat_initial_scan_on_page_reads(self):
+        from ruinedfooocus.features.gallery import index_store
+
+        browser, _, originals = self.native_browser()
+        for path in originals:
+            path.unlink()
+        self.scope["browser"] = browser
+        with (
+            patch("ruinedfooocus.app.preparation_admission.preparation_admission", self.pool),
+            patch("ruinedfooocus.app.resource_lifecycle.latest_ui_requests", self.fence),
+            patch.object(index_store.os, "walk", wraps=os.walk) as walked,
+        ):
+            app, open_view, *_ = self.scope["create_image_gallery"]()
+            functions = {
+                function.fn.__name__: function
+                for function in app.fns.values()
+                if function.fn is not None
+            }
+            open_view(1, "", 1, self.request)
+            self.assertFalse(browser.needs_initial_scan())
+            self.assertEqual(browser.last_scan.count, 0)
+            for version in (2, 3):
+                descriptor = functions["request_page"].fn(1, "", version, self.request)
+                asyncio.run(functions["prepare_view"].fn(descriptor, self.request))
+            self.assertEqual(walked.call_count, 1)
+
+    def test_superseded_initial_scan_cannot_publish_or_commit_over_newer_page(self):
+        browser, native, _ = self.native_browser()
+        self.scope["browser"] = browser
+        entered, release = threading.Event(), threading.Event()
+        metadata = native["get_png_metadata"]
+
+        def held(path):
+            entered.set()
+            self.assertTrue(release.wait(5))
+            return metadata(path)
+
+        with (
+            patch("ruinedfooocus.app.preparation_admission.preparation_admission", self.pool),
+            patch("ruinedfooocus.app.resource_lifecycle.latest_ui_requests", self.fence),
+            patch.dict(native, get_png_metadata=held),
+        ):
+            app, open_view, *_ = self.scope["create_image_gallery"]()
+            functions = {
+                function.fn.__name__: function
+                for function in app.fns.values()
+                if function.fn is not None
+            }
+
+            async def race():
+                old = asyncio.create_task(asyncio.to_thread(open_view, 1, "", 1, self.request))
+                self.assertTrue(await asyncio.to_thread(entered.wait, 5))
+                try:
+                    latest = functions["request_search"].fn(1, "newest", 2, self.request)
+                finally:
+                    release.set()
+                self.assertEqual(await old, gr.skip())
+                self.assertTrue(await functions["prepare_view"].fn(latest, self.request))
+
+            asyncio.run(race())
+        self.assertTrue(browser.needs_initial_scan())
+        self.assertEqual(browser.num_images_pages(), (0, 1))
 
     def test_native_page_serializes_images_once_and_preserves_selection_reset(self):
         browser, _, _ = self.native_browser()

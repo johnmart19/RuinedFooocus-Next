@@ -12,8 +12,12 @@ retains the settings and paths it already captured. A configuration change
 notification is published after settings recover.
 
 Gallery callbacks open and close their own SQLite connection. If the default
-index has disappeared, they initialize a new schema; a refresh can then rebuild
-its rows from the remaining original images. Recreating default outputs invalidates
+index has disappeared, they initialize a new schema. Opening Gallery with an
+uninitialized index completes its initial scan through the bounded preparation
+pool before publishing the page. This also rebuilds an index cleared by Maintenance
+before Gallery's first visit, without an extra Refresh action. A completed empty
+index is distinct from an uninitialized one; ordinary paging never starts a scan.
+Recreating default outputs invalidates
 their old rows before the next page read and enables a new initial scan. Indexed
 archive rows and their source files are retained.
 

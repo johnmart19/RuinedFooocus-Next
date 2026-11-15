@@ -1,0 +1,14 @@
+{
+  "id": "gallery-reset-recovery",
+  "subject": "Rebuild a cleared Gallery index before publishing its first page",
+  "requires": ["maintenance-reset"],
+  "tests": [
+    "test_gallery_scheduling.py",
+    "test_gallery_page_work.py",
+    "test_gallery_index.py",
+    "test_maintenance_reset.py",
+    "test_storage_recovery.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

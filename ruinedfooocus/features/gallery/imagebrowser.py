@@ -236,6 +236,15 @@ class ImageBrowser:
         pages = max(1, (image_cnt + self.images_per_page - 1) // self.images_per_page)
         return image_cnt, pages
 
+    def needs_initial_scan(self):
+        from ruinedfooocus.features.gallery.index_store import index_connection
+
+        with index_connection(self) as connection:
+            revision = connection.execute(
+                "SELECT revision FROM library_snapshot WHERE id=1"
+            ).fetchone()[0]
+        return revision == 0
+
     def load_images(
         self,
         page: int,

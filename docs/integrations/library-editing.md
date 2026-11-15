@@ -43,10 +43,12 @@ setup replay retain the toggle and mask restored by their own callbacks.
 
 Gallery construction leaves its image values and records empty, without opening
 originals, preparing thumbnails or copying a page to Gradio's cache. Opening the
-Gallery tab acknowledges `request_refresh`; its existing bounded `prepare_view`
-callback refreshes the incremental index and publishes the first page through
-the same owner/version fence as later paging and search. A new index is populated
-on that first visit. Action buttons remain disabled until a current image is
+Gallery tab acknowledges a current view request. An uninitialized or reset index
+completes its initial incremental scan in the bounded preparation pool before the
+first page is published. An existing index supplies its cached page immediately;
+the bounded `prepare_view` callback then checks for changed files. Both paths use
+the same owner/version fence as later paging and search, and the initial path
+does not schedule a second scan. Action buttons remain disabled until a current image is
 selected. `test_gallery_scheduling.py` exercises both empty and existing indexes
 through native image preparation and Gradio output processing.
 
