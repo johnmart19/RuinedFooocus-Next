@@ -36,7 +36,15 @@ def add_api():
     import ruinedfooocus.app.api_runtime as api_runtime
 
     def api_llama(system: str, user: str) -> str:
-        """Talk to the selected local chat model on the shared GPU worker."""
+        """
+        Ask the local chat model selected in RuinedFooocus for a reply.
+
+        Args:
+            system: Instructions for the model, such as its role or answer style.
+            user: The message to answer.
+        Returns:
+            The model's reply text.
+        """
         model, selected = api_runtime.configured_chat_model()
         result = api_runtime.wait_for_result(
             api_runtime.chat(
@@ -56,21 +64,28 @@ def add_api():
     gr.api(api_llama, api_name="llama")
 
     def api_generate_image(prompt: str) -> dict:
-        """Generate an image using the shared API settings and GPU worker."""
+        """
+        Generate one image with the image model and settings selected in RuinedFooocus.
+
+        Args:
+            prompt: Description of the image to generate.
+        Returns:
+            The generated image file.
+        """
         files = api_runtime.wait_for_result(api_runtime.legacy_images(prompt))
         return {"path": str(files[0]), "meta": {"_type": "gradio.FileData"}}
 
     gr.api(api_generate_image, api_name="generate_image")
 
     # Search
-    def api_search(text: str) -> str:
+    def api_search(text: str) -> list[str]:
         """
-        Tool to search for images. Uses the filter to find a list of images that match.
+        Search the RuinedFooocus image library by prompt and metadata text.
 
         Args:
-            filter (str): Text to find images that match.
+            text: Words to match. Start with "max:N" to return up to N images (default 10).
         Returns:
-            images (str): List of image urls
+            URLs of the matching images.
         """
         prompt = f"search: max:10 {text}"
         files = search_pipeline.search(prompt)
@@ -83,10 +98,10 @@ def add_api():
 
     def api_version() -> str:
         """
-        Look up the current version of RuinedFooocus
+        Look up the running RuinedFooocus version.
 
         Returns:
-            version (str): The current version of RuinedFooocus
+            The version string.
         """
         from version import version
 
@@ -94,8 +109,9 @@ def add_api():
 
     gr.api(api_version, api_name="api_version")
 
-    # "secret" pi slideshow
-    gr.api(get_last_image, api_name="last_image")
+    # "secret" pi slideshow: callable by name, but not listed for API docs or MCP
+    # because it returns a server-side path.
+    gr.api(get_last_image, api_name="last_image", api_visibility="undocumented")
 
 
 def add_fastapi():

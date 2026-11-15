@@ -108,6 +108,28 @@ class ApiLiveContracts(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 429)
 
+    def test_every_validation_error_is_one_concise_message_without_server_details(self):
+        cases = (
+            ("/v1/chat/completions", {}, "body.messages — Field required"),
+            ("/v1/images/upscale", {}, "body.model — Field required"),
+            ("/tools/image_review", {"input_image": "x"}, "body.model — Field required"),
+            ("/v1/images/histogram", {"secret_field": "do-not-echo"}, "input_image"),
+        )
+        for path, body, expected in cases:
+            with self.subTest(path=path):
+                response = self.client.post(path, headers=self.headers, json=body)
+                self.assertEqual(response.status_code, 400)
+                message = response.json()["error"]["message"]
+                self.assertIn(expected, message)
+                for leaked in ("File ", ".py", "do-not-echo", "'input'"):
+                    self.assertNotIn(leaked, message)
+        response = self.client.post(
+            "/v1/chat/completions",
+            headers={**self.headers, "Content-Type": "application/json"},
+            content=b"not-json",
+        )
+        self.assertEqual(response.json()["error"]["message"], "body.0 — JSON decode error")
+
     def test_chat_reply_and_sse_completion_cancel_consumed_jobs(self):
         reply = {"choices": [{"message": {"content": "reply"}}]}
         completed = job(("result", reply))

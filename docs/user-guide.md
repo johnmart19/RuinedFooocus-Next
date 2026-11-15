@@ -407,7 +407,10 @@ files, dedicated inputs, source denoise and Library/API behavior.
 - `--listen` opens the UI on your network and requires `--auth user/password` (or `RF_UI_AUTH`). `--guest`
   starts a restricted, generation-only page for other people. `--nobrowser` skips opening a browser.
 - `--api` enables an OpenAI-compatible API; set `--api-key` (or `RF_API_KEY`), which is required when listening
-  beyond localhost. `--mcp` starts an MCP server.
+  beyond localhost. `--mcp` starts an MCP server at `/gradio_api/mcp/` with four tools: `api_llama`
+  (local chat), `api_generate_image`, `api_search` (Library search; start the text with `max:N` for
+  more than 10 results) and `api_version`. Invalid `/v1` and `/tools` requests return one
+  `field — problem` message without echoing the request.
 - Reinstall, repair and PyTorch freeze markers are described in [runtimes and troubleshooting](runtime-and-troubleshooting.md).
 
 ## Preview without generating

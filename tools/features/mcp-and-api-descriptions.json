@@ -1,0 +1,9 @@
+{
+  "id": "mcp-and-api-descriptions",
+  "subject": "Describe MCP tools and their parameters, and give every API validation error one concise message",
+  "requires": ["ui-release-polish"],
+  "tests": ["test_mcp_tools.py", "test_api_live_contracts.py", "test_api_examples.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

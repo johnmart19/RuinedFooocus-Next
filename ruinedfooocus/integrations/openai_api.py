@@ -1423,22 +1423,12 @@ def create_apps(backend, key=None):
         )
 
     async def validation_error(request, error):
-        endpoint = request.scope.get("endpoint")
-        private_chat = (
-            endpoint is chat_completions
-            and isinstance(error.body, dict)
-            and "rf_attachments" in error.body
-        )
-        message = (
-            _validation_message(error)
-            if private_chat
-            or endpoint in (image_generations, image_generation, editor_open, rf_image_tool)
-            else str(error)
-        )
+        # One concise "field — problem" message for every endpoint: never echo the
+        # request body (attachments, images) or the server's source location.
         return JSONResponse(
             {
                 "error": {
-                    "message": message,
+                    "message": _validation_message(error),
                     "type": "invalid_request_error",
                     "code": 400,
                 }
@@ -1495,6 +1485,7 @@ def create_apps(backend, key=None):
     @api.get("/models")
     @tools.get("/models", operation_id="available_models")
     def list_models():
+        """List the local chat, image and upscaler model IDs that requests can name."""
         return {
             "object": "list",
             "data": [
@@ -1521,6 +1512,7 @@ def create_apps(backend, key=None):
     @api.get("/capabilities")
     @tools.get("/capabilities", operation_id="generation_settings")
     def capabilities():
+        """Describe the image sizes, settings and options that image_generation accepts."""
         return backend.capabilities()
 
     @api.post("/rf/editor/sessions")

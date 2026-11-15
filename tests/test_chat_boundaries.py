@@ -161,7 +161,7 @@ class LegacyApiTests(unittest.TestCase):
             "add_api",
             {
                 "gr": SimpleNamespace(
-                    api=lambda function, api_name: endpoints.update({api_name: function})
+                    api=lambda function, api_name, **options: endpoints.update({api_name: function})
                 ),
                 "settings": SimpleNamespace(default_settings={}),
                 "get_last_image": lambda: "image.png",
