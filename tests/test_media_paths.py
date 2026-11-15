@@ -70,6 +70,14 @@ class MediaPathsTests(unittest.TestCase):
             owner_media_paths(self.manager, self.models, {"archive_folders": [str(archive)]}),
         )
 
+    def test_gradio_upload_cache_is_checked_first(self):
+        # Gallery thumbnails live in Gradio's own upload cache; Gradio tries roots in
+        # order and resolves each one per returned file, so this root comes first.
+        from gradio.utils import get_upload_folder
+
+        self.assertEqual(self.allowed[0], str(Path(get_upload_folder()).resolve()))
+        self.assertEqual(len(self.allowed), len(set(self.allowed)))
+
     def test_real_output_callback_reproduces_missing_media_root_then_accepts_each_owned_leaf(self):
         with gr.Blocks(analytics_enabled=False) as app:
             output = gr.Gallery()

@@ -1103,3 +1103,8 @@
 :is(#app-tabs, #image-stage) .source-selection .icon {
   margin-block: 0 !important;
 }
+/* Tables use the app's text font and size; Gradio's default is a monospace face. */
+:is(#app-tabs, #image-stage) .table-wrap :is(th, td, .virtual-row, .cell-wrap) {
+  font-family: var(--font) !important;
+  font-size: var(--text-sm) !important;
+}

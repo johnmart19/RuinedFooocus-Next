@@ -2,6 +2,7 @@
 
 import asyncio
 from concurrent.futures import CancelledError
+import os
 import threading
 
 import gradio as gr
@@ -44,16 +45,41 @@ def target_rows(plan, locale=None):
         "output-directory": localize("Subfolders", locale),
         "profile-document": localize("Settings", locale),
     }
+    # One row per kind and folder: a cache holds hundreds of thumbnails and an
+    # output folder hundreds of images, so a row per file would hide the totals.
+    groups = {}
+    for item in plan.targets:
+        if item.kind == "output-directory":
+            key = (item.kind, None)  # emptied subfolders: one row under their common folder
+        elif item.kind in {"library-thumbnails", "output-file"}:
+            key = (item.kind, os.path.dirname(item.path))
+        else:
+            key = (item.kind, item.path)
+        groups.setdefault(key, []).append(item)
     return [
         [
-            item.path,
-            labels[item.kind],
-            0 if item.kind in {"library-index", "output-directory"} else 1,
-            f"{0 if item.kind == 'library-index' else item.bytes} B",
-            item.rows,
+            items[0].path if len(items) == 1 else folder or _common_folder(items),
+            labels[kind] + (f" ({len(items)})" if kind == "output-directory" else ""),
+            0 if kind in {"library-index", "output-directory"} else len(items),
+            _size(0 if kind == "library-index" else sum(item.bytes for item in items)),
+            sum(item.rows or 0 for item in items),
         ]
-        for item in plan.targets
+        for (kind, folder), items in groups.items()
     ]
+
+
+def _common_folder(items):
+    try:
+        return os.path.commonpath([item.path for item in items])
+    except ValueError:  # different drives
+        return items[0].path
+
+
+def _size(value):
+    for unit in ("B", "KiB", "MiB"):
+        if value < 1024 or unit == "MiB":
+            return f"{value} B" if unit == "B" else f"{value:.1f} {unit}"
+        value /= 1024
 
 
 def retained_text(plan, locale=None):
@@ -135,24 +161,28 @@ def create_storage_reset(manager, settings):
             cache = gr.Button(t("Clear rebuildable cache"))
             outputs = gr.Button(t("Clear cache and outputs"))
             factory = gr.Button(t("Factory reset settings"))
-        table = gr.Dataframe(
-            headers=[
-                localize("Path"),
-                localize("Action"),
-                localize("Files"),
-                localize("Size"),
-                localize("Rows"),
-            ],
-            datatype=["str", "str", "number", "str", "number"],
-            value=[],
-            interactive=False,
-            wrap=True,
-        )
-        retained = gr.Textbox(label=t("Retention"), interactive=False, lines=3)
-        confirmed = gr.Checkbox(label=t("Confirm permanent deletion"), value=False, visible=False)
-        with gr.Row():
-            apply = gr.Button(t("Confirm reset"), interactive=False, variant="stop")
-            cancel = gr.Button(t("Cancel"))
+        with gr.Column(visible=False) as review:
+            table = gr.Dataframe(
+                headers=[
+                    localize("Path"),
+                    localize("Action"),
+                    localize("Files"),
+                    localize("Size"),
+                    localize("Rows"),
+                ],
+                datatype=["str", "str", "number", "str", "number"],
+                column_widths=["46%", "22%", "10%", "12%", "10%"],
+                value=[],
+                interactive=False,
+                wrap=True,
+            )
+            retained = gr.Textbox(label=t("Retention"), interactive=False, lines=3)
+            confirmed = gr.Checkbox(
+                label=t("Confirm permanent deletion"), value=False, visible=False
+            )
+            with gr.Row():
+                apply = gr.Button(t("Confirm reset"), interactive=False, variant="stop")
+                cancel = gr.Button(t("Cancel"))
         status = gr.Markdown()
         localized_output(lambda locale, value: target_rows(value, locale), [plan], [table])
         localized_output(lambda locale, value: retained_text(value, locale), [plan], [retained])
@@ -180,7 +210,7 @@ def create_storage_reset(manager, settings):
                     )
                 )
                 if control.cancelled is not cancelled or cancelled.is_set():
-                    return (gr.skip(),) * 6
+                    return (gr.skip(),) * 7
                 return (
                     value,
                     target_rows(value, locale),
@@ -188,6 +218,7 @@ def create_storage_reset(manager, settings):
                     gr.update(value=False, visible=action != "cache"),
                     gr.update(interactive=action == "cache"),
                     localize("Preview", locale),
+                    gr.update(visible=True),
                 )
             except (
                 ValueError,
@@ -197,7 +228,7 @@ def create_storage_reset(manager, settings):
                 asyncio.CancelledError,
             ) as error:
                 if control.cancelled is not cancelled or cancelled.is_set():
-                    return (gr.skip(),) * 6
+                    return (gr.skip(),) * 7
                 return (
                     None,
                     [],
@@ -205,6 +236,7 @@ def create_storage_reset(manager, settings):
                     gr.update(value=False, visible=False),
                     gr.update(interactive=False),
                     error_text(error, locale),
+                    gr.update(visible=False),
                 )
 
         async def preview_cache(control, request: gr.Request = None):
@@ -241,12 +273,13 @@ def create_storage_reset(manager, settings):
                     )
                 )
                 if control.cancelled is not cancelled:
-                    return (gr.skip(),) * 4
+                    return (gr.skip(),) * 5
                 return (
                     None,
                     gr.update(interactive=False),
                     gr.update(value=False, visible=False),
                     result_text(result, locale),
+                    gr.update(visible=False),
                 )
             except (
                 ValueError,
@@ -256,7 +289,7 @@ def create_storage_reset(manager, settings):
                 asyncio.CancelledError,
             ) as error:
                 if control.cancelled is not cancelled:
-                    return (gr.skip(),) * 4
+                    return (gr.skip(),) * 5
                 return (
                     None,
                     gr.update(interactive=False),
@@ -269,6 +302,7 @@ def create_storage_reset(manager, settings):
                     )
                     + "\n\n"
                     + error_text(error, locale),
+                    gr.update(visible=False),
                 )
 
         def confirm(value, checked):
@@ -285,6 +319,7 @@ def create_storage_reset(manager, settings):
                 gr.update(value=False, visible=False),
                 gr.update(interactive=False),
                 localize("Cancelled", resolve_locale(request=request)),
+                gr.update(visible=False),
             )
 
         options = dict(
@@ -303,14 +338,14 @@ def create_storage_reset(manager, settings):
             button.click(
                 callback,
                 inputs=session,
-                outputs=[plan, table, retained, confirmed, apply, status],
+                outputs=[plan, table, retained, confirmed, apply, status, review],
                 **options,
             )
         recheck.click(check_folders, outputs=status, **options)
         apply.click(
             apply_reset,
             inputs=[plan, confirmed, session],
-            outputs=[plan, apply, confirmed, status],
+            outputs=[plan, apply, confirmed, status, review],
             **options,
         )
         confirmed.change(
@@ -324,7 +359,7 @@ def create_storage_reset(manager, settings):
         cancel.click(
             cancel_reset,
             inputs=session,
-            outputs=[plan, table, retained, confirmed, apply, status],
+            outputs=[plan, table, retained, confirmed, apply, status, review],
             queue=False,
             show_progress="hidden",
             api_visibility="private",

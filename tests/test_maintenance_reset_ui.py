@@ -60,6 +60,35 @@ class MaintenanceResetUiTests(unittest.TestCase):
         self.assertFalse(functions["confirm"].fn(plan, False)["interactive"])
         self.assertTrue(functions["confirm"].fn(plan, True)["interactive"])
 
+    def test_preview_rows_total_each_folder_instead_of_listing_every_file(self):
+        import os
+
+        cache = os.path.join("cache", "library-thumbnails")
+        targets = (
+            Target(os.path.join(cache, "a.webp"), "library-thumbnails", None, 1024),
+            Target(os.path.join(cache, "b.webp"), "library-thumbnails", None, 2048),
+            Target(os.path.join("cache", "images.db"), "library-index", None, 99, 12),
+            Target(os.path.join("outputs", "day", "one.png"), "output-file", None, 5 << 20),
+            Target(os.path.join("outputs", "a"), "output-directory", None),
+            Target(os.path.join("outputs", "a", "b"), "output-directory", None),
+        )
+        plan = ResetPlan("cache-outputs", None, targets, (), "private")
+        self.assertEqual(
+            ui.target_rows(plan, "en"),
+            [
+                [cache, "Library thumbnails", 2, "3.0 KiB", 0],
+                [os.path.join("cache", "images.db"), "Library index", 0, "0 B", 12],
+                [
+                    os.path.join("outputs", "day", "one.png"),
+                    "Original output files",
+                    1,
+                    "5.0 MiB",
+                    0,
+                ],
+                [os.path.join("outputs", "a"), "Subfolders (2)", 0, "0 B", 0],
+            ],
+        )
+
     def test_failed_or_cancelled_partial_results_never_say_completed(self):
         base = {
             "complete": False,
@@ -98,13 +127,17 @@ class MaintenanceResetUiTests(unittest.TestCase):
             self.assertFalse(cancelled["data"][3]["visible"])
             self.assertFalse(cancelled["data"][4]["interactive"])
             self.assertEqual(cancelled["data"][5], "Cancelled")
+            # The preview table, retention and confirmation hide again.
+            self.assertFalse(cancelled["data"][6]["visible"])
+            self.assertTrue(preview["data"][6]["visible"])
             # A stale client-side checked value cannot resurrect the state plan.
             with patch.object(ui, "execute_reset", wraps=ui.execute_reset) as execute:
                 rejected = await app.process_api(
                     functions["apply_reset"], [None, True, None], state=state
                 )
             self.assertIsNone(execute.call_args.args[0])
-            self.assertIn("Preview the maintenance action first", rejected["data"][-1])
+            self.assertIn("Preview the maintenance action first", rejected["data"][3])
+            self.assertFalse(rejected["data"][4]["visible"])
 
         for action, callback in (
             ("cache", "preview_cache"),
@@ -170,8 +203,8 @@ class MaintenanceResetUiTests(unittest.TestCase):
                 work()
             future.set_exception(CancelledError("Maintenance was cancelled"))
             result = await task
-            self.assertIn("Cancelled", result[-1])
-            self.assertNotIn("Completed", result[-1])
+            self.assertIn("Cancelled", result[3])
+            self.assertNotIn("Completed", result[3])
 
         def check_cancelled(*args, cancelled, **kwargs):
             if cancelled.is_set():
@@ -187,7 +220,7 @@ class MaintenanceResetUiTests(unittest.TestCase):
             first, second = futures
             first[0].set_result(ResetPlan("cache-outputs", None, (), (), "old"))
             second[0].set_result(ResetPlan("cache", None, (), (), "new"))
-            self.assertEqual(await old, (gr.skip(),) * 6)
+            self.assertEqual(await old, (gr.skip(),) * 7)
             self.assertEqual((await new)[0].action, "cache")
 
         with (

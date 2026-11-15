@@ -46,6 +46,7 @@ def create_cache_maintenance(manager):
         table = gr.Dataframe(
             headers=cache_headers(),
             datatype=["str", "number", "str", "str"],
+            column_widths=["28%", "10%", "12%", "50%"],
             value=[],
             interactive=False,
             wrap=True,
