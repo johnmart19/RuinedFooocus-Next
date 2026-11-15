@@ -1,0 +1,8 @@
+{
+  "id": "compact-chat-assistant-actions",
+  "subject": "Tighten spacing in the Chat assistant button group",
+  "requires": ["chat-portrait-and-scrollbars"],
+  "tests": ["test_responsive_ui_layout.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}

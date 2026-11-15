@@ -778,9 +778,10 @@
 :is(#app-tabs, #image-stage) ::-webkit-scrollbar-thumb:hover {
   background: var(--body-text-color-subdued);
 }
-#chat-assistant-actions {
+#chat-controls #chat-assistant-actions {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.375rem !important;
 }
 #chat-assistant-actions > button {
   inline-size: 100%;
