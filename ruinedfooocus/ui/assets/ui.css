@@ -73,6 +73,33 @@
 #image-tool-input img {
   object-fit: contain;
 }
+#image-view-controls {
+  align-items: center;
+  gap: 0.5rem;
+}
+#image-view-controls > * {
+  min-inline-size: min(100%, 11.25rem) !important;
+}
+#generation-workspace.rf-viewer-actual #main_view .upload-container {
+  overflow: auto;
+  align-items: start;
+  justify-content: start;
+}
+#generation-workspace.rf-viewer-actual #main_view .image-container > .upload-container {
+  width: 100% !important;
+  max-width: 100%;
+  align-self: stretch;
+}
+#generation-workspace.rf-viewer-actual #main_view .image-frame {
+  display: block;
+}
+#generation-workspace.rf-viewer-actual #main_view img {
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: none;
+}
 #hint-container {
   max-height: 150px;
   overflow: auto;

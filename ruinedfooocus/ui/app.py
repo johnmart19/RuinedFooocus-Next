@@ -1215,7 +1215,7 @@ with shared.gradio_root as block:
                 label=t("Image"),
                 elem_id="main_view",
                 value=str(asset_path("init_image.png")),
-                height="var(--rf-preview-height)",
+                height="var(--rf-viewer-height, var(--rf-preview-height))",
                 type="filepath",
                 image_mode=None,
                 format="png",
@@ -1223,6 +1223,9 @@ with shared.gradio_root as block:
                 buttons=["download", "fullscreen"],
             )
             add_ctrl("main_view", main_view)
+            from ruinedfooocus.ui.image_viewer import create_ui as create_viewer_ui
+
+            create_viewer_ui()
             generation_originals = gr.File(
                 label=translate_ui("Original output files"),
                 file_count="multiple",
