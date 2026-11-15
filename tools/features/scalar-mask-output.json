@@ -1,0 +1,9 @@
+{
+  "id": "scalar-mask-output",
+  "subject": "Keep Editor masks usable after an HDR export",
+  "requires": ["hdr-format-projection"],
+  "tests": ["test_image_adjustment_integration.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

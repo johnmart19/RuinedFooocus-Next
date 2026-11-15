@@ -633,6 +633,78 @@ class AdjustmentIntegrationTests(unittest.TestCase):
             ("png", "8-bit", "sRGB"),
         )
 
+    def test_editor_hdr_to_scalar_mask_runs_without_changing_the_format_draft(self):
+        from ruinedfooocus.features.image_processing import native_image_formats as formats
+        from test_native_image_formats import native_codecs
+
+        source = self.root / "hdr-result.exr"
+        pixels = np.full((3, 5, 4), 0.5, dtype=np.float32)
+        pixels[..., 3] = np.linspace(0, 1, 15).reshape(3, 5)
+        draft = dict(output_format="exr", output_bit_depth="16-bit float", output_color_space="HDR")
+        with patch.object(formats, "_native", return_value=native_codecs()):
+            formats.write_image(source, pixels, draft)
+        original = source.read_bytes()
+        expected_alpha = formats.read_image(source).pixels[..., 3].copy()
+        for explicit in (False, True):
+            with self.subTest(explicit=explicit):
+                controls = dict(
+                    draft,
+                    mask_operation="channel",
+                    mask_channel="alpha",
+                    _editor_output_explicit=explicit,
+                )
+                before = controls.copy()
+                snapshot = self.store.start(source, owner=self.owner)
+                data = build_library_request(
+                    controls,
+                    source_record(source),
+                    prompt="Extract alpha",
+                    negative="",
+                    checkpoint=None,
+                    action="image-mask",
+                    resets={},
+                    features={},
+                    presets=json.loads(resource_path("defaults", "powerup.default").read_text()),
+                    custom="Custom...",
+                    editor_context=dict(
+                        session_id=snapshot.session_id,
+                        revision=snapshot.revision,
+                        source_id=snapshot.current.artifact_id,
+                    ),
+                    editor_store=self.store,
+                    owner=self.owner,
+                )
+                self.assertEqual(controls, before)
+                self.assertEqual(data["output_color_space"], "sRGB")
+                self.assertEqual(data["output_format"], "exr")
+                self.assertEqual(data["output_bit_depth"], "16-bit float")
+                captured = assets.capture_image_assets(
+                    data, self.manager, data["controlnet"], offline=True
+                )
+                prepared = assets.prepare_image_assets(captured, check_cancelled=lambda: None)
+                result = utilities.process(NS(), prepared, self.manager, lambda: None)[0]
+                self.assertIsInstance(result, np.ndarray)
+                self.assertEqual(result.shape, (3, 5, 3))
+                np.testing.assert_array_equal(result[..., 0], expected_alpha)
+                np.testing.assert_array_equal(result[..., 0], result[..., 1])
+                np.testing.assert_array_equal(result[..., 0], result[..., 2])
+                metadata = utilities.output_metadata(prepared)
+                self.assertEqual(metadata["image_utility_source"]["mask_role"], "inpaint-selection")
+                output = self.root / f"mask-{explicit}.exr"
+                with patch.object(formats, "_native", return_value=native_codecs()):
+                    formats.write_image(output, result, prepared, metadata)
+                self.assertTrue(output.is_file())
+                self.assertGreater(output.stat().st_size, 0)
+                self.assertEqual(formats.read_image(output).pixels.shape, (3, 5, 3))
+                self.assertEqual(source.read_bytes(), original)
+        unmarked = self.owned_adjustment(
+            source, "image-mask", **draft, mask_operation="channel", mask_channel="alpha"
+        )
+        with self.assertRaisesRegex(ValueError, "Masks are scalar selections"):
+            assets.capture_image_assets(
+                unmarked, self.manager, unmarked["controlnet"], offline=True
+            )
+
     def mask_result(self, *, size=None, metadata=True):
         snapshot = self.store.start(self.path, owner=self.owner)
         ticket = self.store.capture(

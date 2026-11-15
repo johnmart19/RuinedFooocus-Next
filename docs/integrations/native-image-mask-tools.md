@@ -15,12 +15,16 @@ Threshold selects values strictly greater than the chosen threshold. Input
 inversion applies to the primary mask before the selected operation.
 
 Results are exported as opaque grayscale RGB images. **Use result as inpaint
-mask** can reuse an 8-bit PNG result against its matching 8-bit sRGB source in
-the Editor. The canonical Editor handoff currently rejects precision PNG16/EXR
-masks or sources; retain the original and make an explicit working copy when an
-8-bit Editor selection is needed. PNG16/EXR mask exports retain their precision
-for other consumers. Color-key extraction uses native rounded RGB8 equality;
+mask** restores the matching owned source and derives an 8-bit scalar selection,
+including from precision PNG16/EXR results. The original source and precision
+result remain in history; no manual working-copy export is needed.
+Color-key extraction uses native rounded RGB8 equality;
 it ignores source alpha. Extracting the alpha channel is a separate operation.
+
+Editor mask requests use sRGB as the scalar-data output convention even after
+an HDR image export. Supported selected PNG/EXR container and precision choices
+are retained, and the shared format draft is unchanged. Direct API capture keeps
+its strict output validation; it does not silently repair invalid format choices.
 
 ## Source and request contract
 

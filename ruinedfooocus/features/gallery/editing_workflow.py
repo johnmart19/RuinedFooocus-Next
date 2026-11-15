@@ -177,9 +177,20 @@ def _automatic_adjustment_output(data, original, action):
         format_settings,
     )
 
-    if data.get("_editor_output_explicit") is not False:
+    explicit = data.get("_editor_output_explicit")
+    if type(explicit) is not bool:
         return
     choice = format_settings(data)
+    if action == "image-mask" and choice["output_format"] in ("png", "exr"):
+        if choice["output_color_space"] != "sRGB":
+            choice = dict(choice, output_color_space="sRGB")
+            data.update(choice)
+            data["image_source"]["output_selection"] = dict(
+                policy="scalar Editor mask output without color conversion",
+                selected=choice.copy(),
+            )
+    if explicit:
+        return
     if choice != format_settings():
         return
     pixels = original.pixels if isinstance(original, ImportedImage) else np.asarray(original)
