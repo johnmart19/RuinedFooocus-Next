@@ -216,7 +216,7 @@ def moe_cache_cpu_share_capability(
         "effective_share": None,
         "arguments": (),
         "extra_arguments": tuple(extra if supported else filtered),
-        "reason": "Load a native runtime exposing this parser option. The pinned b12110 runtime lacks it.",
+        "reason": "Load a native runtime exposing this parser option; support has not been established for the selected runtime.",
     }
     if not native:
         return {

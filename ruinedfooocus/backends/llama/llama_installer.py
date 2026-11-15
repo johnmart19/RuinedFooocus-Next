@@ -19,6 +19,9 @@ from ruinedfooocus.packaging.startup_options import skip_dependency_install
 from ruinedfooocus.backends.llama.runtime_policy import preferred_backend
 
 VERSION = "b12366"
+# These native CLI contracts are also supported by llama_server. Reuse is
+# limited to CPU/Vulkan, whose environment needs no version-specific SDK.
+COMPATIBLE_CACHED_VERSIONS = ("b12327", "b12110")
 CUDA_BACKEND = "CUDA 13.5"
 RELEASES = "https://api.github.com/repos/ggml-org/llama.cpp/releases/tags/"
 
@@ -479,6 +482,48 @@ def package_directory(package, *, version=VERSION):
     )
 
 
+def _compatible_receipt(directory, package, version):
+    """Check saved acquisition identity only; loading still hashes the payload."""
+    try:
+        saved = json.loads((directory / "rf-runtime.json").read_text(encoding="utf-8"))
+        archives = saved.get("archives")
+        if (
+            saved.get("version") != version
+            or saved.get("package") != package
+            or not isinstance(saved.get("files"), dict)
+            or not saved["files"]
+            or not isinstance(archives, list)
+            or len(archives) != 1
+            or not isinstance(archives[0], dict)
+        ):
+            return False
+        archive = archives[0]
+        pinned = _pinned_archives(package, version)
+        return (
+            archive.get("name") == package
+            and archive.get("url")
+            == f"https://github.com/ggml-org/llama.cpp/releases/download/{version}/{package}"
+            and isinstance(archive.get("sha256"), str)
+            and re.fullmatch(r"[0-9a-f]{64}", archive["sha256"]) is not None
+            and (pinned is None or archives == pinned)
+        )
+    except (OSError, ValueError, AttributeError):
+        return False
+
+
+def runtime_package(system, machine, gpu, backend, *, allow_compatible=False):
+    """Select a bounded installed package without downloads or native probes."""
+    package = package_name(system, machine, gpu, False, backend)
+    directory = package_directory(package)
+    if allow_compatible and not os.path.lexists(directory) and backend in ("CPU", "Vulkan"):
+        for version in COMPATIBLE_CACHED_VERSIONS:
+            old_package = package_name(system, machine, gpu, False, backend, version=version)
+            old_directory = package_directory(old_package, version=version)
+            if old_directory.is_dir() and _compatible_receipt(old_directory, old_package, version):
+                return version, old_package, old_directory
+    return VERSION, package, directory
+
+
 def server_path(
     gpu=True, backend="Auto", *, acquire=True, progress_callback=None, check_cancelled=None
 ):
@@ -502,23 +547,23 @@ def server_path(
         return executable
     if gpu:
         validate_cuda_backend(backend)
-    package = package_name(
+    version, package, directory = runtime_package(
         platform.system(),
         platform.machine(),
         gpu,
-        False,
         backend,
+        allow_compatible=not acquire or skip_dependency_install(),
     )
-    directory = package_directory(package)
     from ruinedfooocus.packaging.install_lock import installation_lock
 
-    _emit(progress_callback, "resolving_runtime", backend=backend, package=package)
+    _emit(progress_callback, "resolving_runtime", backend=backend, package=package, version=version)
     # Fail promptly rather than block cancellation behind another installer.
     with installation_lock(directory, timeout=0):
         return _install_server(
             directory,
             package,
             acquire=acquire,
+            version=version,
             backend=backend,
             **_callbacks(progress_callback, check_cancelled),
         )

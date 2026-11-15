@@ -31,6 +31,17 @@ plan and free space for the exact installation root first. On failure, preserve
 the source and reconcile the reported collision/incomplete payload explicitly.
 After migration, existing loaders still check their original runtime/version and
 provider receipts; moving bytes grants no new device or model qualification.
+When acquisition is disabled and the current llama.cpp package directory is
+absent, CPU/Vulkan discovery can reuse the already supported `b12327` or `b12110`
+package for the same platform, architecture and backend. It requires the saved
+acquisition receipt, canonical official archive identity and unchanged payload
+hashes; source-pinned archive digests are also checked where available. This does
+not authorize arbitrary older builds. Existing current-pin directories, explicit
+updated selections and custom `LLAMA_SERVER` paths retain precedence. A corrupt
+current installation fails rather than being hidden by an older installation.
+Hardware inventory shares this bounded discovery but checks receipt metadata
+only; activation verifies payload hashes and retains the existing device checks.
+Inventory presence therefore grants no integrity or GPU qualification.
 Owned SDK active-directory pointers are rebased to the copied sibling; arbitrary
 external paths and original receipts remain unchanged.
 
@@ -53,5 +64,5 @@ The runtime migration alone does not make every old cache directory disposable.
 Focused fixtures use private inert bundles and the CPU guard:
 
 ```powershell
-D:/RuinedFooocus/venv/Scripts/python.exe tools/check_cpu.py test_runtime_publication.py test_native_runtime_paths.py test_installer_llama.py test_llama_update.py test_wsl_llama_bridge.py test_onnx_installer.py
+D:/RuinedFooocus/venv/Scripts/python.exe tools/check_cpu.py test_runtime_publication.py test_native_runtime_paths.py test_installer_llama.py test_cached_llama_runtime.py test_llama_update.py test_wsl_llama_bridge.py test_onnx_installer.py
 ```

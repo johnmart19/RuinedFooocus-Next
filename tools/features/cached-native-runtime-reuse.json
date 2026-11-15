@@ -1,0 +1,15 @@
+{
+  "id": "cached-native-runtime-reuse",
+  "subject": "Reuse verified compatible Chat runtimes when installation is disabled",
+  "requires": ["native-runtime-storage"],
+  "tests": [
+    "test_cached_llama_runtime.py",
+    "test_installer_llama.py",
+    "test_llama_moe_cache_share.py",
+    "test_hardware_inventory.py",
+    "test_llama_update.py",
+    "test_llama_server.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

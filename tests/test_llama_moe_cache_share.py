@@ -187,7 +187,7 @@ class MoeCacheShareTests(unittest.TestCase):
         self.assertTrue(state["requested_enabled"])
         self.assertFalse(state["supported"])
         self.assertFalse(state["active"])
-        self.assertIn("b12110", state["reason"])
+        self.assertIn("selected runtime", state["reason"])
 
     def test_positive_parser_detection_is_signature_cached_and_invalidates_on_replace(self):
         with tempfile.TemporaryDirectory() as directory:

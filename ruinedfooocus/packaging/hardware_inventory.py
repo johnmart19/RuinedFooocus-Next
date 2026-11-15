@@ -394,10 +394,11 @@ def llama_cached_servers(system=None, machine=None):
         if backend in ("Auto",) or backend.startswith("CUDA (local"):
             continue
         try:
-            package = installer.package_name(system, machine, True, False, backend)
+            _, _, directory = installer.runtime_package(
+                system, machine, backend != "CPU", backend, allow_compatible=True
+            )
         except RuntimeError:
             continue
-        directory = installer.package_directory(package)
         if directory.is_dir():
             matches = list(directory.rglob(executable))
             if matches:
