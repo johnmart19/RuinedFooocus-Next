@@ -153,7 +153,7 @@ python tools/build_source_archive.py --output dist/RuinedFooocus-source.zip
 
 Build only after committing. Verify the archive's revision metadata and Git blob
 contents, including docs and translations. The ZIP retains the tracked model
-folder README and approved placement markers up to 16 KiB each. Weights, local
+folder README up to 16 KiB; placement markers are excluded. Weights, local
 model bundles, settings, environments and private evidence are excluded.
 Portable GPU runtime qualification is separate. See
 [runtime support](runtime-and-troubleshooting.md).

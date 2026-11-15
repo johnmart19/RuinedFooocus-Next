@@ -70,6 +70,9 @@ class DistributionTests(unittest.TestCase):
         marker = self.repo / "models/diffusers/put_local_diffusers_bundles_here"
         marker.write_text("uncommitted placement text", encoding="utf-8")
         self.git("add", str(marker))
+        readme = self.repo / "models/README.md"
+        readme.write_text("uncommitted model guide", encoding="utf-8")
+        self.git("add", str(readme))
         result = build_source_archive(self.repo, output, revision)
         with zipfile.ZipFile(output) as archive:
             names = archive.namelist()
@@ -83,23 +86,15 @@ class DistributionTests(unittest.TestCase):
             )
             self.assertEqual(
                 {name for name in names if name.startswith("models/") and not name.endswith("/")},
-                {
-                    "models/README.md",
-                    "models/background_removal/put_birefnet_models_here",
-                    "models/diffusers/put_local_diffusers_bundles_here",
-                    "models/inbox/Place_models_to_be_sorted_here",
-                },
+                {"models/README.md"},
             )
             self.assertNotIn("models/clip/", names)
             self.assertNotIn("models/diffusers/example/", names)
-            self.assertEqual(
-                archive.read("models/diffusers/put_local_diffusers_bundles_here"),
-                b"Place local bundles here.\n",
-            )
+            self.assertEqual(archive.read("models/README.md"), b"# Model folders\n")
             extracted = self.root / "extracted"
             archive.extractall(extracted)
             for directory in ("background_removal", "diffusers", "inbox"):
-                self.assertTrue((extracted / "models" / directory).is_dir())
+                self.assertFalse((extracted / "models" / directory).exists())
             self.assertNotIn("nested/PRIVATE.GGUF", names)
             self.assertNotIn("AGENTS.md", names)
             self.assertEqual(len(names), len(set(names)))
@@ -114,7 +109,7 @@ class DistributionTests(unittest.TestCase):
         target = self.repo / "link-target"
         target.write_text("../private.safetensors", encoding="utf-8")
         blob = self.git("hash-object", "-w", str(target)).decode().strip()
-        symlink = "models/checkpoints/put_checkpoints_here"
+        symlink = "models/README.md"
         self.git("update-index", "--add", "--cacheinfo", f"120000,{blob},{symlink}")
         directory = self.repo / "models/loras/put_loras_here"
         directory.mkdir(parents=True)
@@ -134,9 +129,33 @@ class DistributionTests(unittest.TestCase):
             self.assertNotIn(symlink, archive.namelist())
             self.assertFalse(any(name.startswith("models/loras/") for name in archive.namelist()))
             self.assertNotIn("models/vae/put_vae_here", archive.namelist())
-            self.assertEqual(
-                archive.getinfo("models/vae_approx/put_approximate_vae_decoders_here").file_size,
-                16 * 1024,
+            self.assertNotIn(
+                "models/vae_approx/put_approximate_vae_decoders_here", archive.namelist()
+            )
+
+    def test_readme_size_limit_and_directory_exclusion_are_preserved(self):
+        readme = self.repo / "models/README.md"
+        for size in (16 * 1024, 16 * 1024 + 1):
+            with self.subTest(size=size):
+                readme.write_bytes(b"x" * size)
+                self.git("add", str(readme))
+                self.commit()
+                output = self.root / f"readme-{size}.zip"
+                build_source_archive(self.repo, output)
+                with zipfile.ZipFile(output) as archive:
+                    self.assertEqual("models/README.md" in archive.namelist(), size == 16 * 1024)
+                    if size == 16 * 1024:
+                        self.assertEqual(archive.getinfo("models/README.md").file_size, size)
+        readme.unlink()
+        readme.mkdir()
+        (readme / "private.txt").write_text("private nested data", encoding="utf-8")
+        self.git("add", "-A", str(readme))
+        self.commit()
+        output = self.root / "readme-directory.zip"
+        build_source_archive(self.repo, output)
+        with zipfile.ZipFile(output) as archive:
+            self.assertFalse(
+                any(name.startswith("models/README.md") for name in archive.namelist())
             )
 
     def test_existing_artifact_is_never_overwritten_or_deleted(self):

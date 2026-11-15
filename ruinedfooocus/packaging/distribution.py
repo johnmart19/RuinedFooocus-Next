@@ -27,52 +27,32 @@ USER_DIRECTORIES = (
     ".agents",
 )
 WEIGHT_SUFFIXES = (".safetensors", ".ckpt", ".gguf", ".pth", ".pt", ".onnx", ".bin")
-MAX_MODEL_PLACEMENT_BYTES = 16 * 1024
-MODEL_PLACEMENT_FILES = (
-    "models/README.md",
-    "models/background_removal/put_birefnet_models_here",
-    "models/checkpoints/put_checkpoints_here",
-    "models/clip_vision/put_clip_vision_models_here",
-    "models/controlnet/put_controlnets_and_t2i_here",
-    "models/diffusers/put_local_diffusers_bundles_here",
-    "models/diffusion_models/put_image_diffusion_models_here",
-    "models/embeddings/put_textual_inversion_embeddings_here",
-    "models/faceswap/put_gfpgan_face_restore_here",
-    "models/geometry_estimation/put_depth_estimation_models_here",
-    "models/inbox/Place_models_to_be_sorted_here",
-    "models/llm/put_llama_cpp_models_here",
-    "models/loras/put_loras_here",
-    "models/photomaker/put_photomaker_models_here",
-    "models/style_models/put_reference_style_models_here",
-    "models/text_encoders/put_text_encoder_models_here",
-    "models/upscale_models/put_esrgan_and_other_upscale_models_here",
-    "models/vae/put_vae_here",
-    "models/vae_approx/put_approximate_vae_decoders_here",
-)
+MAX_MODEL_DOCUMENTATION_BYTES = 16 * 1024
+MODEL_DOCUMENTATION_FILES = ("models/README.md",)
 
 
 def git(root, *arguments):
     return subprocess.check_output(["git", "-C", str(root), *arguments])
 
 
-def _append_model_placement(root, commit, archive):
+def _append_model_documentation(root, commit, archive):
     # Match regular file entries at the selected revision, not working-tree paths.
     files = []
-    entries = git(root, "ls-tree", "-rlz", commit, "--", *MODEL_PLACEMENT_FILES)
+    entries = git(root, "ls-tree", "-rlz", commit, "--", *MODEL_DOCUMENTATION_FILES)
     for entry in entries.split(b"\0"):
         attributes, _, path = entry.partition(b"\t")
         if (
             attributes.startswith(b"100644 blob ")
-            and int(attributes.rsplit(maxsplit=1)[1]) <= MAX_MODEL_PLACEMENT_BYTES
+            and int(attributes.rsplit(maxsplit=1)[1]) <= MAX_MODEL_DOCUMENTATION_BYTES
         ):
             name = path.decode("utf-8", errors="surrogateescape")
-            if name in MODEL_PLACEMENT_FILES:
+            if name in MODEL_DOCUMENTATION_FILES:
                 files.append(name)
     if files:
-        placement = git(
+        documentation = git(
             root, "-c", "core.autocrlf=false", "archive", "--format=zip", commit, "--", *files
         )
-        with zipfile.ZipFile(BytesIO(placement)) as source:
+        with zipfile.ZipFile(BytesIO(documentation)) as source:
             for entry in source.infolist():
                 archive.writestr(entry, source.read(entry))
 
@@ -126,7 +106,7 @@ def build_source_archive(root, output, ref="HEAD"):
                 check=True,
             )
             with zipfile.ZipFile(destination, "a", compression=zipfile.ZIP_DEFLATED) as archive:
-                _append_model_placement(root, commit, archive)
+                _append_model_documentation(root, commit, archive)
                 names = archive.namelist()
                 if len(names) != len(set(names)):
                     raise ValueError("Archive contains duplicate paths")
@@ -135,10 +115,10 @@ def build_source_archive(root, output, ref="HEAD"):
                 if any(
                     name.startswith("models/")
                     and not name.endswith("/")
-                    and name not in MODEL_PLACEMENT_FILES
+                    and name not in MODEL_DOCUMENTATION_FILES
                     for name in names
                 ):
-                    raise ValueError("Source archives can include only model placement files")
+                    raise ValueError("Source archives can include only model documentation")
                 entry = zipfile.ZipInfo(
                     "distribution.json", date_time=archive.infolist()[0].date_time
                 )

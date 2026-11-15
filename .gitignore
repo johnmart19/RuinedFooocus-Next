@@ -70,5 +70,4 @@ node_modules/
 /models/**
 !/models/
 !/models/**/
-!/models/**/put_*_here
 !/models/README.md
