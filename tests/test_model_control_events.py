@@ -44,11 +44,11 @@ class ModelControlGraph:
 
         self.publisher = SimpleNamespace(
             refresh=Mock(side_effect=refresh),
-            cached_resolution=Mock(
+            cached_resolutions=Mock(
                 side_effect=lambda _: (
-                    (self.cached_size, "fresh cached recommendation")
+                    ([self.cached_size], "fresh cached recommendation")
                     if self.cached_size
-                    else (None, None)
+                    else ([], None)
                 )
             ),
             metadata=Mock(return_value={}),
@@ -235,7 +235,7 @@ class ModelControlEventTests(unittest.TestCase):
         graph = ModelControlGraph(self)
         graph.run()
         self.assertEqual(graph.resolutions.model_selection.call_count, 1, graph.trace)
-        self.assertEqual(graph.publisher.cached_resolution.call_count, 2)
+        self.assertEqual(graph.publisher.cached_resolutions.call_count, 2)
         self.assertEqual(
             graph.trace,
             [
@@ -316,7 +316,7 @@ class ModelControlEventTests(unittest.TestCase):
                 self.assertEqual(graph.value("model_family"), "Flux3")
                 self.assertEqual(
                     graph.value("aspect_ratios_selection"),
-                    "1024x1024 (Generic fallback)" if automatic else "832x1216",
+                    "1024x1024 (Generic fallback)" if automatic else "832x1216 (Generic fallback)",
                 )
                 self.assertEqual(graph.value("resolution_auto"), automatic)
                 self.assertEqual(graph.resolutions.model_selection.call_count, 1)

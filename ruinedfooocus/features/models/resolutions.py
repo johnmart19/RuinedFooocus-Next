@@ -176,36 +176,41 @@ class ResolutionSettings:
                 label = f"{width}x{height} ({family} recommended)"
                 self.aspect_ratios[label] = (width, height)
                 choices.append(label)
-        if not choices and not recommended:
-            label = "1024x1024 (Generic fallback)"
-            self.aspect_ratios[label] = (1024, 1024)
-            self.aspect_ratios["1024x1024"] = (1024, 1024)
-            choices.append(label)
+        if not recommended:
+            # Unknown models still need practical orientations, without claiming
+            # that generic defaults were published for that checkpoint.
+            recommended = self.recommended_sizes("SDXL") or [(1024, 1024), (832, 1216), (1216, 832)]
+            for width, height in recommended:
+                label = f"{width}x{height} (Generic fallback)"
+                self.aspect_ratios[label] = (width, height)
+                self.aspect_ratios[f"{width}x{height}"] = (width, height)
+                if not any(self.aspect_ratios[value] == (width, height) for value in choices):
+                    choices.append(label)
         choices.sort(key=lambda value: self.aspect_ratios[value] not in recommended)
         return choices + [self.CUSTOM_RESOLUTION]
 
     def recommendation(self, family, checkpoint=None, performance=None):
         """Read bounded, local recommendation data without fetching or sampling."""
         import re
-        from ruinedfooocus.features.models.model_recommendations import FAMILY_PRESETS
+        from ruinedfooocus.features.models.model_recommendations import (
+            FAMILY_PRESETS,
+            published_resolutions,
+        )
 
+        publisher_sizes, publisher_source = [], None
         if performance is not None and checkpoint:
-            size, source = performance.model_recommendations.cached_resolution(checkpoint)
-            if size:
-                return [size], source
+            publisher_sizes, publisher_source = (
+                performance.model_recommendations.cached_resolutions(checkpoint)
+            )
             metadata = performance.model_recommendations.metadata(checkpoint)
-            config = metadata.get("generationConfig", {})
             if (
-                source is None
-                and isinstance(config, dict)
+                publisher_source is None
                 and not metadata.get("_rf_stale_native_family")
                 and self._current_metadata(checkpoint, metadata)
             ):
-                size = config.get("width"), config.get("height")
-                if all(
-                    type(value) is int and 256 <= value <= 4096 and value % 2 == 0 for value in size
-                ):
-                    return [size], "Cached publisher generation settings"
+                publisher_sizes = published_resolutions(metadata)
+                if publisher_sizes:
+                    publisher_source = "Cached publisher resolution recommendations"
             preset = performance.family_preset(family, checkpoint)
         else:
             preset = FAMILY_PRESETS.get(family, family)
@@ -226,7 +231,15 @@ class ResolutionSettings:
                 default = tuple(default)
                 sizes = [default] + [size for size in sizes if size != default]
             source = model_recipe.get("provenance", {}).get("label", f"Local {preset} recipe")
-            return sizes, source
+            if publisher_sizes:
+                source = (
+                    f"{publisher_source}; {source}"
+                    if any(size not in publisher_sizes for size in sizes)
+                    else publisher_source
+                )
+            return list(dict.fromkeys(publisher_sizes + sizes)), source
+        if publisher_sizes:
+            return publisher_sizes, publisher_source
         example_reader = getattr(performance, "native_example", None)
         if checkpoint and callable(example_reader):
             example = example_reader(family, checkpoint)

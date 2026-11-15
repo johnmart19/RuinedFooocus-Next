@@ -15,6 +15,24 @@ It never inherits a claim about an exact artifact's visual quality or hardware
 qualification. Explicit checkpoint overrides remain last in the sampling merge;
 current saved dimensions remain a user decision.
 
+Resolution recommendations keep an explicit publisher default first, retain the
+full downloaded size list, then append distinct sizes from the compatible family
+recipe. One cached square no longer hides portrait and landscape presets. Hash
+and current-file signature checks still apply; acquisition uses the existing
+bounded metadata refresh, never dropdown rendering. Resolution-only HF cards do
+not trigger extra parent-repository searches. Offline mode reuses local lists.
+Common SDXL derivatives, Anima, FLUX.1, SD3.5 and Z-Image presets include nine
+local aspect buckets; Kontext uses the 17 preferred sizes from pinned ComfyUI
+`nodes_flux.py`. Local buckets are recorded separately from publisher geometry;
+Anima buckets stay within its publisher's 512²–1536² pixel range. Layered Qwen
+and fixed-scale PiD keep their specialized geometry. Unknown models receive
+generic square, portrait and landscape choices, plus Custom.
+
+Sources checked 2026-11-15: [Stability's SDXL aspect table](https://github.com/Stability-AI/generative-models/blob/main/scripts/demo/sampling.py),
+[Anima generation settings](https://huggingface.co/circlestone-labs/Anima), and the
+pinned native ComfyUI source. These presets do not claim image-quality acceptance
+for every checkpoint or replace explicit user dimensions.
+
 Missing optional checkpoint recommendations do not block a currently recognized,
 connected ordinary native image route. Model Defaults uses existing family
 settings or fresh app defaults and labels that source as a fallback, without
@@ -27,7 +45,7 @@ settings as `sampling_defaults_source`; Own settings clears the automatic label.
 
 The retained 26 image presets are projected from indexed image resources. The
 compatibility snapshot and its index share canonical digest
-`5dde2b88f603d0cc76a070fbaddac7f0ed9c3894e8eb83a33ee44c09c9d7beb9`.
+`92d51b63b840e70e2b076a0806864161c0ed3f97ad46ff47e491c909b1d12707`.
 The eight video presets and dedicated resolution data are retired. Existing saved
 video-only rows are ignored and preserved when a profile is written; shared rows
 with valid image consumers retain their image settings. The current index has

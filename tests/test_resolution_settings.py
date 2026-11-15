@@ -65,7 +65,7 @@ class ResolutionSettingsTests(unittest.TestCase):
         self.addCleanup(local.stop)
         self.resolutions = ResolutionSettings()
         self.publisher = SimpleNamespace(
-            metadata=Mock(return_value={}), cached_resolution=Mock(return_value=(None, None))
+            metadata=Mock(return_value={}), cached_resolutions=Mock(return_value=([], None))
         )
         self.performance = SimpleNamespace(
             model_recommendations=self.publisher, family_preset=Mock(return_value="SDXL")
@@ -146,7 +146,10 @@ class ResolutionSettingsTests(unittest.TestCase):
         }
         self.publisher.metadata.return_value = metadata
         sizes, source = self.resolutions.recommendation("SDXL", str(model), self.performance)
-        self.assertEqual(sizes, [(896, 1152)])
+        self.assertEqual(sizes[0], (896, 1152))
+        self.assertIn((832, 1216), sizes)
+        self.assertIn((1216, 832), sizes)
+        self.assertEqual(len(sizes), len(set(sizes)))
         self.assertIn("publisher", source)
         model.write_bytes(b"replacement with distinct signature")
         self.assertEqual(
@@ -168,11 +171,12 @@ class ResolutionSettingsTests(unittest.TestCase):
                     self.resolutions.recommended_sizes("SDXL", str(model), self.performance)[0],
                     (1024, 1024),
                 )
-        self.publisher.cached_resolution.return_value = ((768, 1024), "Civitai version 123")
-        self.assertEqual(
-            self.resolutions.recommendation("SDXL", str(model), self.performance),
-            ([(768, 1024)], "Civitai version 123"),
-        )
+        self.publisher.cached_resolutions.return_value = ([(768, 1024)], "Civitai version 123")
+        sizes, source = self.resolutions.recommendation("SDXL", str(model), self.performance)
+        self.assertEqual(sizes[0], (768, 1024))
+        self.assertIn("Civitai version 123", source)
+        self.assertIn("Local SDXL family recipe", source)
+        self.assertIn((1216, 832), sizes)
 
     def test_successful_refresh_with_no_size_does_not_resurrect_old_local_publisher_size(self):
         model = self.root / "model.safetensors"
@@ -181,7 +185,7 @@ class ResolutionSettingsTests(unittest.TestCase):
             "_rf_file_signature": file_signature(model),
             "generationConfig": {"width": 896, "height": 1152},
         }
-        self.publisher.cached_resolution.return_value = (None, "Civitai version 123")
+        self.publisher.cached_resolutions.return_value = ([], "Civitai version 123")
         sizes, source = self.resolutions.recommendation("SDXL", str(model), self.performance)
         self.assertEqual((sizes[0], source), ((1024, 1024), "Local SDXL family recipe"))
 

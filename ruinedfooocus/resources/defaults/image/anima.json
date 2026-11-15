@@ -12,7 +12,17 @@
     "scheduler": "normal",
     "clip_skip": 1
   },
-  "recommended_sizes": [[1024, 1024]],
+  "recommended_sizes": [
+    [1024, 1024],
+    [832, 1216],
+    [1216, 832],
+    [896, 1152],
+    [1152, 896],
+    [768, 1344],
+    [1344, 768],
+    [640, 1536],
+    [1536, 640]
+  ],
   "default_size": [1024, 1024],
   "applicability": {
     "behavioral_variants": ["base"],
@@ -40,6 +50,12 @@
     "sampler_name": "euler",
     "scheduler": "normal",
     "clip_skip": 1,
-    "recommended_resolutions": "1024x1024; Anima family fallback, verify your exact checkpoint"
+    "recommended_resolutions": "1024x1024, 832x1216, 1216x832, 896x1152, 1152x896, 768x1344, 1344x768, 640x1536, 1536x640"
+  },
+  "resolution_provenance": {
+    "kind": "local_aspect_buckets",
+    "label": "Local aspect buckets near the family default pixel area",
+    "source_url": "https://huggingface.co/circlestone-labs/Anima",
+    "note": "Local aspect buckets within the publisher 512^2 to 1536^2 pixel range."
   }
 }

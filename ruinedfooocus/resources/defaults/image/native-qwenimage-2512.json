@@ -12,7 +12,11 @@
     "scheduler": "simple",
     "clip_skip": 1
   },
-  "recommended_sizes": [[1328, 1328]],
+  "recommended_sizes": [
+    [1328, 1328],
+    [1664, 928],
+    [928, 1664]
+  ],
   "default_size": [1328, 1328],
   "applicability": {
     "native_class": "QwenImage",
@@ -57,5 +61,9 @@
       "values": ["Qwen-Image-2512-Lightning-4steps-V1.0-fp32.safetensors", 1]
     }
   ],
-  "legacy": null
+  "legacy": null,
+  "resolution_provenance": {
+    "kind": "local_family_recipe",
+    "label": "Qwen Image family aspect buckets"
+  }
 }

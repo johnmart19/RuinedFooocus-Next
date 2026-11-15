@@ -496,9 +496,12 @@ controls; prompt, adapter selections, manual sampling and size overrides remain
 owned by their existing controls.
 
 Successful exact-version recommendation refreshes also cache explicit
-`generationConfig.width/height`: each must be an even integer from 256 through 4096. No size is inferred from gallery examples, dtype or model-card prose.
-`ModelRecommendations.cached_resolution` is read-only and returns size plus
-provenance; a successful refresh with no published size clears the old size,
+`generationConfig.width/height`, structured recommended/supported resolution lists,
+and bounded lists/tables in explicitly named recommended/supported size sections
+of the pinned model card. Each dimension must be an even integer from 256 through 4096. Gallery examples, code snippets and arbitrary card dimensions cast no vote.
+`ModelRecommendations.cached_resolutions` reads the complete list plus provenance
+without networking; `cached_resolution` remains a first-size compatibility reader.
+A successful refresh with no published size clears the old size,
 while a failed or offline refresh retains it. A stale signed source cannot
 contribute resolution or sampling recommendations. The resolution consumer keeps
 explicit user dimensions ahead of suggestions and reports the chosen source.

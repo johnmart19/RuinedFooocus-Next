@@ -16,7 +16,7 @@ from pathlib import Path
 from ruinedfooocus.core.config_io import save_json
 
 FIELDS = ("custom_steps", "cfg", "sampler_name", "scheduler", "clip_skip")
-RECOMMENDATION_SCHEMA = 6
+RECOMMENDATION_SCHEMA = 7
 QWEN_IMAGE21_FAMILIES = ("QwenImage21", "Qwen Image 2.1")
 _QWEN_IMAGE21_WORKFLOW = "https://comfy.org/hub/workflows/qwen-image-2-1-image-edit-5fbe136ba6f9/"
 _QWEN_IMAGE21_TURBO_WORKFLOW = (
@@ -106,6 +106,79 @@ def published_resolution(metadata):
         if all(type(value) is int and 256 <= value <= 4096 and value % 2 == 0 for value in size)
         else None
     )
+
+
+def published_resolutions(metadata):
+    """Explicit publisher lists only; arbitrary workflow/example dimensions are ignored."""
+    if not isinstance(metadata, dict):
+        return []
+    sizes = []
+
+    def add(value):
+        if isinstance(value, str):
+            match = re.fullmatch(r"\s*(\d{3,4})\s*[xX×]\s*(\d{3,4})\s*", value)
+            value = tuple(map(int, match.groups())) if match else None
+        if not isinstance(value, (list, tuple)) or len(value) != 2:
+            return
+        size = published_resolution({"generationConfig": dict(zip(("width", "height"), value))})
+        if size and size not in sizes and len(sizes) < 128:
+            sizes.append(size)
+
+    add(published_resolution(metadata))
+    config = metadata.get("generationConfig", {})
+    for owner in (config, metadata):
+        if not isinstance(owner, dict):
+            continue
+        for key in ("recommended_resolutions", "recommended_sizes", "supported_resolutions"):
+            values = owner.get(key, [])
+            if isinstance(values, list):
+                for value in values[:128]:
+                    add(
+                        (value.get("width"), value.get("height"))
+                        if isinstance(value, dict)
+                        else value
+                    )
+    description = metadata.get("description", "")
+    if not isinstance(description, str):
+        return sizes
+    # HTML cards and Markdown tables share a bounded, explicitly named section.
+    text = unescape(description[:200000])
+    text = re.sub(r"</?(?:p|div|tr|h[1-6]|li)\b[^>]*>|<br\s*/?>", "\n", text, flags=re.I)
+    text = re.sub(r"</?(?:td|th)\b[^>]*>", "|", text, flags=re.I)
+    text = re.sub(r"<[^>]*>", " ", text)
+    section = 0
+    fenced = False
+    for line in text.splitlines():
+        if re.match(r"\s*```", line):
+            fenced = not fenced
+            section = 0
+            continue
+        if fenced:
+            continue
+        named = re.search(
+            r"\b(?:recommended|supported)\s+(?:(?:image|output|generation)\s+)?(?:resolutions?|sizes?)\b",
+            line,
+            re.I,
+        )
+        if named:
+            section = 20
+        elif section and re.match(r"\s*#{1,6}\s", line):
+            section = 0
+        if not section:
+            continue
+        section -= 1
+        if not named and not re.match(r"\s*(?:[-*+|]|\d{3,4}\s*[xX×])", line):
+            continue
+        for width, height in re.findall(r"(?<!\d)(\d{3,4})\s*[xX×]\s*(\d{3,4})(?!\d)", line):
+            add((int(width), int(height)))
+        # Markdown table columns: width | height (optionally preceded by a ratio).
+        if "|" in line:
+            cells = [cell.strip() for cell in line.split("|") if cell.strip()]
+            for first, second in zip(cells, cells[1:]):
+                if re.fullmatch(r"\d{3,4}", first) and re.fullmatch(r"\d{3,4}", second):
+                    add((int(first), int(second)))
+                    break
+    return sizes
 
 
 def verified_qwen_image21_variant(metadata):
@@ -531,6 +604,7 @@ class ModelRecommendations:
             isinstance(remote, dict) and type(remote.get("id")) is int and remote["id"] == version
         )
         remote_version = remote if matched else None
+        shared_sizes = []
         recommended = extract(remote, samplers, schedulers) if matched else {}
         source = f"Civitai version {version}" if matched else None
         source_url = None
@@ -561,7 +635,8 @@ class ModelRecommendations:
                     general = {
                         key: value for key, value in general.items() if key not in recommended
                     }
-                    if general:
+                    shared_sizes = published_resolutions(model)
+                    if general or shared_sizes:
                         source = (
                             source + "; " if recommended else ""
                         ) + "Civitai creator model card (shared across versions)"
@@ -602,7 +677,9 @@ class ModelRecommendations:
                 # Repackaged weights may link to the original creator's card.
                 # Follow a bounded set of HF repositories only when each contains
                 # exactly the same weights; never trust a link as model identity.
-                if not extract(hf, samplers, schedulers, metadata.get("baseModel")):
+                if not extract(
+                    hf, samplers, schedulers, metadata.get("baseModel")
+                ) and not published_resolutions(hf):
                     linked = re.findall(
                         r"https://huggingface\.co/([A-Za-z0-9][A-Za-z0-9._-]*/[A-Za-z0-9][A-Za-z0-9._-]*)",
                         str(hf.get("description") or "")[:200000],
@@ -619,8 +696,9 @@ class ModelRecommendations:
                     ][:3]
                     for candidate in candidates:
                         creator = huggingface_recommendations(candidate, sha256)
-                        if isinstance(creator, dict) and extract(
-                            creator, samplers, schedulers, metadata.get("baseModel")
+                        if isinstance(creator, dict) and (
+                            extract(creator, samplers, schedulers, metadata.get("baseModel"))
+                            or published_resolutions(creator)
                         ):
                             hf = creator
                             break
@@ -643,6 +721,7 @@ class ModelRecommendations:
                     source=source,
                     source_url=source_url,
                     resolution=published_resolution(remote),
+                    resolutions=list(dict.fromkeys(published_resolutions(remote) + shared_sizes)),
                     resolution_signature=metadata.get("_rf_file_signature"),
                 )
             save_json(self.path, data)
@@ -650,9 +729,14 @@ class ModelRecommendations:
 
     def cached_resolution(self, checkpoint):
         """Return exact cached publisher size/provenance, with no network lookup."""
+        sizes, source = self.cached_resolutions(checkpoint)
+        return (sizes[0] if sizes else None), source
+
+    def cached_resolutions(self, checkpoint):
+        """Read the complete publisher size list, bound to the current local file."""
         metadata = self.metadata(checkpoint)
         if metadata.get("_rf_stale_native_family"):
-            return None, None
+            return [], None
         with self.lock:
             entry = self.load().get(self.identity(checkpoint, metadata), {})
         signature = entry.get("resolution_signature")
@@ -661,17 +745,23 @@ class ModelRecommendations:
             or len(signature) != 4
             or signature != metadata.get("_rf_file_signature")
         ):
-            return None, None
+            return [], None
+        if "resolutions" in entry:
+            values = entry["resolutions"]
+            if not isinstance(values, list):
+                return [], None
+            sizes = published_resolutions({"recommended_sizes": values})
+            return sizes, entry.get("source") or "Cached publisher metadata"
         size = entry.get("resolution")
         if "resolution" in entry and size is None:
-            return None, entry.get("source") or "Cached publisher metadata"
+            return [], entry.get("source") or "Cached publisher metadata"
         if not isinstance(size, (list, tuple)) or len(size) != 2:
-            return None, None
+            return [], None
         checked = published_resolution({"generationConfig": dict(zip(("width", "height"), size))})
         return (
-            (checked, entry.get("source") or "Cached publisher metadata")
+            ([checked], entry.get("source") or "Cached publisher metadata")
             if checked
-            else (None, None)
+            else ([], None)
         )
 
     def recipe(self, checkpoint, samplers, schedulers, *, family=None):

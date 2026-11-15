@@ -12,7 +12,25 @@
     "scheduler": "simple",
     "clip_skip": 1
   },
-  "recommended_sizes": [[1024, 1024]],
+  "recommended_sizes": [
+    [1024, 1024],
+    [672, 1568],
+    [688, 1504],
+    [720, 1456],
+    [752, 1392],
+    [800, 1328],
+    [832, 1248],
+    [880, 1184],
+    [944, 1104],
+    [1104, 944],
+    [1184, 880],
+    [1248, 832],
+    [1328, 800],
+    [1392, 752],
+    [1456, 720],
+    [1504, 688],
+    [1568, 672]
+  ],
   "default_size": [1024, 1024],
   "applicability": {
     "native_class": "Flux",
@@ -55,5 +73,10 @@
       "values": [2.5]
     }
   ],
-  "legacy": null
+  "legacy": null,
+  "resolution_provenance": {
+    "kind": "native_preferred_sizes",
+    "source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy_extras/nodes_flux.py",
+    "constant": "PREFERRED_KONTEXT_RESOLUTIONS"
+  }
 }

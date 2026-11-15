@@ -154,7 +154,7 @@ class ResolutionTransitionTests(unittest.TestCase):
             self.assertTrue(automatic)
             performance = SimpleNamespace(
                 model_recommendations=SimpleNamespace(
-                    cached_resolution=lambda _: (None, None), metadata=lambda _: {}
+                    cached_resolutions=lambda _: ([], None), metadata=lambda _: {}
                 ),
                 family_preset=lambda *_: None,
             )
