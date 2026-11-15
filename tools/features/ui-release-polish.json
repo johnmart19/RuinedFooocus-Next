@@ -1,0 +1,13 @@
+{
+  "id": "ui-release-polish",
+  "subject": "Give Gradio's inner controls the app's radius, type and spacing scale",
+  "requires": ["chat-attach-and-switches"],
+  "tests": [
+    "test_responsive_ui_layout.py",
+    "test_native_image_formats.py",
+    "test_image_residual_ui_api.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

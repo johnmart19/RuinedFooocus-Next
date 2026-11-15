@@ -125,7 +125,7 @@ def create_library_ui(selected, manager):
         )
         controls = create_controls()
         export = gr.Button(t("Export selected image"), interactive=False)
-        download = gr.File(label=t("Exported image"), interactive=False)
+        download = gr.File(label=t("Exported image"), interactive=False, visible=False)
         upload = gr.File(
             label=t("Original still image"), file_types=[".png", ".exr", ".avif"], type="filepath"
         )
@@ -133,7 +133,9 @@ def create_library_ui(selected, manager):
         status = gr.Markdown()
         imported = gr.File(visible=False)
     export.click(
-        lambda record, *values: export_selection(record, *values, cache),
+        lambda record, *values: gr.update(
+            value=export_selection(record, *values, cache), visible=True
+        ),
         inputs=[selected, *controls.values()],
         outputs=download,
         concurrency_id="native-image-exports",

@@ -1042,3 +1042,64 @@
 #app-tabs #chat-conversation :is(.gr-group, .styler):not(.rf-chat-permission) {
   background: transparent !important;
 }
+/* ---- Release polish: one radius, type and spacing scale for Gradio's inner parts ---- */
+/* Choice chips, slider number boxes, reset buttons and tables use the small radius. */
+:is(#app-tabs, #image-stage) fieldset label,
+:is(#app-tabs, #image-stage) .tab-like-container,
+:is(#app-tabs, #image-stage) .table-wrap,
+:is(#app-tabs, #image-stage) .table-wrap .upload-container {
+  border-radius: var(--rf-radius-sm) !important;
+}
+:is(#app-tabs, #image-stage) .tab-like-container {
+  overflow: hidden;
+}
+:is(#app-tabs, #image-stage) .tab-like-container .reset-button {
+  border-radius: 0 !important;
+}
+:is(#app-tabs, #image-stage) fieldset label {
+  font-size: var(--text-sm) !important;
+}
+/* Small captions use the 12px step of the type scale. */
+:is(#app-tabs, #image-stage) .thumbnail-item .caption-label {
+  font-size: 12px !important;
+}
+/* Dropdown values end with an ellipsis before the arrow instead of running under it. */
+:is(#app-tabs, #image-stage) .wrap-inner input {
+  text-overflow: ellipsis;
+  min-inline-size: 0;
+}
+/* Fields stacked inside a card (accordion or group) sit on the card itself and are
+   spaced like every other stack, rather than drawing a second card with 0px gaps. */
+:is(#app-tabs, #image-stage) .gr-accordion .form {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  gap: 0.5rem !important;
+}
+:is(#app-tabs, #image-stage) .gr-accordion .gr-accordion {
+  border: 0 !important;
+  border-top: 1px solid var(--border-color-primary) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+/* An empty status message takes no room (its row would add a blank gap). */
+:is(#app-tabs, #image-stage) .block:has(> [data-testid="markdown-wrapper"] .md:empty) {
+  display: none !important;
+}
+/* An empty download slot shows only its label, not a tall drop area. */
+:is(#app-tabs, #image-stage) .block:has(> .file-preview-holder:empty),
+:is(#app-tabs, #image-stage) .block:has([data-testid="file"] .empty) {
+  min-height: 0 !important;
+}
+/* Editor's workspace column and Chat's conversation stack space their rows by
+   0.5rem like the other pages (Gradio's wrappers otherwise leave 1px). */
+#editor-workspace .column,
+#generation-workspace,
+#app-tabs #chat-conversation .styler {
+  gap: 0.5rem !important;
+}
+/* Image source buttons (upload, webcam, paste) are full-height in their bar;
+   Gradio's 12px margin would push them below the image card's edge. */
+:is(#app-tabs, #image-stage) .source-selection .icon {
+  margin-block: 0 !important;
+}

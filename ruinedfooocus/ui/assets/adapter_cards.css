@@ -108,7 +108,7 @@
 .adapter-card-default,
 .adapter-card-empty {
   color: var(--body-text-color-subdued);
-  font-size: 0.8em;
+  font-size: 12px;
 }
 .adapter-drop-zone {
   border: 1px dashed var(--border-color-primary);
