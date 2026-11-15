@@ -42,6 +42,9 @@ class PlanAcquisitionTransportTests(unittest.TestCase):
         self.manager.paths = {
             key: str(self.root / key.removeprefix("path_")) for key in PathManager.DEFAULT_PATHS
         }
+        # Missing custom mounts must not be created by request capture/transfer.
+        for category in ("clip", "vae"):
+            (self.root / category).mkdir()
         self.manager.model_paths = {}
         self.manager.DOWNLOADABLE_FILES = {}
         self.content = payload()
@@ -177,6 +180,13 @@ class PlanAcquisitionTransportTests(unittest.TestCase):
             self.assertIs(by_key[row.key].request, row.acquisition)
             self.assertEqual(row.catalogue_identity, download_identity(canonical[row.download_key]))
         json.dumps(plan.metadata(), allow_nan=False)
+        for component in plan.components:
+            if component.acquisition is not None:
+                request = component.acquisition
+                self.assertEqual(request.model_root, self.root / component.category)
+                self.assertNotIn("model_root", component.metadata()["acquisition"])
+                with self.assertRaises(AttributeError):
+                    request.model_root = self.root / "changed"
         ready = assets.prepare_image_assets(
             captured, check_cancelled=lambda: None, service=self.service()
         )

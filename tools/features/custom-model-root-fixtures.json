@@ -1,0 +1,28 @@
+{
+  "id": "custom-model-root-fixtures",
+  "subject": "Keep preparation capture read-only and model-root authority internal",
+  "requires": ["model-directory-recovery", "release-ui-fixture-contracts"],
+  "tests": [
+    "test_model_acquisition.py",
+    "test_model_acquisition_ui.py",
+    "test_model_ui_requests.py",
+    "test_plan_acquisition_transport.py",
+    "test_api_local_components.py",
+    "test_api_precomputed_guides.py",
+    "test_model_directory_recovery.py",
+    "test_atomic_lfm3_default.py",
+    "test_bernini_image_resources.py",
+    "test_effective_image_plan.py",
+    "test_effective_plan_local_components.py",
+    "test_effective_plan_transport.py",
+    "test_embedding_adapters.py",
+    "test_guide_control_resources.py",
+    "test_krea_style_asset_capture.py",
+    "test_krea_style_resources.py",
+    "test_pinned_image_acquisition_sources.py",
+    "test_wevisone_catalogue.py"
+  ],
+  "native_comfy": true,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+  "native_gguf": false
+}

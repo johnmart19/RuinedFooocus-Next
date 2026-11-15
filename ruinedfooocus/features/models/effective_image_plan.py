@@ -121,6 +121,8 @@ class ImagePlanComponent:
         result = asdict(self)
         if self.acquisition is not None:
             result["acquisition"]["destination"] = str(self.acquisition.destination)
+            # This root is immutable execution authority, not a public wire field.
+            result["acquisition"].pop("model_root")
         return result
 
 

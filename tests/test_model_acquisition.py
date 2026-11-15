@@ -35,6 +35,10 @@ class AcquisitionTests(unittest.TestCase):
         self.manager.paths = {
             key: str(self.root / key.removeprefix("path_")) for key in PathManager.DEFAULT_PATHS
         }
+        # Explicit custom roots are supplied by their owner, never by capture.
+        # Keep unrelated categories absent to retain the passive-browsing checks.
+        for category in ("checkpoints", "clip"):
+            (self.root / category).mkdir()
         self.manager.model_paths = {"cache_path": self.root / "cache"}
         self.manager.DOWNLOADABLE_FILES = {
             "checkpoints/a.safetensors": {

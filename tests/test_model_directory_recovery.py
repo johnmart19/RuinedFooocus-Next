@@ -161,14 +161,29 @@ class ModelDirectoryRecoveryTests(unittest.TestCase):
         self.assertFalse(custom.parent.exists())
         self.assertFalse((self.root / "models/text_encoders").exists())
 
-    def test_missing_custom_download_root_rejected_before_submit(self):
+    def test_missing_custom_capture_is_readonly_and_transfer_rejects_before_transport(self):
         custom = self.root / "unmounted/checkpoints"
         self.manager.paths["path_checkpoints"] = [str(custom)]
-        with patch("ruinedfooocus.core.preparation.preparation_service.submit") as submit:
-            with self.assertRaises(FileNotFoundError):
-                self.manager.prepare_file("fixture")
-        submit.assert_not_called()
+        with patch.object(
+            Path, "mkdir", side_effect=AssertionError("capture cannot create folders")
+        ):
+            request = self.manager.preparation_request("fixture")
+        self.assertEqual(request.model_root, custom)
         self.assertFalse(custom.parent.exists())
+        transport = Mock(side_effect=AssertionError("no transfer"))
+        with self.assertRaises(FileNotFoundError):
+            self.service(transport).submit(request).result(timeout=5)
+        transport.assert_not_called()
+        self.assertFalse(custom.parent.exists())
+
+    def test_default_capture_is_readonly_and_first_transfer_recovers_its_category(self):
+        with patch.object(
+            Path, "mkdir", side_effect=AssertionError("capture cannot create folders")
+        ):
+            request = self.manager.preparation_request("fixture")
+        self.assertEqual(request.model_root, self.root / "models/checkpoints")
+        self.assertFalse((self.root / "models").exists())
+        self.assertEqual(self.service().submit(request).result(timeout=5).read_bytes(), b"ok")
 
     def test_queued_custom_root_removed_before_transfer_is_not_recreated(self):
         custom = self.root / "custom"
@@ -183,6 +198,7 @@ class ModelDirectoryRecoveryTests(unittest.TestCase):
         self.assertFalse(custom.exists())
 
     def test_captured_default_transfer_recovers_deleted_root_and_installs_once(self):
+        self.manager.get_model_paths()
         request = self.manager.preparation_request("fixture")
         self.remove(self.root / "models")
         self.assertEqual(self.service().submit(request).result(timeout=5).read_bytes(), b"ok")
@@ -233,6 +249,7 @@ class ModelDirectoryRecoveryTests(unittest.TestCase):
         self.assertFalse((model_root / "checkpoints").exists())
 
     def test_queued_default_reparse_replacement_is_rejected_before_transfer(self):
+        self.manager.get_model_paths()
         request = self.manager.preparation_request("fixture")
         lstat = Path.lstat
         category = self.root / "models/checkpoints"

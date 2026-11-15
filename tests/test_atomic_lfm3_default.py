@@ -61,7 +61,7 @@ class AtomicLfm3DefaultTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             manager = PathManager.__new__(PathManager)
             manager.DOWNLOADABLE_FILES = self.downloads
-            manager.get_model_download_folder = lambda kind: Path(folder)
+            manager.paths = {"path_llm": folder}
             request = manager.preparation_request("llm/" + NAME)
             self.assertEqual(request.destination, (Path(folder) / NAME).resolve())
             self.assertEqual(request.expected_size, 1132208000)

@@ -162,25 +162,43 @@ class EmbeddingAdapterTests(unittest.TestCase):
             self.assertEqual(scope["sync_weight"](gallery, selected)["value"], expected)
         self.assertFalse(scope["sync_weight"]([], None)["visible"])
 
-    def test_configured_canonical_and_singular_roots_resolve_without_moving_or_mkdir(self):
-        with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, RF_DATA_DIR=folder):
+    def test_startup_creates_canonical_root_but_warm_embedding_lookup_does_not_mkdir(self):
+        with (
+            tempfile.TemporaryDirectory() as folder,
+            patch.dict(os.environ, RF_DATA_DIR=folder),
+            patch.object(PathManager, "DOWNLOADABLE_FILES", {}),
+        ):
             root = Path(folder).resolve()
             legacy = root / "models/embedding/lazypos.safetensors"
             legacy.parent.mkdir(parents=True)
             legacy.write_bytes(b"fixture stays here")
             before = legacy.read_bytes()
-            owner = PathManager.__new__(PathManager)
-            owner.paths = PathManager.DEFAULT_PATHS.copy()
-            owner.get_abspath_folder = Mock(return_value=root)
-            paths = owner.get_model_paths()
+            owner = PathManager()
+            canonical = root / "models/embeddings"
+            self.assertTrue(canonical.is_dir())  # Startup owns default-folder recovery.
+            self.assertEqual(legacy.read_bytes(), before)
+            canonical.rmdir()  # Empty owned fixture: passive lookup must not recreate it.
+            snapshot = {
+                path.relative_to(root): path.read_bytes() if path.is_file() else None
+                for path in root.rglob("*")
+            }
+            paths = owner.model_paths
             self.assertEqual(
                 paths["embedding_path"], [root / "models/embeddings", root / "models/embedding"]
             )
-            self.assertFalse((root / "models/embeddings").exists())
+            self.assertEqual(owner.get_model_folders("embeddings"), paths["embedding_path"])
+            self.assertFalse(canonical.exists())
             self.assertEqual(legacy.read_bytes(), before)
             owner.paths["path_embeddings"] = [str(root / "custom")]
-            self.assertEqual(owner.get_model_paths()["embedding_path"], [root / "custom"])
+            self.assertEqual(owner.get_model_folders("embeddings"), [root / "custom"])
             self.assertFalse((root / "custom").exists())
+            self.assertEqual(
+                {
+                    path.relative_to(root): path.read_bytes() if path.is_file() else None
+                    for path in root.rglob("*")
+                },
+                snapshot,
+            )
 
     def test_embedding_folder_setting_uses_multiline_list_contract(self):
         self.assertEqual(

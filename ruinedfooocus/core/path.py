@@ -448,8 +448,8 @@ class PathManager:
                     if explicit is None and published is not None:
                         info[field] = published
                 info["url"] = _registered_pinned_url(info, annotation["artifact"], file_key)
-        folder = self.get_model_download_folder(info["path"].removeprefix("path_"))
         if destination is None:
+            folder = self.get_model_download_folder(info["path"].removeprefix("path_"))
             destination = folder / info["filename"]
         # Explicit destinations may select a secondary configured root. Capture
         # that root so a queued transfer cannot revive it after it disappears.
@@ -461,7 +461,6 @@ class PathManager:
             ),
             Path(destination).parent,
         )
-        ensure_model_root(root, required=True)
         return PreparationRequest(
             info["url"],
             destination,
