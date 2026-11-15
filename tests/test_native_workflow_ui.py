@@ -122,6 +122,17 @@ class NativeWorkflowUI(unittest.TestCase):
         self.assertTrue(set(ui.FIELDS).issubset(ast.literal_eval(image_keys)))
         self.assertTrue(demo.fns)
 
+    def test_sdxl_refiner_automatic_controls_survive_real_component_preprocessing(self):
+        _, controls, _ = self.build({}, family="SDXL")
+        switch = controls["sdxl_refiner_switch_step"]
+        self.assertEqual(switch.value, 0)
+        self.assertEqual(switch.preprocess(0), 0)
+        cfg = controls["sdxl_refiner_cfg"]
+        self.assertIsNone(cfg.value)
+        self.assertIsNone(cfg.preprocess(None))
+        self.assertEqual(cfg.preprocess(0), 0)
+        self.assertTrue(cfg.allow_custom_value)
+
     def test_sdxl_refiner_context_preserves_explicit_zero_and_unavailable_source(self):
         defaults = dict(
             sdxl_refiner_model="Missing refiner",

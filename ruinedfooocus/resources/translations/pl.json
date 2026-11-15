@@ -268,6 +268,7 @@
   "common.resolution": "Rozdzielczość",
   "common.sampler": "Sampler",
   "common.save": "Zapisz",
+  "generation.blank_refiner_switch_uses_80_percent": "0 lub puste pole oznacza 80% wszystkich kroków. Podaj krok, aby zmienić próg.",
   "common.save_metadata": "Zapisz metadane",
   "common.saved": "Zapisano",
   "common.saved_new_settings_to_path": "Zapisano nowe ustawienia w {path}.",

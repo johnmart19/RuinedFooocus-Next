@@ -268,6 +268,7 @@
   "common.resolution": "解析度",
   "common.sampler": "採樣器",
   "common.save": "儲存",
+  "generation.blank_refiner_switch_uses_80_percent": "0 或留空時在總步數的 80% 處切換。可指定步數加以覆寫。",
   "common.save_metadata": "儲存中繼資料",
   "common.saved": "已儲存",
   "common.saved_new_settings_to_path": "已將新設定儲存至 {path}。",

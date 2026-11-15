@@ -31,6 +31,7 @@ def compatible_native_recipe(path, metadata, *, root=None):
     missing native nodes remain inspectable, but sampling must not use it as Auto.
     """
     from ruinedfooocus.features.models.model_identity import (
+        cached_native_source,
         file_signature,
         verified_native_source,
     )
@@ -50,6 +51,8 @@ def compatible_native_recipe(path, metadata, *, root=None):
             recipe["artifact_qualified"] = False
             return recipe
         source = verified_native_source(path, metadata, current_signature=signature)
+        if source is None:
+            source = cached_native_source(path, metadata, current_signature=signature)
         if source is not None:
             evidence = source.get("evidence", {})
             recipe = load_family_recipe(evidence.get("default_recipe_id"), root=root)

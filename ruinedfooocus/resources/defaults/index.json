@@ -567,7 +567,7 @@
       "family": "SDXLRefiner",
       "variant": "base",
       "media": "image",
-      "sha256": "82cbc61f2a543173b14a760c7bffba2d301ab1d639a08f1b04434e76625f4cf3"
+      "sha256": "dc4ed90c8637317846da918239c7d1ee8a0093cf78611170c8c70622c9d3212e"
     },
     "Native extended SSD1B base": {
       "path": "image/native-extended-ssd1b-base.json",

@@ -268,6 +268,7 @@
   "common.resolution": "Çözünürlük",
   "common.sampler": "Örnekleyici (Sampler)",
   "common.save": "Kaydet",
+  "generation.blank_refiner_switch_uses_80_percent": "0 veya boş bırakılırsa toplam adımların %80’i kullanılır. Değiştirmek için bir adım belirtin.",
   "common.save_metadata": "Üst Verileri Kaydet",
   "common.saved": "Kaydedildi",
   "common.saved_new_settings_to_path": "Yeni ayarlar {path} konumuna kaydedildi.",

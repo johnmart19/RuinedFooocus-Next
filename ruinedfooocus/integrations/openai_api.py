@@ -382,7 +382,7 @@ class _GenerationRequest(BaseModel):
     ) = Field(default=None, max_length=8)
     cascade_vision_crop: Literal["none", "center"] = "none"
     sdxl_refiner_model: str | None = Field(default=None, max_length=1024)
-    sdxl_refiner_switch_step: int | None = Field(default=None, ge=1, le=199, strict=True)
+    sdxl_refiner_switch_step: int | None = Field(default=None, ge=0, le=199, strict=True)
     sdxl_refiner_cfg: float | None = Field(default=None, ge=0, le=100, allow_inf_nan=False)
     sdxl_refiner_clip: str | None = Field(default=None, max_length=1024)
     refiner_noise_augmentation: float | None = Field(default=None, ge=0, le=1, allow_inf_nan=False)

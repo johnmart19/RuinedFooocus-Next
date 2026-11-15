@@ -268,6 +268,7 @@
   "common.resolution": "Upplösning",
   "common.sampler": "Samplare",
   "common.save": "Spara",
+  "generation.blank_refiner_switch_uses_80_percent": "0 eller tomt använder 80 % av alla steg. Ange ett steg för att ändra.",
   "common.save_metadata": "Spara metadata",
   "common.saved": "Sparat",
   "common.saved_new_settings_to_path": "Sparade nya inställningar till {path}.",

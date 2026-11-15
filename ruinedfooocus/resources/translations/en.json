@@ -544,6 +544,7 @@
   "common.resolution": "Resolution",
   "common.sampler": "Sampler",
   "common.save": "Save",
+  "generation.blank_refiner_switch_uses_80_percent": "0 or blank uses 80% of total steps. Set a step to override.",
   "common.save_metadata": "Save Metadata",
   "common.saved": "Saved",
   "common.saved_new_settings_to_path": "Saved new settings to {path}.",

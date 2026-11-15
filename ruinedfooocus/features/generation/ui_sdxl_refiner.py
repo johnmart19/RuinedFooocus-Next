@@ -59,19 +59,18 @@ def create_ui(base_model, *, preset_selection=None, main_model=None, model_refre
         with gr.Row():
             controls["sdxl_refiner_switch_step"] = gr.Number(
                 label=t("Refiner switch step"),
-                minimum=1,
+                minimum=0,
                 maximum=199,
                 precision=0,
-                value=defaults.get("sdxl_refiner_switch_step"),
-                info=t(
-                    "Required when a refiner is selected. Use one through total steps minus one."
-                ),
+                value=defaults.get("sdxl_refiner_switch_step") or 0,
+                info=t("0 or blank uses 80% of total steps. Set a step to override."),
                 min_width=180,
             )
-            controls["sdxl_refiner_cfg"] = gr.Number(
+            controls["sdxl_refiner_cfg"] = gr.Dropdown(
                 label=t("Refiner CFG"),
-                minimum=0,
-                maximum=100,
+                choices=[(t("Automatic"), None)]
+                + [(str(value), value) for value in (0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20)],
+                allow_custom_value=True,
                 value=defaults.get("sdxl_refiner_cfg"),
                 info=t("Blank uses the base CFG. Zero is an explicit override."),
                 min_width=180,

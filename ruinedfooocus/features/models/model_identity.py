@@ -158,6 +158,39 @@ def is_native_checkpoint_source(row):
     )
 
 
+def cached_native_source(path, metadata, *, current_signature=None):
+    """Match an already hashed local file to a pinned artifact without rehashing."""
+    from ruinedfooocus.features.models.model_registry import load_registry
+
+    signature = file_signature(path)
+    checksum = metadata.get("_rf_local_sha256")
+    if (
+        current_signature is not None
+        and current_signature != signature
+        or metadata.get("_rf_file_signature") != signature
+        or not isinstance(checksum, str)
+        or re.fullmatch(r"[a-fA-F0-9]{64}", checksum) is None
+    ):
+        return None
+    matches = [
+        row
+        for row in load_registry().entries(role="image_diffusion_checkpoint")
+        if is_native_checkpoint_source(row)
+        and row["artifact"]["sha256"] == checksum.lower()
+        and row["artifact"]["bytes"] == signature[1]
+    ]
+    contracts = {
+        (
+            row["native_family"],
+            row.get("native_class", row.get("architecture")),
+            row.get("behavioral_variant"),
+            row.get("evidence", {}).get("default_recipe_id"),
+        )
+        for row in matches
+    }
+    return matches[0] if len(contracts) == 1 else None
+
+
 def verified_native_source(path, metadata, *, current_signature=None):
     """Reuse only a current explicit verification of a packaged source identity."""
     from ruinedfooocus.features.models.model_registry import load_registry, RegistryError

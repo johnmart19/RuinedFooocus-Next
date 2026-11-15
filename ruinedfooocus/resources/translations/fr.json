@@ -268,6 +268,7 @@
   "common.resolution": "Résolution",
   "common.sampler": "Échantillonneur",
   "common.save": "Enregistrer",
+  "generation.blank_refiner_switch_uses_80_percent": "0 ou vide : 80 % du total des étapes. Indiquez une étape pour modifier ce seuil.",
   "common.save_metadata": "Enregistrer les métadonnées",
   "common.saved": "Enregistré",
   "common.saved_new_settings_to_path": "Nouveaux paramètres enregistrés dans {path}.",

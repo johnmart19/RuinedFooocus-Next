@@ -12,7 +12,7 @@
       },
       "settings": {
         "default_recipe_id": "native-extended-sdxlrefiner-base",
-        "auto_recipe_supported": false,
+        "auto_recipe_supported": true,
         "source_workflow": "sdxl_refiner_prompt_example.json"
       },
       "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."

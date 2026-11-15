@@ -447,7 +447,7 @@ class SDXLHandoffTests(unittest.TestCase):
 
     def test_explicit_selection_split_and_cfg_validation(self):
         for values in (
-            dict(sdxl_refiner_switch_step=0),
+            dict(sdxl_refiner_switch_step=-1),
             dict(sdxl_refiner_switch_step=4),
             dict(sdxl_refiner_switch_step=True),
             dict(sdxl_refiner_cfg=float("nan")),
@@ -459,6 +459,19 @@ class SDXLHandoffTests(unittest.TestCase):
         self.families[self.base_path.name] = "Flux"
         with self.assertRaisesRegex(ValueError, "ordinary SDXL base"):
             native.capture_assets(self.data, self.manager, self.models)
+
+    def test_automatic_handoff_and_cfg_are_normalized_before_sampling(self):
+        for split in (None, 0):
+            with self.subTest(split=split):
+                captured, _ = native.capture_assets(
+                    self.data | dict(sdxl_refiner_switch_step=split, sdxl_refiner_cfg=""),
+                    self.manager,
+                    self.models,
+                )
+                self.assertEqual(captured["sdxl_refiner_switch_step"], 3)
+                self.assertIsNone(captured["sdxl_refiner_cfg"])
+                self.sample(captured)
+                self.assertEqual(captured["sdxl_refiner_source"]["switch_step"], 3)
 
     def test_actual_capture_refuses_explicit_optional_engine_and_ignores_utility_refiner_fields(
         self,
@@ -502,6 +515,9 @@ class SDXLHandoffTests(unittest.TestCase):
         values = {key: self.data[key] for key in native.FIELDS if key in self.data}
         request = ImageRequest(prompt="cat", **values)
         self.assertEqual(request.sdxl_refiner_cfg, 0)
+        self.assertEqual(
+            ImageRequest(prompt="cat", sdxl_refiner_switch_step=0).sdxl_refiner_switch_step, 0
+        )
         with self.assertRaises(ValidationError):
             ImageRequest(prompt="cat", sdxl_refiner_switch_step=True)
         metadata = dict(prompt="cat", **values)

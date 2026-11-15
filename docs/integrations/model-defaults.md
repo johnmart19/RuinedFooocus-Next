@@ -1,5 +1,18 @@
 # Family defaults and source precedence
 
+Installed files with a current cached SHA-256 and file signature can reuse an
+exact pinned catalogue recipe, including Boogu Edit, without a download receipt.
+Picker/default lookup never hashes weights. Changed files, unknown hashes and
+conflicting artifact contracts remain misses; filenames and storage dtypes do
+not select behavioral variants.
+
+SDXL Refiner uses the pinned native example's 25 steps, CFG 8, Euler/normal
+baseline. Its native single CLIP-G conditioning is used by the existing loader.
+For SDXL base-to-refiner staging, a zero or blank switch step automatically hands off at
+80% of total steps (20 of 25 in the source workflow); explicit steps remain
+authoritative. Refiner CFG defaults to Automatic (the base CFG); an explicit
+zero remains an override. Selecting a refiner still requires a compatible SDXL base model.
+
 `features/models/resource_defaults.py` reads `resources/defaults/index.json`
 and one small `image/` family recipe. `model_recommendations.family_recipe`
 is the optional UI-facing reader; unknown or damaged optional data returns no

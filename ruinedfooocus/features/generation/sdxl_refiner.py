@@ -40,8 +40,19 @@ def settings(data):
     )
     if type(steps) is not int or not 2 <= steps <= 200:
         raise ValueError("SDXL staging requires 2 through 200 total steps.")
+    if split is None or type(split) is int and split == 0:
+        # The native example hands off at 20 of 25 steps. Keep the same
+        # proportion when the user changes total steps, including short runs.
+        split = min(steps - 1, max(1, steps * 4 // 5))
     if type(split) is not int or not 1 <= split < steps:
         raise ValueError("Enter a refiner switch step between one and the total steps minus one.")
+    if isinstance(cfg, str):
+        try:
+            cfg = float(cfg) if cfg.strip() else None
+        except ValueError:
+            raise ValueError(
+                "Enter refiner CFG from zero through 100, or leave it blank."
+            ) from None
     if cfg is not None and (
         type(cfg) not in (int, float) or not math.isfinite(cfg) or not 0 <= cfg <= 100
     ):
@@ -120,7 +131,15 @@ def capture_assets(data, manager, models, values=None):
     plan = RefinerPlan(base, name, split, steps, cfg, clip_name)
     if supplied is not None and supplied != plan:
         raise ValueError("The captured SDXL refiner selection changed. Submit the request again.")
-    result.update({KEY: plan, "sdxl_refiner_model": name, "sdxl_refiner_clip": clip_name})
+    result.update(
+        {
+            KEY: plan,
+            "sdxl_refiner_model": name,
+            "sdxl_refiner_clip": clip_name,
+            "sdxl_refiner_switch_step": split,
+            "sdxl_refiner_cfg": cfg,
+        }
+    )
     return result, tuple(artifacts)
 
 

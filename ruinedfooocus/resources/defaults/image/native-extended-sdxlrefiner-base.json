@@ -5,7 +5,13 @@
   "media": "image",
   "variant": "base",
   "aliases": [],
-  "sampling": {},
+  "sampling": {
+    "custom_steps": 25,
+    "cfg": 8,
+    "sampler_name": "euler",
+    "scheduler": "normal",
+    "clip_skip": 1
+  },
   "recommended_sizes": [[1024, 1024]],
   "default_size": [1024, 1024],
   "applicability": {
@@ -24,15 +30,13 @@
       "embedded_components_first": true,
       "vae_gguf_image_supported": false
     },
-    "auto_recipe_supported": false,
-    "default_for_native_configuration": false,
-    "runtime_requirements": [
-      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
-    ]
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": true,
+    "runtime_requirements": []
   },
   "provenance": {
     "kind": "native_workflow",
-    "label": "SDXLRefiner specialized native workflow",
+    "label": "Native ComfyUI SDXL refiner sampling baseline",
     "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/sdxl_refiner_prompt_example.json",
     "source_revision": "comfyui_workflow_templates_json==0.1.129",
     "resource_sha256": "c376af45ad93aeb52326d51d73f2d218c85423e36eec05a498edda50b769e4fb",

@@ -268,6 +268,7 @@
   "common.resolution": "해상도",
   "common.sampler": "샘플러",
   "common.save": "저장",
+  "generation.blank_refiner_switch_uses_80_percent": "0이거나 비어 있으면 전체 단계의 80%에서 전환합니다. 변경하려면 단계를 지정하세요.",
   "common.save_metadata": "메타데이터 저장",
   "common.saved": "저장됨",
   "common.saved_new_settings_to_path": "{path}에 새 설정을 저장했습니다.",

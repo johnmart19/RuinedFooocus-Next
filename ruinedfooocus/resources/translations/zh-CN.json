@@ -268,6 +268,7 @@
   "common.resolution": "分辨率",
   "common.sampler": "采样器",
   "common.save": "保存",
+  "generation.blank_refiner_switch_uses_80_percent": "0 或留空时在总步数的 80% 处切换。可指定步数进行覆盖。",
   "common.save_metadata": "保存元数据",
   "common.saved": "已保存",
   "common.saved_new_settings_to_path": "已将新设置保存至 {path}。",

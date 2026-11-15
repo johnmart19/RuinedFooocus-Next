@@ -6418,10 +6418,8 @@
           "evidence_file": "cache\\plan-execution-20261111\\publisher-payload-review\\d230615d69fcd41bd283ae64ef9f82250c44f09145048b0eb60132668f61693f.artifact.json"
         },
         "default_recipe_id": "native-extended-sdxlrefiner-base",
-        "auto_recipe_supported": false,
-        "recipe_requirements": [
-          "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
-        ],
+        "auto_recipe_supported": true,
+        "recipe_requirements": [],
         "behavioral_variant_source": "Exact publisher tuple/primary native workflow, never local filename inference."
       }
     },
