@@ -33,8 +33,8 @@ The image loader uses the pinned ComfyUI backend. The default layout follows
 its canonical `text_encoders`, `diffusion_models` and `embeddings` names while
 continuing to find files in the old locations. Files already in model folders
 stay where they are. Use the canonical folders below or drop files into Inbox.
-The small `put_..._here` files keep ready-to-use folders in source distributions;
-they contain instructions, not model weights.
+Startup and **Recheck folders** create missing canonical model directories. Source
+distributions include the folder README, with no bundled placement markers or weights.
 
 | Folder under `models/` | Purpose and application support                                                                                                                                                        |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -269,7 +269,8 @@ See [Settings](settings.md) for profile persistence and restart behavior.
 
 ## Consolidating an existing installation
 
-The source distribution keeps placeholders only for canonical folders. Existing
+Startup and **Recheck folders** create missing canonical folders without recreating
+legacy aliases. Existing
 `clip`, `unet`, `embedding` and `t2i_adapter` folders still work and need not be
 renamed for compatibility. To consolidate them explicitly, move their contents
 to `text_encoders`, `diffusion_models`, `embeddings` and `controlnet`, respectively.
