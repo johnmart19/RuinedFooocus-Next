@@ -1,0 +1,8 @@
+{
+  "id": "image-viewer-pan-zoom",
+  "subject": "Replace viewer height controls with drag resize and anchored pan zoom",
+  "requires": ["image-viewer-sizing"],
+  "tests": ["test_image_viewer.py", "test_navigation_shell.py", "test_html_templates.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}

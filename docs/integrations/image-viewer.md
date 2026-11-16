@@ -1,20 +1,27 @@
 # Image viewing controls
 
-Create and Editor share **Fit / Actual size** controls immediately below their
-main image. Fit preserves the complete image inside the viewer. Actual size
-shows one image pixel per CSS pixel, with scrolling for images larger than the
-available space. **Viewer height (%)** adjusts the frame from 25% to 150% of
-the browser height; the initial value is 65%.
+Create and Editor share **Fit**, **Fill**, **Actual size**, **− / +** and a
+diagonal resize handle below their main image. Fit shows the whole image; Fill
+covers the frame. Actual size uses one image pixel per CSS pixel. Drag a cropped
+or enlarged image to pan, and use the mouse wheel or −/+ buttons to zoom. Wheel
+zoom stays anchored beneath the cursor; Ctrl+wheel retains browser zoom.
+
+Drag the diagonal handle to resize the viewer horizontally and vertically. Its
+width stays inside the workspace. Arrow keys on the handle also resize it;
+double-click restores the default frame. The initial height is 65% of the browser.
+On touch screens a fitted image allows page scrolling; an enlarged image allows
+single-finger panning.
 
 These controls affect display only. They do not change generated dimensions,
 resample, upload or decode another copy, reload the image, or submit a backend
-job. They use native Gradio controls with client-only input callbacks and the
+job. They use native Gradio controls with client-only callbacks and the
 small `ui/assets/image_viewer.js` controller. Inpainting's editable canvas and
 the existing fullscreen action retain their own behavior.
 
-The CSS keeps oversized images inside the scrollable upload area. Height uses
-viewport units so the selected size follows window resizing on desktop and
-mobile. Initialization is idempotent and does not reset an adjusted height when
-the shell starts again during navigation. Viewing state is attached to the
-workspace, so Gradio rebuilding the image component during fullscreen or source
-changes does not erase it.
+Transforms keep images inside a clipped frame, with bounded panning that can
+reach every edge. Fit and Fill follow frame resizing. Explicit zoom is retained
+while resizing; a new source resets custom zoom to Fit. Resize state is attached
+to the workspace and survives native image-component/fullscreen rebuilds.
+Observers are limited to the image and its immediate workspace. Rebinding aborts
+old pointer/wheel handlers; pointer movement and wheel zoom paint at most once
+per animation frame. No page-wide polling or extra image copies are used.

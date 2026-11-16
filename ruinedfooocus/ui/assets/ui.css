@@ -75,30 +75,89 @@
 }
 #image-view-controls {
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
+  position: relative;
 }
-#image-view-controls > * {
-  min-inline-size: min(100%, 11.25rem) !important;
+#image-view-controls > button {
+  flex: 0 0 auto !important;
+  min-width: 2.75rem !important;
 }
-#generation-workspace.rf-viewer-actual #main_view .upload-container {
-  overflow: auto;
-  align-items: start;
-  justify-content: start;
+#viewer-zoom-value {
+  flex: 0 0 3.5rem !important;
+  min-width: 0 !important;
+  text-align: center;
 }
-#generation-workspace.rf-viewer-actual #main_view .image-container > .upload-container {
+#viewer-zoom-value output {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+:is(#viewer-zoom-in, #viewer-zoom-out, #viewer-resize) {
+  font-size: 0 !important;
+  padding: 0.25rem !important;
+}
+:is(#viewer-zoom-in, #viewer-zoom-out, #viewer-resize)::before {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+#viewer-zoom-in::before {
+  content: "+";
+}
+#viewer-zoom-out::before {
+  content: "−";
+}
+#viewer-resize::before {
+  content: "⤢";
+}
+#viewer-resize {
+  position: absolute;
+  left: var(--rf-handle-x, calc(100% - 3.25rem));
+  top: var(--rf-handle-y, -3.5rem);
+  z-index: 20;
+  cursor: nwse-resize;
+  touch-action: none;
+  border-radius: 50%;
+}
+#viewer-resize[hidden] {
+  display: none !important;
+}
+#main_view {
+  max-width: 100%;
+}
+#main_view:not(.fullscreen) {
+  width: var(--rf-viewer-width, 100%);
+  max-height: 200dvh;
+}
+#main_view[data-rf-viewer] .image-container > .upload-container {
   width: 100% !important;
   max-width: 100%;
   align-self: stretch;
+  overflow: hidden;
+  touch-action: pan-y;
+  position: relative;
 }
-#generation-workspace.rf-viewer-actual #main_view .image-frame {
+#main_view[data-rf-viewer] .image-frame {
   display: block;
-}
-#generation-workspace.rf-viewer-actual #main_view img {
+  position: absolute;
+  inset: 0;
   width: auto !important;
   height: auto !important;
+  overflow: hidden;
+}
+#main_view[data-rf-viewer] .image-frame img {
+  position: absolute;
+  top: 0;
+  left: 0;
   max-width: none !important;
   max-height: none !important;
-  object-fit: none;
+  transform-origin: 0 0;
+  user-select: none;
+}
+#main_view .rf-can-pan {
+  cursor: grab;
+  touch-action: none !important;
+}
+#main_view .rf-panning {
+  cursor: grabbing;
 }
 #hint-container {
   max-height: 150px;

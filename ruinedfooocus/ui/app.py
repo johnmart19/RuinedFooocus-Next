@@ -1215,7 +1215,7 @@ with shared.gradio_root as block:
                 label=t("Image"),
                 elem_id="main_view",
                 value=str(asset_path("init_image.png")),
-                height="var(--rf-viewer-height, var(--rf-preview-height))",
+                height="var(--rf-viewer-height, 65dvh)",
                 type="filepath",
                 image_mode=None,
                 format="png",
