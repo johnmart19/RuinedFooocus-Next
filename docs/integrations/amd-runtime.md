@@ -242,3 +242,16 @@ SDK extraction, `init`, `test`, device query, model run or GPU work was performe
 Upstream TheRock packaging, rocm-cli README, AMD SMI WSL, ROCprofiler and Quark
 references were rechecked on 2026-11-09; their published support is not RF hardware
 qualification.
+
+## hipBLAS on native Windows
+
+`comfy_compat.configure_rocm_blas` sets `TORCH_BLAS_PREFER_HIPBLASLT=0` before Torch
+is imported when the selected platform is ROCm on native Windows. Torch prefers
+hipBLASLt on gfx11; with the Windows ROCm 10.1 wheels its Tensile kernel library
+failed to start inside the application ("Could not initialize Tensile host"), and
+the next half-precision batched matmul ended in `hipErrorLaunchFailure`, which
+Windows shows as an AMD driver timeout. An explicitly set value is kept; Linux and
+WSL are unchanged. Observed 2026-11-18 on an RX 7900 XTX with Torch 2.14.0+rocm10.1.0:
+SeedVR2 3B at scale 4 on a 512 px source failed before the change and completed
+after it (one run each). `torch.backends.cuda.preferred_blas_library` is ignored on
+Windows, so the environment switch is the only control.

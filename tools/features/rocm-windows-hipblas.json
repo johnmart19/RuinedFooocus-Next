@@ -1,0 +1,9 @@
+{
+  "id": "rocm-windows-hipblas",
+  "subject": "Use hipBLAS on native Windows ROCm to stop SeedVR2 GPU driver resets",
+  "requires": ["ui-composition"],
+  "tests": ["test_comfy_runtime.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

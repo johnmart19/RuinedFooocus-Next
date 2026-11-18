@@ -47,6 +47,7 @@ def initialize_backend(launch_args):
         # AIMDO reserves a large virtual address space; match native startup
         # before Torch or the controller loads the ROCm runtime.
         os.environ["OCL_SET_SVM_SIZE"] = "4194304"
+    configure_rocm_blas(torch_platform, os_platform)
     import comfy.cli_args
 
     from ruinedfooocus.backends.comfy.image_compute import finalize_compute
@@ -502,6 +503,23 @@ def configure_rocm_attention():
 
     scaled_dot_product_attention._rf_rocm_head_dim = True
     functional.scaled_dot_product_attention = scaled_dot_product_attention
+    return True
+
+
+def configure_rocm_blas(torch_platform, os_platform):
+    """Select hipBLAS for GEMM on native Windows ROCm, before Torch is imported.
+
+    Torch prefers hipBLASLt on gfx11 HIP builds. In the Windows ROCm 10.1 wheels its
+    Tensile kernel library can fail to start inside the application ("Could not
+    initialize Tensile host"); the half-precision batched matmul that SeedVR2's
+    codec issues through conv3d then takes the GPU context with it
+    (hipErrorLaunchFailure, shown by Windows as a driver timeout). Torch reads this
+    switch once at import; `preferred_blas_library` is ignored on Windows. An
+    explicit user value wins. Linux and WSL keep their default.
+    """
+    if not torch_platform.startswith("rocm") or os_platform != "Windows":
+        return False
+    os.environ.setdefault("TORCH_BLAS_PREFER_HIPBLASLT", "0")
     return True
 
 

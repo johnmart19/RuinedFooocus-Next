@@ -559,8 +559,27 @@ class RocmAttentionTests(unittest.TestCase):
         self.assertEqual(calls, [{"scale": 1.0}] * 6)
         self.assertEqual(SDPBackend.MATH.name, "MATH")
 
+    def test_windows_rocm_uses_hipblas_and_other_platforms_keep_their_default(self):
+        key = "TORCH_BLAS_PREFER_HIPBLASLT"
+        for platform_name, system, preset, expected in (
+            ("cu128", "Windows", None, None),
+            ("cpu", "Windows", None, None),
+            ("rocm10.1", "Linux", None, None),
+            ("rocm10.1", "Windows", None, "0"),
+            ("rocm10.1", "Windows", "1", "1"),  # An explicit choice is kept.
+        ):
+            environment = {} if preset is None else {key: preset}
+            with (
+                self.subTest(platform=platform_name, system=system, preset=preset),
+                patch.dict(os.environ, environment, clear=False),
+            ):
+                if preset is None:
+                    os.environ.pop(key, None)
+                applied = comfy_compat.configure_rocm_blas(platform_name, system)
+                self.assertEqual(applied, platform_name.startswith("rocm") and system == "Windows")
+                self.assertEqual(os.environ.get(key), expected)
+                os.environ.pop(key, None)
 
-class AimdoLogShutdownTests(unittest.TestCase):
     def setUp(self):
         import ctypes
 
