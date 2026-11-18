@@ -2083,7 +2083,7 @@
   "shell.the_current_profile_is_unavailable": "Das aktuelle Profil ist nicht verfügbar",
   "shell.unsupported_output_entry_is_not_eligible_path": "Nicht unterstützter Ausgabeeintrag ist nicht zulässig: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Nächster Schritt: Wähle Vordergrund und Hintergrund kombinieren, um dein Motiv auf diesem Hintergrund zu platzieren.",
-  "image_processing.amd_fsr_1": "AMD FSR 1",
+  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Farbtoleranz (0–255)",
   "image_processing.straighten": "Begradigen",
   "image_processing.angle_degrees": "Winkel (Grad)",

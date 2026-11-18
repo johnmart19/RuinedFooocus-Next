@@ -2083,7 +2083,7 @@
   "shell.the_current_profile_is_unavailable": "Поточний профіль недоступний",
   "shell.unsupported_output_entry_is_not_eligible_path": "Непідтримуваний вихідний елемент не підлягає очищенню: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Наступний крок: виберіть «Скомпонувати передній план і тло», щоб розмістити об’єкт на цьому тлі.",
-  "image_processing.amd_fsr_1": "AMD FSR 1",
+  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Допуск кольору (0–255)",
   "image_processing.straighten": "Вирівняти",
   "image_processing.angle_degrees": "Кут (градуси)",

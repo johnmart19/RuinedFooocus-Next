@@ -2083,7 +2083,7 @@
   "shell.the_current_profile_is_unavailable": "Le profil actuel est indisponible",
   "shell.unsupported_output_entry_is_not_eligible_path": "Une entrée de sortie non prise en charge ne peut pas être nettoyée : {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Étape suivante : choisissez Composer le premier plan et l’arrière-plan pour placer votre sujet sur cet arrière-plan.",
-  "image_processing.amd_fsr_1": "AMD FSR 1",
+  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Tolérance de couleur (0–255)",
   "image_processing.straighten": "Redresser",
   "image_processing.angle_degrees": "Angle (degrés)",

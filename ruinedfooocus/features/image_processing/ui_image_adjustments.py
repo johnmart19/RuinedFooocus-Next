@@ -54,9 +54,9 @@ def create_ui(selection, control_type, kind_for):
                                 "histogram": "Histogram (256-bin)",
                                 "sdr-to-hdr": "SDR to HDR",
                                 "crop-to-mask": "Crop to selection",
-                                "amd-fsr1": "AMD FSR 1",
+                                "amd-fsr4": "AMD FSR 4",
                             }[value]
-                            if value in ("histogram", "sdr-to-hdr", "crop-to-mask", "amd-fsr1")
+                            if value in ("histogram", "sdr-to-hdr", "crop-to-mask", "amd-fsr4")
                             else value.replace("-", " ").replace("_", " ").capitalize()
                         ),
                         value,

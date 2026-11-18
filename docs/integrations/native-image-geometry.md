@@ -91,15 +91,36 @@ image, so the result has no empty corners and gains no alpha. It is application
 arithmetic over `torch.grid_sample`, not a native node.
 
 Nearest-exact, bilinear, area and bicubic use native interpolation.
-**AMD FSR 1** (`amd-fsr1`) enlarges with AMD FidelityFX Super Resolution 1: the
-edge-adaptive EASU upsampler in passes of at most 2× per axis, then RCAS
-sharpening at 0.2 stops, with bicubic alpha. `amd_fsr1.py` is a tensor port of the
-MIT-licensed `ffx_fsr1.h` from the AMD FSR SDK 2.4.0 and runs on any device,
-including CPU; it loads no AMD binary. It accepts 8-bit or 16-bit sRGB sources
-and refuses a target smaller than the source in either dimension before queueing.
-With **center-crop** it enlarges to cover the target and trims the excess. The
-SDK's temporal upscalers (FSR 2, 3 and 4), frame generation and denoisers need
-motion vectors, depth and a swap chain, so they do not apply to a still image. The pinned
+**AMD FSR 4** (`amd-fsr4`) enlarges with AMD's FSR 4 upscaler through the AMD FSR
+API and DirectX 12. FSR 4 is temporal: it expects a moving camera, motion vectors
+and depth. A still has none, so the native helper `tools/native/amd_fsr/fsr_still.cpp`
+presents the image as a static camera sequence of three jitter cycles: each frame
+is the source resampled (Catmull-Rom) at that frame's sub-pixel jitter, with zero
+motion vectors, a flat depth buffer and FSR's sharpening pass at full strength.
+The result is a clean, well anti-aliased enlargement. It does not invent detail:
+in the 2026-11-19 comparison on one 512 px illustration it had cleaner edges than
+bicubic and FSR 3.1, while RealESRGAN reconstructed more drawn detail.
+
+Requirements: Windows, a GPU and driver for which the AMD FSR API offers a 4.x
+upscaler (the SDK lists RX 9000, 7000 and 6000 series and some Ryzen integrated
+graphics), and the runtime folder `runtime/amd-fsr` under the data root, or
+`RF_AMD_FSR_DIR`. Build it once with
+`python tools/native/amd_fsr/build.py --sdk <AMD FSR SDK 2.4.0 folder>`, which
+needs the Visual Studio C++ build tools; it compiles the helper and copies AMD's
+signed `amd_fidelityfx_loader_dx12.dll` and `amd_fidelityfx_upscaler_dx12.dll`
+beside it. Nothing is downloaded or installed by the application, and the
+binaries are not in the repository. AMD's licence requires its notice to
+accompany any redistribution of the signed DLLs.
+
+The adapter `amd_fsr4.py` runs the helper as a bounded, cancellable subprocess
+outside Torch, in passes of at most 2x per axis, with colour in 8-bit sRGB and
+bicubic alpha. It refuses before queueing, with the reason, when the runtime is
+missing, in CPU mode, for a non-8-bit or non-sRGB source, or for a target smaller
+than the source. If the driver offers no 4.x provider the helper stops and the
+user is told so; it never silently substitutes FSR 3 or 2. With **center-crop**
+it enlarges to cover the target and trims the excess. Verified on an RX 7900 XTX
+(provider 4.1.2): one 512 to 1024 run through the Editor. Other GPUs, other
+scales and long sessions are not qualified. The pinned
 native Lanczos helper converts through Pillow uint8 and is intentionally omitted
 from this precision-preserving surface. The adapter does not substitute a new
 Lanczos implementation.

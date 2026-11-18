@@ -1,0 +1,16 @@
+{
+  "id": "amd-fsr4-upscaling",
+  "subject": "Replace the FSR 1 resize option with AMD FSR 4 through the AMD FSR API",
+  "requires": ["paint-canvas-and-photo-tools"],
+  "tests": [
+    "test_amd_fsr4.py",
+    "test_amd_fsr1.py",
+    "test_image_geometry_tools.py",
+    "test_localization.py",
+    "test_image_tools_localization.py",
+    "test_tool_contracts.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

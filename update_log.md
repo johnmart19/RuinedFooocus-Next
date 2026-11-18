@@ -8,7 +8,7 @@
 - Size the phone image viewer to the screen width, name the Chat assistant portrait for assistive technology, and align the Gallery search row with other controls.
 - Run background removal, upscaling and depth maps from Gallery and Editor without an installed image model, fill the frame when composing with Crop framing, explain a missing image model or Chat model in plain words, and hide the prompt-processing switch on actions that ignore the prompt.
 - Fix the AMD driver timeout in SeedVR2 restoration on Windows ROCm, use Depth map results for guided editing with an automatically chosen installed depth ControlNet, show the next step after a background is selected or generated, and offer the default image model download on Create when none is installed.
-- Add photo adjustments to image effects (Saturation, Vibrance, Exposure, Midtones, Temperature, Tint, Hue shift, Sepia, Vignette) and AMD FSR 1 as a resize interpolation for sharper enlargement on any device.
+- Add photo adjustments to image effects (Saturation, Vibrance, Exposure, Midtones, Temperature, Tint, Hue shift, Sepia, Vignette) and AMD FSR 4 as a resize interpolation on supported AMD GPUs, through AMD's own runtime.
 - Add Auto contrast, give mask-by-colour a tolerance so it works on photos, and stop asking for a manual ControlNet choice before using a map for editing.
 - Add a paint canvas with brush, eraser, layers and crop handles whose result is an undoable Editor step, Straighten by any angle, Levels, Auto color, noise reduction and AMD RCAS sharpening.
 

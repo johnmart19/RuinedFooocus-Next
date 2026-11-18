@@ -701,7 +701,7 @@ class ImageRequest(_GenerationRequest):
     transform_height: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_fit: Literal["contain", "stretch", "center-crop"] | None = None
     transform_interpolation: (
-        Literal["nearest-exact", "bilinear", "area", "bicubic", "amd-fsr1"] | None
+        Literal["nearest-exact", "bilinear", "area", "bicubic", "amd-fsr4"] | None
     ) = None
     transform_x: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_y: int | None = Field(default=None, strict=True, ge=0, le=16384)
