@@ -663,6 +663,10 @@ class ImageRequest(_GenerationRequest):
             "bt709-grayscale",
             "posterize",
             "auto-contrast",
+            "auto-color",
+            "levels",
+            "denoise",
+            "rcas-sharpen",
             "saturation",
             "vibrance",
             "exposure",
@@ -677,6 +681,11 @@ class ImageRequest(_GenerationRequest):
     ) = None
     shader_amount: float | None = Field(default=None, strict=True, ge=-1, le=1, allow_inf_nan=False)
     shader_levels: int | None = Field(default=None, strict=True, ge=2, le=32)
+    shader_black: float | None = Field(default=None, strict=True, ge=0, le=1, allow_inf_nan=False)
+    shader_white: float | None = Field(default=None, strict=True, ge=0, le=1, allow_inf_nan=False)
+    shader_gamma: float | None = Field(
+        default=None, strict=True, ge=0.1, le=10, allow_inf_nan=False
+    )
     filter_radius: int | None = Field(default=None, strict=True, ge=1, le=31)
     filter_sigma: float | None = Field(
         default=None, strict=True, ge=0.1, le=10, allow_inf_nan=False
@@ -686,7 +695,7 @@ class ImageRequest(_GenerationRequest):
     )
     filter_factor: float | None = Field(default=None, strict=True, ge=0, le=2, allow_inf_nan=False)
     transform_operation: (
-        Literal["resize", "crop", "pad", "rotate", "flip", "crop-to-mask"] | None
+        Literal["resize", "crop", "pad", "rotate", "straighten", "flip", "crop-to-mask"] | None
     ) = None
     transform_width: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_height: int | None = Field(default=None, strict=True, ge=0, le=16384)
@@ -705,6 +714,9 @@ class ImageRequest(_GenerationRequest):
     transform_feather: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_rotation: Literal["none", "90 degrees", "180 degrees", "270 degrees"] | None = None
     transform_flip: Literal["horizontal", "vertical"] | None = None
+    transform_angle: float | None = Field(
+        default=None, strict=True, ge=-180, le=180, allow_inf_nan=False
+    )
     mask_operation: (
         Literal["grow", "feather", "composite", "channel", "color", "threshold", "invert"] | None
     ) = None
@@ -1899,6 +1911,10 @@ def create_apps(backend, key=None):
                                         "bt709-grayscale",
                                         "posterize",
                                         "auto-contrast",
+                                        "auto-color",
+                                        "levels",
+                                        "denoise",
+                                        "rcas-sharpen",
                                         "saturation",
                                         "vibrance",
                                         "exposure",
@@ -1913,12 +1929,27 @@ def create_apps(backend, key=None):
                                 "shader_amount": {
                                     "type": "string",
                                     "contentMediaType": "application/json",
-                                    "description": "JSON number for the selected named effect: 0–1 for invert, bt709-grayscale, posterize, auto-contrast and sepia; -1 to 1 for the signed adjustments. 0 leaves the image unchanged.",
+                                    "description": "JSON number for the selected named effect: 0–1 for invert, bt709-grayscale, posterize, auto-contrast, auto-color, levels, denoise, rcas-sharpen and sepia; -1 to 1 for the signed adjustments. 0 leaves the image unchanged.",
                                 },
                                 "shader_levels": {
                                     "type": "string",
                                     "contentMediaType": "application/json",
                                     "description": "JSON integer 2–32 for posterize.",
+                                },
+                                "shader_black": {
+                                    "type": "string",
+                                    "contentMediaType": "application/json",
+                                    "description": "JSON number 0–1: Levels black point.",
+                                },
+                                "shader_white": {
+                                    "type": "string",
+                                    "contentMediaType": "application/json",
+                                    "description": "JSON number 0–1: Levels white point, at least 0.01 above the black point.",
+                                },
+                                "shader_gamma": {
+                                    "type": "string",
+                                    "contentMediaType": "application/json",
+                                    "description": "JSON number 0.1–10: Levels midtone gamma.",
                                 },
                                 "filter_sigma": {
                                     "type": "string",
@@ -1996,6 +2027,9 @@ def create_apps(backend, key=None):
                 "curve_blue",
                 "shader_amount",
                 "shader_levels",
+                "shader_black",
+                "shader_white",
+                "shader_gamma",
             ):
                 if name in values:
                     try:

@@ -182,7 +182,10 @@ class ImageShaders(unittest.TestCase):
             call = self.calls[-1]
             # Auto contrast also receives the measured black and white points.
             self.assertEqual(call["floats"][0], 0)
-            self.assertEqual(len(call["floats"]), 3 if name == "auto-contrast" else 1)
+            self.assertEqual(
+                len(call["floats"]),
+                {"auto-contrast": 3, "auto-color": 7, "levels": 4}.get(name, 1),
+            )
             self.assertEqual(call["ints"], [7] if name == "posterize" else [])
             self.assertEqual(call["curves"], [])
             self.assertEqual(call["bools"], [])
@@ -558,6 +561,58 @@ class ImageShaders(unittest.TestCase):
         self.assertEqual(results[0].tobytes(), self.source.tobytes())
         self.assertEqual([results[1].getpixel((x, 0))[0] for x in range(5)], [0, 64, 128, 191, 255])
         self.assertEqual(results[1].getpixel((1, 0))[3], 9)
+        self.assertFalse(self.calls)
+
+    def test_levels_auto_color_noise_reduction_and_rcas_have_documented_results(self):
+        def run(pixels, size=None, **options):
+            self.source = Image.new("RGBA", size or (len(pixels), 1))
+            self.source.putdata(pixels)
+            with (
+                patch.object(shaders, "cpu_mode", self.cpu_policy),
+                patch.object(sys, "argv", ["owned", "--cpu"]),
+            ):
+                data = self.capture("glsl-effect", **options)
+                return shaders.process(NS(), data, self.manager, Mock())[0]
+
+        gray = lambda *values: [(value,) * 3 + (255,) for value in values]
+        # Black 0.2 and white 0.8 map to the ends; gamma 2 lifts the middle to its root.
+        result = run(
+            gray(0, 51, 128, 204, 255),
+            shader_effect="levels",
+            shader_black=0.2,
+            shader_white=0.8,
+            shader_gamma=2.0,
+        )
+        self.assertEqual([result.getpixel((x, 0))[0] for x in range(5)], [0, 0, 181, 255, 255])
+        for options in (
+            dict(shader_black=0.5, shader_white=0.5),
+            dict(shader_black=0.6, shader_white=0.4),
+            dict(shader_gamma=0),
+            dict(shader_white=1.5),
+        ):
+            with self.subTest(options=options), self.assertRaises(ValueError):
+                self.capture("glsl-effect", shader_effect="levels", **options)
+        # A warm cast: each channel is stretched on its own, so neutral gray returns.
+        cast = [(60 + step * 20, 40 + step * 20, 20 + step * 10, 255) for step in range(8)]
+        result = run(cast, shader_effect="auto-color", shader_amount=1)
+        first, last = result.getpixel((0, 0)), result.getpixel((7, 0))
+        self.assertEqual((first[:3], last[:3]), ((0, 0, 0), (255, 255, 255)))
+        # One hot pixel in a flat field is removed by the 3x3 median; edges are kept.
+        field = gray(*([100] * 25))
+        field[12] = (255, 0, 255, 255)
+        result = run(field, size=(5, 5), shader_effect="denoise", shader_amount=1)
+        self.assertEqual(
+            {result.getpixel((x, y))[:3] for x in range(5) for y in range(5)}, {(100,) * 3}
+        )
+        step = gray(*([40] * 3 + [200] * 3)) * 3
+        result = run(step, size=(6, 3), shader_effect="denoise", shader_amount=1)
+        self.assertEqual([result.getpixel((x, 1))[0] for x in range(6)], [40] * 3 + [200] * 3)
+        # RCAS raises local contrast, never leaves 0..255, and leaves flat areas alone.
+        soft = gray(*([90, 100, 110, 120, 130, 140] * 3))
+        result = run(soft, size=(6, 3), shader_effect="rcas-sharpen", shader_amount=1)
+        self.assertEqual(result.size, (6, 3))
+        flat = run(gray(*([77] * 9)), size=(3, 3), shader_effect="rcas-sharpen", shader_amount=1)
+        self.assertEqual({flat.getpixel((x, y))[0] for x in range(3) for y in range(3)}, {77})
         self.assertFalse(self.calls)
 
     def test_cpu_curve_pixels_use_native_luts_and_exact_endpoint_center_sampling(self):

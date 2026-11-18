@@ -1,5 +1,9 @@
 __pycache__
 /ruinedfooocus/features/generation/dimension_number.pyi
+# Gradio writes these component stubs when the app starts.
+/ruinedfooocus/features/image_editing/tool_type_dropdown.pyi
+/ruinedfooocus/features/image_editing/ui_reference_adapters.pyi
+/ruinedfooocus/features/models/resolution_dropdown.pyi
 *.ckpt
 *.safetensors
 *.pth

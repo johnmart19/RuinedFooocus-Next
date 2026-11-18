@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Nieobsługiwany element wyjściowy nie podlega usunięciu: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Następny krok: wybierz Połącz pierwszy plan i tło, aby umieścić obiekt na tym tle.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Tolerancja koloru (0–255)"
+  "image_processing.color_tolerance_0_255": "Tolerancja koloru (0–255)",
+  "image_processing.straighten": "Wyprostuj",
+  "image_processing.angle_degrees": "Kąt (stopnie)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Wartość dodatnia obraca obraz zgodnie z ruchem wskazówek zegara. Wynik jest przycinany, aby nie pozostały puste rogi.",
+  "image_processing.black_point": "Punkt czerni",
+  "image_processing.white_point": "Punkt bieli",
+  "image_processing.midtone_gamma": "Gamma półtonów",
+  "gallery.paint_and_crop": "Malowanie i kadrowanie",
+  "gallery.load_current_image": "Wczytaj bieżący obraz",
+  "gallery.apply_painting": "Zastosuj malowanie",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Najpierw wczytaj bieżący obraz i pomaluj go lub przytnij.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Wczytaj bieżący obraz, a następnie maluj pędzlem, wymazuj, dodawaj warstwy lub przeciągaj uchwyty kadrowania. Zastosuj zapisuje wynik jako nowy krok, który można cofnąć."
 }

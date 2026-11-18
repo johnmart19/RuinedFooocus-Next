@@ -1,0 +1,16 @@
+{
+  "id": "paint-canvas-and-photo-tools",
+  "subject": "Add a paint and crop canvas, Straighten, Levels, Auto color, noise reduction and RCAS sharpening",
+  "requires": ["auto-contrast-and-colour-tolerance"],
+  "tests": [
+    "test_editor_paint.py",
+    "test_image_shaders.py",
+    "test_amd_fsr1.py",
+    "test_image_geometry_tools.py",
+    "test_localization.py",
+    "test_api_image_edits.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

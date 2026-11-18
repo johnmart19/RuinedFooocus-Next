@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Непідтримуваний вихідний елемент не підлягає очищенню: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Наступний крок: виберіть «Скомпонувати передній план і тло», щоб розмістити об’єкт на цьому тлі.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Допуск кольору (0–255)"
+  "image_processing.color_tolerance_0_255": "Допуск кольору (0–255)",
+  "image_processing.straighten": "Вирівняти",
+  "image_processing.angle_degrees": "Кут (градуси)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Додатне значення повертає зображення за годинниковою стрілкою. Результат обрізається так, щоб не лишалося порожніх кутів.",
+  "image_processing.black_point": "Точка чорного",
+  "image_processing.white_point": "Точка білого",
+  "image_processing.midtone_gamma": "Гама середніх тонів",
+  "gallery.paint_and_crop": "Малювання й обрізання",
+  "gallery.load_current_image": "Завантажити поточне зображення",
+  "gallery.apply_painting": "Застосувати малюнок",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Спершу завантажте поточне зображення та намалюйте або обріжте його.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Завантажте поточне зображення, а потім малюйте пензлем, стирайте, додавайте шари або перетягуйте маркери обрізання. «Застосувати» зберігає результат як новий крок, який можна скасувати."
 }

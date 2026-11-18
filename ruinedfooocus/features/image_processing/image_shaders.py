@@ -20,6 +20,10 @@ EFFECTS = {
     "bt709-grayscale": "BT.709 grayscale",
     "posterize": "Posterize",
     "auto-contrast": "Auto contrast",
+    "auto-color": "Auto color",
+    "levels": "Levels",
+    "denoise": "Reduce noise",
+    "rcas-sharpen": "Sharpen (AMD RCAS)",
     "saturation": "Saturation",
     "vibrance": "Vibrance",
     "exposure": "Exposure",
@@ -48,6 +52,9 @@ DEFAULTS = {
     "shader_effect": "invert",
     "shader_amount": 1.0,
     "shader_levels": 8,
+    "shader_black": 0.0,
+    "shader_white": 1.0,
+    "shader_gamma": 1.0,
 }
 FIELDS = tuple(DEFAULTS)
 KEY = "_image_shader_request"
@@ -59,6 +66,10 @@ PROGRAM_SHA256 = {
     "bt709-grayscale": "3ba2223959ec8289230cb0488295e414699b4733c83b44943737b6fe02bc716c",
     "posterize": "b06a6c5a1c90a9e62622d0edb7e415b7927a5f673cf1c0904c36b167058ea4fb",
     "auto-contrast": "21b5a3808c87abaeae8d83bf8eb15b61d50471eacb8c53046af4d51d6c891285",
+    "levels": "6545fe28508d201065adbec851d4aafda2496b7a6446f341ed5fb05daa87dbd5",
+    "auto-color": "c886159c602eddbc2f93aacf01e97cdfb2ca05022772a5496bed3b624a358d9b",
+    "denoise": "fb2b53569b3674d6c53d4134096d5bf575518ca194262a67033dbf93391c5072",
+    "rcas-sharpen": "f28a3aca33a856ddd4b5b3ad00012ba612722cef30dcddc7f64e3fb5117e457d",
     "saturation": "7cb97a70fe57dabbd1a841dbe11a0a3271a38c272f385e46af11833e9e6d5ca9",
     "vibrance": "48df17b514029d26fc1b2c7d63dbdfa329dfcace351626ce7464c0b6a92c661c",
     "exposure": "ca0dac46e9c9be3e20299b9db92b49fcdaf508b288826e6839b495178047de1b",
@@ -120,6 +131,12 @@ def parameters(kind, data):
             result["shader_levels"] = _number(
                 data.get("shader_levels", 8), "Posterize levels", 2, 32, integer=True
             )
+        if effect == "levels":
+            result["shader_black"] = _number(data.get("shader_black", 0.0), "Black point", 0, 1)
+            result["shader_white"] = _number(data.get("shader_white", 1.0), "White point", 0, 1)
+            result["shader_gamma"] = _number(data.get("shader_gamma", 1.0), "Gamma", 0.1, 10)
+            if result["shader_white"] - result["shader_black"] < 0.01:
+                raise ValueError("The white point must be at least 0.01 above the black point.")
         return result
     raise ValueError("Choose RGB curves or a named GLSL image effect.")
 
@@ -233,6 +250,17 @@ def gl_pixels(request, tensor, curves, check_cancelled):
 
         # The shader cannot measure the image; give it the same range the CPU path uses.
         floats["u_float1"], floats["u_float2"] = tonal_range(tensor)
+    elif request.recipe == "auto-color":
+        from ruinedfooocus.features.image_processing.image_effect_cpu import channel_ranges
+
+        low, high = channel_ranges(tensor)
+        floats.update({f"u_float{index + 1}": value for index, value in enumerate((*low, *high))})
+    elif request.recipe == "levels":
+        floats.update(
+            u_float1=options["shader_black"],
+            u_float2=options["shader_white"],
+            u_float3=options["shader_gamma"],
+        )
     ints = {"u_int0": options["shader_levels"]} if request.recipe == "posterize" else {}
     with torch.inference_mode():
         outputs = native_call(

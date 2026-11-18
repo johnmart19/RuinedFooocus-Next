@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Esta entrada de saída não é compatível: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Próximo passo: escolha Compor primeiro plano e fundo para colocar o assunto sobre este fundo.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Tolerância de cor (0–255)"
+  "image_processing.color_tolerance_0_255": "Tolerância de cor (0–255)",
+  "image_processing.straighten": "Endireitar",
+  "image_processing.angle_degrees": "Ângulo (graus)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Um valor positivo gira a imagem no sentido horário. O resultado é recortado para que não restem cantos vazios.",
+  "image_processing.black_point": "Ponto preto",
+  "image_processing.white_point": "Ponto branco",
+  "image_processing.midtone_gamma": "Gama dos tons médios",
+  "gallery.paint_and_crop": "Pintar e recortar",
+  "gallery.load_current_image": "Carregar a imagem atual",
+  "gallery.apply_painting": "Aplicar a pintura",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Primeiro carregue a imagem atual e pinte ou recorte.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Carregue a imagem atual e então pinte com o pincel, apague, adicione camadas ou arraste as alças de recorte. Aplicar salva o resultado como uma nova etapa que Desfazer pode reverter."
 }

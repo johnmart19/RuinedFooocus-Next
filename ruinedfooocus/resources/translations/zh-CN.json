@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "不支持的输出条目不可清理：{path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "下一步：选择“合成前景与背景”，将主体放到此背景上。",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "颜色容差（0–255）"
+  "image_processing.color_tolerance_0_255": "颜色容差（0–255）",
+  "image_processing.straighten": "拉直",
+  "image_processing.angle_degrees": "角度（度）",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "正值使图像顺时针旋转。结果会被裁剪，因此不会留下空白角落。",
+  "image_processing.black_point": "黑场",
+  "image_processing.white_point": "白场",
+  "image_processing.midtone_gamma": "中间调伽马",
+  "gallery.paint_and_crop": "绘画与裁剪",
+  "gallery.load_current_image": "载入当前图像",
+  "gallery.apply_painting": "应用绘画",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "请先载入当前图像，然后绘画或裁剪。",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "载入当前图像，然后用画笔绘画、擦除、添加图层或拖动裁剪手柄。应用会将结果保存为可撤销的新步骤。"
 }

@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "En utdatapost som inte stöds kan inte användas: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Nästa steg: välj Kombinera förgrund och bakgrund för att placera motivet på den här bakgrunden.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Färgtolerans (0–255)"
+  "image_processing.color_tolerance_0_255": "Färgtolerans (0–255)",
+  "image_processing.straighten": "Räta upp",
+  "image_processing.angle_degrees": "Vinkel (grader)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Positiva värden vrider bilden medurs. Resultatet beskärs så att inga tomma hörn blir kvar.",
+  "image_processing.black_point": "Svartpunkt",
+  "image_processing.white_point": "Vitpunkt",
+  "image_processing.midtone_gamma": "Mellantonsgamma",
+  "gallery.paint_and_crop": "Måla och beskär",
+  "gallery.load_current_image": "Läs in aktuell bild",
+  "gallery.apply_painting": "Använd målningen",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Läs in den aktuella bilden och måla eller beskär den först.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Läs in den aktuella bilden och måla sedan med penseln, sudda, lägg till lager eller dra i beskärningshandtagen. Använd sparar resultatet som ett nytt steg som Ångra kan ta tillbaka."
 }

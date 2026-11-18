@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Nicht unterstützter Ausgabeeintrag ist nicht zulässig: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Nächster Schritt: Wähle Vordergrund und Hintergrund kombinieren, um dein Motiv auf diesem Hintergrund zu platzieren.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Farbtoleranz (0–255)"
+  "image_processing.color_tolerance_0_255": "Farbtoleranz (0–255)",
+  "image_processing.straighten": "Begradigen",
+  "image_processing.angle_degrees": "Winkel (Grad)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Positive Werte drehen das Bild im Uhrzeigersinn. Das Ergebnis wird passend zugeschnitten, sodass keine leeren Ecken bleiben.",
+  "image_processing.black_point": "Schwarzpunkt",
+  "image_processing.white_point": "Weißpunkt",
+  "image_processing.midtone_gamma": "Mitteltöne-Gamma",
+  "gallery.paint_and_crop": "Malen und zuschneiden",
+  "gallery.load_current_image": "Aktuelles Bild laden",
+  "gallery.apply_painting": "Bemalung anwenden",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Lade zuerst das aktuelle Bild und bemale oder beschneide es.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Lade das aktuelle Bild und male dann mit dem Pinsel, radiere, füge Ebenen hinzu oder ziehe an den Zuschneidegriffen. Anwenden speichert das Ergebnis als neuen Schritt, den Rückgängig zurücknehmen kann."
 }

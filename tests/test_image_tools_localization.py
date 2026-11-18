@@ -122,7 +122,7 @@ class ImageToolsLocalizationTests(unittest.TestCase):
                         )
         self.assertEqual(
             [wire for _, wire in controls["transform_operation"].choices],
-            ["resize", "crop", "pad", "rotate", "flip", "crop-to-mask"],
+            ["resize", "crop", "pad", "rotate", "straighten", "flip", "crop-to-mask"],
         )
         self.assertEqual(
             [wire for _, wire in controls["color_transfer_method"].choices],

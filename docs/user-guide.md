@@ -121,6 +121,9 @@ use their own tool model or none, so they run even when the selected image model
 not installed. **Compose foreground and background** keeps the whole background with
 transparent bands under Preserve or Pad framing; choose **Crop** to fill the frame.
 Depth, pose and landmark results are guides for a later edit, not finished images.
+**Image workspace → Paint and crop** loads the current image into a canvas with a
+brush, eraser, colour picker, layers and crop handles. **Apply painting** flattens
+what you see, saves it to Gallery and records it as a step that **Undo** takes back.
 After **Depth map**, **Use map for editing** restores the photo, attaches the map and
 selects an installed reviewed SDXL depth ControlNet for you; write a prompt and run.
 After **Select background** or **Generate background** the Editor shows the next step:
@@ -135,8 +138,8 @@ inpainting. Cutouts remain separate results and cannot become selection masks.
 and replace faces in a full photo.
 
 Choose **Adjust image** for **Transform**, **Mask** or **Color**, then choose its
-operation and press **Run image action**. Transform resizes, crops, pads, rotates
-or flips. Mask extracts or edits an exact-frame selection. Color blends a
+operation and press **Run image action**. Transform resizes, crops, pads, rotates,
+straightens by any angle (cropped to fit, with no empty corners) or flips. Mask extracts or edits an exact-frame selection. Color blends a
 reference, transfers its colors or makes an RGB8 palette. These tools need no
 model or prompt. Precision originals use PNG16 or EXR output. After a Mask
 result, **Use result as selection mask** restores its original image and attaches
@@ -175,7 +178,8 @@ See [native model patches](integrations/native-model-patches.md) for compatible
 files, dedicated inputs, source denoise and Library/API behavior.
 
 - **RGB curves** edits normalized master/red/green/blue point tables. **GLSL image
-  effect** selects Invert RGB, BT.709 grayscale, Posterize, Auto contrast or Sepia with an amount slider,
+  effect** selects Invert RGB, BT.709 grayscale, Posterize, Auto contrast, Auto color, Levels (black point, white point and midtone gamma), Reduce noise,
+  Sharpen (AMD RCAS) or Sepia with an amount slider,
   and the photo adjustments Saturation, Vibrance, Exposure, Midtones, Temperature, Tint,
   Hue shift and Vignette with a signed slider where 0 changes nothing. **Adjust image →
   Transform → Resize** offers **AMD FSR 1** interpolation for sharper enlargement.

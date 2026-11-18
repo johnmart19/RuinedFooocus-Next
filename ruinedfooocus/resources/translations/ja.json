@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "未対応の出力項目は処理できません: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "次の手順：「前景と背景を合成」を選ぶと、被写体をこの背景に配置できます。",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "色の許容範囲（0–255）"
+  "image_processing.color_tolerance_0_255": "色の許容範囲（0–255）",
+  "image_processing.straighten": "傾き補正",
+  "image_processing.angle_degrees": "角度（度）",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "正の値で画像は時計回りに回転します。空白の角が残らないよう、結果は切り抜かれます。",
+  "image_processing.black_point": "黒点",
+  "image_processing.white_point": "白色点",
+  "image_processing.midtone_gamma": "中間調ガンマ",
+  "gallery.paint_and_crop": "ペイントと切り抜き",
+  "gallery.load_current_image": "現在の画像を読み込む",
+  "gallery.apply_painting": "ペイントを適用",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "先に現在の画像を読み込み、ペイントまたは切り抜きを行ってください。",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "現在の画像を読み込み、ブラシで描く、消す、レイヤーを追加する、切り抜きハンドルをドラッグするなどの操作を行います。適用すると、元に戻せる新しいステップとして結果が保存されます。"
 }

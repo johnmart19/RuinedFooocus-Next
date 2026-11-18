@@ -27,12 +27,32 @@ def tonal_range(pixels):
     A few stray dark or bright pixels do not hold the stretch back, and a flat
     image keeps its tone because the two points coincide.
     """
-    luminance = _luminance(pixels).flatten().float()
-    count = luminance.numel()
-    ordered = luminance.sort().values
+    return _range(_luminance(pixels))
+
+
+def _range(values):
+    count = values.numel()
+    ordered = values.flatten().float().sort().values
     low = float(ordered[min(count - 1, int(count * 0.005))])
     high = float(ordered[max(0, min(count - 1, int(count * 0.995)))])
     return (low, high) if high - low > 1e-5 else (0.0, 1.0)
+
+
+def channel_ranges(pixels):
+    """Per-channel black and white points for Auto color, which also removes a colour cast."""
+    ranges = [_range(pixels[..., channel]) for channel in range(3)]
+    return tuple(low for low, _ in ranges), tuple(high for _, high in ranges)
+
+
+def median3(torch, pixels):
+    """3x3 per-channel median with replicated edges, as the Reduce noise recipe computes it."""
+    from torch.nn.functional import pad
+
+    padded = pad(pixels.movedim(-1, 1), (1, 1, 1, 1), mode="replicate")
+    windows = (
+        padded.unfold(2, 3, 1).unfold(3, 3, 1).reshape(*padded.shape[:2], *pixels.shape[1:3], 9)
+    )
+    return windows.median(dim=-1).values.movedim(1, -1)
 
 
 def _saturation(torch, pixels, amount):
@@ -151,6 +171,27 @@ def render(request, pixels, curves, check_cancelled):
         effect = ((pixels - low) / max(high - low, 0.00001)).clamp(0, 1)
         check_cancelled()
         operators = ["torch(RF auto-contrast recipe)", "ImageBlend"]
+    elif request.recipe == "auto-color":
+        check_cancelled()
+        low, high = (pixels.new_tensor(values) for values in channel_ranges(pixels))
+        effect = ((pixels - low) / (high - low).clamp_min(0.00001)).clamp(0, 1)
+        check_cancelled()
+        operators = ["torch(RF auto-color recipe)", "ImageBlend"]
+    elif request.recipe == "levels":
+        check_cancelled()
+        black, white = options["shader_black"], options["shader_white"]
+        ranged = ((pixels - black) / max(white - black, 0.00001)).clamp(0, 1)
+        effect = ranged ** (1 / options["shader_gamma"])
+        check_cancelled()
+        operators = ["torch(RF levels recipe)", "ImageBlend"]
+    elif request.recipe == "denoise":
+        effect = native_call(check_cancelled, median3, torch, pixels)
+        operators = ["torch.median(RF 3x3 recipe)", "ImageBlend"]
+    elif request.recipe == "rcas-sharpen":
+        from ruinedfooocus.features.image_processing import amd_fsr1
+
+        effect = native_call(check_cancelled, amd_fsr1.rcas, pixels.clamp(0, 1), 0.0)
+        operators = ["AMD FSR 1 RCAS (tensor port)", "ImageBlend"]
     elif request.recipe in ADJUSTMENTS:
         # These recipes are their own arithmetic; amount is the adjustment, not an opacity.
         check_cancelled()

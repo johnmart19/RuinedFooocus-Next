@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Неподдерживаемый выходной элемент не подлежит очистке: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Следующий шаг: выберите «Объединить передний план и фон», чтобы поместить объект на этот фон.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Допуск цвета (0–255)"
+  "image_processing.color_tolerance_0_255": "Допуск цвета (0–255)",
+  "image_processing.straighten": "Выровнять",
+  "image_processing.angle_degrees": "Угол (градусы)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Положительное значение поворачивает изображение по часовой стрелке. Результат обрезается так, чтобы не осталось пустых углов.",
+  "image_processing.black_point": "Точка чёрного",
+  "image_processing.white_point": "Точка белого",
+  "image_processing.midtone_gamma": "Гамма средних тонов",
+  "gallery.paint_and_crop": "Рисование и обрезка",
+  "gallery.load_current_image": "Загрузить текущее изображение",
+  "gallery.apply_painting": "Применить рисунок",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Сначала загрузите текущее изображение и нарисуйте на нём или обрежьте его.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Загрузите текущее изображение, затем рисуйте кистью, стирайте, добавляйте слои или перетаскивайте маркеры обрезки. «Применить» сохраняет результат как новый шаг, который можно отменить."
 }

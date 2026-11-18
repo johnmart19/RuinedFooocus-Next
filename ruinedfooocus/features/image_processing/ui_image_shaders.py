@@ -76,12 +76,28 @@ def create_ui(selection, control_type, kind_for):
                 value=saved.get("shader_levels", 8),
                 visible=effect.value == "posterize",
             )
+            level_controls = {
+                field: gr.Slider(
+                    label=label,
+                    minimum=low,
+                    maximum=high,
+                    step=0.01,
+                    value=saved.get(field, DEFAULTS[field]),
+                    visible=effect.value == "levels",
+                )
+                for field, label, low, high in (
+                    ("shader_black", translate_ui("Black point"), 0, 1),
+                    ("shader_white", translate_ui("White point"), 0, 1),
+                    ("shader_gamma", translate_ui("Midtone gamma"), 0.1, 10),
+                )
+            }
     controls = {
         **curve_controls,
         "curve_interpolation": interpolation,
         "shader_effect": effect,
         "shader_amount": amount,
         "shader_levels": levels,
+        **level_controls,
     }
     for field, component in controls.items():
         shared.add_ctrl(field, component)
@@ -105,12 +121,16 @@ def create_ui(selection, control_type, kind_for):
 
     def effect_range(value):
         low, high = amount_range(value)
-        return gr.update(visible=value == "posterize"), gr.update(minimum=low, maximum=high)
+        return (
+            gr.update(visible=value == "posterize"),
+            gr.update(minimum=low, maximum=high),
+            *(gr.update(visible=value == "levels") for _ in level_controls),
+        )
 
     effect.change(
         effect_range,
         inputs=effect,
-        outputs=[levels, amount],
+        outputs=[levels, amount, *level_controls.values()],
         queue=False,
         api_visibility="undocumented",
     )

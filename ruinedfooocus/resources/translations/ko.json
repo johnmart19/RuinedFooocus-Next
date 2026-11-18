@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "지원되지 않는 출력 항목은 처리할 수 없습니다: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "다음 단계: ‘전경과 배경 합성’을(를) 선택해 피사체를 이 배경 위에 배치하세요.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "색상 허용 오차(0–255)"
+  "image_processing.color_tolerance_0_255": "색상 허용 오차(0–255)",
+  "image_processing.straighten": "수평 맞추기",
+  "image_processing.angle_degrees": "각도(도)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "양수 값은 이미지를 시계 방향으로 돌립니다. 빈 모서리가 남지 않도록 결과가 잘립니다.",
+  "image_processing.black_point": "블랙 포인트",
+  "image_processing.white_point": "화이트 포인트",
+  "image_processing.midtone_gamma": "중간 톤 감마",
+  "gallery.paint_and_crop": "그리기 및 자르기",
+  "gallery.load_current_image": "현재 이미지 불러오기",
+  "gallery.apply_painting": "그림 적용",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "먼저 현재 이미지를 불러온 뒤 그리거나 자르세요.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "현재 이미지를 불러온 다음 브러시로 그리거나, 지우거나, 레이어를 추가하거나, 자르기 핸들을 드래그하세요. 적용하면 실행 취소할 수 있는 새 단계로 결과가 저장됩니다."
 }

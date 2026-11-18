@@ -126,6 +126,15 @@
       "acceptance": "Exact-frame and owned-source CPU contracts cover mask adoption and later worker handoff; rendered brush/upload delivery and generated visual results remain separate."
     },
     {
+      "id": "editor-paint-canvas",
+      "sources": ["ruinedfooocus/features/gallery/ui_paint.py"],
+      "work": "Load the current owned Editor image into the browser paint canvas, and record the flattened canvas as one completed Editor step. No model, queue or native compute.",
+      "resource_owner": "Authenticated EditorSessionStore session and operation ticket; latest_ui_requests fence on the workspace channel",
+      "persistence": "Apply writes one PNG with processing metadata to the outputs folder and commits it through EditorSessionStore.complete; the file is removed if the commit fails. Load reads the current artifact only.",
+      "cancellation": "A stale revision, changed head or running image job refuses the step before writing. A superseded UI request publishes nothing.",
+      "acceptance": "CPU contracts cover flattening, saved metadata, undo/redo and crop geometry. One brush stroke, Apply, Undo and Redo were exercised in a browser; layer and crop-handle delivery remain rendered acceptance."
+    },
+    {
       "id": "editor-workspace-readiness",
       "sources": ["ruinedfooocus/features/gallery/ui_workspace.py"],
       "callbacks": "preview_readiness$",

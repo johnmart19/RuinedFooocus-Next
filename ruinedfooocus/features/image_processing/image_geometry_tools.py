@@ -1,6 +1,7 @@
 """Immutable, model-free still-image transforms using pinned native V3 nodes."""
 
 from dataclasses import dataclass
+import math
 import hashlib
 import re
 
@@ -30,6 +31,7 @@ DEFAULTS = dict(
     transform_feather=0,
     transform_rotation="none",
     transform_flip="horizontal",
+    transform_angle=0.0,
 )
 FIELDS = tuple(DEFAULTS)
 IMAGE_FIELDS = ("mask_image",)
@@ -71,7 +73,15 @@ def _integer(value, name, minimum=0):
 def parameters(data):
     values = {name: data.get(name, default) for name, default in DEFAULTS.items()}
     choices = dict(
-        transform_operation=("resize", "crop", "crop-to-mask", "pad", "rotate", "flip"),
+        transform_operation=(
+            "resize",
+            "crop",
+            "crop-to-mask",
+            "pad",
+            "rotate",
+            "flip",
+            "straighten",
+        ),
         transform_fit=("contain", "stretch", "center-crop"),
         transform_interpolation=INTERPOLATIONS,
         transform_padding_style=("transparent", "color", "mirror"),
@@ -91,7 +101,29 @@ def parameters(data):
     ):
         raise ValueError("Choose a six-digit RGB padding color.")
     values["transform_padding_color"] = values["transform_padding_color"].upper()
+    angle = values["transform_angle"]
+    if type(angle) not in (int, float) or not math.isfinite(angle) or not -180 <= angle <= 180:
+        raise ValueError("Angle must be a number from -180 to 180 degrees.")
+    values["transform_angle"] = float(angle)
     return values
+
+
+def straightened_size(source_size, angle):
+    """Largest upright rectangle that fits inside the source rotated by angle degrees."""
+    width, height = source_size
+    sine, cosine = abs(math.sin(math.radians(angle))), abs(math.cos(math.radians(angle)))
+    longer, shorter = max(width, height), min(width, height)
+    if shorter <= 2 * sine * cosine * longer or abs(sine - cosine) < 1e-10:
+        # Half-constrained: two corners touch the longer sides.
+        half = 0.5 * shorter
+        fitted = (half / sine, half / cosine) if width >= height else (half / cosine, half / sine)
+    else:
+        double = cosine * cosine - sine * sine
+        fitted = (
+            (width * cosine - height * sine) / double,
+            (height * cosine - width * sine) / double,
+        )
+    return max(1, math.floor(fitted[0] + 1e-6)), max(1, math.floor(fitted[1] + 1e-6))
 
 
 def output_size(source_size, values, crop_region=None):
@@ -125,6 +157,8 @@ def output_size(source_size, values, crop_region=None):
         height += values["transform_top"] + values["transform_bottom"]
     elif operation == "rotate" and values["transform_rotation"] in ("90 degrees", "270 degrees"):
         width, height = height, width
+    elif operation == "straighten":
+        width, height = straightened_size(source_size, values["transform_angle"])
     if min(width, height) < 1 or max(width, height) > MAX_DIMENSION or width * height > MAX_PIXELS:
         raise ValueError(
             "Transformed images must fit within 16 megapixels and 16384 pixels per side."
@@ -347,6 +381,30 @@ def worker_data(data):
     return result
 
 
+def _straighten(torch, pixels, angle, width, height):
+    """Rotate about the centre and keep the upright rectangle with no empty corners."""
+    from torch.nn.functional import grid_sample
+
+    source_height, source_width = pixels.shape[1:3]
+    radians = -math.radians(angle)
+    # Output pixel centres, measured from the shared centre, mapped back into the source.
+    rows = torch.arange(height, device=pixels.device, dtype=pixels.dtype) + 0.5 - height / 2
+    columns = torch.arange(width, device=pixels.device, dtype=pixels.dtype) + 0.5 - width / 2
+    y, x = torch.meshgrid(rows, columns, indexing="ij")
+    source_x = x * math.cos(radians) - y * math.sin(radians)
+    source_y = x * math.sin(radians) + y * math.cos(radians)
+    grid = torch.stack((source_x / (source_width / 2), source_y / (source_height / 2)), dim=-1)
+    sampled = grid_sample(
+        pixels.movedim(-1, 1),
+        grid.unsqueeze(0),
+        mode="bicubic",
+        padding_mode="border",
+        align_corners=False,
+    ).movedim(1, -1)
+    # Bicubic overshoot stays inside the range the source already has.
+    return sampled.clamp(float(pixels.min()), float(pixels.max()))
+
+
 def _process_pixels(request, policy, check_cancelled):
     import numpy as np
     import torch
@@ -429,6 +487,8 @@ def _process_pixels(request, policy, check_cancelled):
                 pixels = torch.cat((rgb, alpha), dim=-1)
         elif operation == "rotate":
             pixels = ops.rotate(None, pixels, values["transform_rotation"])[0]
+        elif operation == "straighten":
+            pixels = _straighten(torch, pixels, values["transform_angle"], width, height)
         else:
             pixels = ops.flip(
                 None,
@@ -486,6 +546,7 @@ def process(owner, data, manager, check_cancelled):
         "crop-to-mask": "ImageCropV2",
         "pad": "PadImageNode",
         "rotate": "ImageRotate",
+        "straighten": "torch.grid_sample (RF straighten: rotate and crop to fit)",
         "flip": "ImageFlip",
     }[values["transform_operation"]]
     if (

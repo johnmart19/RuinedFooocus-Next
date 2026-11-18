@@ -6,14 +6,20 @@ start at 0, end at 1 and increase by at least 0.000001; output values can rise o
 fall within 0–1. Choose linear or monotone cubic interpolation. Master RGB
 runs first, then the separate channels. Add one source and press Generate.
 
-**GLSL image effect** offers thirteen bundled recipes. **Invert RGB**, **BT.709
-grayscale**, **Posterize**, **Auto contrast** and **Sepia** blend towards their
-result: amount 0 preserves source RGB and amount 1 applies the full effect.
+**GLSL image effect** offers seventeen bundled recipes. **Invert RGB**, **BT.709
+grayscale**, **Posterize**, **Auto contrast**, **Auto color**, **Levels**, **Reduce
+noise**, **Sharpen (AMD RCAS)** and **Sepia** blend towards their result: amount 0 preserves source RGB and amount 1 applies the full effect.
 Posterize accepts 2–32 levels per channel. Auto contrast measures the 0.5% and
 99.5% luminance levels of the source and stretches all three channels between
 them, so a few stray dark or bright pixels do not hold it back and colours keep
 their balance; a flat image is left alone. The measurement is made on the CPU and
-handed to the GLSL recipe as two uniforms. The photo adjustments are signed, from −1 to 1, and 0 leaves
+handed to the GLSL recipe as two uniforms. **Auto color** does the same for red,
+green and blue separately, which also removes a colour cast. **Levels** maps the
+chosen black and white points to the ends of the range and applies the midtone
+gamma; the white point must be at least 0.01 above the black point. **Reduce
+noise** is a 3×3 per-channel median, which removes isolated specks and keeps
+edges. **Sharpen (AMD RCAS)** is the contrast-adaptive sharpener from AMD FSR 1
+at full strength. The photo adjustments are signed, from −1 to 1, and 0 leaves
 the image unchanged:
 
 | Effect      | Amount                                                                |

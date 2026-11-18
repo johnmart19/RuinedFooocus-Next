@@ -174,6 +174,9 @@ class EditorWorkspace:
                     value="preserve",
                 )
                 self.preview = gr.Button(t("Check resources"), size="sm")
+            from ruinedfooocus.features.gallery.ui_paint import PaintCanvas
+
+            self.paint = PaintCanvas()
 
     @staticmethod
     def action_label(action, destination="editor"):
@@ -609,6 +612,8 @@ class EditorWorkspace:
                 return updates
 
             return self._source_action(task_id, version, request, adopt, prepare=True)
+
+        self.paint.bind(self)
 
         self.open_current.click(
             open_current,

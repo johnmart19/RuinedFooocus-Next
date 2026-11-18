@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Une entrée de sortie non prise en charge ne peut pas être nettoyée : {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Étape suivante : choisissez Composer le premier plan et l’arrière-plan pour placer votre sujet sur cet arrière-plan.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Tolérance de couleur (0–255)"
+  "image_processing.color_tolerance_0_255": "Tolérance de couleur (0–255)",
+  "image_processing.straighten": "Redresser",
+  "image_processing.angle_degrees": "Angle (degrés)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Une valeur positive fait tourner l’image dans le sens horaire. Le résultat est recadré pour qu’il ne reste aucun coin vide.",
+  "image_processing.black_point": "Point noir",
+  "image_processing.white_point": "Point blanc",
+  "image_processing.midtone_gamma": "Gamma des tons moyens",
+  "gallery.paint_and_crop": "Peindre et recadrer",
+  "gallery.load_current_image": "Charger l’image actuelle",
+  "gallery.apply_painting": "Appliquer la peinture",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Chargez d’abord l’image actuelle, puis peignez-la ou recadrez-la.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Chargez l’image actuelle, puis peignez au pinceau, effacez, ajoutez des calques ou faites glisser les poignées de recadrage. Appliquer enregistre le résultat comme une nouvelle étape qu’Annuler peut reprendre."
 }

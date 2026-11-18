@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Questa voce di output non supportata non può essere rimossa: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Passaggio successivo: scegli Componi primo piano e sfondo per posizionare il soggetto su questo sfondo.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Tolleranza colore (0–255)"
+  "image_processing.color_tolerance_0_255": "Tolleranza colore (0–255)",
+  "image_processing.straighten": "Raddrizza",
+  "image_processing.angle_degrees": "Angolo (gradi)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Un valore positivo ruota l’immagine in senso orario. Il risultato viene ritagliato in modo che non restino angoli vuoti.",
+  "image_processing.black_point": "Punto di nero",
+  "image_processing.white_point": "Punto di bianco",
+  "image_processing.midtone_gamma": "Gamma dei mezzitoni",
+  "gallery.paint_and_crop": "Dipingi e ritaglia",
+  "gallery.load_current_image": "Carica l’immagine corrente",
+  "gallery.apply_painting": "Applica la pittura",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Carica prima l’immagine corrente e dipingila o ritagliala.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Carica l’immagine corrente, poi dipingi con il pennello, cancella, aggiungi livelli o trascina le maniglie di ritaglio. Applica salva il risultato come nuovo passaggio che Annulla può ripristinare."
 }

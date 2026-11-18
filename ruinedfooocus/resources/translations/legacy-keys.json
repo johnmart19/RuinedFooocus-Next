@@ -2080,5 +2080,16 @@
   "Unsupported output entry is not eligible: {path}": "shell.unsupported_output_entry_is_not_eligible_path",
   "Next: choose Compose foreground and background to place your subject on this background.": "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background",
   "AMD FSR 1": "image_processing.amd_fsr_1",
-  "Color tolerance (0–255)": "image_processing.color_tolerance_0_255"
+  "Color tolerance (0–255)": "image_processing.color_tolerance_0_255",
+  "Straighten": "image_processing.straighten",
+  "Angle (degrees)": "image_processing.angle_degrees",
+  "Positive turns the image clockwise. The result is cropped to fit, so no empty corners remain.": "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain",
+  "Black point": "image_processing.black_point",
+  "White point": "image_processing.white_point",
+  "Midtone gamma": "image_processing.midtone_gamma",
+  "Paint and crop": "gallery.paint_and_crop",
+  "Load the current image, then paint with the brush, erase, add layers or drag the crop handles. Apply saves the result as a new step that Undo can take back.": "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back",
+  "Load the current image and paint or crop it first.": "gallery.load_the_current_image_and_paint_or_crop_it_first",
+  "Load current image": "gallery.load_current_image",
+  "Apply painting": "gallery.apply_painting"
 }

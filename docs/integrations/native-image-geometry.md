@@ -85,6 +85,11 @@ samples normalize to float32 without an 8-bit intermediate. RGB, RGBA and one
 grayscale channel are supported; ordinary byte PIL inputs use oriented RGBA.
 There is no ICC conversion or implicit transfer/color-space conversion.
 
+**Straighten** rotates by any angle from −180° to 180° (positive is clockwise) with
+bicubic sampling and crops to the largest upright rectangle inside the rotated
+image, so the result has no empty corners and gains no alpha. It is application
+arithmetic over `torch.grid_sample`, not a native node.
+
 Nearest-exact, bilinear, area and bicubic use native interpolation.
 **AMD FSR 1** (`amd-fsr1`) enlarges with AMD FidelityFX Super Resolution 1: the
 edge-adaptive EASU upsampler in passes of at most 2× per axis, then RCAS

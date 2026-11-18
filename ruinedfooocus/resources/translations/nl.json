@@ -2084,5 +2084,16 @@
   "shell.unsupported_output_entry_is_not_eligible_path": "Dit niet-ondersteunde uitvoeritem kan niet worden gewist: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Volgende stap: kies Voorgrond en achtergrond samenstellen om je onderwerp op deze achtergrond te plaatsen.",
   "image_processing.amd_fsr_1": "AMD FSR 1",
-  "image_processing.color_tolerance_0_255": "Kleurtolerantie (0–255)"
+  "image_processing.color_tolerance_0_255": "Kleurtolerantie (0–255)",
+  "image_processing.straighten": "Rechtzetten",
+  "image_processing.angle_degrees": "Hoek (graden)",
+  "image_processing.positive_turns_the_image_clockwise_the_result_is_cropped_to_fit_so_no_empty_corners_remain": "Een positieve waarde draait de afbeelding met de klok mee. Het resultaat wordt bijgesneden, zodat er geen lege hoeken overblijven.",
+  "image_processing.black_point": "Zwartpunt",
+  "image_processing.white_point": "Witpunt",
+  "image_processing.midtone_gamma": "Middentonen-gamma",
+  "gallery.paint_and_crop": "Schilderen en bijsnijden",
+  "gallery.load_current_image": "Huidige afbeelding laden",
+  "gallery.apply_painting": "Schilderwerk toepassen",
+  "gallery.load_the_current_image_and_paint_or_crop_it_first": "Laad eerst de huidige afbeelding en schilder of snijd deze bij.",
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Laad de huidige afbeelding en schilder daarna met het penseel, gum, voeg lagen toe of sleep de bijsnijdgrepen. Toepassen slaat het resultaat op als een nieuwe stap die Ongedaan maken kan terugdraaien."
 }

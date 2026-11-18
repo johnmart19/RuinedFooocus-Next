@@ -123,7 +123,7 @@ def create_ui(selection, control_type, kind_for):
             operation = field(
                 "transform_operation",
                 "Transform operation",
-                choices=("resize", "crop", "pad", "rotate", "flip", "crop-to-mask"),
+                choices=("resize", "crop", "pad", "rotate", "straighten", "flip", "crop-to-mask"),
             )
             field(
                 "transform_width",
@@ -169,6 +169,15 @@ def create_ui(selection, control_type, kind_for):
                 "Rotation",
                 choices=("none", "90 degrees", "180 degrees", "270 degrees"),
                 when=lambda k, o, m, c: o == "rotate",
+            )
+            field(
+                "transform_angle",
+                "Angle (degrees)",
+                low=-180,
+                high=180,
+                step=0.1,
+                info="Positive turns the image clockwise. The result is cropped to fit, so no empty corners remain.",
+                when=lambda k, o, m, c: o == "straighten",
             )
             field(
                 "transform_flip",
