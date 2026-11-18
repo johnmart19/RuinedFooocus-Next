@@ -213,6 +213,12 @@ def create_ui(selection, control_type, kind_for):
             )
             field("mask_color", "Selected color (#RRGGBB)", when=lambda k, o, m, c: m == "color")
             field(
+                "mask_color_tolerance",
+                "Color tolerance (0–255)",
+                high=255,
+                when=lambda k, o, m, c: m == "color",
+            )
+            field(
                 "mask_threshold",
                 "Mask threshold",
                 high=1,

@@ -19,6 +19,7 @@ EFFECTS = {
     "invert": "Invert RGB",
     "bt709-grayscale": "BT.709 grayscale",
     "posterize": "Posterize",
+    "auto-contrast": "Auto contrast",
     "saturation": "Saturation",
     "vibrance": "Vibrance",
     "exposure": "Exposure",
@@ -57,6 +58,7 @@ PROGRAM_SHA256 = {
     "invert": "30fc2a953a5a4b6710868c04fc72a58fcf298c4b0f485b69666e0e4e3e02b112",
     "bt709-grayscale": "3ba2223959ec8289230cb0488295e414699b4733c83b44943737b6fe02bc716c",
     "posterize": "b06a6c5a1c90a9e62622d0edb7e415b7927a5f673cf1c0904c36b167058ea4fb",
+    "auto-contrast": "21b5a3808c87abaeae8d83bf8eb15b61d50471eacb8c53046af4d51d6c891285",
     "saturation": "7cb97a70fe57dabbd1a841dbe11a0a3271a38c272f385e46af11833e9e6d5ca9",
     "vibrance": "48df17b514029d26fc1b2c7d63dbdfa329dfcace351626ce7464c0b6a92c661c",
     "exposure": "ca0dac46e9c9be3e20299b9db92b49fcdaf508b288826e6839b495178047de1b",
@@ -226,6 +228,11 @@ def gl_pixels(request, tensor, curves, check_cancelled):
     check_cancelled()
     width, height = request.source.size
     floats = {"u_float0": options["shader_amount"]} if request.kind == "glsl-effect" else {}
+    if request.recipe == "auto-contrast":
+        from ruinedfooocus.features.image_processing.image_effect_cpu import tonal_range
+
+        # The shader cannot measure the image; give it the same range the CPU path uses.
+        floats["u_float1"], floats["u_float2"] = tonal_range(tensor)
     ints = {"u_int0": options["shader_levels"]} if request.recipe == "posterize" else {}
     with torch.inference_mode():
         outputs = native_call(

@@ -18,7 +18,9 @@ Results are exported as opaque grayscale RGB images. **Use result as inpaint
 mask** restores the matching owned source and derives an 8-bit scalar selection,
 including from precision PNG16/EXR results. The original source and precision
 result remain in history; no manual working-copy export is needed.
-Color-key extraction uses native rounded RGB8 equality;
+Color-key extraction selects pixels whose red, green and blue are each within
+**Color tolerance** (0–255) of the chosen colour. The form starts at 32, which suits
+photos; 0, and any request or saved setup without the field, uses native rounded RGB8 equality;
 it ignores source alpha. Extracting the alpha channel is a separate operation.
 
 Editor mask requests use sRGB PNG or linear EXR as the scalar-data output convention,

@@ -262,12 +262,8 @@ class GuidedResultActions:
                         owner=owner,
                     )
                     message = self._guide_label(spec.kind, locale)
-                if not attached:
-                    message = localize(
-                        "{guide}\n\nSelect a compatible local ControlNet in More tools before using this map.",
-                        locale,
-                        guide=message,
-                    )
+                # No instruction to pick a ControlNet: Use map for editing chooses an
+                # installed reviewed one itself and reports it if none is available.
                 self._current(workspace, context, owner)
                 return publish(
                     {

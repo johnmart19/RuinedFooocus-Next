@@ -457,9 +457,6 @@ class GuidedResultUiTests(unittest.TestCase):
 
         manager = translations.catalogue()
         server_language = manager.language
-        template = (
-            "{guide}\n\nSelect a compatible local ControlNet in More tools before using this map."
-        )
         # Interleave clients to catch accidental dependence on shared language.
         for locale in ("en", "uk", "en", *manager.manifest["locales"]):
             for kind in ("normal", "depth"):
@@ -477,11 +474,7 @@ class GuidedResultUiTests(unittest.TestCase):
                         if kind == "normal"
                         else "Depth map · editing guide"
                     )
-                    expected = manager.translate(
-                        template,
-                        {"guide": manager.translate(label, locale=locale)},
-                        locale=locale,
-                    )
+                    expected = manager.translate(label, locale=locale)
                     actual = projected[self.helper.status]["value"]
                     self.assertEqual(actual, expected)
                     self.assertNotIn("{guide}", actual)

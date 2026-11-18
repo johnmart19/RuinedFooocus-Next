@@ -106,6 +106,7 @@ ENUM_FIELDS = {
         "invert",
         "bt709-grayscale",
         "posterize",
+        "auto-contrast",
         "saturation",
         "vibrance",
         "exposure",

@@ -2083,5 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "현재 프로필을 사용할 수 없습니다",
   "shell.unsupported_output_entry_is_not_eligible_path": "지원되지 않는 출력 항목은 처리할 수 없습니다: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "다음 단계: ‘전경과 배경 합성’을(를) 선택해 피사체를 이 배경 위에 배치하세요.",
-  "image_processing.amd_fsr_1": "AMD FSR 1"
+  "image_processing.amd_fsr_1": "AMD FSR 1",
+  "image_processing.color_tolerance_0_255": "색상 허용 오차(0–255)"
 }

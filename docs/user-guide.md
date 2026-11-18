@@ -175,7 +175,7 @@ See [native model patches](integrations/native-model-patches.md) for compatible
 files, dedicated inputs, source denoise and Library/API behavior.
 
 - **RGB curves** edits normalized master/red/green/blue point tables. **GLSL image
-  effect** selects Invert RGB, BT.709 grayscale, Posterize or Sepia with an amount slider,
+  effect** selects Invert RGB, BT.709 grayscale, Posterize, Auto contrast or Sepia with an amount slider,
   and the photo adjustments Saturation, Vibrance, Exposure, Midtones, Temperature, Tint,
   Hue shift and Vignette with a signed slider where 0 changes nothing. **Adjust image →
   Transform → Resize** offers **AMD FSR 1** interpolation for sharper enlargement.

@@ -2083,5 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "現在のプロファイルを利用できません",
   "shell.unsupported_output_entry_is_not_eligible_path": "未対応の出力項目は処理できません: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "次の手順：「前景と背景を合成」を選ぶと、被写体をこの背景に配置できます。",
-  "image_processing.amd_fsr_1": "AMD FSR 1"
+  "image_processing.amd_fsr_1": "AMD FSR 1",
+  "image_processing.color_tolerance_0_255": "色の許容範囲（0–255）"
 }

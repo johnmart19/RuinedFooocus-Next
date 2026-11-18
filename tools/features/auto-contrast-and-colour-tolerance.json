@@ -1,0 +1,15 @@
+{
+  "id": "auto-contrast-and-colour-tolerance",
+  "subject": "Add Auto contrast and a colour tolerance for mask selection",
+  "requires": ["photo-adjustments-and-fsr1", "depth-map-editing-guide"],
+  "tests": [
+    "test_image_shaders.py",
+    "test_image_mask_tools.py",
+    "test_guided_result_ui.py",
+    "test_localization.py",
+    "test_api_image_edits.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

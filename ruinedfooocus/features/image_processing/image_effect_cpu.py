@@ -21,6 +21,20 @@ def _luminance(pixels):
     return (pixels * pixels.new_tensor([0.2126, 0.7152, 0.0722])).sum(dim=-1, keepdim=True)
 
 
+def tonal_range(pixels):
+    """Black and white points for Auto contrast: the 0.5% and 99.5% luminance levels.
+
+    A few stray dark or bright pixels do not hold the stretch back, and a flat
+    image keeps its tone because the two points coincide.
+    """
+    luminance = _luminance(pixels).flatten().float()
+    count = luminance.numel()
+    ordered = luminance.sort().values
+    low = float(ordered[min(count - 1, int(count * 0.005))])
+    high = float(ordered[max(0, min(count - 1, int(count * 0.995)))])
+    return (low, high) if high - low > 1e-5 else (0.0, 1.0)
+
+
 def _saturation(torch, pixels, amount):
     luminance = _luminance(pixels)
     return luminance + (pixels - luminance) * (1 + amount)
@@ -131,6 +145,12 @@ def render(request, pixels, curves, check_cancelled):
         effect = torch.floor(pixels.clamp(0, 1) * steps + 0.5) / steps
         check_cancelled()
         operators = ["torch.floor(RF posterize recipe)", "ImageBlend"]
+    elif request.recipe == "auto-contrast":
+        check_cancelled()
+        low, high = tonal_range(pixels)
+        effect = ((pixels - low) / max(high - low, 0.00001)).clamp(0, 1)
+        check_cancelled()
+        operators = ["torch(RF auto-contrast recipe)", "ImageBlend"]
     elif request.recipe in ADJUSTMENTS:
         # These recipes are their own arithmetic; amount is the adjustment, not an opacity.
         check_cancelled()

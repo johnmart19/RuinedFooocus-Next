@@ -28,6 +28,8 @@ DEFAULTS = dict(
     mask_composite_operation="multiply",
     mask_channel="alpha",
     mask_color="#000000",
+    # The form starts with a tolerance that works on photos.
+    mask_color_tolerance=32,
     mask_threshold=0.5,
     mask_invert=False,
 )
@@ -85,6 +87,10 @@ def parameters(data):
     ):
         raise ValueError("Choose a six-digit RGB mask color.")
     values["mask_color"] = values["mask_color"].upper()
+    # A request or saved setup from before the tolerance existed stays an exact match.
+    values["mask_color_tolerance"] = _number(
+        data.get("mask_color_tolerance", 0), "Color tolerance", 0, 255, integer=True
+    )
     return values
 
 
@@ -258,11 +264,18 @@ def _process_pixels(request, policy, check_cancelled):
             pixels = (
                 torch.from_numpy(_samples(request.source).copy()).to(policy.device).unsqueeze(0)
             )
-            result = (
-                ops.ImageToMask(None, pixels, values["mask_channel"])[0]
-                if operation == "channel"
-                else ops.ImageColorToMask(None, pixels, int(values["mask_color"][1:], 16))[0]
-            )
+            if operation == "channel":
+                result = ops.ImageToMask(None, pixels, values["mask_channel"])[0]
+            elif values["mask_color_tolerance"]:
+                # Photos never repeat one exact colour: select every pixel whose red,
+                # green and blue are each within the tolerance of the chosen colour.
+                key = pixels.new_tensor(
+                    [int(values["mask_color"][index : index + 2], 16) for index in (1, 3, 5)]
+                )
+                distance = (pixels[..., :3] * 255 - key).abs().amax(dim=-1)
+                result = (distance <= values["mask_color_tolerance"] + 0.5).to(pixels.dtype)
+            else:
+                result = ops.ImageColorToMask(None, pixels, int(values["mask_color"][1:], 16))[0]
         else:
             result = (
                 torch.from_numpy(_mask_samples(request.mask).copy()).to(policy.device).unsqueeze(0)
@@ -351,7 +364,13 @@ def process(owner, data, manager, check_cancelled):
         frame="oriented main image frame; no implicit crop or resize",
         working_dtype="float32",
         output_precision="float32 selection; export precision follows explicit output settings",
-        color_key_policy="native RGB8 rounded equality" if operation == "color" else None,
+        color_key_policy=(
+            None
+            if operation != "color"
+            else "per-channel RGB8 distance within tolerance"
+            if values["mask_color_tolerance"]
+            else "native RGB8 rounded equality"
+        ),
         color_policy="scalar selection; no ICC or color-space conversion",
         compute=execution.metadata(),
         **values,

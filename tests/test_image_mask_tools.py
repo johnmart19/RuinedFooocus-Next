@@ -97,6 +97,31 @@ class ImageMaskToolsTests(unittest.TestCase):
         self.assertEqual(int(result[0, 0, 0]), 0)
         self.assertEqual(int(result[1, 1, 0]), 255)
 
+    def test_color_tolerance_selects_near_colours_per_channel_and_zero_stays_exact(self):
+        image = Image.new("RGBA", (4, 1))
+        image.putdata(
+            [(100, 100, 100, 0), (110, 95, 104, 255), (111, 100, 100, 255), (0, 0, 0, 255)]
+        )
+        selected = lambda **options: [
+            int(value)
+            for value in self.run_mask(self.capture("color", source=image, **options))[0, :, 0]
+        ]
+        self.assertEqual(selected(mask_color="#646464"), [255, 0, 0, 0])
+        self.assertEqual(selected(mask_color="#646464", mask_color_tolerance=10), [255, 255, 0, 0])
+        self.assertEqual(
+            selected(mask_color="#646464", mask_color_tolerance=11), [255, 255, 255, 0]
+        )
+        self.assertEqual(selected(mask_color="#646464", mask_color_tolerance=255), [255] * 4)
+        data = self.capture("color", source=image, mask_color="#646464", mask_color_tolerance=10)
+        self.run_mask(data)
+        self.assertIn("tolerance", data["image_utility_source"]["color_key_policy"])
+        # The form default is tolerant; a request without the field is still exact.
+        self.assertEqual(masks.DEFAULTS["mask_color_tolerance"], 32)
+        self.assertEqual(masks.parameters({})["mask_color_tolerance"], 0)
+        for tolerance in (-1, 256, 1.5, True):
+            with self.subTest(tolerance=tolerance), self.assertRaises(ValueError):
+                self.capture("color", source=image, mask_color_tolerance=tolerance)
+
     def test_threshold_is_native_strict_greater_and_inversion_is_explicit(self):
         values = np.full((5, 5), 0.5, dtype=np.float32)
         values[0, 0] = 0.6

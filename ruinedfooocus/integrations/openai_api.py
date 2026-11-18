@@ -662,6 +662,7 @@ class ImageRequest(_GenerationRequest):
             "invert",
             "bt709-grayscale",
             "posterize",
+            "auto-contrast",
             "saturation",
             "vibrance",
             "exposure",
@@ -718,6 +719,7 @@ class ImageRequest(_GenerationRequest):
     )
     mask_channel: Literal["red", "green", "blue", "alpha"] | None = None
     mask_color: str | None = Field(default=None, pattern=r"^#[0-9A-Fa-f]{6}$")
+    mask_color_tolerance: int | None = Field(default=None, strict=True, ge=0, le=255)
     mask_threshold: float | None = Field(default=None, strict=True, ge=0, le=1, allow_inf_nan=False)
     mask_invert: bool | None = Field(default=None, strict=True)
     mask_image: str | None = Field(default=None, max_length=MAX_INLINE_IMAGE_CHARS)
@@ -1896,6 +1898,7 @@ def create_apps(backend, key=None):
                                         "invert",
                                         "bt709-grayscale",
                                         "posterize",
+                                        "auto-contrast",
                                         "saturation",
                                         "vibrance",
                                         "exposure",
@@ -1910,7 +1913,7 @@ def create_apps(backend, key=None):
                                 "shader_amount": {
                                     "type": "string",
                                     "contentMediaType": "application/json",
-                                    "description": "JSON number for the selected named effect: 0–1 for invert, bt709-grayscale, posterize and sepia; -1 to 1 for the signed adjustments. 0 leaves the image unchanged.",
+                                    "description": "JSON number for the selected named effect: 0–1 for invert, bt709-grayscale, posterize, auto-contrast and sepia; -1 to 1 for the signed adjustments. 0 leaves the image unchanged.",
                                 },
                                 "shader_levels": {
                                     "type": "string",

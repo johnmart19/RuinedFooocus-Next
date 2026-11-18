@@ -2083,5 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "El perfil actual no está disponible",
   "shell.unsupported_output_entry_is_not_eligible_path": "No se admite esta entrada de salida: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Siguiente paso: elige Componer primer plano y fondo para colocar el sujeto sobre este fondo.",
-  "image_processing.amd_fsr_1": "AMD FSR 1"
+  "image_processing.amd_fsr_1": "AMD FSR 1",
+  "image_processing.color_tolerance_0_255": "Tolerancia de color (0–255)"
 }

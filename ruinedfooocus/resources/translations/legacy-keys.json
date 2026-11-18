@@ -2079,5 +2079,6 @@
   "The current profile is unavailable": "shell.the_current_profile_is_unavailable",
   "Unsupported output entry is not eligible: {path}": "shell.unsupported_output_entry_is_not_eligible_path",
   "Next: choose Compose foreground and background to place your subject on this background.": "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background",
-  "AMD FSR 1": "image_processing.amd_fsr_1"
+  "AMD FSR 1": "image_processing.amd_fsr_1",
+  "Color tolerance (0–255)": "image_processing.color_tolerance_0_255"
 }

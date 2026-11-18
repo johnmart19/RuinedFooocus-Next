@@ -2083,5 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "当前配置文件不可用",
   "shell.unsupported_output_entry_is_not_eligible_path": "不支持的输出条目不可清理：{path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "下一步：选择“合成前景与背景”，将主体放到此背景上。",
-  "image_processing.amd_fsr_1": "AMD FSR 1"
+  "image_processing.amd_fsr_1": "AMD FSR 1",
+  "image_processing.color_tolerance_0_255": "颜色容差（0–255）"
 }

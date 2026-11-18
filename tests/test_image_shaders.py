@@ -180,7 +180,9 @@ class ImageShaders(unittest.TestCase):
             data = self.capture("glsl-effect", shader_effect=name, shader_amount=0, shader_levels=7)
             shaders.process(NS(), data, self.manager, Mock())
             call = self.calls[-1]
-            self.assertEqual(call["floats"], [0])
+            # Auto contrast also receives the measured black and white points.
+            self.assertEqual(call["floats"][0], 0)
+            self.assertEqual(len(call["floats"]), 3 if name == "auto-contrast" else 1)
             self.assertEqual(call["ints"], [7] if name == "posterize" else [])
             self.assertEqual(call["curves"], [])
             self.assertEqual(call["bools"], [])
@@ -520,6 +522,42 @@ class ImageShaders(unittest.TestCase):
                 result = shaders.process(NS(), data, self.manager, Mock())[0]
                 self.assertEqual(result.getpixel((4, 4))[:3], (200, 200, 200))
                 compare(result.getpixel((0, 0))[0], 200)
+        self.assertFalse(self.calls)
+
+    def test_auto_contrast_stretches_the_measured_range_and_ignores_stray_pixels(self):
+        from ruinedfooocus.features.image_processing import image_effect_cpu
+
+        ramp = torch.linspace(0.25, 0.75, 400).reshape(1, 20, 20, 1).expand(-1, -1, -1, 3).clone()
+        low, high = image_effect_cpu.tonal_range(ramp)
+        self.assertAlmostEqual(low, 0.25, delta=0.01)
+        self.assertAlmostEqual(high, 0.75, delta=0.01)
+        # One black and one white pixel in 400 are below the half-percent clip.
+        ramp[0, 0, 0], ramp[0, 19, 19] = 0.0, 1.0
+        self.assertEqual(
+            tuple(round(v, 2) for v in image_effect_cpu.tonal_range(ramp)), (0.25, 0.75)
+        )
+        self.assertEqual(image_effect_cpu.tonal_range(torch.full((1, 4, 4, 3), 0.4)), (0.0, 1.0))
+        self.source = Image.new("RGBA", (5, 1))
+        self.source.putdata(
+            [(64, 64, 64, 255), (96, 96, 96, 9), (128,) * 3 + (255,)] * 1
+            + [
+                (160, 160, 160, 255),
+                (192, 192, 192, 255),
+            ]
+        )
+        with (
+            patch.object(shaders, "cpu_mode", self.cpu_policy),
+            patch.object(sys, "argv", ["owned", "--cpu"]),
+        ):
+            results = {}
+            for amount in (0, 1):
+                data = self.capture(
+                    "glsl-effect", shader_effect="auto-contrast", shader_amount=amount
+                )
+                results[amount] = shaders.process(NS(), data, self.manager, Mock())[0]
+        self.assertEqual(results[0].tobytes(), self.source.tobytes())
+        self.assertEqual([results[1].getpixel((x, 0))[0] for x in range(5)], [0, 64, 128, 191, 255])
+        self.assertEqual(results[1].getpixel((1, 0))[3], 9)
         self.assertFalse(self.calls)
 
     def test_cpu_curve_pixels_use_native_luts_and_exact_endpoint_center_sampling(self):
