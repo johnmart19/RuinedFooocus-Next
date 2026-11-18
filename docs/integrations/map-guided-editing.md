@@ -7,9 +7,12 @@ After an owned Face region-mask result, **Use result as selection mask** restore
 the source and selects Inpaint. The existing exact-frame mask handoff retains the
 original pixels and alpha. The prompt remains editable; Run is a separate action.
 
-For an owned perspective MoGe depth/normal or Lotus depth result, explicitly
-select a compatible installed ControlNet under **More tools**. Use **Use map for
-editing** to restore the source and attach the retained map separately. The
+For an owned perspective MoGe depth/normal, Lotus depth or **Depth map** (Depth
+Anything 3, white-near) result, use **Use map for editing** to restore the source
+and attach the retained map separately. The current ControlNet selection is used
+when it is a reviewed guide control; otherwise an installed reviewed control is
+chosen (the depth-only payload first; a normal map needs Union). Either way the
+payload is verified by its content hash first, and nothing is downloaded. The
 action opens the existing control panel. It preserves the current prompt,
 negative prompt, target dimensions and manual control strength/start/end values.
 **Edit denoise** is a transient control, initially 0.35; lower values retain more

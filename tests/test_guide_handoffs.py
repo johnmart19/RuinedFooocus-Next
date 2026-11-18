@@ -205,6 +205,55 @@ class GuideHandoffTests(unittest.TestCase):
                 owner=self.owner,
             )
 
+    def depth_anything_result(self, vision):
+        snapshot = self.store.snapshot(self.initial.session_id, owner=self.owner)
+        ticket = self.store.capture(
+            snapshot.session_id,
+            snapshot.revision,
+            "depth-map",
+            source_id=snapshot.current.artifact_id,
+            owner=self.owner,
+        )
+        pixels = np.arange(35, dtype=np.uint8).reshape(5, 7) * 7
+        image = Image.fromarray(pixels, "L").convert("RGBA")
+        image.putalpha(Image.fromarray(self.source[..., 3]))
+        path = self.root / "depth-anything.png"
+        image.save(path)
+        return self.store.complete(
+            ticket, path, execution=dict(native_vision_source=vision), owner=self.owner
+        )
+
+    def test_depth_anything_map_is_an_editing_guide_only_with_its_white_near_receipt(self):
+        result = self.depth_anything_result(
+            dict(native="DepthAnything3", convention="white-near", format="png-gray8")
+        )
+        spec = guides.describe_result_guide(
+            self.store,
+            result.session_id,
+            result.revision,
+            result.current.artifact_id,
+            owner=self.owner,
+        )
+        self.assertEqual(
+            (spec.producer, spec.kind, spec.convention, spec.projection, spec.width, spec.height),
+            ("depth-map", "depth", "white-near", "perspective", 7, 5),
+        )
+        for vision in (
+            dict(native="DepthAnything3"),
+            dict(native="DepthAnything3", convention="white-far"),
+            dict(native="OtherEstimator", convention="white-near"),
+        ):
+            with self.subTest(vision=vision):
+                result = self.depth_anything_result(vision)
+                with self.assertRaises(ValueError):
+                    guides.describe_result_guide(
+                        self.store,
+                        result.session_id,
+                        result.revision,
+                        result.current.artifact_id,
+                        owner=self.owner,
+                    )
+
     def test_derived_guide_keeps_color_redo_and_rejects_receipt_identity_changes(self):
         ticket = self.store.capture(
             self.initial.session_id,

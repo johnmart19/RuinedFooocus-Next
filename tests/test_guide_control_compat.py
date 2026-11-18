@@ -259,8 +259,18 @@ class GuideControlCompatibilityTests(unittest.TestCase):
         detached = receipt.controls
         detached["model_signature"][1] = -1
         self.assertNotEqual(detached, receipt.controls)
-        with self.assertRaisesRegex(ValueError, "local list"):
+        # No selection: the installed reviewed control is chosen and verified the same way.
+        automatic = guide.plan_guide_control(self.spec, "SDXL", self.manager, "", [])
+        self.assertEqual(automatic.ui_values(), receipt.ui_values())
+        self.assertEqual(automatic.artifact_sha256, receipt.artifact_sha256)
+        with (
+            patch.object(guide, "_installed_reviewed_controls", return_value=[]),
+            self.assertRaisesRegex(ValueError, "local list"),
+        ):
             guide.plan_guide_control(self.spec, "SDXL", self.manager, "", [])
+        # Another checkpoint family keeps its explicit refusal.
+        with self.assertRaisesRegex(ValueError, "SDXL"):
+            guide.plan_guide_control(self.spec, "Flux", self.manager, "", [])
 
     def test_invalid_control_ranges_fail_before_queueing(self):
         _, controls = self.fixture()

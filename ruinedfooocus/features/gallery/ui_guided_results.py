@@ -106,6 +106,17 @@ class GuidedResultActions:
         )
 
     @staticmethod
+    def _control_update(component, value):
+        """Set a planned control value; a selector also learns an automatically chosen file."""
+        choices = getattr(component, "choices", None)
+        if isinstance(component, gr.Dropdown) and value not in {
+            choice[1] if isinstance(choice, (tuple, list)) else choice for choice in choices or ()
+        }:
+            # The selector's own refresh rebuilds the full local list afterwards.
+            return gr.update(value=value, choices=[*(choices or ()), (value, value)])
+        return gr.update(value=value)
+
+    @staticmethod
     def _guide_label(kind, locale):
         return (
             localize("Normal map · editing guide", locale)
@@ -426,7 +437,10 @@ class GuidedResultActions:
                 images = guides.handoff_images(workspace.selected_store(), handoff, owner=owner)
                 updates = workspace.snapshot_updates(restored, request=request)
                 updates.update(
-                    {controls[field]: gr.update(value=value) for field, value in values.items()}
+                    {
+                        controls[field]: self._control_update(controls[field], value)
+                        for field, value in values.items()
+                    }
                 )
                 updates.update(
                     {

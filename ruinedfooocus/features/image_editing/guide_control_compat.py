@@ -53,11 +53,11 @@ def _spec_values(spec):
     values = tuple(getattr(spec, name, None) for name in _SPEC_FIELDS)
     kind, convention, projection, producer, source_id, guide_id, width, height = values
     if (
-        producer not in ("moge-depth", "lotus-depth", "explicit-upload")
+        producer not in ("moge-depth", "lotus-depth", "depth-map", "explicit-upload")
         or not source_id
         or not guide_id
     ):
-        raise ValueError("Choose an owned MoGe or Lotus guide with its original source.")
+        raise ValueError("Choose an owned depth or normal guide with its original source.")
     if type(width) is not int or type(height) is not int or min(width, height) <= 0:
         raise ValueError("The guide must retain its exact positive source dimensions.")
     if projection != "perspective":
@@ -278,8 +278,45 @@ def validate_guide_control(manager, family, controls, spec):
     )
 
 
+def _installed_reviewed_controls(manager, family, kind):
+    """Installed files with a reviewed payload size, the depth-only payload first."""
+    from ruinedfooocus.features.image_editing.control_candidates import local_candidates
+
+    modes = {row[0]: row[3] for row in SOURCES.values()}
+    rows = [
+        row
+        for row in local_candidates(manager, family)
+        if row["compatibility"] == "compatible"
+        and row["signature"][1] in modes
+        and (kind != "normal" or modes[row["signature"][1]])
+    ]
+    return sorted(rows, key=lambda row: (bool(modes[row["signature"][1]]), row["name"]))
+
+
 def plan_guide_control(spec, family, manager, cn_model, cn_model_signature):
-    """CTA preflight before restoring source/history; no automatic file selection."""
-    return validate_guide_control(
-        manager, family, dict(model=cn_model, model_signature=cn_model_signature), spec
-    )
+    """CTA preflight before restoring source/history; never downloads a file.
+
+    The current ControlNet selection is used when it is a reviewed guide control.
+    Otherwise an installed reviewed control is chosen, so the map can be used
+    without visiting the ControlNet selector first. Either way the exact payload
+    is verified by its content hash before anything is restored.
+    """
+    try:
+        return validate_guide_control(
+            manager, family, dict(model=cn_model, model_signature=cn_model_signature), spec
+        )
+    except ValueError as selected_error:
+        if model_family(family) != "SDXL":
+            raise
+        kind = _spec_values(spec)[0]
+        for row in _installed_reviewed_controls(manager, family, kind):
+            try:
+                return validate_guide_control(
+                    manager,
+                    family,
+                    dict(model=row["name"], model_signature=row["signature"]),
+                    spec,
+                )
+            except ValueError:
+                continue
+        raise selected_error

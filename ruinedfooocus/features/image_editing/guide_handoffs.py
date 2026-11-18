@@ -214,12 +214,35 @@ def automatic_source_size(data):
     return plan["target"] if plan is not None else None
 
 
+# Depth Anything 3 is the estimator behind the stock Depth tool, so its saved
+# white-near map is the same guide that tool would have computed for itself.
+GUIDE_PRODUCERS = ("moge-depth", "lotus-depth", "depth-map")
+
+
+def depth_map_facts(execution, size):
+    """Describe an owned Depth map result in the utility-result vocabulary."""
+    vision = (execution or {}).get("native_vision_source")
+    if (
+        not isinstance(vision, dict)
+        or vision.get("native") != "DepthAnything3"
+        or vision.get("convention") != "white-near"
+    ):
+        raise ValueError("This depth result has no supported white-near convention.")
+    return dict(
+        operation="depth-map",
+        convention="white-near",
+        projection="perspective",
+        width=size[0],
+        height=size[1],
+    )
+
+
 def classify_map_metadata(metadata):
     """Describe saved producer semantics only; this confers no ownership authority."""
     if not isinstance(metadata, dict):
         raise ValueError("Read the saved geometry result metadata before selecting its convention.")
     info = metadata.get("image_utility_source", metadata)
-    if not isinstance(info, dict) or info.get("operation") not in ("moge-depth", "lotus-depth"):
+    if not isinstance(info, dict) or info.get("operation") not in GUIDE_PRODUCERS:
         raise ValueError("Choose an owned depth or normal utility result, not an arbitrary image.")
     producer = info["operation"]
     width, height = info.get("width"), info.get("height")
@@ -262,7 +285,7 @@ def classify_map_metadata(metadata):
 def _guide_result_id(value, current_id):
     """Resolve only the exact owned guide receipt attached to this color head."""
     if any(
-        row.get("result_id") == current_id and row.get("operation") in ("moge-depth", "lotus-depth")
+        row.get("result_id") == current_id and row.get("operation") in GUIDE_PRODUCERS
         for row in value["steps"]
     ):
         return current_id
@@ -291,12 +314,17 @@ def _step_spec(store, value, result_id, *, derived_revision=None):
         ):
             raise ValueError("Choose a current owned depth or normal utility result.")
         step = derived
-    info = (step or {}).get("execution", {}).get("image_utility_source", {})
+    source = store._get(value, step["source_id"], kind="image")
+    guide = store._get(value, result_id, kind="image")
+    execution = (step or {}).get("execution", {})
+    info = (
+        depth_map_facts(execution, source.frame.size)
+        if (step or {}).get("operation") == "depth-map"
+        else execution.get("image_utility_source", {})
+    )
     facts = classify_map_metadata(info)
     if (step or {}).get("operation") != facts["producer"]:
         raise ValueError("Choose an owned depth or normal utility result, not an arbitrary image.")
-    source = store._get(value, step["source_id"], kind="image")
-    guide = store._get(value, result_id, kind="image")
     if derived is not None and derived.get("source_frame_id") != source.frame_id:
         raise ValueError("The guide receipt does not match its exact original source frame.")
     if source.frame.size != guide.frame.size or source.frame.orientation != guide.frame.orientation:

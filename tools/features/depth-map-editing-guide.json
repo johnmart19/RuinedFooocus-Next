@@ -1,0 +1,9 @@
+{
+  "id": "depth-map-editing-guide",
+  "subject": "Use Depth map results as editing guides with an automatic reviewed ControlNet",
+  "requires": ["release-ui-review-fixes", "owned-derived-guide-consumption"],
+  "tests": ["test_guide_handoffs.py", "test_guide_control_compat.py", "test_guided_result_ui.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
