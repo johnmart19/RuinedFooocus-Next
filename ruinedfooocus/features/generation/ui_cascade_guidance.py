@@ -120,7 +120,7 @@ def create_ui(base_model, *, preset_selection=None, main_model=None, model_refre
         )
         gr.Markdown(
             t(
-                "Vision images are request inputs. Library setup restores the model and strengths; attach the reference images again in the same order."
+                "Vision images are request inputs. Gallery setup restores the model and strengths; attach the reference images again in the same order."
             )
         )
     model = main_model if main_model is not None else base_model

@@ -947,7 +947,7 @@ class ModelRecommendations:
             cfg="CFG",
             sampler_name=localize("Sampler", locale),
             scheduler=localize("Scheduler", locale),
-            clip_skip=localize("Clip Skip", locale),
+            clip_skip=localize("Clip skip", locale),
             sampling_shift=localize("Sampling shift", locale),
         )
         if details["network_cached"]:

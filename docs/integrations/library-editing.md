@@ -124,8 +124,8 @@ Full setup declares every restored native field and reference reset in its Gradi
 event outputs, including Cascade guidance for ordinary checkpoint images. The
 settings and destination update are processed in the same response. The
 saved seed also uses Create's canonical visibility update in that response, so
-it is editable when Random Seed is cleared. Metadata without a seed preserves
-the current seed, random choice and visibility; toggling Random Seed changes
+it is editable when Random seed is cleared. Metadata without a seed preserves
+the current seed, random choice and visibility; toggling Random seed changes
 visibility without choosing a different seed.
 The focused `test_gallery_setup_outputs.py` checks ordinary SDXL and Cascade setup
 through the production callback and real Gradio postprocessing, and checks the

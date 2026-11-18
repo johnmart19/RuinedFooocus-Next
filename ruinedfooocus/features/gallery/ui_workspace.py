@@ -131,6 +131,13 @@ class EditorWorkspace:
                 label=t("Apply current styles and negative processing"),
                 value=False,
             )
+            # A background step leaves only the background on screen; say what finishes it.
+            self.next_step = gr.Markdown(
+                t(
+                    "Next: choose Compose foreground and background to place your subject on this background."
+                ),
+                visible=False,
+            )
             self.denoise = gr.Slider(
                 label=t("Edit strength"),
                 minimum=0.01,
@@ -974,6 +981,22 @@ class EditorWorkspace:
                 self.background: gr.update(visible=background),
                 self.framing: gr.update(visible=framing),
                 self.denoise: gr.update(visible=action == "prompt-edit"),
+                self.next_step: gr.update(
+                    visible=action in ("select-background", "generate-background")
+                ),
+                # These actions never read the prompt, so its processing switch is noise.
+                self.prompt_processing: gr.update(
+                    visible=action
+                    not in (
+                        "remove-background",
+                        "select-background",
+                        "compose",
+                        "upscale",
+                        "depth-map",
+                        "restore-seedvr2",
+                        "adjust-image",
+                    )
+                ),
             }
 
         gr.on(
@@ -1001,6 +1024,8 @@ class EditorWorkspace:
                 self.background,
                 self.framing,
                 self.denoise,
+                self.prompt_processing,
+                self.next_step,
             ],
             queue=False,
             show_progress="hidden",
@@ -1267,7 +1292,7 @@ class EditorWorkspace:
                         progress=lambda count, parsed, reused: progress(
                             None,
                             desc=localize(
-                                "Scanning Library: {count} files ({reused} unchanged)",
+                                "Scanning Gallery: {count} files ({reused} unchanged)",
                                 locale,
                                 count=count,
                                 reused=reused,

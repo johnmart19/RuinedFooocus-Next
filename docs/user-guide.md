@@ -116,6 +116,18 @@ and **Segment by points** controls (depth maps are an Image action); object sele
 With automatic size and Preserve framing, prompt edits and inpainting keep the
 source dimensions; an explicit size, Pad or Crop remains your choice.
 
+**Remove background**, **Upscale selected image**, **Depth map** and **Adjust image**
+use their own tool model or none, so they run even when the selected image model is
+not installed. **Compose foreground and background** keeps the whole background with
+transparent bands under Preserve or Pad framing; choose **Crop** to fill the frame.
+Depth, pose and landmark results are guides for a later edit, not finished images.
+After **Depth map**, **Use map for editing** restores the photo, attaches the map and
+selects an installed reviewed SDXL depth ControlNet for you; write a prompt and run.
+After **Select background** or **Generate background** the Editor shows the next step:
+choose **Compose foreground and background** to put the subject back on it.
+With no image model installed, Create shows **Download default image model** under
+the model selector (disabled, with the reason, in offline mode).
+
 SAM segmentation keeps the photo open. Choose returned instances under **Objects**
 and use **Use result as selection mask** to attach their combined mask for
 inpainting. Cutouts remain separate results and cannot become selection masks.

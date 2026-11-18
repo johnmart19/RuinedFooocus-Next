@@ -208,7 +208,7 @@ separate acceptance gate.
 
 ## Inbox sorting
 
-Drop finished files into `models/inbox`, or use the Inbox Folder configured
+Drop finished files into `models/inbox`, or use the Inbox folder configured
 under Settings. Sorting starts with the app and normally notices a new file
 within two scans, about ten seconds before any file or network processing.
 The sorter uses exact catalogue checksums and recognized model headers.
@@ -225,10 +225,10 @@ documented folders. Use a model's own destination when you already know it.
 
 ## Profiles and priority
 
-**Settings → Profiles & storage → Paths** exposes Checkpoint Folders, Diffusion
-Model Folders, Text Encoder Folders, LoRA Folders, Embedding Folders and the other
+**Settings → Profiles & storage → Paths** exposes Checkpoint folders, Diffusion
+model folders, Text encoder folders, LoRA folders, Embedding folders and the other
 existing storage controls. Save and restart to apply path changes to model
-discovery and the initialized backend. A blank Diffusion Model Folders list
+discovery and the initialized backend. A blank Diffusion model folders list
 disables those additional browser roots.
 
 `paths.json` retains existing settings keys and custom values. Newly created
@@ -244,7 +244,7 @@ New downloads targeting one of these standard local aliases use its canonical
 counterpart. Existing files in either folder retain their configured lookup
 priority. Startup prepares canonical destinations rather than recreating missing
 local alias directories. Custom destinations are unchanged.
-Text Encoder Folders accepts one root per line; saved single-string roots remain
+Text encoder folders accepts one root per line; saved single-string roots remain
 readable and retain their order when saved as a list. Existing scalar cache and
 download fallbacks use the first root while file lookup searches all of them.
 

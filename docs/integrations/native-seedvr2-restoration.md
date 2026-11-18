@@ -23,6 +23,10 @@ temporal chunking, video loading or video output. ComfyUI owns native loading,
 sampling, codec memory and color correction. RF owns capture, leases, cancellation,
 bounded dimensions, result metadata and image-file transport.
 
+On native Windows ROCm the application starts Torch with
+`TORCH_BLAS_PREFER_HIPBLASLT=0` (see [AMD runtime](amd-runtime.md)); without it the
+codec's half-precision matmul failed in hipBLASLt and reset the GPU driver.
+
 Scale is 1–4, default 4. The native resize rounds each scaled side independently.
 RF pads odd reference dimensions to even dimensions, then native preprocessing
 pads the right and bottom to multiples of 16. Native postprocessing restores alpha
@@ -82,7 +86,7 @@ headers, and opens Image tools with that original and the recorded scale, color
 method and seed. Ambiguous or missing components require a deliberate manual
 selection; a basename alone is never enough. Component SHA-256 receipts are cached
 by current file identity and checked again when their identity is recorded.
-Library → **Edit in Library** also offers **Restore still image (SeedVR2)** with
+Library → **Edit in Gallery** also offers **Restore still image (SeedVR2)** with
 its own model, codec, scale and color controls and the same owned request stream.
 These are fresh operations on the selected original file, not access to a prior
 request's discarded upload. Precision sources use the existing explicit 8-bit

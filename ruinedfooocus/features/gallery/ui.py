@@ -623,9 +623,9 @@ def create_image_gallery():
                 # Find images first, then act on the selected one; details last.
                 with gr.Row(elem_id="browser-search", equal_height=True):
                     search_input = gr.Textbox(
-                        label=t("Search Metadata"),
+                        label=t("Search metadata"),
                         show_label=False,
-                        placeholder=t("Search Metadata"),
+                        placeholder=t("Search metadata"),
                         value="",
                         scale=1,
                         min_width=0,
@@ -666,7 +666,7 @@ def create_image_gallery():
                         grid_btn = gr.Button(t("Start image grid"), interactive=False)
                         composite_btn = gr.Button(t("Start image composition"), interactive=False)
                 metadata_output = gr.Textbox(
-                    label=t("Image Metadata"),
+                    label=t("Image metadata"),
                     interactive=False,
                     lines=6,
                     max_lines=14,
@@ -978,7 +978,7 @@ def create_image_gallery():
                             progress=lambda count, parsed, reused: progress(
                                 None,
                                 desc=localize(
-                                    "Scanning Library: {count} files ({reused} unchanged)",
+                                    "Scanning Gallery: {count} files ({reused} unchanged)",
                                     locale,
                                     count=count,
                                     reused=reused,
@@ -1056,7 +1056,7 @@ def create_image_gallery():
         def cancel_refresh(page, term, version, request: gr.Request = None):
             latest_ui_requests.cancel(owner(request), "library-view")
             message = localize(
-                "Library refresh cancelled. The previous index is still available.",
+                "Gallery refresh cancelled. The previous index is still available.",
                 resolve_locale(request=request),
             )
             descriptor = acknowledge(page, term, version, False, request)
@@ -1108,7 +1108,7 @@ def create_image_gallery():
                 data["file_path"] = str(path)
                 metadata = read_metadata(data.get("parameters")) or read_metadata(data) or data
             except (ValueError, OSError, AttributeError) as error:
-                gr.Warning("Could not select this file. Refresh Library and select it again.")
+                gr.Warning("Could not select this file. Refresh Gallery and select it again.")
                 return availability(None, {}) | {
                     selected: None,
                     metadata_json: {},

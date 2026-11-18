@@ -377,19 +377,19 @@ def create_settings(*, models_in_settings=True):
                     # Folder pickers share a responsive grid: two per row on wide pages.
                     with gr.Column(elem_id="settings-path-grid"):
                         for key, label in (
-                            ("path_checkpoints", t("Checkpoint Folders")),
-                            ("path_diffusion_models", t("Diffusion Model Folders")),
-                            ("path_clip", t("Text Encoder Folders")),
-                            ("path_loras", t("LoRA Folders")),
-                            ("path_embeddings", t("Embedding Folders")),
-                            ("path_inbox", t("Inbox Folder")),
+                            ("path_checkpoints", t("Checkpoint folders")),
+                            ("path_diffusion_models", t("Diffusion model folders")),
+                            ("path_clip", t("Text encoder folders")),
+                            ("path_loras", t("LoRA folders")),
+                            ("path_embeddings", t("Embedding folders")),
+                            ("path_inbox", t("Inbox folder")),
                             ("path_geometry_estimation", t("Geometry models folder")),
                             ("path_detection", t("Face detection models folder")),
                             ("path_model_patches", t("Model patches folder")),
                             ("path_gligen", t("GLIGEN model folders")),
                             ("path_hypernetworks", t("Hypernetwork folders")),
-                            ("path_outputs", t("Output Folder")),
-                            ("path_wildcards", t("Wildcard Folders")),
+                            ("path_outputs", t("Output folder")),
+                            ("path_wildcards", t("Wildcard folders")),
                         ):
                             value = path_manager.paths.get(
                                 key, path_manager.DEFAULT_PATHS.get(key, ["wildcards"])
@@ -397,7 +397,7 @@ def create_settings(*, models_in_settings=True):
                             control = create_path_control(key, label, value)
                             add_setting(key, control)
 
-                with gr.Accordion(t("Image Browser"), open=False):
+                with gr.Accordion(t("Image browser"), open=False):
                     images_per_page = gr.Number(
                         label=t("Images per page"),
                         value=settings.default_settings.get("images_per_page", 100),
@@ -408,7 +408,7 @@ def create_settings(*, models_in_settings=True):
                     add_setting("images_per_page", images_per_page)
                     archive_folders = create_path_control(
                         "archive_folders",
-                        t("Archive Folders"),
+                        t("Archive folders"),
                         settings.default_settings.get("archive_folders", []),
                     )
                     add_setting("archive_folders", archive_folders)
@@ -556,14 +556,14 @@ def create_settings(*, models_in_settings=True):
                     preset_choices = obp_choices()
                     saved_preset = settings.default_settings.get("OBP_preset", "Standard")
                     OBP_preset = gr.Dropdown(
-                        label=t("OBP Preset"),
+                        label=t("OBP preset"),
                         choices=preset_choices,
                         value=saved_preset if saved_preset in preset_choices else "Standard",
                         interactive=True,
                     )
                     add_setting("OBP_preset", OBP_preset)
                     hint_chance = gr.Number(
-                        label=t("Hint Chance"),
+                        label=t("Hint chance"),
                         minimum=0,
                         maximum=100,
                         step=1,
@@ -573,7 +573,7 @@ def create_settings(*, models_in_settings=True):
 
                 with gr.Accordion(t("Image and metadata defaults"), open=False):
                     interrogator = gr.Dropdown(
-                        label=t("Default Interrogator"),
+                        label=t("Default interrogator"),
                         info=t(
                             "Model used to describe an uploaded image when no prompt is supplied."
                         ),
@@ -583,13 +583,13 @@ def create_settings(*, models_in_settings=True):
                     )
                     add_setting("interrogator", interrogator)
                     save_metadata = gr.Checkbox(
-                        label=t("Save Metadata"),
+                        label=t("Save metadata"),
                         value=settings.default_settings.get("save_metadata", True),
                     )
                     add_setting("save_metadata", save_metadata)
 
                     meta_comment = gr.Textbox(
-                        label=t("Metadata Comment (Text added to the metadata)"),
+                        label=t("Metadata comment (text added to the metadata)"),
                         interactive=True,
                         value=settings.default_settings.get("meta_comment", ""),
                         lines=5,

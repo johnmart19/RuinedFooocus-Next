@@ -961,7 +961,7 @@ def add_controlnet_tab(
                     )
                 )
                 for name, label in (
-                    ("OBP_preset", "One Button Preset"),
+                    ("OBP_preset", "One Button preset"),
                     ("OBP_promptenhance", "Prompt enhancement"),
                     ("OBP_modeltype", "Prompt style"),
                 ):

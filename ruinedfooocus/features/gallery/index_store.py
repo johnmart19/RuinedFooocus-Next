@@ -36,7 +36,7 @@ def _writer_lock(key):
 
 def check_cancelled(cancelled):
     if cancelled is not None and cancelled.is_set():
-        raise CancelledError("Library refresh was cancelled")
+        raise CancelledError("Gallery refresh was cancelled")
 
 
 def ensure_schema(connection):
@@ -45,7 +45,7 @@ def ensure_schema(connection):
     if version == SCHEMA_VERSION:
         return
     if version != 0:
-        raise ValueError("This Library index schema needs its matching application version")
+        raise ValueError("This Gallery index schema needs its matching application version")
     with connection:
         connection.execute("CREATE TABLE IF NOT EXISTS images(fullpath text, path text, json text)")
         columns = {row[1] for row in connection.execute("PRAGMA table_info(images)")}
@@ -76,7 +76,7 @@ def connect_index(path, *, create_parent=True):
         if create_parent:
             path.parent.mkdir(parents=True, exist_ok=True)
         elif not path.parent.is_dir():
-            raise FileNotFoundError(f"Library cache folder is unavailable: {path.parent}")
+            raise FileNotFoundError(f"Gallery cache folder is unavailable: {path.parent}")
     else:
         ensure_app_directory("cache", *relative.parts)
     try:
@@ -85,7 +85,7 @@ def connect_index(path, *, create_parent=True):
         pass
     else:
         if stat.S_ISLNK(status.st_mode) or getattr(status, "st_file_attributes", 0) & 0x400:
-            raise OSError(f"Library index cannot follow a link or reparse point: {path}")
+            raise OSError(f"Gallery index cannot follow a link or reparse point: {path}")
     with _writer_lock(canonical_path_key(path)):
         connection = sqlite3.connect(path, timeout=5, check_same_thread=False)
         try:

@@ -168,7 +168,12 @@ def create_navigation_shell(
             with gr.Tab(t("Settings"), id="settings", elem_id="rf-nav-settings") as settings_tab:
                 page_head(t("Settings"), t("Profiles, hardware, defaults and maintenance."))
                 settings_app.render()
-        with gr.Group(elem_id="image-stage") as image_stage:
+        # Gradio writes a Group's elem_id on two nested elements. A Column carries
+        # the unique ID and navigation classes; the Group keeps its block spacing.
+        with (
+            gr.Column(elem_id="image-stage", min_width=0, scale=0) as image_stage,
+            gr.Group(),
+        ):
             for mode, title, text in (
                 ("rf-when-create", t("Create images"), t("Generate a new image from a prompt.")),
                 (
@@ -1215,7 +1220,9 @@ with shared.gradio_root as block:
                 label=t("Image"),
                 elem_id="main_view",
                 value=str(asset_path("init_image.png")),
-                height="var(--rf-viewer-height, 65dvh)",
+                # Phones: no taller than the column is wide, so a square image is not
+                # letterboxed above and below. A dragged size still takes precedence.
+                height="var(--rf-viewer-height, min(65dvh, 100vw))",
                 type="filepath",
                 image_mode=None,
                 format="png",
@@ -1449,6 +1456,23 @@ with shared.gradio_root as block:
                     create_models_button = gr.Button(
                         t("Models"), size="sm", elem_id="create-open-models"
                     )
+                # A fresh install has no image model; offer the default one here, where
+                # the empty selector is, instead of leaving Generate to fail.
+                with gr.Group(
+                    visible=not shared.models.get_names("checkpoints"),
+                    elem_id="create-first-model",
+                ) as first_model_panel:
+                    from ruinedfooocus.features.models.ui_download import (
+                        create_ui as create_first_model_ui,
+                    )
+
+                    create_first_model_ui(base_model).success(
+                        lambda: gr.update(visible=False),
+                        outputs=first_model_panel,
+                        queue=False,
+                        show_progress="hidden",
+                        api_visibility="private",
+                    )
                 preset_notice = gr.Markdown("", visible=False)
                 clear_preset_btn = gr.Button(
                     translate_ui("Clear generation preset"), visible=False, size="sm"
@@ -1552,7 +1576,7 @@ with shared.gradio_root as block:
                     add_ctrl("scheduler", scheduler)
 
                     clip_skip = gr.Slider(
-                        label=t("Clip Skip"),
+                        label=t("Clip skip"),
                         info=translate_ui(
                             "Used by ordinary text encoding. Native image-edit encoders choose their own layers."
                         ),
@@ -1702,7 +1726,7 @@ with shared.gradio_root as block:
                             interactive=True,
                         )
                         automatic_upscale = gr.Dropdown(
-                            label=t("Automatic Upscale"),
+                            label=t("Automatic upscale"),
                             choices=upscale_choices(2, advanced=False),
                             value="Off",
                             info=t(
@@ -1809,7 +1833,7 @@ with shared.gradio_root as block:
                     style_selection = style_controls.selection
                     add_ctrl("style_selection", style_selection)
                 image_number = gr.Slider(
-                    label=t("Image Number"),
+                    label=t("Image number"),
                     minimum=0,
                     maximum=settings.get("image_number_max", 50),
                     step=1,
@@ -1820,19 +1844,19 @@ with shared.gradio_root as block:
                     translate_ui("Negative prompt and seed"), open=False, elem_id="generation-seed"
                 ):
                     auto_negative_prompt = gr.Checkbox(
-                        label=t("Auto Negative Prompt"),
+                        label=t("Auto negative prompt"),
                         show_label=True,
                         value=settings["auto_negative_prompt"],
                     )
                     add_ctrl("auto_negative", auto_negative_prompt)
                     negative_prompt = gr.Textbox(
-                        label=translate_ui("Negative Prompt"),
+                        label=translate_ui("Negative prompt"),
                         show_label=True,
                         placeholder=translate_ui("Type prompt here."),
                         value=settings["negative_prompt"],
                     )
                     add_ctrl("negative", negative_prompt)
-                    seed_random = gr.Checkbox(label=t("Random Seed"), value=settings["seed_random"])
+                    seed_random = gr.Checkbox(label=t("Random seed"), value=settings["seed_random"])
                     add_ctrl("seed_random", seed_random)
                     image_seed = gr.Number(
                         label=t("Seed"),

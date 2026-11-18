@@ -2081,5 +2081,6 @@
   "shell.the_application_is_busy_finish_or_stop_current_work_first": "Die App ist beschäftigt; beenden oder stoppen Sie zuerst laufende Vorgänge",
   "shell.the_application_is_busy_retry_after_current_work_finishes": "Die App ist beschäftigt; versuchen Sie es nach Abschluss laufender Vorgänge erneut",
   "shell.the_current_profile_is_unavailable": "Das aktuelle Profil ist nicht verfügbar",
-  "shell.unsupported_output_entry_is_not_eligible_path": "Nicht unterstützter Ausgabeeintrag ist nicht zulässig: {path}"
+  "shell.unsupported_output_entry_is_not_eligible_path": "Nicht unterstützter Ausgabeeintrag ist nicht zulässig: {path}",
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Nächster Schritt: Wähle Vordergrund und Hintergrund kombinieren, um dein Motiv auf diesem Hintergrund zu platzieren."
 }

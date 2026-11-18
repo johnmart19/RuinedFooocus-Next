@@ -369,7 +369,9 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 elem_id="chat-divider",
                 min_width=12,
                 scale=0,
-                js_on_load=(ASSET_ROOT / "chat_splitter.js").read_text(encoding="utf-8"),
+                js_on_load=(ASSET_ROOT / "chat_splitter.js").read_text(encoding="utf-8")
+                + "\n"
+                + (ASSET_ROOT / "chat_avatar_label.js").read_text(encoding="utf-8"),
             )
             with gr.Column(scale=2, min_width=0, elem_id="chat-controls"):
                 with gr.Column(elem_id="chat-assistant-head", min_width=0, scale=0):
@@ -602,8 +604,17 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                         cancel_load = gr.Button(
                             translate_ui("Cancel loading"), size="sm", min_width=112, visible=False
                         )
+                    # Send stays disabled until a model is loaded; say which step is next.
                     llama_model_status = gr.Markdown(
-                        (default_decision.reason if not default_decision.allowed else "")
+                        (
+                            default_decision.reason
+                            if not default_decision.allowed
+                            else "Choose a model and click Load before sending. Selecting a candidate does not load it."
+                            if initial_actions["load_available"]
+                            else "Download this candidate first, then click Load."
+                            if initial_actions["download_visible"]
+                            else ""
+                        )
                         if default_available
                         else "Select an installed model or a downloadable candidate."
                     )

@@ -340,6 +340,10 @@ def _image(store, ticket, ref, owner, *, details=False):
     return (image, information) if details else image
 
 
+def _background_fit(values):
+    return "crop" if values.get("image_resize_mode") == "crop" else "pad"
+
+
 def composition_inputs(step, store, *, owner):
     """Resolve both owned roles again at native capture, preserving the current canvas."""
     if not isinstance(step, WorkflowStep) or step.action != "compose":
@@ -352,7 +356,11 @@ def composition_inputs(step, store, *, owner):
     import numpy as np
     from ruinedfooocus.features.image_editing.image_geometry import prepare_reference
 
-    pixels, _ = prepare_reference(additional, source.size, "pad", multiple=1, preserve_alpha=True)
+    # Crop framing covers the canvas; Preserve and Pad keep the whole background
+    # with transparent bands, as before.
+    pixels, _ = prepare_reference(
+        additional, source.size, _background_fit(step.parameters), multiple=1, preserve_alpha=True
+    )
     background = Image.fromarray((pixels[0].numpy() * 255).round().astype(np.uint8))
     store.validate(step.ticket, owner=owner)
     return [background, source]
@@ -528,7 +536,9 @@ def execution_metadata(step, result_size, *, actual=None):
     )
     if step.action == "compose" and "background_id" in values:
         result["background_fit"] = dict(
-            policy="uniform fit with transparent padding; no crop or stretch",
+            policy="uniform cover with centered crop; no stretch"
+            if _background_fit(values) == "crop"
+            else "uniform fit with transparent padding; no crop or stretch",
             source=list(step.ticket.additional_images[0].frame.size),
             result=list(step.ticket.source.frame.size),
         )

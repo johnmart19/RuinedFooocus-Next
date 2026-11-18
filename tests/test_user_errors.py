@@ -43,7 +43,7 @@ class UserErrorTests(unittest.TestCase):
 
     def test_app_messages_become_gradio_errors_with_the_same_text(self):
         for error in (
-            ValueError("Select an image in Library first."),
+            ValueError("Select an image in Gallery first."),
             PermissionError("Sign in again."),
             FileNotFoundError("The model is not installed."),
         ):

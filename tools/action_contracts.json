@@ -24,8 +24,12 @@
     },
     {
       "id": "create-local-controls-navigation",
-      "sources": ["ruinedfooocus/ui/app.py", "ruinedfooocus/ui/settings_navigation.py"],
-      "work": "Navigation, localization dispatch, captured upload/metadata/preset, model/size/default projection and preview timers.",
+      "sources": [
+        "ruinedfooocus/ui/app.py",
+        "ruinedfooocus/ui/settings_navigation.py",
+        "ruinedfooocus/ui/image_viewer.py"
+      ],
+      "work": "Navigation, localization dispatch, captured upload/metadata/preset, model/size/default projection, preview timers and client-only image viewer fit/zoom buttons.",
       "resource_owner": "Per-browser Gradio controls/draft; shared model catalogue read snapshots owned by features/models",
       "persistence": "Local control updates only except explicit feature-owned actions; original image paths and metadata remain authoritative.",
       "cancellation": "Short reads must not await compute; delayed model projections need latest selection fencing. Localization helpers expand at app composition.",

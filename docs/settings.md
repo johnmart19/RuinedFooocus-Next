@@ -110,8 +110,8 @@ family recipe; unknown models show an identified generic fallback. Size recipes
 and benchmark/hardware qualification are separate facts.
 
 The [model folder guide](model-folders.md) lists canonical names and legacy
-aliases. Diffusion Model Folders extends image-model discovery beyond Checkpoint
-Folders; Text Encoder Folders keeps the `path_clip` profile key. New profiles use
+aliases. Diffusion model folders extends image-model discovery beyond Checkpoint
+folders; Text encoder folders keeps the `path_clip` profile key. New profiles use
 `models/text_encoders`, while existing `models/clip` values keep their priority.
 
 In **Profiles & storage → Paths**, **Select folder** opens an in-page browser for

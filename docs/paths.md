@@ -20,7 +20,7 @@ accessible existing directory. Output selection also checks the host's writable
 access flag. Actual file writes can still fail later if permissions or storage
 change.
 
-Archive roots use the same controls under **Image Browser**. The picker covers
+Archive roots use the same controls under **Image browser**. The picker covers
 checkpoints, diffusion models, text encoders, LoRAs, embeddings, inbox, geometry
 models, output, wildcards and archives.
 

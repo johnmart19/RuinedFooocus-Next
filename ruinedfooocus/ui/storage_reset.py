@@ -38,8 +38,8 @@ def target_rows(plan, locale=None):
         return []
     labels = {
         "model-hashes": localize("Model hash records", locale),
-        "library-index": localize("Library index", locale),
-        "library-thumbnails": localize("Library thumbnails", locale),
+        "library-index": localize("Gallery index", locale),
+        "library-thumbnails": localize("Gallery thumbnails", locale),
         "startup-checks": localize("Startup verification", locale),
         "output-file": localize("Original output files", locale),
         "output-directory": localize("Subfolders", locale),

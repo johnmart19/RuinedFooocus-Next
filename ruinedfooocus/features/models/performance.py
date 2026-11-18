@@ -724,7 +724,7 @@ class PerformanceSettings:
         )
         options = self.get_perf_options(selection, checkpoint, family)
         text += (
-            localize("Clip Skip", locale) + f": {options['clip_skip']}"
+            localize("Clip skip", locale) + f": {options['clip_skip']}"
             if selection != self.CUSTOM_PERFORMANCE
             else ""
         )

@@ -230,10 +230,10 @@ def create_ui(base_model, *, preset_selection=None, main_model=None, model_refre
         )
         controls["clip_layer_source"] = gr.Dropdown(
             label=t("CLIP layer settings"),
-            choices=[(t("Current Clip Skip"), "request"), (t("Selected recipe"), "recipe")],
+            choices=[(t("Current clip skip"), "request"), (t("Selected recipe"), "recipe")],
             value=defaults.get("clip_layer_source", "request") if saved_recipe else "request",
             interactive=bool(saved_recipe),
-            info=t("Editing Clip Skip or choosing a PNG preset restores Current Clip Skip."),
+            info=t("Editing Clip skip or choosing a PNG preset restores Current clip skip."),
         )
         refresh_recipes = gr.Button(t("Refresh local recipes"), size="sm")
     controls["model_recipe_sha256"] = gr.State(

@@ -1,7 +1,7 @@
 """Show the app's own error messages to the person who triggered an event.
 
 Callbacks raise ValueError, PermissionError or FileNotFoundError with text written
-for the user ("Select an image in Library first."). Gradio shows only a generic
+for the user ("Select an image in Gallery first."). Gradio shows only a generic
 "Error" for exceptions other than gr.Error, so those three become gr.Error with
 the same text. Other exceptions are unexpected and keep Gradio's generic message.
 Existing gr.Error instances keep their message, display options and identity.

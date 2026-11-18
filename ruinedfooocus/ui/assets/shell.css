@@ -176,12 +176,15 @@
 #image-stage.rf-editor .rf-when-editor {
   display: block;
 }
-#image-stage {
+/* The stage's Group only supplies block spacing; it draws no card of its own.
+   Gradio nests two .gr-group elements around the styler. */
+#image-stage > .gr-group,
+#image-stage > .gr-group > .gr-group {
   border: 0;
   background: transparent;
   overflow: visible;
 }
-#image-stage > .styler {
+#image-stage > .gr-group > .gr-group > .styler {
   background: transparent;
   gap: var(--layout-gap);
   overflow: visible;
@@ -269,6 +272,24 @@
 :is(#app-tabs .tabitem, #image-stage) .tab-container {
   inline-size: fit-content;
 }
+/* The Create/Editor side-column tab bar spans its column. Tabs share each row's free
+   space, so a bar that wraps (Editor has four tabs) keeps justified rows, not ragged
+   ones. Two IDs outrank the segmented rule above, which ui.css cannot (it loads first). */
+#image-stage #generation-controls .tab-container {
+  display: flex;
+  inline-size: 100%;
+}
+#image-stage #generation-controls .tab-container > [role="tab"] {
+  flex: 1 1 auto;
+  justify-content: center;
+  text-align: center;
+}
+/* A phone column fits Editor's four tabs on one row once their padding is tighter. */
+@media (max-width: 640px) {
+  #image-stage #generation-controls .tab-container > [role="tab"] {
+    padding-inline: 0.375rem;
+  }
+}
 /* Choice chips: every option stays visible and equally sized. */
 .rf-chips .wrap {
   display: flex;
@@ -305,8 +326,10 @@
 #browser-actions > :is(button, a) {
   inline-size: 100%;
   min-inline-size: 0 !important;
-  /* Narrow two-column cells keep labels on one line where they can. */
-  padding: 0.375rem 0.5rem !important;
+  /* Narrow two-column cells keep labels on one line where they can; a label that
+     still wraps to two lines fits the standard control height instead of raising
+     its whole grid to 48px. */
+  padding: 0.25rem 0.5rem !important;
   line-height: 1.2 !important;
 }
 #browser-controls .rf-actions > :is(button, a):last-child:nth-child(odd),
@@ -740,6 +763,11 @@
 }
 #browser-search > button {
   flex: 0 0 auto !important;
+}
+/* The field's block adds a 1px border around the one-row textarea; without this the
+   row, and the Search button stretched to it, is 2px taller than every other control. */
+#browser-search textarea {
+  padding-block: calc(0.625rem - 1px);
 }
 
 /* ---- Chat assistant ---- */

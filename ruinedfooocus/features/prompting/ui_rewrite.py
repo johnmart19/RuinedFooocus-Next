@@ -43,7 +43,16 @@ def add_rewrite_controls(prompt):
             raise gr.Error("Enter a prompt before rewriting it.")
         if not system_file:
             raise gr.Error("Choose a rewrite preset first.")
-        result = safe_rewrite(current, run_prompt(current, system_file))
+        try:
+            proposed = run_prompt(current, system_file)
+        except RuntimeError as error:
+            # Gradio shows only a bare "Error" for this type; say what to do instead.
+            detail = " ".join(str(error).split())[:240]
+            raise gr.Error(
+                "The prompt could not be rewritten. Choose or download a model in Chat, "
+                "then preview again. " + detail
+            ) from error
+        result = safe_rewrite(current, proposed)
         return gr.update(value=result, visible=True), current, gr.update(interactive=True)
 
     def apply_rewrite(current, original, proposed):

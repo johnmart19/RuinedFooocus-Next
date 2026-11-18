@@ -39,10 +39,17 @@ def create_ui(base_model):
             "Add checkpoints to `models/checkpoints` or configure **Settings → Storage → Paths**, then refresh files. The default SDXL checkpoint is an optional download of several GB; no model weights are included in source releases."
         )
     )
+    if offline():
+        # The button is disabled in this mode; say why.
+        gr.Markdown(
+            translate_ui(
+                "Offline mode: add a checkpoint locally or restart online to download the default model."
+            )
+        )
     button = gr.Button(
         translate_ui("Download default image model"), interactive=not offline(), size="sm"
     )
-    button.click(
+    return button.click(
         download_default,
         outputs=base_model,
         concurrency_id="checkpoint_download",

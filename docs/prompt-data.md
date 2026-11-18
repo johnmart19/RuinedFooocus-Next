@@ -66,7 +66,7 @@ the same user-root resolver. Existing files are never moved by discovery.
 Standalone wildcard files use the separate wildcard resolver: custom
 `wildcards/name.txt` entries override official entries packaged in
 `ruinedfooocus/resources/wildcards/`. Use `__name__` in a prompt. Random Style and
-Random Seed are separate controls; neither selects a new random prompt.
+Random seed are separate controls; neither selects a new random prompt.
 
 ## CSV contract
 

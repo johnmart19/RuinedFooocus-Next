@@ -2081,5 +2081,6 @@
   "shell.the_application_is_busy_finish_or_stop_current_work_first": "L’application est occupée ; terminez ou arrêtez d’abord les tâches en cours",
   "shell.the_application_is_busy_retry_after_current_work_finishes": "L’application est occupée ; réessayez une fois les tâches en cours terminées",
   "shell.the_current_profile_is_unavailable": "Le profil actuel est indisponible",
-  "shell.unsupported_output_entry_is_not_eligible_path": "Une entrée de sortie non prise en charge ne peut pas être nettoyée : {path}"
+  "shell.unsupported_output_entry_is_not_eligible_path": "Une entrée de sortie non prise en charge ne peut pas être nettoyée : {path}",
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Étape suivante : choisissez Composer le premier plan et l’arrière-plan pour placer votre sujet sur cet arrière-plan."
 }

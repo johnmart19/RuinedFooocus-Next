@@ -52,17 +52,17 @@ def _categories(manager):
         ),
         Category(
             "library-index",
-            "Library index",
+            "Gallery index",
             (configured / "images.db",),
             False,
-            "Refresh Library to rebuild metadata. Original images are preserved.",
+            "Refresh Gallery to rebuild metadata. Original images are preserved.",
         ),
         Category(
             "library-thumbnails",
-            "Library thumbnails",
+            "Gallery thumbnails",
             (library_thumbnail_root(configured),),
             False,
-            "Regenerated when browsing Library. Original images are preserved.",
+            "Regenerated when browsing Gallery. Original images are preserved.",
         ),
         Category(
             "startup-checks",
@@ -101,7 +101,7 @@ def _categories(manager):
             "Native image display previews",
             tuple(root / "native-image-previews" for root in roots),
             True,
-            "May be used by active Library views and image workflows.",
+            "May be used by active Gallery views and image workflows.",
         ),
         Category(
             "native-image-exports",

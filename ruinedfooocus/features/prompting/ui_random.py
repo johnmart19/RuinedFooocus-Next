@@ -640,7 +640,7 @@ def ui_onebutton(
             # Part of presets
             with gr.Row():
                 OBP_preset = gr.Dropdown(
-                    label=translate_ui("One Button Preset"),
+                    label=translate_ui("One Button preset"),
                     choices=[OBPresets.RANDOM_PRESET_OBP]
                     + list(OBPresets.opb_presets.keys())
                     + [OBPresets.CUSTOM_OBP],

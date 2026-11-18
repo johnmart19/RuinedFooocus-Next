@@ -2081,5 +2081,6 @@
   "shell.the_application_is_busy_finish_or_stop_current_work_first": "La aplicación está ocupada; termine o detenga primero las tareas en curso",
   "shell.the_application_is_busy_retry_after_current_work_finishes": "La aplicación está ocupada; inténtelo de nuevo cuando finalicen las tareas en curso",
   "shell.the_current_profile_is_unavailable": "El perfil actual no está disponible",
-  "shell.unsupported_output_entry_is_not_eligible_path": "No se admite esta entrada de salida: {path}"
+  "shell.unsupported_output_entry_is_not_eligible_path": "No se admite esta entrada de salida: {path}",
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Siguiente paso: elige Componer primer plano y fondo para colocar el sujeto sobre este fondo."
 }

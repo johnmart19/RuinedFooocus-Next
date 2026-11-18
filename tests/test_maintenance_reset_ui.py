@@ -76,8 +76,8 @@ class MaintenanceResetUiTests(unittest.TestCase):
         self.assertEqual(
             ui.target_rows(plan, "en"),
             [
-                [cache, "Library thumbnails", 2, "3.0 KiB", 0],
-                [os.path.join("cache", "images.db"), "Library index", 0, "0 B", 12],
+                [cache, "Gallery thumbnails", 2, "3.0 KiB", 0],
+                [os.path.join("cache", "images.db"), "Gallery index", 0, "0 B", 12],
                 [
                     os.path.join("outputs", "day", "one.png"),
                     "Original output files",

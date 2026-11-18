@@ -54,7 +54,7 @@ class CacheMaintenanceUiTests(unittest.TestCase):
             translated_locations = next(
                 fn("sv") for fn, outputs in callbacks if outputs == [locations]
             )
-            self.assertIn("sv: Model and Library cache", translated_locations)
+            self.assertIn("sv: Model and Gallery cache", translated_locations)
             translated_headers = next(fn("sv") for fn, outputs in callbacks if outputs == [table])
             self.assertEqual(translated_headers["headers"][0], "sv: Category")
             self.assertNotIn("value", translated_headers)

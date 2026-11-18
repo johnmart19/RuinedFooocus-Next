@@ -232,6 +232,26 @@ class EditorWorkingCopyTests(unittest.TestCase):
             workflows.execution_metadata(step, result.size)["background_fit"]["policy"],
         )
 
+    def test_crop_framing_covers_the_canvas_with_the_background(self):
+        path = self.root / "foreground.png"
+        Image.new("RGBA", (20, 10), (200, 0, 0, 128)).save(path)
+        snapshot = self.store.start(path, owner=self.owner)
+        background = self.root / "background.png"
+        Image.new("RGBA", (5, 10), (0, 0, 200, 255)).save(background)
+        ref = self.store.bind_image(snapshot.session_id, background, owner=self.owner)
+        step = self.step(
+            snapshot, "compose", {"background_id": ref.artifact_id, "image_resize_mode": "crop"}
+        )
+        fitted = workflows.worker_request(step, self.store, owner=self.owner)["composition_images"][
+            0
+        ]
+        self.assertEqual(fitted.size, (20, 10))
+        # No transparent bands remain: every pixel comes from the background.
+        self.assertEqual(set(fitted.getdata()), {(0, 0, 200, 255)})
+        self.assertIn(
+            "cover", workflows.execution_metadata(step, (20, 10))["background_fit"]["policy"]
+        )
+
     def test_existing_foreground_composition_route_and_conflicting_role_rejection(self):
         path = self.root / "background.png"
         Image.new("RGBA", (20, 10), (0, 0, 200, 255)).save(path)

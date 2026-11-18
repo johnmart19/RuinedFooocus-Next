@@ -18,7 +18,7 @@ def _size(value):
 
 
 def cache_location_text(roots, locale=None):
-    locations = [f"{localize('Model and Library cache', locale)}: `{roots[0]}`"]
+    locations = [f"{localize('Model and Gallery cache', locale)}: `{roots[0]}`"]
     if len(roots) > 1:
         locations.append(f"{localize('Uploads and runtime cache', locale)}: `{roots[1]}`")
     return "\n\n".join(locations)
@@ -55,8 +55,8 @@ def create_cache_maintenance(manager):
         category = gr.Dropdown(
             choices=[
                 (t("Model hash records"), "model-hashes"),
-                (t("Library index"), "library-index"),
-                (t("Library thumbnails"), "library-thumbnails"),
+                (t("Gallery index"), "library-index"),
+                (t("Gallery thumbnails"), "library-thumbnails"),
                 (t("Startup verification"), "startup-checks"),
             ],
             value="model-hashes",
@@ -97,7 +97,7 @@ def create_cache_maintenance(manager):
                 text += "\n\n" + "\n".join(result["errors"])
             if value == "library-index":
                 text += "\n\n" + localize(
-                    "Refresh Library to rebuild its index. Original images are preserved.", locale
+                    "Refresh Gallery to rebuild its index. Original images are preserved.", locale
                 )
             return text
 

@@ -2081,5 +2081,6 @@
   "shell.the_application_is_busy_finish_or_stop_current_work_first": "应用正忙，请先完成或停止当前任务",
   "shell.the_application_is_busy_retry_after_current_work_finishes": "应用正忙，请在当前任务完成后重试",
   "shell.the_current_profile_is_unavailable": "当前配置文件不可用",
-  "shell.unsupported_output_entry_is_not_eligible_path": "不支持的输出条目不可清理：{path}"
+  "shell.unsupported_output_entry_is_not_eligible_path": "不支持的输出条目不可清理：{path}",
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "下一步：选择“合成前景与背景”，将主体放到此背景上。"
 }

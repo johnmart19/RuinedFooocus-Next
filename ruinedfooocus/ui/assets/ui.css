@@ -705,19 +705,6 @@ textarea {
 :is(#app-tabs, #image-stage) .tab-container.wrap > [role="tab"] {
   box-shadow: inset 0 -1px var(--border-color-primary);
 }
-/* Side-column tab bars wrap at most widths; equal cells keep wrapped rows aligned
-   and leave a leftover tab in one cell instead of stretching it across a row. */
-#generation-controls .tab-container.wrap,
-#browser-controls .tab-container.wrap,
-#chat-controls .tab-container.wrap {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.5rem), 1fr));
-}
-#generation-controls .tab-container.wrap > [role="tab"],
-#browser-controls .tab-container.wrap > [role="tab"],
-#chat-controls .tab-container.wrap > [role="tab"] {
-  justify-content: center;
-}
 /* break-word keeps whole words in min-content sizing, so flex columns cannot
    squeeze a button until a label like "Generate" splits mid-word. */
 :is(#app-tabs, #image-stage) button,

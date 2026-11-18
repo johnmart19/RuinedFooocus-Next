@@ -138,6 +138,18 @@ def capture_pending_image_selection(
     )
 
     kind = str((data.get("controlnet") or {}).get("type", "")).lower()
+    if not kind and (
+        "cn_selection" in data or data.get("automatic_upscale_target") == "Input image only"
+    ):
+        # UI requests select a tool as a preset. The worker resolves it the same way;
+        # a checkpoint-free tool chosen either way needs no primary model.
+        from ruinedfooocus.features.image_editing.controlnet import get_settings
+
+        try:
+            kind = str((get_settings(data) or {}).get("type", "")).lower()
+        except (AttributeError, KeyError, ValueError):
+            # Incomplete custom-control fields are reported by the worker's own validation.
+            kind = ""
     if (
         data.get("task_type") in ("llama", "chat")
         or _local_prompt_command(data)
@@ -192,7 +204,9 @@ def capture_pending_image_selection(
         row = registry.annotations_for(key, info)
         if row is None or row.get("state") != "existing" or not is_native_checkpoint_source(row):
             raise ValueError(
-                "This missing primary has no trusted image source contract. Install and inspect it locally."
+                "The selected image model is not installed and cannot be downloaded "
+                "automatically. Choose an installed model under Models, or add this "
+                "file to a checkpoint folder."
             )
         family = row["native_family"]
         require_image_family(family)

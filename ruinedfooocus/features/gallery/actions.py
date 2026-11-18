@@ -31,7 +31,7 @@ def source_record(path):
 
 def source_path(record):
     if not isinstance(record, dict) or not isinstance(record.get("path"), str):
-        raise ValueError("Select an image in Library first.")
+        raise ValueError("Select an image in Gallery first.")
     path = Path(record["path"])
     from ruinedfooocus.features.models.image_scope import require_image_path
 
@@ -42,7 +42,7 @@ def source_path(record):
         unchanged = False
     if not unchanged:
         raise ValueError(
-            "The selected file changed or was removed. Refresh Library and select it again."
+            "The selected file changed or was removed. Refresh Gallery and select it again."
         )
     _require_still_source(path)
     return path

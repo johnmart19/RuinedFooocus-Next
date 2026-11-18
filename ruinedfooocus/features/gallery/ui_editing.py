@@ -52,7 +52,7 @@ class LibraryEditor:
         self.setup_choice = gr.Textbox("", visible=False)
         self.terminal = gr.State(None)
         with gr.Accordion(t("Gallery draft"), open=True):
-            self.notice = gr.Markdown(t("Select an image to start a Library draft."))
+            self.notice = gr.Markdown(t("Select an image to start a Gallery draft."))
             self.preview = gr.Image(
                 label=t("Selected original"),
                 interactive=False,
@@ -411,7 +411,7 @@ class LibraryEditor:
                     self.preview: gr.update(visible=False),
                     self.mask: gr.update(visible=False),
                     self.run: gr.update(interactive=False),
-                    self.notice: t("Select an image to start a Library draft."),
+                    self.notice: t("Select an image to start a Gallery draft."),
                 }
             try:
                 ticket = validate_record(record, request)
@@ -482,7 +482,7 @@ class LibraryEditor:
                         ],
                         stale=None,
                         message=t(
-                            "The Library draft changed while metadata loaded. Your text was kept."
+                            "The Gallery draft changed while metadata loaded. Your text was kept."
                         ),
                     ),
                     self.mask: gr.update(
@@ -688,7 +688,7 @@ class LibraryEditor:
             validate_record(record, request)
             if not same_source(record, draft_source):
                 raise gr.Error(
-                    "The selected image changed. Wait for its Library draft before running."
+                    "The selected image changed. Wait for its Gallery draft before running."
                 )
             controls = dict(zip(shared.state["ctrls_name"], values))
             staged = values[len(shared.state["ctrls_name"]) + 3 :]

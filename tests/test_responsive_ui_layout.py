@@ -253,8 +253,12 @@ class ResponsiveUILayoutTests(unittest.TestCase):
         self.assertGreater(CSS.rfind("@media (max-width: 600px)", 0, start), 0)
 
     def test_narrow_tabs_do_not_keep_an_unbounded_minimum_or_duplicate_slider_rules(self):
-        tabs = rules("#generation-controls .tab-container.wrap")[0]
-        self.assertIn("minmax(min(100%, 7.5rem), 1fr)", tabs)
+        # shell.css loads after ui.css; only a rule there with two IDs outranks the
+        # segmented `:is(#app-tabs .tabitem, #image-stage) .tab-container` layout.
+        side = "#image-stage #generation-controls .tab-container"
+        self.assertEqual(rules("#generation-controls .tab-container.wrap"), [])
+        self.assertIn("inline-size: 100%", rules(side, SHELL_CSS)[0])
+        self.assertIn("flex: 1 1 auto", rules(side + ' > [role="tab"]', SHELL_CSS)[0])
         self.assertEqual(len(rules(":is(#app-tabs, #image-stage) .tab-like-container")), 1)
         self.assertEqual(len(rules("#chat-message-input textarea")), 1)
         self.assertIn(

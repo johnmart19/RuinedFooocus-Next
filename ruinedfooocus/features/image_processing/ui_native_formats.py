@@ -110,7 +110,7 @@ def import_selection(path, folder):
         imported, _ = import_image(path, folder)
     except (OSError, ValueError, RuntimeError) as error:
         raise gr.Error(str(error)) from None
-    return t("Imported an original copy. Refresh images to find it in Library."), str(imported)
+    return t("Imported an original copy. Refresh images to find it in Gallery."), str(imported)
 
 
 def create_library_ui(selected, manager):

@@ -405,6 +405,27 @@ class FirstUseImageAssetsTests(unittest.TestCase):
         self.assertEqual(ready["_prepared_primary_asset"].request, pending.primary.request)
         self.assertIsNone(assets.capture_pending_image_selection(ready, self.manager))
 
+    def test_checkpoint_free_tool_chosen_by_preset_never_needs_the_missing_primary(self):
+        key = self.primary()
+        selected = "ruinedfooocus.features.image_editing.controlnet.get_settings"
+        # Gallery quick actions select the tool as a preset, without an explicit control.
+        for kind in ("rembg", "upscale", "depth-map"):
+            with self.subTest(kind=kind), patch(selected, return_value={"type": kind}):
+                self.assertIsNone(
+                    assets.capture_pending_image_selection(
+                        dict(base_model_name=key, cn_selection="preset"), self.manager
+                    )
+                )
+        # Incomplete custom-control fields fall back to the explicit control only.
+        with patch(selected, side_effect=KeyError("cn_type")):
+            pending = assets.capture_pending_image_selection(
+                dict(base_model_name=key, cn_selection="preset"), self.manager
+            )
+        self.assertEqual(assets.pending_image_selection(pending).catalogue_key, key)
+        # API requests without a preset never import the UI control module.
+        with patch(selected, side_effect=AssertionError("not consulted")):
+            assets.capture_pending_image_selection(dict(base_model_name=key), self.manager)
+
     def test_missing_primary_fails_native_class_and_variant_disagreement_before_final_plan(self):
         key = self.primary(shapes=fixtures.HEADERS["SAM31"])
         pending = assets.capture_pending_image_selection(dict(base_model_name=key), self.manager)

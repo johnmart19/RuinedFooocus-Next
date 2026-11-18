@@ -2081,5 +2081,6 @@
   "shell.the_application_is_busy_finish_or_stop_current_work_first": "앱이 사용 중입니다. 현재 작업을 완료하거나 중지하세요",
   "shell.the_application_is_busy_retry_after_current_work_finishes": "앱이 사용 중입니다. 현재 작업이 끝난 후 다시 시도하세요",
   "shell.the_current_profile_is_unavailable": "현재 프로필을 사용할 수 없습니다",
-  "shell.unsupported_output_entry_is_not_eligible_path": "지원되지 않는 출력 항목은 처리할 수 없습니다: {path}"
+  "shell.unsupported_output_entry_is_not_eligible_path": "지원되지 않는 출력 항목은 처리할 수 없습니다: {path}",
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "다음 단계: ‘전경과 배경 합성’을(를) 선택해 피사체를 이 배경 위에 배치하세요."
 }
