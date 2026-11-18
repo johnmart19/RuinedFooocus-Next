@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "Програма зайнята; повторіть спробу після завершення поточної роботи",
   "shell.the_current_profile_is_unavailable": "Поточний профіль недоступний",
   "shell.unsupported_output_entry_is_not_eligible_path": "Непідтримуваний вихідний елемент не підлягає очищенню: {path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Наступний крок: виберіть «Скомпонувати передній план і тло», щоб розмістити об’єкт на цьому тлі."
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Наступний крок: виберіть «Скомпонувати передній план і тло», щоб розмістити об’єкт на цьому тлі.",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }

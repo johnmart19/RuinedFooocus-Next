@@ -85,7 +85,16 @@ samples normalize to float32 without an 8-bit intermediate. RGB, RGBA and one
 grayscale channel are supported; ordinary byte PIL inputs use oriented RGBA.
 There is no ICC conversion or implicit transfer/color-space conversion.
 
-Nearest-exact, bilinear, area and bicubic use native interpolation. The pinned
+Nearest-exact, bilinear, area and bicubic use native interpolation.
+**AMD FSR 1** (`amd-fsr1`) enlarges with AMD FidelityFX Super Resolution 1: the
+edge-adaptive EASU upsampler in passes of at most 2× per axis, then RCAS
+sharpening at 0.2 stops, with bicubic alpha. `amd_fsr1.py` is a tensor port of the
+MIT-licensed `ffx_fsr1.h` from the AMD FSR SDK 2.4.0 and runs on any device,
+including CPU; it loads no AMD binary. It accepts 8-bit or 16-bit sRGB sources
+and refuses a target smaller than the source in either dimension before queueing.
+With **center-crop** it enlarges to cover the target and trims the excess. The
+SDK's temporal upscalers (FSR 2, 3 and 4), frame generation and denoisers need
+motion vectors, depth and a swap chain, so they do not apply to a still image. The pinned
 native Lanczos helper converts through Pillow uint8 and is intentionally omitted
 from this precision-preserving surface. The adapter does not substitute a new
 Lanczos implementation.

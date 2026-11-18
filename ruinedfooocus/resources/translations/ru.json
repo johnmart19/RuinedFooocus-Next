@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "Приложение занято; повторите попытку после завершения текущей работы",
   "shell.the_current_profile_is_unavailable": "Текущий профиль недоступен",
   "shell.unsupported_output_entry_is_not_eligible_path": "Неподдерживаемый выходной элемент не подлежит очистке: {path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Следующий шаг: выберите «Объединить передний план и фон», чтобы поместить объект на этот фон."
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Следующий шаг: выберите «Объединить передний план и фон», чтобы поместить объект на этот фон.",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }

@@ -69,7 +69,7 @@ INTEGER_RANGES = {
 FLOAT_RANGES = {
     "krea_style_strength": (-10, 10),
     "llama_moe_cache_cpu_share": (0, 1),
-    "shader_amount": (0, 1),
+    "shader_amount": (-1, 1),
     "filter_sigma": (0.1, 10),
     "filter_strength": (0, 5),
     "filter_factor": (0, 2),
@@ -102,7 +102,20 @@ BOOLEAN_FIELDS = {
 }
 ENUM_FIELDS = {
     "curve_interpolation": ("linear", "monotone_cubic"),
-    "shader_effect": ("invert", "bt709-grayscale", "posterize"),
+    "shader_effect": (
+        "invert",
+        "bt709-grayscale",
+        "posterize",
+        "saturation",
+        "vibrance",
+        "exposure",
+        "midtones",
+        "temperature",
+        "tint",
+        "hue",
+        "sepia",
+        "vignette",
+    ),
     "face_detector_variant": ("short", "full", "both"),
     "reference_adapter": ("none", "style", "redux", "photomaker"),
     "clip_layer_source": ("request", "recipe"),

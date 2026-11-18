@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "The application is busy; retry after current work finishes",
   "shell.the_current_profile_is_unavailable": "The current profile is unavailable",
   "shell.unsupported_output_entry_is_not_eligible_path": "Unsupported output entry is not eligible: {path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Next: choose Compose foreground and background to place your subject on this background."
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Next: choose Compose foreground and background to place your subject on this background.",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }

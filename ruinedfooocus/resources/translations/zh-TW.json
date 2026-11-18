@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "應用程式忙碌中，請在目前工作完成後重試",
   "shell.the_current_profile_is_unavailable": "目前的設定檔無法使用",
   "shell.unsupported_output_entry_is_not_eligible_path": "不支援的輸出項目無法清理：{path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "下一步：選擇「合成前景與背景」，將主體放到此背景上。"
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "下一步：選擇「合成前景與背景」，將主體放到此背景上。",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }

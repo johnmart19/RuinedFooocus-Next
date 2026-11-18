@@ -12,7 +12,7 @@ KEY = "_image_transform_request"
 NATIVE_REVISION = "989d93d0d968e704c589ce0146bb18c77f6b50cc"
 MAX_PIXELS = 16777216
 MAX_DIMENSION = 16384
-INTERPOLATIONS = ("nearest-exact", "bilinear", "area", "bicubic")
+INTERPOLATIONS = ("nearest-exact", "bilinear", "area", "bicubic", "amd-fsr1")
 DEFAULTS = dict(
     transform_operation="resize",
     transform_width=0,
@@ -223,6 +223,19 @@ def capture_selection(value, source_size):
     return selection, (left, top, right - left, bottom - top)
 
 
+def _fsr_cover(source_size, size, values):
+    """The size FSR produces before an optional centre crop to the exact target."""
+    if values["transform_fit"] != "center-crop":
+        return size
+    import math
+
+    scale = max(size[0] / source_size[0], size[1] / source_size[1])
+    return (
+        max(size[0], math.ceil(source_size[0] * scale)),
+        max(size[1], math.ceil(source_size[1] * scale)),
+    )
+
+
 def capture_assets(data, manager, models=None):
     from PIL import Image
     from ruinedfooocus.features.image_processing.native_image_formats import format_settings
@@ -235,6 +248,16 @@ def capture_assets(data, manager, models=None):
     elif data.get("mask_image") is not None:
         raise ValueError("Only Crop to selection mask uses an input selection mask.")
     size = output_size(source.size, values, crop_region)
+    if (
+        values["transform_operation"] == "resize"
+        and values["transform_interpolation"] == "amd-fsr1"
+    ):
+        from ruinedfooocus.features.image_processing import amd_fsr1
+
+        if source.dtype not in ("uint8", "uint16") or source.color_space != "sRGB":
+            raise ValueError("AMD FSR 1 works on 8-bit or 16-bit sRGB sources.")
+        # Refuse a reduction here, before queueing, with the reason.
+        amd_fsr1.pass_sizes(source.size, _fsr_cover(source.size, size, values))
     choice = format_settings(data)
     creates_alpha = (
         values["transform_operation"] == "pad"
@@ -342,7 +365,14 @@ def _process_pixels(request, policy, check_cancelled):
     width, height = request.output_size
     operation = values["transform_operation"]
     with torch.inference_mode():
-        if operation == "resize":
+        if operation == "resize" and values["transform_interpolation"] == "amd-fsr1":
+            from ruinedfooocus.features.image_processing import amd_fsr1
+
+            cover = _fsr_cover(source.size, (width, height), values)
+            pixels = amd_fsr1.upscale(pixels, *cover, check_cancelled=check_cancelled)
+            left, top = (cover[0] - width) // 2, (cover[1] - height) // 2
+            pixels = pixels[:, top : top + height, left : left + width]
+        elif operation == "resize":
             pixels = ops.resize(
                 None,
                 pixels,
@@ -458,6 +488,13 @@ def process(owner, data, manager, check_cancelled):
         "rotate": "ImageRotate",
         "flip": "ImageFlip",
     }[values["transform_operation"]]
+    if (
+        values["transform_operation"] == "resize"
+        and values["transform_interpolation"] == "amd-fsr1"
+    ):
+        from ruinedfooocus.features.image_processing import amd_fsr1
+
+        node = amd_fsr1.SOURCE
     information = dict(
         operation=KINDS[0],
         native_node=node,

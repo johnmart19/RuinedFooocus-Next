@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "Aplikacja jest zajęta; spróbuj ponownie po zakończeniu bieżących zadań",
   "shell.the_current_profile_is_unavailable": "Bieżący profil jest niedostępny",
   "shell.unsupported_output_entry_is_not_eligible_path": "Nieobsługiwany element wyjściowy nie podlega usunięciu: {path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Następny krok: wybierz Połącz pierwszy plan i tło, aby umieścić obiekt na tym tle."
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Następny krok: wybierz Połącz pierwszy plan i tło, aby umieścić obiekt na tym tle.",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }

@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "O aplicativo está ocupado; tente novamente quando as tarefas atuais terminarem",
   "shell.the_current_profile_is_unavailable": "O perfil atual não está disponível",
   "shell.unsupported_output_entry_is_not_eligible_path": "Esta entrada de saída não é compatível: {path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Próximo passo: escolha Compor primeiro plano e fundo para colocar o assunto sobre este fundo."
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Próximo passo: escolha Compor primeiro plano e fundo para colocar o assunto sobre este fundo.",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }

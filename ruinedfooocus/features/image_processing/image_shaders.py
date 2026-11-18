@@ -15,7 +15,31 @@ from ruinedfooocus.features.image_processing.native_vision import _number
 
 KINDS = ("image-curves", "glsl-effect")
 LABELS = {"image-curves": "RGB curves", "glsl-effect": "GLSL image effect"}
-EFFECTS = {"invert": "Invert RGB", "bt709-grayscale": "BT.709 grayscale", "posterize": "Posterize"}
+EFFECTS = {
+    "invert": "Invert RGB",
+    "bt709-grayscale": "BT.709 grayscale",
+    "posterize": "Posterize",
+    "saturation": "Saturation",
+    "vibrance": "Vibrance",
+    "exposure": "Exposure",
+    "midtones": "Midtones",
+    "temperature": "Temperature",
+    "tint": "Tint",
+    "hue": "Hue shift",
+    "sepia": "Sepia",
+    "vignette": "Vignette",
+}
+# Amount 0 always leaves the image unchanged. The first effects and Sepia blend
+# towards their result; the adjustments are signed, like a photo editor's sliders.
+SIGNED_EFFECTS = frozenset(
+    ("saturation", "vibrance", "exposure", "midtones", "temperature", "tint", "hue", "vignette")
+)
+
+
+def amount_range(effect):
+    return (-1.0, 1.0) if effect in SIGNED_EFFECTS else (0.0, 1.0)
+
+
 CURVE_FIELDS = ("curve_master", "curve_red", "curve_green", "curve_blue")
 DEFAULTS = {
     **{field: [[0.0, 0.0], [1.0, 1.0]] for field in CURVE_FIELDS},
@@ -33,6 +57,15 @@ PROGRAM_SHA256 = {
     "invert": "30fc2a953a5a4b6710868c04fc72a58fcf298c4b0f485b69666e0e4e3e02b112",
     "bt709-grayscale": "3ba2223959ec8289230cb0488295e414699b4733c83b44943737b6fe02bc716c",
     "posterize": "b06a6c5a1c90a9e62622d0edb7e415b7927a5f673cf1c0904c36b167058ea4fb",
+    "saturation": "7cb97a70fe57dabbd1a841dbe11a0a3271a38c272f385e46af11833e9e6d5ca9",
+    "vibrance": "48df17b514029d26fc1b2c7d63dbdfa329dfcace351626ce7464c0b6a92c661c",
+    "exposure": "ca0dac46e9c9be3e20299b9db92b49fcdaf508b288826e6839b495178047de1b",
+    "midtones": "2fa83f00d7bf39d8c0fc18fcaef0bea59dc2938a3a1548e0c55c3a5888aab066",
+    "temperature": "45713209ffadcc47a296725a22e9fd1cf3da1707946b229e8158eeb799302708",
+    "tint": "7160eb34a478a84ef9941923eee82559ecd8c36416195e27388d565b7fa13b59",
+    "hue": "9bc867a9a5adbded6f37ac35f151b4b07339496a2872b0884df475fe89db3db6",
+    "sepia": "9bb9c06e562b893d6a9bf360fc326cd48fbe7f0fbe0fd880fb9ff58057180ebd",
+    "vignette": "5e8185daa4cfc23766a8c503cd601b513fbc59ede41d997e75ef07e02160e912",
 }
 
 
@@ -77,7 +110,9 @@ def parameters(kind, data):
             raise ValueError("Choose one of the named GLSL image effects.")
         result = {
             "shader_effect": effect,
-            "shader_amount": _number(data.get("shader_amount", 1.0), "Effect amount", 0, 1),
+            "shader_amount": _number(
+                data.get("shader_amount", 1.0), "Effect amount", *amount_range(effect)
+            ),
         }
         if effect == "posterize":
             result["shader_levels"] = _number(

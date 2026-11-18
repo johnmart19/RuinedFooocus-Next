@@ -657,8 +657,24 @@ class ImageRequest(_GenerationRequest):
     curve_green: CurveTable | None = None
     curve_blue: CurveTable | None = None
     curve_interpolation: Literal["linear", "monotone_cubic"] | None = None
-    shader_effect: Literal["invert", "bt709-grayscale", "posterize"] | None = None
-    shader_amount: float | None = Field(default=None, strict=True, ge=0, le=1, allow_inf_nan=False)
+    shader_effect: (
+        Literal[
+            "invert",
+            "bt709-grayscale",
+            "posterize",
+            "saturation",
+            "vibrance",
+            "exposure",
+            "midtones",
+            "temperature",
+            "tint",
+            "hue",
+            "sepia",
+            "vignette",
+        ]
+        | None
+    ) = None
+    shader_amount: float | None = Field(default=None, strict=True, ge=-1, le=1, allow_inf_nan=False)
     shader_levels: int | None = Field(default=None, strict=True, ge=2, le=32)
     filter_radius: int | None = Field(default=None, strict=True, ge=1, le=31)
     filter_sigma: float | None = Field(
@@ -674,7 +690,9 @@ class ImageRequest(_GenerationRequest):
     transform_width: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_height: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_fit: Literal["contain", "stretch", "center-crop"] | None = None
-    transform_interpolation: Literal["nearest-exact", "bilinear", "area", "bicubic"] | None = None
+    transform_interpolation: (
+        Literal["nearest-exact", "bilinear", "area", "bicubic", "amd-fsr1"] | None
+    ) = None
     transform_x: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_y: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_left: int | None = Field(default=None, strict=True, ge=0, le=16384)
@@ -1874,12 +1892,25 @@ def create_apps(backend, key=None):
                                 },
                                 "shader_effect": {
                                     "type": "string",
-                                    "enum": ["invert", "bt709-grayscale", "posterize"],
+                                    "enum": [
+                                        "invert",
+                                        "bt709-grayscale",
+                                        "posterize",
+                                        "saturation",
+                                        "vibrance",
+                                        "exposure",
+                                        "midtones",
+                                        "temperature",
+                                        "tint",
+                                        "hue",
+                                        "sepia",
+                                        "vignette",
+                                    ],
                                 },
                                 "shader_amount": {
                                     "type": "string",
                                     "contentMediaType": "application/json",
-                                    "description": "JSON number 0–1 for the selected named effect.",
+                                    "description": "JSON number for the selected named effect: 0–1 for invert, bt709-grayscale, posterize and sepia; -1 to 1 for the signed adjustments. 0 leaves the image unchanged.",
                                 },
                                 "shader_levels": {
                                     "type": "string",

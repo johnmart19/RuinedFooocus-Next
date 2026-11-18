@@ -6,9 +6,28 @@ start at 0, end at 1 and increase by at least 0.000001; output values can rise o
 fall within 0–1. Choose linear or monotone cubic interpolation. Master RGB
 runs first, then the separate channels. Add one source and press Generate.
 
-**GLSL image effect** offers three bundled recipes: **Invert RGB**, **BT.709
-grayscale** and **Posterize**. Amount 0 preserves source RGB; amount 1 applies
-the full effect. Posterize accepts 2–32 levels per channel. Both operations
+**GLSL image effect** offers twelve bundled recipes. **Invert RGB**, **BT.709
+grayscale**, **Posterize** and **Sepia** blend towards their result: amount 0
+preserves source RGB and amount 1 applies the full effect. Posterize accepts 2–32
+levels per channel. The photo adjustments are signed, from −1 to 1, and 0 leaves
+the image unchanged:
+
+| Effect      | Amount                                                                |
+| ----------- | --------------------------------------------------------------------- |
+| Saturation  | −1 is BT.709 gray, +1 doubles the distance from gray                  |
+| Vibrance    | Like Saturation, weighted towards colours that are not yet saturated  |
+| Exposure    | Two stops per unit: +0.5 doubles encoded values, −0.5 halves them     |
+| Midtones    | Gamma of 2^−amount: positive brightens midtones, black and white stay |
+| Temperature | Positive warms (red up, blue down by 25%), negative cools             |
+| Tint        | Positive moves towards magenta, negative towards green                |
+| Hue shift   | Rotation about the gray axis, ±180° at ±1                             |
+| Vignette    | Positive darkens towards the corners, negative brightens them         |
+
+They work on encoded RGB values, clip instead of wrapping, and have the same
+arithmetic in the GLSL recipe and the CPU path. The new recipes' GLSL programs
+were not executed here, because the native GL packages were not installed on the
+test machine; the CPU path was. Choosing an effect by hand resets the slider to
+that effect's neutral or full value; a restored setup keeps its saved amount. Both operations
 remain off until selected and use the source dimensions and alpha. The source
 limit is 4,194,304 pixels with no side longer than 4096 pixels. No generation
 checkpoint, prompt, sampling recipe or model download is required.

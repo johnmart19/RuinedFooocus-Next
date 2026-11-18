@@ -10,6 +10,8 @@ from ruinedfooocus.features.image_processing.image_shaders import (
     DEFAULTS,
     EFFECTS,
     KINDS,
+    SIGNED_EFFECTS,
+    amount_range,
 )
 
 
@@ -58,12 +60,13 @@ def create_ui(selection, control_type, kind_for):
                 choices=[(translate_ui(label), value) for value, label in EFFECTS.items()],
                 value=saved.get("shader_effect", "invert"),
             )
+            low, high = amount_range(effect.value)
             amount = gr.Slider(
                 label=translate_ui("Effect amount"),
-                minimum=0,
-                maximum=1,
+                minimum=low,
+                maximum=high,
                 step=0.01,
-                value=saved.get("shader_amount", 1.0),
+                value=min(high, max(low, saved.get("shader_amount", 1.0))),
             )
             levels = gr.Slider(
                 label=translate_ui("Posterize levels"),
@@ -99,10 +102,24 @@ def create_ui(selection, control_type, kind_for):
         queue=False,
         api_visibility="undocumented",
     )
+
+    def effect_range(value):
+        low, high = amount_range(value)
+        return gr.update(visible=value == "posterize"), gr.update(minimum=low, maximum=high)
+
     effect.change(
-        lambda value: gr.update(visible=value == "posterize"),
+        effect_range,
         inputs=effect,
-        outputs=levels,
+        outputs=[levels, amount],
+        queue=False,
+        api_visibility="undocumented",
+    )
+    # Choosing an effect by hand starts from its neutral or full value; a restored
+    # setup keeps the amount it was saved with.
+    effect.input(
+        lambda value: 0.0 if value in SIGNED_EFFECTS else 1.0,
+        inputs=effect,
+        outputs=amount,
         queue=False,
         api_visibility="undocumented",
     )

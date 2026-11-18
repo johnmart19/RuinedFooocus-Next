@@ -455,6 +455,73 @@ class ImageShaders(unittest.TestCase):
             )
         self.assertFalse(self.calls)
 
+    def test_signed_photo_adjustments_have_their_own_range_and_documented_arithmetic(self):
+        for effect, amount in (
+            ("invert", -0.5),
+            ("bt709-grayscale", -0.01),
+            ("posterize", -1),
+            ("sepia", -0.25),
+            ("saturation", -1.01),
+            ("hue", 1.5),
+        ):
+            with self.subTest(effect=effect, amount=amount), self.assertRaises(ValueError):
+                self.capture("glsl-effect", shader_effect=effect, shader_amount=amount)
+        self.assertEqual(shaders.amount_range("exposure"), (-1.0, 1.0))
+        self.assertEqual(shaders.amount_range("sepia"), (0.0, 1.0))
+        self.assertLessEqual(shaders.SIGNED_EFFECTS, set(shaders.EFFECTS))
+
+        def run(effect, amount, pixels):
+            self.source = Image.new("RGBA", (len(pixels), 1))
+            self.source.putdata(pixels)
+            with (
+                patch.object(shaders, "cpu_mode", self.cpu_policy),
+                patch.object(sys, "argv", ["owned", "--cpu"]),
+            ):
+                data = self.capture("glsl-effect", shader_effect=effect, shader_amount=amount)
+                result = shaders.process(NS(), data, self.manager, Mock())[0]
+            self.assertEqual(
+                result.getchannel("A").tobytes(), self.source.getchannel("A").tobytes()
+            )
+            return [result.getpixel((x, 0))[:3] for x in range(len(pixels))]
+
+        primaries = [(255, 0, 0, 255), (0, 255, 0, 128), (0, 0, 255, 0), (128, 128, 128, 255)]
+        # Full desaturation is BT.709 luminance; gray stays gray under every colour control.
+        self.assertEqual(
+            run("saturation", -1, primaries),
+            [(54, 54, 54), (182, 182, 182), (18, 18, 18), (128, 128, 128)],
+        )
+        for effect in ("saturation", "vibrance", "hue"):
+            self.assertEqual(run(effect, 1, primaries)[3], (128, 128, 128))
+        # One stop is amount 0.5; values clip instead of wrapping.
+        self.assertEqual(run("exposure", 0.5, [(64, 100, 200, 255)]), [(128, 200, 255)])
+        self.assertEqual(run("exposure", -0.5, [(64, 100, 200, 255)]), [(32, 50, 100)])
+        # Positive midtones brighten without moving black or white.
+        self.assertEqual(
+            run("midtones", 1, [(0, 0, 0, 255), (64, 64, 64, 255), (255, 255, 255, 255)]),
+            [(0, 0, 0), (128, 128, 128), (255, 255, 255)],
+        )
+        warm, cool = (
+            run("temperature", 1, [(100, 100, 100, 255)])[0],
+            run("temperature", -1, [(100, 100, 100, 255)])[0],
+        )
+        self.assertEqual((warm, cool), ((125, 100, 75), (75, 100, 125)))
+        self.assertEqual(run("tint", 1, [(100, 100, 100, 255)]), [(112, 75, 112)])
+        # A third of a turn moves red to green to blue.
+        self.assertEqual(run("hue", 2 / 3, primaries[:3]), [(0, 255, 0), (0, 0, 255), (255, 0, 0)])
+        self.assertEqual(run("sepia", 1, [(255, 255, 255, 255)]), [(255, 255, 239)])
+        # The centre is untouched and the corners darken (or brighten when negative).
+        self.source = Image.new("RGBA", (9, 9), (200, 200, 200, 255))
+        with (
+            patch.object(shaders, "cpu_mode", self.cpu_policy),
+            patch.object(sys, "argv", ["owned", "--cpu"]),
+        ):
+            for amount, compare in ((1, self.assertLess), (-1, self.assertGreater)):
+                data = self.capture("glsl-effect", shader_effect="vignette", shader_amount=amount)
+                result = shaders.process(NS(), data, self.manager, Mock())[0]
+                self.assertEqual(result.getpixel((4, 4))[:3], (200, 200, 200))
+                compare(result.getpixel((0, 0))[0], 200)
+        self.assertFalse(self.calls)
+
     def test_cpu_curve_pixels_use_native_luts_and_exact_endpoint_center_sampling(self):
         self.source = Image.new("RGBA", (256, 1))
         self.source.putdata([(x, x, x, x) for x in range(256)])

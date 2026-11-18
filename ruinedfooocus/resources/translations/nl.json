@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "De app is bezig; probeer het opnieuw nadat het huidige werk is voltooid",
   "shell.the_current_profile_is_unavailable": "Het huidige profiel is niet beschikbaar",
   "shell.unsupported_output_entry_is_not_eligible_path": "Dit niet-ondersteunde uitvoeritem kan niet worden gewist: {path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Volgende stap: kies Voorgrond en achtergrond samenstellen om je onderwerp op deze achtergrond te plaatsen."
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Volgende stap: kies Voorgrond en achtergrond samenstellen om je onderwerp op deze achtergrond te plaatsen.",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }

@@ -2082,5 +2082,6 @@
   "shell.the_application_is_busy_retry_after_current_work_finishes": "Appen är upptagen; försök igen när pågående arbete är klart",
   "shell.the_current_profile_is_unavailable": "Den aktuella profilen är inte tillgänglig",
   "shell.unsupported_output_entry_is_not_eligible_path": "En utdatapost som inte stöds kan inte användas: {path}",
-  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Nästa steg: välj Kombinera förgrund och bakgrund för att placera motivet på den här bakgrunden."
+  "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Nästa steg: välj Kombinera förgrund och bakgrund för att placera motivet på den här bakgrunden.",
+  "image_processing.amd_fsr_1": "AMD FSR 1"
 }
