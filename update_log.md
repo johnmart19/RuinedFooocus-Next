@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Show the selected download and its button above the model cards instead of below the grid, and list Settings search results by matching field before falling back to a matching section.
 - Interface audit: the saved language now applies from the first frame, the Gallery no longer lists the worker's live preview files (and they are removed after each run), a rewrite preview that comes back unchanged is reported instead of offered, Model Defaults shows a readable table in the narrow panel, the Details tab labels its metadata box, and Settings search shows button names correctly.
 - Use six desktop sidebar destinations: Create, Editor, Gallery, Models, Chat and Settings. Keep the shared image draft, group optional upscaling and advanced Create controls, and separate Installed models from Download.
 - Preview available themes immediately and Save the profile choice for later launches; keep Settings profile actions at the page end with a desktop bottom bar, expose the host folder dialog beside in-page folder browsing, and use derived Gallery thumbnails while retaining originals for image actions.

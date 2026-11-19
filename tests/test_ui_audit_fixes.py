@@ -113,5 +113,45 @@ class ModelDefaultsTableTests(unittest.TestCase):
         self.assertIn("white-space: nowrap", rule[: rule.index("}")])
 
 
+class SettingsSearchRankingTests(unittest.TestCase):
+    def test_section_keywords_stay_apart_from_a_field_s_own_words(self):
+        from ruinedfooocus.ui.settings_navigation import navigation_records
+
+        with gr.Blocks() as demo:
+            with gr.Tabs():
+                with gr.Tab("Appearance"):
+                    gr.Textbox(label="Theme", info="Colours of the interface")
+                    gr.Number(label="Maximum batch size")
+        records = {
+            record["label"]: record
+            for record in navigation_records(demo, {"Appearance": "theme language"})
+        }
+        self.assertEqual(records["Maximum batch size"]["section_terms"], "theme language")
+        self.assertNotIn("theme", records["Maximum batch size"]["terms"])
+        self.assertIn("Colours", records["Theme"]["terms"])
+
+    def test_the_result_list_prefers_field_matches_over_section_matches(self):
+        from ruinedfooocus.core.paths import asset_path
+
+        script = asset_path("settings_search.js").read_text(encoding="utf-8")
+        own = script.index("const own = ")
+        self.assertIn("${record.label} ${record.terms}", script[own : script.index(";", own)])
+        self.assertIn("own.length", script)
+        self.assertIn("record.section_terms", script)
+
+
+class DownloadSelectionPlacementTests(unittest.TestCase):
+    def test_the_selection_and_its_actions_are_built_before_the_card_grid(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "ruinedfooocus/features/models/ui_acquisition.py"
+        ).read_text(encoding="utf-8")
+        cards = source.index('elem_id="acquisition-cards"')
+        self.assertLess(
+            source.index('status = gr.Markdown(t("Select a model or component."))'), cards
+        )
+        self.assertLess(source.index('t("Download selected files")'), cards)
+        self.assertLess(source.index('t("Use installed checkpoint in Create")'), cards)
+
+
 if __name__ == "__main__":
     unittest.main()

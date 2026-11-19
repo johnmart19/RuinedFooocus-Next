@@ -323,6 +323,19 @@ def create_ui(manager, models, *, offline):
         ):
             count = gr.Markdown(elem_id="model-catalogue-count")
             refresh = gr.Button(t("Refresh local catalogue"), size="sm", scale=0, min_width=0)
+        # The selection and its action sit above the cards: below a long grid they were
+        # off-screen, so choosing a card appeared to do nothing.
+        status = gr.Markdown(t("Select a model or component."))
+        with gr.Row(elem_classes=["rf-actions"]):
+            download = gr.Button(
+                t("Download selected files"), interactive=False, visible=False, variant="primary"
+            )
+            activate = gr.Button(
+                t("Use installed checkpoint in Create"),
+                interactive=False,
+                visible=False,
+                variant="primary",
+            )
         page = gr.State(1)
         assets = Path(__file__).resolve().parents[2] / "ui/assets"
         cards = gr.HTML(
@@ -339,7 +352,6 @@ def create_ui(manager, models, *, offline):
             js_on_load=(assets / "adapter_cards.js").read_text(encoding="utf-8"),
             elem_id="acquisition-cards",
         )
-        status = gr.Markdown(t("Select a model or component."))
         component_role = gr.Dropdown(label=t("Component role"), choices=[], visible=False)
         with gr.Accordion(t("Source, license, compatibility and resources"), open=False):
             details = gr.Dataframe(
@@ -347,16 +359,6 @@ def create_ui(manager, models, *, offline):
                 datatype=["str", "str"],
                 interactive=False,
                 wrap=True,
-            )
-        with gr.Row(elem_classes=["rf-actions"]):
-            download = gr.Button(
-                t("Download selected files"), interactive=False, visible=False, variant="primary"
-            )
-            activate = gr.Button(
-                t("Use installed checkpoint in Create"),
-                interactive=False,
-                visible=False,
-                variant="primary",
             )
         with gr.Accordion(t("Download options"), open=False):
             companions = gr.Checkbox(label=t("Include registered companions"), value=True)

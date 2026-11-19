@@ -1,0 +1,16 @@
+{
+  "id": "download-selection-and-settings-search",
+  "subject": "Show the Download selection above the card grid and rank Settings search by field",
+  "requires": ["interface-audit-fixes", "custom-model-root-fixtures"],
+  "tests": [
+    "test_ui_audit_fixes.py",
+    "test_settings_navigation.py",
+    "test_settings_ui.py",
+    "test_model_acquisition_ui.py",
+    "test_model_acquisition.py",
+    "test_compact_model_profile_controls.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

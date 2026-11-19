@@ -64,8 +64,11 @@ def navigation_records(root, sections, *, excluded=()):
                         "label": label,
                         "section": section,
                         "route": route,
+                        # Section keywords are kept apart from the field's own words so a
+                        # field match outranks "everything in a matching section".
+                        "section_terms": sections.get(section, ""),
                         "terms": " ".join(
-                            [source_text(getattr(node, "info", None)), sections.get(section, "")]
+                            [source_text(getattr(node, "info", None))]
                             + [
                                 source_text(value[0] if isinstance(value, tuple) else value)
                                 for value in choices

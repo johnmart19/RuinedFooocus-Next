@@ -50,11 +50,15 @@ function render() {
     status().textContent = "";
     return;
   }
-  const matches = (props.records || []).filter((record) =>
-    words.every((word) =>
-      `${record.label} ${record.section} ${record.terms}`.toLocaleLowerCase().includes(word),
-    ),
-  );
+  const has = (text) => words.every((word) => text.toLocaleLowerCase().includes(word));
+  // A field that matches by its own name or description wins. Only when none does
+  // is the query treated as a section search, which lists that section's fields.
+  const own = (props.records || []).filter((record) => has(`${record.label} ${record.terms}`));
+  const matches = own.length
+    ? own
+    : (props.records || []).filter((record) =>
+        has(`${record.label} ${record.section} ${record.terms} ${record.section_terms || ""}`),
+      );
   matches.sort(
     (a, b) =>
       Number(words.every((word) => b.label.toLocaleLowerCase().includes(word))) -
