@@ -1,0 +1,9 @@
+{
+  "id": "long-path-download-staging",
+  "subject": "Accept downloads staged under a long Windows path",
+  "requires": ["rocm-10-2-runtime"],
+  "tests": ["test_preparation_service.py", "test_preparation_transfer_status.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

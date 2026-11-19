@@ -396,15 +396,17 @@ class PreparationService:
                     # SDK-complete filenames must never appear under model roots.
                     staging = self._staging_directory(request)
                     staging.mkdir(parents=True, exist_ok=True)
-                    prepared = Path(
+                    # The Hub SDK returns an extended `\\?\` path once a staging path is
+                    # long; compare both sides in the same plain form.
+                    prepared = resolved_path(
                         self._transport(
                             request,
                             staging,
                             lambda *values: self._report(job, *values),
                             job.cancelled,
                         )
-                    ).resolve()
-                    if not prepared.is_relative_to(staging.resolve()):
+                    )
+                    if not prepared.is_relative_to(resolved_path(staging)):
                         raise ValueError(
                             "Transport returned an artifact outside its staging directory"
                         )

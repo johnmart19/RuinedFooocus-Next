@@ -358,6 +358,35 @@ class PreparationTests(unittest.TestCase):
                 ],
             )
 
+    def test_a_staged_file_named_by_an_extended_windows_path_is_accepted(self):
+        import os
+
+        if os.name != "nt":
+            self.skipTest("Extended-length paths are a Windows form.")
+        staged = []
+        EXTENDED = chr(92) * 2 + "?" + chr(92)
+
+        def transfer(request, staging, report, cancelled):
+            path = staging / "sub" / request.destination.name
+            path.parent.mkdir(parents=True)
+            path.write_bytes(b"model")
+            staged.append(path)
+            # The Hub SDK returns this form once the staging path is long.
+            return EXTENDED + str(path)
+
+        result = self.service(transfer).submit(self.request("long.gguf")).result(5)
+        self.assertEqual(result.read_bytes(), b"model")
+        self.assertFalse(staged[0].exists())
+
+        def escape(request, staging, report, cancelled):
+            outside = self.root / "elsewhere.gguf"
+            outside.write_bytes(b"model")
+            return EXTENDED + str(outside)
+
+        with self.assertRaisesRegex(ValueError, "outside its staging directory"):
+            self.service(escape).submit(self.request("escaped.gguf")).result(5)
+        self.assertFalse((self.root / "escaped.gguf").exists())
+
     def test_external_sdk_staging_is_invisible_to_rf_and_native_scanners(self):
         import runpy
         from types import SimpleNamespace
