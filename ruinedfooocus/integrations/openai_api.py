@@ -701,7 +701,7 @@ class ImageRequest(_GenerationRequest):
     transform_height: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_fit: Literal["contain", "stretch", "center-crop"] | None = None
     transform_interpolation: (
-        Literal["nearest-exact", "bilinear", "area", "bicubic", "amd-fsr4"] | None
+        Literal["nearest-exact", "bilinear", "area", "bicubic", "amd-fsr"] | None
     ) = None
     transform_x: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_y: int | None = Field(default=None, strict=True, ge=0, le=16384)
@@ -714,6 +714,7 @@ class ImageRequest(_GenerationRequest):
     transform_feather: int | None = Field(default=None, strict=True, ge=0, le=16384)
     transform_rotation: Literal["none", "90 degrees", "180 degrees", "270 degrees"] | None = None
     transform_flip: Literal["horizontal", "vertical"] | None = None
+    transform_fsr_version: Literal["fsr4", "fsr3", "fsr2", "fsr1"] | None = None
     transform_angle: float | None = Field(
         default=None, strict=True, ge=-180, le=180, allow_inf_nan=False
     )

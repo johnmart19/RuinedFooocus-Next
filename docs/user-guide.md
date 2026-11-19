@@ -182,8 +182,9 @@ files, dedicated inputs, source denoise and Library/API behavior.
   Sharpen (AMD RCAS) or Sepia with an amount slider,
   and the photo adjustments Saturation, Vibrance, Exposure, Midtones, Temperature, Tint,
   Hue shift and Vignette with a signed slider where 0 changes nothing. **Adjust image →
-  Transform → Resize** offers **AMD FSR 4** interpolation on supported AMD GPUs once its runtime is built
-  (see the geometry guide); it gives a clean, anti-aliased enlargement.
+  Transform → Resize** offers **AMD FSR** interpolation with an **FSR version** choice: FSR 4, 3 and 2 run on
+  supported GPUs once the AMD runtime is built (see the geometry guide), and FSR 1 works on
+  any device, including CPU mode.
   These explicit source operations preserve size and alpha and accept at most
   4 megapixels and 4096 pixels per side. CPU mode works without GL. Requested
   acceleration falls back to CPU with a terminal warning when native EGL/GLES

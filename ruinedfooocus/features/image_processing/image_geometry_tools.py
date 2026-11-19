@@ -13,7 +13,7 @@ KEY = "_image_transform_request"
 NATIVE_REVISION = "989d93d0d968e704c589ce0146bb18c77f6b50cc"
 MAX_PIXELS = 16777216
 MAX_DIMENSION = 16384
-INTERPOLATIONS = ("nearest-exact", "bilinear", "area", "bicubic", "amd-fsr4")
+INTERPOLATIONS = ("nearest-exact", "bilinear", "area", "bicubic", "amd-fsr")
 DEFAULTS = dict(
     transform_operation="resize",
     transform_width=0,
@@ -32,6 +32,7 @@ DEFAULTS = dict(
     transform_rotation="none",
     transform_flip="horizontal",
     transform_angle=0.0,
+    transform_fsr_version="fsr4",
 )
 FIELDS = tuple(DEFAULTS)
 IMAGE_FIELDS = ("mask_image",)
@@ -87,6 +88,7 @@ def parameters(data):
         transform_padding_style=("transparent", "color", "mirror"),
         transform_rotation=("none", "90 degrees", "180 degrees", "270 degrees"),
         transform_flip=("horizontal", "vertical"),
+        transform_fsr_version=("fsr4", "fsr3", "fsr2", "fsr1"),
     )
     for name, options in choices.items():
         if values[name] not in options:
@@ -282,22 +284,18 @@ def capture_assets(data, manager, models=None):
     elif data.get("mask_image") is not None:
         raise ValueError("Only Crop to selection mask uses an input selection mask.")
     size = output_size(source.size, values, crop_region)
-    if (
-        values["transform_operation"] == "resize"
-        and values["transform_interpolation"] == "amd-fsr4"
-    ):
-        from ruinedfooocus.features.image_processing import amd_fsr4
+    if values["transform_operation"] == "resize" and values["transform_interpolation"] == "amd-fsr":
+        from ruinedfooocus.features.image_processing import amd_fsr
         from ruinedfooocus.features.image_processing.image_shaders import cpu_mode
 
-        # Refuse here, before queueing, with the reason.
-        if cpu_mode():
-            raise ValueError("AMD FSR 4 runs on the GPU and is unavailable in CPU mode.")
-        if source.dtype != "uint8" or source.color_space != "sRGB":
-            raise ValueError("AMD FSR 4 works on 8-bit sRGB sources.")
-        reason = amd_fsr4.unavailable_reason()
-        if reason is not None:
-            raise ValueError(reason)
-        amd_fsr4.pass_sizes(source.size, _fsr_cover(source.size, size, values))
+        amd_fsr.check(
+            values["transform_fsr_version"],
+            dtype=source.dtype,
+            color_space=source.color_space,
+            source_size=source.size,
+            target_size=_fsr_cover(source.size, size, values),
+            cpu=cpu_mode(),
+        )
     choice = format_settings(data)
     creates_alpha = (
         values["transform_operation"] == "pad"
@@ -429,11 +427,13 @@ def _process_pixels(request, policy, check_cancelled):
     width, height = request.output_size
     operation = values["transform_operation"]
     with torch.inference_mode():
-        if operation == "resize" and values["transform_interpolation"] == "amd-fsr4":
-            from ruinedfooocus.features.image_processing import amd_fsr4
+        if operation == "resize" and values["transform_interpolation"] == "amd-fsr":
+            from ruinedfooocus.features.image_processing import amd_fsr
 
             cover = _fsr_cover(source.size, (width, height), values)
-            pixels = amd_fsr4.upscale(pixels, *cover, check_cancelled=check_cancelled)
+            pixels = amd_fsr.upscale(
+                values["transform_fsr_version"], pixels, *cover, check_cancelled=check_cancelled
+            )
             left, top = (cover[0] - width) // 2, (cover[1] - height) // 2
             pixels = pixels[:, top : top + height, left : left + width]
         elif operation == "resize":
@@ -555,13 +555,10 @@ def process(owner, data, manager, check_cancelled):
         "straighten": "torch.grid_sample (RF straighten: rotate and crop to fit)",
         "flip": "ImageFlip",
     }[values["transform_operation"]]
-    if (
-        values["transform_operation"] == "resize"
-        and values["transform_interpolation"] == "amd-fsr4"
-    ):
-        from ruinedfooocus.features.image_processing import amd_fsr4
+    if values["transform_operation"] == "resize" and values["transform_interpolation"] == "amd-fsr":
+        from ruinedfooocus.features.image_processing import amd_fsr
 
-        node = amd_fsr4.SOURCE
+        node = amd_fsr.source(values["transform_fsr_version"])
     information = dict(
         operation=KINDS[0],
         native_node=node,

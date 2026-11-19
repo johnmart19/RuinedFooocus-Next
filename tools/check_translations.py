@@ -194,9 +194,23 @@ def adjustment_nodes(node, constants):
                     "histogram": "Histogram (256-bin)",
                     "sdr-to-hdr": "SDR to HDR",
                     "crop-to-mask": "Crop to selection",
-                    "amd-fsr4": "AMD FSR 4",
+                    "amd-fsr": "AMD FSR",
+                    "fsr4": "FSR 4",
+                    "fsr3": "FSR 3",
+                    "fsr2": "FSR 2",
+                    "fsr1": "FSR 1",
                 }[option]
-                if option in ("histogram", "sdr-to-hdr", "crop-to-mask", "amd-fsr4")
+                if option
+                in (
+                    "histogram",
+                    "sdr-to-hdr",
+                    "crop-to-mask",
+                    "amd-fsr",
+                    "fsr4",
+                    "fsr3",
+                    "fsr2",
+                    "fsr1",
+                )
                 else option.replace("-", " ").replace("_", " ").capitalize()
             )
             yield ast.copy_location(ast.Constant(text), value)

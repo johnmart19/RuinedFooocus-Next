@@ -1,7 +1,7 @@
-"""AMD FSR 4 adapter: runtime discovery, helper protocol and the Transform caller.
+"""AMD FSR 2, 3 and 4 adapter: runtime discovery, helper protocol and the Transform caller.
 
 The native helper and AMD's DLLs are replaced by a stand-in process boundary, so
-these checks need no GPU. They do not show that FSR 4 itself runs or looks good.
+these checks need no GPU. They do not show that the upscalers themselves run or looks good.
 """
 
 from pathlib import Path
@@ -15,7 +15,7 @@ from PIL import Image
 import torch
 
 from ruinedfooocus.core.bounded_subprocess import BoundedProcessError
-from ruinedfooocus.features.image_processing import amd_fsr4
+from ruinedfooocus.features.image_processing import amd_fsr, amd_fsr4
 from ruinedfooocus.features.image_processing import image_geometry_tools as transform
 
 
@@ -132,12 +132,12 @@ class AmdFsr4Tests(unittest.TestCase):
             amd_fsr4.upscale(pixels, 4, 4, work=work)
 
     def test_transform_resize_refuses_unsuitable_requests_before_queueing(self):
-        self.assertIn(amd_fsr4.INTERPOLATION, transform.INTERPOLATIONS)
+        self.assertIn(amd_fsr.INTERPOLATION, transform.INTERPOLATIONS)
         options = dict(
             input_image=Image.new("RGBA", (8, 6), (10, 20, 30, 255)),
             controlnet={"type": "image-transform"},
             transform_operation="resize",
-            transform_interpolation="amd-fsr4",
+            transform_interpolation="amd-fsr",
             transform_width=16,
             transform_height=12,
         )
@@ -162,6 +162,51 @@ class AmdFsr4Tests(unittest.TestCase):
         self.assertEqual(
             transform._fsr_cover((8, 6), (16, 16), dict(transform_fit="center-crop")), (22, 16)
         )
+
+    def test_each_version_asks_the_helper_for_its_own_provider_and_never_another(self):
+        self.install()
+        work = self.root / "work"
+        pixels = torch.zeros(1, 2, 2, 3)
+        self.assertEqual(amd_fsr.VERSIONS, ("fsr4", "fsr3", "fsr2", "fsr1"))
+        self.assertEqual(amd_fsr.DEFAULT_VERSION, "fsr4")
+        self.assertEqual(transform.DEFAULTS["transform_fsr_version"], "fsr4")
+        for version, provider in (("fsr4", "4."), ("fsr3", "3."), ("fsr2", "2.")):
+            self.calls.clear()
+            with (
+                self.subTest(version=version),
+                patch("ruinedfooocus.core.bounded_subprocess.run_bounded", self.helper),
+            ):
+                result = amd_fsr.upscale(version, pixels, 4, 4)
+                self.assertEqual(tuple(result.shape), (1, 4, 4, 3))
+                self.assertEqual([command[7] for command, _ in self.calls], [provider])
+                self.assertIn(version[-1], amd_fsr.source(version))
+        self.calls.clear()
+        with patch("ruinedfooocus.core.bounded_subprocess.run_bounded", self.helper):
+            self.assertEqual(tuple(amd_fsr.upscale("fsr1", pixels, 4, 4).shape), (1, 4, 4, 3))
+        self.assertEqual(self.calls, [])
+        self.assertIn("FSR 1", amd_fsr.source("fsr1"))
+        error = BoundedProcessError(2, b"", b"FAIL requested upscaler version is not available")
+        with (
+            patch("ruinedfooocus.core.bounded_subprocess.run_bounded", side_effect=error),
+            self.assertRaisesRegex(ValueError, "AMD FSR 3 is not offered"),
+        ):
+            amd_fsr4.upscale(pixels, 4, 4, version="fsr3", work=work)
+        with self.assertRaisesRegex(ValueError, "FSR 2, 3 or 4"):
+            amd_fsr4.upscale(pixels, 4, 4, version="fsr1", work=work)
+
+    def test_checks_name_the_version_and_point_at_fsr_1_when_the_gpu_path_is_closed(self):
+        common = dict(color_space="sRGB", source_size=(8, 6), target_size=(16, 12))
+        with self.assertRaisesRegex(ValueError, "AMD FSR 3 runs on the GPU.*FSR 1"):
+            amd_fsr.check("fsr3", dtype="uint8", cpu=True, **common)
+        with self.assertRaisesRegex(ValueError, "AMD FSR 2 works on 8-bit"):
+            amd_fsr.check("fsr2", dtype="uint16", cpu=False, **common)
+        with self.assertRaisesRegex(ValueError, "runtime.*FSR 1 needs no runtime"):
+            amd_fsr.check("fsr4", dtype="uint8", cpu=False, **common)
+        amd_fsr.check("fsr1", dtype="uint16", cpu=True, **common)
+        with self.assertRaisesRegex(ValueError, "sRGB"):
+            amd_fsr.check("fsr1", dtype="uint8", cpu=True, **dict(common, color_space="linear"))
+        with self.assertRaisesRegex(ValueError, "8-bit or 16-bit"):
+            amd_fsr.check("fsr1", dtype="float32", cpu=True, **common)
 
 
 if __name__ == "__main__":

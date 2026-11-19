@@ -2083,7 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "Поточний профіль недоступний",
   "shell.unsupported_output_entry_is_not_eligible_path": "Непідтримуваний вихідний елемент не підлягає очищенню: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Наступний крок: виберіть «Скомпонувати передній план і тло», щоб розмістити об’єкт на цьому тлі.",
-  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Допуск кольору (0–255)",
   "image_processing.straighten": "Вирівняти",
   "image_processing.angle_degrees": "Кут (градуси)",
@@ -2095,5 +2094,12 @@
   "gallery.load_current_image": "Завантажити поточне зображення",
   "gallery.apply_painting": "Застосувати малюнок",
   "gallery.load_the_current_image_and_paint_or_crop_it_first": "Спершу завантажте поточне зображення та намалюйте або обріжте його.",
-  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Завантажте поточне зображення, а потім малюйте пензлем, стирайте, додавайте шари або перетягуйте маркери обрізання. «Застосувати» зберігає результат як новий крок, який можна скасувати."
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Завантажте поточне зображення, а потім малюйте пензлем, стирайте, додавайте шари або перетягуйте маркери обрізання. «Застосувати» зберігає результат як новий крок, який можна скасувати.",
+  "image_processing.amd_fsr": "AMD FSR",
+  "image_processing.fsr_version": "Версія FSR",
+  "image_processing.fsr_4": "FSR 4",
+  "image_processing.fsr_3": "FSR 3",
+  "image_processing.fsr_2": "FSR 2",
+  "image_processing.fsr_1": "FSR 1",
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Використовується з інтерполяцією AMD FSR. FSR 4, 3 і 2 працюють на відеокарті через середовище виконання AMD; FSR 1 працює на будь-якому пристрої."
 }

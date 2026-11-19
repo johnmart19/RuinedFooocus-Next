@@ -2083,7 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "Il profilo corrente non è disponibile",
   "shell.unsupported_output_entry_is_not_eligible_path": "Questa voce di output non supportata non può essere rimossa: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Passaggio successivo: scegli Componi primo piano e sfondo per posizionare il soggetto su questo sfondo.",
-  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Tolleranza colore (0–255)",
   "image_processing.straighten": "Raddrizza",
   "image_processing.angle_degrees": "Angolo (gradi)",
@@ -2095,5 +2094,12 @@
   "gallery.load_current_image": "Carica l’immagine corrente",
   "gallery.apply_painting": "Applica la pittura",
   "gallery.load_the_current_image_and_paint_or_crop_it_first": "Carica prima l’immagine corrente e dipingila o ritagliala.",
-  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Carica l’immagine corrente, poi dipingi con il pennello, cancella, aggiungi livelli o trascina le maniglie di ritaglio. Applica salva il risultato come nuovo passaggio che Annulla può ripristinare."
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Carica l’immagine corrente, poi dipingi con il pennello, cancella, aggiungi livelli o trascina le maniglie di ritaglio. Applica salva il risultato come nuovo passaggio che Annulla può ripristinare.",
+  "image_processing.amd_fsr": "AMD FSR",
+  "image_processing.fsr_version": "Versione FSR",
+  "image_processing.fsr_4": "FSR 4",
+  "image_processing.fsr_3": "FSR 3",
+  "image_processing.fsr_2": "FSR 2",
+  "image_processing.fsr_1": "FSR 1",
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Usato con l'interpolazione AMD FSR. FSR 4, 3 e 2 vengono eseguiti sulla GPU tramite il runtime AMD; FSR 1 funziona su qualsiasi dispositivo."
 }

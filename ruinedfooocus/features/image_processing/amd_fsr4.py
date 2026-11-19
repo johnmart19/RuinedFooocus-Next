@@ -1,7 +1,7 @@
-"""AMD FSR 4 upscaling for still images, through AMD's own runtime.
+"""AMD FSR 2, 3 and 4 upscaling for still images, through AMD's own runtime.
 
-FSR 4 is a temporal upscaler: it expects a moving camera, motion vectors and a
-depth buffer. A still has none of these, so the small native helper in
+These are temporal upscalers; FSR 4 is the ML one. Each expects a moving camera,
+motion vectors and a depth buffer. A still has none of these, so the small native helper in
 `tools/native/amd_fsr` presents the image as a static camera sequence: each frame
 is the source resampled at that frame's sub-pixel jitter, with zero motion and a
 flat depth buffer, and FSR's own sharpening pass enabled. The result is a clean,
@@ -10,7 +10,7 @@ upscaler does.
 
 The helper drives AMD's signed `amd_fidelityfx_*_dx12.dll` on the GPU with
 DirectX 12, outside Torch. It needs Windows, a GPU and driver for which the AMD
-FSR API offers an FSR 4 provider, and the runtime files in `runtime_directory()`.
+FSR API offers the chosen provider, and the runtime files in `runtime_directory()`.
 Nothing here downloads them.
 """
 
@@ -20,12 +20,17 @@ import struct
 import subprocess
 from uuid import uuid4
 
-LABEL = "AMD FSR 4"
-INTERPOLATION = "amd-fsr4"
 HELPER = "fsr_still.exe"
 RUNTIME_FILES = (HELPER, "amd_fidelityfx_loader_dx12.dll", "amd_fidelityfx_upscaler_dx12.dll")
-PROVIDER = "4."
-SOURCE = "AMD FSR 4 upscaler (AMD FSR API, DirectX 12) on a static jittered sequence"
+# Version prefixes the AMD FSR API reports for its upscaler providers.
+PROVIDERS = {"fsr4": "4.", "fsr3": "3.", "fsr2": "2."}
+LABELS = {"fsr4": "AMD FSR 4", "fsr3": "AMD FSR 3", "fsr2": "AMD FSR 2"}
+
+
+def source(version):
+    return LABELS[version] + " upscaler (AMD FSR API, DirectX 12) on a static jittered sequence"
+
+
 # FSR's presets go up to 3x; two keeps quality, and larger targets take several passes.
 MAX_PASS_SCALE = 2.0
 DEFAULT_SHARPNESS = 1.0
@@ -44,14 +49,14 @@ def runtime_directory():
 
 
 def unavailable_reason(directory=None):
-    """None when FSR 4 can be attempted here; otherwise the reason, in plain words."""
+    """None when the AMD runtime can be attempted here; otherwise the reason, in plain words."""
     if os.name != "nt":
-        return "AMD FSR 4 needs Windows and DirectX 12."
+        return "AMD FSR 2, 3 and 4 need Windows and DirectX 12."
     directory = Path(directory) if directory is not None else runtime_directory()
     missing = [name for name in RUNTIME_FILES if not (directory / name).is_file()]
     if missing:
         return (
-            "AMD FSR 4 needs its runtime in "
+            "AMD FSR 2, 3 and 4 need their runtime in "
             + str(directory)
             + ". Build it with tools/native/amd_fsr/build.py and the AMD FSR SDK. Missing: "
             + ", ".join(missing)
@@ -67,7 +72,7 @@ def pass_sizes(source, target):
     (width, height), (target_width, target_height) = source, target
     if target_width < width or target_height < height:
         raise ValueError(
-            "AMD FSR 4 only enlarges. Choose a target at least as large as the source in "
+            "AMD FSR only enlarges. Choose a target at least as large as the source in "
             "both dimensions, or another interpolation."
         )
     passes = max(
@@ -102,17 +107,17 @@ def read_raw(path, width, height):
     return pixels
 
 
-def _failure(error):
+def _failure(error, label):
     detail = " ".join((getattr(error, "stderr", b"") or b"").decode("utf-8", "replace").split())
     if "requested upscaler version is not available" in detail:
         return ValueError(
-            "AMD FSR 4 is not offered by this GPU or driver. Update the AMD driver, or choose "
-            "another interpolation."
+            label + " is not offered by this GPU or driver. Update the AMD driver, or choose "
+            "another FSR version."
         )
-    return ValueError("AMD FSR 4 could not run on this GPU. " + detail[-240:])
+    return ValueError(label + " could not run on this GPU. " + detail[-240:])
 
 
-def run_pass(rgba, size, target, *, sharpness, directory, work, check_cancelled=None):
+def run_pass(rgba, size, target, *, version, sharpness, directory, work, check_cancelled=None):
     """One helper run: RGBA8 bytes at size -> RGBA8 bytes at target."""
     from ruinedfooocus.core.bounded_subprocess import BoundedProcessError, run_bounded
 
@@ -130,28 +135,39 @@ def run_pass(rgba, size, target, *, sharpness, directory, work, check_cancelled=
                     str(target[1]),
                     "0",
                     "1",
-                    PROVIDER,
+                    PROVIDERS[version],
                     repr(float(sharpness)),
                 ],
                 timeout=TIMEOUT_SECONDS,
                 check_cancelled=check_cancelled,
             )
         except BoundedProcessError as error:
-            raise _failure(error) from None
+            raise _failure(error, LABELS[version]) from None
         except subprocess.TimeoutExpired:
-            raise ValueError("AMD FSR 4 did not finish in time on this GPU.") from None
+            raise ValueError(LABELS[version] + " did not finish in time on this GPU.") from None
         return read_raw(result_path, *target)
     finally:
         source_path.unlink(missing_ok=True)
         result_path.unlink(missing_ok=True)
 
 
-def upscale(pixels, width, height, *, sharpness=DEFAULT_SHARPNESS, check_cancelled=None, work=None):
-    """FSR 4 for BHWC in [0, 1]: colour through the helper in 8-bit; alpha is bicubic."""
+def upscale(
+    pixels,
+    width,
+    height,
+    *,
+    version="fsr4",
+    sharpness=DEFAULT_SHARPNESS,
+    check_cancelled=None,
+    work=None,
+):
+    """FSR 2, 3 or 4 for BHWC in [0, 1]: colour through the helper in 8-bit; alpha is bicubic."""
     import numpy as np
     import torch
     import torch.nn.functional as functional
 
+    if version not in PROVIDERS:
+        raise ValueError("Choose AMD FSR 2, 3 or 4 for the AMD runtime.")
     reason = unavailable_reason()
     if reason is not None:
         raise ValueError(reason)
@@ -159,7 +175,7 @@ def upscale(pixels, width, height, *, sharpness=DEFAULT_SHARPNESS, check_cancell
         raise ValueError("FSR sharpness is 0 to 1.")
     channels = pixels.shape[-1]
     if pixels.ndim != 4 or pixels.shape[0] != 1 or channels not in (1, 3, 4):
-        raise ValueError("AMD FSR 4 accepts one grayscale, RGB or RGBA image.")
+        raise ValueError("AMD FSR accepts one grayscale, RGB or RGBA image.")
     directory = runtime_directory()
     if work is None:
         from ruinedfooocus.core.cache_contract import configured_cache_root
@@ -182,6 +198,7 @@ def upscale(pixels, width, height, *, sharpness=DEFAULT_SHARPNESS, check_cancell
                 data,
                 size,
                 step,
+                version=version,
                 sharpness=sharpness,
                 directory=directory,
                 work=work,

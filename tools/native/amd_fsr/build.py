@@ -94,7 +94,7 @@ def main():
     parser.add_argument("--output", help="Runtime folder; default is the application's.")
     options = parser.parse_args()
     if os.name != "nt":
-        raise SystemExit("AMD FSR 4 needs Windows and DirectX 12.")
+        raise SystemExit("The AMD FSR runtime needs Windows and DirectX 12.")
     output = build(options.sdk, options.output or default_output())
     print(f"AMD FSR runtime ready in {output}")
 

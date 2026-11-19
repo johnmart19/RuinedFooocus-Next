@@ -2083,7 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "Bieżący profil jest niedostępny",
   "shell.unsupported_output_entry_is_not_eligible_path": "Nieobsługiwany element wyjściowy nie podlega usunięciu: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Następny krok: wybierz Połącz pierwszy plan i tło, aby umieścić obiekt na tym tle.",
-  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Tolerancja koloru (0–255)",
   "image_processing.straighten": "Wyprostuj",
   "image_processing.angle_degrees": "Kąt (stopnie)",
@@ -2095,5 +2094,12 @@
   "gallery.load_current_image": "Wczytaj bieżący obraz",
   "gallery.apply_painting": "Zastosuj malowanie",
   "gallery.load_the_current_image_and_paint_or_crop_it_first": "Najpierw wczytaj bieżący obraz i pomaluj go lub przytnij.",
-  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Wczytaj bieżący obraz, a następnie maluj pędzlem, wymazuj, dodawaj warstwy lub przeciągaj uchwyty kadrowania. Zastosuj zapisuje wynik jako nowy krok, który można cofnąć."
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Wczytaj bieżący obraz, a następnie maluj pędzlem, wymazuj, dodawaj warstwy lub przeciągaj uchwyty kadrowania. Zastosuj zapisuje wynik jako nowy krok, który można cofnąć.",
+  "image_processing.amd_fsr": "AMD FSR",
+  "image_processing.fsr_version": "Wersja FSR",
+  "image_processing.fsr_4": "FSR 4",
+  "image_processing.fsr_3": "FSR 3",
+  "image_processing.fsr_2": "FSR 2",
+  "image_processing.fsr_1": "FSR 1",
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Używane z interpolacją AMD FSR. FSR 4, 3 i 2 działają na GPU przez środowisko AMD; FSR 1 działa na każdym urządzeniu."
 }

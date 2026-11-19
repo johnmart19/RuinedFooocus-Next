@@ -2083,7 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "Das aktuelle Profil ist nicht verfügbar",
   "shell.unsupported_output_entry_is_not_eligible_path": "Nicht unterstützter Ausgabeeintrag ist nicht zulässig: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Nächster Schritt: Wähle Vordergrund und Hintergrund kombinieren, um dein Motiv auf diesem Hintergrund zu platzieren.",
-  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Farbtoleranz (0–255)",
   "image_processing.straighten": "Begradigen",
   "image_processing.angle_degrees": "Winkel (Grad)",
@@ -2095,5 +2094,12 @@
   "gallery.load_current_image": "Aktuelles Bild laden",
   "gallery.apply_painting": "Bemalung anwenden",
   "gallery.load_the_current_image_and_paint_or_crop_it_first": "Lade zuerst das aktuelle Bild und bemale oder beschneide es.",
-  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Lade das aktuelle Bild und male dann mit dem Pinsel, radiere, füge Ebenen hinzu oder ziehe an den Zuschneidegriffen. Anwenden speichert das Ergebnis als neuen Schritt, den Rückgängig zurücknehmen kann."
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Lade das aktuelle Bild und male dann mit dem Pinsel, radiere, füge Ebenen hinzu oder ziehe an den Zuschneidegriffen. Anwenden speichert das Ergebnis als neuen Schritt, den Rückgängig zurücknehmen kann.",
+  "image_processing.amd_fsr": "AMD FSR",
+  "image_processing.fsr_version": "FSR-Version",
+  "image_processing.fsr_4": "FSR 4",
+  "image_processing.fsr_3": "FSR 3",
+  "image_processing.fsr_2": "FSR 2",
+  "image_processing.fsr_1": "FSR 1",
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Wird mit der AMD-FSR-Interpolation verwendet. FSR 4, 3 und 2 laufen über die AMD-Laufzeit auf der GPU; FSR 1 läuft auf jedem Gerät."
 }

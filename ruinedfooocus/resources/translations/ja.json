@@ -2083,7 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "現在のプロファイルを利用できません",
   "shell.unsupported_output_entry_is_not_eligible_path": "未対応の出力項目は処理できません: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "次の手順：「前景と背景を合成」を選ぶと、被写体をこの背景に配置できます。",
-  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "色の許容範囲（0–255）",
   "image_processing.straighten": "傾き補正",
   "image_processing.angle_degrees": "角度（度）",
@@ -2095,5 +2094,12 @@
   "gallery.load_current_image": "現在の画像を読み込む",
   "gallery.apply_painting": "ペイントを適用",
   "gallery.load_the_current_image_and_paint_or_crop_it_first": "先に現在の画像を読み込み、ペイントまたは切り抜きを行ってください。",
-  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "現在の画像を読み込み、ブラシで描く、消す、レイヤーを追加する、切り抜きハンドルをドラッグするなどの操作を行います。適用すると、元に戻せる新しいステップとして結果が保存されます。"
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "現在の画像を読み込み、ブラシで描く、消す、レイヤーを追加する、切り抜きハンドルをドラッグするなどの操作を行います。適用すると、元に戻せる新しいステップとして結果が保存されます。",
+  "image_processing.amd_fsr": "AMD FSR",
+  "image_processing.fsr_version": "FSR バージョン",
+  "image_processing.fsr_4": "FSR 4",
+  "image_processing.fsr_3": "FSR 3",
+  "image_processing.fsr_2": "FSR 2",
+  "image_processing.fsr_1": "FSR 1",
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "AMD FSR 補間で使用します。FSR 4、3、2 は AMD ランタイムを通じて GPU で動作し、FSR 1 はどのデバイスでも動作します。"
 }

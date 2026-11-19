@@ -1,0 +1,16 @@
+{
+  "id": "amd-fsr-version-choice",
+  "subject": "Offer AMD FSR as one resize option with a choice of FSR 4, 3, 2 or 1",
+  "requires": ["amd-fsr4-upscaling"],
+  "tests": [
+    "test_amd_fsr4.py",
+    "test_amd_fsr1.py",
+    "test_image_geometry_tools.py",
+    "test_localization.py",
+    "test_image_tools_localization.py",
+    "test_tool_contracts.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

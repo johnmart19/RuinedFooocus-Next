@@ -2083,7 +2083,6 @@
   "shell.the_current_profile_is_unavailable": "El perfil actual no está disponible",
   "shell.unsupported_output_entry_is_not_eligible_path": "No se admite esta entrada de salida: {path}",
   "gallery.next_choose_compose_foreground_and_background_to_place_your_subject_on_this_background": "Siguiente paso: elige Componer primer plano y fondo para colocar el sujeto sobre este fondo.",
-  "image_processing.amd_fsr_4": "AMD FSR 4",
   "image_processing.color_tolerance_0_255": "Tolerancia de color (0–255)",
   "image_processing.straighten": "Enderezar",
   "image_processing.angle_degrees": "Ángulo (grados)",
@@ -2095,5 +2094,12 @@
   "gallery.load_current_image": "Cargar la imagen actual",
   "gallery.apply_painting": "Aplicar la pintura",
   "gallery.load_the_current_image_and_paint_or_crop_it_first": "Primero carga la imagen actual y píntala o recórtala.",
-  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Carga la imagen actual y luego pinta con el pincel, borra, añade capas o arrastra los tiradores de recorte. Aplicar guarda el resultado como un paso nuevo que Deshacer puede revertir."
+  "gallery.load_the_current_image_then_paint_with_the_brush_erase_add_layers_or_drag_the_crop_handles_apply_saves_the_result_as_a_new_step_that_undo_can_take_back": "Carga la imagen actual y luego pinta con el pincel, borra, añade capas o arrastra los tiradores de recorte. Aplicar guarda el resultado como un paso nuevo que Deshacer puede revertir.",
+  "image_processing.amd_fsr": "AMD FSR",
+  "image_processing.fsr_version": "Versión de FSR",
+  "image_processing.fsr_4": "FSR 4",
+  "image_processing.fsr_3": "FSR 3",
+  "image_processing.fsr_2": "FSR 2",
+  "image_processing.fsr_1": "FSR 1",
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Se usa con la interpolación AMD FSR. FSR 4, 3 y 2 se ejecutan en la GPU mediante el entorno de AMD; FSR 1 funciona en cualquier dispositivo."
 }
