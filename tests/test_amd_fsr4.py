@@ -191,6 +191,16 @@ class AmdFsr4Tests(unittest.TestCase):
             self.assertRaisesRegex(ValueError, "AMD FSR 3 is not offered"),
         ):
             amd_fsr4.upscale(pixels, 4, 4, version="fsr3", work=work)
+        # After the first pass FSR 2 and 3 sharpen less, so a 4x result has no stipple.
+        for version, later in (("fsr4", "1.0"), ("fsr3", "0.8"), ("fsr2", "0.65")):
+            self.calls.clear()
+            with patch("ruinedfooocus.core.bounded_subprocess.run_bounded", self.helper):
+                amd_fsr4.upscale(pixels, 16, 16, version=version, work=work)
+            self.assertEqual([command[8] for command, _ in self.calls], ["1.0", later, later])
+        self.calls.clear()
+        with patch("ruinedfooocus.core.bounded_subprocess.run_bounded", self.helper):
+            amd_fsr4.upscale(pixels, 8, 8, version="fsr2", sharpness=0.3, work=work)
+        self.assertEqual([command[8] for command, _ in self.calls], ["0.3", "0.3"])
         with self.assertRaisesRegex(ValueError, "FSR 2, 3 or 4"):
             amd_fsr4.upscale(pixels, 4, 4, version="fsr1", work=work)
 

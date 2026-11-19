@@ -34,6 +34,10 @@ def source(version):
 # FSR's presets go up to 3x; two keeps quality, and larger targets take several passes.
 MAX_PASS_SCALE = 2.0
 DEFAULT_SHARPNESS = 1.0
+# Sharpening limit for every pass after the first. Sharpening an already sharpened
+# FSR 2 or 3 result at full strength turns their jitter residue into a checkerboard
+# along edges (seen at 4x on 2026-11-19); FSR 4 stays clean at full strength.
+LATER_PASS_SHARPNESS = {"fsr4": 1.0, "fsr3": 0.8, "fsr2": 0.65}
 TIMEOUT_SECONDS = 120
 MAGIC = b"RFI1"
 
@@ -190,6 +194,7 @@ def upscale(
     array = (color[0].detach().float().cpu().numpy() * 255).round().astype(np.uint8)
     rgba = np.concatenate((array, np.full((*array.shape[:2], 1), 255, np.uint8)), axis=-1)
     data = rgba.tobytes()
+    first = True
     for step in pass_sizes(size, (width, height)):
         if check_cancelled is not None:
             check_cancelled()
@@ -199,12 +204,13 @@ def upscale(
                 size,
                 step,
                 version=version,
-                sharpness=sharpness,
+                sharpness=sharpness if first else min(sharpness, LATER_PASS_SHARPNESS[version]),
                 directory=directory,
                 work=work,
                 check_cancelled=check_cancelled,
             )
             size = step
+            first = False
     result = np.frombuffer(data, dtype=np.uint8).reshape(height, width, 4)[..., :3]
     result = torch.from_numpy(result.astype(np.float32) / 255).unsqueeze(0)
     result = result.to(device=pixels.device, dtype=pixels.dtype)

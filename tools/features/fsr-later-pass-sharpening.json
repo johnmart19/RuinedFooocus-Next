@@ -1,0 +1,9 @@
+{
+  "id": "fsr-later-pass-sharpening",
+  "subject": "Sharpen less after the first pass in FSR 2 and 3 enlargements",
+  "requires": ["amd-fsr-version-choice"],
+  "tests": ["test_amd_fsr4.py", "test_amd_fsr1.py", "test_image_geometry_tools.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

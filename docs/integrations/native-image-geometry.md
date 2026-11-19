@@ -123,7 +123,9 @@ bicubic alpha. It refuses before queueing, with the reason, when the runtime is
 missing, in CPU mode, for a non-8-bit or non-sRGB source, or for a target smaller
 than the source. The helper asks the AMD FSR API for exactly the chosen major
 version; if the driver does not offer it the helper stops and the user is told
-so. It never silently substitutes another version.
+so. It never silently substitutes another version. Passes after the first sharpen
+less for FSR 3 (0.8) and FSR 2 (0.65): at full strength a second pass turned
+their jitter residue into a checkerboard along edges in the 4x check.
 
 **FSR 1** is the spatial pair EASU (edge-adaptive upsampling) and RCAS
 (sharpening), a tensor port of AMD's MIT-licensed `ffx_fsr1.h` in `amd_fsr1.py`.
