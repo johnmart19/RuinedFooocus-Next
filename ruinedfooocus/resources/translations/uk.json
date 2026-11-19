@@ -2102,5 +2102,7 @@
   "image_processing.fsr_2": "FSR 2",
   "image_processing.fsr_1": "FSR 1",
   "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Використовується з інтерполяцією AMD FSR. FSR 4, 3 і 2 працюють на відеокарті через середовище виконання AMD; FSR 1 працює на будь-якому пристрої.",
-  "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "Переписування повернуло запит без змін. Виберіть або завантажте модель у Чаті й повторіть попередній перегляд."
+  "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "Переписування повернуло запит без змін. Виберіть або завантажте модель у Чаті й повторіть попередній перегляд.",
+  "image_editing.choose_a_tool_and_add_its_image_inpainting_and_upscaling_are_set_in_main": "Виберіть інструмент і додайте до нього зображення. Інпейнтинг і масштабування налаштовуються на вкладці «Головна».",
+  "shell.power_ups": "Підсилення"
 }

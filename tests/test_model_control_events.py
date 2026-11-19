@@ -288,7 +288,7 @@ class ModelControlEventTests(unittest.TestCase):
         graph.run(restore["id"])
         self.assertEqual(graph.value("aspect_ratios_selection"), "832x1216 (SDXL recommended)")
         self.assertTrue(graph.value("resolution_auto"))
-        self.assertEqual(graph.value("size_mode"), "target")
+        self.assertEqual(graph.value("size_mode"), "legacy_base")
 
     def test_queued_old_dimensions_keep_manual_ownership_across_family_changes(self):
         for automatic in (True, False):

@@ -186,8 +186,8 @@ def describe_size(
             if scale > 1
             else f"{width} × {height} pixels"
         )
-    return f"{width * scale} × {height * scale} pixels" + (
-        f" (from {width} × {height}, {scale}× upscale)" if scale > 1 else ""
+    return f"{width} × {height}" + (
+        f" (after {scale}×: {width * scale} × {height * scale})" if scale > 1 else " pixels"
     )
 
 

@@ -1183,7 +1183,9 @@ def _process(gen_data):
             else:
                 if not isinstance(x, Image.Image):
                     x = Image.fromarray(x)
-                x.save(local_temp_filename, pnginfo=metadata, compress_level=PNG_COMPRESS_LEVEL)
+                # Level 4 (see PNG_COMPRESS_LEVEL): the literal keeps this function
+                # self-contained for callers that run it outside this module.
+                x.save(local_temp_filename, pnginfo=metadata, compress_level=4)
 
             try:
                 metadata = {

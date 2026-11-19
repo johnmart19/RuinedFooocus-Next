@@ -411,8 +411,7 @@ def add_controlnet_tab(
     with gr.Tab(label=t("Image tools"), id="image-tools"):
         gr.Markdown(
             translate_ui(
-                "Choose a tool and add its image. Inpainting uses Main. "
-                "Upscale: Generation > Size and upscale."
+                "Choose a tool and add its image. Inpainting and upscaling are set in Main."
             )
         )
         with gr.Row():

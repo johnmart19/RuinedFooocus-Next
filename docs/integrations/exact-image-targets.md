@@ -32,9 +32,11 @@ patch alignment is applied separately. HiDream O1 uses its native 32-pixel
 alignment and 64–4096 side contract. Other model recommendations are not used as
 hard limits. Application API working-canvas/pixel limits remain separate.
 
-Create's **Effective stages** shows the current generation dimensions when
-automatic upscaling is Off. Selecting an upscaler shows the content, native
-canvas and target stages; named sizes and custom dimensions use the same helper.
+Create's **Output size** shows the current generation dimensions when
+automatic upscaling is Off. A size chosen in Create is generated as chosen and
+an upscaler multiplies it, shown as `1024 × 1024 (after 2×: 2048 × 2048)`.
+The 1080p, 1440p and 4K shortcuts and the API keep the target plan, for which
+the field shows the content, native canvas and target stages.
 
 For 1920 × 1080 at 2×, content is 960 × 540. An alignment-16 native canvas is
 960 × 544, with two padding rows on each side. Decode restores exactly the

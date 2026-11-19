@@ -200,7 +200,8 @@ class NavigationShellTests(unittest.TestCase):
         self.assertTrue(registry.issubset(shell.app.blocks))
         self.assertIs(shell.app.blocks[workspace.context._id], workspace.context)
         self.assertIs(shell.app.blocks[base._id], base)
-        self.assertIs(scope["model_tab"].parent, shell.model_destinations)
+        # Installed models stay beside the generation controls.
+        self.assertIs(scope["model_tab"].parent, scope["create_tabs"])
         self.assertIs(settings.models_tab.parent, shell.model_destinations)
         self.assertNotIn(settings.models_tab, settings.models_tabs.children)
         for event in events:
@@ -281,9 +282,14 @@ class NavigationShellTests(unittest.TestCase):
                         self.assertEqual("rf-off" not in classes, image)
                         self.assertEqual("rf-editor" in classes, editing)
                         self.assertEqual(state[workspace.panel._id].visible, editing)
-                        self.assertEqual(state[image_tools._id].visible, editing)
+                        # Power-ups are offered on Create too; the Editor opens
+                        # on its own tab.
+                        self.assertTrue(state[image_tools._id].visible)
                         if image:
-                            self.assertEqual(state[scope["create_tabs"]._id].selected, "generation")
+                            self.assertEqual(
+                                state[scope["create_tabs"]._id].selected,
+                                "editor-tools" if editing else "generation",
+                            )
                         else:
                             self.assertEqual(updates[scope["create_tabs"]._id], gr.skip())
                         self.assertTrue(
@@ -305,7 +311,7 @@ class NavigationShellTests(unittest.TestCase):
         workspace.selected_store.assert_not_called()
 
     def test_native_navigation_tracks_no_output_progress_and_keeps_toolbar_destinations(self):
-        shell, workspace, base, *_ = self.shell()
+        shell, workspace, base, scope, *_ = self.shell()
         routes = {tab._id for tab in shell.tabs.children}
         navigation = [
             event
@@ -354,9 +360,14 @@ class NavigationShellTests(unittest.TestCase):
             self.assertEqual(dependency["show_progress"], "hidden")
             self.assertEqual(dependency["show_progress_on"], [])
             result = asyncio.run(shell.app.process_api(dependency["id"], [], state=state))
-            self.assertEqual(len(result["data"]), len(shell.outputs) + 1)
-            self.assertEqual(state[shell.tabs._id].selected, "models")
-            self.assertEqual(state[shell.model_destinations._id].selected, destination)
+            if destination == "create-models":
+                # The model browser is a tab of the generation controls.
+                self.assertEqual(len(result["data"]), len(shell.outputs))
+                self.assertEqual(state[scope["create_tabs"]._id].selected, destination)
+            else:
+                self.assertEqual(len(result["data"]), len(shell.outputs) + 1)
+                self.assertEqual(state[shell.tabs._id].selected, "models")
+                self.assertEqual(state[shell.model_destinations._id].selected, destination)
             self.assertEqual(state[workspace.context._id], context)
             self.assertEqual(state[base._id].value, base.value)
 

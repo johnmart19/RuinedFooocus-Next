@@ -115,6 +115,14 @@ def regroup_generation_options(generation_tab, image_number, save_defaults_btn):
     anchor, holder = image_number, image_number.parent
     while not any(isinstance(child, gr.Accordion) for child in holder.children):
         anchor, holder = holder, holder.parent
+    sections = {getattr(child, "elem_id", None): child for child in holder.children}
+    sampling, size = sections.get("generation-sampling"), sections.get("generation-size")
+    if sampling is not None and size is not None:
+        # Size comes before the model-specific sampling settings.
+        later = holder.children[holder.children.index(size) + 1 :]
+        with holder:
+            for section in (sampling, *later):
+                section.unrender().render()
     rare_sections = [
         child
         for child in (
@@ -154,6 +162,19 @@ def create_navigation_shell(
         for line in (f"<h1>{title}</h1>", f"<p>{text}</p>"):
             gr.HTML(line, elem_classes=["rf-page-head", *classes], padding=False)
 
+    # The Editor opens on its own tools, not on the generation settings: the source
+    # buttons, the image action and its options lead its right panel. This move
+    # happens inside the Create blocks, before they are merged below.
+    with create:
+        with create_tabs:
+            editor_tools_tab = gr.Tab(label=t("Edit"), id="editor-tools", visible=False)
+        with editor_tools_tab:
+            workspace.panel.unrender().render()
+    # First in the row; the generation settings stay selected until the Editor opens.
+    create_tabs.children.remove(editor_tools_tab)
+    create_tabs.children.insert(0, editor_tools_tab)
+    create_tabs.selected = "generation"
+
     app = gr.Blocks(title=title, analytics_enabled=False, fill_width=True)
     with app:
         with gr.Tabs(elem_id="app-tabs", overflow_behavior="wrap") as top_tabs:
@@ -190,19 +211,18 @@ def create_navigation_shell(
             create.render()
         # All descendants and listeners already belong to this combined Blocks.
         # Native unrender/render changes only the containers' layout parents.
+        # Installed models and LoRAs are chosen beside the generation controls; the
+        # Models page is where new ones are found and downloaded.
         with models_page, model_destinations:
-            model_tab.unrender().render()
             settings_app.models_tab.unrender().render()
-        # Inside the Models page the two panels are named by what they hold.
-        # A distinct ID keeps the page's own navigation label.
-        model_tab.label = t("Installed")
         settings_app.models_tab.label = t("Download")
         settings_app.models_tab.id = "downloads"
         image_tools_tab = next(
             child for child in image_tools_tabs.children if child.id == "image-tools"
         )
-        image_tools_tab.visible = False
-        image_tools_tab.label = t("More tools")
+        # Image-to-image, guides and other additions to a generation: offered on
+        # Create as well as in the Editor.
+        image_tools_tab.label = t("Power-ups")
         workspace.panel.visible = False
 
         navigation_outputs = [
@@ -210,6 +230,7 @@ def create_navigation_shell(
             image_stage,
             workspace.panel,
             image_tools_tab,
+            editor_tools_tab,
             workspace.destination,
             create_tabs,
             run_button,
@@ -236,14 +257,22 @@ def create_navigation_shell(
                     elem_classes=["rf-editor"] if editing else [] if image else ["rf-off"]
                 ),
                 workspace.panel: gr.update(visible=editing),
-                image_tools_tab: gr.update(visible=editing),
+                image_tools_tab: gr.update(visible=True),
+                editor_tools_tab: gr.update(visible=editing),
                 workspace.destination: destination,
             }
             if select:
                 updates[top_tabs] = gr.update(selected=destination)
             if image:
                 updates[create_tabs] = gr.update(
-                    selected=inner or ("image-tools" if editing and utility else "generation")
+                    selected=inner
+                    or (
+                        "image-tools"
+                        if editing and utility
+                        else "editor-tools"
+                        if editing
+                        else "generation"
+                    )
                 )
             if destination == "create" or editing and action is not None:
                 updates[run_button] = gr.update(
@@ -575,11 +604,8 @@ def launch_app(args):
             api_visibility="undocumented",
         )
         create_models_button.click(
-            lambda: (
-                shell.navigate("models")
-                | {shell.model_destinations: gr.update(selected="create-models")}
-            ),
-            outputs=[*shell.outputs, shell.model_destinations],
+            lambda: shell.navigate("create", "create-models", select=False),
+            outputs=shell.outputs,
             queue=False,
             show_progress="hidden",
             show_progress_on=[],
@@ -662,7 +688,7 @@ def launch_app(args):
                     raise gr.Error(str(error)) from None
                 return (
                     gr.skip(),
-                    gr.update(selected="models"),
+                    gr.update(selected="create"),
                     gr.update(selected="create-models"),
                     choices,
                     identity,
@@ -1455,7 +1481,7 @@ with shared.gradio_root as block:
         with gr.Column(scale=2, min_width=0, elem_id="generation-controls"):
             with (
                 gr.Tabs(elem_id="create-controls-tabs") as create_controls_tabs,
-                gr.Tab(label=t("Generation"), id="generation") as generation_tab,
+                gr.Tab(label=t("Main"), id="generation") as generation_tab,
             ):
                 initial_checkpoint = primary_checkpoint_selection(
                     settings["base_model"],
@@ -1638,7 +1664,10 @@ with shared.gradio_root as block:
                     translate_ui("Size and upscale"), open=True, elem_id="generation-size"
                 ) as size_section:
                     resolution_settings.set_profile(shared.settings.name)
-                    size_mode = gr.State("target")
+                    # The selected size is generated as chosen and automatic upscaling
+                    # multiplies it ("legacy_base"). The 1080p/1440p/4K shortcuts and the
+                    # API use "target", which fits the final image instead.
+                    size_mode = gr.State("legacy_base")
                     add_ctrl("size_mode", size_mode)
                     initial_choices, initial_resolution, initial_resolution_auto = (
                         resolution_settings.model_selection(
@@ -1657,7 +1686,7 @@ with shared.gradio_root as block:
                     )
                     add_ctrl("resolution_auto", resolution_auto)
                     aspect_ratios_selection = ResolutionDropdown(
-                        label=t("Output target"),
+                        label=t("Size"),
                         choices=initial_choices,
                         value=initial_resolution,
                     )
@@ -1696,7 +1725,7 @@ with shared.gradio_root as block:
                         (settings.get("custom_width", 1024), settings.get("custom_height", 1024)),
                     )
                     custom_width = DimensionNumber(
-                        label=t("Target width"),
+                        label=t("Width"),
                         elem_id="output-target-width",
                         minimum=1,
                         maximum=32768,
@@ -1706,7 +1735,7 @@ with shared.gradio_root as block:
                     )
                     add_ctrl("custom_width", custom_width)
                     custom_height = DimensionNumber(
-                        label=t("Target height"),
+                        label=t("Height"),
                         elem_id="output-target-height",
                         minimum=1,
                         maximum=32768,
@@ -1779,7 +1808,7 @@ with shared.gradio_root as block:
                             add_ctrl("automatic_upscale_target", automatic_upscale_target)
                             add_ctrl("advanced_upscalers", advanced_upscalers)
                             upscale_size = gr.Textbox(
-                                label=t("Effective stages"),
+                                label=t("Output size"),
                                 interactive=False,
                                 lines=2,
                                 value=t("Add a source image in Image tools to see its output size.")
@@ -1964,11 +1993,46 @@ with shared.gradio_root as block:
             # Everyday choices stay in view: upscaling folds into its own
             # section and rarely used file and layout options into one.
             with size_section:
-                upscale_section = gr.Accordion(
-                    t("Upscale"), open=False, elem_id="generation-upscale"
+                upscale_enabled = gr.Checkbox(
+                    label=t("Upscale"), value=False, elem_id="generation-upscale-toggle"
                 )
+                upscale_section = gr.Group(visible=False, elem_id="generation-upscale")
             with upscale_section:
                 automatic_upscale_controls.unrender().render()
+
+            def toggle_upscale(enabled, factor, advanced, current):
+                if not enabled:
+                    return "Off", gr.update(visible=False)
+                if current not in (None, "", "Off"):
+                    return gr.skip(), gr.update(visible=True)
+                available = [
+                    choice[1] if isinstance(choice, (list, tuple)) else choice
+                    for choice in upscale_choices(
+                        None if factor == "all" else int(factor),
+                        advanced=advanced or factor == "all",
+                    )
+                ]
+                first = next((choice for choice in available if choice != "Off"), "Off")
+                return first, gr.update(visible=True)
+
+            upscale_enabled.input(
+                toggle_upscale,
+                inputs=[upscale_enabled, upscale_factor, advanced_upscalers, automatic_upscale],
+                outputs=[automatic_upscale, upscale_section],
+                api_visibility="undocumented",
+                show_progress="hidden",
+            )
+            # Presets, saved defaults and PNG settings change the model directly.
+            automatic_upscale.change(
+                lambda selection: (
+                    selection not in (None, "", "Off"),
+                    gr.update(visible=selection not in (None, "", "Off")),
+                ),
+                inputs=automatic_upscale,
+                outputs=[upscale_enabled, upscale_section],
+                api_visibility="undocumented",
+                show_progress="hidden",
+            )
             with create_controls_tabs:
                 model_tab = gr.Tab(
                     label=t("Models"),
@@ -2037,7 +2101,7 @@ with shared.gradio_root as block:
                     resolution_auto.input(
                         lambda family, checkpoint, current, automatic: (
                             *model_resolution(family, checkpoint, current, automatic, force=True),
-                            "target",
+                            "legacy_base",
                         ),
                         inputs=[model_family, base_model, aspect_ratios_selection, resolution_auto],
                         outputs=[aspect_ratios_selection, resolution_auto, size_mode],
@@ -2049,7 +2113,7 @@ with shared.gradio_root as block:
                     restore_recommended_size.click(
                         lambda family, checkpoint, current: (
                             *model_resolution(family, checkpoint, current, True, force=True),
-                            "target",
+                            "legacy_base",
                         ),
                         inputs=[model_family, base_model, aspect_ratios_selection],
                         outputs=[aspect_ratios_selection, resolution_auto, size_mode],
@@ -2059,7 +2123,7 @@ with shared.gradio_root as block:
                     )
                     for size_control in (aspect_ratios_selection, custom_width, custom_height):
                         size_control.input(
-                            lambda: (False, "target"),
+                            lambda: (False, "legacy_base"),
                             outputs=[resolution_auto, size_mode],
                             api_visibility="undocumented",
                             show_progress="hidden",

@@ -8,11 +8,18 @@ destinations keeps the draft and image history. Create's **Generate** starts a n
 or mask. Returning to Editor restores its selected image action and source.
 The preview stays above the prompt and Generate button, with the concise image model picker at the top of
 **Generation** in the right sidebar. Its **Models** button opens the full manager without copying the selection.
-Models contains checkpoint browsing, LoRAs, model tools and the download catalogue. Checkpoints show cached
-publisher names and versions; details retain filenames. The selected checkpoint card follows the Generation picker.
-Generation, Prompt tools and Details remain available beside the shared image; Editor also exposes **More tools**
-for existing full image-tool controls. **Generation → Size and upscale → Upscale** contains optional upscaling.
-**Generation → More options** groups saved PNG settings, native output and sampling, layout/attention,
+The right panel of Create has five tabs. **Main** holds everything for a new image, in order: the image
+model, the size, the **Upscale** switch, the model's sampling settings, styles, image number, negative prompt
+and seed. **Models** is the browser for installed checkpoints with previews, and for LoRAs and embeddings;
+checkpoints show cached publisher names and versions, details retain filenames, and the selected card follows
+the Main picker. **Power-ups** adds to a generation: image to image, guides, reference adapters and other
+advanced tools. **Prompt tools** and **Details** complete the row. The Models page in the sidebar is the
+download catalogue.
+
+Editor works on an existing image. Its right panel opens on **Edit**: choose the image (the current one, the
+latest generated, one from Gallery or an upload), then the action and its options. The other tabs follow it
+for the settings an edit uses.
+**Main → More options** groups saved PNG settings, native output and sampling, layout/attention,
 Layered and saved-tensor controls; model-specific sections appear when applicable. The changelog is in Details.
 When the working area is narrow or text is enlarged, the image controls follow the image and prompt
 and scroll with the page.
@@ -105,7 +112,7 @@ with every checkpoint or text encoder. Adding a reference edits prompt text only
 
 ## Image tools
 
-The full tool panels are in **Editor → More tools**. The main **Image action** selector
+The full tool panels are in **Power-ups**. The main **Image action** selector
 handles the common editing steps; the same source, mask and generation controls serve both.
 
 Use **Latest generated** to open a completed image, or **Choose from Gallery** and
@@ -211,8 +218,8 @@ files, dedicated inputs, source denoise and Library/API behavior.
   Library's **Start image grid** or **Start image composition** seeds the selected
   original; add further inputs in Editor. Saved defaults and full setup restore
   controls, and require fresh image uploads. See [framing, alpha and limits](integrations/native-image-composition.md).
-- **Generation → Size and upscale → Output target** lists the selected model's recommended sizes and
-  **Custom...**. Custom opens integer **Target width** and **Target height**, plus **1080p**, **1440p**
+- **Main → Size and upscale → Size** lists the selected model's recommended sizes and
+  **Custom...**. Custom opens integer **Width** and **Height**, plus **1080p**, **1440p**
   and **4K** shortcuts. **Use model recommended size** restores automatic following.
   Pasting a number replaces the field; pasting `1440x2560` fills both dimensions.
   Out-of-range pastes show local validation without submitting the invalid size.
@@ -260,12 +267,14 @@ files, dedicated inputs, source denoise and Library/API behavior.
   Image Edit model. See [still geometry utilities](integrations/native-still-geometry-utilities.md)
   for component folders, API fields, replay and qualification limits.
 - Rembg can use an installed native BiRefNet model selected under **Background model**. Leave it on **Hardware background removal (ONNX)** for the existing default. Native models use the image device; install them locally in your configured `background_removal` folder. Existing alpha is kept unless **Reprocess transparent images** is enabled.
-- Upscaling is in **Generation → Size and upscale → Upscale**. Choose **2×** or **4×** to filter models by their
-  actual native factor; **All native factors** exposes compatible specialist factors. Selecting a model
-  can acquire its registered file on first use. The target is the final file size: 1920 × 1080 at 2×
-  generates 960 × 540 content, removes only native alignment padding, then enlarges it to Full HD.
-  Odd targets use uniform fitting and padding to retain every edge. **Effective stages** shows the
-  extra geometry. This is separate from latent/diffusion upscale workflows.
+- Upscaling is the **Upscale** switch in **Main → Size and upscale**; its options appear when it is on.
+  Choose **2×** or **4×** to filter models by their actual native factor; **All native factors** exposes
+  compatible specialist factors. Selecting a model can acquire its registered file on first use. The
+  size you choose is the size that is generated, and upscaling multiplies it: **Output size** shows, for
+  example, `1024 × 1024 (after 2×: 2048 × 2048)`. The **1080p**, **1440p** and **4K** shortcuts and the
+  API instead name the final file size: 1920 × 1080 at 2× generates 960 × 540 content, removes only
+  native alignment padding, then enlarges it to Full HD; odd targets use uniform fitting and padding
+  to retain every edge. This is separate from latent/diffusion upscale workflows.
   **Input image only** skips generation and preserves source size × factor while recommended-size
   following is enabled. Choose a target manually to uniformly fit the upload with padding; alpha and
   the original upload remain intact. Masked edits and source-preserving generation keep their own geometry.
@@ -443,6 +452,6 @@ files, dedicated inputs, source denoise and Library/API behavior.
 3. **Styles:** choose a category and real styles (headings cannot be selected), Preview, then Bake into prompt if desired. Inspect the result before Generate.
 4. **Variations:** put up to nine parent prompts in the prompt box separated by `---`, choose Use current prompts as parents, select a parent and Preview variations. Select an indexed candidate; Apply changes text only.
 5. **Gallery:** select a result and use Original/Rendered prompt or Reuse full setup in its local draft; Create stays unchanged. Choose a local action without running inference during navigation-only checks. Open in Editor explicitly and check original dimensions/history. In Editor, check Latest generated and Choose from Gallery, including a technical output that must not replace Latest. Page/search/refresh invalidate Gallery selections; browsing never means Stop. PNG metadata cannot reconstruct absent uploads or masks.
-6. **Editor → More tools:** choose Image to image, input a reference and set denoise/framing. Preserve source proportions; explicit padded sizing fits uniformly. The tool is configured now; Generate executes it later.
+6. **Power-ups:** choose Image to image, input a reference and set denoise/framing. Preserve source proportions; explicit padded sizing fits uniformly. The tool is configured now; Generate executes it later.
 
 Random Prompt, One Button, Random Style, seed randomness, wildcards, prompt variations and optional LLM enhancement are distinct operations. See [prompt data](prompt-data.md) for their data ownership. No preview action is a claim of final image quality.

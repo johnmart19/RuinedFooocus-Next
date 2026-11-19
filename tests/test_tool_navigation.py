@@ -163,7 +163,7 @@ class ToolNavigationTests(unittest.TestCase):
         self.assertIs(tabs, scope["image_tools_tabs"])
         self.assertEqual(
             [child.label for child in tabs.children],
-            ["Generation", "Models", "Prompt tools", "Image tools", "Details"],
+            ["Main", "Models", "Prompt tools", "Image tools", "Details"],
         )
         self.assertTrue(all(isinstance(child, gr.Tab) for child in tabs.children))
         layout = create.config["layout"]

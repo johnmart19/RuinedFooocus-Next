@@ -230,7 +230,7 @@ class AcquisitionUiTests(unittest.TestCase):
             )
         self.assertEqual(result[0], gr.skip())
         self.assertEqual(
-            (result[1]["selected"], result[2]["selected"]), ("models", "create-models")
+            (result[1]["selected"], result[2]["selected"]), ("create", "create-models")
         )
         self.assertEqual(result[3:5], ({"clip_l": "encoder.safetensors"}, "checkpoint-scope"))
         self.assertEqual(len(result), 5)

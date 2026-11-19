@@ -8,7 +8,7 @@ Application code lives under `ruinedfooocus`; downloaded backends live under
 | Feature                                      | Source under `ruinedfooocus/`                           | UI entry                                    | Backend                                      |
 | -------------------------------------------- | ------------------------------------------------------- | ------------------------------------------- | -------------------------------------------- |
 | Generation, batches, automatic settings      | `features/generation`, `features/models/performance.py` | Create → Generation                         | ComfyUI sampling and model loading           |
-| Image editing, masks, ControlNet, geometry   | `features/image_editing`                                | Editor / Editor → More tools                | Native ComfyUI edit/ControlNet nodes         |
+| Image editing, masks, ControlNet, geometry   | `features/image_editing`                                | Create and Editor → Power-ups               | Native ComfyUI edit/ControlNet nodes         |
 | Upscale, background removal, captioning      | `features/image_processing`                             | Editor / image upload                       | ComfyUI upscale nodes; ONNX / caption models |
 | Models, LoRAs, components, checkpoint copies | `features/models`                                       | Models                                      | ComfyUI; local safetensors inspection        |
 | Prompt transforms, styles, rewrite presets   | `features/prompting`                                    | Create → Prompt tools / Generation → Styles | Shared local chat; ComfyUI conditioning      |

@@ -2102,5 +2102,7 @@
   "image_processing.fsr_2": "FSR 2",
   "image_processing.fsr_1": "FSR 1",
   "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Gebruikt bij AMD FSR-interpolatie. FSR 4, 3 en 2 draaien op de GPU via de AMD-runtime; FSR 1 werkt op elk apparaat.",
-  "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "De herschrijving gaf je prompt ongewijzigd terug. Kies of download een model in Chat en maak het voorbeeld opnieuw."
+  "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "De herschrijving gaf je prompt ongewijzigd terug. Kies of download een model in Chat en maak het voorbeeld opnieuw.",
+  "image_editing.choose_a_tool_and_add_its_image_inpainting_and_upscaling_are_set_in_main": "Kies een tool en voeg een afbeelding toe. Inpainting en opschalen stel je in onder Hoofd.",
+  "shell.power_ups": "Power-ups"
 }
