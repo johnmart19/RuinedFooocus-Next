@@ -1,0 +1,13 @@
+{
+  "id": "fsr-version-field-visibility",
+  "subject": "Show the FSR version field only for an AMD FSR resize",
+  "requires": ["amd-fsr-version-choice"],
+  "tests": [
+    "test_editor_workspace_events.py",
+    "test_image_adjustment_integration.py",
+    "test_image_tools_localization.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

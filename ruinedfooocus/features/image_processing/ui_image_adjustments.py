@@ -19,6 +19,10 @@ def create_ui(selection, control_type, kind_for):
     initial = kind_for(selection.value, control_type.value)
     controls, visibility = {}, []
 
+    def fsr_version_visible(transform_op, interpolation):
+        # The version only means something for an AMD FSR resize.
+        return transform_op == "resize" and interpolation == "amd-fsr"
+
     def field(
         name,
         label,
@@ -167,7 +171,12 @@ def create_ui(selection, control_type, kind_for):
                 "FSR version",
                 choices=("fsr4", "fsr3", "fsr2", "fsr1"),
                 info="Used with AMD FSR interpolation. FSR 4, 3 and 2 run on the GPU through the AMD runtime; FSR 1 runs on any device.",
-                when=lambda k, o, m, c: o == "resize",
+                visible=fsr_version_visible(
+                    saved.get("transform_operation", "resize"),
+                    saved.get(
+                        "transform_interpolation", ADJUSTMENT_DEFAULTS["transform_interpolation"]
+                    ),
+                ),
             )
             for name in ("x", "y"):
                 field("transform_" + name, "Crop " + name, when=lambda k, o, m, c: o == "crop")
@@ -370,6 +379,17 @@ def create_ui(selection, control_type, kind_for):
             color_panel,
             *[component for component, _ in visibility],
         ],
+        queue=False,
+        api_visibility="undocumented",
+        show_progress="hidden",
+    )
+    gr.on(
+        triggers=[operation.change, controls["transform_interpolation"].change],
+        fn=lambda transform_op, interpolation: gr.update(
+            visible=fsr_version_visible(transform_op, interpolation)
+        ),
+        inputs=[operation, controls["transform_interpolation"]],
+        outputs=controls["transform_fsr_version"],
         queue=False,
         api_visibility="undocumented",
         show_progress="hidden",
