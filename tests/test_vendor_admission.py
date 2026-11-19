@@ -18,10 +18,10 @@ class VendorAdmissionTests(unittest.TestCase):
             build="26200",
             drivers=[
                 dict(DeviceID="PCI\\VEN_1002&DEV_67DF\\OLD", DriverVersion="31.0.0.0"),
-                dict(DeviceID="PCI\\VEN_1002&DEV_744C\\NEW", DriverVersion="32.0.31041.5005"),
+                dict(DeviceID="PCI\\VEN_1002&DEV_744C\\NEW", DriverVersion="32.0.32029.2010"),
             ],
         )
-        evidence = admission.windows_recipe_evidence("rocm10.1", [old, good], inventory)
+        evidence = admission.windows_recipe_evidence("rocm10.2", [old, good], inventory)
         selected, hardware, driver = admission.select_installer_adapter([old, good], evidence)
         self.assertEqual(selected["inventory_adapter_id"], "new-dgpu")
         self.assertEqual(selected["hardware_id"], inventory["drivers"][1]["DeviceID"])
@@ -39,7 +39,7 @@ class VendorAdmissionTests(unittest.TestCase):
         _, hardware, driver = admission.select_installer_adapter(adapters, evidence)
         self.assertFalse(hardware is True and driver is True)
 
-    def linux(self, recipe="rocm10.1", *, wsl=False, **changes):
+    def linux(self, recipe="rocm10.2", *, wsl=False, **changes):
         adapter = dict(
             adapter_id="native:pci:0000:03:00.0",
             name="AMD Radeon RX 7900 XTX",
@@ -64,7 +64,7 @@ class VendorAdmissionTests(unittest.TestCase):
             )
         host = dict(
             build="26200",
-            drivers=[dict(DeviceID="PCI\\VEN_1002&DEV_744C\\A", DriverVersion="32.0.31041.5005")],
+            drivers=[dict(DeviceID="PCI\\VEN_1002&DEV_744C\\A", DriverVersion="32.0.32029.2010")],
         )
         return admission.linux_recipe_evidence(
             recipe,
@@ -96,7 +96,7 @@ class VendorAdmissionTests(unittest.TestCase):
             adapter_id="host:one", name="AMD Radeon RX 7900 XTX", pci_id="1002:744c", gfx="gfx1100"
         )
         result = admission.linux_recipe_evidence(
-            "rocm10.1",
+            "rocm10.2",
             [adapter],
             {"os_release": {"ID": "ubuntu", "VERSION_ID": "24.04"}, "dxg": True},
             wsl=True,
@@ -109,10 +109,10 @@ class VendorAdmissionTests(unittest.TestCase):
         )
         host = dict(
             build="26300",
-            drivers=[dict(DeviceID="PCI\\VEN_1002&DEV_744C\\A", DriverVersion="32.0.32015.12012")],
+            drivers=[dict(DeviceID="PCI\\VEN_1002&DEV_744C\\A", DriverVersion="32.0.32101.12012")],
         )
         result = admission.linux_recipe_evidence(
-            "rocm10.1",
+            "rocm10.2",
             [adapter],
             {"os_release": {"ID": "debian", "VERSION_ID": "13"}, "dxg": True},
             wsl=True,
@@ -175,9 +175,9 @@ class VendorAdmissionTests(unittest.TestCase):
         self,
         name="AMD Radeon RX 7900 XTX",
         pci_id="1002:744c",
-        driver="32.0.31041.5005",
+        driver="32.0.32029.2010",
         build="26200",
-        recipe="rocm10.1",
+        recipe="rocm10.2",
     ):
         adapter = dict(adapter_id="physical-a", name=name, pci_id=pci_id)
         vendor, device = pci_id.split(":")
@@ -206,7 +206,9 @@ class VendorAdmissionTests(unittest.TestCase):
         )
 
     def test_new_unlisted_amd_driver_and_missing_metadata_stay_unknown(self):
-        self.assertTrue(self.row(driver="32.0.32015.12012")["driver_supported"])
+        self.assertTrue(self.row(driver="32.0.32101.12012")["driver_supported"])
+        # The ROCm 10.1 era driver predates AMD Software 26.11.2.
+        self.assertFalse(self.row(driver="32.0.31041.5005")["driver_supported"])
         self.assertIsNone(self.row(driver="33.0.1.2")["driver_supported"])
         self.assertIsNone(self.row(driver="")["driver_supported"])
         self.assertIsNone(self.row(build="")["hardware_supported"])
@@ -216,14 +218,14 @@ class VendorAdmissionTests(unittest.TestCase):
     def test_duplicate_cards_cannot_share_one_unbound_driver_identity(self):
         adapter = dict(adapter_id="a", name="AMD Radeon RX 7900 XTX", pci_id="1002:744c")
         rows = [
-            dict(DeviceID=f"PCI\\VEN_1002&DEV_744C\\{instance}", DriverVersion="32.0.31041.5005")
+            dict(DeviceID=f"PCI\\VEN_1002&DEV_744C\\{instance}", DriverVersion="32.0.32029.2010")
             for instance in ("A", "B")
         ]
         inventory = dict(build="26200", drivers=rows)
         self.assertIsNone(
-            windows_recipe_evidence("rocm10.1", [adapter], inventory)[0]["driver_supported"]
+            windows_recipe_evidence("rocm10.2", [adapter], inventory)[0]["driver_supported"]
         )
         adapter["hardware_id"] = rows[1]["DeviceID"]
         self.assertTrue(
-            windows_recipe_evidence("rocm10.1", [adapter], inventory)[0]["driver_supported"]
+            windows_recipe_evidence("rocm10.2", [adapter], inventory)[0]["driver_supported"]
         )

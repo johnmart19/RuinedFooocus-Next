@@ -395,7 +395,7 @@ class DynamicMemoryTests(unittest.TestCase):
         support = types.SimpleNamespace(
             inspect_installed_rocm=lambda platform: None,
             inspect_installed_cuda=lambda platform: None,
-            select_torch_platform=lambda *args: "rocm10.1",
+            select_torch_platform=lambda *args: "rocm10.2",
         )
         with (
             patch.dict(os.environ, {}, clear=True),
@@ -564,9 +564,9 @@ class RocmAttentionTests(unittest.TestCase):
         for platform_name, system, preset, expected in (
             ("cu128", "Windows", None, None),
             ("cpu", "Windows", None, None),
-            ("rocm10.1", "Linux", None, None),
-            ("rocm10.1", "Windows", None, "0"),
-            ("rocm10.1", "Windows", "1", "1"),  # An explicit choice is kept.
+            ("rocm10.2", "Linux", None, None),
+            ("rocm10.2", "Windows", None, "0"),
+            ("rocm10.2", "Windows", "1", "1"),  # An explicit choice is kept.
         ):
             environment = {} if preset is None else {key: preset}
             with (

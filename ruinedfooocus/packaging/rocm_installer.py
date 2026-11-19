@@ -40,7 +40,7 @@ SUPPORTED_TARGETS = {
     "Windows": _RADEON | {"gfx1200", "gfx1201"},
     "Linux": _RADEON | {"gfx908", "gfx90a", "gfx942", "gfx950", "gfx1200", "gfx1201"},
 }
-ROCM_PLATFORM = "rocm10.1"
+ROCM_PLATFORM = "rocm10.2"
 
 
 @dataclass(frozen=True)
@@ -56,6 +56,7 @@ ROCM_INDEX = bundle_for(ROCM_PLATFORM).index
 _ROCM_METADATA_HASHES = {
     "10.0.0": "65b5982249612a310135f5e061b9f28909e8ad718a1ddb3f1abba92298b7216b",
     "10.1.0": "e6616e62ebd1324031681e6e59349d46ee4f143a8d8f4f901a91c35c993041fc",
+    "10.2.0": "1ed367cf6fcaeb183ac2cb930605320c6486888881b7d523c998f521f328f027",
 }
 
 
@@ -320,8 +321,9 @@ def automatic_rocm_plan(os_platform, selected_platform, force=False):
         target_platform,
         [
             f"torch[{extras}]=={bundle.torch}",
-            # AMD's stable index labels the matching 2.14 vision build as alpha.
-            # An unbounded install selects 0.28, whose native extension cannot load.
+            # Pin vision to the bundle: AMD's index carries several builds per ROCm
+            # release, and an unbounded install can select one whose native
+            # extension does not match this Torch.
             f"torchvision[{extras}]=={bundle.vision}",
             "--index-url",
             ROCM_INDEX,

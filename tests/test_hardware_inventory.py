@@ -80,7 +80,7 @@ class BackgroundChoicesAndStatus(unittest.TestCase):
 
     def test_torch_builds_are_classified_from_the_version_string(self):
         for version, kind in (
-            ("2.14.0+rocm10.1.0", "rocm"),
+            ("2.15.0+rocm10.2.0", "rocm"),
             ("2.9.1+cu130", "cuda"),
             ("2.9.1+cpu", "cpu"),
             ("2.9.1", "other"),

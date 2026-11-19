@@ -1,4 +1,4 @@
-"""Acquisition evidence for pinned ROCm 10.1 and Torch 2.14 XPU recipes.
+"""Acquisition evidence for the pinned ROCm 10.2 and Intel XPU recipes.
 
 Windows driver-store versions are read without importing Torch or initializing
 accelerators. Published matrices qualify acquisition, never a model workload.
@@ -174,7 +174,7 @@ def windows_recipe_evidence(recipe, adapters, inventory):
         exact = [row for row in matches if row.get("DeviceID", "").lower() == hardware_id]
         matches = exact or matches
         driver = _version(matches[0].get("DriverVersion")) if len(matches) == 1 else None
-        if recipe == "rocm10.1":
+        if recipe == "rocm10.2":
             # Released Radeon/Ryzen rows; TheRock build-only GFX extras are not
             # a substitute for this device-family contract.
             hardware = bool(
@@ -187,10 +187,10 @@ def windows_recipe_evidence(recipe, adapters, inventory):
             # Admit acquisition on newer drivers; native validation after install
             # still owns runtime compatibility, independently of this lower bound.
             driver_ok = (
-                None if driver is None or driver[0] != 32 else driver >= (32, 0, 31041, 5005)
+                None if driver is None or driver[0] != 32 else driver >= (32, 0, 32029, 2010)
             )
             os_ok = None if build is None or build >= 28000 else build >= 26200
-            source = "AMD ROCm 10.1 matrix / RN-RAD-ROCM-10-01"
+            source = "AMD ROCm 10.2 matrix / RN-RAD-ROCM-10-01"
         elif recipe == "xpu":
             hardware = bool(
                 re.search(
@@ -399,7 +399,7 @@ def linux_recipe_evidence(
         name = adapter.get("name", "")
         gfx = adapter.get("gfx") or adapter.get("architecture")
         reasons = []
-        if recipe == "rocm10.1":
+        if recipe == "rocm10.2":
             released_gfx = {
                 "gfx1030",
                 "gfx1100",
@@ -439,7 +439,7 @@ def linux_recipe_evidence(
                         guest_visibility is not False,
                     )
                 )
-                reasons.append("ROCm 10.1 WSL is a technical preview requiring explicit opt-in")
+                reasons.append("ROCm 10.2 WSL is a technical preview requiring explicit opt-in")
                 if guest_visibility is None:
                     reasons.append(
                         "Guest execution must be verified after installing the ROCm wheels"
@@ -506,7 +506,7 @@ def linux_recipe_evidence(
                     )
                 )
                 hardware = combined_evidence((hardware, os_ok))
-            source = "AMD ROCm 10.1 released matrix / WSL technical preview"
+            source = "AMD ROCm 10.2 released matrix / WSL technical preview"
         elif recipe == "xpu":
             hardware = (
                 bool(
@@ -563,7 +563,7 @@ def linux_recipe_evidence(
                 driver_supported=driver,
                 source=source,
                 reasons=tuple(reasons),
-                opt_in=wsl and recipe == "rocm10.1",
+                opt_in=wsl and recipe == "rocm10.2",
             )
         )
     return tuple(results)

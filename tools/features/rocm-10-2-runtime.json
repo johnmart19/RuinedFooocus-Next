@@ -1,0 +1,31 @@
+{
+  "id": "rocm-10-2-runtime",
+  "subject": "Update the AMD image runtime to ROCm 10.2 with Torch 2.15.0",
+  "requires": [
+    "gallery-parallel-thumbnails",
+    "generation-recheck-fixes",
+    "native-storage-fixture-contracts",
+    "release-status-wording",
+    "rocm-windows-hipblas",
+    "ui-composition"
+  ],
+  "tests": [
+    "test_runtime_bundles.py",
+    "test_vendor_admission.py",
+    "test_installer_rocm.py",
+    "test_installer_gpu.py",
+    "test_gpu_support_matrix.py",
+    "test_hardware_inventory.py",
+    "test_runtime_support.py",
+    "test_backend_preferences.py",
+    "test_comfy_runtime.py",
+    "test_cpu_startup.py",
+    "test_dependency_requirements.py",
+    "test_native_allocator.py",
+    "test_package_plan.py",
+    "test_onnx_provider_recipes.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

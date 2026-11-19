@@ -17,8 +17,8 @@ class RuntimeBundleTests(unittest.TestCase):
         )
 
     def test_new_python_branch_is_not_qualified_merely_by_one_wheel(self):
-        self.assertTrue(python_bundle_supported("rocm10.1", (3, 12)))
-        self.assertFalse(python_bundle_supported("rocm10.1", (3, 10)))
+        self.assertTrue(python_bundle_supported("rocm10.2", (3, 12)))
+        self.assertFalse(python_bundle_supported("rocm10.2", (3, 10)))
         self.assertFalse(python_bundle_supported("cpu", (3, 15)))
         self.assertFalse(python_bundle_supported("cpu", (3, 12), "pypy"))
         self.assertIsNone(python_bundle_supported("unknown", (3, 12)))
@@ -31,7 +31,7 @@ class RuntimeBundleTests(unittest.TestCase):
         self.assertEqual(bundle_for("cu132", (3, 12)).torch, "2.15.0")
         self.assertEqual(bundle_for("cu132", (3, 10)).torch, "2.14.1")
         self.assertEqual(BUNDLES["cu126"].torch, "2.14.1")
-        self.assertIn("a0+rocm10.1.0", BUNDLES["rocm10.1"].vision)
+        self.assertIn("+rocm10.2.0", BUNDLES["rocm10.2"].vision)
         with self.assertRaises(TypeError):
             BUNDLES["cpu"] = BUNDLES["cu132"]
 
@@ -93,16 +93,32 @@ class RuntimeBundleTests(unittest.TestCase):
                 cuda_selection.select_cuda_legacy("Linux", "cu124", install=False)
 
     def test_legacy_rejects_conflicts_and_unmanaged_incompatible_packages(self):
-        for runtime in ("rocm10.1", "cpu", "cu132"):
+        for runtime in ("rocm10.2", "cpu", "cu132"):
             with self.subTest(runtime=runtime), self.assertRaisesRegex(RuntimeError, "conflicts"):
                 cuda_selection.select_cuda_legacy("Windows", runtime)
-        for version in ("2.15.0+cu132", "2.15.0+cu126", "2.14.1+cpu", "2.14.0+rocm10.1.0"):
+        for version in ("2.15.0+cu132", "2.15.0+cu126", "2.14.1+cpu", "2.15.0+rocm10.2.0"):
             with (
                 self.subTest(version=version),
                 patch.object(importlib.metadata, "version", return_value=version),
                 self.assertRaisesRegex(RuntimeError, "outside"),
             ):
                 cuda_selection.select_cuda_legacy("Windows", install=False)
+
+
+class AmdBundleAlignmentTests(unittest.TestCase):
+    def test_amd_follows_the_shared_torch_line_for_cpython_3_11_to_3_14(self):
+        from ruinedfooocus.packaging.runtime_bundles import python_bundle_supported
+
+        amd, cpu = BUNDLES["rocm10.2"], BUNDLES["cpu"]
+        self.assertEqual(amd.torch.partition("+")[0], cpu.torch)
+        self.assertEqual(amd.vision.partition("+")[0], cpu.vision)
+        self.assertTrue(amd.torch.endswith("+rocm10.2.0") and amd.vision.endswith("+rocm10.2.0"))
+        # AMD publishes ROCm 10.2 for CPython 3.11-3.14 only.
+        self.assertFalse(python_bundle_supported("rocm10.2", (3, 10)))
+        for version in ((3, 11), (3, 12), (3, 13), (3, 14)):
+            self.assertTrue(python_bundle_supported("rocm10.2", version), version)
+        self.assertFalse(python_bundle_supported("rocm10.2", (3, 15)))
+        self.assertFalse(python_bundle_supported("rocm10.2", (3, 12), "pypy"))
 
 
 if __name__ == "__main__":

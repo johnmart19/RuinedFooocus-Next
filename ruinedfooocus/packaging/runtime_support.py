@@ -52,7 +52,7 @@ class RuntimeCandidate:
     allowlists and driver checks belong to the recipe producer. Unknown evidence
     stays ``None``; installed package names alone cannot make a route usable.
     ``backend`` is the saved family/engine (cuda, rocm, Vulkan); ``platform``
-    identifies its executable/package route (cu126, cu132, rocm10.1), while
+    identifies its executable/package route (cu126, cu132, rocm10.2), while
     ``recipe_id`` retains the caller's versioned recipe identity. Historical
     exact image backend values are normalized without dropping their route.
     """

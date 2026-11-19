@@ -107,7 +107,7 @@ class ComponentChoices(unittest.TestCase):
         )
         # The ROCm 7.2 wheel crashes in the same process as ROCm 10 PyTorch.
         self.assertEqual(
-            inventory.xllamacpp_backend_choices([AMD], "Linux", "x86_64", "2.14.0+rocm10.1.0"),
+            inventory.xllamacpp_backend_choices([AMD], "Linux", "x86_64", "2.15.0+rocm10.2.0"),
             ["Auto", "CPU", "Vulkan"],
         )
         self.assertEqual(
@@ -131,8 +131,8 @@ class ComponentChoices(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "Linux"):
             gpu_installer.xllamacpp_index("cpu", "Windows", choice="ROCm 7.2")
         with self.assertRaisesRegex(RuntimeError, "ROCm 10"):
-            gpu_installer.xllamacpp_index("rocm10.1", "Linux", choice="ROCm 7.2")
-        self.assertTrue(gpu_installer.xllamacpp_index("rocm10.1", "Linux").endswith("/vulkan"))
+            gpu_installer.xllamacpp_index("rocm10.2", "Linux", choice="ROCm 7.2")
+        self.assertTrue(gpu_installer.xllamacpp_index("rocm10.2", "Linux").endswith("/vulkan"))
         with (
             patch("ruinedfooocus.packaging.cuda_selection.wheel_available", return_value=False),
             self.assertRaisesRegex(RuntimeError, "cu132"),
@@ -164,7 +164,7 @@ class IsolatedOnnxRuntimes(unittest.TestCase):
         cuda13 = onnx_installer.native_runtime("CUDA", "2.14.1+cu130")
         self.assertEqual((cuda13.version, cuda13.extras), ("1.32.0", ()))
         # Without CUDA PyTorch the CUDA/cuDNN libraries come from the package extras.
-        cpu = onnx_installer.native_runtime("CUDA", "2.14.0+rocm10.1.0")
+        cpu = onnx_installer.native_runtime("CUDA", "2.15.0+rocm10.2.0")
         self.assertEqual(cpu.extras, ("cuda", "cudnn"))
 
     def test_plan_is_isolated_pinned_and_os_checked(self):
@@ -217,7 +217,7 @@ class SupportTable(unittest.TestCase):
                 }
 
     def test_amd_on_windows_lists_rocm_and_hides_vendor_options_with_reasons(self):
-        rows = self.rows([AMD], "Windows", kind="rocm", torch="2.14.0+rocm10.1.0")
+        rows = self.rows([AMD], "Windows", kind="rocm", torch="2.15.0+rocm10.2.0")
         self.assertEqual(
             rows[("ComfyUI (PyTorch)", "ROCm (AMD)")]["status"], "Installed (unverified)"
         )

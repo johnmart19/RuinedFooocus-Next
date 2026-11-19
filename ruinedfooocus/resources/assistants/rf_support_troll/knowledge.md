@@ -22,7 +22,7 @@ Settings tab: Chatbot settings sets the default chat model, the token limit for 
 
 Install: run RuinedFooocus.bat on Windows or ./RuinedFooocus.sh on Linux and WSL. They create the venv folder, install the matching PyTorch build and start the web UI. Python 3.11 to 3.14 and Git are required. The first start downloads several GB of packages and the default SDXL model.
 
-GPU backends: the launcher detects the GPU and installs CUDA builds for NVIDIA, ROCm 10.1 for supported AMD Radeon RX 5000 to 9000 and Strix Halo (Windows, Linux and WSL), DirectML for other AMD or Intel GPUs on Windows, or CPU. Override detection with TORCH_PLATFORM (for example cu128, rocm10.1 or cpu) or the --rocm10, --cuda-nightly, --directml or --cpu flags. There is no config.yaml for this.
+GPU backends: the launcher detects the GPU and installs CUDA builds for NVIDIA, ROCm 10.2 for supported AMD Radeon RX 5000 to 9000 and Strix Halo (Windows, Linux and WSL), DirectML for other AMD or Intel GPUs on Windows, or CPU. Override detection with TORCH_PLATFORM (for example cu128, rocm10.2 or cpu) or the --rocm10, --cuda-nightly, --directml or --cpu flags. There is no config.yaml for this.
 
 Reinstall: create an empty file named reinstall in the RuinedFooocus folder to reinstall all Python packages on the next start, reinstalltorch to reinstall PyTorch, or freezetorch to stop the launcher from changing PyTorch. Deleting the venv folder and starting again gives a completely fresh install.
 

@@ -56,7 +56,7 @@ class InstalledRequirementTests(unittest.TestCase):
         self.assertTrue(
             self.check(
                 'gpu==2.13\nabsent; python_version < "2"',
-                {"gpu": "2.13+rocm10.1"},
+                {"gpu": "2.13+rocm10.2"},
                 {"gpu": ['absent; python_version < "2"']},
             )
         )

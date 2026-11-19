@@ -12,7 +12,7 @@ from ruinedfooocus.backends.comfy.comfy_args import add_comfy_arguments, Perform
 
 
 class CpuStartupTests(unittest.TestCase):
-    def initialize(self, arguments, selected="rocm10.1", forbid_detection=False, unavailable=None):
+    def initialize(self, arguments, selected="rocm10.2", forbid_detection=False, unavailable=None):
         parser = argparse.ArgumentParser()
         add_comfy_arguments(parser)
         args = parser.parse_args(arguments)
@@ -62,7 +62,7 @@ class CpuStartupTests(unittest.TestCase):
         return result, cli.args, support
 
     def test_cpu_skips_gpu_detection_even_with_an_installed_gpu_provider(self):
-        for provider in ("rocm10.1", "cu130", "directml"):
+        for provider in ("rocm10.2", "cu130", "directml"):
             with self.subTest(provider=provider):
                 result, backend, support = self.initialize(
                     ["--cpu"], provider, forbid_detection=True
@@ -74,7 +74,7 @@ class CpuStartupTests(unittest.TestCase):
                     function.assert_not_called()
 
     def test_automatic_cuda_rocm_cpu_and_directml_selection_stays_native(self):
-        for provider in ("rocm10.1", "cu130", "directml"):
+        for provider in ("rocm10.2", "cu130", "directml"):
             with self.subTest(provider=provider):
                 result, backend, support = self.initialize([], provider)
                 self.assertEqual(result, (provider, "Windows"))
@@ -83,7 +83,7 @@ class CpuStartupTests(unittest.TestCase):
                 support.select_torch_platform.assert_called_once()
 
     def test_missing_gpu_and_unavailable_installed_gpu_report_cpu_fallback(self):
-        for selected, reason in (("cpu", None), ("rocm10.1", "GPU masked by environment")):
+        for selected, reason in (("cpu", None), ("rocm10.2", "GPU masked by environment")):
             with self.subTest(selected=selected), self.assertLogs(level="WARNING") as logs:
                 result, backend, _ = self.initialize([], selected, unavailable=reason)
                 self.assertEqual(result, ("cpu", "Windows"))

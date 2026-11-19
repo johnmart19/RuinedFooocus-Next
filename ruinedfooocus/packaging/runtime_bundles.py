@@ -64,9 +64,11 @@ BUNDLES = MappingProxyType(
             python_min=(3, 11),
             architecture="Intel Arc and Core Ultra GPUs with a current Intel graphics driver",
         ),
-        "rocm10.1": RuntimeBundle(
-            "2.14.0+rocm10.1.0",
-            "0.29.0a0+rocm10.1.0",
+        # Same Torch line as the CPU, CUDA 13.2 and XPU bundles. AMD publishes it for
+        # CPython 3.11-3.14 on Windows and Linux; ROCm 10.2 has no CPython 3.10 build.
+        "rocm10.2": RuntimeBundle(
+            "2.15.0+rocm10.2.0",
+            "0.29.2+rocm10.2.0",
             "https://stable.repo.amd.com/rocm/whl-next/",
             python_min=(3, 11),
             architecture="AMD device extras; platform qualification checked by rocm_installer",

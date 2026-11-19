@@ -70,6 +70,46 @@ rocm_sdk/__init__.py      ed87e36cc153b7811133fb934ff1f018114c394f32a56aa040663e
 rocm_sdk/_dist_info.py    1a275d0b2f2b4e3b69aa08ae8cee9f14d231eedd08e9cc8f3403e64f821f7876
 ```
 
+### ROCm 10.2 update (2026-11-19)
+
+The pinned AMD image runtime is now Torch `2.15.0+rocm10.2.0` with torchvision
+`0.29.2+rocm10.2.0` and `rocm`, `rocm-sdk-core`, `rocm-sdk-libraries` and the device
+package at `10.2.0`. It is the same Torch line as the CPU, CUDA 13.2 and XPU bundles.
+AMD's index carries these wheels for CPython 3.11 to 3.14 on Windows and Linux and
+none for 3.10. The `rocm` selector sdist is pinned by SHA256
+`1ed367cf6fcaeb183ac2cb930605320c6486888881b7d523c998f521f328f027`.
+
+AMD's [10.2 matrix](https://rocm.docs.amd.com/en/docs-10.2.0/compatibility/compatibility-matrix.html)
+lists Windows 11 25H2 with AMD Software 26.11.2. On an RX 7900 XTX that driver
+reports driver-store `32.0.32029.2010`, which is the new lower bound for Windows
+acquisition; older 32.x drivers are refused with the reason.
+
+Installed-source SHA256 identities after the update:
+
+```text
+torch/_rocm_init.py       a75e7acdaf42e9eca5e0fb4c483e09ca1c2913461b72c4346560ffa1dacef11d
+rocm_sdk/__init__.py      bc700474d400e8c512eac157ee1bf98b8a1fb013ac4a1d1a66c492915b821124
+rocm_sdk/_dist_info.py    43f02d9be16ade48d45c456315b588dc5eb2dff11e8c3d362c794d8693c6e558
+```
+
+Observed on that RX 7900 XTX, one prompt and seed, second run of each (seconds):
+
+| Model, size             | 2.14.0+rocm10.1 | 2.14.0+rocm10.2 | 2.15.0+rocm10.2 |
+| ----------------------- | --------------- | --------------- | --------------- |
+| SDXL, 1024x1024         | 10.3            | 10.4            | 10.3            |
+| SDXL, 1536x1536         | 26.3            | 25.9            | 25.7            |
+| SDXL, 2048x2048         | 56.2            | 56.2            | 55.1            |
+| Anima v1.0, 1024x1024   | 25.8            | 25.3            | 25.4            |
+| Anima v1.0, 1536x1536   | 94.3            | 93.7            | 92.5            |
+| Flux 3 Klein, 1024x1024 | 8.8             | 8.7             | 8.6             |
+| Flux 3 Klein, 2048x2048 | 47.5            | 47.9            | 47.3            |
+
+Anima and Flux 3 images are identical across the three; SDXL is deterministic within
+a runtime but Torch 2.15 changes fine detail for the same seed. Not re-qualified on
+10.2: SeedVR2 restoration (the hipBLAS selection below was observed on 10.1), Linux,
+WSL, other GPUs and the ONNX MIGraphX plugin, whose packages AMD publishes only for
+10.1 and which keeps its 10.1 pins.
+
 ## Optional standalone development SDK
 
 Wheel-only inference does not require a separately installed HIP SDK. For

@@ -73,7 +73,7 @@ class SavedImageBackend(unittest.TestCase):
     def test_cli_environment_then_saved_precedence(self):
         saved = {"image_backend": "cpu"}
         # The environment wins over a saved CPU request.
-        result = apply(saved, environment={"TORCH_PLATFORM": "rocm10.1"})
+        result = apply(saved, environment={"TORCH_PLATFORM": "rocm10.2"})
         self.assertFalse(result.cpu)
         # Explicit device-selecting flags keep priority as well.
         for option in ("--directml", "--gpu-only", "--rocm10", "--legacy", "--cuda-nightly"):
@@ -246,7 +246,7 @@ class TorchSwitchDecision(unittest.TestCase):
             patch.object(prefs, "installed_torch_kind", return_value="cuda"),
             patch(
                 "ruinedfooocus.packaging.rocm_installer.automatic_rocm_plan",
-                return_value=SimpleNamespace(platform="rocm10.1"),
+                return_value=SimpleNamespace(platform="rocm10.2"),
             ) as producer,
         ):
             # The explicit launch profile must win over the saved next launch.
@@ -257,7 +257,7 @@ class TorchSwitchDecision(unittest.TestCase):
                 '{"image_backend":"xpu"}', encoding="utf-8"
             )
             prefs.apply_saved_image_backend(args, "Windows", reinstall=True)
-            self.assertEqual(os.environ["TORCH_PLATFORM"], "rocm10.1")
+            self.assertEqual(os.environ["TORCH_PLATFORM"], "rocm10.2")
             producer.assert_called_once()
             producer.reset_mock()
             os.environ.pop("TORCH_PLATFORM")

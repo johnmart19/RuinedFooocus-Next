@@ -290,7 +290,7 @@ def prepare_environment(skip_install=False):
                 else None
             )
             matching = [item for item in adapters if not vendor or item.get("vendor") == vendor]
-            if not preserve and os_platform == "Linux" and torch_platform in ("rocm10.1", "xpu"):
+            if not preserve and os_platform == "Linux" and torch_platform in ("rocm10.2", "xpu"):
                 from ruinedfooocus.packaging.vendor_admission import linux_image_adapters
 
                 targets = (
@@ -312,7 +312,7 @@ def prepare_environment(skip_install=False):
                 validate_cuda_runtime(torch_platform, nightly=args.cuda_nightly)
                 hardware = driver = True
             elif (
-                not preserve and os_platform == "Windows" and torch_platform in ("rocm10.1", "xpu")
+                not preserve and os_platform == "Windows" and torch_platform in ("rocm10.2", "xpu")
             ):
                 from ruinedfooocus.packaging.vendor_admission import (
                     combined_evidence,
@@ -323,7 +323,7 @@ def prepare_environment(skip_install=False):
                 evidence = windows_recipe_evidence(
                     torch_platform, matching, windows_driver_inventory()
                 )
-            elif not preserve and os_platform == "Linux" and torch_platform in ("rocm10.1", "xpu"):
+            elif not preserve and os_platform == "Linux" and torch_platform in ("rocm10.2", "xpu"):
                 from ruinedfooocus.packaging.vendor_admission import (
                     combined_evidence,
                     guest_device_inventory,
@@ -336,13 +336,13 @@ def prepare_environment(skip_install=False):
                 guest = is_wsl()
                 if (
                     guest
-                    and torch_platform == "rocm10.1"
+                    and torch_platform == "rocm10.2"
                     and not (
-                        args.rocm10 or getattr(args, "_user_torch_platform", None) == "rocm10.1"
+                        args.rocm10 or getattr(args, "_user_torch_platform", None) == "rocm10.2"
                     )
                 ):
                     raise RuntimeError(
-                        "ROCm 10.1 WSL is a technical preview. Select --rocm10 or TORCH_PLATFORM=rocm10.1 explicitly after reviewing its driver/guest requirements."
+                        "ROCm 10.2 WSL is a technical preview. Select --rocm10 or TORCH_PLATFORM=rocm10.2 explicitly after reviewing its driver/guest requirements."
                     )
                 visible = guest_device_inventory(matching) if guest else None
                 if guest:

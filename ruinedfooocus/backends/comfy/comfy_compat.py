@@ -472,7 +472,7 @@ def configure_torch_allocator(torch_platform, os_platform, launch_args=None, *, 
 def configure_rocm_attention():
     """Keep the gfx11 wide-head safeguard without overriding other AMD GPUs.
 
-    Torch 2.14 + ROCm 10.1 on gfx11 dispatches Flash/efficient kernels for these
+    Torch 2.14/2.15 + ROCm 10 on gfx11 dispatches Flash/efficient kernels for these
     shapes, which then fail to launch (hipErrorProfilerNotInitialized). Gemma 4's
     512-wide global attention (LTX 2.5's text encoder) hits this; CUDA already
     falls back to math. Smaller heads keep the fast kernels.
@@ -509,7 +509,7 @@ def configure_rocm_attention():
 def configure_rocm_blas(torch_platform, os_platform):
     """Select hipBLAS for GEMM on native Windows ROCm, before Torch is imported.
 
-    Torch prefers hipBLASLt on gfx11 HIP builds. In the Windows ROCm 10.1 wheels its
+    Torch prefers hipBLASLt on gfx11 HIP builds. In the Windows ROCm 10.2 wheels its
     Tensile kernel library can fail to start inside the application ("Could not
     initialize Tensile host"); the half-precision batched matmul that SeedVR2's
     codec issues through conv3d then takes the GPU context with it

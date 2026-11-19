@@ -150,8 +150,8 @@ class RocmPackagePlanTests(unittest.TestCase):
         self.assertEqual(
             plan.args[:2],
             [
-                "torch[device-gfx1100]==2.14.0+rocm10.1.0",
-                "torchvision[device-gfx1100]==0.29.0a0+rocm10.1.0",
+                "torch[device-gfx1100]==2.15.0+rocm10.2.0",
+                "torchvision[device-gfx1100]==0.29.2+rocm10.2.0",
             ],
         )
         self.assertIn(rocm_installer.ROCM_INDEX, plan.args)
@@ -159,7 +159,7 @@ class RocmPackagePlanTests(unittest.TestCase):
     def test_install_validates_native_vision_and_gpu_before_returning(self):
         from ruinedfooocus.packaging.package_plan import PackagePlan
 
-        plan = PackagePlan("target", (), (), "environment", "rocm10.1")
+        plan = PackagePlan("target", (), (), "environment", "rocm10.2")
         with (
             patch.object(rocm_installer.subprocess, "run") as run,
             patch("ruinedfooocus.packaging.package_plan.execute_plan") as execute,

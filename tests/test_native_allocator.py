@@ -125,7 +125,7 @@ class NativeAllocatorTests(unittest.TestCase):
             patch.dict(os.environ, {}, clear=True),
             patch("platform.release", return_value="6.6-microsoft-WSL2"),
         ):
-            configure_torch_allocator("rocm10.1", "Linux", native=True)
+            configure_torch_allocator("rocm10.2", "Linux", native=True)
             self.assertEqual(os.environ["PYTORCH_ALLOC_CONF"], "expandable_segments:False")
 
 

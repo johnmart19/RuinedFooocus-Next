@@ -560,7 +560,7 @@ class InstalledRuntimeTests(unittest.TestCase):
             ("mps", "Linux", "cpu"),
             ("mps", "Darwin", "mps"),
             ("rocm5.5", "Linux", "cpu"),
-            ("rocm10.1", "Windows", "rocm10.1"),
+            ("rocm10.2", "Windows", "rocm10.2"),
         ):
             with (
                 self.subTest(backend=backend, platform=platform),

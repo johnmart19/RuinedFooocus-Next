@@ -161,7 +161,7 @@ class TorchPackagePlanTests(unittest.TestCase):
             ) as installed,
             patch.object(gpu_installer, "cached_xllamacpp_backend_matches", return_value=True),
         ):
-            gpu_installer.ensure_xllamacpp("rocm10.1", "Windows")
+            gpu_installer.ensure_xllamacpp("rocm10.2", "Windows")
             installed.assert_called_once_with("xllamacpp==2026.10.11870")
         with (
             patch(

@@ -100,7 +100,7 @@ Use `--cpu` to select CPU explicitly.
 | --------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------- |
 | NVIDIA Maxwell–Pascal                                                                                     | CUDA 12.6 / 12.4               |                                                                                          |
 | NVIDIA Turing and newer                                                                                   | CUDA 13.4 / 13.2 / 13.0 / 12.8 | Newest stable bundle your driver and Python support. Nightlies require `--cuda-nightly`. |
-| AMD RX 5000/6000/7000/9000, RDNA 3.5 APUs (Windows, Linux, WSL), Instinct MI100/MI200/MI300/MI350 (Linux) | ROCm 10.1                      | `--rocm10` reinstalls/repairs it                                                         |
+| AMD RX 5000/6000/7000/9000, RDNA 3.5 APUs (Windows, Linux, WSL), Instinct MI100/MI200/MI300/MI350 (Linux) | ROCm 10.2                      | `--rocm10` reinstalls/repairs it                                                         |
 | Intel Arc A/B-series, Core Ultra (Meteor/Arrow/Lunar Lake) iGPUs (Windows, Linux, WSL)                    | XPU 2.15.0                     | Official `whl/xpu` wheels; Chat can use the SYCL llama.cpp build, Python 3.11+           |
 | Other AMD/Intel GPUs on Windows                                                                           | CPU by default                 | Explicit legacy `--directml` remains available on Python 3.10–3.12                       |
 | No supported GPU                                                                                          | CPU                            | or `--cpu`                                                                               |
@@ -194,7 +194,7 @@ included. GPT's existing partial was recovered with a verified range helper;
 ordinary interrupted-download resume with the installed Hub SDK remains a known
 unfixed limitation, distinct from successful model execution.
 
-Set `TORCH_PLATFORM` (for example `cu128`, `rocm10.1`, `cpu`) to override detection, or choose the image, Chat (`llama.cpp`) and background-removal backends in **Settings → Hardware & backends** (see [Settings](settings.md)). Chat models run on the
+Set `TORCH_PLATFORM` (for example `cu128`, `rocm10.2`, `cpu`) to override detection, or choose the image, Chat (`llama.cpp`) and background-removal backends in **Settings → Hardware & backends** (see [Settings](settings.md)). Chat models run on the
 native llama.cpp server. Auto tries cached compatible vendor GPU builds first,
 then Vulkan independently of the image runtime. Select explicit ROCm,
 CUDA, SYCL or CPU under **Settings → Hardware & backends** where supported.
@@ -309,9 +309,10 @@ SDK directory, so a running native server's DLLs are not overwritten. A failed
 stage leaves the previous pointer intact.
 
 Windows acquisition evidence is read from CIM display-driver and OS metadata;
-no compute runs in that inspection. The audited ROCm 10.1 Radeon/Ryzen route uses
-Windows 11 25H2 and its listed driver, mapped to driver-store 32.0.31041.5005 by
-[AMD's release notes](https://www.amd.com/en/resources/support-articles/release-notes/RN-RAD-ROCM-10-01.html).
+no compute runs in that inspection. The audited ROCm 10.2 Radeon/Ryzen route uses
+Windows 11 25H2 and AMD Software 26.11.2
+([release notes](https://www.amd.com/en/resources/support-articles/release-notes/rn-rad-win-26-11-2.html)),
+whose driver-store version was read as 32.0.32029.2010 on an RX 7900 XTX on 2026-11-19.
 See the [ROCm matrix](https://rocm.docs.amd.com/en/latest/compatibility/compatibility-matrix.html).
 Newer drivers on the same 32.x driver-store branch are admitted for installation,
 with native runtime validation still required afterward. Other major branches
@@ -327,7 +328,7 @@ vendor-driver branches and documented APU inbox-driver route remain distinct;
 Intel additionally needs its matching userspace compute runtime. Unknown rows
 remain unknown rather than borrowing a neighboring release. In WSL, `clinfo`
 is a separate explicit acquisition-time device query, never a passive Settings
-refresh; ambiguous identical adapters remain unbound. ROCm 10.1 WSL is a
+refresh; ambiguous identical adapters remain unbound. ROCm 10.2 WSL is a
 [technical preview](https://rocm.docs.amd.com/en/latest/about/release-notes.html)
 requiring explicit selection. Source/CPU fixtures do not certify these platforms.
 
