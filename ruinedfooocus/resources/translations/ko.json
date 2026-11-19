@@ -2104,5 +2104,7 @@
   "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "AMD FSR 보간에 사용됩니다. FSR 4, 3, 2는 AMD 런타임을 통해 GPU에서 실행되고, FSR 1은 모든 장치에서 실행됩니다.",
   "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "다시 쓰기 결과가 프롬프트와 동일합니다. 채팅에서 모델을 선택하거나 다운로드한 뒤 다시 미리 보세요.",
   "image_editing.choose_a_tool_and_add_its_image_inpainting_and_upscaling_are_set_in_main": "도구를 선택하고 이미지를 추가하세요. 인페인팅과 업스케일은 메인 탭에서 설정합니다.",
-  "shell.power_ups": "파워업"
+  "shell.power_ups": "파워업",
+  "models.create_int8_copy": "INT8 사본 만들기",
+  "models.benchmark_pair": "쌍 벤치마크"
 }

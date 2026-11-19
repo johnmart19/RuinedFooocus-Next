@@ -2104,5 +2104,7 @@
   "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "與 AMD FSR 內插搭配使用。FSR 4、3 和 2 透過 AMD 執行階段在 GPU 上執行；FSR 1 可在任何裝置上執行。",
   "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "改寫回傳的提示詞沒有變化。請在聊天中選擇或下載模型，然後重新預覽。",
   "image_editing.choose_a_tool_and_add_its_image_inpainting_and_upscaling_are_set_in_main": "選擇工具並加入圖片。局部重繪與放大在「主要」區域設定。",
-  "shell.power_ups": "強化功能"
+  "shell.power_ups": "強化功能",
+  "models.create_int8_copy": "建立 INT8 副本",
+  "models.benchmark_pair": "對比測試這一對"
 }

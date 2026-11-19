@@ -1,0 +1,15 @@
+{
+  "id": "int8-model-copies",
+  "subject": "Create INT8 model copies for the GPU and benchmark them against the original",
+  "requires": ["create-editor-panel-rework"],
+  "tests": [
+    "test_gpu_optimizer.py",
+    "test_checkpoint_selection_lane.py",
+    "test_action_contract_audit.py",
+    "test_localization.py",
+    "test_new_ui_localization.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

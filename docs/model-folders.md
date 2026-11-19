@@ -353,10 +353,26 @@ BF16/FP8 files. These disk jobs currently run to completion once started. Select
 another checkpoint updates its header details while a disk job runs. A completed
 job for the previous selection cannot replace the current report or action
 availability. A completed FP16 copy is retained; refresh files to list it if the
-selection changed before its result arrived. INT8
-export is unavailable: the pinned native loader requires per-layer `comfy_quant`
-metadata and scales, so casting tensors to integers cannot produce a supported
-export. Loading an existing compatible quantized model is a separate capability.
+selection changed before its result arrived.
+
+**Create INT8 copy** writes `<name>.int8.safetensors` beside a transformer image
+checkpoint (Anima, Flux, Qwen and similar). The large attention and MLP linear
+weights inside the transformer blocks are quantized with the installed kernel
+library to INT8 with a per-row scale and a ConvRot rotation, and each gets the
+per-layer `comfy_quant` record and `weight_scale` the pinned native loader
+reads; embedders, modulation, output layers, biases and bundled encoders are
+copied unchanged. The runtime has dedicated INT8 linear kernels for AMD (HIP)
+and NVIDIA devices, so the copy runs natively rather than being converted back.
+The conversion runs on the CPU and leaves the GPU to the image worker; Anima
+(3988 MB) took about 85 seconds and produced a 2216 MB file. UNet checkpoints
+(SD 1.5, SDXL) and files that are already quantized are refused with the reason.
+
+Quantization changes the numbers: the same seed gives a different image. To
+decide whether to keep a copy, **Benchmark pair** generates twice at
+1024 × 1024 with the original and with its copy and reports the second run of
+each in seconds; both images are saved for a quality comparison. On an
+RX 7900 XTX with ROCm 10.2 the Anima copy measured about 7% faster at 1024 and
+1536 px (2026-11-20, one prompt). Other models and GPUs were not measured.
 
 ## LoRAs and embeddings
 

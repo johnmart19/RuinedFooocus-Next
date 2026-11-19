@@ -42,8 +42,11 @@ flow so their links remain usable without covering another control.
 - Safetensors and GGUF checkpoints, including UNet-only files. **Models → Installed → Model → Image model components** lists
   and downloads the text encoders and VAE a checkpoint needs. The compact status view separates local/published sizes and reports unique required missing bytes; embedded components add no download. Paths and URLs are under **Component locations and sources**. Unknown/custom sizes keep totals unresolved; refresh does not download.
   ComfyUI detects checkpoint configuration directly. An explicitly selected local YAML recipe can override prediction and CLIP-layer settings for ordinary native Stable Diffusion; filenames do not attach recipes automatically. Merge-recipe files are not used.
-- **Models → Installed → Model → Checkpoint tools** reports a checkpoint's size and tensor types, checks its weights for
-  damage (NaN/Inf), and can create a smaller FP16 copy while keeping the original.
+- **Create → Models → Model → Checkpoint tools** reports a checkpoint's size and tensor types, checks its weights for
+  damage (NaN/Inf), and can create a smaller FP16 copy while keeping the original. For transformer models
+  (Anima, Flux, Qwen and similar) **Create INT8 copy** writes a quantized copy for the INT8 kernels of the
+  GPU, and **Benchmark pair** times the original against it on this machine. The copy is about half the
+  size; the same seed gives a different image with it. See [model folders](model-folders.md).
   Existing destination files are never overwritten, including on drives without hard-link support.
 - If a checkpoint cannot load, the error names the cause: a missing file, a missing text encoder or VAE, a
   damaged or incomplete download, or a file that is not an image checkpoint.

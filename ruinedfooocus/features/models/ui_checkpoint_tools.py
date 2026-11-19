@@ -136,8 +136,12 @@ def run_action(name, action, progress, on_verified=None, *, verify_source=True):
                 "No tensors were loaded or checked for NaN/Inf. "
                 "Workflow controls refresh automatically."
             )
-        if action == "convert":
-            result = tools.create_fp16_copy(
+        if action in ("convert", "optimize"):
+            if action == "optimize":
+                from ruinedfooocus.features.models.gpu_optimizer import create_int8_copy as create
+            else:
+                create = tools.create_fp16_copy
+            result = create(
                 path, shared.models.cache_paths["checkpoints"], info, _preview(path), progress
             )
             if result["path"]:
@@ -201,6 +205,18 @@ def create_ui(base_model, visible=True, model_refresh=None):
                 interactive=is_safetensors(base_model.value or ""),
             )
             convert = gr.Button(translate_ui("Create FP16 copy"), min_width=140, interactive=False)
+        # A quantized copy for the INT8 kernels of this GPU, and a timed comparison
+        # of the pair so the copy is kept on evidence.
+        with gr.Row(equal_height=True, elem_classes=["rf-actions"]):
+            optimize = gr.Button(
+                translate_ui("Create INT8 copy"),
+                min_width=140,
+                interactive=is_safetensors(base_model.value or ""),
+                elem_id="checkpoint-int8-copy",
+            )
+            benchmark = gr.Button(
+                translate_ui("Benchmark pair"), min_width=140, elem_id="checkpoint-benchmark-pair"
+            )
         report = gr.Textbox(label=translate_ui("Checkpoint report"), lines=7, interactive=False)
         selection = gr.State(CheckpointToolSelection())
         selection_version = gr.Number(value=0, precision=0, visible=False)
@@ -230,8 +246,8 @@ def create_ui(base_model, visible=True, model_refresh=None):
         def check_selected(name, progress=gr.Progress()):
             return run_action(name, "check", progress)
 
-        def convert_selected(name, progress=gr.Progress()):
-            message = run_action(name, "convert", progress)
+        def convert_selected(name, progress=gr.Progress(), action="convert"):
+            message = run_action(name, action, progress)
             # List a new copy at once; the original stays selected.
             # JSON staging bypasses Dropdown's usual label/value normalization.
             choices = [(value, value) for value in shared.models.get_names("checkpoints")]
@@ -253,12 +269,12 @@ def create_ui(base_model, visible=True, model_refresh=None):
             )
             return checkpoint_result(version, [update])
 
-        def convert_current(name, session, version, progress=gr.Progress()):
+        def convert_current(name, session, version, progress=gr.Progress(), action="convert"):
             try:
                 ticket = session.capture(name, version)
             except CancelledError:
                 return checkpoint_result(version, [gr.skip(), gr.skip()])
-            result = convert_selected(name, progress)
+            result = convert_selected(name, progress, action)
             try:
                 updates = session.publish(ticket, lambda: result)
             except CancelledError:
@@ -302,6 +318,45 @@ def create_ui(base_model, visible=True, model_refresh=None):
             api_visibility="undocumented",
         )
         publish_checkpoint_result(conversion, conversion_result, [report, base_model])
+
+        def optimize_current(name, session, version, progress=gr.Progress()):
+            return convert_current(name, session, version, progress, "optimize")
+
+        def benchmark_current(name, session, version, progress=gr.Progress()):
+            def build():
+                from ruinedfooocus.features.models import gpu_optimizer
+
+                try:
+                    found = gpu_optimizer.pair(name, shared.models.get_names("checkpoints"))
+                    if found is None:
+                        return (
+                            "Benchmark pair: select a checkpoint that has an INT8 copy, "
+                            "or create the copy first."
+                        )
+                    progress(0, "Generating with both files")
+                    return gpu_optimizer.benchmark_pair(*found)["message"]
+                except Exception as error:
+                    return f"Benchmark pair: {error}"
+
+            update = selected_result(session, name, version, build, outputs=1)
+            return checkpoint_result(version, [update])
+
+        for button, callback, outputs in (
+            (optimize, optimize_current, [report, base_model]),
+            (benchmark, benchmark_current, [report]),
+        ):
+            optimizer_result = gr.JSON(None, visible="hidden")
+            optimizer_event = button.click(
+                callback,
+                inputs=[base_model, selection, selection_version],
+                outputs=optimizer_result,
+                js=capture_version,
+                concurrency_id="checkpoint_tools",
+                concurrency_limit=1,
+                show_progress_on=report,
+                api_visibility="undocumented",
+            )
+            publish_checkpoint_result(optimizer_event, optimizer_result, outputs)
 
         def selection_report(name, *, verify_source=False, on_verified=None):
             # Selection reads headers only; source verification needs an explicit click.
