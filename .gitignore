@@ -11,6 +11,8 @@ __pycache__
 *.gguf
 !taesdxl_decoder.pth
 /repositories
+# Locally built native runtimes, such as the AMD FSR helper and AMD's signed DLLs.
+/runtime/
 /venv
 /tmp
 /ui-config.json
