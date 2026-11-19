@@ -1348,6 +1348,9 @@ def worker():
             results = [_preview_path(gen_data)] + results
 
         add_result(gen_data["task_id"], "results", results)
+        from ruinedfooocus.features.gallery.index_store import discard_live_previews
+
+        discard_live_previews(_preview_path(gen_data), keep=results)
 
     def txt2txt_process(gen_data):
 

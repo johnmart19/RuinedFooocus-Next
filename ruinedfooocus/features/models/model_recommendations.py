@@ -970,17 +970,10 @@ class ModelRecommendations:
             lines += [localize("Offline mode.", locale)]
         elif details["status"].startswith("Lookup unavailable"):
             lines += [localize("Refresh failed; previous settings retained.", locale)]
-        table = [
-            "| {} | {} | {} |".format(
-                localize("Setting", locale),
-                localize("Model default", locale),
-                localize("Source", locale),
-            ),
-            "|---|---|---|",
-        ]
         fields = ["custom_steps", "cfg", "sampler_name", "scheduler", "clip_skip"]
         if "sampling_shift" in options:
             fields.append("sampling_shift")
+        rows = []
         for key in fields:
             origin = (
                 localize("Your override", locale)
@@ -998,7 +991,23 @@ class ModelRecommendations:
                 if family_default
                 else localize("App fallback", locale)
             )
-            table.append(f"| {labels[key]} | {options[key]} | {origin} |")
+            rows.append((labels[key], options[key], origin))
+        headings = [
+            localize("Setting", locale),
+            localize("Model default", locale),
+            localize("Source", locale),
+        ]
+        origins = {origin for _, _, origin in rows}
+        if len(origins) == 1:
+            # One shared source reads better as a line than as a repeated column,
+            # which the narrow control panel wraps into a few letters per line.
+            lines.append(f"**{headings[2]}:** {origins.pop()}")
+            headings, rows = headings[:2], [row[:2] for row in rows]
+        table = [
+            "| " + " | ".join(headings) + " |",
+            "|" + "---|" * len(headings),
+            *("| " + " | ".join(str(cell) for cell in row) + " |" for row in rows),
+        ]
         return "\n\n".join(lines) + "\n\n" + "\n".join(table)
 
     def save_override(self, checkpoint, values, samplers, schedulers):

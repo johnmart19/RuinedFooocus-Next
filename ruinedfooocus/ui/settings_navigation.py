@@ -1,5 +1,7 @@
 """Field-level Settings navigation without rebuilding or saving the form."""
 
+import json
+
 import gradio as gr
 
 from ruinedfooocus.core.paths import asset_path
@@ -11,14 +13,25 @@ from ruinedfooocus.core.translation_manager import (
 )
 
 
+I18N_PREFIX = "__i18n__"
+
+
 def source_text(value):
     """Resolve native static-label metadata before passing it to custom HTML."""
     from gradio.i18n import I18nData
 
     if isinstance(value, I18nData):
-        key = value.key.removeprefix("ruinedfooocus.")
-        return catalogue().translations["en"].get(key, key)
-    return str(value or "")
+        key = value.key
+    elif isinstance(value, str) and value.startswith(I18N_PREFIX):
+        # Buttons keep their caption in Gradio's serialized form.
+        try:
+            key = json.loads(value[len(I18N_PREFIX) :])["key"]
+        except (ValueError, KeyError, TypeError):
+            return ""
+    else:
+        return str(value or "")
+    key = str(key).removeprefix("ruinedfooocus.")
+    return catalogue().translations["en"].get(key, key)
 
 
 def navigation_records(root, sections, *, excluded=()):

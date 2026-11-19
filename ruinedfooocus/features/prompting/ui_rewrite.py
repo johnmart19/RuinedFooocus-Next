@@ -53,6 +53,12 @@ def add_rewrite_controls(prompt):
                 "then preview again. " + detail
             ) from error
         result = safe_rewrite(current, proposed)
+        if result.strip() == current.strip():
+            # The chat runtime returns the prompt itself when it cannot run a model.
+            raise gr.Error(
+                "The rewrite returned your prompt unchanged. Choose or download a model in "
+                "Chat, then preview again."
+            )
         return gr.update(value=result, visible=True), current, gr.update(interactive=True)
 
     def apply_rewrite(current, original, proposed):

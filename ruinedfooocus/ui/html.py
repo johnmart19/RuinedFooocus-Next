@@ -23,8 +23,9 @@ sidebar_head = """<style>
 }</style>"""
 
 
-def startup_head(app_id, *, themed=False, sidebar=True):
+def startup_head(app_id, *, themed=False, sidebar=True, language="auto"):
     from ruinedfooocus.core.paths import asset_path
+    from ruinedfooocus.core.translation_manager import locale_change_js
 
     # Gradio's random 64-bit id loses precision when read as a JavaScript Number.
     return (
@@ -36,6 +37,12 @@ def startup_head(app_id, *, themed=False, sidebar=True):
         )
         # Before Gradio's client starts, so its unqueued requests are observed.
         + f"<script>{asset_path('error_messages.js').read_text(encoding='utf-8')}</script>"
+        # The saved language used to be applied only by the page's load event, seconds
+        # after the first frame was drawn in the browser's language. Apply it as soon
+        # as this head is injected; the load event repeats it harmlessly.
+        + "<script>if (window.gradio_config?.i18n_translations) { ("
+        + locale_change_js(language, initialize=True)
+        + ")().catch(() => {}); }</script>"
     )
 
 

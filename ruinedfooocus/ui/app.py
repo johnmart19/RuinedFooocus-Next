@@ -1,6 +1,10 @@
 from types import SimpleNamespace
 from ruinedfooocus.core.translation_manager import translate_ui
-from ruinedfooocus.core.translation_manager import catalogue, locale_change_js
+from ruinedfooocus.core.translation_manager import (
+    catalogue,
+    locale_change_js,
+    normalize_locale,
+)
 from ruinedfooocus.core.translation_manager import (
     LOCALE_COOKIE,
     localize,
@@ -931,6 +935,7 @@ def launch_app(args):
         head=html.startup_head(
             main_tabs.app_id,
             themed=not theme_warning and bool(theme_id(settings.get("theme"))),
+            language=normalize_locale(args.language or settings.get("ui_language", "auto")),
         ),
         js=html.scripts,
         allowed_paths=owner_media_paths(path_manager, shared.models, settings),
@@ -1185,7 +1190,7 @@ def stop_clicked(task_id):
 
 settings = settings.default_settings
 
-metadata_json = gr.Json()
+metadata_json = gr.Json(label=translate_ui("Image metadata"))
 
 shared.wildcards = get_wildcard_files()
 

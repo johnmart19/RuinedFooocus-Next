@@ -165,7 +165,10 @@ class GuestLocalizationTests(unittest.TestCase):
                 self.assertEqual(launch["js"], captured["runtime"].scripts)
                 self.assertEqual(
                     launch["head"],
-                    captured["runtime"].startup_head(demo.app_id, themed=themed, sidebar=False),
+                    # The fixture's language is applied from the first frame.
+                    captured["runtime"].startup_head(
+                        demo.app_id, themed=themed, sidebar=False, language="en"
+                    ),
                 )
                 self.assertNotIn("14.5rem", launch["head"])
                 self.assertNotIn("css", launch)

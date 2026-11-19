@@ -1,0 +1,18 @@
+{
+  "id": "interface-audit-fixes",
+  "subject": "Fix language flash, Gallery preview files, rewrite preview and panel tables found in the interface audit",
+  "requires": ["fsr-later-pass-sharpening", "fsr-version-field-visibility"],
+  "tests": [
+    "test_ui_audit_fixes.py",
+    "test_settings_navigation.py",
+    "test_guest_localization.py",
+    "test_ui_runtime.py",
+    "test_localization.py",
+    "test_prompt_workflows.py",
+    "test_gallery_actions.py",
+    "test_model_default_resources.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

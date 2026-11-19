@@ -1065,3 +1065,25 @@ body:not(.dark) #details-links img {
     --block-padding: 0.5rem;
   }
 }
+
+/* Markdown tables in the narrow control column (Model Defaults, chat sampling):
+   short name and value cells stay on one line; only the last, descriptive
+   column wraps, at word boundaries. */
+#generation-controls .prose table {
+  width: 100%;
+  table-layout: auto;
+  font-size: var(--text-sm);
+}
+#generation-controls .prose table :is(th, td) {
+  padding: var(--spacing-sm);
+  word-break: normal;
+  overflow-wrap: normal;
+  vertical-align: top;
+}
+/* Headers may wrap between words so a long heading does not widen its column. */
+#generation-controls .prose table td:not(:last-child) {
+  white-space: nowrap;
+}
+#generation-controls .prose table :is(th, td):last-child {
+  overflow-wrap: anywhere;
+}

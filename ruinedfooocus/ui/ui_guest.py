@@ -240,7 +240,10 @@ def launch_guest(args):
         i18n=catalogue().native(),
         theme=theme,
         head=app_html.startup_head(
-            app.app_id, themed=not theme_warning and bool(theme_id(saved_theme)), sidebar=False
+            app.app_id,
+            themed=not theme_warning and bool(theme_id(saved_theme)),
+            sidebar=False,
+            language=args.language or shared.settings.default_settings.get("ui_language", "auto"),
         ),
         js=app_html.scripts,
     )

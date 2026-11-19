@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import json
 import os
 from pathlib import Path
+import re
 import sqlite3
 import stat
 import threading
@@ -16,6 +17,33 @@ from ruinedfooocus.core.cache_contract import canonical_path_key
 
 SCHEMA_VERSION = 2
 MEDIA_SUFFIXES = frozenset({".png", ".jpg", ".jpeg", ".webp", ".gif", ".exr", ".avif"})
+# The worker's in-progress preview (`preview.jpg`, `preview-<job>.jpg`) sits beside the
+# dated output folders; it is working state, not a result.
+LIVE_PREVIEW = re.compile(r"preview(-[\w-]+)?\.jpe?g", re.IGNORECASE)
+
+
+def discard_live_previews(current, *, keep=(), max_age=86400):
+    """Delete a finished job's preview unless it is a result, and day-old previews.
+
+    A preview grid returned as a result must outlive its job for the viewer, so a
+    later job removes it.
+    """
+    current = Path(current)
+    kept = {str(Path(path)) for path in keep if isinstance(path, (str, Path))}
+    stem = current.stem.split("-")[0]
+    try:
+        candidates = list(current.parent.glob(f"{stem}-*{current.suffix}"))
+    except OSError:
+        return
+    for path in candidates:
+        try:
+            stale = time.time() - path.stat().st_mtime > max_age
+            if (path == current and str(path) not in kept) or stale:
+                path.unlink()
+        except OSError:
+            continue
+
+
 IMAGE_ROWS = (
     "("
     + " OR ".join(f"lower(fullpath) LIKE '%{suffix}'" for suffix in sorted(MEDIA_SUFFIXES))
@@ -205,9 +233,12 @@ def incremental_scan(
                     raise OSError(f"Library folder is unavailable: {folder}")
                 for directory, _, filenames in os.walk(folder, onerror=_walk_error):
                     check_cancelled(cancelled)
+                    top_level = Path(directory) == folder
                     for filename in filenames:
                         path = Path(directory) / filename
                         if path.suffix.lower() not in MEDIA_SUFFIXES:
+                            continue
+                        if top_level and LIVE_PREVIEW.fullmatch(filename):
                             continue
                         check_cancelled(cancelled)
                         identity = canonical_path_key(path)

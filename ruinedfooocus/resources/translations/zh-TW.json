@@ -2101,5 +2101,6 @@
   "image_processing.fsr_3": "FSR 3",
   "image_processing.fsr_2": "FSR 2",
   "image_processing.fsr_1": "FSR 1",
-  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "與 AMD FSR 內插搭配使用。FSR 4、3 和 2 透過 AMD 執行階段在 GPU 上執行；FSR 1 可在任何裝置上執行。"
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "與 AMD FSR 內插搭配使用。FSR 4、3 和 2 透過 AMD 執行階段在 GPU 上執行；FSR 1 可在任何裝置上執行。",
+  "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "改寫回傳的提示詞沒有變化。請在聊天中選擇或下載模型，然後重新預覽。"
 }

@@ -2101,5 +2101,6 @@
   "image_processing.fsr_3": "FSR 3",
   "image_processing.fsr_2": "FSR 2",
   "image_processing.fsr_1": "FSR 1",
-  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Используется с интерполяцией AMD FSR. FSR 4, 3 и 2 работают на видеокарте через среду выполнения AMD; FSR 1 работает на любом устройстве."
+  "image_processing.used_with_amd_fsr_interpolation_fsr_4_3_and_2_run_on_the_gpu_through_the_amd_runtime_fsr_1_runs_on_any_device": "Используется с интерполяцией AMD FSR. FSR 4, 3 и 2 работают на видеокарте через среду выполнения AMD; FSR 1 работает на любом устройстве.",
+  "prompting.the_rewrite_returned_your_prompt_unchanged_choose_or_download_a_model_in_chat_then_preview_again": "Переписывание вернуло запрос без изменений. Выберите или скачайте модель в Чате и повторите предпросмотр."
 }
