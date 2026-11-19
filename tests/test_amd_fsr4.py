@@ -18,6 +18,8 @@ from ruinedfooocus.core.bounded_subprocess import BoundedProcessError
 from ruinedfooocus.features.image_processing import amd_fsr, amd_fsr4
 from ruinedfooocus.features.image_processing import image_geometry_tools as transform
 
+BLOCKER = "ruinedfooocus.backends.amd_fsr.runtime.acquisition_blocker"
+
 
 class AmdFsr4Tests(unittest.TestCase):
     def setUp(self):
@@ -47,7 +49,7 @@ class AmdFsr4Tests(unittest.TestCase):
     def test_runtime_is_reported_missing_by_name_and_only_windows_is_supported(self):
         self.assertEqual(amd_fsr4.runtime_directory(), self.runtime)
         reason = amd_fsr4.unavailable_reason()
-        self.assertIn("tools/native/amd_fsr/build.py", reason)
+        self.assertIn("downloaded and built on first use", reason)
         for name in amd_fsr4.RUNTIME_FILES:
             self.assertIn(name, reason)
         (self.runtime / amd_fsr4.HELPER).write_bytes(b"x")
@@ -56,9 +58,30 @@ class AmdFsr4Tests(unittest.TestCase):
         self.assertIsNone(amd_fsr4.unavailable_reason())
         with patch.object(amd_fsr4.os, "name", "posix"):
             self.assertIn("Windows", amd_fsr4.unavailable_reason())
-        with self.assertRaisesRegex(ValueError, "runtime"):
-            (self.runtime / amd_fsr4.HELPER).unlink()
+        (self.runtime / amd_fsr4.HELPER).unlink()
+        with (
+            patch(BLOCKER, return_value="Offline mode: the AMD FSR runtime cannot be downloaded."),
+            self.assertRaisesRegex(ValueError, "Offline mode"),
+        ):
             amd_fsr4.upscale(torch.zeros(1, 2, 2, 3), 4, 4, work=self.root / "work")
+
+    def test_a_missing_runtime_is_acquired_once_before_the_first_pass(self):
+        acquired = []
+
+        def ensure(output, *, check_cancelled=None, ready=None):
+            acquired.append((output, ready()))
+            self.install()
+
+        with (
+            patch("ruinedfooocus.backends.amd_fsr.runtime.ensure", ensure),
+            patch("ruinedfooocus.core.bounded_subprocess.run_bounded", self.helper),
+        ):
+            pixels = torch.zeros(1, 2, 2, 3)
+            first = amd_fsr4.upscale(pixels, 4, 4, work=self.root / "work")
+            amd_fsr4.upscale(pixels, 4, 4, work=self.root / "work")
+        self.assertEqual(tuple(first.shape), (1, 4, 4, 3))
+        self.assertEqual(acquired, [(self.runtime, False)])
+        self.assertEqual(len(self.calls), 2)
 
     def test_passes_are_at_most_two_times_and_reductions_are_refused(self):
         self.assertEqual(amd_fsr4.pass_sizes((100, 50), (200, 100)), [(200, 100)])
@@ -151,8 +174,16 @@ class AmdFsr4Tests(unittest.TestCase):
             self.assertRaisesRegex(ValueError, "CPU mode"),
         ):
             transform.capture_assets(dict(options), None)
-        with gpu, self.assertRaisesRegex(ValueError, "runtime"):
+        with (
+            gpu,
+            patch(BLOCKER, return_value="Offline mode: the AMD FSR runtime cannot be downloaded."),
+            self.assertRaisesRegex(ValueError, "Offline mode.*FSR 1 needs no runtime"),
+        ):
             transform.capture_assets(dict(options), None)
+        # Missing but obtainable: accepted now, fetched and built when the step runs.
+        with gpu, patch(BLOCKER, return_value=None):
+            captured, _ = transform.capture_assets(dict(options), None)
+            self.assertEqual(captured[transform.KEY].output_size, (16, 12))
         self.install()
         with gpu:
             captured, _ = transform.capture_assets(dict(options), None)

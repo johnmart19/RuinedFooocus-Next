@@ -30,9 +30,14 @@ def check(version, *, dtype, color_space, source_size, target_size, cpu):
         )
     if dtype != "uint8":
         raise ValueError(label + " works on 8-bit sources. FSR 1 also accepts 16-bit.")
-    reason = amd_fsr4.unavailable_reason()
-    if reason is not None:
-        raise ValueError(reason + " FSR 1 needs no runtime.")
+    if amd_fsr4.unavailable_reason() is not None:
+        from ruinedfooocus.backends.amd_fsr import runtime
+
+        # A missing runtime is fetched and built when the step runs; refuse now only
+        # when that cannot happen here.
+        blocker = runtime.acquisition_blocker()
+        if blocker is not None:
+            raise ValueError(blocker + " FSR 1 needs no runtime.")
     amd_fsr4.pass_sizes(source_size, target_size)
 
 

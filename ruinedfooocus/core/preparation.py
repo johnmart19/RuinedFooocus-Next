@@ -536,9 +536,17 @@ def transfer_file(request, staging, progress, cancelled):
 
     temporary = staging / "artifact.part"
     try:
-        with requests.get(request.url, stream=True, timeout=(15, 60)) as response:
+        # Ask for the bytes as stored: a compressed transfer reports the compressed
+        # length while the body arrives decoded, so the two could never be compared.
+        with requests.get(
+            request.url,
+            stream=True,
+            timeout=(15, 60),
+            headers={"Accept-Encoding": "identity"},
+        ) as response:
             response.raise_for_status()
-            total = int(response.headers.get("content-length", 0))
+            encoded = response.headers.get("content-encoding", "identity").lower() != "identity"
+            total = 0 if encoded else int(response.headers.get("content-length", 0))
             received = 0
             started = last_update = time.monotonic()
             progress(0, total, 0)

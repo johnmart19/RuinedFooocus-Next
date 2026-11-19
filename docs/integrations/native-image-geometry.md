@@ -98,7 +98,7 @@ queueing and dispatches it.
 
 **FSR 4, 3 and 2** run AMD's own upscalers through the AMD FSR API and DirectX 12.
 They are temporal: they expect a moving camera, motion vectors and depth. A still
-has none, so the native helper `tools/native/amd_fsr/fsr_still.cpp` presents the
+has none, so the native helper `ruinedfooocus/backends/amd_fsr/fsr_still.cpp` presents the
 image as a static camera sequence of three jitter cycles: each frame is the source
 resampled (Catmull-Rom) at that frame's sub-pixel jitter, with zero motion
 vectors, a flat depth buffer and FSR's sharpening pass at full strength. The
@@ -109,13 +109,28 @@ bicubic and FSR 3.1, while RealESRGAN reconstructed more drawn detail.
 Requirements for these three: Windows, a GPU and driver for which the AMD FSR API
 offers the chosen provider (for 4.x the SDK lists RX 9000, 7000 and 6000 series
 and some Ryzen integrated graphics), and the runtime folder `runtime/amd-fsr`
-under the data root, or `RF_AMD_FSR_DIR`. Build it once with
-`python tools/native/amd_fsr/build.py --sdk <AMD FSR SDK 2.4.0 folder>`, which
-needs the Visual Studio C++ build tools; it compiles the helper and copies AMD's
-signed `amd_fidelityfx_loader_dx12.dll` and `amd_fidelityfx_upscaler_dx12.dll`
-beside it. Nothing is downloaded or installed by the application, and the
-binaries are not in the repository. AMD's licence requires its notice to
-accompany any redistribution of the signed DLLs.
+under the data root, or `RF_AMD_FSR_DIR`.
+
+The runtime is acquired on first use (`backends/amd_fsr/runtime.py`). When the
+folder is incomplete and FSR 2, 3 or 4 is requested, the application downloads
+eight files of the AMD FidelityFX SDK 2.4.0 from
+<https://github.com/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK> at one pinned commit
+(four headers, the loader import library, AMD's two signed DLLs and the licence;
+about 58 MB), verifies each by size and SHA256, and keeps them in
+`cache/amd-fsr-sdk/<commit>`. It then compiles the helper with the Visual Studio
+C++ build tools already on the machine and places it beside AMD's signed
+`amd_fidelityfx_loader_dx12.dll` and `amd_fidelityfx_upscaler_dx12.dll`. Later
+requests reuse the folder. No binary comes from anywhere but AMD's repository,
+no build tool is installed, and the binaries are not in this repository. AMD's
+licence requires its notice to accompany any redistribution of the signed DLLs,
+so the SDK's licence file is placed with them.
+
+The request is refused before queueing, with the reason, when the runtime is
+missing and cannot be acquired: in offline mode, or without the C++ build tools
+(Visual Studio workload "Desktop development with C++"). FSR 1 needs neither.
+`python tools/native/amd_fsr/build.py [--sdk <folder>] [--output <dir>]` does the
+same without starting the application, for example to prepare an offline
+machine; with `--sdk` it uses an unpacked SDK folder and downloads nothing.
 
 The adapter `amd_fsr4.py` runs the helper as a bounded, cancellable subprocess
 outside Torch, in passes of at most 2x per axis, with colour in 8-bit sRGB and

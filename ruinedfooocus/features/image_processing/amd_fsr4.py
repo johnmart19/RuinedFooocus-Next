@@ -2,7 +2,7 @@
 
 These are temporal upscalers; FSR 4 is the ML one. Each expects a moving camera,
 motion vectors and a depth buffer. A still has none of these, so the small native helper in
-`tools/native/amd_fsr` presents the image as a static camera sequence: each frame
+`backends/amd_fsr` presents the image as a static camera sequence: each frame
 is the source resampled at that frame's sub-pixel jitter, with zero motion and a
 flat depth buffer, and FSR's own sharpening pass enabled. The result is a clean,
 well anti-aliased enlargement; it does not invent detail the way a generative
@@ -11,7 +11,8 @@ upscaler does.
 The helper drives AMD's signed `amd_fidelityfx_*_dx12.dll` on the GPU with
 DirectX 12, outside Torch. It needs Windows, a GPU and driver for which the AMD
 FSR API offers the chosen provider, and the runtime files in `runtime_directory()`.
-Nothing here downloads them.
+When they are missing, `backends/amd_fsr/runtime.py` downloads AMD's pinned SDK
+files and compiles the helper once, on first use.
 """
 
 import os
@@ -62,9 +63,8 @@ def unavailable_reason(directory=None):
         return (
             "AMD FSR 2, 3 and 4 need their runtime in "
             + str(directory)
-            + ". Build it with tools/native/amd_fsr/build.py and the AMD FSR SDK. Missing: "
-            + ", ".join(missing)
-            + "."
+            + ". It is downloaded and built on first use when online with the Visual Studio "
+            "C++ build tools installed. Missing: " + ", ".join(missing) + "."
         )
     return None
 
@@ -172,9 +172,18 @@ def upscale(
 
     if version not in PROVIDERS:
         raise ValueError("Choose AMD FSR 2, 3 or 4 for the AMD runtime.")
-    reason = unavailable_reason()
-    if reason is not None:
-        raise ValueError(reason)
+    if unavailable_reason() is not None:
+        from ruinedfooocus.backends.amd_fsr import runtime
+
+        # First use: fetch AMD's pinned SDK files and compile the helper once.
+        runtime.ensure(
+            runtime_directory(),
+            check_cancelled=check_cancelled,
+            ready=lambda: unavailable_reason() is None,
+        )
+        reason = unavailable_reason()
+        if reason is not None:
+            raise ValueError(reason)
     if not 0 <= sharpness <= 1:
         raise ValueError("FSR sharpness is 0 to 1.")
     channels = pixels.shape[-1]

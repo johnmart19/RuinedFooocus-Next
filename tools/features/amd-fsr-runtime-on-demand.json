@@ -1,0 +1,15 @@
+{
+  "id": "amd-fsr-runtime-on-demand",
+  "subject": "Download the AMD FSR SDK and build its helper on first use",
+  "requires": ["combined-model-and-language-updates", "fsr-later-pass-sharpening"],
+  "tests": [
+    "test_amd_fsr_runtime.py",
+    "test_amd_fsr4.py",
+    "test_amd_fsr1.py",
+    "test_image_geometry_tools.py",
+    "test_preparation_service.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

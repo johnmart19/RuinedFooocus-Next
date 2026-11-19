@@ -21,11 +21,14 @@ All paths below are relative to this directory. Validation filenames are in
 `tests/` and run through `check_cpu.py`. Heavy inference commands need a separate
 explicit workload scope; this tool pass ran no video, model or GPU workloads.
 
-[native/amd_fsr/build.py](native/amd_fsr/build.py) compiles the AMD FSR still-image
-helper (`fsr_still.cpp`) with the Visual Studio C++ build tools against an unpacked
-AMD FSR SDK and copies it with AMD's two signed DirectX 12 DLLs into the
-application's `runtime/amd-fsr` folder. Windows only; no downloads. The adapter and
-its CPU checks are in `amd_fsr4.py` and `test_amd_fsr4.py`; see the
+[native/amd_fsr/build.py](native/amd_fsr/build.py) prepares the AMD FSR still-image
+runtime ahead of first use: it downloads the pinned AMD FidelityFX SDK files (or
+takes an unpacked SDK with `--sdk`), compiles the helper with the Visual Studio
+C++ build tools and places it with AMD's two signed DirectX 12 DLLs in the
+application's `runtime/amd-fsr` folder. Windows only. The application does the
+same on first use through `ruinedfooocus/backends/amd_fsr/runtime.py`; the
+adapter is `amd_fsr4.py`, with CPU checks in `test_amd_fsr4.py` and
+`test_amd_fsr_runtime.py`. See the
 [geometry guide](../docs/integrations/native-image-geometry.md).
 
 The copy-only [RAG model migration](migrate_rag_model.py) moves the eight pinned

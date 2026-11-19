@@ -592,6 +592,29 @@ class PreparationTests(unittest.TestCase):
         self.assertFalse(self.request().destination.exists())
         self.assertFalse(list(self.root.rglob("*.part")))
 
+    def test_http_transfer_asks_for_stored_bytes_and_accepts_a_compressed_reply(self):
+        class Response:
+            # The length a compressing server reports is the compressed one.
+            headers = {"content-length": "3", "content-encoding": "gzip"}
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *arguments):
+                pass
+
+            def raise_for_status(self):
+                pass
+
+            def iter_content(self, **options):
+                yield b"decoded body"
+
+        service = self.service(transfer_file)
+        with patch("requests.get", return_value=Response()) as get:
+            destination = service.submit(self.request()).result(5)
+        self.assertEqual(get.call_args.kwargs["headers"], {"Accept-Encoding": "identity"})
+        self.assertEqual(destination.read_bytes(), b"decoded body")
+
 
 if __name__ == "__main__":
     unittest.main()
