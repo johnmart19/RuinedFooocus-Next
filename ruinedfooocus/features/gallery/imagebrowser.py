@@ -309,46 +309,64 @@ class ImageBrowser:
             else {}
         )
         page_assets = {}
-        with copies as thumbnail:
-            for fullpath, relpath, *_ in rows:
-                check_cancelled(cancelled)
-                try:
-                    signature = tuple(file_signature(fullpath))
-                    asset = previous_assets.get(signature)
-                    cached = asset[0] if asset is not None else None
-                    if cached is not None:
-                        try:
-                            if Path(cached).is_file():
-                                # Match native Gradio's renewed delete_cache grace period.
-                                os.utime(cached, None)
-                            else:
-                                cached = None
-                        except OSError:
-                            cached = None
-                    if cached is None:
-                        record = source_record(fullpath)
-                        signature = tuple(record["signature"])
-                        from ruinedfooocus.features.image_processing.native_image_formats import (
-                            display_image,
-                            needs_preview,
-                        )
 
-                        display = (
-                            display_image(fullpath, cache) if needs_preview(fullpath) else fullpath
-                        )
-                        display = thumbnail(display)
-                        cached = save_file_to_cache(str(display), upload)
-                    else:
-                        record = dict(
-                            path=signature[0], signature=list(signature), caption=asset[1]
-                        )
-                    page_assets[signature] = (cached, record["caption"])
-                    cached_paths.append((cached, record["caption"]))
-                    records.append(record)
-                    image_paths.append((fullpath, relpath))
-                except (OSError, ValueError):
-                    # Files can disappear or be rejected between query and cache copy.
-                    continue
+        def prepare(row):
+            """One row's display copy: (signature, cached path, record), or None."""
+            fullpath, relpath = row[0], row[1]
+            check_cancelled(cancelled)
+            try:
+                signature = tuple(file_signature(fullpath))
+                asset = previous_assets.get(signature)
+                cached = asset[0] if asset is not None else None
+                if cached is not None:
+                    try:
+                        if Path(cached).is_file():
+                            # Match native Gradio's renewed delete_cache grace period.
+                            os.utime(cached, None)
+                        else:
+                            cached = None
+                    except OSError:
+                        cached = None
+                if cached is None:
+                    record = source_record(fullpath)
+                    signature = tuple(record["signature"])
+                    from ruinedfooocus.features.image_processing.native_image_formats import (
+                        display_image,
+                        needs_preview,
+                    )
+
+                    display = (
+                        display_image(fullpath, cache) if needs_preview(fullpath) else fullpath
+                    )
+                    display = thumbnail(display)
+                    cached = save_file_to_cache(str(display), upload)
+                else:
+                    record = dict(path=signature[0], signature=list(signature), caption=asset[1])
+                return signature, cached, record, (fullpath, relpath)
+            except (OSError, ValueError):
+                # Files can disappear or be rejected between query and cache copy.
+                return None
+
+        with copies as thumbnail:
+            # Decoding and encoding release the GIL: a cold page of large images is
+            # several times faster on a few threads, and row order is kept.
+            workers = min(8, max(1, len(rows)))
+            if workers == 1:
+                prepared = [prepare(row) for row in rows]
+            else:
+                from concurrent.futures import ThreadPoolExecutor
+
+                with ThreadPoolExecutor(workers, thread_name_prefix="gallery-page") as pool:
+                    prepared = list(pool.map(prepare, rows))
+        check_cancelled(cancelled)
+        for item in prepared:
+            if item is None:
+                continue
+            signature, cached, record, location = item
+            page_assets[signature] = (cached, record["caption"])
+            cached_paths.append((cached, record["caption"]))
+            records.append(record)
+            image_paths.append(location)
         # Immutable snapshots retain two pages (at most 200 assets). Every visit
         # still reads the index and current source signatures; stale workers can
         # only lose hits, never publish an old UI view or resurrect index rows.

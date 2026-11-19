@@ -231,22 +231,27 @@ class GalleryPageWorkTests(unittest.TestCase):
     def test_cancelled_copy_batch_preserves_delivery_and_releases_maintenance_lease(self):
         cancelled = threading.Event()
         copied = []
+        guard = threading.Lock()
 
         def copy(path, destination):
             result = processing_utils.save_file_to_cache(path, destination)
-            copied.append(result)
-            clear = cache_maintenance.clear_category("library-thumbnails", self.manager)
-            self.assertEqual((clear["removed"], clear["skipped"]), (0, 1))
-            cancelled.set()
+            with guard:
+                copied.append(result)
+                clear = cache_maintenance.clear_category("library-thumbnails", self.manager)
+                self.assertEqual(clear["removed"], 0)
+                self.assertGreaterEqual(clear["skipped"], 1)
+                cancelled.set()
             return result
 
         self.scope["save_file_to_cache"] = copy
         with self.assertRaises(CancelledError):
             self.load(cancelled=cancelled)
-        self.assertEqual(len(copied), 1)
-        self.assertTrue(Path(copied[0]).is_file())
+        # Rows are prepared on up to eight threads: copies already in flight when the
+        # request is cancelled finish, later rows never start, and nothing is delivered.
+        self.assertTrue(1 <= len(copied) <= 8)
+        self.assertTrue(all(Path(path).is_file() for path in copied))
         clear = cache_maintenance.clear_category("library-thumbnails", self.manager)
-        self.assertEqual((clear["removed"], clear["skipped"]), (1, 0))
+        self.assertEqual((clear["removed"], clear["skipped"]), (len(copied), 0))
         self.assertTrue(
             all(path.read_bytes() == content for path, content in self.originals.items())
         )

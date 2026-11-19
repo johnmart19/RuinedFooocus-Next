@@ -1,0 +1,15 @@
+{
+  "id": "gallery-parallel-thumbnails",
+  "subject": "Prepare a Gallery page's thumbnails on several threads",
+  "requires": ["generation-recheck-fixes"],
+  "tests": [
+    "test_gallery_page_work.py",
+    "test_gallery_thumbnails.py",
+    "test_gallery_actions.py",
+    "test_gallery_scheduling.py",
+    "test_editor_gallery_imports.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
