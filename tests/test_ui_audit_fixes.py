@@ -153,5 +153,20 @@ class DownloadSelectionPlacementTests(unittest.TestCase):
         self.assertLess(source.index('t("Use installed checkpoint in Create")'), cards)
 
 
+class LeaveImageToolTests(unittest.TestCase):
+    def test_a_press_on_the_highlighted_generate_action_registers_as_a_choice(self):
+        workspace = (
+            Path(__file__).resolve().parents[1] / "ruinedfooocus/features/gallery/ui_workspace.py"
+        ).read_text(encoding="utf-8")
+        self.assertIn('elem_id="editor-image-action"', workspace)
+        hook = html.scripts[html.scripts.index("#editor-image-action label") :]
+        hook = hook[: hook.index("{capture: true}")]
+        self.assertIn("input.value === 'generate'", hook)
+        self.assertIn("input.checked = false", hook)
+        self.assertIn(
+            "pointerdown", html.scripts[: html.scripts.index("#editor-image-action label")][-120:]
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

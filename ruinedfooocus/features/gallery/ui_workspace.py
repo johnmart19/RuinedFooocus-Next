@@ -97,6 +97,7 @@ class EditorWorkspace:
                 self.picker_notice = gr.Markdown()
             self.action = gr.Radio(
                 label=t("Image action"),
+                elem_id="editor-image-action",
                 elem_classes=["rf-chips"],
                 choices=[
                     (t("Generate"), "generate"),

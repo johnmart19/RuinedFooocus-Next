@@ -71,6 +71,15 @@ function generate_shortcut(){
       if (e.key === 'Alt') e.preventDefault();
     }
   };
+  // An image tool runs through the Generate action, so the action row keeps
+  // Generate highlighted while a tool is active, and a radio ignores a click on
+  // its checked option. Clear the mark as the press begins so the click registers
+  // as a choice and the app leaves the tool.
+  document.addEventListener('pointerdown', (e) => {
+    const input = e.target?.closest?.('#editor-image-action label')
+      ?.querySelector('input[type="radio"]');
+    if (input?.checked && input.value === 'generate' && !input.disabled) input.checked = false;
+  }, {capture: true});
   document.addEventListener('keydown', preserveDropdown, {capture: true});
   document.addEventListener('keyup', preserveDropdown, {capture: true});
   document.addEventListener('keydown', (e) => {

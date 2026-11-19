@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Clicking Generate in the Editor while an image tool is active now leaves the tool; the click used to do nothing because Generate was already highlighted.
 - Show an image tool's options in about two seconds instead of six or seven after it is picked in the Editor: the panels that react to the selection now update in a few combined requests instead of one request each.
 - Show the selected download and its button above the model cards instead of below the grid, and list Settings search results by matching field before falling back to a matching section.
 - Interface audit: the saved language now applies from the first frame, the Gallery no longer lists the worker's live preview files (and they are removed after each run), a rewrite preview that comes back unchanged is reported instead of offered, Model Defaults shows a readable table in the narrow panel, the Details tab labels its metadata box, and Settings search shows button names correctly.

@@ -1,0 +1,14 @@
+{
+  "id": "leave-image-tool-with-generate",
+  "subject": "Leave an active image tool when Generate is clicked in the Editor",
+  "requires": ["combined-tool-selection-updates"],
+  "tests": [
+    "test_ui_audit_fixes.py",
+    "test_ui_runtime.py",
+    "test_editor_workspace_events.py",
+    "test_guest_localization.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
