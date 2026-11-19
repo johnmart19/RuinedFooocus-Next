@@ -338,6 +338,15 @@
       "persistence": "Worker owns completed files/metadata; captured request cannot be rewritten by another browser's controls.",
       "cancellation": "Disconnect/cancel signals owning JobRegistry task; terminal/capacity release once; no cancellation of another owner.",
       "acceptance": "API/lifecycle CPU caller contracts exist; real-model/platform and HTTP streaming cancellation remain separate bounded acceptance."
+    },
+    {
+      "id": "ui-event-coalescing",
+      "sources": ["ruinedfooocus/ui/event_coalescing.py"],
+      "work": "Call neighbouring change listeners of one component (image tool selection and tool type) in one unqueued request, in their registered order, and return each listener's own updates. Adds no behaviour of its own; no model, queue or native compute.",
+      "resource_owner": "Each combined listener keeps its own owner; the combined request holds no state. Listeners that read or write an earlier listener's output, or use JavaScript, .then, progress, cancellation, batching, streaming or generators, are not combined.",
+      "persistence": "None. The pass rewrites event targets once before launch and stores nothing.",
+      "cancellation": "always_last: a selection made while a request is in flight runs after it instead of being dropped. A listener that raises fails the whole combined request, so its neighbours' updates for that event are not applied.",
+      "acceptance": "CPU contracts cover batching, order, dict and positional results, request injection and wrong result counts. In a browser every Editor action and image tool showed its own panel, rapid switches converged on the newest selection, and one tool switch fell from 27 requests to 9."
     }
   ]
 }

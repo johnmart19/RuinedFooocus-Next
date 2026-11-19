@@ -53,6 +53,16 @@ and Gallery images reach Editor through deliberate Open/Edit. Ordinary generatio
 setup and prompt replay prepare Create; source-bound image setup prepares Editor.
 Models owns the full existing manager, while Create retains the same quick model picker.
 
+Each feature panel registers its own listener on the image tool selection and tool
+type. Gradio's client runs the listeners of one event one after another, each as a
+full round trip, so `ui/event_coalescing.py` runs once before launch and combines
+neighbouring listeners into batches that are called in one request. Order is kept;
+a listener that reads or writes an earlier listener's output starts the next batch,
+and listeners with JavaScript, `.then`, progress, cancellation, streaming or
+generators stay on their own. Features keep registering independently; add a
+component to the `coalesce` call in `ui/app.py` only when its listeners are many
+and plain. `tools/check_ui_events.py` fires the combined requests on the real app.
+
 `features/chat/image_tool_requests.py` owns bounded tool requests and the frozen
 Text/Preview/Run context. `features/chat/llama_pipeline.py` yields a typed image
 continuation; `app/async_worker.py` leaves outer Chat compute before preparation,

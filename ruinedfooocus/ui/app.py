@@ -916,6 +916,12 @@ def launch_app(args):
                 api_visibility="private",
             )
 
+    # Picking an image tool or tool type is observed by every feature panel. Run the
+    # panels that cannot affect one another as one request instead of one each;
+    # before other passes wrap the callbacks.
+    from ruinedfooocus.ui.event_coalescing import coalesce
+
+    coalesce(main_tabs, [shared.get_ctrl(name) for name in ("cn_selection", "cn_type")])
     normalize_hidden_progress(main_tabs)
     # Show the app's own ValueError/PermissionError/FileNotFoundError text in the
     # browser instead of Gradio's generic "Error".

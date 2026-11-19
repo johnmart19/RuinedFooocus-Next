@@ -1,0 +1,15 @@
+{
+  "id": "combined-tool-selection-updates",
+  "subject": "Update the Editor's tool panels in a few combined requests instead of one each",
+  "requires": ["download-selection-and-settings-search"],
+  "tests": [
+    "test_event_coalescing.py",
+    "test_action_contract_audit.py",
+    "test_ui_runtime.py",
+    "test_tool_contracts.py",
+    "test_editor_workspace_events.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
