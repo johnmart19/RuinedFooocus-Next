@@ -101,6 +101,29 @@ class StyleCatalogTests(unittest.TestCase):
         )
         self.assertEqual(selected, before)
 
+    def test_bundled_styles_are_separate_phrases_without_contradicting_negatives(self):
+        with tempfile.TemporaryDirectory() as folder:
+            templates = style_templates(user_file=Path(folder) / "missing.csv")
+        styles = {
+            name: pair
+            for name, pair in templates.items()
+            if name.startswith("Style: ") and name != "Style: Pick Random"
+        }
+        self.assertGreater(len(styles), 100)
+        for name, (prompt, negative) in styles.items():
+            with self.subTest(name):
+                self.assertEqual(prompt.count("{prompt}"), 1)
+                # The user's words stay a phrase of their own: tag models read the
+                # first tag as written, and a glued prefix changes what it names.
+                before, after = prompt.split("{prompt}")
+                self.assertTrue(before == "" or before.endswith(", "), prompt)
+                self.assertTrue(after.startswith(", "), prompt)
+                self.assertNotRegex(prompt + "|" + negative, r"  | ,|,\S|^ | $")
+                wanted = {part.strip().lower() for part in prompt.split(",")}
+                refused = [part.strip().lower() for part in negative.split(",") if part.strip()]
+                self.assertEqual(len(refused), len(set(refused)), negative)
+                self.assertFalse(wanted & set(refused), (prompt, negative))
+
     def test_every_bundled_style_keeps_the_literal_prompt(self):
         tree = ast.parse(
             (ROOT / "ruinedfooocus/features/prompting/sdxl_styles.py").read_text(encoding="utf-8")

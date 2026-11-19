@@ -64,20 +64,6 @@ def apply_style(style, prompt, negative_prompt, lora_keywords, *, enhancer=None,
         if s not in styles:
             continue
         p, n = styles[s]
-        if (
-            s == "Style: sai-cinematic"
-            and p
-            and p.startswith("cinematic film still {prompt}")
-            and re.search(r"\banime\b", prompt, re.IGNORECASE)
-        ):
-            p = p.replace("cinematic film still", "cinematic anime illustration", 1)
-            # Do not make the style reject the medium explicitly requested in the prompt.
-            n = ", ".join(
-                tag.strip()
-                for tag in (n or "").split(",")
-                if tag.strip().lower()
-                not in {"", "anime", "cartoon", "graphic", "painting", "crayon"}
-            )
         if p and s != "None":
             # A style adds to the user's text; legacy empty/header rows cannot replace it.
             if "{prompt}" not in p:

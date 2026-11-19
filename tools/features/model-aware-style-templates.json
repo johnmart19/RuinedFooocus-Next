@@ -1,0 +1,15 @@
+{
+  "id": "model-aware-style-templates",
+  "subject": "Rewrite the bundled styles for Anima, Flux and other current models",
+  "requires": ["amd-fsr-runtime-on-demand"],
+  "tests": [
+    "test_style_catalog.py",
+    "test_style_prompt_payloads.py",
+    "test_style_encoding.py",
+    "test_style_workflow.py",
+    "test_gallery_actions.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Rewrite all 118 bundled styles so they work on current models, not only SDXL: each now leads with the medium, describes the look in plain words and uses the tags Anima and Illustrious models know. Checked image by image on Anima and Flux 3 Klein; styles such as pixel art, watercolor, isometric, comic book, manga, stained glass and the papercraft set now change the picture where they used to do little.
 - AMD FSR 2, 3 and 4 now set themselves up on first use: the application downloads the pinned AMD FidelityFX SDK files from AMD's repository, verifies them and builds its helper once (needs the Visual Studio C++ build tools; FSR 1 needs nothing). Fix plain HTTPS downloads failing as incomplete when the server compresses the transfer.
 - Switching the image model or the interface language now updates the panels in fewer, combined requests (a model switch went from 64 requests to 43).
 - Fix automatic model downloads being rejected after completing ("Transport returned an artifact outside its staging directory") when the data folder has a long path.
