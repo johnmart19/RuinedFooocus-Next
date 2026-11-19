@@ -85,21 +85,9 @@ def local_choices(names, current):
 
 
 def stage_b_choices(models):
-    from ruinedfooocus.features.generation.cascade import require_bundle
+    from ruinedfooocus.features.generation.cascade import installed_stage_b
 
-    names = []
-    for name in models.get_names("checkpoints"):
-        path = models.get_file("checkpoints", name)
-        if path is None:
-            continue
-        try:
-            if models.detect_checkpoint_base(path) not in ("Stable_Cascade_B", "StableCascade_B"):
-                continue
-            require_bundle(path, "b")
-        except (OSError, ValueError):
-            continue
-        names.append(name)
-    return names
+    return installed_stage_b(models)
 
 
 def create_ui(base_model, *, preset_selection=None, main_model=None, model_refresh=None):

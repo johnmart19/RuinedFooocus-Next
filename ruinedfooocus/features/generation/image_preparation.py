@@ -1430,11 +1430,26 @@ def capture_image_assets(
                 )
             if family in ("Stable_Cascade_C", "StableCascade_C"):
                 from ruinedfooocus.features.generation.cascade import (
+                    installed_stage_b,
                     sampling_settings,
                     require_bundle,
                     stage_b_defaults,
                 )
 
+                if not result.get("cascade_stage_b"):
+                    # Stage C cannot decode without Stage B. With one installed there is
+                    # nothing to choose, so a request that names only Stage C still runs.
+                    available = installed_stage_b(models)
+                    if len(available) != 1:
+                        raise ValueError(
+                            "Select a Stable Cascade Stage B checkpoint in Cascade settings. "
+                            + (
+                                "None is installed."
+                                if not available
+                                else "More than one is installed."
+                            )
+                        )
+                    result["cascade_stage_b"] = available[0]
                 for key, value in stage_b_defaults(result.get("cascade_stage_b"), models).items():
                     if result.get(key) in (None, ""):
                         result[key] = value

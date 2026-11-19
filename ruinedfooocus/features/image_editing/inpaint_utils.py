@@ -1,7 +1,9 @@
 """Image-only preparation shared by the inpaint editor and pipeline."""
 
 from PIL import Image, ImageOps
-import numpy as np
+
+# numpy is imported where pixels are handled: saved settings are validated through
+# `outpaint_margins` during startup, before the installer may replace numpy.
 
 
 OUTPAINT_MARGINS = ("outpaint_left", "outpaint_top", "outpaint_right", "outpaint_bottom")
@@ -41,6 +43,8 @@ def outpaint_size(source_size, margins):
 
 def prepare_outpaint(source, data):
     """Create the native image and border mask, then align them for VAE encoding."""
+    import numpy as np
+
     import torch
     from torch.nn.functional import pad
     from nodes import ImagePadForOutpaint
@@ -111,6 +115,8 @@ def editor_payload(value, *, preserve_alpha=False):
 
 
 def source_and_mask(value, editor, *, preserve_alpha=False):
+    import numpy as np
+
     source = load_source(value, preserve_alpha=preserve_alpha)
     layers = editor.get("layers") if isinstance(editor, dict) else None
     if not isinstance(layers, (list, tuple)) or not layers:
@@ -141,6 +147,8 @@ def prepare_inpaint(source, mask, target_size, mode="preserve"):
 
 def prepare_mask(mask, plan, resample=Image.Resampling.LANCZOS):
     """Map a mask into an existing image frame with zero coverage in padding."""
+    import numpy as np
+
     import torch
 
     mode = plan["mode"]

@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Fix online starts being refused with "Native runtime is imported" whenever a numpy update was pending, choose the only installed Stable Cascade Stage B automatically, fix the layered-image path failing on a ComfyUI circular import, and make step previews and PNG saving cheaper for large outputs.
 - Clicking Generate in the Editor while an image tool is active now leaves the tool; the click used to do nothing because Generate was already highlighted.
 - Show an image tool's options in about two seconds instead of six or seven after it is picked in the Editor: the panels that react to the selection now update in a few combined requests instead of one request each.
 - Show the selected download and its button above the model cards instead of below the grid, and list Settings search results by matching field before falling back to a matching section.

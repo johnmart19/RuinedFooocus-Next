@@ -108,6 +108,23 @@ def source_latents(vae, pixels, data, *, frame=None):
     return CascadeLatents(stage_c, stage_b)
 
 
+def installed_stage_b(models):
+    """Names of installed bundled Stage B checkpoints, in catalogue order."""
+    names = []
+    for name in models.get_names("checkpoints"):
+        path = models.get_file("checkpoints", name)
+        if path is None:
+            continue
+        try:
+            if models.detect_checkpoint_base(path) not in ("Stable_Cascade_B", "StableCascade_B"):
+                continue
+            require_bundle(path, "b")
+        except (OSError, ValueError):
+            continue
+        names.append(name)
+    return names
+
+
 def stage_b_defaults(name, models):
     """Use a verified source or positive full native companion configuration."""
     from ruinedfooocus.features.models.model_identity import verified_native_source

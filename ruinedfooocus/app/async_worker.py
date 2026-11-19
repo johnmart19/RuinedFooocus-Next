@@ -424,6 +424,13 @@ def image_handoff(gen_data, chat, original_model, original_vision):
                 chat.load_base_model(original_model, vision=original_vision, **options)
 
 
+# PNG is lossless at every level. Level 4 writes a 4096 px result in about half the
+# time of Pillow's default 6 for a file 1-3% larger (measured 2026-11-19).
+PNG_COMPRESS_LEVEL = 4
+# Longest side of an in-progress preview file; the viewer scales it to fit.
+STEP_PREVIEW_SIZE = 1024
+
+
 def _preview_path(gen_data):
     paths = gen_data.get("_image_capture_paths") or shared.path_manager
     base = Path(paths.model_paths["temp_preview_path"])
@@ -712,14 +719,24 @@ def _process(gen_data):
             grid_ypos = int(
                 math.floor(shared.state["preview_count"] / grid_xsize) * (pheight / grid_ysize)
             )
-            image = image.resize((int(width / grid_max), int(height / grid_max)))
-            shared.state["preview_grid"].paste(image, (grid_xpos, grid_ypos))
-
-            shared.state["preview_grid"].save(
-                _preview_path(gen_data),
-                optimize=True,
-                quality=35 if step < total_steps else 70,
+            final = step >= total_steps
+            # A step preview is a small decoded estimate shown scaled in the viewer.
+            # Enlarging it to the full output and optimising the JPEG on every step
+            # cost more the larger the output; only the finished grid keeps full size.
+            image = image.resize(
+                (int(width / grid_max), int(height / grid_max)),
+                Image.BICUBIC if final else Image.BILINEAR,
             )
+            shared.state["preview_grid"].paste(image, (grid_xpos, grid_ypos))
+            frame = shared.state["preview_grid"]
+            longest = max(frame.size)
+            if not final and longest > STEP_PREVIEW_SIZE:
+                scale = STEP_PREVIEW_SIZE / longest
+                frame = frame.resize(
+                    (max(1, round(frame.width * scale)), max(1, round(frame.height * scale))),
+                    Image.BILINEAR,
+                )
+            frame.save(_preview_path(gen_data), optimize=final, quality=70 if final else 35)
 
             preview = _preview_path(gen_data)
         else:
@@ -1166,7 +1183,7 @@ def _process(gen_data):
             else:
                 if not isinstance(x, Image.Image):
                     x = Image.fromarray(x)
-                x.save(local_temp_filename, pnginfo=metadata)
+                x.save(local_temp_filename, pnginfo=metadata, compress_level=PNG_COMPRESS_LEVEL)
 
             try:
                 metadata = {
