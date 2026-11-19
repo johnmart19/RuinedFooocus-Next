@@ -707,7 +707,7 @@ process.stdout.write(JSON.stringify({output,memory}));
         self.open_library(session)
         context = copy.deepcopy(self.value(session, self.workspace.context))
         updates = self.call(session, adjustment)
-        self.assertEqual(updates[self.tool_tabs]["selected"], "generation")
+        self.assertEqual(updates[self.tool_tabs]["selected"], "editor-tools")
         self.assertEqual(self.value(session, self.workspace.context), context)
         self.assertEqual(self.value(session, self.controls["cn_selection"]), "None")
         self.run_request.assert_not_called()
@@ -722,7 +722,7 @@ process.stdout.write(JSON.stringify({output,memory}));
             self.value(session, self.controls["cn_selection"]), "Restore still image (SeedVR2)"
         )
         inpaint = self.call(session, action, {self.workspace.action: "inpaint"})
-        self.assertEqual(inpaint[self.tool_tabs]["selected"], "generation")
+        self.assertEqual(inpaint[self.tool_tabs]["selected"], "editor-tools")
         self.assertEqual(self.value(session, self.controls["cn_selection"]), "None")
         updates = self.call(session, self.event(self.workspace.action, "change", "action_context"))
         self.assertEqual(
@@ -742,7 +742,8 @@ process.stdout.write(JSON.stringify({output,memory}));
             {self.workspace.action: "generate"},
         )
         self.assertEqual(self.value(session, self.controls["cn_selection"]), "None")
-        self.assertEqual(updates[self.tool_tabs]["selected"], "generation")
+        # The tool for a Power-ups run is chosen in that tab.
+        self.assertEqual(updates[self.tool_tabs]["selected"], "image-tools")
         self.assertFalse(self.value(session, self.remote["inpaint_toggle"]))
         self.call(
             session,
@@ -756,6 +757,13 @@ process.stdout.write(JSON.stringify({output,memory}));
             self.request_values(session, "generate"), request=session.request
         )
         self.assertEqual(data["cn_selection"], "Face landmarks")
+        # Without a tool the action would ignore the image; a new image belongs to Create.
+        with self.assertRaisesRegex(ValueError, "Choose a tool in Power-ups"):
+            self.workspace.build_request(
+                self.request_values(session, "generate")
+                | {"cn_selection": "None", "_editor_destination": "editor"},
+                request=session.request,
+            )
         self.run_request.assert_not_called()
 
     def test_picker_select_opens_original_through_success_continuation_in_one_action(self):
@@ -1653,7 +1661,9 @@ process.stdout.write(JSON.stringify({output,memory}));
                 session,
                 function,
                 {
-                    self.values: self.request_values(session, "generate"),
+                    # A tool is chosen: without one the Editor refuses to start a new image.
+                    self.values: self.request_values(session, "generate")
+                    | {"cn_selection": "Img2img"},
                     self.workspace.version: 2,
                 },
             )

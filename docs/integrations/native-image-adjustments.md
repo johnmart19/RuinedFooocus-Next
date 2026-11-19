@@ -3,7 +3,7 @@
 Image tools → **Adjust image** provides Transform, Mask and Color groups with
 operation-specific controls. The Image workspace has the same **Adjust image**
 action and uses the current owned artifact. Selecting that action opens the
-existing More tools tab and its selected
+existing Power-ups tab and its selected
 adjustment group without changing source images, prompts or operation settings.
 The existing Run/Stop flow serializes these operations on the image worker.
 No checkpoint, text encoder, sampler,

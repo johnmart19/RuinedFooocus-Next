@@ -21,7 +21,7 @@ One shared image surface is visible for Create and Editor. A destination State
 belongs to the existing workspace; it holds no copied image/model/draft. Create
 projects source-free intent at submission without clearing Editor's widgets.
 Saved-tensor generation inputs remain available. Editor's primary action selector
-and the existing `image-tools` tab (labelled **More tools**) share the same worker;
+and the existing `image-tools` tab (labelled **Power-ups**) share the same worker;
 using a legacy tool resets a preceding explicit action. Gallery source handoffs
 clear the previous opaque context before preparing the new source.
 

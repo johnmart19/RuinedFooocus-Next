@@ -206,8 +206,8 @@ class AdjustmentIntegrationTests(unittest.TestCase):
         ]
         self.assertEqual(other[0], "None")
         self.assertNotIn("value", other[1])
-        self.assertEqual(other[2]["selected"], "generation")
-        self.assertEqual(state[tabs._id].selected, "generation")
+        self.assertEqual(other[2]["selected"], "editor-tools")
+        self.assertEqual(state[tabs._id].selected, "editor-tools")
         self.assertEqual(
             (controls["prompt"].value, controls["negative"].value),
             ("retained draft", "retained negative"),

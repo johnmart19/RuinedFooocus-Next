@@ -5,7 +5,7 @@ grayscale results to an exact editor image/revision for native inpainting.
 Union versus instance and inversion are explicit. Cutouts remain alpha images;
 their multiplied alpha is not silently reused as a selection mask.
 
-Editor → More tools → Segment by points retains its existing click-to-keep and
+Power-ups → Segment by points retains its existing click-to-keep and
 click-to-exclude controls. It also accepts optional **Text categories**,
 **Source-image boxes**, and **Separate result for each object**. Choose an
 installed SAM 3 or 3.1 model. A single source image and a single native detector

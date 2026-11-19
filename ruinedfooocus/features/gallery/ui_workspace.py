@@ -100,7 +100,9 @@ class EditorWorkspace:
                 elem_id="editor-image-action",
                 elem_classes=["rf-chips"],
                 choices=[
-                    (t("Generate"), "generate"),
+                    # Runs the tool chosen in Power-ups on the selected image.
+                    # A new image from a prompt alone belongs to Create.
+                    (t("Power-ups"), "generate"),
                     (t("Edit selected image"), "prompt-edit"),
                     (t("Inpaint selected image"), "inpaint"),
                     (t("Remove background"), "remove-background"),
@@ -1044,7 +1046,8 @@ class EditorWorkspace:
                 if "cn_selection" in controls:
                     updates[controls["cn_selection"]] = "None"
                 if create_tabs is not None:
-                    updates[create_tabs] = gr.update(selected="generation")
+                    # The tool for this action is chosen in Power-ups.
+                    updates[create_tabs] = gr.update(selected="image-tools")
             return updates
 
         self.action.input(
@@ -1078,8 +1081,9 @@ class EditorWorkspace:
                 "compose",
                 "select-background",
             ):
+                # These actions are set up where they are chosen, on the Edit tab.
                 return ["None", gr.skip()] + (
-                    [gr.update(selected="generation")] if create_tabs is not None else []
+                    [gr.update(selected="editor-tools")] if create_tabs is not None else []
                 )
             if action != "adjust-image":
                 return [gr.skip() for _ in adjustment_outputs]
@@ -1895,6 +1899,17 @@ class EditorWorkspace:
                 values["_editor_context"] = dict(context, additional_image_ids=[])
         if action == "generate":
             result = dict(values)
+            if (
+                values.get("_editor_destination") == "editor"
+                and values.get("cn_selection") in (None, "", "None")
+                and not values.get("inpaint_toggle")
+                and values.get("_editor_guide_handoff") is None
+            ):
+                # The Editor changes an existing image. Without a tool this action
+                # would ignore the image and generate a new one from the prompt.
+                raise ValueError(
+                    "Choose a tool in Power-ups for this image, or use Create for a new image."
+                )
             if values.get("_editor_destination") == "editor" and values.get("_editor_context"):
                 result["editor_context"] = values["_editor_context"]
                 if values.get("cn_selection") in {value for _, value in self.quick_tool.choices}:

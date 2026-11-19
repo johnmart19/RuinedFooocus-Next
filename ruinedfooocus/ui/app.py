@@ -173,6 +173,13 @@ def create_navigation_shell(
     # First in the row; the generation settings stay selected until the Editor opens.
     create_tabs.children.remove(editor_tools_tab)
     create_tabs.children.insert(0, editor_tools_tab)
+    # Power-ups follow the model choice; prompt helpers and details close the row.
+    by_id = {getattr(tab, "id", None): tab for tab in create_tabs.children}
+    if "image-tools" in by_id and "create-models" in by_id:
+        create_tabs.children.remove(by_id["image-tools"])
+        create_tabs.children.insert(
+            create_tabs.children.index(by_id["create-models"]) + 1, by_id["image-tools"]
+        )
     create_tabs.selected = "generation"
 
     app = gr.Blocks(title=title, analytics_enabled=False, fill_width=True)

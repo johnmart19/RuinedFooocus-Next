@@ -57,7 +57,7 @@ Anima's fallback sampler/scheduler comes from the pinned **Anima Base 1.0**
 blueprint (`er_sde` / `simple`, 30 steps, CFG4). Exact checkpoint recommendations
 and user overrides keep precedence. Its native Qwen3 encoder, Qwen Image VAE,
 sampling shift, LoRA and LLLite model-patch routes remain native backend adapters;
-LLLite is exposed under **Editor → More tools → Native model patch**.
+LLLite is exposed under **Power-ups → Native model patch**.
 
 Sources checked 2026-11-15: [Stability's SDXL aspect table](https://github.com/Stability-AI/generative-models/blob/main/scripts/demo/sampling.py),
 [Anima generation settings](https://huggingface.co/circlestone-labs/Anima), and the

@@ -17,8 +17,11 @@ advanced tools. **Prompt tools** and **Details** complete the row. The Models pa
 download catalogue.
 
 Editor works on an existing image. Its right panel opens on **Edit**: choose the image (the current one, the
-latest generated, one from Gallery or an upload), then the action and its options. The other tabs follow it
-for the settings an edit uses.
+latest generated, one from Gallery or an upload), then the action and its options. Choosing an action keeps
+you on Edit; actions whose options live in Power-ups (Depth map, Restore, Remove background, Adjust image and
+the **Power-ups** action itself) open that tab. The **Power-ups** action runs the tool selected there on the
+image. The Editor does not start a new image from a prompt alone: without a tool it asks you to choose one or
+to use Create. The other tabs hold the model, size, sampling and style settings an edit uses.
 **Main → More options** groups saved PNG settings, native output and sampling, layout/attention,
 Layered and saved-tensor controls; model-specific sections appear when applicable. The changelog is in Details.
 When the working area is narrow or text is enlarged, the image controls follow the image and prompt

@@ -1,6 +1,6 @@
 # Native LoRA hook schedules
 
-In **Editor → More tools → Scheduled LoRA**, choose manual, interpolated or
+In **Power-ups → Scheduled LoRA**, choose manual, interpolated or
 strength-list keyframes, a local source, and its signed model/CLIP strengths. **Off** is the
 default. It performs no LoRA inventory scan, file preparation, native hook loading
 or additional encoding. Enabling the panel lists local state dictionaries; safe

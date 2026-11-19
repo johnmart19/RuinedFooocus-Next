@@ -1,6 +1,6 @@
 # Still-image depth, landmarks, pose and albedo
 
-In **Editor → More tools**, choose **Lotus depth**, **MoGe depth**, **Face
+In **Power-ups**, choose **Lotus depth**, **MoGe depth**, **Face
 landmarks**, **Whole-body pose** or **Marigold albedo**. Add one source image and
 run the image tool. Face landmarks and Whole-body pose select compatible local
 components or their [registered first-use defaults](native-utility-defaults.md).
