@@ -53,8 +53,8 @@ and Gallery images reach Editor through deliberate Open/Edit. Ordinary generatio
 setup and prompt replay prepare Create; source-bound image setup prepares Editor.
 Models owns the full existing manager, while Create retains the same quick model picker.
 
-Each feature panel registers its own listener on the image tool selection and tool
-type. Gradio's client runs the listeners of one event one after another, each as a
+Each feature panel registers its own listener on the image tool selection, tool
+type, image model, effective checkpoint, metadata revision and interface language. Gradio's client runs the listeners of one event one after another, each as a
 full round trip, so `ui/event_coalescing.py` runs once before launch and combines
 neighbouring listeners into batches that are called in one request. Order is kept;
 a listener that reads or writes an earlier listener's output starts the next batch,

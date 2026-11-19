@@ -1,0 +1,15 @@
+{
+  "id": "combined-model-and-language-updates",
+  "subject": "Combine the listeners of model switching and the language picker",
+  "requires": ["long-path-download-staging", "combined-tool-selection-updates"],
+  "tests": [
+    "test_event_coalescing.py",
+    "test_action_contract_audit.py",
+    "test_ui_runtime.py",
+    "test_model_control_events.py",
+    "test_settings_ui.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

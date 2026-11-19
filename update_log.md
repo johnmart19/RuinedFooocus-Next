@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Switching the image model or the interface language now updates the panels in fewer, combined requests (a model switch went from 64 requests to 43).
 - Fix automatic model downloads being rejected after completing ("Transport returned an artifact outside its staging directory") when the data folder has a long path.
 - Update the AMD image runtime to ROCm 10.2 with Torch 2.15.0 (the same Torch line as the other runtimes). It needs AMD Software 26.11.2 or newer on Windows; `--rocm10` installs or repairs it.
 - Prepare a Gallery page's thumbnails on several threads, so a first visit with large images loads several times faster.

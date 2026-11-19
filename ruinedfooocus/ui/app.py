@@ -916,12 +916,24 @@ def launch_app(args):
                 api_visibility="private",
             )
 
-    # Picking an image tool or tool type is observed by every feature panel. Run the
-    # panels that cannot affect one another as one request instead of one each;
-    # before other passes wrap the callbacks.
+    # Each of these selections is observed by many feature panels: an image tool or
+    # tool type by about thirty, a model switch by about sixty across the picker, the
+    # effective checkpoint and the metadata revision, and the language by every
+    # localized text. Run the listeners that cannot affect one another as one request
+    # instead of one each; before other passes wrap the callbacks.
     from ruinedfooocus.ui.event_coalescing import coalesce
 
-    coalesce(main_tabs, [shared.get_ctrl(name) for name in ("cn_selection", "cn_type")])
+    coalesce(
+        main_tabs,
+        [
+            shared.get_ctrl("cn_selection"),
+            shared.get_ctrl("cn_type"),
+            shared.get_ctrl("base_model_name"),
+            effective_image_checkpoint,
+            model_metadata_refresh,
+            app_settings.language_control,
+        ],
+    )
     normalize_hidden_progress(main_tabs)
     # Show the app's own ValueError/PermissionError/FileNotFoundError text in the
     # browser instead of Gradio's generic "Error".
