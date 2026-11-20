@@ -1,0 +1,14 @@
+{
+  "id": "upload-races",
+  "subject": "Keep one copy of identical uploads and end cancelled uploads quietly",
+  "requires": ["model-cards-by-address"],
+  "tests": [
+    "test_gradio_uploads.py",
+    "test_gradio_frontend.py",
+    "test_guest_localization.py",
+    "test_media_paths.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

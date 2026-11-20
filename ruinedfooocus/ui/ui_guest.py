@@ -15,6 +15,7 @@ from starlette.middleware import Middleware
 
 import ruinedfooocus.app.state as shared
 import version
+from ruinedfooocus.integrations.gradio_uploads import UploadGuard
 from ruinedfooocus.integrations.web_access import PrivateResponses, login_token, validate_web_access
 from ruinedfooocus.ui import html as app_html
 from ruinedfooocus.ui.gradio_frontend import GradioCompletionGuard, normalize_hidden_progress
@@ -234,6 +235,7 @@ def launch_guest(args):
             "middleware": [
                 Middleware(PrivateResponses, guest=True),
                 Middleware(GradioCompletionGuard),
+                Middleware(UploadGuard),
             ]
         },
         enable_monitoring=False,

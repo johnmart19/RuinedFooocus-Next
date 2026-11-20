@@ -22,6 +22,7 @@ from gradio.state_holder import SessionState
 from PIL import Image
 from starlette.middleware import Middleware
 
+from ruinedfooocus.integrations.gradio_uploads import UploadGuard
 from ruinedfooocus.integrations.web_access import PrivateResponses
 from ruinedfooocus.ui import gradio_frontend as frontend
 
@@ -304,11 +305,14 @@ class GradioFrontendTests(unittest.TestCase):
                         "Middleware": Middleware,
                         "PrivateResponses": PrivateResponses,
                         "GradioCompletionGuard": frontend.GradioCompletionGuard,
+                        "UploadGuard": UploadGuard,
                     },
                 )
+                # Both launchers end cancelled uploads quietly and keep one copy
+                # of identical uploads; the private wrapper stays outermost.
                 self.assertEqual(
                     [item.cls for item in options["middleware"]],
-                    [PrivateResponses, frontend.GradioCompletionGuard],
+                    [PrivateResponses, frontend.GradioCompletionGuard, UploadGuard],
                 )
 
 

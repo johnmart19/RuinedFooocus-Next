@@ -376,6 +376,7 @@ def launch_app(args):
     from ruinedfooocus.integrations.web_access import PrivateResponses, validate_web_access
     from ruinedfooocus.ui.gradio_frontend import GradioCompletionGuard, normalize_hidden_progress
     from starlette.middleware import Middleware
+    from ruinedfooocus.integrations.gradio_uploads import UploadGuard
     from ruinedfooocus.integrations.media_paths import owner_media_paths
 
     validate_web_access(args)
@@ -1008,7 +1009,11 @@ def launch_app(args):
         js=html.scripts,
         allowed_paths=owner_media_paths(path_manager, shared.models, settings),
         app_kwargs={
-            "middleware": [Middleware(PrivateResponses), Middleware(GradioCompletionGuard)]
+            "middleware": [
+                Middleware(PrivateResponses),
+                Middleware(GradioCompletionGuard),
+                Middleware(UploadGuard),
+            ]
         },
         enable_monitoring=False,
         pwa=False,

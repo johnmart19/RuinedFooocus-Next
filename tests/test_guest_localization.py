@@ -19,6 +19,7 @@ from fastapi.responses import FileResponse
 from starlette.middleware import Middleware
 
 from ruinedfooocus.core.translation_manager import catalogue, locale_change_js, translate_ui
+from ruinedfooocus.integrations.gradio_uploads import UploadGuard
 from ruinedfooocus.integrations.web_access import PrivateResponses, login_token, validate_web_access
 from ruinedfooocus.ui import themes
 from ruinedfooocus.ui.gradio_frontend import GradioCompletionGuard, normalize_hidden_progress
@@ -92,6 +93,7 @@ class GuestLocalizationTests(unittest.TestCase):
                 "Middleware": Middleware,
                 "PrivateResponses": PrivateResponses,
                 "GradioCompletionGuard": GradioCompletionGuard,
+                "UploadGuard": UploadGuard,
                 "normalize_hidden_progress": normalize_hidden_progress,
                 "login_token": login_token,
                 "validate_web_access": validate_web_access,

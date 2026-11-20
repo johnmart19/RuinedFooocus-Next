@@ -418,3 +418,19 @@ MIGraphX acquisition and device discovery succeeded, but Bria initialization tim
 out after 180 seconds and recovered on CPU; its GPU inference remains unqualified.
 WSL native ROCm Chat with LFM3 also passed. NVIDIA, Intel and native-Linux
 hardware require separate qualification.
+
+### Repeated and cancelled uploads
+
+Gradio keeps each upload in `cache/uploads/<SHA-256 of the bytes>/<name>`. The
+image editor can send the same picture several times at once, for example a
+blank layer as both `layer_0.png` and `image.png`. On Windows the later copy
+used to fail with `WinError 183` and then `WinError 32` while moving over the
+stored file, and left a `tmp…` file in `cache/uploads`. Because the folder name
+is the content hash, `ruinedfooocus/integrations/gradio_uploads.py` now keeps
+the stored file and deletes the duplicate.
+
+A browser that cancels an upload ends the request partway. That was logged as
+`Exception in ASGI application … ClientDisconnect` and the partial file stayed.
+The request now ends without a log entry and the partial file is removed. Both
+launchers install this through the `UploadGuard` middleware. Temporary files
+left by earlier versions are ordinary cache files and can be deleted.
