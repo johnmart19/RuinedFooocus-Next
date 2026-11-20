@@ -1,0 +1,9 @@
+{
+  "id": "image-viewer-command-bar",
+  "subject": "Rework the image viewer with a floating command bar, pinch, double-click and keyboard zoom",
+  "requires": ["benchmark-tool"],
+  "tests": ["test_image_viewer.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

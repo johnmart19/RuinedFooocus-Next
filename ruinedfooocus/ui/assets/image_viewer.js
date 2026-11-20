@@ -42,13 +42,43 @@
       image,
     );
   };
+  // Double-click / double-tap, as in Photos: the whole image zooms to actual
+  // pixels at the pointer (or 2x when the whole image already is 1:1); any
+  // other zoom returns to the whole image.
+  const toggled = (pose, point, view, image) => {
+    const fit = preset("fit", view, image);
+    if (Math.abs(pose.scale - fit.scale) > 1e-6) return { pose: fit, mode: "fit" };
+    const factor = Math.abs(fit.scale - 1) < 1e-6 ? 2 : 1 / pose.scale;
+    return {
+      pose: zoomAt(pose, factor, point, view, image),
+      mode: factor === 2 ? "custom" : "actual",
+    };
+  };
+  // Two-finger pinch: scale by the change in finger distance around the
+  // midpoint, and follow the midpoint as it moves.
+  const pinched = (start, from, to, view, image) => {
+    const factor = to.distance / Math.max(1, from.distance);
+    const zoomed = zoomAt(start, factor, from.mid, view, image);
+    return constrain(
+      { ...zoomed, x: zoomed.x + to.mid.x - from.mid.x, y: zoomed.y + to.mid.y - from.mid.y },
+      view,
+      image,
+    );
+  };
+  // Arrow keys move a tenth of the view, like ScrollView's line steps.
+  const nudged = (pose, dx, dy, view, image) =>
+    constrain(
+      { ...pose, x: pose.x - dx * view.w * 0.1, y: pose.y - dy * view.h * 0.1 },
+      view,
+      image,
+    );
   const resized = (width, height, available, screenHeight) => ({
     width: Math.min(available, Math.max(Math.min(220, available), width)),
     height: Math.min(Math.max(400, screenHeight * 2), Math.max(200, height)),
   });
   // The tests exercise the same geometry used below, without a DOM substitute.
   if (typeof document === "undefined" && typeof module !== "undefined" && module.exports) {
-    module.exports = { constrain, preset, zoomAt, resized, reframed };
+    module.exports = { constrain, preset, zoomAt, resized, reframed, toggled, pinched, nudged };
     return;
   }
   if (window.rfImageViewer || !document.getElementById("generation-workspace")) return;
@@ -63,8 +93,19 @@
     view = { w: 0, h: 0 },
     dimensions;
   let pan,
+    pinch,
     resize,
+    animation,
     pending = false;
+  const pointers = new Map();
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+  // Buttons and keys glide to the new view; wheel, drag and pinch follow the hand.
+  function animate() {
+    if (!viewport || reducedMotion?.matches) return;
+    viewport.classList.add("rf-animate");
+    clearTimeout(animation);
+    animation = setTimeout(() => viewport?.classList.remove("rf-animate"), 260);
+  }
   const workspaceObserver = new MutationObserver(() => schedule(bind));
   const imageObserver = new MutationObserver(() => schedule(bind));
   const sizeObserver = new ResizeObserver(() => schedule(reflow));
@@ -91,6 +132,12 @@
       "rf-can-pan",
       dimensions.w * pose.scale > view.w + 1 || dimensions.h * pose.scale > view.h + 1,
     );
+    for (const key of ["fit", "fill", "actual"]) {
+      const button = document.getElementById(`viewer-${key}`);
+      const pressed = String(mode === key);
+      if (button && button.getAttribute("aria-pressed") !== pressed)
+        button.setAttribute("aria-pressed", pressed);
+    }
     const output = document.querySelector("#viewer-zoom-value output");
     const percent = pose.scale * 100;
     const text = `${percent < 10 ? Math.round(percent * 10) / 10 : Math.round(percent)}%`;
@@ -132,18 +179,29 @@
       `${rect.bottom - row.top - handle.offsetHeight - 8}px`,
     );
   }
-  function setMode(value) {
+  function setMode(value, smooth = false) {
     bind();
     mode = ["fit", "fill", "actual"].includes(value) ? value : "fit";
     if (dimensions && view.w) {
+      if (smooth) animate();
       pose = preset(mode, view, dimensions);
       paint();
     }
   }
-  function zoom(factor, point) {
+  function toggle(point) {
+    bind();
+    if (!dimensions || !view.w) return;
+    const next = toggled(pose, point || { x: view.w / 2, y: view.h / 2 }, view, dimensions);
+    animate();
+    pose = next.pose;
+    mode = next.mode;
+    paint();
+  }
+  function zoom(factor, point, smooth = false) {
     if (!viewport?.isConnected || !image?.isConnected) bind();
     if (!image?.naturalWidth || !dimensions || !view.w || !Number.isFinite(factor) || factor <= 0)
       return;
+    if (smooth) animate();
     pose = zoomAt(pose, factor, point || { x: view.w / 2, y: view.h / 2 }, view, dimensions);
     mode = "custom";
     schedule(paint);
@@ -182,6 +240,9 @@
     listeners?.abort();
     sizeObserver.disconnect();
     if (root) sizeObserver.observe(root);
+    // The resize grip is placed from the floating command bar's box.
+    const bar = document.getElementById("image-view-controls");
+    if (bar) sizeObserver.observe(bar);
     viewport = currentViewport;
     image = currentImage;
     pan = null;
@@ -211,13 +272,31 @@
       },
       { passive: false, signal },
     );
+    const local = (event) => {
+      const rect = viewport.getBoundingClientRect();
+      return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    };
+    const fingers = () => {
+      const [a, b] = [...pointers.values()];
+      return {
+        mid: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
+        distance: Math.hypot(a.x - b.x, a.y - b.y),
+      };
+    };
     viewport.addEventListener(
       "pointerdown",
       (event) => {
-        if (event.button !== 0 || !image.naturalWidth || !viewport.classList.contains("rf-can-pan"))
+        if (!image.naturalWidth || (event.pointerType === "mouse" && event.button !== 0)) return;
+        pointers.set(event.pointerId, local(event));
+        if (pointers.size === 2) {
+          pan = null;
+          pinch = { from: fingers(), pose: { ...pose } };
+        } else if (pointers.size === 1 && viewport.classList.contains("rf-can-pan")) {
+          pan = { id: event.pointerId, x: event.clientX, y: event.clientY, pose: { ...pose } };
+        } else {
           return;
+        }
         event.preventDefault();
-        pan = { id: event.pointerId, x: event.clientX, y: event.clientY, pose: { ...pose } };
         viewport.setPointerCapture(event.pointerId);
         viewport.classList.add("rf-panning");
       },
@@ -226,6 +305,13 @@
     viewport.addEventListener(
       "pointermove",
       (event) => {
+        if (pointers.has(event.pointerId)) pointers.set(event.pointerId, local(event));
+        if (pinch && pointers.size >= 2) {
+          pose = pinched(pinch.pose, pinch.from, fingers(), view, dimensions);
+          mode = "custom";
+          schedule(paint);
+          return;
+        }
         if (!pan || pan.id !== event.pointerId) return;
         pose = {
           ...pan.pose,
@@ -239,13 +325,55 @@
     for (const name of ["pointerup", "pointercancel", "lostpointercapture"]) {
       viewport.addEventListener(
         name,
-        () => {
-          pan = null;
-          viewport.classList.remove("rf-panning");
+        (event) => {
+          pointers.delete(event.pointerId);
+          if (pointers.size < 2) pinch = null;
+          if (pointers.size === 0) {
+            pan = null;
+            viewport.classList.remove("rf-panning");
+          }
         },
         { signal },
       );
     }
+    viewport.addEventListener(
+      "dblclick",
+      (event) => {
+        if (!image.naturalWidth) return;
+        event.preventDefault();
+        toggle(local(event));
+      },
+      { signal },
+    );
+    // Keyboard, as WinUI's ScrollView: the focused image zooms with +/- (also
+    // with Ctrl), returns to the whole image with 0 or Home, shows actual pixels
+    // with 1 and moves with the arrow keys.
+    viewport.tabIndex = 0;
+    viewport.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.altKey || event.metaKey || !image.naturalWidth) return;
+        const arrows = {
+          ArrowLeft: [-1, 0],
+          ArrowRight: [1, 0],
+          ArrowUp: [0, -1],
+          ArrowDown: [0, 1],
+        };
+        if (event.key === "+" || event.key === "=") zoom(1.25, null, true);
+        else if (event.key === "-" || event.key === "_") zoom(0.8, null, true);
+        else if (event.key === "0" || event.key === "Home") setMode("fit", true);
+        else if (event.key === "1") setMode("actual", true);
+        else if (arrows[event.key] && viewport.classList.contains("rf-can-pan")) {
+          const [dx, dy] = arrows[event.key];
+          animate();
+          pose = nudged(pose, dx, dy, view, dimensions);
+          mode = "custom";
+          schedule(paint);
+        } else return;
+        event.preventDefault();
+      },
+      { signal },
+    );
     reflow();
   }
   const handle = document.getElementById("viewer-resize");
@@ -291,12 +419,38 @@
       setSize(rect.width + delta[0], rect.height + delta[1]);
     });
   }
-  for (const id of ["viewer-zoom-out", "viewer-zoom-in"]) {
+  // Tooltips name the keyboard shortcut; icon buttons keep their text as the
+  // accessible name.
+  const shortcuts = {
+    "viewer-zoom-out": "-",
+    "viewer-zoom-in": "+",
+    "viewer-fit": "0",
+    "viewer-fill": "",
+    "viewer-actual": "1",
+  };
+  for (const [id, key] of Object.entries(shortcuts)) {
     const button = document.getElementById(id);
     button?.addEventListener("pointerenter", () => {
-      button.title = button.textContent.trim();
+      const label = button.textContent.trim();
+      button.setAttribute("aria-label", label);
+      button.title = key ? `${label} (${key})` : label;
     });
   }
-  window.rfImageViewer = { mode: setMode, zoom };
+  const readout = document.querySelector("#viewer-zoom-value output");
+  if (readout) {
+    // The zoom readout is also a button: whole image <-> actual pixels.
+    readout.setAttribute("role", "button");
+    readout.tabIndex = 0;
+    readout.addEventListener("click", () => toggle());
+    readout.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      toggle();
+    });
+  }
+  window.rfImageViewer = {
+    mode: (value) => setMode(value, true),
+    zoom: (factor, point) => zoom(factor, point, true),
+  };
   bind();
 })();
