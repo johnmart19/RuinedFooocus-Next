@@ -100,12 +100,11 @@ def reasoning_display_available(capability, history):
 
 def assistant_avatar(info):
     """Materialize the portrait for Gradio without exposing its saved directory."""
-    from PIL import Image
+    from ruinedfooocus.features.chat.assistants import avatar_preview
 
     if info.get("avatar") is None:
         return None
-    with Image.open(info["avatar"]) as image:
-        return image.copy()
+    return avatar_preview(info["avatar"])
 
 
 def chat_model_catalogue():
@@ -198,6 +197,10 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     buttons=["copy_all"],
                     sanitize_html=True,
                     value=assistant_info(default_bot)["chatstart"],
+                    # An empty conversation says what to do instead of showing a blank box.
+                    placeholder=translate_ui(
+                        "Write a message below to start. Choose the assistant and model on the right."
+                    ),
                 )
                 llama_msg = gr.Textbox(
                     label=translate_ui("Message"),

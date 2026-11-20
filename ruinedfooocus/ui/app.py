@@ -1285,6 +1285,9 @@ with shared.gradio_root as block:
 
     cfg_timestamp = gr.Textbox(visible="hidden", value=get_cfg_timestamp())
     cfg_timer = gr.Timer(value=5)
+    # The model lists below are built from this revision. Read before them, so a
+    # background scan finishing during the build still triggers one refresh.
+    built_model_revision = shared.models.revision
     cfg_timer.tick(
         fn=get_cfg_timestamp,
         api_visibility="undocumented",
@@ -1517,6 +1520,17 @@ with shared.gradio_root as block:
                     lambda name: shared.models.get_models_by_path("checkpoints", name, fetch=False),
                     names=shared.models.get_names("checkpoints"),
                 )
+                # The model-dependent controls are built from this metadata; the
+                # preview timer compares against it (see selected_metadata_identity).
+                built_metadata = (
+                    shared.models.get_models_by_path("checkpoints", initial_checkpoint, fetch=False)
+                    if initial_checkpoint
+                    else {}
+                )
+                built_identity = [initial_checkpoint] + [
+                    built_metadata.get(key)
+                    for key in ("baseModel", "id", "hf_repo_id", "_rf_file_signature")
+                ]
                 base_model = gr.Dropdown(
                     label=translate_ui("Image model"),
                     choices=checkpoint_choices(
@@ -2247,9 +2261,12 @@ with shared.gradio_root as block:
 
                 return results
 
-            # Refresh thumbnails when the background metadata scan finishes.
-            model_revision = gr.State(-1)
-            selected_metadata_identity = gr.State(None)
+            # Refresh thumbnails when the background metadata scan finishes. Both
+            # states start from what this page was built with, so a page opened
+            # after nothing changed skips the refresh and its follow-up cascade
+            # (measured: about 2 s plus 10-15 s of server work per page load).
+            model_revision = gr.State(built_model_revision)
+            selected_metadata_identity = gr.State(built_identity)
 
             def update_model_previews(
                 revision,

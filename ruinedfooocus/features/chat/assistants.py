@@ -1,6 +1,7 @@
 """Bundled and user assistants; model selection is independent of persona."""
 
 import base64
+import functools
 import json
 import hashlib
 import io
@@ -29,6 +30,32 @@ def _saved_path(identity):
     if path.resolve().parent.parent != root:
         raise ValueError("Assistant path is outside the saved catalogue.")
     return path
+
+
+AVATAR_PREVIEW_SIZE = 768
+
+
+def avatar_preview(path):
+    """A display copy of an assistant portrait, at most 768px on its longer side.
+
+    The portrait is shown at about 140px and in fullscreen. Every page load sent
+    the full file (1254px for the default) through Gradio's WebP encoder, about
+    0.5 s each time; the reduced copy is decoded once per file version.
+    """
+    path = Path(path)
+    stat = path.stat()
+    return _avatar_preview(str(path), stat.st_mtime_ns, stat.st_size).copy()
+
+
+@functools.lru_cache(maxsize=16)
+def _avatar_preview(path, mtime_ns, size):
+    from PIL import Image
+
+    with Image.open(path) as image:
+        image.load()
+        preview = image.copy()
+    preview.thumbnail((AVATAR_PREVIEW_SIZE, AVATAR_PREVIEW_SIZE), Image.Resampling.LANCZOS)
+    return preview
 
 
 def _avatar(path, info):
@@ -224,19 +251,23 @@ def character_card(path):
 def assistant_choices():
     choices = {}
     hidden = _hidden_assistants()
+    # Resolved once: each resolve is a filesystem round trip, and these were
+    # repeated for every assistant on every page load.
+    general = _saved_path("__normal__").resolve()
+    saved_root = data_path("assistants").resolve()
     for folder in content_roots("assistants", "chatbots"):
         if not folder.is_dir():
             continue
         for path in sorted(folder.rglob("*")):
             try:
                 if path.name == "info.json":
-                    if path.resolve() == _saved_path("__normal__").resolve():
+                    if path.resolve() == general:
                         continue
                     info = json.loads(path.read_text(encoding="utf-8"))
                     if not isinstance(info, dict) or not isinstance(info.get("name"), str):
                         raise ValueError("Assistant definition needs a name.")
                     identity = str(path.parent)
-                    if path.parent.parent.resolve() == data_path("assistants").resolve():
+                    if path.parent.parent.resolve() == saved_root:
                         candidate = "user:" + path.parent.name
                         if _USER_ID.fullmatch(candidate):
                             identity = candidate

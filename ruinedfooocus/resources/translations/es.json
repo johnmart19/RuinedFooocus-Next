@@ -2132,5 +2132,6 @@
   "models.open_this_tab_to_load_the_list": "Abre esta pestaña para cargar la lista.",
   "models.downloading_file_done_of_total_speed_s": "Descargando {file}: {done} de {total} ({speed}/s)",
   "shell.popular_now": "Populares ahora",
-  "models.loading_the_source_list": "Cargando la lista de {source}…"
+  "models.loading_the_source_list": "Cargando la lista de {source}…",
+  "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right": "Escribe un mensaje abajo para empezar. Elige el asistente y el modelo a la derecha."
 }

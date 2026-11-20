@@ -2132,5 +2132,6 @@
   "models.open_this_tab_to_load_the_list": "Open dit tabblad om de lijst te laden.",
   "models.downloading_file_done_of_total_speed_s": "{file} downloaden: {done} van {total} ({speed}/s)",
   "shell.popular_now": "Nu populair",
-  "models.loading_the_source_list": "Lijst van {source} laden…"
+  "models.loading_the_source_list": "Lijst van {source} laden…",
+  "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right": "Typ hieronder een bericht om te beginnen. Kies assistent en model rechts."
 }

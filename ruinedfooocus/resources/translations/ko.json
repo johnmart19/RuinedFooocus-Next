@@ -2132,5 +2132,6 @@
   "models.open_this_tab_to_load_the_list": "이 탭을 열면 목록을 불러옵니다.",
   "models.downloading_file_done_of_total_speed_s": "{file} 다운로드 중: {done} / {total} ({speed}/초)",
   "shell.popular_now": "지금 인기",
-  "models.loading_the_source_list": "{source} 목록을 불러오는 중…"
+  "models.loading_the_source_list": "{source} 목록을 불러오는 중…",
+  "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right": "아래에 메시지를 입력해 시작하세요. 어시스턴트와 모델은 오른쪽에서 고릅니다."
 }

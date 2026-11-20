@@ -2132,5 +2132,6 @@
   "models.open_this_tab_to_load_the_list": "打开此标签页以加载列表。",
   "models.downloading_file_done_of_total_speed_s": "正在下载 {file}：{done} / {total}（{speed}/秒）",
   "shell.popular_now": "当前热门",
-  "models.loading_the_source_list": "正在加载 {source} 列表…"
+  "models.loading_the_source_list": "正在加载 {source} 列表…",
+  "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right": "在下方输入消息即可开始。在右侧选择助手和模型。"
 }

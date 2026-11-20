@@ -1,0 +1,15 @@
+{
+  "id": "side-panel-layout-and-quiet-load",
+  "subject": "Give the side panel room, align its controls and skip needless refreshes on page load",
+  "requires": ["order-independent-tests"],
+  "tests": [
+    "test_model_defaults_ui.py",
+    "test_stage_companion_roles.py",
+    "test_chatbots.py",
+    "test_chat_ui_acceptance.py",
+    "test_action_contract_audit.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

@@ -605,7 +605,9 @@
 :is(#app-tabs, #image-stage) .rf-help-host {
   position: relative;
 }
-:is(#app-tabs, #image-stage) .rf-help-host > :is(label, .head, [data-testid="block-info"]) {
+:is(#app-tabs, #image-stage) .rf-help-host > :is(label, .head, [data-testid="block-info"]),
+:is(#app-tabs, #image-stage) .rf-help-host > .wrap > .head {
+  /* A slider's value box sits in .wrap > .head; keep it clear of the help icon. */
   padding-inline-end: 2rem;
 }
 :is(#app-tabs, #image-stage) .rf-control-help {
@@ -1155,4 +1157,52 @@
 :is(#app-tabs, #image-stage) .table-wrap :is(th, td, .virtual-row, .cell-wrap) {
   font-family: var(--font) !important;
   font-size: var(--text-sm) !important;
+}
+
+/* ---- Layout consistency pass (2026-11-20) ---- */
+/* The Create/Editor inspector keeps a readable width on desktop instead of a fixed
+   2/7 share (about 270px at 1280px), which split label and value rows and wrapped
+   its tab bar. The image column takes the rest. */
+@media (min-width: 1001px) {
+  #generation-layout > #generation-workspace {
+    flex: 1 1 0 !important;
+  }
+  #generation-layout > #generation-controls {
+    flex: 0 0 clamp(20rem, 32%, 28rem) !important;
+  }
+}
+/* Section headers start at the left edge when a long title wraps. */
+:is(#app-tabs, #image-stage) .label-wrap {
+  text-align: start;
+}
+/* Generate fills the prompt box's height beside it; wrapped below, it keeps its own. */
+:is(#app-tabs, #image-stage) #prompt-actions > button:not(.hidden) {
+  flex: 1 1 auto;
+}
+/* Paired actions in the inspector share a line (Generate prompt | Undo) instead of
+   stacking full width; Gradio's 160px child minimum otherwise forces a wrap. */
+#generation-controls .row > button {
+  flex: 1 1 0 !important;
+  min-inline-size: min(6.5rem, 100%) !important;
+}
+/* Choice chips form an even grid: equal cells, no ragged one-per-line column. */
+.rf-chips .wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(7.5rem, 100%), 1fr));
+  /* Each row takes its taller chip's height; both chips in a row match. */
+  align-items: stretch;
+}
+.rf-chips .wrap > label {
+  justify-content: center;
+  text-align: center;
+  min-inline-size: 0;
+  padding: 0.25rem 0.625rem;
+  line-height: 1.25;
+}
+/* The Gallery grid holds its height while the first thumbnails load instead of
+   starting as a small empty box and pushing the page down. */
+@media (min-width: 1001px) {
+  #browser-images {
+    min-block-size: min(var(--rf-gallery-height), 70dvh);
+  }
 }

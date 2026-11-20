@@ -2132,5 +2132,6 @@
   "models.open_this_tab_to_load_the_list": "このタブを開くと一覧を読み込みます。",
   "models.downloading_file_done_of_total_speed_s": "{file} をダウンロード中: {done} / {total} ({speed}/秒)",
   "shell.popular_now": "いま人気",
-  "models.loading_the_source_list": "{source} の一覧を読み込み中…"
+  "models.loading_the_source_list": "{source} の一覧を読み込み中…",
+  "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right": "下にメッセージを入力して始めます。アシスタントとモデルは右側で選べます。"
 }

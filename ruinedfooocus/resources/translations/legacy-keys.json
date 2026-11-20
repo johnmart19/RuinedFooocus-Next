@@ -2128,5 +2128,6 @@
   "Open this tab to load the list.": "models.open_this_tab_to_load_the_list",
   "Downloading {file}: {done} of {total} ({speed}/s)": "models.downloading_file_done_of_total_speed_s",
   "Popular now": "shell.popular_now",
-  "Loading the {source} list…": "models.loading_the_source_list"
+  "Loading the {source} list…": "models.loading_the_source_list",
+  "Write a message below to start. Choose the assistant and model on the right.": "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right"
 }
