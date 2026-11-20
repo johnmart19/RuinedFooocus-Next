@@ -6305,7 +6305,7 @@
       "native_class": "SDXLRefiner",
       "native_family": "SDXLRefiner",
       "behavioral_variant": "base",
-      "auto_recipe_supported": false,
+      "auto_recipe_supported": true,
       "media": "image",
       "format": "safetensors",
       "quantization": {

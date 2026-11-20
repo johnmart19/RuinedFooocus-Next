@@ -5745,7 +5745,7 @@
       "sha256": "4de69fc6d8f7af6ff132ad0eed3a4d4ad9c5d3aa8de0bf79512cff75aba40b95"
     },
     "artifacts/image_diffusion_checkpoint.json": {
-      "sha256": "f0177b4a85133cafd94805b16f7b7a22ca00dbc965f5f95456aba60082b11376"
+      "sha256": "9811394016b4e8daec2fee5a6dda992e24001f9e865e11ce8a0b201f545e5cad"
     },
     "artifacts/acceleration_lora.json": {
       "sha256": "a101d7eaeb3487c982b21b17db2ce5457d84bfe90cc2b252f28fb3d76a06bd67"
@@ -6059,7 +6059,7 @@
       ]
     }
   ],
-  "source_document_sha256": "7a836c154ed6f1bbeb62a4826158316cdc30ef280d9e61d7a81863612be32e4d",
+  "source_document_sha256": "54c79b96eecb8fefed8f5d7da91cbc5054bba4564ba500a5e94295a9ca67d3b4",
   "migration_baseline": {
     "profiles": [
       "language:qwen3_1_7b",

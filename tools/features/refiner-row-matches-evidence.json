@@ -1,0 +1,15 @@
+{
+  "id": "refiner-row-matches-evidence",
+  "subject": "Make the SDXL Refiner catalogue row agree with its automatic-defaults evidence",
+  "requires": ["full-suite-repairs", "release-boogu-refiner-defaults"],
+  "tests": [
+    "test_native_extended_catalogue.py",
+    "test_model_registry.py",
+    "test_release_model_defaults.py",
+    "test_sdxl_refiner.py",
+    "test_model_acquisition.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
