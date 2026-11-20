@@ -48,6 +48,14 @@ Transformers through 5.20.2 and ONNX Runtime 1.23.2, and selects FastAPI 0.162.5
 python-multipart 0.0.32 and filelock 4.1. The later filelock releases require
 Python 3.11; an unconditional 4.2 pin cannot resolve a Python 3.10 environment.
 
+On November 20, 2026 the API pins for Python 3.11 and later moved to FastAPI
+0.165.0 and python-multipart 0.0.34. The interface's own dependency resolves
+FastAPI without a pin, so a current environment already had these releases; the
+older API pins then made `--api` refuse to start with `--offline` or
+`--skip-dependency-install`, and a normal `--api` start would have downgraded
+the package the interface runs on. Both releases require Python 3.11, so the
+Python 3.10 pins are unchanged.
+
 The modern Kornia range permits 0.9.1, whose Torch floor remains 2.5.1, while
 retaining 0.8.3 for the explicit DirectML Torch 2.4 recipe. Python 3.10 retains
 Kornia 0.8.2. SoupSieve 4.1.1 remains a BeautifulSoup transitive dependency rather

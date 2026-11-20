@@ -21,6 +21,7 @@ data folder:
 
 - `outputs` holds the generated images. Each image carries its prompt and
   settings in its own metadata; that is the only lasting copy of a prompt.
+  Images made through the guest interface are kept apart in `outputs/guests`.
 - `cache` holds everything else from a session: uploads and files shown in the
   interface, Editor sessions and their images, the Gallery index and
   thumbnails, cached Chat sources and the local Chat server's log. Deleting the

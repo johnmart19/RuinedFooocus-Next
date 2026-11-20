@@ -1,0 +1,13 @@
+{
+  "id": "api-pins-match-interface",
+  "subject": "Match the API package pins to the releases the interface installs",
+  "requires": ["prompts-stay-out-of-settings", "current-python-dependencies"],
+  "tests": [
+    "test_dependency_requirements.py",
+    "test_package_plan.py",
+    "test_session_content_locations.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
