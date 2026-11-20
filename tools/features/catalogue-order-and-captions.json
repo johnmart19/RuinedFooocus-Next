@@ -1,0 +1,16 @@
+{
+  "id": "catalogue-order-and-captions",
+  "subject": "List image models first and name what a placeholder card is",
+  "requires": ["faster-startup"],
+  "tests": [
+    "test_catalogue_listing.py",
+    "test_card_preview_badge.py",
+    "test_catalogue_previews.py",
+    "test_compact_model_profile_controls.py",
+    "test_model_acquisition_ui.py",
+    "test_media_paths.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

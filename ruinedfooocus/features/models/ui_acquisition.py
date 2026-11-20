@@ -101,8 +101,59 @@ def preview_sidecar_key(row):
     return None
 
 
+# What people come for first: models that make images, then what shapes or extends
+# them, then supporting components, then Chat. Unlisted categories follow in name order.
+CATEGORY_ORDER = (
+    "Image models",
+    "LoRAs",
+    "Embeddings",
+    "ControlNet",
+    "Model patches",
+    "Image tools",
+    "Upscalers",
+    "Latent upscalers",
+    "VAEs",
+    "Text encoders",
+    "Vision encoders",
+    "Component",
+    "Depth",
+    "Detection",
+    "Background removal",
+    "Face restoration",
+    "Chat models",
+    "Vision / projectors",
+)
+_CATEGORY_RANK = {name: index for index, name in enumerate(CATEGORY_ORDER)}
+
+
+def placeholder_caption(row, locale=None):
+    """What to print on category artwork: the most telling known fact about the entry.
+
+    An image model is named by its family, an upscaler by its factor; everything
+    else by its category. Nothing is guessed: unknown facts fall back to the category.
+    """
+    category = localize(row["category_label"], locale)
+    annotation = row.get("annotation") or {}
+    if row["category_label"] == "Image models":
+        family = annotation.get("architecture")
+        if isinstance(family, str) and 0 < len(family) <= 24:
+            return family
+    if row["category_label"] in ("Upscalers", "Latent upscalers"):
+        factor = re.match(r"(?i)(\d{1,2})x[-_ ]", Path(row["key"]).name)
+        if factor:
+            return f"{int(factor.group(1))}× · {category}"
+    return category
+
+
 def listed_records(rows):
-    return [row for row in rows if not row.get("_details_only")]
+    """Listed rows by category, keeping the catalogue's order inside each one."""
+    return sorted(
+        (row for row in rows if not row.get("_details_only")),
+        key=lambda row: (
+            _CATEGORY_RANK.get(row["category_label"], len(CATEGORY_ORDER)),
+            row["category_label"] if row["category_label"] not in _CATEGORY_RANK else "",
+        ),
+    )
 
 
 def card_label(row):
@@ -141,6 +192,9 @@ def card_data(rows, selected, manager, page=1, locale=None, previews=None):
                 preview=gr.data_classes.FileData(path=preview or fallback).model_dump(),
                 fallback=gr.data_classes.FileData(path=fallback).model_dump(),
                 preview_is_default=not preview or preview == fallback,
+                # Shown over the category artwork when the publisher supplies none,
+                # so a page of placeholders still says what each entry is.
+                caption=placeholder_caption(row, locale),
             )
         )
     return dict(
@@ -272,7 +326,11 @@ def create_ui(manager, models, *, offline):
     selection_version = gr.Number(0, visible=False, precision=0)
     page_version = gr.Number(0, visible=False, precision=0)
     roles_version = gr.Number(0, visible=False, precision=0)
-    previews = CataloguePreviews(Path(manager.model_paths["cache_path"]) / "catalogue-previews")
+    # A page shows 36 entries; fetch artwork for several at once so it fills in
+    # within seconds. Each fetch is two small bounded reads.
+    previews = CataloguePreviews(
+        Path(manager.model_paths["cache_path"]) / "catalogue-previews", workers=4, pending=8
+    )
     preview_revision = gr.State(0)
     with gr.Column(elem_id="model-acquisition", min_width=0):
         gr.Markdown(

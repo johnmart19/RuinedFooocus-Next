@@ -418,3 +418,18 @@ The cached **Flux.3 Klein** image family uses the existing FLUX 3 encoder/VAE
 slots. Its automatic distilled recipe is selected from a matching local header,
 not filename words; Base or ambiguous variants require explicit sampling choices.
 See [FLUX 3 defaults and source limits](integrations/flux3-native-defaults.md).
+
+## Download catalogue order and pictures
+
+The catalogue lists image models first, then LoRAs, embeddings, ControlNet and
+other add-ons, then upscalers and supporting components, and Chat models last.
+Inside a category the catalogue's own order is kept.
+
+A card shows the publisher's picture when the pinned repository contains an
+image file; the application reads that repository's file list and one image,
+nothing else. Checked on 2026-11-20, 18 of 90 sampled repositories contained
+one, and model cards added almost only logos, so they are not used. Every other
+entry shows the category artwork, dimmed, with a caption that names what the
+entry is: the model family for an image model when the catalogue records it,
+the factor for an upscaler whose filename states it, otherwise the category.
+Installed models keep showing their own local preview.

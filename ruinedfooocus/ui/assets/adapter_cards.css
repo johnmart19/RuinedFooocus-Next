@@ -105,6 +105,30 @@
   line-height: 1.35;
 }
 .adapter-card-badge,
+/* A placeholder is category artwork, not the model's own picture: dim it and
+   name the category on it so identical tiles stay readable. */
+.adapter-card-media[data-caption] {
+  position: relative;
+}
+.adapter-card-media[data-caption] img {
+  filter: brightness(0.42) saturate(0.7);
+}
+.adapter-card-media[data-caption]::after {
+  content: attr(data-caption);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
 .adapter-card-default,
 .adapter-card-empty {
   color: var(--body-text-color-subdued);

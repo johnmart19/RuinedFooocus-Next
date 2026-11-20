@@ -1,9 +1,12 @@
 const dragType = "application/x-ruinedfooocus-adapter";
 let selected = "";
 let renderedValue = props.value;
-function setPreview(media, url, fallback, badge, isDefault = false) {
+function setPreview(media, url, fallback, badge, isDefault = false, caption = "") {
   const markDefault = (value) => {
     if (badge) badge.hidden = !value || !badge.textContent;
+    // Category artwork alone does not say what an entry is; name it on the picture.
+    if (value && caption) media.dataset.caption = caption;
+    else delete media.dataset.caption;
   };
   const preview = media.querySelector("img") || document.createElement("img");
   if (preview.getAttribute("src") !== url) preview.src = url;
@@ -61,6 +64,7 @@ function renderCards() {
         button.dataset.fallback,
         button.querySelector(".adapter-card-default"),
         patch.preview_is_default,
+        button.dataset.caption || "",
       );
     }
     return;
@@ -99,6 +103,7 @@ function renderCards() {
     button.dataset.adapter = card.key;
     button.dataset.artwork = card.artworkKey || "";
     button.dataset.fallback = card.fallback?.url || "";
+    button.dataset.caption = card.caption || "";
     button.draggable = Boolean(data.acceptsDrag);
     button.setAttribute("aria-pressed", String(card.key === selected));
     const media = button.querySelector(".adapter-card-media") || document.createElement("span");
@@ -115,6 +120,7 @@ function renderCards() {
         button.dataset.fallback,
         defaultBadge,
         card.preview_is_default,
+        card.caption || "",
       );
     } else {
       media.textContent = card.kind || data.heading;
