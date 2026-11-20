@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Pin FastAPI and python-multipart in the base install to the releases the API extras name, so enabling `--api` can no longer disagree with what is installed.
 - Fix `--api` refusing to start offline in a current environment: its FastAPI and python-multipart pins were older than the releases the interface already installs (now 0.165.0 and 0.0.34 on Python 3.11 and later).
 - Prompts are no longer written to the profile: Save current defaults stopped saving the prompt and negative prompt into settings and clears text saved there before. After a review of every storage location and outbound request, prompts exist only in an image's own metadata and in the disposable cache folder, and nothing sends them over the network. The user guide lists what each folder holds.
 - Finish the Editor side of the panel rework: the Editor's Generate action is now Power-ups and runs the tool chosen there on the image, and it no longer starts a new image from a prompt alone (it asks for a tool or points to Create). Choosing an edit action keeps the Edit tab open instead of jumping to the generation settings, and Power-ups now sits next to Models in the tab row.

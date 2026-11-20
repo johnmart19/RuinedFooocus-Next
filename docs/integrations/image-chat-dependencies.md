@@ -56,6 +56,12 @@ older API pins then made `--api` refuse to start with `--offline` or
 the package the interface runs on. Both releases require Python 3.11, so the
 Python 3.10 pins are unchanged.
 
+The same day the base overlay (`pip/modules.txt`) gained the same FastAPI and
+python-multipart pins, per Python branch. Before that the interface's dependency
+chose whatever release was current at install time, which is how the two files
+came apart. `test_api_requirement_pins.py` now fails when an API pin differs
+from the base pin of the same package, so the files change together.
+
 The modern Kornia range permits 0.9.1, whose Torch floor remains 2.5.1, while
 retaining 0.8.3 for the explicit DirectML Torch 2.4 recipe. Python 3.10 retains
 Kornia 0.8.2. SoupSieve 4.1.1 remains a BeautifulSoup transitive dependency rather

@@ -9,6 +9,13 @@ tqdm==4.70.1
 psutil==7.2.2
 pytorch_lightning==2.6.6
 gradio[mcp]==6.32.0
+# Gradio resolves these without a pin. The API extras name the same releases
+# (requirements_api_versions.txt), so enabling --api never changes the packages
+# the interface itself runs on. Later releases require Python 3.11.
+fastapi==0.162.5; python_version < "3.11"
+fastapi==0.165.0; python_version >= "3.11"
+python-multipart==0.0.32; python_version < "3.11"
+python-multipart==0.0.34; python_version >= "3.11"
 # Gradio 6.32 supports Pillow 13; Python 3.10 retains its latest compatible Pillow.
 pillow==12.3.0; python_version < "3.11"
 pillow==13.0.0; python_version >= "3.11"

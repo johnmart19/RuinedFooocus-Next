@@ -26,6 +26,8 @@
     "accelerate",
     "pytorch-lightning",
     "gradio",
+    "fastapi",
+    "python-multipart",
     "diffusers",
     "ftfy",
     "clip-interrogator",

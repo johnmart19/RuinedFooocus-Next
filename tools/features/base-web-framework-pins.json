@@ -1,0 +1,15 @@
+{
+  "id": "base-web-framework-pins",
+  "subject": "Pin the web framework in the base install to the API releases",
+  "requires": ["api-pins-match-interface"],
+  "tests": [
+    "test_api_requirement_pins.py",
+    "test_package_plan.py",
+    "test_dependency_requirements.py",
+    "test_comfy045_release.py",
+    "test_bootstrap_package_contract.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
