@@ -49,6 +49,11 @@ if args.guest:
     launch_guest(args)
     raise SystemExit(0)
 
+from ruinedfooocus.ui.gradio_frontend import defer_interface_build, resume_interface_build
+
+# The page is assembled from many layout contexts; build it once, at launch.
+defer_interface_build()
+
 import logging
 
 _startup_log_level = logging.getLogger().level
@@ -973,6 +978,7 @@ def launch_app(args):
     from ruinedfooocus.ui import user_errors
 
     user_errors.apply(main_tabs, shared.gradio_root)
+    resume_interface_build()
     shared.server_app, shared.local_url, shared.share_url = main_tabs.launch(
         inbrowser=inbrowser,
         server_name=args.listen,

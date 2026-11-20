@@ -113,6 +113,38 @@ class GradioCompletionGuard:
         return await self.app(scope, receive, send)
 
 
+_DEFERRED = {}
+
+
+def defer_interface_build():
+    """Skip Gradio's rebuild of the page each time a layout context closes.
+
+    Closing any `with gr.Blocks()` context makes Gradio compute the configuration
+    of every component and construct a new web application. The interface is
+    assembled from many such contexts, so that work was repeated for the whole
+    page each time and then discarded. `launch()` builds both once from the
+    finished page; call `resume_interface_build()` before it.
+    """
+    import gradio.blocks as blocks
+
+    if _DEFERRED:
+        return
+    _DEFERRED["config"] = blocks.Blocks.get_config_file
+    _DEFERRED["app"] = blocks.App.__dict__["create_app"]
+    blocks.Blocks.get_config_file = lambda self: {}
+    blocks.App.create_app = staticmethod(lambda *arguments, **options: None)
+
+
+def resume_interface_build():
+    """Restore Gradio's own functions; safe to call when nothing was deferred."""
+    import gradio.blocks as blocks
+
+    if not _DEFERRED:
+        return
+    blocks.Blocks.get_config_file = _DEFERRED.pop("config")
+    blocks.App.create_app = _DEFERRED.pop("app")
+
+
 def normalize_hidden_progress(root):
     """Resolve only hidden callbacks' implicit output scope before native launch."""
     changed = 0

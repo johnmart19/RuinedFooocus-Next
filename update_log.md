@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Start much faster: a launch that took 46 seconds on a warm disk now takes about 20 (measured on Windows with an RX 7900 XTX). The interface is now built once instead of being rebuilt each time a part of it was added, the check of the installed PyTorch packages is remembered until those packages change, and background removal loads its library on first use. Startup also says when it is loading the image runtime, so the quiet phases no longer look stuck.
 - Fix image tools failing to load in a brand-new data folder that has no settings folder yet.
 - Benchmark pair now also reports the GPU memory in use with each file. On a second model (JANIMA) the INT8 copy was about 6% faster, used 2.4 GB less GPU memory and gave almost the same picture.
 - Pin FastAPI and python-multipart in the base install to the releases the API extras name, so enabling `--api` can no longer disagree with what is installed.

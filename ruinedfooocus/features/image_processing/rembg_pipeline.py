@@ -4,7 +4,6 @@ from ruinedfooocus.app.arguments import args
 from ruinedfooocus.backends.onnx.onnx_runtime import new_session, session_request_identity
 from ruinedfooocus.features.image_editing.controlnet import get_settings
 
-import rembg
 import PIL.Image
 from typing import Any
 
@@ -46,6 +45,10 @@ class pipeline:
                     # PNG expects straight RGB plus alpha, not RGB blended with
                     # black and then attenuated a second time by its alpha.
                     rembg_kwargs.setdefault("putalpha", True)
+                # Imported on first use: the library and its compiler stack take
+                # over a second, which every launch paid for.
+                import rembg
+
                 image = rembg.remove(image, session=rembg_session, **rembg_kwargs)
             finally:
                 if hasattr(rembg_session, "check_cancelled"):

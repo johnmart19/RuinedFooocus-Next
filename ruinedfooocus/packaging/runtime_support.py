@@ -527,7 +527,82 @@ def _read_installed_torch(backend="rocm"):
     return {"hip" if backend == "rocm" else backend: runtime, "versions": versions}
 
 
+# Validated bundles of this process, by the identity of the packages they describe.
+_PROBED = {}
+# A CUDA probe also exercises the driver, which can change without the packages.
+_REMEMBERED_BACKENDS = ("rocm", "cpu")
+
+
+def _bundle_identity(backend):
+    """What a validated bundle depends on: the interpreter and the installed packages.
+
+    Reinstalling, repairing or replacing torch or torchvision rewrites their
+    metadata, so the identity changes and the bundle is validated again.
+    """
+    parts = [backend, sys.executable]
+    for name in ("torch", "torchvision"):
+        try:
+            distribution = importlib.metadata.distribution(name)
+        except importlib.metadata.PackageNotFoundError:
+            return None
+        record = distribution.locate_file("") / (
+            f"{distribution.metadata['Name'].replace('-', '_')}-{distribution.version}.dist-info"
+        )
+        try:
+            stamp = (record / "RECORD").stat()
+        except OSError:
+            return None
+        parts += [name, distribution.version, stamp.st_size, stamp.st_mtime_ns]
+    return json.dumps(parts)
+
+
+def _probe_cache_file():
+    from ruinedfooocus.core.paths import data_path
+
+    return data_path("cache", "torch-probe.json")
+
+
 def _probe_installed_torch(backend):
+    """Validate the installed bundle once per set of installed packages.
+
+    Importing torch in a child process costs several seconds and startup asks more
+    than once. A ROCm or CPU bundle that validated stays valid until its packages
+    change; a failed or empty result is never remembered.
+    """
+    identity = _bundle_identity(backend) if backend in _REMEMBERED_BACKENDS else None
+    if identity is None:
+        return _run_torch_probe(backend)
+    if identity in _PROBED:
+        return _PROBED[identity]
+    try:
+        saved = json.loads(_probe_cache_file().read_text(encoding="utf-8"))
+        bundle = saved.get(identity) if isinstance(saved, dict) else None
+        key = "hip" if backend == "rocm" else backend
+        if (
+            isinstance(bundle, dict)
+            and isinstance(bundle.get(key), str)
+            and isinstance(bundle.get("versions"), dict)
+        ):
+            _PROBED[identity] = bundle
+            return bundle
+    except (OSError, ValueError):
+        pass
+    bundle = _run_torch_probe(backend)
+    if bundle is not None:
+        _PROBED[identity] = bundle
+        try:
+            path = _probe_cache_file()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            # One entry: an older identity describes packages that are gone.
+            temporary = path.with_suffix(".tmp")
+            temporary.write_text(json.dumps({identity: bundle}), encoding="utf-8")
+            os.replace(temporary, path)
+        except OSError:
+            pass
+    return bundle
+
+
+def _run_torch_probe(backend):
     """Keep torch imports isolated and normalize child-process probe failures."""
     try:
         result = subprocess.run(

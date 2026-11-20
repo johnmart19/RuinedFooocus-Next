@@ -9,7 +9,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import PIL.Image
 
@@ -20,7 +20,12 @@ class BackgroundSessionTests(unittest.TestCase):
             Path("ruinedfooocus/features/image_processing/rembg_pipeline.py").read_text()
         )
         node = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == "pipeline")
+        import rembg
+
+        self.library = rembg
         self.rembg = Mock()
+        # The pipeline imports the library on first use.
+        self.enterContext(patch.dict("sys.modules", {"rembg": self.rembg}))
         self.worker = Mock()
         self.args = SimpleNamespace(cpu=False)
         self.identity = Mock(return_value="request-a")
@@ -105,9 +110,7 @@ class BackgroundSessionTests(unittest.TestCase):
         self.rembg.new_session.assert_called_once_with(cpu=False)
 
     def test_native_cutout_keeps_straight_rgb_and_source_pixels(self):
-        import rembg
-
-        self.rembg.remove.side_effect = rembg.remove
+        self.rembg.remove.side_effect = self.library.remove
         source = PIL.Image.new("RGB", (3, 1), (200, 100, 50))
         mask = PIL.Image.new("L", source.size)
         mask.putdata([0, 128, 255])

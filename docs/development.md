@@ -157,3 +157,30 @@ folder README up to 16 KiB; placement markers are excluded. Weights, local
 model bundles, settings, environments and private evidence are excluded.
 Portable GPU runtime qualification is separate. See
 [runtime support](runtime-and-troubleshooting.md).
+
+## Startup time
+
+Measured on Windows with an RX 7900 XTX and a warm disk on 2026-11-20: 46 seconds
+from process start to a listening port before, about 20 after. Three things made
+the difference, and each is easy to undo by accident:
+
+- **One interface build.** Closing any `with gr.Blocks()` context makes Gradio
+  compute the configuration of every component and construct a new web
+  application. The interface re-enters such contexts about 25 times while it is
+  assembled, which cost 11.5 seconds. `ui/gradio_frontend.py` defers that work
+  (`defer_interface_build`) until `launch()`, which builds both once;
+  `resume_interface_build` must run before `launch()`. Code that needs
+  `Blocks.config` or `Blocks.app` while the interface is being assembled will
+  see an empty configuration and no application.
+- **Remembered PyTorch validation.** `packaging/runtime_support.py` validates
+  the installed bundle by importing torch in a child process, about five seconds
+  each time, and startup asked twice. A ROCm or CPU bundle that validated is
+  remembered in `cache/torch-probe.json` under the identity of the installed
+  torch and torchvision records, so reinstalling or repairing them validates
+  again. CUDA is not remembered because its probe also exercises the driver.
+- **Imports on first use.** `rembg` and its compiler stack took 1.7 seconds at
+  every launch; `rembg_pipeline.py` now imports it when a background is removed.
+
+To see where a launch spends its time, sample the main thread rather than trace
+it: a tracing profiler multiplies the cost of import-heavy code and points at
+the wrong places.

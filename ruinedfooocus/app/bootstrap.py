@@ -581,6 +581,8 @@ except:
 # Initialize native memory services before UI model discovery imports backend modules.
 from ruinedfooocus.backends.comfy.comfy_compat import initialize_backend
 
+# The next steps print nothing for several seconds; say what is happening.
+print("Loading the image runtime...", flush=True)
 initialize_backend(args)
 
 from ruinedfooocus.core.paths import data_path
@@ -602,7 +604,7 @@ except Exception as e:
 
 
 def launch_ui():
-    print("Starting webui...", flush=True)
+    print("Starting webui... building the interface", flush=True)
     import ruinedfooocus.ui.app as webui
 
 
