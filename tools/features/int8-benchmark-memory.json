@@ -1,0 +1,9 @@
+{
+  "id": "int8-benchmark-memory",
+  "subject": "Report GPU memory in the INT8 pair benchmark",
+  "requires": ["base-web-framework-pins"],
+  "tests": ["test_gpu_optimizer.py", "test_checkpoint_selection_lane.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

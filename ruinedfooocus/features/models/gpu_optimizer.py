@@ -8,8 +8,9 @@ else is copied byte for byte and the original file is never modified.
 
 Quantization changes the numbers: the same seed gives a different image.
 `benchmark_pair` measures both files on this machine so the choice is made on
-evidence rather than on the format's name. Measured once on an RX 7900 XTX with
-Anima (2026-11-20): file 3988 MB to 2216 MB, about 7% faster at 1024 and 1536 px.
+evidence rather than on the format's name. Measured on an RX 7900 XTX with
+ROCm 10.2 (2026-11-20): Anima 3988 MB to 2216 MB and about 7% faster; JANIMA
+5572 MB to 3081 MB, about 6% faster and 2.4 GB less GPU memory in use.
 """
 
 import hashlib
@@ -257,11 +258,27 @@ def pair(name, names):
     return (name, matches[0]) if matches else None
 
 
-def benchmark_pair(original, copy, *, size="1024x1024", runs=2, generate=None):
+def device_memory_used():
+    """GPU memory in use on the image device in GiB, or None without a GPU."""
+    try:
+        import torch
+
+        if not torch.cuda.is_available():
+            return None
+        free, total = torch.cuda.mem_get_info()
+        return (total - free) / 2**30
+    except Exception:
+        return None
+
+
+def benchmark_pair(original, copy, *, size="1024x1024", runs=2, generate=None, memory=None):
     """Generate with both files and report the last run of each, in seconds.
 
     The first run of a model includes loading it, so only the last run is compared.
+    GPU memory is read after each model's last run, while it is still loaded; the
+    reading covers everything on the device, so compare the two, not the absolute.
     """
+    memory = device_memory_used if memory is None else memory
     if generate is None:
         from ruinedfooocus.app import api_runtime
 
@@ -270,12 +287,13 @@ def benchmark_pair(original, copy, *, size="1024x1024", runs=2, generate=None):
             payload = dict(prompt=BENCHMARK_PROMPT, model=resolved, n=1, seed=1234, size=size)
             api_runtime.wait_for_result(api_runtime.images(payload, selected))
 
-    timings = {}
+    timings, used = {}, {}
     for name in (original, copy):
         for _ in range(runs):
             started = time.perf_counter()
             generate(name)
             timings[name] = time.perf_counter() - started
+        used[name] = memory()
     first, second = timings[original], timings[copy]
     change = (first - second) / first * 100
     verdict = (
@@ -285,10 +303,17 @@ def benchmark_pair(original, copy, *, size="1024x1024", runs=2, generate=None):
         if change <= -2
         else "No measurable speed difference."
     )
+    memory_note = ""
+    if used[original] is not None and used[copy] is not None:
+        memory_note = (
+            f" GPU memory in use: {used[original]:.1f} GiB with the original, "
+            f"{used[copy]:.1f} GiB with the copy."
+        )
     return dict(
         seconds=timings,
+        memory_gib=used,
         change_percent=change,
         message=f"{size}, run {runs} of {runs} each: {Path(original).name} {first:.1f} s, "
-        f"{Path(copy).name} {second:.1f} s. {verdict} "
+        f"{Path(copy).name} {second:.1f} s. {verdict}{memory_note} "
         "Both images are in the Gallery for a quality comparison.",
     )

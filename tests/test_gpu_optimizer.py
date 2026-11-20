@@ -169,6 +169,17 @@ class GpuOptimizerTests(unittest.TestCase):
         self.assertEqual(calls, ["a.safetensors"] * 2 + ["a.int8.safetensors"] * 2)
         self.assertEqual(result["seconds"], {"a.safetensors": 30, "a.int8.safetensors": 27})
         self.assertIn("10% faster", result["message"])
+        self.assertNotIn("GPU memory", result["message"])
+        readings = iter([11.2, 8.9])
+        measured = gpu_optimizer.benchmark_pair(
+            "a.safetensors",
+            "a.int8.safetensors",
+            runs=1,
+            generate=lambda name: None,
+            memory=lambda: next(readings),
+        )
+        self.assertEqual(measured["memory_gib"], {"a.safetensors": 11.2, "a.int8.safetensors": 8.9})
+        self.assertIn("11.2 GiB with the original, 8.9 GiB with the copy", measured["message"])
 
 
 if __name__ == "__main__":

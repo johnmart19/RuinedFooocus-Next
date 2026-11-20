@@ -370,9 +370,12 @@ The conversion runs on the CPU and leaves the GPU to the image worker; Anima
 Quantization changes the numbers: the same seed gives a different image. To
 decide whether to keep a copy, **Benchmark pair** generates twice at
 1024 × 1024 with the original and with its copy and reports the second run of
-each in seconds; both images are saved for a quality comparison. On an
-RX 7900 XTX with ROCm 10.2 the Anima copy measured about 7% faster at 1024 and
-1536 px (2026-11-20, one prompt). Other models and GPUs were not measured.
+each in seconds and the GPU memory in use with each; both images are saved for
+a quality comparison. Measured on an RX 7900 XTX with ROCm 10.2 on 2026-11-20,
+one prompt each: the Anima copy was about 7% faster at 1024 and 1536 px; the
+JANIMA copy (5572 MB to 3081 MB) was about 6% faster at 1024 px, used 2.4 GB
+less GPU memory (11.2 GB to 8.9 GB in use) and gave almost the same picture.
+Other models and GPUs were not measured.
 
 ## LoRAs and embeddings
 
