@@ -192,3 +192,46 @@ the difference, and each is easy to undo by accident:
 To see where a launch spends its time, sample the main thread rather than trace
 it: a tracing profiler multiplies the cost of import-heavy code and points at
 the wrong places.
+
+## Benchmarks
+
+`tools/benchmark_app.py` measures an installation without changing it. Use the
+app's interpreter:
+
+```sh
+python tools/benchmark_app.py startup --runs 3 --data-dir <profile> -- --offline
+python tools/benchmark_app.py generate --base-url http://127.0.0.1:7860 --model anima --runs 4
+```
+
+`startup` launches `launch.py` on a free port and reports, per phase, the
+seconds until the runtime loads, the interface is built, the port listens and
+the page and its configuration answer. `generate` needs an app started with
+`--api`; it times `/v1/images/generations` per model, reports the first image
+(which includes loading the model) apart from later ones, and on Windows samples
+the server process's dedicated GPU memory and busiest GPU engine from the
+system counters. Record the CPU load next to any timing: on a shared machine,
+other programs changed CPU results by an order of magnitude on 2026-11-20.
+
+Measured 2026-11-20 on an RX 7900 XTX (ROCm, 1024x1024, the model's default
+steps, seed 1234, models used one after another in one session); the run was
+stopped before Krea 2 finished:
+
+| Model                    | First image | Later images | GPU memory |
+| ------------------------ | ----------- | ------------ | ---------- |
+| Anima Mayhem 2.9B fp16   | 41 s        | 36-43 s      | 11.5 GB    |
+| JANIMA 2.9B bf16         | 37 s        | 32-33 s      | 17.0 GB    |
+| Flux 3 Klein INT8        | 32 s        | 9.5-11 s     | 21.9 GB    |
+| MOSS Image INT8          | 72 s        | 62-63 s      | 20.1 GB    |
+| Krea 2 BSS INT8 (2 runs) | 37 s        | 103-108 s    | 22.0 GB    |
+
+GPU memory grows as models change because earlier ones stay loaded; Krea 2 ran
+about three times slower once 22 of 24 GB were in use. This is not yet
+explained.
+
+Interface callbacks are measured on the server: wrap
+`gradio.blocks.Blocks.process_api` in a scratch launcher to record each
+callback's name, trigger and duration, then load the page. On 2026-11-20 a
+fresh page load cost 80 callbacks and 19.1 s of server time; most of it came
+from the model preview timer, which treated every new page as stale and
+re-rendered the model and LoRA lists. It now starts from the revision and
+selected-model metadata the page was built with: 65 callbacks and 7.7 s.
