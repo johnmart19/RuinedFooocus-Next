@@ -22,6 +22,11 @@ from ruinedfooocus.core.preparation import preparation_service, PreparationBusy,
 from ruinedfooocus.features.generation import image_preparation as assets
 from ruinedfooocus.features.image_processing import depth_utilities as utilities
 from ruinedfooocus.features.image_processing import utility_face as face
+
+# Imported before any test: fixtures restore `sys.modules` with `patch.dict`,
+# which drops a module first imported inside a test. A later test would then
+# patch that dropped copy while the face utility imports a fresh one.
+from ruinedfooocus.features.image_processing import utility_device as device
 from ruinedfooocus.features.models.model_registry import load_registry
 import test_depth_utilities as fixtures
 from test_image_preparation import Manager
@@ -289,8 +294,6 @@ class MediaPipeFaceMaskTests(unittest.TestCase):
         self.assertNotIn("image_utility_source", data)
 
     def test_native_device_policy_is_preserved_and_failed_model_cache_is_unloaded(self):
-        from ruinedfooocus.features.image_processing import utility_device as device
-
         model = self.runtime()
         policy = device.UtilityPolicy(torch.device("cuda:0"), torch.device("cpu"), torch.float32)
         data = self.capture()
@@ -323,8 +326,6 @@ class MediaPipeFaceMaskTests(unittest.TestCase):
         self.assertFalse(torch.cuda.is_initialized())
 
     def test_explicit_cpu_is_authoritative_for_fresh_native_patchers(self):
-        from ruinedfooocus.features.image_processing import utility_device as device
-
         model = self.runtime()
         model.load_device = "cuda:0"
         for patcher in model.patchers.values():
@@ -340,8 +341,6 @@ class MediaPipeFaceMaskTests(unittest.TestCase):
         self.assertFalse(data["image_utility_source"]["device_policy"]["fallback"])
 
     def test_host_transfer_failure_is_inside_recovery_and_reloads_native_model_on_cpu(self):
-        from ruinedfooocus.features.image_processing import utility_device as device
-
         class FailedHostTransfer(torch.Tensor):
             def cpu(self, *args, **kwargs):
                 raise RuntimeError("CUDA asynchronous host transfer failed")
@@ -376,8 +375,6 @@ class MediaPipeFaceMaskTests(unittest.TestCase):
         warning.assert_called_once()
 
     def test_gpu_only_offload_rejects_recovery_before_second_constructor_or_success_metadata(self):
-        from ruinedfooocus.features.image_processing import utility_device as device
-
         model = self.runtime()
         self.fixture.memory.text_encoder_offload_device = lambda: torch.device("cuda:0")
         model.detect_batch.side_effect = RuntimeError("CUDA unsupported device")

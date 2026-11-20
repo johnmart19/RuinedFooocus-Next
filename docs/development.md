@@ -37,6 +37,14 @@ file hashes, dependency versions, command, test count and failures. Reuse earlie
 proof only when its relevant sources and dependencies still match. CPU mocks do
 not certify model semantics, GPU stability, or rendered browser behavior.
 
+Many fixtures restore `sys.modules` with `patch.dict`, which also removes any
+module first imported while the patch was active. Import a module a test patches
+(for example `utility_device`) at the top of the test file, not inside a test:
+otherwise a later test patches the dropped copy while the code under test loads
+a fresh one. For the same reason the runner imports `torch.distributed.tensor`
+before discovery; `torch.testing.assert_close` loads it lazily, and loading it a
+second time fails because torch registers its operator library only once.
+
 ## Documentation is part of a feature
 
 Each worker updates the guide owned by its feature, or records why the existing

@@ -1,0 +1,14 @@
+{
+  "id": "test-module-isolation",
+  "subject": "Keep patched modules loaded across fixtures that restore sys.modules",
+  "requires": ["upload-races"],
+  "tests": [
+    "test_mediapipe_face_mask.py",
+    "test_sd4x_conditioning.py",
+    "test_feature_cherry_pick_manifest.py",
+    "test_cpu_check_runner.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

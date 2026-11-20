@@ -283,6 +283,13 @@ torch.cuda._lazy_init = prohibit_gpu
 for name in ('init', 'is_available', 'device_count', 'current_device',
              'get_device_properties', 'get_device_name', 'get_device_capability', 'mem_get_info'):
     setattr(torch.cuda, name, prohibit_gpu)
+# torch.testing.assert_close imports this lazily. A test that restores
+# sys.modules with patch.dict drops it again, and the next import registers the
+# c10d_functional operator library a second time, which torch rejects.
+try:
+    import torch.distributed.tensor
+except ImportError:
+    pass
 patterns = {patterns!r}
 suites = []
 for pattern in patterns:
