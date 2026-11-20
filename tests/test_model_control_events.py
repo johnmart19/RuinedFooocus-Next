@@ -291,6 +291,12 @@ class ModelControlEventTests(unittest.TestCase):
         self.assertEqual(graph.value("size_mode"), "legacy_base")
 
     def test_queued_old_dimensions_keep_manual_ownership_across_family_changes(self):
+        from ruinedfooocus.features.models import native_resolutions
+
+        # Fixed to the generic fallback sizes: with the ComfyUI resolution node
+        # importable (as after other suites), Flux 3 offers 832x1248 instead and
+        # the kept manual 832x1216 is shown without a label.
+        self.enterContext(patch.object(native_resolutions, "aspect_presets", return_value=()))
         for automatic in (True, False):
             with self.subTest(automatic=automatic):
                 graph = ModelControlGraph(

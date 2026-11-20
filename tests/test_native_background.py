@@ -362,10 +362,11 @@ class NativeBackgroundTests(unittest.TestCase):
                 force_cpu_for_auxiliary=lambda args: False,
                 session_request_identity=lambda cpu=False: ("CPU" if cpu else "Auto",),
                 new_session=automatic,
-                rembg=NS(remove=lambda image, **kwargs: image),
             ),
         )
-        self.assertIs(onnx_remove(owner, image, force=True), image)
+        # The pipeline imports rembg on first use, so the stand-in goes in sys.modules.
+        with patch.dict("sys.modules", {"rembg": NS(remove=lambda image, **kwargs: image)}):
+            self.assertIs(onnx_remove(owner, image, force=True), image)
         automatic.assert_called_once_with(cpu=False)
         self.assertEqual(owner._rembg_identity, ("Auto",))
         cpu.reset_mock()

@@ -1,0 +1,9 @@
+{
+  "id": "order-independent-tests",
+  "subject": "Make the rembg and size-label tests independent of earlier suites",
+  "requires": ["card-pages-read-paths-once"],
+  "tests": ["test_native_background.py", "test_model_control_events.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
