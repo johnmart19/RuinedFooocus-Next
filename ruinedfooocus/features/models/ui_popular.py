@@ -2,7 +2,6 @@
 
 from concurrent.futures import CancelledError
 from pathlib import Path
-from urllib.parse import quote
 
 import gradio as gr
 
@@ -38,21 +37,15 @@ def is_installed(entry, manager):
         return False
 
 
-def served(path):
-    """A card picture by address, read from the artwork cache the interface serves.
-
-    Returning files instead makes Gradio check each of about 190 pictures against
-    every served folder on every update, which took 10-20 seconds per list.
-    """
-    return dict(url="gradio_api/file=" + quote(Path(path).resolve().as_posix(), safe="/:"))
-
-
 def families(entries):
     return sorted({entry["base"] for entry in entries if entry.get("base")})
 
 
 def card_data(entries, selected, manager, family=ALL, locale=None):
     """The shared card grid's value for one list."""
+    from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
+
+    roots = card_picture_roots(manager)
     shown = [entry for entry in entries if family in (ALL, None, "") or entry["base"] == family]
     cache = manager.model_paths["cache_path"]
     cards = []
@@ -77,8 +70,8 @@ def card_data(entries, selected, manager, family=ALL, locale=None):
                         ),
                     )
                 ),
-                preview=served(preview or fallback),
-                fallback=served(fallback),
+                preview=card_picture(preview or fallback, roots),
+                fallback=card_picture(fallback, roots),
                 preview_is_default=preview is None,
                 caption=entry["base"],
             )

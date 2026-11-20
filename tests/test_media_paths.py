@@ -121,10 +121,15 @@ class MediaPathsTests(unittest.TestCase):
         with self.assertRaisesRegex(InvalidPathError, "not uploaded"):
             asyncio.run(app.process_api(0, [data], state=SessionState(app)))
 
-    def test_generated_default_preview_passes_launched_html_callback_with_external_data_root(self):
+    def test_card_pictures_in_served_caches_are_addresses_and_others_stay_files(self):
         from ruinedfooocus.core.paths import data_path
         from ruinedfooocus.features.models.ui_acquisition import card_data
+        from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
 
+        # Every folder a card may name by address is one the owner app serves.
+        roots = card_picture_roots(self.manager)
+        self.assertTrue(roots)
+        self.assertTrue({str(root) for root in roots} <= set(self.allowed))
         self.manager.DOWNLOADABLE_FILES = {}
         row = dict(
             key="checkpoints/missing.safetensors",
@@ -156,25 +161,27 @@ class MediaPathsTests(unittest.TestCase):
             ),
         ):
             self.assertEqual(data_path("cache", "default-previews"), leaf)
-            # Reproduce the actual failure using the pre-P0 media contract,
-            # then exercise the installed serializer with the one added leaf.
-            app.allowed_paths = [path for path in self.allowed if Path(path) != leaf]
-            with self.assertRaises(InvalidPathError):
-                asyncio.run(app.process_api(0, [], state=SessionState(app)))
             app.allowed_paths = self.allowed
             card = asyncio.run(app.process_api(0, [], state=SessionState(app)))["data"][0]["cards"][
                 0
             ]
-            for name in ("preview", "fallback"):
-                self.assertTrue(card[name]["url"].startswith("/gradio_api/file="))
-                with Image.open(card[name]["path"]) as image:
-                    self.assertEqual(image.size, (512, 512))
-            self.assertEqual(card["preview"]["path"], card["fallback"]["path"])
-            self.assertRegex(
-                Path(card["fallback"]["path"]).name, r"^image-model-[0-9a-f]{16}\.jpeg$"
-            )
-            self.assertNotIn(str(self.data), app.allowed_paths)
-            self.assertNotIn(str(self.cache), app.allowed_paths)
+        for name in ("preview", "fallback"):
+            # Named by address: Gradio neither checks nor copies it on each update.
+            self.assertNotIn("meta", card[name])
+            self.assertTrue(Path(card[name]["path"]).is_relative_to(leaf))
+            self.assertTrue(card[name]["url"].startswith("/gradio_api/file="))
+            self.assertTrue(card[name]["url"].endswith(Path(card[name]["path"]).name))
+            with Image.open(card[name]["path"]) as image:
+                self.assertEqual(image.size, (512, 512))
+        self.assertRegex(Path(card["fallback"]["path"]).name, r"^image-model-[0-9a-f]{16}\.jpeg$")
+        # A picture outside the served caches, such as one beside a model, keeps
+        # the file route and the serializer's checks.
+        beside = self.data / "models" / "model.preview.png"
+        beside.parent.mkdir()
+        Image.new("RGB", (3, 4), "blue").save(beside)
+        self.assertEqual(card_picture(beside, roots)["meta"], {"_type": "gradio.FileData"})
+        self.assertEqual(card_picture(self.secret, roots)["path"], str(self.secret))
+        self.assertIsNone(card_picture(self.secret, roots)["url"])
 
     def test_authenticated_file_routes_and_guest_blocking_remain_intact(self):
         from ruinedfooocus.features.models.resource_cards import (

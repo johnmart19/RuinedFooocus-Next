@@ -434,6 +434,14 @@ entry is: the model family for an image model when the catalogue records it,
 the factor for an upscaler whose filename states it, otherwise the category.
 Installed models keep showing their own local preview.
 
+Card pictures kept in the served cache folders (`catalogue-previews`,
+`default-previews`, `card-previews` and the checkpoint, LoRA and embedding
+caches) are sent to the page as addresses. Sent as files, Gradio checked and
+copied every picture on each update; measured on 2026-11-20 with 36 cards per
+page, turning a page took 8-12 s that way and 1.1-1.4 s by address, and opening
+the tab 13 s and 8.4 s. A preview stored beside a model file still goes through
+Gradio's file checks.
+
 ## Popular now
 
 **Models → Popular now** lists what is downloaded most at the moment, so the

@@ -163,6 +163,9 @@ def card_label(row):
 
 
 def card_data(rows, selected, manager, page=1, locale=None, previews=None):
+    from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
+
+    roots = card_picture_roots(manager)
     rows = listed_records(rows)
     image_only = bool(rows) and all(row["category_label"] == "Image models" for row in rows)
     pages = max(1, (len(rows) + PAGE_SIZE - 1) // PAGE_SIZE)
@@ -189,8 +192,8 @@ def card_data(rows, selected, manager, page=1, locale=None, previews=None):
                         ),
                     )
                 ),
-                preview=gr.data_classes.FileData(path=preview or fallback).model_dump(),
-                fallback=gr.data_classes.FileData(path=fallback).model_dump(),
+                preview=card_picture(preview or fallback, roots),
+                fallback=card_picture(fallback, roots),
                 preview_is_default=not preview or preview == fallback,
                 # Shown over the category artwork when the publisher supplies none,
                 # so a page of placeholders still says what each entry is.
@@ -896,11 +899,14 @@ def create_ui(manager, models, *, offline):
         previews.request(
             [row for row in visible_rows if not cached_preview(row, manager)], offline=offline()
         )
+        from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
+
+        roots = card_picture_roots(manager)
         patches = [
             dict(
                 key=row["key"],
                 artworkKey=(preview_identity(row) or {}).get("key", ""),
-                preview=gr.data_classes.FileData(path=preview).model_dump(),
+                preview=card_picture(preview, roots),
             )
             for row in visible_rows
             if (preview := previews.cached(row))
