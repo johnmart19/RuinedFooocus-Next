@@ -41,6 +41,8 @@ controlnet_models = {
 def load_cnsettings():
     settings = {}
     if not os.path.isfile(CNSETTINGS_FILE):
+        # A new data folder has no settings folder until something writes to it.
+        os.makedirs(os.path.dirname(CNSETTINGS_FILE), exist_ok=True)
         shutil.copy(DEFAULT_CNSETTINGS_FILE, CNSETTINGS_FILE)
 
     if os.path.exists(CNSETTINGS_FILE):

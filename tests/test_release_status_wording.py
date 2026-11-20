@@ -98,7 +98,14 @@ class ReleaseStatusWordingTests(unittest.TestCase):
             ),
         )
         shared = NS(settings=NS(default_settings={}), path_manager=object())
-        with patch.dict("sys.modules", {"ruinedfooocus.app.state": shared}):
+        import ruinedfooocus.app as application
+
+        # `import package.module as name` reads the attribute from the package, so the
+        # stand-in is placed there as well as in the module table.
+        with (
+            patch.dict("sys.modules", {"ruinedfooocus.app.state": shared}),
+            patch.object(application, "state", shared, create=True),
+        ):
             result = render("chosen.safetensors")
         self.assertNotIn("Unverified", result[0][0][2])
         self.assertNotIn("Ready", result[0][0][2])

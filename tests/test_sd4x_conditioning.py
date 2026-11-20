@@ -90,7 +90,12 @@ class SD4xConditioningTests(unittest.TestCase):
             result = callback(
                 scale, "Generated image", "Generic", 1024, 1024, None, "selected", source
             )
-            self.assertIn(f"{width} × {height} pixels", result)
+            self.assertIn(
+                "468 × 404 pixels"
+                if scale == "Off"
+                else f"(after {scale[0]}×: {width} × {height})",
+                result,
+            )
             self.assertEqual(describe.call_args.args[1:4], (None, 468, 404))
         self.assertIn(
             "Add a source image",
@@ -103,7 +108,7 @@ class SD4xConditioningTests(unittest.TestCase):
         )
         features.return_value = {"sd4x": True}
         self.assertIn(
-            "234 × 202 pixels",
+            "(after 2×: 234 × 202)",
             callback(
                 "2× General (RealESRGAN)",
                 "Input image only",

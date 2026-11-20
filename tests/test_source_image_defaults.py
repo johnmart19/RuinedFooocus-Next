@@ -43,13 +43,17 @@ class SourceImageDefaultsTests(unittest.TestCase):
         )
         from ruinedfooocus.features.models.native_snapshot import (
             get_image_family_facts,
+            load_native_snapshot,
             native_sampler_choices,
         )
 
         self.real_facts_reader = get_image_family_facts
         self.real_sampler_reader = native_sampler_choices
         self.facts_reader = lambda *args, **kwargs: SimpleNamespace(
-            metadata=lambda: {"example_recipe": deepcopy(self.example)}
+            metadata=lambda: {"example_recipe": deepcopy(self.example)},
+            # Size choices also read the family's latent grid; none is declared here.
+            configurations=[],
+            examples=[],
         )
         self.enterContext(
             patch.dict(
@@ -66,6 +70,7 @@ class SourceImageDefaultsTests(unittest.TestCase):
                             *args, **kwargs
                         ),
                         native_sampler_choices=self.real_sampler_reader,
+                        load_native_snapshot=load_native_snapshot,
                     ),
                 },
             )
@@ -137,8 +142,8 @@ class SourceImageDefaultsTests(unittest.TestCase):
         resolutions = ResolutionSettings()
         sizes, source = resolutions.recommendation("AuraFlow", str(self.model), self.performance)
         self.assertEqual(sizes, [(768, 1024)])
-        self.assertIn("example canvas", source)
-        self.assertIn("no publisher size recommendation", source)
+        # The source names where the size comes from; it is the native workflow's canvas.
+        self.assertEqual(source, "Native ComfyUI workflow canvas")
         _, selected, automatic = resolutions.model_selection(
             "AuraFlow", "1000x500 (Saved)", True, str(self.model), self.performance
         )

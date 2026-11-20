@@ -255,7 +255,10 @@ def layer_latent(plan, sampled):
     # ComfyUI 0.45 `nodes_latent` and `nodes_post_processing` import each other; only
     # entering the pair through `nodes_post_processing` completes. Imported directly,
     # `nodes_latent` fails unless another feature happened to load its partner first.
-    import comfy_extras.nodes_post_processing  # noqa: F401
+    import sys
+
+    if "comfy_extras.nodes_latent" not in sys.modules:
+        import comfy_extras.nodes_post_processing  # noqa: F401
     from comfy_extras.nodes_latent import LatentCut, LatentCutToBatch
 
     shape = sampled["samples"].shape

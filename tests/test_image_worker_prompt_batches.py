@@ -78,7 +78,12 @@ class WorkerPromptBatchTests(unittest.TestCase):
             )
         )
         self.events = Mock()
+        import tempfile
+
+        previews = Path(self.enterContext(tempfile.TemporaryDirectory()))
         self.scope = dict(
+            # The worker's live preview file, in a private folder.
+            _preview_path=lambda gen_data: previews / "preview.jpg",
             shared=self.shared,
             settings=self.shared.settings,
             control_tools=SimpleNamespace(get_settings=lambda data: data.get("controlnet") or {}),

@@ -1,0 +1,19 @@
+{
+  "id": "full-suite-repairs",
+  "subject": "Repair test fixtures and a first-run settings folder found by a full suite run",
+  "requires": ["int8-benchmark-memory", "generation-recheck-fixes"],
+  "tests": [
+    "test_image_worker_prompt_batches.py",
+    "test_sd4x_conditioning.py",
+    "test_layered_generation.py",
+    "test_native_tensor_context.py",
+    "test_layered_native_imports.py",
+    "test_chat_image_service.py",
+    "test_native_source_retention.py",
+    "test_release_status_wording.py",
+    "test_source_image_defaults.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

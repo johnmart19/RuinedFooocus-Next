@@ -1,5 +1,6 @@
 ### Unreleased (development)
 
+- Fix image tools failing to load in a brand-new data folder that has no settings folder yet.
 - Benchmark pair now also reports the GPU memory in use with each file. On a second model (JANIMA) the INT8 copy was about 6% faster, used 2.4 GB less GPU memory and gave almost the same picture.
 - Pin FastAPI and python-multipart in the base install to the releases the API extras name, so enabling `--api` can no longer disagree with what is installed.
 - Fix `--api` refusing to start offline in a current environment: its FastAPI and python-multipart pins were older than the releases the interface already installs (now 0.165.0 and 0.0.34 on Python 3.11 and later).
