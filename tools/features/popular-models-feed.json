@@ -1,0 +1,16 @@
+{
+  "id": "popular-models-feed",
+  "subject": "Show popular supported models from Civitai and Hugging Face that update themselves",
+  "requires": ["catalogue-order-and-captions"],
+  "tests": [
+    "test_popular_models.py",
+    "test_catalogue_listing.py",
+    "test_model_acquisition_ui.py",
+    "test_media_paths.py",
+    "test_session_content_locations.py",
+    "test_action_contract_audit.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

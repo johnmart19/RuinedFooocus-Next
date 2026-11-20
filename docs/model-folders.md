@@ -433,3 +433,37 @@ entry shows the category artwork, dimmed, with a caption that names what the
 entry is: the model family for an image model when the catalogue records it,
 the factor for an upscaler whose filename states it, otherwise the category.
 Installed models keep showing their own local preview.
+
+## Popular now
+
+**Models → Popular now** lists what is downloaded most at the moment, so the
+choice does not depend on the reviewed catalogue being edited. It reads two
+public listings without an account:
+
+- **Civitai** for image models and LoRAs, sorted by most downloaded, highest
+  rated or newest, for the last week, the last month or all time.
+- **Hugging Face** for GGUF chat models, sorted by trending, downloads or likes.
+
+Only entries the application can run are kept: the base model named by the
+listing must be a supported family (the same table the model loader uses), the
+file must be `.safetensors` or `.gguf`, and the publisher must state its SHA256.
+A base model the application does not know is left out rather than guessed.
+Models the site marks as mature are left out unless you tick the box; either
+way only pictures the site rates for everyone are shown, and an entry without
+one keeps the captioned category artwork.
+
+A list is saved in `cache/popular-models` and its pictures in
+`cache/catalogue-previews/popular`. It is fetched again when it is older than
+six hours or when you press **Refresh now**; a saved list is shown at once
+while the new one loads, and stays if the site cannot be reached. Offline mode
+shows the saved list only. Requests contain the chosen category, sort order and
+period, nothing about this installation.
+
+**Download** saves the file into the first checkpoint, LoRA or chat model
+folder and verifies the listed SHA256 before the file appears there. For a chat
+repository the file is chosen at that moment: one GGUF in a common 4–8 bit
+quantization (Q4_K_M first) of at most 24 GB, never a split or projector file.
+Some Civitai files are given only to signed-in accounts; the application does
+not sign in, says so, and links the model page. Checked on 2026-11-20: the
+monthly list of 100 image models kept 94, 82 of them with a picture, and one of
+three small LoRAs tried downloaded without an account.

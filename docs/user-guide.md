@@ -14,7 +14,8 @@ The preview stays above the prompt and Generate button, with the concise image m
 Online mode is for downloading models, previews, runtimes and updates. Prompts,
 images and chats are never sent anywhere: generation and chat run on this
 machine, model lookups send only file hashes, model ids and search words for
-model names, and telemetry of the underlying libraries is switched off at start.
+model names, the popular-model lists send only the chosen category and
+sort order, and telemetry of the underlying libraries is switched off at start.
 
 Everything you type or produce is disposable and lives in two folders of the
 data folder:

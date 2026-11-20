@@ -585,6 +585,17 @@ def launch_app(args):
     )
     main_tabs, top_tabs, settings_tab = shell.app, shell.tabs, shell.settings
     with main_tabs:
+        # Beside the reviewed catalogue: what is popular now, fetched when opened.
+        with shell.model_destinations, gr.Tab(t("Popular now"), id="popular") as popular_tab:
+            from ruinedfooocus.features.models.ui_popular import create_ui as create_popular
+
+            popular = create_popular(path_manager, shared.models)
+        popular_tab.select(
+            popular["open"],
+            inputs=popular["inputs"],
+            outputs=popular["outputs"],
+            **popular["options"],
+        )
         shell.models.select(
             app_settings.acquisition.refresh_rows,
             inputs=app_settings.acquisition.refresh_inputs,
