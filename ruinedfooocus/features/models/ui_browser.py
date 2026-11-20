@@ -123,14 +123,20 @@ def create_ui(base_model, models, model_refresh=None, catalogue_button=None):
         preview = local_checkpoint_preview(name, models) or get_checkpoint_thumbnail(name)
         if not preview or is_warning(preview):
             preview = default_preview("Image model", models.cache_paths["checkpoints"].parent)
-        return gr.data_classes.FileData(path=preview).model_dump()
+        return picture(preview)
 
     def fallback_payload():
         from ruinedfooocus.features.models.resource_cards import default_preview
 
-        return gr.data_classes.FileData(
-            path=default_preview("Image model", models.cache_paths["checkpoints"].parent)
-        ).model_dump()
+        return picture(default_preview("Image model", models.cache_paths["checkpoints"].parent))
+
+    def picture(path):
+        # Cached pictures go by address; a preview beside a model keeps Gradio's checks.
+        from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
+
+        return card_picture(
+            path, card_picture_roots(cache=models.cache_paths["checkpoints"].parent)
+        )
 
     def card_payload(row, fallback):
         preview = preview_payload(row["name"])

@@ -17,13 +17,16 @@ PUBLIC_CACHE_MEDIA = (
 MODEL_CACHE_MEDIA = ("checkpoints", "loras", "embeddings")
 
 
-def card_picture_roots(manager=None):
+def card_picture_roots(manager=None, cache=None):
     """Cache folders whose pictures a card may name by address.
 
     The same leaves `owner_media_paths` serves, so an address never names a
-    file the interface would refuse.
+    file the interface would refuse. `cache` is the cache root when the caller
+    holds it instead of a path manager.
     """
-    cache = configured_cache_root(manager)
+    cache = (
+        Path(cache).expanduser().resolve() if cache is not None else configured_cache_root(manager)
+    )
     roots = []
     for name in (*PUBLIC_CACHE_MEDIA, *MODEL_CACHE_MEDIA):
         candidate = (cache / name).resolve()

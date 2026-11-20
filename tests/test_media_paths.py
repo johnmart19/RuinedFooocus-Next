@@ -130,6 +130,8 @@ class MediaPathsTests(unittest.TestCase):
         roots = card_picture_roots(self.manager)
         self.assertTrue(roots)
         self.assertTrue({str(root) for root in roots} <= set(self.allowed))
+        # LoRA and checkpoint cards hold only the cache root; they get the same folders.
+        self.assertEqual(card_picture_roots(cache=self.cache), roots)
         self.manager.DOWNLOADABLE_FILES = {}
         row = dict(
             key="checkpoints/missing.safetensors",

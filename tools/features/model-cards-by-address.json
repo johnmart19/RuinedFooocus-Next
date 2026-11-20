@@ -1,0 +1,17 @@
+{
+  "id": "model-cards-by-address",
+  "subject": "Send cached checkpoint and LoRA card pictures by address",
+  "requires": ["card-pictures-by-address"],
+  "tests": [
+    "test_media_paths.py",
+    "test_adapter_browser.py",
+    "test_checkpoint_cards.py",
+    "test_checkpoint_card_work.py",
+    "test_embedding_adapters.py",
+    "test_model_resource_ui.py",
+    "test_card_preview_badge.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

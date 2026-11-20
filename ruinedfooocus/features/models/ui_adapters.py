@@ -209,6 +209,9 @@ def create_ui(
                 records, gallery, positive, negative, cache_dir / "embeddings"
             )
         }
+        from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
+
+        roots = card_picture_roots(cache=cache_dir)
         cards = []
         for card in records:
             if selected_only and card["caption"] not in states:
@@ -232,8 +235,8 @@ def create_ui(
                     label=card["label"],
                     kind=localize(card["kind"], locale),
                     state=shown_state(states.get(card["caption"], "")),
-                    preview=gr.data_classes.FileData(path=preview).model_dump(),
-                    fallback=gr.data_classes.FileData(path=card["fallback"]).model_dump(),
+                    preview=card_picture(preview, roots),
+                    fallback=card_picture(card["fallback"], roots),
                     preview_is_default=card["preview_is_default"],
                 )
             )

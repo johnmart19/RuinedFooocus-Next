@@ -441,6 +441,10 @@ copied every picture on each update; measured on 2026-11-20 with 36 cards per
 page, turning a page took 8-12 s that way and 1.1-1.4 s by address, and opening
 the tab 13 s and 8.4 s. A preview stored beside a model file still goes through
 Gradio's file checks.
+The model and LoRA cards in Create's Models tab do the same; with 21
+checkpoints and 18 LoRAs and embeddings, one search update went from 1.3-2.7 s
+to 0.7-1.4 s for checkpoints and from 1.7-1.8 s to 0.5-0.6 s for LoRAs
+(single measurements on 2026-11-20).
 
 ## Popular now
 
