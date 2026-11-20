@@ -190,6 +190,10 @@ def startup_loras(settings):
     ]
 
 
+# Free text the user typed for one generation.
+PROMPT_KEYS = ("prompt", "negative_prompt")
+
+
 def generation_defaults(values):
     from ruinedfooocus.core.settings_validation import validate_settings
 
@@ -200,6 +204,11 @@ def generation_defaults(values):
         for key, control in DEFAULT_CONTROLS.items()
         if control in values
     }
+    # Prompts are session content: they are used for a generation and recorded in the
+    # image's own metadata, never in the profile. Saving defaults also removes text
+    # an earlier version stored there.
+    for key in PROMPT_KEYS:
+        result[key] = ""
     # Old styles were staged, not active. Only explicit new saves opt into applying them.
     result["style_application"] = 1
     # Forever is an action, not a safe startup batch count.

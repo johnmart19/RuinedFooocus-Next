@@ -8,6 +8,32 @@ destinations keeps the draft and image history. Create's **Generate** starts a n
 or mask. Returning to Editor restores its selected image action and source.
 The preview stays above the prompt and Generate button, with the concise image model picker at the top of
 **Generation** in the right sidebar. Its **Models** button opens the full manager without copying the selection.
+
+## What is stored, and where
+
+Online mode is for downloading models, previews, runtimes and updates. Prompts,
+images and chats are never sent anywhere: generation and chat run on this
+machine, model lookups send only file hashes, model ids and search words for
+model names, and telemetry of the underlying libraries is switched off at start.
+
+Everything you type or produce is disposable and lives in two folders of the
+data folder:
+
+- `outputs` holds the generated images. Each image carries its prompt and
+  settings in its own metadata; that is the only lasting copy of a prompt.
+- `cache` holds everything else from a session: uploads and files shown in the
+  interface, Editor sessions and their images, the Gallery index and
+  thumbnails, cached Chat sources and the local Chat server's log. Deleting the
+  folder removes all of it; the application recreates what it needs.
+
+Chat conversations are kept in memory only and end with the session. `settings`
+holds configuration and never prompt or chat text: **Save current defaults**
+saves the model, size, sampling, styles and similar choices, not the prompt or
+negative prompt, and clears prompt text an earlier version stored there. The
+browser keeps only the interface language and text size. Files you create
+deliberately stay where you put them: assistants, wildcard lists and saved
+PNG settings.
+
 The right panel of Create has five tabs. **Main** holds everything for a new image, in order: the image
 model, the size, the **Upscale** switch, the model's sampling settings, styles, image number, negative prompt
 and seed. **Models** is the browser for installed checkpoints with previews, and for LoRAs and embeddings;

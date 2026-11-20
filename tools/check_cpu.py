@@ -20,6 +20,8 @@ def run(patterns, *, root=ROOT, timeout=300):
         environment = dict(os.environ)
         environment.update(
             RF_DATA_DIR=private_data,
+            # Component files of interface fixtures stay in the private folder too.
+            GRADIO_TEMP_DIR=os.path.join(private_data, "cache", "uploads"),
             GRADIO_ANALYTICS_ENABLED="False",
             HF_HUB_OFFLINE="1",
             TRANSFORMERS_OFFLINE="1",

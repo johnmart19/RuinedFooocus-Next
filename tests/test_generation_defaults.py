@@ -27,13 +27,18 @@ class GenerationDefaultsTests(unittest.TestCase):
             "image_number": 0,
             "input_image": object(),
             "prompt": "Keep 2 red apples.",
+            "negative": "blurry",
         }
         result = generation_defaults(values)
         self.assertEqual(len(result["startup_loras"]), 7)
         self.assertEqual(result["startup_loras"][0]["name"], "custom - 0.safetensors")
         self.assertEqual(result["image_number"], 1)
         self.assertNotIn("input_image", result)
-        self.assertEqual(result["prompt"], values["prompt"])
+        # Prompt text is session content: it is never written to the profile, and
+        # a save clears what an earlier version stored.
+        self.assertEqual((result["prompt"], result["negative_prompt"]), ("", ""))
+        self.assertNotIn("Keep 2 red apples.", repr(result))
+        self.assertNotIn("blurry", repr(result))
         styles.append("Later change")
         self.assertEqual(result["style"], ["My style"])
 

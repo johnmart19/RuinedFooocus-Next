@@ -1,0 +1,14 @@
+{
+  "id": "prompts-stay-out-of-settings",
+  "subject": "Keep prompt text out of saved defaults and document what is stored where",
+  "requires": ["editor-actions-stay-on-edit"],
+  "tests": [
+    "test_session_content_locations.py",
+    "test_generation_defaults.py",
+    "test_optional_image_defaults.py",
+    "test_cpu_check_runner.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
