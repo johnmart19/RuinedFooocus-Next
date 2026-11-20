@@ -208,7 +208,8 @@ class CheckpointPresentationWorkTests(unittest.TestCase):
         with fixture.observe():
             fixture.counts.clear()
             response = fixture.query_api()
-            self.assertEqual(len(response["data"][0]["value"]), 19)
+            # The hidden gallery is left untouched; the 19 rows feed the cards below.
+            self.assertEqual(response["data"][0], {"__type__": "update"})
             self.assertEqual(fixture.counts["metadata_reads"], 19)
             self.assertEqual(fixture.counts["local_preview_lookups"], 19)
             self.assertEqual(fixture.counts["thumbnail_lookups"], 10)

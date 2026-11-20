@@ -2,6 +2,7 @@
 
 from concurrent.futures import CancelledError
 from pathlib import Path
+from types import SimpleNamespace
 
 import gradio as gr
 
@@ -45,12 +46,19 @@ def card_data(entries, selected, manager, family=ALL, locale=None):
     """The shared card grid's value for one list."""
     from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
 
-    roots = card_picture_roots(manager)
     shown = [entry for entry in entries if family in (ALL, None, "") or entry["base"] == family]
-    cache = manager.model_paths["cache_path"]
+    # Each read of `model_paths` re-checks the storage folders; read it once
+    # for the page instead of once per card.
+    paths = manager.model_paths
+    folders = SimpleNamespace(model_paths=paths)
+    cache = paths["cache_path"]
+    roots = card_picture_roots(cache=cache)
+    fallbacks = {}
     cards = []
     for entry in shown:
-        fallback = default_preview(entry["category"], cache)
+        if entry["category"] not in fallbacks:
+            fallbacks[entry["category"]] = default_preview(entry["category"], cache)
+        fallback = fallbacks[entry["category"]]
         preview = feed.thumbnail_path(entry, cache)
         preview = str(preview) if preview is not None and preview.is_file() else None
         cards.append(
@@ -64,7 +72,7 @@ def card_data(entries, selected, manager, family=ALL, locale=None):
                     filter(
                         None,
                         (
-                            localize("Installed", locale) if is_installed(entry, manager) else "",
+                            localize("Installed", locale) if is_installed(entry, folders) else "",
                             "↓ " + short_count(entry["downloads"]),
                             entry.get("published", ""),
                         ),

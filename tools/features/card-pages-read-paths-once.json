@@ -1,0 +1,18 @@
+{
+  "id": "card-pages-read-paths-once",
+  "subject": "Build model card pages without re-reading storage paths for every card",
+  "requires": ["test-module-isolation"],
+  "tests": [
+    "test_model_acquisition_ui.py",
+    "test_popular_models.py",
+    "test_catalogue_listing.py",
+    "test_media_paths.py",
+    "test_checkpoint_card_work.py",
+    "test_checkpoint_cards.py",
+    "test_hf_preview_reliability.py",
+    "test_compact_model_profile_controls.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

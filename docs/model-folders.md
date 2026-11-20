@@ -446,6 +446,14 @@ checkpoints and 18 LoRAs and embeddings, one search update went from 1.3-2.7 s
 to 0.7-1.4 s for checkpoints and from 1.7-1.8 s to 0.5-0.6 s for LoRAs
 (single measurements on 2026-11-20).
 
+Building a page of cards also read `model_paths` once per card. Each read
+re-checks that the cache and outputs folders exist, so they can be deleted while
+the application runs, and costs about 20 ms; a page now reads it once. Measured
+in-process on 2026-11-20: 36 Download cards 2.4 s to 0.2-0.3 s, 94 Popular now
+cards 1.8 s to 0.3-0.45 s. The hidden checkpoint gallery is no longer refilled on
+each checkpoint search, which saved about 0.5 s for 21 checkpoints. The first
+catalogue read after start still takes 2-15 s depending on the disk cache.
+
 ## Popular now
 
 **Models → Popular now** lists what is downloaded most at the moment, so the

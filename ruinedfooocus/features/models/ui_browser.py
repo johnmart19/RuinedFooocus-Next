@@ -106,8 +106,10 @@ def create_ui(base_model, models, model_refresh=None, catalogue_button=None):
                 presented.append(
                     row | {"_view_version": version, "_card": card_payload(row, fallback)}
                 )
-            pictures = [(row["_card"]["preview"]["path"], row["caption"]) for row in presented]
-            return gr.update(value=pictures), presented or [
+            # The legacy gallery stays hidden; the cards show these pictures.
+            # Refilling it made Gradio check and copy every picture again on
+            # each search (about 0.5 s for 21 checkpoints), for nothing shown.
+            return gr.update(), presented or [
                 {"_request_only": True, "_view_version": version, "name": "", "caption": ""}
             ]
 
@@ -170,7 +172,7 @@ def create_ui(base_model, models, model_refresh=None, catalogue_button=None):
             cards=cards,
         )
 
-    initial, records = refresh("")
+    _, records = refresh("")
     selection = gr.State(records)
     gallery = gr.Gallery(
         label=translate_ui("Image checkpoints"),
@@ -182,7 +184,7 @@ def create_ui(base_model, models, model_refresh=None, catalogue_button=None):
         object_fit="contain",
         buttons=[],
         min_width=60,
-        value=initial["value"],
+        value=[],
         elem_id="model-gallery",
     )
     gallery.visible = False

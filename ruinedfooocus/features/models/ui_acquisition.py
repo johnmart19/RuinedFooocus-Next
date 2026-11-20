@@ -61,7 +61,13 @@ def quantization_label(value):
     return "Original" if value == "unspecified_original" else value
 
 
-def cached_preview(row, manager):
+def cached_preview(row, manager, cache=None):
+    """Local or cached artwork for a row.
+
+    `cache` is the cache root when the caller already read it: each read of
+    `manager.model_paths` re-checks the storage folders (about 20 ms), which
+    added up to seconds for a page of cards.
+    """
     candidates = []
     if row["local"]:
         local = local_preview(row["local"], ambiguous=row.get("_ambiguous_sidecar", False))
@@ -70,7 +76,8 @@ def cached_preview(row, manager):
     filename = manager.DOWNLOADABLE_FILES.get(row["key"], {}).get(
         "filename", Path(row["destination"]).name
     )
-    cache = manager.model_paths.get("cache_path")
+    if cache is None:
+        cache = manager.model_paths.get("cache_path")
     if cache and not row.get("_ambiguous_preview_cache"):
         for category in (
             row["category"],
@@ -165,15 +172,22 @@ def card_label(row):
 def card_data(rows, selected, manager, page=1, locale=None, previews=None):
     from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
 
-    roots = card_picture_roots(manager)
+    # Read the storage paths once per page, not once per card.
+    cache = manager.model_paths["cache_path"]
+    roots = card_picture_roots(cache=cache)
+    fallbacks = {}
     rows = listed_records(rows)
     image_only = bool(rows) and all(row["category_label"] == "Image models" for row in rows)
     pages = max(1, (len(rows) + PAGE_SIZE - 1) // PAGE_SIZE)
     page = max(1, min(int(page or 1), pages))
     cards = []
     for row in rows[(page - 1) * PAGE_SIZE : page * PAGE_SIZE]:
-        preview = cached_preview(row, manager) or (previews.cached(row) if previews else None)
-        fallback = default_preview(row["category_label"], manager.model_paths["cache_path"])
+        preview = cached_preview(row, manager, cache) or (
+            previews.cached(row) if previews else None
+        )
+        if row["category_label"] not in fallbacks:
+            fallbacks[row["category_label"]] = default_preview(row["category_label"], cache)
+        fallback = fallbacks[row["category_label"]]
         cards.append(
             dict(
                 key=row["key"],
@@ -485,8 +499,13 @@ def create_ui(manager, models, *, offline):
                 data = stamp(data, "acquisition-view", ticket.version)
                 data["selectionIdentity"] = current_identity("acquisition-selection", request)
             visible = {card["key"] for card in data["cards"]}
+            cache = manager.model_paths["cache_path"]
             previews.request(
-                [row for row in rows if row["key"] in visible and not cached_preview(row, manager)],
+                [
+                    row
+                    for row in rows
+                    if row["key"] in visible and not cached_preview(row, manager, cache)
+                ],
                 offline=offline(),
             )
             return (
@@ -826,8 +845,13 @@ def create_ui(manager, models, *, offline):
                 previews,
             )[0]
             visible = {card["key"] for card in payload["cards"]}
+            cache = manager.model_paths["cache_path"]
             previews.request(
-                [row for row in rows if row["key"] in visible and not cached_preview(row, manager)],
+                [
+                    row
+                    for row in rows
+                    if row["key"] in visible and not cached_preview(row, manager, cache)
+                ],
                 offline=offline(),
             )
             if ticket is not None:
@@ -896,8 +920,10 @@ def create_ui(manager, models, *, offline):
         visible_rows = listed_records(rows)
         current = max(1, int(current or 1))
         visible_rows = visible_rows[(current - 1) * PAGE_SIZE : current * PAGE_SIZE]
+        cache = manager.model_paths["cache_path"]
         previews.request(
-            [row for row in visible_rows if not cached_preview(row, manager)], offline=offline()
+            [row for row in visible_rows if not cached_preview(row, manager, cache)],
+            offline=offline(),
         )
         from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
 
