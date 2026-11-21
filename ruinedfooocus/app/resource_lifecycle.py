@@ -498,6 +498,9 @@ def remember_pipeline(pipeline):
 def _release_native():
     module = sys.modules.get("comfy.model_management")
     if module is not None:
+        from ruinedfooocus.backends.comfy.native_step import end_native_step
+
+        end_native_step()
         module.unload_all_models()
         module.soft_empty_cache()
 

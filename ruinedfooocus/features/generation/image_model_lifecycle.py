@@ -15,7 +15,12 @@ def reset_image_models(owner):
         "cascade_guidance_cache",
         "sdxl_refiner_cache",
         "native_negative_model_cache",
+        "native_model_patch_cache",
         "reference_adapter_models",
+        "depth_model",
+        "depth_model_signature",
+        "depth_model_name",
+        "_lotus_depth",
         "_bernini_plan",
         "_bernini_loras",
     ):

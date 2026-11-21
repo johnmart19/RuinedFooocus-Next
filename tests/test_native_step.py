@@ -82,6 +82,93 @@ class NativeStepTests(unittest.TestCase):
         block = source[source.index("                    cleanup_interrupt(item)") :][:400]
         self.assertIn("end_native_step()", block)
 
+    def test_release_native_runs_cleanup_before_unloading_models(self):
+        from ruinedfooocus.app import resource_lifecycle
+
+        order = []
+        memory = NS(
+            unload_all_models=lambda: order.append("unload_all_models"),
+            soft_empty_cache=lambda: order.append("soft_empty_cache"),
+        )
+        with (
+            patch.dict(sys.modules, {"comfy.model_management": memory}),
+            patch.object(native_step, "end_native_step", lambda: order.append("end_native_step")),
+        ):
+            resource_lifecycle._release_native()
+        self.assertEqual(order, ["end_native_step", "unload_all_models", "soft_empty_cache"])
+
+    def test_vae_decode_oom_retry_runs_cleanup_before_unloading_unet(self):
+        from ruinedfooocus.backends.comfy import vae_decode
+
+        order = []
+        attempts = [0]
+
+        class OOMError(RuntimeError):
+            pass
+
+        class FakeVAEDecode:
+            def decode(self, vae, samples):
+                attempts[0] += 1
+                if attempts[0] == 1:
+                    raise OOMError("out of memory")
+                return ("decoded",)
+
+        memory = NS(
+            raise_non_oom=lambda error: None,
+            unload_model_and_clones=lambda unet: order.append(("unload", unet)),
+            soft_empty_cache=lambda: order.append("soft_empty_cache"),
+        )
+        fake_nodes = NS(VAEDecode=FakeVAEDecode, VAEDecodeTiled=FakeVAEDecode)
+        models = NS(
+            unet="unet-model",
+            vae=NS(device=NS(type="cpu")),
+        )
+        samples = {"samples": NS(is_nested=False, ndim=4)}
+        with (
+            patch.dict(
+                sys.modules,
+                {
+                    "comfy": NS(model_management=memory),
+                    "comfy.model_management": memory,
+                    "nodes": fake_nodes,
+                },
+            ),
+            patch.object(native_step, "end_native_step", lambda: order.append("end_native_step")),
+        ):
+            result = vae_decode.decode_image_vae(models, samples)
+        self.assertEqual(result, "decoded")
+        self.assertEqual(
+            order, ["end_native_step", ("unload", "unet-model"), "soft_empty_cache"]
+        )
+
+    def test_reset_image_models_clears_powerup_and_depth_caches(self):
+        from ruinedfooocus.features.generation import image_model_lifecycle
+
+        owner = NS(
+            depth_model="da3",
+            depth_model_signature=("sig", "fp16"),
+            depth_model_name="depth_anything_3_base.safetensors",
+            _lotus_depth=("sig", "lotus", "vae"),
+            native_model_patch_cache=("id", ("patch", "vision")),
+        )
+        image_model_lifecycle.reset_image_models(owner)
+        for attr in (
+            "depth_model",
+            "depth_model_signature",
+            "depth_model_name",
+            "_lotus_depth",
+            "native_model_patch_cache",
+        ):
+            self.assertIsNone(getattr(owner, attr))
+
+    def test_qwen_prompt_enhancement_runs_cleanup_before_unloading(self):
+        source = (
+            ROOT / "ruinedfooocus/features/prompting/qwen_image21_enhancement.py"
+        ).read_text(encoding="utf-8")
+        block = source[source.index("            finally:") :]
+        self.assertIn("end_native_step()", block)
+        self.assertLess(block.index("end_native_step()"), block.index("unload_all_models()"))
+
 
 if __name__ == "__main__":
     unittest.main()

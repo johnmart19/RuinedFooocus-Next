@@ -250,6 +250,9 @@ def rewrite_prompt(prompt, references=(), *, max_tokens=DEFAULT_TOKENS, seed=Non
                 check()
                 return parse_answer(text, len(references))
             finally:
+                from ruinedfooocus.backends.comfy.native_step import end_native_step
+
+                end_native_step()
                 model_management.unload_all_models()
                 model_management.soft_empty_cache()
 

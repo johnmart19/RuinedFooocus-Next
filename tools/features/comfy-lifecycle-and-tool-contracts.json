@@ -1,0 +1,16 @@
+{
+  "id": "comfy-lifecycle-and-tool-contracts",
+  "subject": "Release ComfyUI Dynamic VRAM and powerup caches across service switches, VAE OOM retries, and model resets",
+  "requires": ["ui-viewer-resize-and-audit-fixes"],
+  "tests": [
+    "test_native_step.py",
+    "test_vae_decode.py",
+    "test_tool_contracts.py",
+    "test_image_depth.py",
+    "test_lotus_depth.py",
+    "test_native_model_patches.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

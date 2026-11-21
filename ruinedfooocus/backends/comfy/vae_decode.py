@@ -42,6 +42,9 @@ def decode_image_vae(models, samples, *, tiled=False, tile_size=None, overlap=No
         memory.raise_non_oom(error)
     # Leave the exception scope before retrying, releasing failed decoder tensors.
     print("VAE decoding needs more VRAM; releasing diffusion weights and retrying.")
+    from ruinedfooocus.backends.comfy.native_step import end_native_step
+
+    end_native_step()
     memory.unload_model_and_clones(models.unet)
     memory.soft_empty_cache()
     return decode()
