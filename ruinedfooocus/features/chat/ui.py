@@ -257,12 +257,20 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 )
                 permission_session = gr.State(ChatPermissionSession())
                 prompt_action = None
-                prompt_action_group = gr.Group() if prompt_control is not None else None
                 image_tool_result = gr.State(None)
                 image_tool_status = gr.Markdown("", elem_id="chat-image-tool-status")
-                open_image_result = gr.Button(
-                    translate_ui("Open / Edit image"), interactive=False, size="sm"
-                )
+                with gr.Row(
+                    elem_id="chat-followup-actions",
+                    elem_classes=["rf-actions", "rf-actions-compact"],
+                ):
+                    prompt_action_group = (
+                        gr.Group(elem_id="chat-prompt-action-group")
+                        if prompt_control is not None
+                        else None
+                    )
+                    open_image_result = gr.Button(
+                        translate_ui("Open / Edit image"), interactive=False, size="sm", scale=0
+                    )
                 editor_context_input = (
                     editor_workspace.context if editor_workspace is not None else gr.State(None)
                 )
@@ -520,10 +528,10 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                         ),
                         js_on_load=(html_dir / "chat_local_models.js").read_text(encoding="utf-8"),
                         css_template="""
-                          label { display: block; margin: 0 0 8px; font-size: var(--block-label-text-size); }
+                          label { display: block; margin: 0 0 6px; font-size: var(--block-label-text-size); }
                           details { margin: 0; padding: 0; }
-                          summary { cursor: pointer; list-style: none; padding: 6px 12px; min-height: 44px;
-                            margin: 0; box-sizing: border-box; line-height: 28px; overflow-wrap: anywhere; border-radius: var(--input-radius);
+                          summary { cursor: pointer; list-style: none; padding: 7px 12px; min-height: 44px;
+                            margin: 0; box-sizing: border-box; line-height: 1.3; overflow-wrap: anywhere; border-radius: var(--input-radius);
                             background: var(--input-background-fill); border: 1px solid var(--border-color-primary); }
                           summary { display: flex; align-items: center; gap: 8px; }
                           summary::-webkit-details-marker { display: none; }

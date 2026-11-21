@@ -1,0 +1,20 @@
+{
+  "id": "ui-six-view-polish",
+  "subject": "Polish alignment, spacing, card geometry, and controls across Create, Editor, Gallery, Models, Chat, and Settings",
+  "requires": ["visual-aspect-picker-and-style-cards"],
+  "tests": [
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_gallery_actions.py",
+    "test_library_editing_ui.py",
+    "test_editor_workspace_events.py",
+    "test_prompt_draft_fence.py",
+    "test_prompt_workflows.py",
+    "test_popular_models.py",
+    "test_settings_presentation.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

@@ -51,7 +51,8 @@ class LibraryEditor:
         self.setup = gr.State({})
         self.setup_choice = gr.Textbox("", visible=False)
         self.terminal = gr.State(None)
-        with gr.Accordion(t("Gallery draft"), open=True):
+        self.panel = gr.Accordion(t("Gallery draft"), open=False)
+        with self.panel:
             self.notice = gr.Markdown(t("Select an image to start a Gallery draft."))
             self.preview = gr.Image(
                 label=t("Selected original"),

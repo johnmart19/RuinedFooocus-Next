@@ -1452,7 +1452,7 @@
   "settings.supported_on_this_pc": "Підтримується на цьому ПК",
   "settings.what_each_component_can_use_with_the_detected_gpus_and_operating_system_and_what_is_already_installed": "Що може використовувати кожен компонент із виявленими GPU та операційною системою і що вже встановлено.",
   "settings.image_generation_comfyui_pytorch": "Генерація зображень (ComfyUI / PyTorch)",
-  "settings.chat_runtime_xllamacpp": "Середовище виконання чату xllamacpp",
+  "settings.chat_runtime_xllamacpp": "Середовище виконання чату (xllamacpp)",
   "settings.install_xllamacpp_now": "Встановити xllamacpp зараз",
   "settings.background_removal_onnx_runtime": "Видалення фону (ONNX Runtime)",
   "settings.the_selected_backend_differs_from_the_installed_wheel_install_it_now_then_restart": "Вибраний бекенд відрізняється від встановленого wheel. Встановіть його зараз, потім перезапустіть.",
@@ -2164,5 +2164,7 @@
   "prompting.all_styles": "Усі стилі",
   "prompting.no_matching_styles": "Відповідних стилів не знайдено.",
   "shell.aspect_ratio": "Співвідношення сторін",
-  "shell.count": "Кількість"
+  "shell.count": "Кількість",
+  "prompting.quick_prompt_options": "Параметри швидкого промпта",
+  "prompting.one_button_prompt_options": "Параметри промпта однією кнопкою"
 }

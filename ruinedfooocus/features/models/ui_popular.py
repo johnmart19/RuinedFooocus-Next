@@ -173,11 +173,24 @@ def create_ui(manager, models):
             note = gr.Markdown(elem_id="popular-models-note")
             refresh = gr.Button(t("Refresh now"), size="sm", scale=0, min_width=0)
         details = gr.Markdown(t("Select a model to see its details."))
-        with gr.Row(elem_classes=["rf-actions"]):
+        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
             download = gr.Button(
-                t("Download"), interactive=False, variant="primary", elem_id="popular-download"
+                t("Download"),
+                interactive=False,
+                variant="primary",
+                scale=0,
+                min_width=140,
+                elem_id="popular-download",
+                elem_classes=["rf-inline-action"],
             )
-            cancel = gr.Button(t("Cancel this download"), visible=False, size="sm")
+            cancel = gr.Button(
+                t("Cancel this download"),
+                visible=False,
+                size="sm",
+                scale=0,
+                min_width=140,
+                elem_classes=["rf-inline-action"],
+            )
         progress = gr.Markdown(elem_id="popular-models-progress")
         assets = Path(__file__).resolve().parents[2] / "ui/assets"
         cards = gr.HTML(

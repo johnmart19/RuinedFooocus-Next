@@ -55,8 +55,8 @@ class EditorWorkspace:
                 self.open_current = gr.Button(t("Open current image"), size="sm")
                 self.open_latest = gr.Button(t("Latest generated"), size="sm")
                 self.choose_gallery = gr.Button(t("Choose from Gallery"), size="sm")
-                # History actions start their own group at the row end.
-                self.undo = gr.Button(t("Undo"), size="sm", elem_classes=["rf-group-start"])
+            with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
+                self.undo = gr.Button(t("Undo"), size="sm")
                 self.redo = gr.Button(t("Redo"), size="sm")
                 self.reopen = gr.Button(t("Reopen image history"), size="sm")
                 self.use_selection = gr.Button(

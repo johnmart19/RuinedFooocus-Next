@@ -1539,12 +1539,12 @@ def create_image_gallery():
                 def local_action(record, request: gr.Request = None, kind=kind):
                     validate_view_record(record, request)
                     source_path(record)
-                    return kind
+                    return kind, gr.update(open=True)
 
                 button.click(
                     local_action,
                     inputs=selected,
-                    outputs=local_editor.operation,
+                    outputs=[local_editor.operation, local_editor.panel],
                     show_progress="hidden",
                     api_visibility="private",
                 )

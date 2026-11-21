@@ -470,7 +470,7 @@ def create_hardware_tab(device_name=""):
             "Choose which hardware each component uses. Only options that suit the detected hardware and operating system are listed. Saving never installs anything; use the install buttons."
         )
     )
-    hardware = gr.Markdown(hardware_text())
+    hardware = gr.Markdown(hardware_text(), elem_classes=["rf-status-card"])
     localized_output(hardware_text, [], [hardware])
     with gr.Accordion(t("Supported on this PC"), open=False, elem_id="hardware-support"):
         gr.Markdown(
@@ -489,7 +489,9 @@ def create_hardware_tab(device_name=""):
             elem_classes=["rf-technical-table"],
         )
         localized_output(support_table, [], [support])
-    refresh_hardware = gr.Button(t("Refresh hardware"), size="sm", min_width=120)
+    refresh_hardware = gr.Button(
+        t("Refresh hardware"), size="sm", min_width=120, elem_classes=["rf-inline-action"]
+    )
     cpu_everywhere = gr.Checkbox(
         label=t("Use CPU for everything"),
         value=saved.get("cpu_everywhere", False),
@@ -513,7 +515,9 @@ def create_hardware_tab(device_name=""):
             ),
         )
         add_setting("image_backend", image_backend)
-        image_status = gr.Markdown(image_status_text(device_name=device_name))
+        image_status = gr.Markdown(
+            image_status_text(device_name=device_name), elem_classes=["rf-status-card"]
+        )
         localized_output(
             lambda locale, choice, cpu: image_status_text(locale, choice, cpu, device_name),
             [image_backend, cpu_everywhere],
@@ -626,7 +630,9 @@ def create_hardware_tab(device_name=""):
             ),
         )
         add_setting("llama_backend", llama_backend)
-        llama_status = gr.Markdown(llama_status_text(cpu_forced=forced))
+        llama_status = gr.Markdown(
+            llama_status_text(cpu_forced=forced), elem_classes=["rf-status-card"]
+        )
         localized_output(
             lambda locale, choice, cpu: llama_status_text(locale, choice, cpu),
             [llama_backend, cpu_everywhere],
@@ -780,7 +786,7 @@ def create_hardware_tab(device_name=""):
             )
 
     # Alternative chat runtime (xllamacpp wheels)
-    with gr.Accordion(t("Chat runtime xllamacpp"), open=False):
+    with gr.Accordion(t("Chat runtime (xllamacpp)"), open=False):
         xllama_values = inventory.xllamacpp_backend_choices(gpus, system)
         saved_xllama = saved.get("xllamacpp_backend", "Auto")
         xllama_backend = gr.Dropdown(
@@ -793,7 +799,10 @@ def create_hardware_tab(device_name=""):
             ),
         )
         add_setting("xllamacpp_backend", xllama_backend)
-        xllama_status = gr.Markdown(xllama_status_text(choice=saved_xllama, cpu_forced=forced))
+        xllama_status = gr.Markdown(
+            xllama_status_text(choice=saved_xllama, cpu_forced=forced),
+            elem_classes=["rf-status-card"],
+        )
         localized_output(
             lambda locale, choice, cpu: xllama_status_text(locale, choice, cpu),
             [xllama_backend, cpu_everywhere],
@@ -892,7 +901,9 @@ def create_hardware_tab(device_name=""):
             ),
         )
         add_setting("rembg_backend", background_backend)
-        background_status = gr.Markdown(background_status_text(cpu_forced=forced))
+        background_status = gr.Markdown(
+            background_status_text(cpu_forced=forced), elem_classes=["rf-status-card"]
+        )
         localized_output(
             lambda locale, choice, cpu: background_status_text(locale, cpu, choice),
             [background_backend, cpu_everywhere],

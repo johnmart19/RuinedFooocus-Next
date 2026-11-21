@@ -497,7 +497,9 @@ def add_quick_prompt_controls(prompt, checkpoint, *, register_prompt):
                 label=translate_ui("Random Prompt seed (-1 for random)"), value=-1, precision=0
             )
 
-        bind = create_prompt_action(prompt, advanced=options)
+        bind = create_prompt_action(
+            prompt, advanced=options, options_label=translate_ui("Quick prompt options")
+        )
 
         def build_quick(selected_subject, selected_seed, selected_checkpoint=None):
             return quick_prompt(selected_subject, selected_checkpoint, selected_seed)
@@ -649,7 +651,9 @@ def ui_onebutton(
                 add_ctrl("OBP_preset", OBP_preset)
 
             subject_override = gr.Textbox(label=translate_ui("Optional subject"), value="")
-            bind_obp = create_prompt_action(prompt)
+            bind_obp = create_prompt_action(
+                prompt, options_label=translate_ui("One Button Prompt options")
+            )
 
             with gr.Accordion(
                 translate_ui("Advanced Custom options"),

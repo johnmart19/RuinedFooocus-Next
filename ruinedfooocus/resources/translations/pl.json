@@ -1452,7 +1452,7 @@
   "settings.supported_on_this_pc": "Obsługiwane na tym komputerze",
   "settings.what_each_component_can_use_with_the_detected_gpus_and_operating_system_and_what_is_already_installed": "Z czego każdy komponent może korzystać przy wykrytych GPU i systemie operacyjnym oraz co jest już zainstalowane.",
   "settings.image_generation_comfyui_pytorch": "Generowanie obrazów (ComfyUI / PyTorch)",
-  "settings.chat_runtime_xllamacpp": "Środowisko czatu xllamacpp",
+  "settings.chat_runtime_xllamacpp": "Środowisko czatu (xllamacpp)",
   "settings.install_xllamacpp_now": "Zainstaluj xllamacpp teraz",
   "settings.background_removal_onnx_runtime": "Usuwanie tła (ONNX Runtime)",
   "settings.the_selected_backend_differs_from_the_installed_wheel_install_it_now_then_restart": "Wybrany backend różni się od zainstalowanego pakietu wheel. Zainstaluj go teraz, a potem uruchom ponownie.",
@@ -2164,5 +2164,7 @@
   "prompting.all_styles": "Wszystkie style",
   "prompting.no_matching_styles": "Brak pasujących stylów.",
   "shell.aspect_ratio": "Proporcje",
-  "shell.count": "Liczba"
+  "shell.count": "Liczba",
+  "prompting.quick_prompt_options": "Opcje szybkiego promptu",
+  "prompting.one_button_prompt_options": "Opcje promptu jednym przyciskiem"
 }

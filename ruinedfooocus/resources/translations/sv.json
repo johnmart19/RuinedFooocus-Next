@@ -1452,7 +1452,7 @@
   "settings.supported_on_this_pc": "Stöds på den här datorn",
   "settings.what_each_component_can_use_with_the_detected_gpus_and_operating_system_and_what_is_already_installed": "Vad varje komponent kan använda med de identifierade GPU:erna och operativsystemet, och vad som redan är installerat.",
   "settings.image_generation_comfyui_pytorch": "Bildgenerering (ComfyUI / PyTorch)",
-  "settings.chat_runtime_xllamacpp": "Chattkörmiljö xllamacpp",
+  "settings.chat_runtime_xllamacpp": "Chattkörmiljö (xllamacpp)",
   "settings.install_xllamacpp_now": "Installera xllamacpp nu",
   "settings.background_removal_onnx_runtime": "Bakgrundsborttagning (ONNX Runtime)",
   "settings.the_selected_backend_differs_from_the_installed_wheel_install_it_now_then_restart": "Den valda backenden skiljer sig från det installerade wheel-paketet. Installera den nu och starta sedan om.",
@@ -2164,5 +2164,7 @@
   "prompting.all_styles": "Alla stilar",
   "prompting.no_matching_styles": "Inga matchande stilar.",
   "shell.aspect_ratio": "Bildförhållande",
-  "shell.count": "Antal"
+  "shell.count": "Antal",
+  "prompting.quick_prompt_options": "Snabba promptalternativ",
+  "prompting.one_button_prompt_options": "Alternativ för enknappsprompt"
 }

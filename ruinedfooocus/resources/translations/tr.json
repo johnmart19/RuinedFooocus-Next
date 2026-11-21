@@ -1452,7 +1452,7 @@
   "settings.supported_on_this_pc": "Bu PC'de destekleniyor",
   "settings.what_each_component_can_use_with_the_detected_gpus_and_operating_system_and_what_is_already_installed": "Algılanan GPU'lar ve işletim sistemiyle her bileşenin neleri kullanabileceği ve nelerin zaten kurulu olduğu.",
   "settings.image_generation_comfyui_pytorch": "Görsel oluşturma (ComfyUI / PyTorch)",
-  "settings.chat_runtime_xllamacpp": "Sohbet çalışma zamanı xllamacpp",
+  "settings.chat_runtime_xllamacpp": "Sohbet çalışma zamanı (xllamacpp)",
   "settings.install_xllamacpp_now": "xllamacpp'yi şimdi kur",
   "settings.background_removal_onnx_runtime": "Arka plan kaldırma (ONNX Runtime)",
   "settings.the_selected_backend_differs_from_the_installed_wheel_install_it_now_then_restart": "Seçili arka uç kurulu wheel'den farklı. Şimdi kurun, ardından yeniden başlatın.",
@@ -2164,5 +2164,7 @@
   "prompting.all_styles": "Tüm stiller",
   "prompting.no_matching_styles": "Eşleşen stil yok.",
   "shell.aspect_ratio": "En-boy oranı",
-  "shell.count": "Adet"
+  "shell.count": "Adet",
+  "prompting.quick_prompt_options": "Hızlı istem seçenekleri",
+  "prompting.one_button_prompt_options": "One Button Prompt seçenekleri"
 }

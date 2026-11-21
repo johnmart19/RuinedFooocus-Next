@@ -1452,7 +1452,7 @@
   "settings.supported_on_this_pc": "この PC でサポートされています",
   "settings.what_each_component_can_use_with_the_detected_gpus_and_operating_system_and_what_is_already_installed": "検出された GPU と OS で各コンポーネントが使用できるものと、すでにインストールされているものを示します。",
   "settings.image_generation_comfyui_pytorch": "画像生成 (ComfyUI / PyTorch)",
-  "settings.chat_runtime_xllamacpp": "チャットランタイム xllamacpp",
+  "settings.chat_runtime_xllamacpp": "チャットランタイム (xllamacpp)",
   "settings.install_xllamacpp_now": "今すぐ xllamacpp をインストール",
   "settings.background_removal_onnx_runtime": "背景削除 (ONNX Runtime)",
   "settings.the_selected_backend_differs_from_the_installed_wheel_install_it_now_then_restart": "選択したバックエンドがインストール済みの wheel と異なります。今すぐインストールしてから再起動してください。",
@@ -2164,5 +2164,7 @@
   "prompting.all_styles": "すべてのスタイル",
   "prompting.no_matching_styles": "一致するスタイルがありません。",
   "shell.aspect_ratio": "アスペクト比",
-  "shell.count": "枚数"
+  "shell.count": "枚数",
+  "prompting.quick_prompt_options": "クイックプロンプト設定",
+  "prompting.one_button_prompt_options": "ワンボタンプロンプト設定"
 }

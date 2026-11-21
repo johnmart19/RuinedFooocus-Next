@@ -1452,7 +1452,7 @@
   "settings.supported_on_this_pc": "此 PC 支援",
   "settings.what_each_component_can_use_with_the_detected_gpus_and_operating_system_and_what_is_already_installed": "依據偵測到的 GPU 和作業系統，各元件可以使用哪些選項，以及哪些已經安裝。",
   "settings.image_generation_comfyui_pytorch": "影像生成 (ComfyUI / PyTorch)",
-  "settings.chat_runtime_xllamacpp": "聊天執行環境 xllamacpp",
+  "settings.chat_runtime_xllamacpp": "聊天執行環境 (xllamacpp)",
   "settings.install_xllamacpp_now": "立即安裝 xllamacpp",
   "settings.background_removal_onnx_runtime": "背景移除 (ONNX Runtime)",
   "settings.the_selected_backend_differs_from_the_installed_wheel_install_it_now_then_restart": "所選後端與已安裝的 wheel 不同。請立即安裝，然後重新啟動。",
@@ -2164,5 +2164,7 @@
   "prompting.all_styles": "全部風格",
   "prompting.no_matching_styles": "沒有符合的風格。",
   "shell.aspect_ratio": "長寬比",
-  "shell.count": "數量"
+  "shell.count": "數量",
+  "prompting.quick_prompt_options": "快速提示詞選項",
+  "prompting.one_button_prompt_options": "一鍵提示詞選項"
 }

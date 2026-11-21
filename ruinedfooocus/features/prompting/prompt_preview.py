@@ -185,7 +185,7 @@ def create_chat_prompt_action(prompt, *, owner_for_request, context_inputs=()):
     return ChatPromptAction(prompt, ticket, permissions, tuple(context_inputs))
 
 
-def create_prompt_action(prompt, *, advanced=None):
+def create_prompt_action(prompt, *, advanced=None, options_label=None):
     """One prompt-only action with a pending result when the draft changed."""
     revision = gr.State(0)
     ticket = gr.JSON(None, visible="hidden")
@@ -199,7 +199,10 @@ def create_prompt_action(prompt, *, advanced=None):
         with gr.Row(elem_classes=["rf-prompt-actions"], equal_height=True):
             apply = gr.Button(translate_ui("Apply result"))
             dismiss = gr.Button(translate_ui("Dismiss result"))
-    with gr.Accordion(translate_ui("Prompt options"), open=False):
+    with gr.Accordion(
+        options_label if options_label is not None else translate_ui("Prompt options"),
+        open=False,
+    ):
         append = gr.Checkbox(label=translate_ui("Append as another prompt"), value=False)
         if advanced is not None:
             advanced()
