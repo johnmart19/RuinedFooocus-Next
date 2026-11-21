@@ -2129,5 +2129,14 @@
   "Downloading {file}: {done} of {total} ({speed}/s)": "models.downloading_file_done_of_total_speed_s",
   "Popular now": "shell.popular_now",
   "Loading the {source} list…": "models.loading_the_source_list",
-  "Write a message below to start. Choose the assistant and model on the right.": "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right"
+  "Write a message below to start. Choose the assistant and model on the right.": "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right",
+  "Latent Hires Fix": "image_editing.latent_hires_fix",
+  "Enable latent hires fix": "image_editing.enable_latent_hires_fix",
+  "Upscale the latent after the first pass and run a second sampling pass for sharper detail.": "image_editing.upscale_the_latent_after_the_first_pass_and_run_a_second_sampling_pass_for_sharper_detail",
+  "Second-pass seed": "image_editing.second_pass_seed",
+  "Optional second-pass seed. Leave blank to derive from the main seed.": "image_editing.optional_second_pass_seed_leave_blank_to_derive_from_the_main_seed",
+  "Scale factor": "image_editing.scale_factor",
+  "Latent upscale method": "image_editing.latent_upscale_method",
+  "Second-pass steps": "image_editing.second_pass_steps",
+  "Second-pass denoise": "image_editing.second_pass_denoise"
 }

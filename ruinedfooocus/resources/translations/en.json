@@ -2133,5 +2133,14 @@
   "models.downloading_file_done_of_total_speed_s": "Downloading {file}: {done} of {total} ({speed}/s)",
   "shell.popular_now": "Popular now",
   "models.loading_the_source_list": "Loading the {source} list…",
-  "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right": "Write a message below to start. Choose the assistant and model on the right."
+  "chat.write_a_message_below_to_start_choose_the_assistant_and_model_on_the_right": "Write a message below to start. Choose the assistant and model on the right.",
+  "image_editing.latent_hires_fix": "Latent Hires Fix",
+  "image_editing.enable_latent_hires_fix": "Enable latent hires fix",
+  "image_editing.upscale_the_latent_after_the_first_pass_and_run_a_second_sampling_pass_for_sharper_detail": "Upscale the latent after the first pass and run a second sampling pass for sharper detail.",
+  "image_editing.second_pass_seed": "Second-pass seed",
+  "image_editing.optional_second_pass_seed_leave_blank_to_derive_from_the_main_seed": "Optional second-pass seed. Leave blank to derive from the main seed.",
+  "image_editing.scale_factor": "Scale factor",
+  "image_editing.latent_upscale_method": "Latent upscale method",
+  "image_editing.second_pass_steps": "Second-pass steps",
+  "image_editing.second_pass_denoise": "Second-pass denoise"
 }

@@ -1,0 +1,17 @@
+{
+  "id": "latent-hires-fix",
+  "subject": "Add native ComfyUI two-pass Latent Hires Fix (LatentUpscaleBy + second KSampler pass) in UI, API, and backend",
+  "requires": ["resize-observer-raf-fallback"],
+  "tests": [
+    "test_hires_fix.py",
+    "test_image_guidance.py",
+    "test_image_guidance_options.py",
+    "test_image_guidance_ui.py",
+    "test_preset_image_guidance.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

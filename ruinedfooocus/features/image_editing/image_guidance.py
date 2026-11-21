@@ -2,6 +2,7 @@
 
 import math
 import re
+from ruinedfooocus.features.generation.hires_fix import HIRES_UPSCALE_METHODS, MAX_COMFY_SEED
 from ruinedfooocus.features.models.image_components import IMAGE_COMPONENTS, ALIASES
 
 MOSS_EDIT_FORMATS = ("Disabled", "ai-toolkit", "ai-toolkit (kv_cache off)", "Moss-Image-Edit")
@@ -48,6 +49,12 @@ FIELD_SCHEMA = {
     "vae_tiled": {"default": False},
     "vae_tile_size": {"minimum": 64, "maximum": 4096, "step": 32, "default": None},
     "vae_overlap": {"minimum": 0, "maximum": 4096, "step": 32, "default": None},
+    "hires_enabled": {"default": False},
+    "hires_scale": {"minimum": 1.05, "maximum": 4.0, "step": 0.05, "default": 1.5},
+    "hires_upscale_method": {"choices": HIRES_UPSCALE_METHODS, "default": "nearest-exact"},
+    "hires_steps": {"minimum": 1, "maximum": 200, "step": 1, "default": 20},
+    "hires_denoise": {"minimum": 0.05, "maximum": 1.0, "step": 0.05, "default": 0.6},
+    "hires_seed": {"minimum": -1, "maximum": MAX_COMFY_SEED, "step": 1, "default": None},
 }
 GUIDANCE_RANGES = (
     ("moss_image_slg_start", "moss_image_slg_end", "SLG"),
@@ -174,9 +181,33 @@ def validate_guidance(values):
             if value is not None and type(value) is not bool:
                 raise ValueError("Seam smoothing: choose Auto, On or Off.")
             result[key] = value
-        elif key in ("moss_image_slg", "cfg_norm_pre_cfg", "cfg_norm_auto", "vae_tiled"):
+        elif key in (
+            "moss_image_slg",
+            "cfg_norm_pre_cfg",
+            "cfg_norm_auto",
+            "vae_tiled",
+            "hires_enabled",
+        ):
             if type(value) is not bool:
                 raise ValueError(f"{key}: choose on or off.")
+        elif key == "hires_upscale_method":
+            if value not in HIRES_UPSCALE_METHODS:
+                raise ValueError("Choose a supported latent upscale method.")
+        elif key == "hires_seed":
+            if value in (None, ""):
+                result[key] = None
+                continue
+            if isinstance(value, bool):
+                raise ValueError("hires_seed: enter a whole seed number or leave blank.")
+            try:
+                seed_value = int(str(value).strip()) if isinstance(value, str) else int(value)
+            except (TypeError, ValueError):
+                raise ValueError("hires_seed: enter a whole seed number or leave blank.") from None
+            if isinstance(value, float) and not value.is_integer():
+                raise ValueError("hires_seed: enter a whole seed number or leave blank.")
+            if not -1 <= seed_value <= MAX_COMFY_SEED:
+                raise ValueError(f"hires_seed: value must be between -1 and {MAX_COMFY_SEED}.")
+            result[key] = seed_value
         elif key.startswith("hidream_o1_") and "choices" in FIELD_SCHEMA[key]:
             if value not in FIELD_SCHEMA[key]["choices"]:
                 raise ValueError(f"{key}: choose a supported option.")
@@ -206,6 +237,10 @@ def validate_guidance(values):
             if key in ("vae_tile_size", "vae_overlap"):
                 if not number.is_integer() or number % 32:
                     raise ValueError("VAE tile size and overlap must be whole multiples of 32.")
+                number = int(number)
+            elif key == "hires_steps":
+                if not number.is_integer():
+                    raise ValueError("hires_steps: enter a whole number of steps.")
                 number = int(number)
             result[key] = number
     for start, end, label in GUIDANCE_RANGES:

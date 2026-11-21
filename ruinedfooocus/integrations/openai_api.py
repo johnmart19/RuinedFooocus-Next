@@ -312,7 +312,7 @@ class _GenerationRequest(BaseModel):
         default=None,
         description="Clip Skip remains request-owned unless recipe is explicitly selected; conflicts with explicit clip_skip.",
     )
-    seed: int | None = Field(default=None, ge=-1, le=4294967295)
+    seed: int | None = Field(default=None, ge=-1, le=9223372036854775807)
     user: str | None = None
     input_image: str | None = Field(
         default=None,
@@ -513,6 +513,40 @@ class _GenerationRequest(BaseModel):
         le=4096,
         multiple_of=32,
         description="VAE tile overlap in pixels; omit for the native default.",
+    )
+    hires_enabled: bool | None = Field(
+        default=None,
+        description="Enable native two-pass latent hires fix (LatentUpscaleBy + second KSampler pass).",
+    )
+    hires_scale: float | None = Field(
+        default=None,
+        ge=1.05,
+        le=4.0,
+        description="Latent hires upscale factor (default 1.5).",
+    )
+    hires_upscale_method: (
+        Literal["nearest-exact", "bilinear", "area", "bicubic", "bislerp"] | None
+    ) = Field(
+        default=None,
+        description="Native ComfyUI LatentUpscaleBy interpolation method.",
+    )
+    hires_steps: int | None = Field(
+        default=None,
+        ge=1,
+        le=200,
+        description="Sampling steps for the second-pass latent hires fix.",
+    )
+    hires_denoise: float | None = Field(
+        default=None,
+        ge=0.05,
+        le=1.0,
+        description="Denoise strength for the second-pass latent hires fix.",
+    )
+    hires_seed: int | None = Field(
+        default=None,
+        ge=-1,
+        le=9223372036854775807,
+        description="Optional explicit seed for the second-pass latent hires fix.",
     )
     reference_images: list[Annotated[str, Field(max_length=28000000)]] | None = Field(
         default=None, max_length=15

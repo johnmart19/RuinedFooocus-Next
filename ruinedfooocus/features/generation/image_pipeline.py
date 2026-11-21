@@ -2445,6 +2445,44 @@ class pipeline:
         sampled_latent.pop("downscale_ratio_spacial", None)
         sampled_latent.pop("downscale_ratio_temporal", None)
         sampled_latent["samples"] = samples
+        if (
+            guidance.get("hires_enabled")
+            and architecture != "StableCascade_C"
+            and not layered_model
+        ):
+            from ruinedfooocus.features.generation.hires_fix import (
+                apply_latent_hires_fix,
+                scale_reference_frame,
+            )
+
+            before_latent_shape = tuple(sampled_latent["samples"].shape)
+            if callback is not None:
+                worker.add_result(
+                    gen_data["task_id"], "preview", (-1, "Latent hires fix pass ...", None)
+                )
+            with torch.inference_mode():
+                sampled_latent = apply_latent_hires_fix(
+                    sampled_latent,
+                    model=sampling_model,
+                    positive=positive_cond,
+                    negative=negative_conditioning,
+                    cfg=cfg,
+                    sampler_name=sampler_name,
+                    scheduler=scheduler,
+                    base_seed=seed,
+                    guidance=guidance,
+                    callback=callback_function,
+                    disable_pbar=not comfy.utils.PROGRESS_BAR_ENABLED,
+                    check_cancelled=lambda: worker.check_interrupt(gen_data),
+                )
+            after_latent_shape = tuple(sampled_latent["samples"].shape)
+            if reference_frame is not None:
+                reference_frame = scale_reference_frame(
+                    reference_frame, before_latent_shape, after_latent_shape
+                )
+            if after_latent_shape[-2:] != before_latent_shape[-2:]:
+                # Latent Hires Fix intentionally enlarges the output beyond the Pass-1 SizePlan.
+                gen_data.pop(SIZE_PLAN_KEY, None)
         if "_native_tensor_plan" in gen_data and (
             gen_data.get("native_export_latent") or gen_data.get("native_export_conditioning")
         ):

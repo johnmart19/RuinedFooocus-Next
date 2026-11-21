@@ -399,6 +399,66 @@ def create_ui(
             ),
         )
         with gr.Accordion(
+            translate_ui("Latent Hires Fix"), open=False, visible=initial[3]
+        ) as hires_panel:
+            hires_enabled = gr.Checkbox(
+                label=translate_ui("Enable latent hires fix"),
+                value=defaults.get("hires_enabled", False),
+                info=translate_ui(
+                    "Upscale the latent after the first pass and run a second sampling pass for sharper detail."
+                ),
+            )
+            with gr.Group(visible=bool(defaults.get("hires_enabled", False))) as hires_options:
+                with gr.Row():
+                    hires_scale = gr.Slider(
+                        label=translate_ui("Scale factor"),
+                        minimum=1.05,
+                        maximum=4.0,
+                        step=0.05,
+                        value=defaults.get("hires_scale", 1.5),
+                        min_width=180,
+                    )
+                    hires_upscale_method = gr.Dropdown(
+                        label=translate_ui("Latent upscale method"),
+                        choices=list(FIELD_SCHEMA["hires_upscale_method"]["choices"]),
+                        value=defaults.get("hires_upscale_method", "nearest-exact"),
+                        min_width=180,
+                    )
+                with gr.Row():
+                    hires_steps = gr.Slider(
+                        label=translate_ui("Second-pass steps"),
+                        minimum=1,
+                        maximum=200,
+                        step=1,
+                        value=defaults.get("hires_steps", 20),
+                        min_width=180,
+                    )
+                    hires_denoise = gr.Slider(
+                        label=translate_ui("Second-pass denoise"),
+                        minimum=0.05,
+                        maximum=1.0,
+                        step=0.05,
+                        value=defaults.get("hires_denoise", 0.6),
+                        min_width=180,
+                    )
+                hires_seed = gr.Textbox(
+                    label=translate_ui("Second-pass seed"),
+                    placeholder=translate_ui("Auto"),
+                    value=""
+                    if defaults.get("hires_seed") is None
+                    else str(defaults["hires_seed"]),
+                    info=translate_ui(
+                        "Optional second-pass seed. Leave blank to derive from the main seed."
+                    ),
+                )
+            hires_enabled.change(
+                lambda enabled: gr.update(visible=bool(enabled)),
+                inputs=hires_enabled,
+                outputs=hires_options,
+                api_visibility="undocumented",
+                show_progress="hidden",
+            )
+        with gr.Accordion(
             translate_ui("VAE decoding"), open=False, visible=initial[3]
         ) as vae_panel:
             vae_tiled = gr.Checkbox(
@@ -460,6 +520,12 @@ def create_ui(
             vae_tiled=vae_tiled,
             vae_tile_size=vae_size,
             vae_overlap=vae_overlap,
+            hires_enabled=hires_enabled,
+            hires_scale=hires_scale,
+            hires_upscale_method=hires_upscale_method,
+            hires_steps=hires_steps,
+            hires_denoise=hires_denoise,
+            hires_seed=hires_seed,
             reference_images=references,
         )
         for key, component in controls.items():
@@ -490,6 +556,7 @@ def create_ui(
             gr.update(visible=use_norm),
             *[gr.update(value="") for key in LCM_FIELDS],
             gr.update(visible=family == "Lens", value=normalization_auto_default(family, defaults)),
+            gr.update(visible=use_norm),
             gr.update(
                 visible=capabilities(family)["qwen_image21"],
                 value=qwen_schedule_for_family(current_schedule, family),
@@ -519,6 +586,7 @@ def create_ui(
                 lcm_panel,
                 *[controls[key] for key in LCM_FIELDS],
                 norm_auto,
+                hires_panel,
                 qwen_schedule,
             ],
             api_visibility="undocumented",
@@ -541,7 +609,16 @@ def create_ui(
         outputs = (
             [guidance_panel, preset_notice, moss_edit]
             + fields
-            + [references, vae_panel, slg_options, hidream_panel, hidream_options, lcm_panel, state]
+            + [
+                references,
+                vae_panel,
+                hires_panel,
+                slg_options,
+                hidream_panel,
+                hidream_options,
+                lcm_panel,
+                state,
+            ]
         )
 
         def context_changed(main_checkpoint, preset, previous, *values):
@@ -596,6 +673,12 @@ def create_ui(
                         "vae_tiled",
                         "vae_tile_size",
                         "vae_overlap",
+                        "hires_enabled",
+                        "hires_scale",
+                        "hires_upscale_method",
+                        "hires_steps",
+                        "hires_denoise",
+                        "hires_seed",
                         *LCM_FIELDS,
                     )
                     else True
@@ -608,6 +691,7 @@ def create_ui(
                     **({"value": []} if transition["clear_references"] else {}),
                 )
             )
+            updates.append(gr.update(visible=available["cfg_norm"]))
             updates.append(gr.update(visible=available["cfg_norm"]))
             updates.append(gr.update(visible=available["moss_slg"] and selected["moss_image_slg"]))
             updates.append(gr.update(visible=available["hidream_o1"]))
