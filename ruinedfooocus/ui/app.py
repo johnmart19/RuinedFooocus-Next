@@ -456,6 +456,7 @@ def launch_app(args):
         "cfg_guidance_mode",
         "pag_scale",
         "differential_diffusion",
+        "freeu_v2",
         "image_resize_mode",
         "hidream_o1_noise_scale",
         "hidream_o1_seam_smoothing",

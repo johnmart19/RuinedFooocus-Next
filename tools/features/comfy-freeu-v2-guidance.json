@@ -1,0 +1,15 @@
+{
+  "id": "comfy-freeu-v2-guidance",
+  "subject": "Add native ComfyUI FreeU V2 UNet detail boost to Advanced guidance, API, and PNG metadata",
+  "requires": ["llama-cpp-auto-update-latest"],
+  "tests": [
+    "test_image_guidance.py",
+    "test_image_guidance_ui.py",
+    "test_preset_image_guidance.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

@@ -495,6 +495,10 @@ class _GenerationRequest(BaseModel):
         default=None,
         description="Enable native ComfyUI Differential Diffusion for smooth gradient-masked inpainting.",
     )
+    freeu_v2: bool | None = Field(
+        default=None,
+        description="Enable native ComfyUI FreeU V2 detail boost on UNet models (SDXL / SD 1.5 / SD 2.0).",
+    )
     hidream_o1_noise_scale: float | None = Field(default=None, ge=0, le=64, allow_inf_nan=False)
     hidream_o1_seam_smoothing: bool | None = Field(
         default=None,

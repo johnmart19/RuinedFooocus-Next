@@ -37,6 +37,7 @@ FIELD_SCHEMA = {
     "cfg_guidance_mode": {"choices": CFG_GUIDANCE_MODES, "default": "Off"},
     "pag_scale": {"minimum": 0.0, "maximum": 100.0, "step": 0.5, "default": None},
     "differential_diffusion": {"default": False},
+    "freeu_v2": {"default": False},
     "hidream_o1_noise_scale": {"minimum": 0.0, "maximum": 64.0, "step": 0.01, "default": None},
     "hidream_o1_seam_smoothing": {"default": None},
     "hidream_o1_seam_start": {"minimum": 0.0, "maximum": 1.0, "step": 0.01, "default": 0.8},
@@ -199,6 +200,7 @@ def validate_guidance(values):
             "cfg_norm_pre_cfg",
             "cfg_norm_auto",
             "differential_diffusion",
+            "freeu_v2",
             "vae_tiled",
             "hires_enabled",
         ):
@@ -454,6 +456,13 @@ def request_model(base, values, family, nodes=None, checkpoint=None):
 
             fn = DifferentialDiffusion.execute
         model = fn(model=model, strength=1.0)[0]
+    if values.get("freeu_v2") and family in ("SDXL", "SD15", "SD20", "SDXLRefiner"):
+        fn = nodes.get("freeu_v2")
+        if fn is None:
+            from comfy_extras.nodes_freelunch import FreeU_V2
+
+            fn = FreeU_V2.execute
+        model = fn(model=model, b1=1.3, b2=1.4, s1=0.9, s2=0.2)[0]
     return model
 
 

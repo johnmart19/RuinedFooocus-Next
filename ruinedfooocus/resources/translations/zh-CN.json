@@ -2157,5 +2157,7 @@
   "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "使用渐变遮罩强度以获得更平滑的局部重绘过渡。",
   "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "选择 Auto、CPU、Vulkan、ROCm 或 SYCL 以管理官方 llama.cpp 更新。",
   "settings.auto_update_llama_cpp_to_latest_release": "自动将 llama.cpp 更新到最新版本",
-  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "联网时自动检查并安装经过验证的最新官方 llama.cpp 版本。"
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "联网时自动检查并安装经过验证的最新官方 llama.cpp 版本。",
+  "image_editing.freeu_v2_unet_detail_boost": "FreeU V2（UNet 细节增强）",
+  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "在 SDXL / SD 1.5 / SD 2.0 UNet 模型上增强细节与结构，无需额外步数。"
 }

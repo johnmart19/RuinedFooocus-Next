@@ -2157,5 +2157,7 @@
   "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Utilise les intensités de masque en dégradé pour des transitions d’inpainting plus douces.",
   "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "Sélectionnez Auto, CPU, Vulkan, ROCm ou SYCL pour gérer les mises à jour officielles de llama.cpp.",
   "settings.auto_update_llama_cpp_to_latest_release": "Mettre à jour automatiquement llama.cpp vers la dernière version",
-  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Recherche et installe automatiquement la dernière version officielle vérifiée de llama.cpp lorsque vous êtes en ligne."
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Recherche et installe automatiquement la dernière version officielle vérifiée de llama.cpp lorsque vous êtes en ligne.",
+  "image_editing.freeu_v2_unet_detail_boost": "FreeU V2 (renforcement des détails UNet)",
+  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "Améliore les détails et la structure sur les modèles UNet SDXL / SD 1.5 / SD 2.0 sans étape supplémentaire."
 }

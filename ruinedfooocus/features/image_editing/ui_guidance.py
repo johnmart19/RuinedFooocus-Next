@@ -415,6 +415,13 @@ def create_ui(
                     "Uses gradient mask strengths for smoother inpaint transitions."
                 ),
             )
+            freeu_v2 = gr.Checkbox(
+                label=translate_ui("FreeU V2 (UNet detail boost)"),
+                value=defaults.get("freeu_v2", False),
+                info=translate_ui(
+                    "Enhances detail and structure on SDXL / SD 1.5 / SD 2.0 UNet models with zero extra steps."
+                ),
+            )
         from ruinedfooocus.features.image_editing.image_geometry import FRAMING_CHOICES
 
         framing = gr.Dropdown(
@@ -551,6 +558,7 @@ def create_ui(
             cfg_guidance_mode=cfg_guidance_mode,
             pag_scale=pag_scale,
             differential_diffusion=differential_diffusion,
+            freeu_v2=freeu_v2,
             image_resize_mode=framing,
             **hidream_controls,
             **lcm_controls,
@@ -717,6 +725,7 @@ def create_ui(
                         "cfg_guidance_mode",
                         "pag_scale",
                         "differential_diffusion",
+                        "freeu_v2",
                         "image_resize_mode",
                         "vae_tiled",
                         "vae_tile_size",

@@ -506,6 +506,15 @@ class ImageGuidanceTests(unittest.TestCase):
             self.assertEqual(calls[1][1], {"scale": 3.0})
             self.assertEqual(calls[2][1], {"strength": 1.0})
 
+        freeu_calls = []
+        freeu_nodes = {"freeu_v2": lambda model, **kw: (freeu_calls.append(kw) or model,)}
+        values = resolve_guidance({"freeu_v2": True}, {}, "SDXL")
+        request_model(FakeModel(freeu_calls), values, "SDXL", nodes=freeu_nodes)
+        self.assertEqual(freeu_calls, [{"b1": 1.3, "b2": 1.4, "s1": 0.9, "s2": 0.2}])
+        freeu_calls.clear()
+        request_model(FakeModel(freeu_calls), values, "Anima", nodes=freeu_nodes)
+        self.assertEqual(freeu_calls, [])
+
 
 if __name__ == "__main__":
     unittest.main()
