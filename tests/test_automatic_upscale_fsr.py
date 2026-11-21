@@ -13,16 +13,17 @@ class AutomaticUpscaleFSRTests(unittest.TestCase):
         all_choices = automatic_upscale.choices()
         x2_choices = automatic_upscale.choices(factor=2)
         x4_choices = automatic_upscale.choices(factor=4)
-        for version, label in (
-            ("fsr4", "2× AMD FSR 4"),
-            ("fsr3", "2× AMD FSR 3"),
-            ("fsr2", "2× AMD FSR 2"),
-            ("fsr1", "2× AMD FSR 1"),
-        ):
-            self.assertIn(label, all_choices)
-            self.assertIn(label, x2_choices)
-            self.assertNotIn(label, x4_choices)
-            self.assertEqual(automatic_upscale.resolve(label), (f"amd-fsr:{version}", 2))
+        for version in ("fsr4", "fsr3", "fsr2", "fsr1"):
+            label_2x = f"2× AMD FSR {version[-1]}"
+            label_4x = f"4× AMD FSR {version[-1]}"
+            self.assertIn(label_2x, all_choices)
+            self.assertIn(label_2x, x2_choices)
+            self.assertNotIn(label_2x, x4_choices)
+            self.assertEqual(automatic_upscale.resolve(label_2x), (f"amd-fsr:{version}", 2))
+            self.assertIn(label_4x, all_choices)
+            self.assertIn(label_4x, x4_choices)
+            self.assertNotIn(label_4x, x2_choices)
+            self.assertEqual(automatic_upscale.resolve(label_4x), (f"amd-fsr:{version}", 4))
             self.assertEqual(automatic_upscale.fsr_version_for(f"amd-fsr:{version}"), version)
         self.assertIsNone(automatic_upscale.fsr_version_for("2x-AniScale.pth"))
 
@@ -54,6 +55,18 @@ class AutomaticUpscaleFSRTests(unittest.TestCase):
             ],
         )
         self.assertEqual(gen_data["automatic_upscale_model"], "amd-fsr:fsr4")
+
+        calls.clear()
+        gen_data_4x = {"task_id": "t2", "automatic_upscale": "4× AMD FSR 4"}
+        with (
+            patch("ruinedfooocus.features.image_processing.amd_fsr.upscale", side_effect=fake_upscale),
+            patch.dict(sys.modules, {"ruinedfooocus.app.async_worker": fake_worker}),
+            patch.object(app_pkg, "async_worker", fake_worker, create=True),
+        ):
+            out4 = automatic_upscale.upscale_decoded(NS(), image[:1], gen_data_4x)
+        self.assertEqual(tuple(out4.shape), (1, 256, 192, 3))
+        self.assertEqual(calls, [("fsr4", (1, 64, 48, 3), 192, 256)])
+        self.assertEqual(gen_data_4x["automatic_upscale_model"], "amd-fsr:fsr4")
 
 
 if __name__ == "__main__":

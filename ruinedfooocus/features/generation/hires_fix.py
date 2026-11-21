@@ -10,7 +10,9 @@ def hires_upscaler_choices():
     from ruinedfooocus.features.generation import automatic_upscale
 
     return [HIRES_UPSCALER_LATENT] + [
-        choice for choice in automatic_upscale.choices() if choice != "Off"
+        choice
+        for choice in automatic_upscale.choices()
+        if choice != "Off" and not choice.startswith("4× AMD FSR ")
     ]
 
 

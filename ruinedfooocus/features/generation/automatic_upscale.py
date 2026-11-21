@@ -19,6 +19,10 @@ PRESETS = {
     "4× Anime (RealESRGAN)": ("RealESRGAN_x4plus_anime_6B.pth", 4),
     "4× General (RealESRGAN)": ("RealESRGAN_x4plus.pth", 4),
     "4× UltraSharp": ("4x-UltraSharp.pth", 4),
+    "4× AMD FSR 4": ("amd-fsr:fsr4", 4),
+    "4× AMD FSR 3": ("amd-fsr:fsr3", 4),
+    "4× AMD FSR 2": ("amd-fsr:fsr2", 4),
+    "4× AMD FSR 1": ("amd-fsr:fsr1", 4),
 }
 FSR_PRESETS = {
     label: target for label, target in PRESETS.items() if target[0] and target[0].startswith("amd-fsr:")
@@ -146,7 +150,16 @@ def choices(factor=None, *, advanced=True):
             )
         )
 
-    presets = [label for label, (name, _) in PRESETS.items() if name is None or compatible(name)]
+    presets = [
+        label
+        for label, (name, preset_scale) in PRESETS.items()
+        if name is None
+        or (
+            (factor is None or preset_scale == factor)
+            if fsr_version_for(name) is not None
+            else compatible(name)
+        )
+    ]
     preset_models = {model for model, _ in PRESETS.values()}
     return presets + sorted(
         name for name in names if name not in preset_models and compatible(name)
@@ -163,9 +176,14 @@ def resolve(selection):
     selection = ALIASES.get(selection, selection) or "Off"
     if selection == "Off":
         return None, 1
-    name = PRESETS[selection][0] if selection in PRESETS else selection
-    if fsr_version_for(name) is not None:
-        return name, 2
+    if selection in PRESETS:
+        name, preset_scale = PRESETS[selection]
+        if fsr_version_for(name) is not None:
+            return name, preset_scale
+    else:
+        name = selection
+        if fsr_version_for(name) is not None:
+            return name, 2
     metadata = native_metadata(name)
     if metadata is None:
         raise ValueError(
