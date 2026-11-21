@@ -166,6 +166,19 @@ def choices(factor=None, *, advanced=True):
     )
 
 
+def switch_factor_selection(current, available, factor):
+    """Preserve an active upscale selection when switching 2x/4x factor instead of collapsing to Off."""
+    if current in available:
+        return current
+    if current in (None, "", "Off"):
+        return "Off"
+    if isinstance(current, str) and " AMD FSR " in current and str(factor) in ("2", "4"):
+        matched = f"{factor}× AMD FSR {current.rsplit(' ', 1)[-1]}"
+        if matched in available:
+            return matched
+    return next((choice for choice in available if choice != "Off"), "Off")
+
+
 def filename_scale(name):
     """Compatibility name: scale is descriptor data, never a filename hint."""
     metadata = native_metadata(name)

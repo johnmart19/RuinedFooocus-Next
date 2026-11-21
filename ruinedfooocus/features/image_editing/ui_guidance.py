@@ -387,6 +387,34 @@ def create_ui(
             hidream_controls, hidream_options = create_hidream_controls(defaults, base_model)
         with gr.Accordion(translate_ui("LCM noise"), open=False, visible=initial[3]) as lcm_panel:
             lcm_controls = create_lcm_controls(defaults)
+        with gr.Accordion(
+            translate_ui("Advanced guidance"), open=False, visible=initial[3]
+        ) as advanced_guidance_panel:
+            cfg_guidance_mode = gr.Dropdown(
+                label=translate_ui("CFG guidance mode"),
+                choices=list(FIELD_SCHEMA["cfg_guidance_mode"]["choices"]),
+                value=defaults.get("cfg_guidance_mode", "Off"),
+                info=translate_ui(
+                    "Optional native ComfyUI CFG patch (CFG-Zero*, TCFG, Mahiro, APG, FreSca, RescaleCFG) with zero extra steps."
+                ),
+            )
+            pag_scale = gr.Textbox(
+                label=translate_ui("PAG scale"),
+                placeholder=translate_ui("Off"),
+                value=""
+                if defaults.get("pag_scale") is None
+                else str(defaults["pag_scale"]),
+                info=translate_ui(
+                    "Perturbed Attention Guidance strength (e.g. 3.0). Leave blank to disable."
+                ),
+            )
+            differential_diffusion = gr.Checkbox(
+                label=translate_ui("Differential diffusion (smooth inpaint)"),
+                value=defaults.get("differential_diffusion", False),
+                info=translate_ui(
+                    "Uses gradient mask strengths for smoother inpaint transitions."
+                ),
+            )
         from ruinedfooocus.features.image_editing.image_geometry import FRAMING_CHOICES
 
         framing = gr.Dropdown(
@@ -520,6 +548,9 @@ def create_ui(
             cfg_norm_strength=norm,
             cfg_norm_auto=norm_auto,
             cfg_norm_pre_cfg=norm_pre,
+            cfg_guidance_mode=cfg_guidance_mode,
+            pag_scale=pag_scale,
+            differential_diffusion=differential_diffusion,
             image_resize_mode=framing,
             **hidream_controls,
             **lcm_controls,
@@ -566,6 +597,7 @@ def create_ui(
             *[gr.update(value="") for key in LCM_FIELDS],
             gr.update(visible=family == "Lens", value=normalization_auto_default(family, defaults)),
             gr.update(visible=use_norm),
+            gr.update(visible=use_norm),
             gr.update(
                 visible=capabilities(family)["qwen_image21"],
                 value=qwen_schedule_for_family(current_schedule, family),
@@ -596,6 +628,7 @@ def create_ui(
                 *[controls[key] for key in LCM_FIELDS],
                 norm_auto,
                 hires_panel,
+                advanced_guidance_panel,
                 qwen_schedule,
             ],
             api_visibility="undocumented",
@@ -622,6 +655,7 @@ def create_ui(
                 references,
                 vae_panel,
                 hires_panel,
+                advanced_guidance_panel,
                 slg_options,
                 hidream_panel,
                 hidream_options,
@@ -680,6 +714,9 @@ def create_ui(
                     in (
                         "cfg_norm_strength",
                         "cfg_norm_pre_cfg",
+                        "cfg_guidance_mode",
+                        "pag_scale",
+                        "differential_diffusion",
                         "image_resize_mode",
                         "vae_tiled",
                         "vae_tile_size",
@@ -702,6 +739,7 @@ def create_ui(
                     **({"value": []} if transition["clear_references"] else {}),
                 )
             )
+            updates.append(gr.update(visible=available["cfg_norm"]))
             updates.append(gr.update(visible=available["cfg_norm"]))
             updates.append(gr.update(visible=available["cfg_norm"]))
             updates.append(gr.update(visible=available["moss_slg"] and selected["moss_image_slg"]))

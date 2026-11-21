@@ -2147,5 +2147,12 @@
   "image_editing.enable_hires_fix": "Hires Fix 사용",
   "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "첫 번째 패스 후 업스케일(잠재 공간 또는 픽셀 업스케일러)하고 두 번째 샘플링 패스를 실행해 디테일을 선명하게 합니다. 메인 업스케일과 함께 연결할 수도 있습니다.",
   "image_editing.hires_upscaler": "Hires 업스케일러",
-  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent는 잠재 공간에서 업스케일하며, 픽셀 업스케일러(Anime, RealESRGAN, AMD FSR)는 두 번째 패스 전에 디코드·업스케일·재인코드를 수행합니다."
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent는 잠재 공간에서 업스케일하며, 픽셀 업스케일러(Anime, RealESRGAN, AMD FSR)는 두 번째 패스 전에 디코드·업스케일·재인코드를 수행합니다.",
+  "image_editing.advanced_guidance": "고급 가이던스",
+  "image_editing.cfg_guidance_mode": "CFG 가이던스 모드",
+  "image_editing.optional_native_comfyui_cfg_patch_cfg_zero_tcfg_mahiro_apg_fresca_rescalecfg_with_zero_extra_steps": "추가 스텝 없이 적용되는 ComfyUI 네이티브 CFG 패치(CFG-Zero*, TCFG, Mahiro, APG, FreSca, RescaleCFG).",
+  "image_editing.pag_scale": "PAG 스케일",
+  "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Perturbed Attention Guidance 강도(예: 3.0). 비워두면 비활성화됩니다.",
+  "image_editing.differential_diffusion_smooth_inpaint": "Differential Diffusion (부드러운 인페인트)",
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "그라데이션 마스크 강도를 사용해 더 부드러운 인페인트 전환을 만듭니다."
 }

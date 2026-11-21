@@ -2147,5 +2147,12 @@
   "image_editing.enable_hires_fix": "Hires Fix etkinleştir",
   "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "İlk geçişten sonra (latent veya piksel yükseltici) büyütür ve daha keskin ayrıntılar için ikinci bir örnekleme geçişi çalıştırır. Ana Yükseltme ile de zincirlenebilir.",
   "image_editing.hires_upscaler": "Hires yükseltici",
-  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent, latent uzayında büyütür; piksel yükselticiler (Anime, RealESRGAN, AMD FSR) ikinci geçişten önce çözer, büyütür ve yeniden kodlar."
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent, latent uzayında büyütür; piksel yükselticiler (Anime, RealESRGAN, AMD FSR) ikinci geçişten önce çözer, büyütür ve yeniden kodlar.",
+  "image_editing.advanced_guidance": "Gelişmiş yönlendirme",
+  "image_editing.cfg_guidance_mode": "CFG yönlendirme modu",
+  "image_editing.optional_native_comfyui_cfg_patch_cfg_zero_tcfg_mahiro_apg_fresca_rescalecfg_with_zero_extra_steps": "Ek adım gerektirmeyen isteğe bağlı yerel ComfyUI CFG yaması (CFG-Zero*, TCFG, Mahiro, APG, FreSca, RescaleCFG).",
+  "image_editing.pag_scale": "PAG ölçeği",
+  "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Perturbed Attention Guidance gücü (örn. 3.0). Devre dışı bırakmak için boş bırakın.",
+  "image_editing.differential_diffusion_smooth_inpaint": "Diferansiyel difüzyon (yumuşak inpaint)",
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Daha yumuşak inpaint geçişleri için gradyan maske güçlerini kullanır."
 }

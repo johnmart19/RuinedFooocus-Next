@@ -11,6 +11,7 @@ from ruinedfooocus.features.generation.hires_fix import (
 from ruinedfooocus.features.models.image_components import IMAGE_COMPONENTS, ALIASES
 
 MOSS_EDIT_FORMATS = ("Disabled", "ai-toolkit", "ai-toolkit (kv_cache off)", "Moss-Image-Edit")
+CFG_GUIDANCE_MODES = ("Off", "CFG-Zero*", "TCFG", "Mahiro", "APG", "FreSca", "RescaleCFG")
 STARTUP_SHIFT_LABELS = {
     "auraflow_shift": "AuraFlow",
     "lumina2_shift": "Lumina 2 / Z Image",
@@ -33,6 +34,9 @@ FIELD_SCHEMA = {
     "cfg_norm_strength": {"minimum": 0.0, "maximum": 100.0, "step": 0.01, "default": None},
     "cfg_norm_auto": {"default": False},
     "cfg_norm_pre_cfg": {"default": False},
+    "cfg_guidance_mode": {"choices": CFG_GUIDANCE_MODES, "default": "Off"},
+    "pag_scale": {"minimum": 0.0, "maximum": 100.0, "step": 0.5, "default": None},
+    "differential_diffusion": {"default": False},
     "hidream_o1_noise_scale": {"minimum": 0.0, "maximum": 64.0, "step": 0.01, "default": None},
     "hidream_o1_seam_smoothing": {"default": None},
     "hidream_o1_seam_start": {"minimum": 0.0, "maximum": 1.0, "step": 0.01, "default": 0.8},
@@ -187,10 +191,14 @@ def validate_guidance(values):
             if value is not None and type(value) is not bool:
                 raise ValueError("Seam smoothing: choose Auto, On or Off.")
             result[key] = value
+        elif key == "cfg_guidance_mode":
+            if value not in CFG_GUIDANCE_MODES:
+                raise ValueError("Choose Off or a supported ComfyUI CFG guidance mode.")
         elif key in (
             "moss_image_slg",
             "cfg_norm_pre_cfg",
             "cfg_norm_auto",
+            "differential_diffusion",
             "vae_tiled",
             "hires_enabled",
         ):
@@ -387,6 +395,65 @@ def request_model(base, values, family, nodes=None, checkpoint=None):
         model = nodes["cfg_norm"](
             model=model, strength=values["cfg_norm_strength"], pre_cfg=values["cfg_norm_pre_cfg"]
         )[0]
+    cfg_mode = values.get("cfg_guidance_mode", "Off")
+    if cfg_mode != "Off":
+        if cfg_mode == "CFG-Zero*":
+            fn = nodes.get("cfg_zero_star")
+            if fn is None:
+                from comfy_extras.nodes_cfg import CFGZeroStar
+
+                fn = CFGZeroStar.execute
+            model = fn(model=model)[0]
+        elif cfg_mode == "TCFG":
+            fn = nodes.get("tcfg")
+            if fn is None:
+                from comfy_extras.nodes_tcfg import TCFG
+
+                fn = TCFG.execute
+            model = fn(model=model)[0]
+        elif cfg_mode == "Mahiro":
+            fn = nodes.get("mahiro")
+            if fn is None:
+                from comfy_extras.nodes_mahiro import Mahiro
+
+                fn = Mahiro.execute
+            model = fn(model=model)[0]
+        elif cfg_mode == "APG":
+            fn = nodes.get("apg")
+            if fn is None:
+                from comfy_extras.nodes_apg import APG
+
+                fn = APG.execute
+            model = fn(model=model, eta=1.0, norm_threshold=5.0, momentum=0.0)[0]
+        elif cfg_mode == "FreSca":
+            fn = nodes.get("fresca")
+            if fn is None:
+                from comfy_extras.nodes_fresca import FreSca
+
+                fn = FreSca.execute
+            model = fn(model=model, scale_low=1.0, scale_high=1.25, freq_cutoff=20)[0]
+        elif cfg_mode == "RescaleCFG":
+            fn = nodes.get("rescale_cfg")
+            if fn is None:
+                from comfy_extras.nodes_model_advanced import RescaleCFG
+
+                fn = RescaleCFG().patch
+            model = fn(model=model, multiplier=0.7)[0]
+    pag_scale = values.get("pag_scale")
+    if pag_scale is not None and pag_scale > 0:
+        fn = nodes.get("pag")
+        if fn is None:
+            from comfy_extras.nodes_pag import PerturbedAttentionGuidance
+
+            fn = PerturbedAttentionGuidance.execute
+        model = fn(model=model, scale=pag_scale)[0]
+    if values.get("differential_diffusion"):
+        fn = nodes.get("differential_diffusion")
+        if fn is None:
+            from comfy_extras.nodes_differential_diffusion import DifferentialDiffusion
+
+            fn = DifferentialDiffusion.execute
+        model = fn(model=model, strength=1.0)[0]
     return model
 
 

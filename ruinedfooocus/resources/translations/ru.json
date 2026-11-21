@@ -2147,5 +2147,12 @@
   "image_editing.enable_hires_fix": "Включить Hires Fix",
   "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Увеличивает после первого прохода (латентный или пиксельный апскейлер) и выполняет второй проход семплирования для более чётких деталей. Также сочетается с основным увеличением.",
   "image_editing.hires_upscaler": "Апскейлер Hires",
-  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent увеличивает в латентном пространстве; пиксельные апскейлеры (Anime, RealESRGAN, AMD FSR) декодируют, увеличивают и повторно кодируют перед вторым проходом."
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent увеличивает в латентном пространстве; пиксельные апскейлеры (Anime, RealESRGAN, AMD FSR) декодируют, увеличивают и повторно кодируют перед вторым проходом.",
+  "image_editing.advanced_guidance": "Расширенное управление",
+  "image_editing.cfg_guidance_mode": "Режим CFG-управления",
+  "image_editing.optional_native_comfyui_cfg_patch_cfg_zero_tcfg_mahiro_apg_fresca_rescalecfg_with_zero_extra_steps": "Необязательный встроенный патч CFG из ComfyUI (CFG-Zero*, TCFG, Mahiro, APG, FreSca, RescaleCFG) без дополнительных шагов.",
+  "image_editing.pag_scale": "Сила PAG",
+  "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Сила Perturbed Attention Guidance (напр. 3.0). Оставьте пустым, чтобы отключить.",
+  "image_editing.differential_diffusion_smooth_inpaint": "Дифференциальная диффузия (плавный inpaint)",
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Использует градиентную силу маски для более плавных переходов inpaint."
 }

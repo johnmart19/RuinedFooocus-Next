@@ -1,0 +1,16 @@
+{
+  "id": "comfy-advanced-guidance-and-upscale-factor-fix",
+  "subject": "Fix Upscale factor switching reset and add native ComfyUI Advanced guidance (CFG-Zero*, TCFG, Mahiro, APG, FreSca, RescaleCFG, PAG, DifferentialDiffusion)",
+  "requires": ["runtime-support-probe-cache-isolation"],
+  "tests": [
+    "test_automatic_upscale_fsr.py",
+    "test_image_guidance.py",
+    "test_image_guidance_ui.py",
+    "test_preset_image_guidance.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

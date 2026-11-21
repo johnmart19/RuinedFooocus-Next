@@ -453,6 +453,9 @@ def launch_app(args):
         "cfg_norm_strength",
         "cfg_norm_auto",
         "cfg_norm_pre_cfg",
+        "cfg_guidance_mode",
+        "pag_scale",
+        "differential_diffusion",
         "image_resize_mode",
         "hidream_o1_noise_scale",
         "hidream_o1_seam_smoothing",
@@ -1818,6 +1821,7 @@ with shared.gradio_root as block:
                         choices as upscale_choices,
                         describe_size,
                         PRESETS,
+                        switch_factor_selection,
                     )
 
                     with gr.Group() as automatic_upscale_controls:
@@ -1880,7 +1884,8 @@ with shared.gradio_root as block:
                                 advanced=enabled or factor == "all",
                             )
                             return gr.update(
-                                choices=choices, value=current if current in choices else "Off"
+                                choices=choices,
+                                value=switch_factor_selection(current, choices, factor),
                             )
 
                         gr.on(

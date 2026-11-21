@@ -478,6 +478,23 @@ class _GenerationRequest(BaseModel):
         default=None,
         description="Normalize before CFG when normalization strength is set; may amplify guidance.",
     )
+    cfg_guidance_mode: (
+        Literal["Off", "CFG-Zero*", "TCFG", "Mahiro", "APG", "FreSca", "RescaleCFG"] | None
+    ) = Field(
+        default=None,
+        description="Optional native ComfyUI CFG guidance patch (CFG-Zero*, TCFG, Mahiro, APG, FreSca, RescaleCFG).",
+    )
+    pag_scale: float | None = Field(
+        default=None,
+        ge=0.0,
+        le=100.0,
+        allow_inf_nan=False,
+        description="Optional native ComfyUI Perturbed Attention Guidance (PAG) scale.",
+    )
+    differential_diffusion: bool | None = Field(
+        default=None,
+        description="Enable native ComfyUI Differential Diffusion for smooth gradient-masked inpainting.",
+    )
     hidream_o1_noise_scale: float | None = Field(default=None, ge=0, le=64, allow_inf_nan=False)
     hidream_o1_seam_smoothing: bool | None = Field(
         default=None,

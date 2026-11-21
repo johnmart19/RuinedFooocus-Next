@@ -68,6 +68,25 @@ class AutomaticUpscaleFSRTests(unittest.TestCase):
         self.assertEqual(calls, [("fsr4", (1, 64, 48, 3), 192, 256)])
         self.assertEqual(gen_data_4x["automatic_upscale_model"], "amd-fsr:fsr4")
 
+    def test_switch_factor_selection_preserves_active_upscale_instead_of_resetting_to_off(self):
+        x4_choices = automatic_upscale.choices(factor=4)
+        x2_choices = automatic_upscale.choices(factor=2)
+        self.assertEqual(
+            automatic_upscale.switch_factor_selection("2× AMD FSR 4", x4_choices, "4"),
+            "4× AMD FSR 4",
+        )
+        self.assertEqual(
+            automatic_upscale.switch_factor_selection("4× AMD FSR 2", x2_choices, "2"),
+            "2× AMD FSR 2",
+        )
+        self.assertEqual(
+            automatic_upscale.switch_factor_selection("Off", x4_choices, "4"),
+            "Off",
+        )
+        switched = automatic_upscale.switch_factor_selection("2× Anime (Futsuu)", x4_choices, "4")
+        self.assertNotEqual(switched, "Off")
+        self.assertIn(switched, x4_choices)
+
 
 if __name__ == "__main__":
     unittest.main()

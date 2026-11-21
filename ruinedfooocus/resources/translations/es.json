@@ -2147,5 +2147,12 @@
   "image_editing.enable_hires_fix": "Activar Hires Fix",
   "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Escala tras la primera pasada (escalador latente o de píxeles) y ejecuta una segunda pasada de muestreo para detalles más nítidos. También puede encadenarse con el escalado principal.",
   "image_editing.hires_upscaler": "Escalador Hires",
-  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent escala en el espacio latente; los escaladores de píxeles (Anime, RealESRGAN, AMD FSR) decodifican, escalan y recodifican antes de la segunda pasada."
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent escala en el espacio latente; los escaladores de píxeles (Anime, RealESRGAN, AMD FSR) decodifican, escalan y recodifican antes de la segunda pasada.",
+  "image_editing.advanced_guidance": "Guía avanzada",
+  "image_editing.cfg_guidance_mode": "Modo de guía CFG",
+  "image_editing.optional_native_comfyui_cfg_patch_cfg_zero_tcfg_mahiro_apg_fresca_rescalecfg_with_zero_extra_steps": "Parche CFG nativo opcional de ComfyUI (CFG-Zero*, TCFG, Mahiro, APG, FreSca, RescaleCFG) sin pasos adicionales.",
+  "image_editing.pag_scale": "Escala PAG",
+  "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Intensidad de Perturbed Attention Guidance (p. ej. 3.0). Déjalo vacío para desactivar.",
+  "image_editing.differential_diffusion_smooth_inpaint": "Difusión diferencial (inpaint suave)",
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Usa intensidades de máscara degradada para transiciones de inpaint más suaves."
 }

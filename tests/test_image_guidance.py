@@ -456,6 +456,56 @@ class ImageGuidanceTests(unittest.TestCase):
         ]
         self.assertIn("prompt.update(gen_data['image_guidance'])", updates)
 
+    def test_advanced_comfy_cfg_guidance_pag_and_differential_diffusion(self):
+        from ruinedfooocus.features.image_editing.image_guidance import CFG_GUIDANCE_MODES
+
+        for mode in CFG_GUIDANCE_MODES:
+            resolved = resolve_guidance({"cfg_guidance_mode": mode}, {}, "Anima")
+            self.assertEqual(resolved["cfg_guidance_mode"], mode)
+        with self.assertRaises(ValueError):
+            validate_guidance({"cfg_guidance_mode": "BogusCFG"})
+        with self.assertRaises(ValueError):
+            validate_guidance({"pag_scale": -1})
+        with self.assertRaises(ValueError):
+            validate_guidance({"differential_diffusion": "yes"})
+
+        class FakeModel:
+            def __init__(self, log):
+                self.log = log
+
+            def clone(self):
+                return FakeModel(self.log)
+
+        for mode, node_key in (
+            ("CFG-Zero*", "cfg_zero_star"),
+            ("TCFG", "tcfg"),
+            ("Mahiro", "mahiro"),
+            ("APG", "apg"),
+            ("FreSca", "fresca"),
+            ("RescaleCFG", "rescale_cfg"),
+        ):
+            calls = []
+            fake_nodes = {
+                node_key: lambda model, **kw: (calls.append((node_key, kw)) or model,),
+                "pag": lambda model, **kw: (calls.append(("pag", kw)) or model,),
+                "differential_diffusion": lambda model, **kw: (
+                    calls.append(("differential_diffusion", kw)) or model,
+                ),
+            }
+            values = resolve_guidance(
+                {
+                    "cfg_guidance_mode": mode,
+                    "pag_scale": 3.0,
+                    "differential_diffusion": True,
+                },
+                {},
+                "Anima",
+            )
+            request_model(FakeModel(calls), values, "Anima", nodes=fake_nodes)
+            self.assertEqual([c[0] for c in calls], [node_key, "pag", "differential_diffusion"])
+            self.assertEqual(calls[1][1], {"scale": 3.0})
+            self.assertEqual(calls[2][1], {"strength": 1.0})
+
 
 if __name__ == "__main__":
     unittest.main()
