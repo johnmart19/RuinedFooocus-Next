@@ -12,12 +12,27 @@ PRESETS = {
     "2× Anime cleanup (AniScale)": ("2x-AniScale.pth", 2),
     "2× Anime sharp (AnimeSharp V4 Fast)": ("2x-AnimeSharpV4_Fast_RCAN_PU.safetensors", 2),
     "2× General (RealESRGAN)": ("RealESRGAN_x2plus.pth", 2),
+    "2× AMD FSR 4": ("amd-fsr:fsr4", 2),
+    "2× AMD FSR 3": ("amd-fsr:fsr3", 2),
+    "2× AMD FSR 2": ("amd-fsr:fsr2", 2),
+    "2× AMD FSR 1": ("amd-fsr:fsr1", 2),
     "4× Anime (RealESRGAN)": ("RealESRGAN_x4plus_anime_6B.pth", 4),
     "4× General (RealESRGAN)": ("RealESRGAN_x4plus.pth", 4),
     "4× UltraSharp": ("4x-UltraSharp.pth", 4),
 }
+FSR_PRESETS = {
+    label: target for label, target in PRESETS.items() if target[0] and target[0].startswith("amd-fsr:")
+}
 # Saved selections from the first version remain valid without family guessing.
 ALIASES = {"2×": "2× General (RealESRGAN)", "4×": "4× General (RealESRGAN)"}
+
+
+def fsr_version_for(name):
+    """Return the AMD FSR version ('fsr4'..'fsr1') for a built-in FSR upscaler target, or None."""
+    if not isinstance(name, str) or not name.startswith("amd-fsr:"):
+        return None
+    version = name.split(":", 1)[1]
+    return version if version in ("fsr4", "fsr3", "fsr2", "fsr1") else None
 
 
 @lru_cache(maxsize=1)
@@ -118,6 +133,8 @@ def choices(factor=None, *, advanced=True):
     names = set(registered_upscalers()) | set(getattr(manager, "upscaler_filenames", ()))
 
     def compatible(name):
+        if fsr_version_for(name) is not None:
+            return factor in (None, 2)
         metadata = native_metadata(name, manager)
         return (
             metadata is not None
@@ -147,6 +164,8 @@ def resolve(selection):
     if selection == "Off":
         return None, 1
     name = PRESETS[selection][0] if selection in PRESETS else selection
+    if fsr_version_for(name) is not None:
+        return name, 2
     metadata = native_metadata(name)
     if metadata is None:
         raise ValueError(
@@ -213,25 +232,45 @@ def upscale_decoded(owner, image, gen_data):
             image = plan.finish(image)
             gen_data["size_plan"] = plan.metadata()
         return image
-    from ruinedfooocus.features.image_processing.upscale_pipeline import (
-        pipeline,
-        InterruptibleUpscaler,
-    )
-    from comfy_extras.nodes_upscale_model import ImageUpscaleWithModel
     import ruinedfooocus.app.async_worker as worker
 
     worker.check_interrupt(gen_data)
     worker.add_result(gen_data["task_id"], "preview", (-1, "Automatic upscaling ...", None))
-    if getattr(owner, "automatic_upscale_pipeline", None) is None:
-        owner.automatic_upscale_pipeline = pipeline()
-    model = owner.automatic_upscale_pipeline.load_upscaler_model(name, gen_data)
-    if model.scale != scale:
-        raise ValueError(f"Unexpected scale for automatic upscaler {name}: {model.scale}")
-    if getattr(model, "input_channels", 3) != 3 or getattr(model, "output_channels", 3) != 3:
-        raise ValueError(
-            "Automatic upscaling requires a native RGB upscaler; source alpha is preserved separately."
+    fsr_version = fsr_version_for(name)
+    if fsr_version is not None:
+        import torch
+        from ruinedfooocus.features.image_processing import amd_fsr
+
+        target_w = int(image.shape[2]) * scale
+        target_h = int(image.shape[1]) * scale
+        frames = [
+            amd_fsr.upscale(
+                fsr_version,
+                image[index : index + 1],
+                target_w,
+                target_h,
+                check_cancelled=lambda: worker.check_interrupt(gen_data),
+            )
+            for index in range(image.shape[0])
+        ]
+        result = torch.cat(frames, dim=0) if len(frames) > 1 else frames[0]
+    else:
+        from ruinedfooocus.features.image_processing.upscale_pipeline import (
+            pipeline,
+            InterruptibleUpscaler,
         )
-    result = ImageUpscaleWithModel.execute(InterruptibleUpscaler(model, gen_data), image)[0]
+        from comfy_extras.nodes_upscale_model import ImageUpscaleWithModel
+
+        if getattr(owner, "automatic_upscale_pipeline", None) is None:
+            owner.automatic_upscale_pipeline = pipeline()
+        model = owner.automatic_upscale_pipeline.load_upscaler_model(name, gen_data)
+        if model.scale != scale:
+            raise ValueError(f"Unexpected scale for automatic upscaler {name}: {model.scale}")
+        if getattr(model, "input_channels", 3) != 3 or getattr(model, "output_channels", 3) != 3:
+            raise ValueError(
+                "Automatic upscaling requires a native RGB upscaler; source alpha is preserved separately."
+            )
+        result = ImageUpscaleWithModel.execute(InterruptibleUpscaler(model, gen_data), image)[0]
     from ruinedfooocus.features.generation.size_plan import KEY, SizePlan
 
     plan = gen_data.get(KEY)

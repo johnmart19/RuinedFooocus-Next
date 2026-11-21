@@ -101,21 +101,41 @@ class pipeline:
         if not upscaler_name or upscaler_name == "None":
             raise ValueError("Choose an upscaler in Image tools.")
 
-        upscaler_model = self.load_upscaler_model(upscaler_name, gen_data)
-        if isinstance(plan, SizePlan) and upscaler_model.scale != plan.scale:
-            raise ValueError("Loaded upscaler scale disagrees with the captured output target.")
-        if isinstance(plan, SizePlan) and any(
-            getattr(upscaler_model, key, 3) != 3 for key in ("input_channels", "output_channels")
-        ):
-            raise ValueError(
-                "Exact image targets require a native RGB upscaler; source alpha is preserved separately."
-            )
-        worker.add_result(gen_data["task_id"], "preview", (-1, "Upscaling image ...", None))
-        from comfy_extras.nodes_upscale_model import ImageUpscaleWithModel
+        from ruinedfooocus.features.generation.automatic_upscale import fsr_version_for
 
-        decoded = ImageUpscaleWithModel.execute(
-            InterruptibleUpscaler(upscaler_model, gen_data), input_image
-        )[0]
+        fsr_version = fsr_version_for(upscaler_name)
+        if fsr_version is not None:
+            if isinstance(plan, SizePlan) and plan.scale != 2:
+                raise ValueError("Loaded upscaler scale disagrees with the captured output target.")
+            worker.add_result(gen_data["task_id"], "preview", (-1, "Upscaling image ...", None))
+            from ruinedfooocus.features.image_processing import amd_fsr
+
+            target_w = int(input_image.shape[2]) * 2
+            target_h = int(input_image.shape[1]) * 2
+            decoded = amd_fsr.upscale(
+                fsr_version,
+                input_image,
+                target_w,
+                target_h,
+                check_cancelled=lambda: worker.check_interrupt(gen_data),
+            )
+        else:
+            upscaler_model = self.load_upscaler_model(upscaler_name, gen_data)
+            if isinstance(plan, SizePlan) and upscaler_model.scale != plan.scale:
+                raise ValueError("Loaded upscaler scale disagrees with the captured output target.")
+            if isinstance(plan, SizePlan) and any(
+                getattr(upscaler_model, key, 3) != 3
+                for key in ("input_channels", "output_channels")
+            ):
+                raise ValueError(
+                    "Exact image targets require a native RGB upscaler; source alpha is preserved separately."
+                )
+            worker.add_result(gen_data["task_id"], "preview", (-1, "Upscaling image ...", None))
+            from comfy_extras.nodes_upscale_model import ImageUpscaleWithModel
+
+            decoded = ImageUpscaleWithModel.execute(
+                InterruptibleUpscaler(upscaler_model, gen_data), input_image
+            )[0]
         if isinstance(plan, SizePlan):
             decoded = plan.finish(decoded)
             gen_data["size_plan"] = plan.metadata()

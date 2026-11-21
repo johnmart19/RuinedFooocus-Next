@@ -1325,16 +1325,19 @@ def capture_image_assets(
                 _artifact(manager, "depth-preprocessor", "geometry_estimation", depth_name)
             )
     if kind == "upscale":
+        from ruinedfooocus.features.generation.automatic_upscale import fsr_version_for
+
         name = controls.get("upscaler")
         if not name or name == "None":
             raise ValueError("Choose an upscaler in Image tools.")
-        artifacts.append(_artifact(manager, "upscaler", "upscalers", name))
+        if fsr_version_for(name) is None:
+            artifacts.append(_artifact(manager, "upscaler", "upscalers", name))
     auto_name, auto_scale = None, 1
     if kind not in ("upscale", "rembg"):
-        from ruinedfooocus.features.generation.automatic_upscale import resolve
+        from ruinedfooocus.features.generation.automatic_upscale import fsr_version_for, resolve
 
         auto_name, auto_scale = resolve(result.get("automatic_upscale"))
-        if auto_name:
+        if auto_name and fsr_version_for(auto_name) is None:
             artifacts.append(_artifact(manager, "upscaler", "upscalers", auto_name))
         from ruinedfooocus.features.models.approximate_codecs import (
             KEY as APPROXIMATE_KEY,
