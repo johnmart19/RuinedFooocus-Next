@@ -1,0 +1,11 @@
+{
+  "id": "runtime-support-probe-cache-isolation",
+  "subject": "Isolate _PROBED and torch-probe.json cache in InstalledRuntimeTests so ROCm hosts do not leak probe state",
+  "requires": ["hires-fix-sidebar-layout"],
+  "tests": [
+    "test_runtime_support.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

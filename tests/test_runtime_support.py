@@ -2,7 +2,9 @@
 
 import json
 import os
+from pathlib import Path
 import subprocess
+import tempfile
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -492,9 +494,21 @@ class CapabilityPolicy(unittest.TestCase):
 
 class InstalledRuntimeTests(unittest.TestCase):
     def setUp(self):
+        self.tmpdir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmpdir.cleanup)
         self.environment = patch.dict(os.environ, {}, clear=True)
         self.environment.start()
         self.addCleanup(self.environment.stop)
+        self.probed = patch.dict(runtime_support._PROBED, {}, clear=True)
+        self.probed.start()
+        self.addCleanup(self.probed.stop)
+        self.cache_file = patch.object(
+            runtime_support,
+            "_probe_cache_file",
+            return_value=Path(self.tmpdir.name) / "torch-probe.json",
+        )
+        self.cache_file.start()
+        self.addCleanup(self.cache_file.stop)
         self.version = patch.object(
             runtime_support.importlib.metadata, "version", return_value="2.9.1"
         )
