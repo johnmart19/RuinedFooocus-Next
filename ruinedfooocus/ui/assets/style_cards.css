@@ -1,0 +1,138 @@
+.rf-style-browser {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rf-style-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.rf-style-tab {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.14));
+  background: var(--background-fill-secondary, rgba(255, 255, 255, 0.04));
+  color: var(--body-text-color-subdued, #9ca3af);
+  font-size: 0.73rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
+}
+
+.rf-style-tab:hover {
+  color: var(--body-text-color, #ffffff);
+  border-color: var(--color-accent, #f97316);
+}
+
+.rf-style-tab[aria-selected="true"] {
+  background: color-mix(in srgb, var(--color-accent, #f97316) 22%, transparent);
+  border-color: var(--color-accent, #f97316);
+  color: var(--body-text-color, #ffffff);
+}
+
+.rf-style-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.rf-style-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: var(--background-fill-secondary, rgba(255, 255, 255, 0.03));
+  color: var(--body-text-color, #e5e7eb);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 120ms ease, transform 100ms ease, background-color 120ms ease;
+}
+
+.rf-style-card:hover {
+  border-color: color-mix(in srgb, var(--color-accent, #f97316) 65%, transparent);
+  transform: translateY(-1px);
+}
+
+.rf-style-card[aria-pressed="true"] {
+  border-color: var(--color-accent, #f97316);
+  background: color-mix(in srgb, var(--color-accent, #f97316) 15%, transparent);
+}
+
+.rf-style-thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.rf-style-motif {
+  width: 56%;
+  height: 56%;
+  color: rgba(255, 255, 255, 0.88);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.rf-style-group-tag {
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(2px);
+  font-size: 0.56rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rf-style-rank {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--color-accent, #f97316);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+.rf-style-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 0 2px 2px;
+}
+
+.rf-style-empty {
+  grid-column: 1 / -1;
+  margin: 8px 0;
+  font-size: 0.82rem;
+  color: var(--body-text-color-subdued, #9ca3af);
+}

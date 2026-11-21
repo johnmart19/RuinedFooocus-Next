@@ -2160,5 +2160,9 @@
   "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Verifica e instala automaticamente a versão oficial verificada mais recente do llama.cpp quando online.",
   "image_editing.freeu_v2_unet_detail_boost": "FreeU V2 (reforço de detalhes UNet)",
   "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "Melhora detalhes e estrutura em modelos UNet SDXL / SD 1.5 / SD 2.0 sem passos extras.",
-  "models.recommended_resolutions": "Resoluções recomendadas"
+  "models.recommended_resolutions": "Resoluções recomendadas",
+  "prompting.all_styles": "Todos os estilos",
+  "prompting.no_matching_styles": "Nenhum estilo correspondente.",
+  "shell.aspect_ratio": "Proporção",
+  "shell.count": "Quantidade"
 }

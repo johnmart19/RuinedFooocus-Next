@@ -1,0 +1,17 @@
+{
+  "id": "visual-aspect-picker-and-style-cards",
+  "subject": "Add visual Aspect Ratio & Count quick picker and visual Style Card Grid in Create UI",
+  "requires": ["resolution-recommendations-and-model-previews"],
+  "tests": [
+    "test_style_workflow.py",
+    "test_style_catalog.py",
+    "test_resolution_settings.py",
+    "test_resolution_transitions.py",
+    "test_resolution_ui_events.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

@@ -1,0 +1,126 @@
+.rf-aspect-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 2px 0 6px;
+}
+
+.rf-picker-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rf-picker-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--body-text-color-subdued, #9ca3af);
+}
+
+.rf-aspect-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.rf-aspect-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 7px 3px 6px;
+  border-radius: 9px;
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.12));
+  background: var(--background-fill-secondary, rgba(255, 255, 255, 0.035));
+  color: var(--body-text-color, #e5e7eb);
+  cursor: pointer;
+  transition: border-color 130ms ease, background-color 130ms ease, transform 100ms ease, box-shadow 130ms ease;
+}
+
+.rf-aspect-tile:hover {
+  border-color: color-mix(in srgb, var(--color-accent, #f97316) 75%, transparent);
+  background: var(--background-fill-primary, rgba(255, 255, 255, 0.07));
+  transform: translateY(-1px);
+}
+
+.rf-aspect-tile[aria-pressed="true"] {
+  border-color: var(--color-accent, #f97316);
+  background: color-mix(in srgb, var(--color-accent, #f97316) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent, #f97316) 45%, transparent);
+  color: var(--body-text-color, #ffffff);
+}
+
+.rf-aspect-box-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.rf-aspect-box {
+  display: block;
+  border-radius: 3px;
+  border: 1.5px solid color-mix(in srgb, var(--body-text-color-subdued, #9ca3af) 80%, transparent);
+  background: color-mix(in srgb, var(--body-text-color-subdued, #9ca3af) 26%, transparent);
+  transition: background-color 130ms ease, border-color 130ms ease;
+}
+
+.rf-aspect-tile[aria-pressed="true"] .rf-aspect-box {
+  border-color: var(--color-accent, #f97316);
+  background: color-mix(in srgb, var(--color-accent, #f97316) 72%, transparent);
+}
+
+.rf-aspect-text {
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.rf-aspect-dims {
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--body-text-color-subdued, #9ca3af);
+  white-space: nowrap;
+}
+
+.rf-aspect-tile[aria-pressed="true"] .rf-aspect-dims {
+  color: color-mix(in srgb, var(--body-text-color, #ffffff) 82%, transparent);
+}
+
+.rf-count-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--background-fill-secondary, rgba(255, 255, 255, 0.035));
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.1));
+}
+
+.rf-count-pill {
+  padding: 6px 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--body-text-color, #e5e7eb);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.rf-count-pill:hover {
+  background: var(--background-fill-primary, rgba(255, 255, 255, 0.08));
+}
+
+.rf-count-pill[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--color-accent, #f97316) 22%, var(--background-fill-primary, #1f2937));
+  border-color: var(--color-accent, #f97316);
+  color: var(--body-text-color, #ffffff);
+}

@@ -1,8 +1,9 @@
-from ruinedfooocus.core.translation_manager import translate_ui
+from ruinedfooocus.core.translation_manager import localize, localized_output, translate_ui
 
 """Grouped visual styles; prompt processors remain explicit, separate tools."""
 
 from dataclasses import dataclass
+from pathlib import Path
 
 import gradio as gr
 from ruinedfooocus.features.prompting.ui_draft_fence import fence_event
@@ -54,6 +55,57 @@ def create_ui(settings):
     )
     catalog = load_catalog()
     groups = list(dict.fromkeys([style.group for style in catalog.values()] + ["Custom"]))
+    assets = Path(__file__).resolve().parents[2] / "ui/assets"
+
+    def style_cards_payload(current, query, locale=None):
+        chosen = normalize_selection(current)
+        text = (query or "").casefold().strip()
+        items = []
+        active_groups = []
+        for name, style in load_catalog().items():
+            group = style.group if style.group in groups else "Custom"
+            label = style_label(name)
+            if text and text not in (name + " " + label + " " + group).casefold():
+                continue
+            items.append(dict(name=name, label=label, group=group))
+            if group not in active_groups:
+                active_groups.append(group)
+        return dict(
+            heading=localize("All styles", locale),
+            allLabel=localize("All", locale),
+            empty=localize("No matching styles.", locale),
+            hasQuery=bool(text),
+            groups=active_groups,
+            selected=chosen,
+            items=items,
+        )
+
+    style_cards = gr.HTML(
+        value=style_cards_payload(initial, ""),
+        elem_id="style-cards",
+        html_template=(assets / "style_cards.html").read_text(encoding="utf-8"),
+        js_on_load=(assets / "style_cards.js").read_text(encoding="utf-8"),
+        css_template=(assets / "style_cards.css").read_text(encoding="utf-8"),
+    )
+
+    def toggle_style_card(current, evt: gr.EventData):
+        data = getattr(evt, "_data", None) or {}
+        name = data.get("name")
+        if not isinstance(name, str) or not name or name not in load_catalog():
+            return gr.skip()
+        chosen = normalize_selection(current)
+        next_selected = [] if name in chosen else [name]
+        return merge_selection(chosen, [name], next_selected)
+
+    style_cards.click(
+        toggle_style_card,
+        inputs=[selection],
+        outputs=selection,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
+
     checkboxes, accordions = [], []
 
     def choices_for(group, query):
@@ -105,15 +157,21 @@ def create_ui(settings):
                     visible=bool(choices_for(group, query)), **({"open": True} if query else {})
                 )
             )
+        updates.append(gr.update(value=style_cards_payload(chosen, query)))
         return updates
 
     gr.on(
         triggers=[selection.change, search.input],
         fn=refresh,
         inputs=[selection, search],
-        outputs=[summary, *checkboxes, *accordions],
+        outputs=[summary, *checkboxes, *accordions, style_cards],
         queue=False,
         api_visibility="undocumented",
+    )
+    localized_output(
+        lambda locale, current, query: style_cards_payload(current, query, locale=locale),
+        [selection, search],
+        [style_cards],
     )
     # Populate the noninteractive summary and initial checkbox state without activating legacy defaults.
     initial_updates = refresh(initial, "")

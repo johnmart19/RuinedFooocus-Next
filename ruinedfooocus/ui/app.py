@@ -1739,6 +1739,79 @@ with shared.gradio_root as block:
                         info=t("Choosing a size keeps your override until you enable this again."),
                     )
                     add_ctrl("resolution_auto", resolution_auto)
+                    ui_assets_dir = Path(__file__).resolve().parent / "assets"
+
+                    def aspect_picker_payload(
+                        family_name,
+                        checkpoint_name,
+                        current_resolution,
+                        current_count,
+                        locale=None,
+                    ):
+                        from ruinedfooocus.features.models.native_resolutions import (
+                            aspect_ratio_label,
+                        )
+                        from ruinedfooocus.features.models.resolution_dropdown import (
+                            dimension_value,
+                        )
+
+                        preferred_order = ("1:1", "16:9", "9:16", "3:2", "2:3", "4:3", "3:4", "21:9")
+                        order_rank = {label: idx for idx, label in enumerate(preferred_order)}
+                        choices = resolution_settings.choices_for_model(
+                            family_name, checkpoint_name, performance_settings
+                        )
+                        seen_ratios = {}
+                        for choice in choices:
+                            if choice == resolution_settings.CUSTOM_RESOLUTION:
+                                continue
+                            dims = resolution_settings.aspect_ratios.get(choice)
+                            if not dims:
+                                continue
+                            w, h = int(dims[0]), int(dims[1])
+                            ratio = aspect_ratio_label(w, h)
+                            if not ratio or ratio in seen_ratios:
+                                continue
+                            seen_ratios[ratio] = dict(
+                                ratio=ratio,
+                                dimension=f"{w}x{h}",
+                                choice=choice,
+                                w=w,
+                                h=h,
+                            )
+                        ratios = sorted(
+                            seen_ratios.values(),
+                            key=lambda item: (
+                                order_rank.get(item["ratio"], len(preferred_order)),
+                                item["ratio"],
+                            ),
+                        )[:8]
+                        return dict(
+                            aspectLabel=localize("Aspect ratio", locale),
+                            countLabel=localize("Count", locale),
+                            selectedDimension=dimension_value(current_resolution) or "",
+                            count=int(current_count or 1),
+                            counts=[1, 2, 4, 8],
+                            ratios=ratios,
+                        )
+
+                    aspect_picker = gr.HTML(
+                        value=aspect_picker_payload(
+                            initial_model_base,
+                            initial_checkpoint,
+                            initial_resolution,
+                            settings.get("image_number", 1),
+                        ),
+                        elem_id="aspect-ratio-picker",
+                        html_template=(ui_assets_dir / "aspect_picker.html").read_text(
+                            encoding="utf-8"
+                        ),
+                        js_on_load=(ui_assets_dir / "aspect_picker.js").read_text(
+                            encoding="utf-8"
+                        ),
+                        css_template=(ui_assets_dir / "aspect_picker.css").read_text(
+                            encoding="utf-8"
+                        ),
+                    )
                     aspect_ratios_selection = ResolutionDropdown(
                         label=t("Size"),
                         choices=initial_choices,
@@ -1948,6 +2021,56 @@ with shared.gradio_root as block:
                     value=settings.get("image_number", 1),
                 )
                 add_ctrl("image_number", image_number)
+
+                def handle_aspect_picker_click(
+                    family_name, checkpoint_name, evt: gr.EventData
+                ):
+                    data = getattr(evt, "_data", None) or {}
+                    kind = data.get("kind")
+                    if kind == "ratio" and isinstance(data.get("dimension"), str):
+                        choices = resolution_settings.choices_for_model(
+                            family_name, checkpoint_name, performance_settings
+                        )
+                        target = data.get("choice") if data.get("choice") in choices else data["dimension"]
+                        return gr.update(value=target), False, gr.skip()
+                    if kind == "count":
+                        try:
+                            count = int(data.get("count", 1))
+                        except (TypeError, ValueError):
+                            return gr.skip(), gr.skip(), gr.skip()
+                        max_count = int(settings.get("image_number_max", 50))
+                        return gr.skip(), gr.skip(), max(1, min(count, max_count))
+                    return gr.skip(), gr.skip(), gr.skip()
+
+                aspect_picker.click(
+                    handle_aspect_picker_click,
+                    inputs=[model_family, base_model],
+                    outputs=[aspect_ratios_selection, resolution_auto, image_number],
+                    queue=False,
+                    show_progress="hidden",
+                    api_visibility="undocumented",
+                )
+                gr.on(
+                    triggers=[
+                        aspect_ratios_selection.change,
+                        image_number.change,
+                        model_family.change,
+                        base_model.change,
+                    ],
+                    fn=lambda f, c, r, n, request=None: aspect_picker_payload(
+                        f, c, r, n, locale=resolve_locale(request=request)
+                    ),
+                    inputs=[model_family, base_model, aspect_ratios_selection, image_number],
+                    outputs=aspect_picker,
+                    queue=False,
+                    show_progress="hidden",
+                    api_visibility="undocumented",
+                )
+                localized_output(
+                    lambda locale, f, c, r, n: aspect_picker_payload(f, c, r, n, locale=locale),
+                    [model_family, base_model, aspect_ratios_selection, image_number],
+                    [aspect_picker],
+                )
                 with gr.Accordion(
                     translate_ui("Negative prompt and seed"), open=False, elem_id="generation-seed"
                 ):

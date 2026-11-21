@@ -2160,5 +2160,9 @@
   "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Çevrimiçiyken en son doğrulanmış resmi llama.cpp sürümünü otomatik olarak denetler ve yükler.",
   "image_editing.freeu_v2_unet_detail_boost": "FreeU V2 (UNet ayrıntı güçlendirme)",
   "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "SDXL / SD 1.5 / SD 2.0 UNet modellerinde ek adım olmadan ayrıntıyı ve yapıyı güçlendirir.",
-  "models.recommended_resolutions": "Önerilen çözünürlükler"
+  "models.recommended_resolutions": "Önerilen çözünürlükler",
+  "prompting.all_styles": "Tüm stiller",
+  "prompting.no_matching_styles": "Eşleşen stil yok.",
+  "shell.aspect_ratio": "En-boy oranı",
+  "shell.count": "Adet"
 }
