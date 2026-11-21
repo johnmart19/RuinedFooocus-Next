@@ -1,0 +1,9 @@
+{
+  "id": "image-viewer-focus",
+  "subject": "Keep keyboard focus on the image viewer and draw the checkerboard only behind a placed image",
+  "requires": ["native-step-cleanup"],
+  "tests": ["test_image_viewer.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

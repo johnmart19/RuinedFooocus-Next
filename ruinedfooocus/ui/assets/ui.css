@@ -183,7 +183,11 @@
   max-height: none !important;
   transform-origin: 0 0;
   user-select: none;
-  /* Transparent pixels read as transparent, not as the frame colour. */
+}
+/* Transparent pixels read as transparent, not as the frame colour. Only once the
+   viewer has placed the image: before that the empty element would show the
+   pattern across the whole frame. */
+#main_view[data-rf-viewer] .image-frame img[style*="translate3d"] {
   background: repeating-conic-gradient(rgb(128 128 128 / 0.22) 0% 25%, transparent 0% 50%) 0 0 /
     16px 16px;
 }

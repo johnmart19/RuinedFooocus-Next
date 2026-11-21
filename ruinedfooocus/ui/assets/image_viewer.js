@@ -288,6 +288,8 @@
       (event) => {
         if (!image.naturalWidth || (event.pointerType === "mouse" && event.button !== 0)) return;
         pointers.set(event.pointerId, local(event));
+        // Panning cancels the default focus change; the keyboard still belongs here.
+        if (document.activeElement !== viewport) viewport.focus({ preventScroll: true });
         if (pointers.size === 2) {
           pan = null;
           pinch = { from: fingers(), pose: { ...pose } };
