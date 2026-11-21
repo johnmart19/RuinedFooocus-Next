@@ -2390,7 +2390,7 @@ with shared.gradio_root as block:
                     upscale_target=automatic_upscale_target,
                     model_refresh=model_metadata_refresh,
                 )
-            hires_panel = shared.state.get("hires_panel")
+            hires_panel = getattr(shared, "hires_panel", None)
             if hires_panel is not None:
                 with size_section:
                     hires_panel.unrender().render()

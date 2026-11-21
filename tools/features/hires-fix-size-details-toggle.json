@@ -1,0 +1,14 @@
+{
+  "id": "hires-fix-size-details-toggle",
+  "subject": "Place standalone Hires Fix toggle and progressive settings directly inside Size details",
+  "requires": ["size-details-fsr4x-and-hires"],
+  "tests": [
+    "test_hires_fix.py",
+    "test_image_guidance_ui.py",
+    "test_preset_image_guidance.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

@@ -404,20 +404,22 @@ def create_ui(
         )
 
         initial_hires_upscaler = defaults.get("hires_upscaler", HIRES_UPSCALER_LATENT)
-        with gr.Accordion(
-            translate_ui("Hires Fix"),
-            open=False,
+        with gr.Group(
             visible=initial[3],
             elem_id="generation-hires-fix",
         ) as hires_panel:
             hires_enabled = gr.Checkbox(
-                label=translate_ui("Enable hires fix"),
+                label=translate_ui("Hires Fix"),
                 value=defaults.get("hires_enabled", False),
+                elem_id="generation-hires-fix-toggle",
                 info=translate_ui(
                     "Upscale after the first pass (latent or pixel upscaler) and run a second sampling pass for sharper detail. Can also chain with Main Upscale."
                 ),
             )
-            with gr.Group(visible=bool(defaults.get("hires_enabled", False))) as hires_options:
+            with gr.Group(
+                visible=bool(defaults.get("hires_enabled", False)),
+                elem_id="generation-hires-fix-options",
+            ) as hires_options:
                 hires_upscaler = gr.Dropdown(
                     label=translate_ui("Hires upscaler"),
                     choices=hires_upscaler_choices(),
@@ -557,8 +559,8 @@ def create_ui(
         )
         for key, component in controls.items():
             shared.add_ctrl(key, component)
-        if isinstance(getattr(shared, "state", None), dict):
-            shared.state["hires_panel"] = hires_panel
+        if preset_selection is not None:
+            shared.hires_panel = hires_panel
 
     def model_changed(name, current_format, current_slg=False, current_schedule="auto"):
         family = family_for_checkpoint(name)
