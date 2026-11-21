@@ -52,6 +52,10 @@ const updateLayout = () => {
   } else resetWidth();
 };
 const observer = new ResizeObserver(() => {
+  if (typeof requestAnimationFrame !== "function") {
+    updateLayout();
+    return;
+  }
   if (layoutFrame) return;
   layoutFrame = requestAnimationFrame(() => {
     layoutFrame = 0;

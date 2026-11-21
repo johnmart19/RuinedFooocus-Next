@@ -1,0 +1,9 @@
+{
+  "id": "resize-observer-raf-fallback",
+  "subject": "Guard requestAnimationFrame in ResizeObserver helpers for headless Node test sandboxes",
+  "requires": ["comfy-lifecycle-and-tool-contracts"],
+  "tests": ["test_responsive_ui_layout.py", "test_image_viewer.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

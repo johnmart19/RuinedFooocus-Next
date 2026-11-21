@@ -19,6 +19,10 @@
   };
   let frame = 0;
   const schedule = () => {
+    if (typeof requestAnimationFrame !== "function") {
+      update();
+      return;
+    }
     if (frame) return;
     frame = requestAnimationFrame(() => {
       frame = 0;
