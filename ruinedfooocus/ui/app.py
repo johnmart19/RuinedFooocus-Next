@@ -1605,9 +1605,6 @@ with shared.gradio_root as block:
                         elem_id="sampling-mode",
                     )
                     add_ctrl("performance_selection", performance_selection)
-                    performance_help = gr.Markdown(
-                        performance_settings.describe(initial_performance),
-                    )
                     initial_recipe = performance_settings.control_options(
                         initial_performance, initial_checkpoint, initial_model_base
                     )
@@ -1623,31 +1620,46 @@ with shared.gradio_root as block:
                         ),
                         visible=False,
                     )
-
-                    def describe_performance(name, request: gr.Request = None):
-                        return performance_settings.describe(
-                            name, locale=resolve_locale(request=request)
-                        )
-
-                    performance_selection.change(
-                        fn=describe_performance,
-                        inputs=[performance_selection],
-                        outputs=[performance_help],
-                        show_progress="hidden",
-                        api_visibility="undocumented",
-                    )
                     custom_default_values = performance_settings.control_options(
                         initial_performance, initial_checkpoint, initial_model_base
                     )
                     if initial_performance == performance_settings.CUSTOM_PERFORMANCE:
                         custom_default_values |= settings.get("custom_sampling", {})
+                    from ruinedfooocus.features.generation.native_sampling import scheduler_choices
+                    from ruinedfooocus.ui.sampling_table import (
+                        apply_sampling_table_action,
+                        build_sampling_table_payload,
+                    )
+
+                    ui_assets_dir = Path(__file__).resolve().parent / "assets"
+                    sampling_table = gr.HTML(
+                        value=build_sampling_table_payload(
+                            performance_settings,
+                            initial_performance,
+                            initial_model_base,
+                            initial_checkpoint,
+                            custom_default_values,
+                            KSampler.SAMPLERS,
+                            KSampler.SCHEDULERS,
+                        ),
+                        elem_id="sampling-table",
+                        html_template=(ui_assets_dir / "sampling_table.html").read_text(
+                            encoding="utf-8"
+                        ),
+                        js_on_load=(ui_assets_dir / "sampling_table.js").read_text(
+                            encoding="utf-8"
+                        ),
+                        css_template=(ui_assets_dir / "sampling_table.css").read_text(
+                            encoding="utf-8"
+                        ),
+                    )
                     custom_steps = gr.Slider(
                         label=t("Steps"),
                         minimum=1,
                         maximum=200,
                         step=1,
                         value=custom_default_values["custom_steps"],
-                        visible=True,
+                        visible=False,
                     )
                     add_ctrl("custom_steps", custom_steps)
 
@@ -1657,23 +1669,22 @@ with shared.gradio_root as block:
                         maximum=20.0,
                         step=0.1,
                         value=custom_default_values["cfg"],
-                        visible=True,
+                        visible=False,
                     )
                     add_ctrl("cfg", cfg)
                     sampler_name = gr.Dropdown(
                         label=t("Sampler"),
                         choices=sorted(KSampler.SAMPLERS),
                         value=custom_default_values["sampler_name"],
-                        visible=True,
+                        visible=False,
                     )
                     add_ctrl("sampler_name", sampler_name)
-                    from ruinedfooocus.features.generation.native_sampling import scheduler_choices
 
                     scheduler = gr.Dropdown(
                         label=t("Scheduler"),
                         choices=scheduler_choices(KSampler.SCHEDULERS),
                         value=custom_default_values["scheduler"],
-                        visible=True,
+                        visible=False,
                     )
                     add_ctrl("scheduler", scheduler)
 
@@ -1686,32 +1697,15 @@ with shared.gradio_root as block:
                         maximum=5,
                         step=1,
                         value=custom_default_values["clip_skip"],
-                        visible=True,
+                        visible=False,
                     )
 
                     add_ctrl("clip_skip", clip_skip)
+                    recommendation_status = gr.Markdown(visible=False)
 
-                    def switch_to_own_sampling(current):
-                        if current == performance_settings.CUSTOM_PERFORMANCE:
-                            return gr.skip()
-                        return performance_settings.CUSTOM_PERFORMANCE
-
-                    gr.on(
-                        triggers=[
-                            custom_steps.input,
-                            cfg.input,
-                            sampler_name.input,
-                            scheduler.input,
-                            clip_skip.input,
-                        ],
-                        fn=switch_to_own_sampling,
-                        inputs=[performance_selection],
-                        outputs=[performance_selection],
-                        queue=False,
-                        show_progress="hidden",
-                        api_visibility="undocumented",
+                    auto_recommendations = gr.Checkbox(
+                        label=translate_ui("Automatically refresh recommendations"), value=True
                     )
-
                     with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
                         recommendation_use = gr.Button(
                             translate_ui("Use model defaults"), size="sm"
@@ -1719,21 +1713,11 @@ with shared.gradio_root as block:
                         recommendation_save = gr.Button(
                             translate_ui("Save sampling defaults"), size="sm"
                         )
-
-                    with gr.Accordion(
-                        translate_ui("Model Defaults"),
-                        open=False,
-                        elem_id="sampling-model-defaults",
-                    ):
-                        recommendation_status = gr.Markdown(elem_classes=["rf-status-card"])
-                        auto_recommendations = gr.Checkbox(
-                            label=translate_ui("Automatically refresh recommendations"), value=True
+                    with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
+                        recommendation_refresh = gr.Button(translate_ui("Refresh"), size="sm")
+                        recommendation_reset = gr.Button(
+                            translate_ui("Remove sampling override"), size="sm"
                         )
-                        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-                            recommendation_refresh = gr.Button(translate_ui("Refresh"), size="sm")
-                            recommendation_reset = gr.Button(
-                                translate_ui("Remove sampling override"), size="sm"
-                            )
 
                     performance_outputs = [
                         cfg,
@@ -2916,13 +2900,117 @@ with shared.gradio_root as block:
                 options = performance_settings.control_options(selection, checkpoint, family)
                 updates = []
                 for key in ("cfg", "sampler_name", "scheduler", "clip_skip", "custom_steps"):
-                    update = {"visible": True}
+                    update = {}
                     if selection != performance_settings.CUSTOM_PERFORMANCE and not options.get(
                         "_recipe_unavailable"
                     ):
                         update["value"] = options[key]
                     updates.append(gr.update(**update))
                 return updates
+
+            sampling_table_inputs = [
+                performance_selection,
+                model_family,
+                base_model,
+                custom_steps,
+                cfg,
+                sampler_name,
+                scheduler,
+                clip_skip,
+            ]
+
+            def refresh_sampling_table(
+                selection,
+                family,
+                checkpoint,
+                steps_val,
+                cfg_val,
+                sampler_val,
+                scheduler_val,
+                skip_val,
+                request: gr.Request = None,
+            ):
+                return build_sampling_table_payload(
+                    performance_settings,
+                    selection,
+                    family,
+                    checkpoint,
+                    dict(
+                        custom_steps=steps_val,
+                        cfg=cfg_val,
+                        sampler_name=sampler_val,
+                        scheduler=scheduler_val,
+                        clip_skip=skip_val,
+                    ),
+                    KSampler.SAMPLERS,
+                    KSampler.SCHEDULERS,
+                    locale=resolve_locale(request=request),
+                )
+
+            def handle_sampling_table_edit(
+                selection,
+                family,
+                checkpoint,
+                steps_val,
+                cfg_val,
+                sampler_val,
+                scheduler_val,
+                skip_val,
+                evt: gr.EventData,
+                request: gr.Request = None,
+            ):
+                data = getattr(evt, "_data", None) or {}
+                new_selection, updated = apply_sampling_table_action(
+                    data,
+                    performance_settings,
+                    selection,
+                    family,
+                    checkpoint,
+                    dict(
+                        custom_steps=steps_val,
+                        cfg=cfg_val,
+                        sampler_name=sampler_val,
+                        scheduler=scheduler_val,
+                        clip_skip=skip_val,
+                    ),
+                    KSampler.SAMPLERS,
+                    KSampler.SCHEDULERS,
+                )
+                payload = build_sampling_table_payload(
+                    performance_settings,
+                    new_selection,
+                    family,
+                    checkpoint,
+                    updated,
+                    KSampler.SAMPLERS,
+                    KSampler.SCHEDULERS,
+                    locale=resolve_locale(request=request),
+                )
+                return (
+                    new_selection,
+                    updated["cfg"],
+                    updated["sampler_name"],
+                    updated["scheduler"],
+                    updated["clip_skip"],
+                    updated["custom_steps"],
+                    payload,
+                )
+
+            sampling_table.click(
+                handle_sampling_table_edit,
+                inputs=sampling_table_inputs,
+                outputs=[
+                    performance_selection,
+                    cfg,
+                    sampler_name,
+                    scheduler,
+                    clip_skip,
+                    custom_steps,
+                    sampling_table,
+                ],
+                show_progress="hidden",
+                api_visibility="undocumented",
+            )
 
             def refresh_recommendation(
                 selection, family, checkpoint, automatic, request: gr.Request = None, force=False
@@ -2965,6 +3053,12 @@ with shared.gradio_root as block:
                 outputs=performance_outputs,
                 api_visibility="undocumented",
                 show_progress="hidden",
+            ).then(
+                refresh_sampling_table,
+                inputs=sampling_table_inputs,
+                outputs=[sampling_table],
+                api_visibility="undocumented",
+                show_progress="hidden",
             )
 
             def force_recommendation(
@@ -2984,6 +3078,12 @@ with shared.gradio_root as block:
                 inputs=[performance_selection, model_family, base_model],
                 outputs=performance_outputs,
                 api_visibility="undocumented",
+            ).then(
+                refresh_sampling_table,
+                inputs=sampling_table_inputs,
+                outputs=[sampling_table],
+                api_visibility="undocumented",
+                show_progress="hidden",
             ).then(
                 model_resolution,
                 inputs=[model_family, base_model, aspect_ratios_selection, resolution_auto],
@@ -3037,6 +3137,12 @@ with shared.gradio_root as block:
                 outputs=[recommendation_status],
                 api_visibility="undocumented",
                 show_progress="hidden",
+            ).then(
+                refresh_sampling_table,
+                inputs=sampling_table_inputs,
+                outputs=[sampling_table],
+                api_visibility="undocumented",
+                show_progress="hidden",
             )
 
             def reset_checkpoint_override(checkpoint, family):
@@ -3061,6 +3167,12 @@ with shared.gradio_root as block:
                 outputs=performance_outputs,
                 api_visibility="undocumented",
                 show_progress="hidden",
+            ).then(
+                refresh_sampling_table,
+                inputs=sampling_table_inputs,
+                outputs=[sampling_table],
+                api_visibility="undocumented",
+                show_progress="hidden",
             )
             performance_selection.change(
                 refresh_recommendation,
@@ -3072,6 +3184,12 @@ with shared.gradio_root as block:
                 inputs=[performance_selection, model_family, base_model],
                 outputs=performance_outputs,
                 api_visibility="undocumented",
+            ).then(
+                refresh_sampling_table,
+                inputs=sampling_table_inputs,
+                outputs=[sampling_table],
+                api_visibility="undocumented",
+                show_progress="hidden",
             )
             # Resolve sizes once, after recommendations can update cached dimensions.
             model_controls_event.then(
@@ -3111,6 +3229,12 @@ with shared.gradio_root as block:
                 outputs=performance_outputs,
                 api_visibility="undocumented",
             ).then(
+                refresh_sampling_table,
+                inputs=sampling_table_inputs,
+                outputs=[sampling_table],
+                api_visibility="undocumented",
+                show_progress="hidden",
+            ).then(
                 model_resolution,
                 inputs=[model_family, base_model, aspect_ratios_selection, resolution_auto],
                 outputs=[aspect_ratios_selection, resolution_auto],
@@ -3125,6 +3249,22 @@ with shared.gradio_root as block:
                 api_visibility="undocumented",
                 show_progress="hidden",
                 show_progress_on=[],
+            )
+            gr.on(
+                triggers=[
+                    recommendation_status.change,
+                    custom_steps.change,
+                    cfg.change,
+                    sampler_name.change,
+                    scheduler.change,
+                    clip_skip.change,
+                ],
+                fn=refresh_sampling_table,
+                inputs=sampling_table_inputs,
+                outputs=[sampling_table],
+                trigger_mode="always_last",
+                show_progress="hidden",
+                api_visibility="undocumented",
             )
 
             workflow_inputs = [
@@ -3166,9 +3306,24 @@ with shared.gradio_root as block:
                 [workflow_help],
             )
             localized_output(
-                lambda locale, name: performance_settings.describe(name, locale=locale),
-                [performance_selection],
-                [performance_help],
+                lambda locale, selection, family, checkpoint, steps_val, cfg_val, sampler_val, scheduler_val, skip_val: build_sampling_table_payload(
+                    performance_settings,
+                    selection,
+                    family,
+                    checkpoint,
+                    dict(
+                        custom_steps=steps_val,
+                        cfg=cfg_val,
+                        sampler_name=sampler_val,
+                        scheduler=scheduler_val,
+                        clip_skip=skip_val,
+                    ),
+                    KSampler.SAMPLERS,
+                    KSampler.SCHEDULERS,
+                    locale=locale,
+                ),
+                sampling_table_inputs,
+                [sampling_table],
             )
             localized_output(
                 lambda locale, selection, family, checkpoint, automatic: refresh_recommendation(
@@ -3345,12 +3500,7 @@ with shared.gradio_root as block:
                 preset_selection: gr.update(value=path),
                 preset_accordion: gr.update(label=t(PNG_PRESET_LABEL) + ": " + preset),
                 performance_selection: show_perf,
-                performance_help: show_perf,
-                cfg: show_perf,
-                sampler_name: show_perf,
-                scheduler: show_perf,
-                clip_skip: show_perf,
-                custom_steps: show_perf,
+                sampling_table: show_perf,
                 aspect_ratios_selection: show_size,
                 resolution_auto: show_size,
                 ratio_name: show_size,
@@ -3362,7 +3512,6 @@ with shared.gradio_root as block:
             }
 
         def preset_unselect(performance_selection_val, aspect_ratios_selection_val):
-            show_perf = True
             show_size = (
                 True
                 if (aspect_ratios_selection_val == resolution_settings.CUSTOM_RESOLUTION)
@@ -3373,12 +3522,7 @@ with shared.gradio_root as block:
                 preset_selection: gr.update(value=""),
                 preset_accordion: gr.update(label=t(PNG_PRESET_LABEL)),
                 performance_selection: gr.update(visible=True),
-                performance_help: gr.update(visible=True),
-                cfg: gr.update(visible=show_perf),
-                sampler_name: gr.update(visible=show_perf),
-                scheduler: gr.update(visible=show_perf),
-                clip_skip: gr.update(visible=show_perf),
-                custom_steps: gr.update(visible=show_perf),
+                sampling_table: gr.update(visible=True),
                 aspect_ratios_selection: gr.update(visible=True),
                 resolution_auto: gr.update(visible=True),
                 ratio_name: gr.update(visible=show_size),
@@ -3396,12 +3540,7 @@ with shared.gradio_root as block:
                 preset_selection: gr.update(value=path),
                 preset_accordion: gr.update(label=t(PNG_PRESET_LABEL) + ": " + preset),
                 performance_selection: gr.update(visible="hidden"),
-                performance_help: gr.update(visible="hidden"),
-                cfg: gr.update(visible="hidden"),
-                sampler_name: gr.update(visible="hidden"),
-                scheduler: gr.update(visible="hidden"),
-                clip_skip: gr.update(visible="hidden"),
-                custom_steps: gr.update(visible="hidden"),
+                sampling_table: gr.update(visible="hidden"),
                 aspect_ratios_selection: gr.update(visible="hidden"),
                 resolution_auto: gr.update(visible="hidden"),
                 ratio_name: gr.update(visible="hidden"),
@@ -3416,12 +3555,7 @@ with shared.gradio_root as block:
             preset_selection,
             preset_accordion,
             performance_selection,
-            performance_help,
-            cfg,
-            sampler_name,
-            scheduler,
-            clip_skip,
-            custom_steps,
+            sampling_table,
             aspect_ratios_selection,
             resolution_auto,
             ratio_name,

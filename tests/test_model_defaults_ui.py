@@ -127,6 +127,11 @@ class ModelDefaultsUiTests(unittest.TestCase):
             )
 
     def test_actual_callbacks_keep_manual_controls_and_show_missing_recipe(self):
+        from ruinedfooocus.ui.sampling_table import (
+            apply_sampling_table_action,
+            build_sampling_table_payload,
+        )
+
         scope = dict(
             performance_settings=self.performance,
             gr=SimpleNamespace(update=lambda **values: values, Request=object),
@@ -138,20 +143,54 @@ class ModelDefaultsUiTests(unittest.TestCase):
         controls = callback("performance_control_updates", scope)
         automatic = controls("Model Defaults", "Chroma", "local.safetensors")
         self.assertTrue(
-            all(update["visible"] and "value" not in update for update in automatic[:5])
+            all(not update.get("visible") and "value" not in update for update in automatic[:5])
         )
         manual = controls("Own settings", "Chroma", "local.safetensors")
-        self.assertTrue(all(update["visible"] and "value" not in update for update in manual[:5]))
-        skip = object()
-        switch = callback(
-            "switch_to_own_sampling",
-            dict(
-                performance_settings=self.performance,
-                gr=SimpleNamespace(skip=lambda: skip),
-            ),
+        self.assertTrue(
+            all(not update.get("visible") and "value" not in update for update in manual[:5])
         )
-        self.assertEqual(switch("Model Defaults"), "Own settings")
-        self.assertIs(switch("Own settings"), skip)
+        payload = build_sampling_table_payload(
+            self.performance,
+            "Model Defaults",
+            "SDXL",
+            "local.safetensors",
+            dict(custom_steps=30, cfg=7.0, sampler_name="euler", scheduler="simple", clip_skip=1),
+            ["euler", "dpmpp_2m"],
+            ["simple", "karras"],
+        )
+        self.assertEqual([row["key"] for row in payload["rows"]], [
+            "custom_steps",
+            "cfg",
+            "sampler_name",
+            "scheduler",
+            "clip_skip",
+        ])
+        self.assertEqual(payload["notice"], "")
+        self.assertNotIn("__i18n__", str(payload))
+        new_mode, updated = apply_sampling_table_action(
+            dict(action="edit", field="custom_steps", value=25),
+            self.performance,
+            "Model Defaults",
+            "SDXL",
+            "local.safetensors",
+            dict(custom_steps=30, cfg=7.0, sampler_name="euler", scheduler="simple", clip_skip=1),
+            ["euler", "dpmpp_2m"],
+            ["simple", "karras"],
+        )
+        self.assertEqual(new_mode, "Own settings")
+        self.assertEqual(updated["custom_steps"], 25)
+        restored_mode, restored = apply_sampling_table_action(
+            dict(action="reset_field", field="custom_steps", value=30),
+            self.performance,
+            new_mode,
+            "SDXL",
+            "local.safetensors",
+            updated,
+            ["euler", "dpmpp_2m"],
+            ["simple", "karras"],
+        )
+        self.assertEqual(restored["custom_steps"], payload["rows"][0]["defaultValue"])
+        self.assertIn(restored_mode, ("Model Defaults", "Own settings"))
         self.performance.model_recommendations.describe = Mock(
             side_effect=AssertionError("No recipe exists")
         )

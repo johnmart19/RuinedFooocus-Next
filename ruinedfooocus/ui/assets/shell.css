@@ -1423,11 +1423,23 @@ html {
 :is(#app-tabs, #image-stage) .prose a:hover {
   text-decoration: underline;
 }
-#sampling-model-defaults .block.rf-status-card {
-  padding: 0.5rem 0.625rem !important;
+#sampling-table,
+#sampling-table > .wrap,
+#sampling-table .html-container,
+#sampling-table .prose {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
-#sampling-model-defaults .prose td:last-child {
-  white-space: nowrap;
+:is(#app-tabs, #image-stage) #sampling-table .prose a.rf-st-badge-network {
+  color: #93c5fd !important;
+  text-decoration: none !important;
+}
+:is(#app-tabs, #image-stage) #sampling-table .prose a.rf-st-badge-network:hover {
+  color: #ffffff !important;
+  text-decoration: none !important;
 }
 /* Sampling mode segmented toggle spans 2 balanced equal-width columns. */
 #sampling-mode .wrap {

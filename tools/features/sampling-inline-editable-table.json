@@ -1,0 +1,17 @@
+{
+  "id": "sampling-inline-editable-table",
+  "subject": "Unify Create Sampling into a single inline-editable defaults table and remove redundant Civitai/Network prose",
+  "requires": ["sampling-direct-controls-rework"],
+  "tests": [
+    "test_model_defaults_ui.py",
+    "test_model_control_events.py",
+    "test_cascade_topology_defaults.py",
+    "test_sdxl_step_capture.py",
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
