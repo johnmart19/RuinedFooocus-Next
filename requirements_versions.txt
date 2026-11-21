@@ -3,5 +3,5 @@ packaging==26.3
 pygit2==1.18.2; python_version < "3.11"
 pygit2==1.21.0; python_version >= "3.11"
 setuptools==84.2.1
-torchruntime==2.27.0
+torchruntime==2.28.0
 cffi==2.1.1

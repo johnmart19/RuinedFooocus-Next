@@ -1,0 +1,15 @@
+{
+  "id": "dependency-updates-py310-to-314",
+  "subject": "Update verified Python 3.10-3.14 dependency pins (torchruntime, accelerate, transformers, pyyaml, imageio, pypdf, filelock)",
+  "requires": ["comfy-freeu-v2-guidance"],
+  "tests": [
+    "test_dependency_requirements.py",
+    "test_api_requirement_pins.py",
+    "test_document_parser_dependency.py",
+    "test_package_plan.py",
+    "test_runtime_bundles.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
