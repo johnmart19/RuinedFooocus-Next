@@ -2474,6 +2474,15 @@ class pipeline:
                     callback=callback_function,
                     disable_pbar=not comfy.utils.PROGRESS_BAR_ENABLED,
                     check_cancelled=lambda: worker.check_interrupt(gen_data),
+                    vae=self.xl_base_patched.vae,
+                    decode_fn=lambda lat: self.decode_latent(
+                        lat,
+                        tiled=guidance["vae_tiled"],
+                        tile_size=guidance["vae_tile_size"],
+                        overlap=guidance["vae_overlap"],
+                    ),
+                    owner=self,
+                    gen_data=gen_data,
                 )
             after_latent_shape = tuple(sampled_latent["samples"].shape)
             if reference_frame is not None:

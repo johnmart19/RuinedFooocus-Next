@@ -2,7 +2,12 @@
 
 import math
 import re
-from ruinedfooocus.features.generation.hires_fix import HIRES_UPSCALE_METHODS, MAX_COMFY_SEED
+from ruinedfooocus.features.generation.hires_fix import (
+    HIRES_UPSCALE_METHODS,
+    HIRES_UPSCALER_LATENT,
+    MAX_COMFY_SEED,
+    resolve_hires_upscaler,
+)
 from ruinedfooocus.features.models.image_components import IMAGE_COMPONENTS, ALIASES
 
 MOSS_EDIT_FORMATS = ("Disabled", "ai-toolkit", "ai-toolkit (kv_cache off)", "Moss-Image-Edit")
@@ -51,6 +56,7 @@ FIELD_SCHEMA = {
     "vae_overlap": {"minimum": 0, "maximum": 4096, "step": 32, "default": None},
     "hires_enabled": {"default": False},
     "hires_scale": {"minimum": 1.05, "maximum": 4.0, "step": 0.05, "default": 1.5},
+    "hires_upscaler": {"default": HIRES_UPSCALER_LATENT},
     "hires_upscale_method": {"choices": HIRES_UPSCALE_METHODS, "default": "nearest-exact"},
     "hires_steps": {"minimum": 1, "maximum": 200, "step": 1, "default": 20},
     "hires_denoise": {"minimum": 0.05, "maximum": 1.0, "step": 0.05, "default": 0.6},
@@ -190,6 +196,14 @@ def validate_guidance(values):
         ):
             if type(value) is not bool:
                 raise ValueError(f"{key}: choose on or off.")
+        elif key == "hires_upscaler":
+            if value in (None, ""):
+                result[key] = HIRES_UPSCALER_LATENT
+            elif not isinstance(value, str):
+                raise ValueError("Choose Latent or a supported pixel upscaler for hires fix.")
+            else:
+                resolve_hires_upscaler(value)
+                result[key] = value
         elif key == "hires_upscale_method":
             if value not in HIRES_UPSCALE_METHODS:
                 raise ValueError("Choose a supported latent upscale method.")

@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "Коефіцієнт масштабу",
   "image_editing.latent_upscale_method": "Метод масштабування латенту",
   "image_editing.second_pass_steps": "Кроки другого проходу",
-  "image_editing.second_pass_denoise": "Знешумлення другого проходу"
+  "image_editing.second_pass_denoise": "Знешумлення другого проходу",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Увімкнути Hires Fix",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Збільшує після першого проходу (латентний або піксельний апскейлер) і запускає другий прохід семплювання для чіткіших деталей. Також може поєднуватися з основним збільшенням.",
+  "image_editing.hires_upscaler": "Апскейлер Hires",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent збільшує в латентному просторі; піксельні апскейлери (Anime, RealESRGAN, AMD FSR) декодують, збільшують і повторно кодують перед другим проходом."
 }

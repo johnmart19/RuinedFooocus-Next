@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "Współczynnik skali",
   "image_editing.latent_upscale_method": "Metoda skalowania latentu",
   "image_editing.second_pass_steps": "Kroki drugiego przebiegu",
-  "image_editing.second_pass_denoise": "Denoise drugiego przebiegu"
+  "image_editing.second_pass_denoise": "Denoise drugiego przebiegu",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Włącz Hires Fix",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Skaluje po pierwszym przebiegu (upscaler latentny lub pikselowy) i uruchamia drugi przebieg próbkowania dla ostrzejszych detali. Można też łączyć z głównym skalowaniem.",
+  "image_editing.hires_upscaler": "Upscaler Hires",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent skaluje w przestrzeni latentnej; upscalery pikselowe (Anime, RealESRGAN, AMD FSR) dekodują, skalują i ponownie kodują przed drugim przebiegiem."
 }

@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "Fator de escala",
   "image_editing.latent_upscale_method": "Método de ampliação latente",
   "image_editing.second_pass_steps": "Etapas da segunda passagem",
-  "image_editing.second_pass_denoise": "Denoise da segunda passagem"
+  "image_editing.second_pass_denoise": "Denoise da segunda passagem",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Ativar Hires Fix",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Aumenta a escala após a primeira passagem (upscaler latente ou de pixels) e executa uma segunda passagem de amostragem para detalhes mais nítidos. Também pode ser encadeado com o Upscale principal.",
+  "image_editing.hires_upscaler": "Upscaler do Hires",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent amplia no espaço latente; upscalers de pixels (Anime, RealESRGAN, AMD FSR) decodificam, ampliam e recodificam antes da segunda passagem."
 }

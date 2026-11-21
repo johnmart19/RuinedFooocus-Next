@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "縮放倍數",
   "image_editing.latent_upscale_method": "潛空間放大方式",
   "image_editing.second_pass_steps": "第二階段步數",
-  "image_editing.second_pass_denoise": "第二階段去噪強度"
+  "image_editing.second_pass_denoise": "第二階段去噪強度",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "啟用 Hires Fix",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "首次取樣後進行放大（潛空間或像素放大器）並執行第二次取樣以獲得更銳利的細節，也可與主放大串聯使用。",
+  "image_editing.hires_upscaler": "Hires 放大器",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent 在潛空間中放大；像素放大器（Anime、RealESRGAN、AMD FSR）會在第二次取樣前先解碼、放大再重新編碼。"
 }

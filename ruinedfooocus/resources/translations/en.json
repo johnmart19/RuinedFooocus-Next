@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "Scale factor",
   "image_editing.latent_upscale_method": "Latent upscale method",
   "image_editing.second_pass_steps": "Second-pass steps",
-  "image_editing.second_pass_denoise": "Second-pass denoise"
+  "image_editing.second_pass_denoise": "Second-pass denoise",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Enable hires fix",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Upscale after the first pass (latent or pixel upscaler) and run a second sampling pass for sharper detail. Can also chain with Main Upscale.",
+  "image_editing.hires_upscaler": "Hires upscaler",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent upscales in latent space; pixel upscalers (Anime, RealESRGAN, AMD FSR) decode, upscale, and re-encode before the second pass."
 }

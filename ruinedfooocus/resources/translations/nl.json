@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "Schaalfactor",
   "image_editing.latent_upscale_method": "Latent-upscalemethode",
   "image_editing.second_pass_steps": "Stappen tweede ronde",
-  "image_editing.second_pass_denoise": "Denoise tweede ronde"
+  "image_editing.second_pass_denoise": "Denoise tweede ronde",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Hires Fix inschakelen",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Schaalt op na de eerste pass (latente of pixel-upscaler) en voert een tweede sampling-pass uit voor scherpere details. Kan ook worden gekoppeld aan de hoofd-upscale.",
+  "image_editing.hires_upscaler": "Hires-upscaler",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent schaalt op in de latente ruimte; pixel-upscalers (Anime, RealESRGAN, AMD FSR) decoderen, schalen op en hercoderen vóór de tweede pass."
 }

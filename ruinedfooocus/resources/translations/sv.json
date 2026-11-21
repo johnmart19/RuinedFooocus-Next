@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "Skalfaktor",
   "image_editing.latent_upscale_method": "Latent uppskalningsmetod",
   "image_editing.second_pass_steps": "Steg i andra passet",
-  "image_editing.second_pass_denoise": "Denoise i andra passet"
+  "image_editing.second_pass_denoise": "Denoise i andra passet",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Aktivera hires fix",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "Skala upp efter första passet (latent eller pixeluppskalare) och kör ett andra samplingspass för skarpare detaljer. Kan även kedjas med huvuduppskalning.",
+  "image_editing.hires_upscaler": "Hires-uppskalare",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent skalar upp i latentutrymmet; pixeluppskalare (Anime, RealESRGAN, AMD FSR) avkodar, skalar upp och kodar om före det andra passet."
 }

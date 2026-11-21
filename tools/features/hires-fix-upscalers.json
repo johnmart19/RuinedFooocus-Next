@@ -1,0 +1,16 @@
+{
+  "id": "hires-fix-upscalers",
+  "subject": "Support selectable pixel upscalers (neural models and AMD FSR 1-4) inside Hires Fix and chain cleanly with Main Upscale",
+  "requires": ["amd-fsr-still-calibration"],
+  "tests": [
+    "test_hires_fix.py",
+    "test_image_guidance.py",
+    "test_image_guidance_ui.py",
+    "test_automatic_upscale_fsr.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

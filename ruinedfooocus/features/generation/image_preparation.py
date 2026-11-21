@@ -1339,6 +1339,12 @@ def capture_image_assets(
         auto_name, auto_scale = resolve(result.get("automatic_upscale"))
         if auto_name and fsr_version_for(auto_name) is None:
             artifacts.append(_artifact(manager, "upscaler", "upscalers", auto_name))
+        if result.get("hires_enabled"):
+            from ruinedfooocus.features.generation.hires_fix import resolve_hires_upscaler
+
+            hires_up_name, _ = resolve_hires_upscaler(result.get("hires_upscaler"))
+            if hires_up_name and fsr_version_for(hires_up_name) is None:
+                artifacts.append(_artifact(manager, "upscaler", "upscalers", hires_up_name))
         from ruinedfooocus.features.models.approximate_codecs import (
             KEY as APPROXIMATE_KEY,
             capture_request as capture_approximate,

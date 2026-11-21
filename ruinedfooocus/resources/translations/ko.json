@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "확대 배율",
   "image_editing.latent_upscale_method": "잠재 업스케일 방식",
   "image_editing.second_pass_steps": "2차 패스 스텝",
-  "image_editing.second_pass_denoise": "2차 패스 디노이즈"
+  "image_editing.second_pass_denoise": "2차 패스 디노이즈",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Hires Fix 사용",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "첫 번째 패스 후 업스케일(잠재 공간 또는 픽셀 업스케일러)하고 두 번째 샘플링 패스를 실행해 디테일을 선명하게 합니다. 메인 업스케일과 함께 연결할 수도 있습니다.",
+  "image_editing.hires_upscaler": "Hires 업스케일러",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent는 잠재 공간에서 업스케일하며, 픽셀 업스케일러(Anime, RealESRGAN, AMD FSR)는 두 번째 패스 전에 디코드·업스케일·재인코드를 수행합니다."
 }

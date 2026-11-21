@@ -522,7 +522,12 @@ class _GenerationRequest(BaseModel):
         default=None,
         ge=1.05,
         le=4.0,
-        description="Latent hires upscale factor (default 1.5).",
+        description="Hires upscale factor (default 1.5).",
+    )
+    hires_upscaler: str | None = Field(
+        default=None,
+        max_length=256,
+        description="Hires upscaler: 'Latent' (LatentUpscaleBy) or any pixel upscaler preset/model (including AMD FSR 1-4).",
     )
     hires_upscale_method: (
         Literal["nearest-exact", "bilinear", "area", "bicubic", "bislerp"] | None

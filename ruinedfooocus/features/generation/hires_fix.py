@@ -1,7 +1,90 @@
-"""Native ComfyUI two-pass Latent Hires Fix (LatentUpscaleBy + second KSampler pass)."""
+"""Native ComfyUI two-pass Hires Fix (Latent or pixel-upscaler + second KSampler pass)."""
 
+HIRES_UPSCALER_LATENT = "Latent"
 HIRES_UPSCALE_METHODS = ("nearest-exact", "bilinear", "area", "bicubic", "bislerp")
 MAX_COMFY_SEED = (1 << 63) - 1
+
+
+def hires_upscaler_choices():
+    """Return 'Latent' followed by all available pixel upscalers (neural models and AMD FSR)."""
+    from ruinedfooocus.features.generation import automatic_upscale
+
+    return [HIRES_UPSCALER_LATENT] + [
+        choice for choice in automatic_upscale.choices() if choice != "Off"
+    ]
+
+
+def resolve_hires_upscaler(selection):
+    """Return (name, native_scale) for a pixel hires upscaler, or (None, 1) for Latent."""
+    if selection in (None, "", HIRES_UPSCALER_LATENT, "Off"):
+        return None, 1
+    from ruinedfooocus.features.generation import automatic_upscale
+
+    return automatic_upscale.resolve(selection)
+
+
+def _upscale_pixels_for_hires(
+    decoded,
+    *,
+    upscaler_name,
+    native_scale,
+    target_w,
+    target_h,
+    owner=None,
+    gen_data=None,
+    check_cancelled=None,
+):
+    """Upscale decoded [B, H, W, C] pixels with AMD FSR or a native ComfyUI pixel upscaler."""
+    import torch
+    from ruinedfooocus.features.generation import automatic_upscale
+
+    fsr_version = automatic_upscale.fsr_version_for(upscaler_name)
+    if fsr_version is not None:
+        from ruinedfooocus.features.image_processing import amd_fsr
+
+        frames = [
+            amd_fsr.upscale(
+                fsr_version,
+                decoded[index : index + 1],
+                target_w,
+                target_h,
+                check_cancelled=check_cancelled,
+            )
+            for index in range(decoded.shape[0])
+        ]
+        result = torch.cat(frames, dim=0) if len(frames) > 1 else frames[0]
+    else:
+        from comfy_extras.nodes_upscale_model import ImageUpscaleWithModel
+        from ruinedfooocus.features.image_processing.upscale_pipeline import (
+            InterruptibleUpscaler,
+            pipeline as create_upscale_pipeline,
+        )
+
+        upscale_pipe = getattr(owner, "automatic_upscale_pipeline", None) if owner is not None else None
+        if upscale_pipe is None:
+            upscale_pipe = create_upscale_pipeline()
+            if owner is not None:
+                owner.automatic_upscale_pipeline = upscale_pipe
+        model = upscale_pipe.load_upscaler_model(upscaler_name, gen_data or {})
+        if getattr(model, "scale", native_scale) != native_scale:
+            raise ValueError(f"Unexpected scale for hires upscaler {upscaler_name}: {model.scale}")
+        if getattr(model, "input_channels", 3) != 3 or getattr(model, "output_channels", 3) != 3:
+            raise ValueError("Hires fix pixel upscaling requires a native RGB upscaler.")
+        result = ImageUpscaleWithModel.execute(
+            InterruptibleUpscaler(model, gen_data or {}), decoded
+        )[0]
+
+    if int(result.shape[1]) != target_h or int(result.shape[2]) != target_w:
+        import comfy.utils
+
+        result = (
+            comfy.utils.common_upscale(
+                result.movedim(-1, 1), target_w, target_h, "lanczos", "disabled"
+            )
+            .movedim(1, -1)
+            .clamp(0.0, 1.0)
+        )
+    return result
 
 
 def resolve_hires_seed(base_seed, hires_seed):
@@ -53,8 +136,12 @@ def apply_latent_hires_fix(
     callback=None,
     disable_pbar=False,
     check_cancelled=None,
+    vae=None,
+    decode_fn=None,
+    owner=None,
+    gen_data=None,
 ):
-    """Upscale the latent with ComfyUI's LatentUpscaleBy and refine with a second KSampler pass."""
+    """Upscale Pass-1 output (latent or pixel upscaler) and refine with a second KSampler pass."""
     if not guidance.get("hires_enabled"):
         return sampled_latent
     if check_cancelled is not None:
@@ -68,12 +155,49 @@ def apply_latent_hires_fix(
     steps = int(guidance["hires_steps"])
     denoise = float(guidance["hires_denoise"])
     second_seed = resolve_hires_seed(base_seed, guidance.get("hires_seed"))
+    upscaler_name, native_scale = resolve_hires_upscaler(guidance.get("hires_upscaler"))
 
-    upscaled = nodes.LatentUpscaleBy().upscale(
-        samples=sampled_latent,
-        upscale_method=method,
-        scale_by=scale,
-    )[0]
+    if upscaler_name is None:
+        if gen_data is not None:
+            gen_data.pop("hires_upscaler_model", None)
+        upscaled = nodes.LatentUpscaleBy().upscale(
+            samples=sampled_latent,
+            upscale_method=method,
+            scale_by=scale,
+        )[0]
+    else:
+        if vae is None or decode_fn is None:
+            raise ValueError("Pixel-upscaler hires fix requires an active VAE and decoder.")
+        decoded = decode_fn(sampled_latent)
+        if check_cancelled is not None:
+            check_cancelled()
+        orig_h, orig_w = int(decoded.shape[1]), int(decoded.shape[2])
+        align = max(1, int(getattr(vae, "spacial_compression_decode", lambda: 8)()))
+        target_w = max(align, round((orig_w * scale) / align) * align)
+        target_h = max(align, round((orig_h * scale) / align) * align)
+        upscaled_pixels = _upscale_pixels_for_hires(
+            decoded,
+            upscaler_name=upscaler_name,
+            native_scale=native_scale,
+            target_w=target_w,
+            target_h=target_h,
+            owner=owner,
+            gen_data=gen_data,
+            check_cancelled=check_cancelled,
+        )
+        if check_cancelled is not None:
+            check_cancelled()
+        if guidance.get("vae_tiled") and hasattr(nodes, "VAEEncodeTiled"):
+            upscaled = nodes.VAEEncodeTiled().encode(
+                vae=vae,
+                pixels=upscaled_pixels,
+                tile_size=int(guidance.get("vae_tile_size") or 512),
+                overlap=int(guidance.get("vae_overlap") or 64),
+            )[0]
+        else:
+            upscaled = nodes.VAEEncode().encode(vae=vae, pixels=upscaled_pixels)[0]
+        if gen_data is not None:
+            gen_data["hires_upscaler_model"] = upscaler_name
     if check_cancelled is not None:
         check_cancelled()
 

@@ -2142,5 +2142,10 @@
   "image_editing.scale_factor": "拡大倍率",
   "image_editing.latent_upscale_method": "潜在拡大方式",
   "image_editing.second_pass_steps": "2パス目のステップ数",
-  "image_editing.second_pass_denoise": "2パス目のデノイズ"
+  "image_editing.second_pass_denoise": "2パス目のデノイズ",
+  "image_editing.hires_fix": "Hires Fix",
+  "image_editing.enable_hires_fix": "Hires Fix を有効にする",
+  "image_editing.upscale_after_the_first_pass_latent_or_pixel_upscaler_and_run_a_second_sampling_pass_for_sharper_detail_can_also_chain_with_main_upscale": "1パス目の後に拡大（潜在空間またはピクセルアップスケーラー）し、2パス目のサンプリングでディテールを鮮明にします。メインの拡大とも併用できます。",
+  "image_editing.hires_upscaler": "Hires アップスケーラー",
+  "image_editing.latent_upscales_in_latent_space_pixel_upscalers_anime_realesrgan_amd_fsr_decode_upscale_and_re_encode_before_the_second_pass": "Latent は潜在空間で拡大します。ピクセルアップスケーラー（Anime、RealESRGAN、AMD FSR）は2パス目の前にデコード・拡大・再エンコードを行います。"
 }

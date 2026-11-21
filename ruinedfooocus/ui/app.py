@@ -470,6 +470,7 @@ def launch_app(args):
         "vae_overlap",
         "hires_enabled",
         "hires_scale",
+        "hires_upscaler",
         "hires_upscale_method",
         "hires_steps",
         "hires_denoise",

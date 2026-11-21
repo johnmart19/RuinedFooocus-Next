@@ -398,17 +398,32 @@ def create_ui(
                 "Preserve keeps the source proportions and only downscales if needed. Pad keeps the whole source inside the exact selected size. Crop is an explicit framing choice; none of these modes stretch the image."
             ),
         )
+        from ruinedfooocus.features.generation.hires_fix import (
+            HIRES_UPSCALER_LATENT,
+            hires_upscaler_choices,
+        )
+
+        initial_hires_upscaler = defaults.get("hires_upscaler", HIRES_UPSCALER_LATENT)
         with gr.Accordion(
-            translate_ui("Latent Hires Fix"), open=False, visible=initial[3]
+            translate_ui("Hires Fix"), open=False, visible=initial[3]
         ) as hires_panel:
             hires_enabled = gr.Checkbox(
-                label=translate_ui("Enable latent hires fix"),
+                label=translate_ui("Enable hires fix"),
                 value=defaults.get("hires_enabled", False),
                 info=translate_ui(
-                    "Upscale the latent after the first pass and run a second sampling pass for sharper detail."
+                    "Upscale after the first pass (latent or pixel upscaler) and run a second sampling pass for sharper detail. Can also chain with Main Upscale."
                 ),
             )
             with gr.Group(visible=bool(defaults.get("hires_enabled", False))) as hires_options:
+                hires_upscaler = gr.Dropdown(
+                    label=translate_ui("Hires upscaler"),
+                    choices=hires_upscaler_choices(),
+                    value=initial_hires_upscaler,
+                    allow_custom_value=True,
+                    info=translate_ui(
+                        "Latent upscales in latent space; pixel upscalers (Anime, RealESRGAN, AMD FSR) decode, upscale, and re-encode before the second pass."
+                    ),
+                )
                 with gr.Row():
                     hires_scale = gr.Slider(
                         label=translate_ui("Scale factor"),
@@ -422,6 +437,7 @@ def create_ui(
                         label=translate_ui("Latent upscale method"),
                         choices=list(FIELD_SCHEMA["hires_upscale_method"]["choices"]),
                         value=defaults.get("hires_upscale_method", "nearest-exact"),
+                        visible=initial_hires_upscaler == HIRES_UPSCALER_LATENT,
                         min_width=180,
                     )
                 with gr.Row():
@@ -455,6 +471,13 @@ def create_ui(
                 lambda enabled: gr.update(visible=bool(enabled)),
                 inputs=hires_enabled,
                 outputs=hires_options,
+                api_visibility="undocumented",
+                show_progress="hidden",
+            )
+            hires_upscaler.change(
+                lambda selection: gr.update(visible=(selection or HIRES_UPSCALER_LATENT) == HIRES_UPSCALER_LATENT),
+                inputs=hires_upscaler,
+                outputs=hires_upscale_method,
                 api_visibility="undocumented",
                 show_progress="hidden",
             )
@@ -522,6 +545,7 @@ def create_ui(
             vae_overlap=vae_overlap,
             hires_enabled=hires_enabled,
             hires_scale=hires_scale,
+            hires_upscaler=hires_upscaler,
             hires_upscale_method=hires_upscale_method,
             hires_steps=hires_steps,
             hires_denoise=hires_denoise,
@@ -665,6 +689,9 @@ def create_ui(
                     else available["sampling_shift"]
                     if key == "sampling_shift"
                     else available["cfg_norm"]
+                    and selected["hires_upscaler"] == HIRES_UPSCALER_LATENT
+                    if key == "hires_upscale_method"
+                    else available["cfg_norm"]
                     if key
                     in (
                         "cfg_norm_strength",
@@ -675,7 +702,7 @@ def create_ui(
                         "vae_overlap",
                         "hires_enabled",
                         "hires_scale",
-                        "hires_upscale_method",
+                        "hires_upscaler",
                         "hires_steps",
                         "hires_denoise",
                         "hires_seed",
