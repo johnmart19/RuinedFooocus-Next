@@ -251,7 +251,6 @@ class SettingsProgressTests(unittest.TestCase):
         self.assertFalse(result["resolution_auto"])
 
     def test_fast_settings_events_do_not_overlay_other_controls(self):
-        tree = ast.parse((ROOT / "ruinedfooocus/ui/ui_settings.py").read_text(encoding="utf-8"))
         receivers = {
             "settings_search",
             "language",
@@ -261,26 +260,28 @@ class SettingsProgressTests(unittest.TestCase):
             "llm_runtime",
         }
         events = []
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Attribute):
-                continue
-            receiver = node.func.value
-            if (
-                isinstance(receiver, ast.Name)
-                and receiver.id in receivers
-                and node.func.attr in {"change", "input", "load", "click"}
-            ) or (
-                node.func.attr == "tick"
-                and isinstance(receiver, ast.Call)
-                and isinstance(receiver.func, ast.Attribute)
-                and receiver.func.attr == "Timer"
-            ):
-                events.append(node)
+        for path in ("ruinedfooocus/ui/ui_settings.py", "ruinedfooocus/ui/ui_hardware.py"):
+            tree = ast.parse((ROOT / path).read_text(encoding="utf-8"))
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Attribute):
+                    continue
+                receiver = node.func.value
+                if (
+                    isinstance(receiver, ast.Name)
+                    and receiver.id in receivers
+                    and node.func.attr in {"change", "input", "load", "click"}
+                ) or (
+                    node.func.attr == "tick"
+                    and isinstance(receiver, ast.Call)
+                    and isinstance(receiver.func, ast.Attribute)
+                    and receiver.func.attr == "Timer"
+                ):
+                    events.append((path, node))
         # Search is now browser-only field navigation, registered by its helper.
         self.assertEqual(len(events), 6)
-        for event in events:
+        for path, event in events:
             keywords = {keyword.arg: keyword.value for keyword in event.keywords}
-            with self.subTest(line=event.lineno):
+            with self.subTest(path=path, line=event.lineno):
                 self.assertEqual(ast.literal_eval(keywords["show_progress"]), "hidden")
 
     def test_installs_refresh_the_support_table_after_completion(self):
@@ -362,6 +363,88 @@ class SettingsProgressTests(unittest.TestCase):
         for event in change_events:
             keywords = {keyword.arg: keyword.value for keyword in event.keywords}
             self.assertEqual(ast.literal_eval(keywords["show_progress"]), "hidden")
+
+    def test_support_matrix_payload_hides_unavailable_by_default_and_marks_main_and_installable(self):
+        import json
+        from unittest.mock import patch
+
+        from ruinedfooocus.ui import ui_hardware
+
+        fake_gpus = [{"name": "AMD Radeon RX 7900 XTX", "vendor": "amd"}]
+        with (
+            patch.object(ui_hardware.inventory, "detect_gpus", return_value=fake_gpus),
+            patch.object(ui_hardware.inventory, "is_wsl", return_value=False),
+            patch.object(
+                ui_hardware.inventory,
+                "installed_runtimes",
+                return_value={"kind": "rocm", "torch": "2.15.0+rocm10.2.0", "directml": False},
+            ),
+            patch.object(
+                ui_hardware.inventory,
+                "image_backend_choices",
+                return_value=["auto", "rocm", "cpu"],
+            ),
+            patch.object(
+                ui_hardware.inventory,
+                "llm_backend_choices",
+                return_value=["Auto", "Vulkan", "ROCm", "CPU"],
+            ),
+            patch.object(ui_hardware.inventory, "llama_installed", return_value=["Vulkan"]),
+            patch.object(
+                ui_hardware.inventory,
+                "xllamacpp_backend_choices",
+                return_value=["Auto", "Vulkan", "CPU"],
+            ),
+            patch.object(ui_hardware.inventory, "xllamacpp_installed", return_value=None),
+            patch.object(
+                ui_hardware.inventory,
+                "onnx_backend_choices",
+                return_value=["Auto", "CPU", "Windows GPU"],
+            ),
+            patch("platform.system", return_value="Windows"),
+            patch("platform.machine", return_value="AMD64"),
+        ):
+            compact = ui_hardware.support_matrix_payload(
+                locale="en",
+                include_unavailable=False,
+                image_choice="rocm",
+                image_engine_choice="comfy",
+                llm_runtime_choice="llama.cpp",
+                llama_choice="Vulkan",
+                bg_choice="Windows GPU",
+                bg_provider_choice="Windows ML",
+                winml_provider_choice="AMDGPUExecutionProvider",
+            )
+            full = ui_hardware.support_matrix_payload(
+                locale="en",
+                include_unavailable=True,
+                image_choice="rocm",
+                image_engine_choice="comfy",
+                llm_runtime_choice="xllamacpp",
+                xllama_choice="Vulkan",
+            )
+
+        self.assertNotIn("__i18n__", json.dumps(compact))
+        self.assertGreater(compact["hiddenUnsupportedCount"], 0)
+        compact_rows = {
+            row["id"]: row for group in compact["groups"] for row in group["rows"]
+        }
+        self.assertTrue(all(row["status"] != "unavailable" for row in compact_rows.values()))
+        self.assertTrue(compact_rows["image:rocm"]["isMain"])
+        self.assertFalse(compact_rows["image:rocm"]["canInstall"])
+        self.assertTrue(compact_rows["llama:Vulkan"]["isMain"])
+        self.assertFalse(compact_rows["llama:Vulkan"]["canInstall"])
+        self.assertTrue(compact_rows["llama:ROCm"]["canInstall"])
+        self.assertTrue(compact_rows["llama:ROCm"]["canSetMain"])
+        self.assertTrue(compact_rows["xllama:Vulkan"]["canInstall"])
+        self.assertTrue(compact_rows["winml:AMDGPUExecutionProvider"]["isMain"])
+
+        full_rows = {row["id"]: row for group in full["groups"] for row in group["rows"]}
+        self.assertIn("image:cuda", full_rows)
+        self.assertEqual(full_rows["image:cuda"]["status"], "unavailable")
+        self.assertFalse(full_rows["image:cuda"]["canInstall"])
+        self.assertFalse(full_rows["image:cuda"]["canSetMain"])
+        self.assertTrue(full_rows["xllama:Vulkan"]["isMain"])
 
 
 if __name__ == "__main__":

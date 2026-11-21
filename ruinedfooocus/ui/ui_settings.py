@@ -20,12 +20,12 @@ SETTINGS_INDEX = {
     "Models / downloads": "installed, available, catalogue, download, cancel, components, source, license, disk, memory, quantization",
     "Appearance & language": "language, text size, theme, metadata, batch size, LoRA weights, update interval",
     "Profiles & storage": "Save, Save as profile, Use next launch, browser, port, offline, installed packages, paths, archive, library",
-    "Hardware & backends": "GPU, CPU, Use CPU for everything, CUDA, ROCm, Vulkan, DirectML, Windows ML, PyTorch, llama.cpp, ONNX, background removal, install",
+    "Hardware & backends": "GPU, CPU, Use CPU for everything, CUDA, ROCm, Vulkan, DirectML, Windows ML, PyTorch, Torch, llama.cpp, xllamacpp, Chat runtime, ONNX, background removal, install, main, default",
     "Image runtime": "device, CPU, preview, dynamic VRAM, precision, attention, offload, deterministic, smart memory, pinned memory, mmap, allocator, compiler, CUDA graphs",
-    "Local Chat": "llama.cpp, XLlamacpp, backend, sampling, context, GPU layers, history, rewrite reasoning, documents, RAG, embeddings, diagnostics, file presence, sampling recommendations",
+    "Local Chat": "llama.cpp, sampling, context, GPU layers, history, rewrite reasoning, documents, RAG, embeddings, diagnostics, file presence, sampling recommendations",
     "Generation defaults": "presets, hints, metadata, framing, VAE tiles, MOSS, HiDream, LCM, sampling shifts",
     "Connections": "API, MCP, listen, authentication, guest",
-    "Maintenance": "cache, exact cache, hash, model hashes, library index, sizes, cache storage, clear, reinstall, Python packages, Torch",
+    "Maintenance": "cache, exact cache, hash, model hashes, library index, sizes, cache storage, clear, reinstall, Python packages",
 }
 SETTINGS_INDEX["Local Chat"] += ", memory, offload, MoE cache CPU share"
 
@@ -414,6 +414,7 @@ def create_settings(*, models_in_settings=True):
                     add_setting("archive_folders", archive_folders)
             from comfy import memory_management, model_management
             from comfy.cli_args import args as comfy_args
+            from ruinedfooocus.app.arguments import args as launch_args
             from ruinedfooocus.backends.comfy.image_compute import CHOICES
             from ruinedfooocus.backends.comfy.runtime_info import runtime_details
             from ruinedfooocus.ui.ui_hardware import create_hardware_tab
@@ -421,7 +422,11 @@ def create_settings(*, models_in_settings=True):
             device = model_management.get_torch_device()
             device_name = model_management.get_torch_device_name(device)
             with gr.Tab(t("Hardware & backends")):
-                create_hardware_tab(device_name=device_name)
+                _, llm_runtime = create_hardware_tab(
+                    device_name=device_name,
+                    launch_args=launch_args,
+                    profile_base=profile_base,
+                )
             with gr.Tab(t("Image runtime")):
                 from ruinedfooocus.ui.settings_presentation import create_image_runtime_summary
 
@@ -723,7 +728,6 @@ def create_settings(*, models_in_settings=True):
                         )
                     )
             with gr.Tab(t("Local Chat")) as chat_settings:
-                from ruinedfooocus.app.arguments import args as launch_args
                 from ruinedfooocus.app.state import get_ctrl
                 from ruinedfooocus.features.chat.ui_model_diagnostics import (
                     create_model_diagnostics,
@@ -737,37 +741,6 @@ def create_settings(*, models_in_settings=True):
                     get_ctrl("chat_sampling_status"),
                 )
                 with gr.Accordion(t("Local chat and prompt runtime"), open=False):
-                    from ruinedfooocus.backends.llama.llama_runtime_info import runtime_choices
-
-                    llm_runtime = gr.Dropdown(
-                        label=t("Chat runtime"),
-                        choices=runtime_choices(),
-                        value=settings.default_settings.get("llm_runtime", "llama.cpp"),
-                    )
-                    add_setting("llm_runtime", llm_runtime)
-                    runtime_signature = gr.State(str(runtime_choices()))
-
-                    def refresh_runtime_label(previous):
-                        choices = runtime_choices()
-                        signature = str(choices)
-                        if signature == previous:
-                            return gr.skip(), gr.skip()
-                        return gr.update(choices=choices), signature
-
-                    gr.Timer(2).tick(
-                        refresh_runtime_label,
-                        inputs=runtime_signature,
-                        outputs=[llm_runtime, runtime_signature],
-                        queue=False,
-                        api_visibility="undocumented",
-                        show_progress="hidden",
-                    )
-                    with gr.Accordion(t("Installed chat runtimes"), open=False):
-                        from ruinedfooocus.features.chat.ui_runtime_info import (
-                            create_runtime_info_controls,
-                        )
-
-                        create_runtime_info_controls(launch_args, profile_base)
                     curr_localfile = settings.default_settings.get("llama_localfile", None)
                     llama_localfile = gr.Textbox(
                         label=t("Custom GGUF path"),
@@ -964,10 +937,17 @@ def create_settings(*, models_in_settings=True):
 
                 create_storage_reset(path_manager, settings)
                 with gr.Accordion(t("Reinstall"), open=False):
-                    gr.Markdown(t("Reinstallation runs on the next online restart."))
-                    with gr.Row(elem_classes=["rf-actions"]):
-                        reinstall_all_btn = gr.Button(t("Reinstall Python packages"), size="sm")
-                        reinstall_torch_btn = gr.Button(t("Reinstall Torch"), size="sm")
+                    gr.Markdown(
+                        t(
+                            "Reinstallation runs on the next online restart. To switch or reinstall PyTorch, use Settings > Hardware & backends."
+                        )
+                    )
+                    with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
+                        reinstall_all_btn = gr.Button(
+                            t("Reinstall Python packages"),
+                            size="sm",
+                            elem_classes=["rf-inline-action"],
+                        )
 
         profile_status = gr.Markdown("", elem_classes=["rf-settings-profile"])
         profile_area = gr.Column(min_width=0, elem_classes=["rf-settings-profile"])
@@ -1064,18 +1044,8 @@ def create_settings(*, models_in_settings=True):
                 "Application Python packages and Torch will be reinstalled on the next online restart, using this Python environment. Overrides freezetorch."
             )
 
-        def trigger_reinstall_torch():
-            data_path("reinstalltorch").touch()
-            gr.Info(
-                "Torch will be reinstalled for the selected GPU runtime on the next online restart. Overrides freezetorch."
-            )
-
         reinstall_all_btn.click(
             fn=trigger_reinstall_all,
-            api_visibility="undocumented",
-        )
-        reinstall_torch_btn.click(
-            fn=trigger_reinstall_torch,
             api_visibility="undocumented",
         )
 

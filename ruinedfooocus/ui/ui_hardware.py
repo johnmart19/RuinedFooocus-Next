@@ -6,6 +6,7 @@ option; a changed image backend only takes effect after a restart.
 """
 
 import platform
+from pathlib import Path
 
 import gradio as gr
 
@@ -57,6 +58,20 @@ SUPPORT_TEXTS = (
     t("Details"),
     t("Installed"),
     t("Available"),
+    t("Not installed"),
+    t("Ready"),
+    t("Main"),
+    t("Set as main"),
+    t("Install"),
+    t("Install on restart"),
+    t("Image generation"),
+    t("Chat & prompt LLM"),
+    t("Background removal"),
+    t("Uses your detected GPU automatically"),
+    t("Optional Vulkan GGUF image engine"),
+    t("No supported backends detected."),
+    t("Use CPU for everything is enabled — individual GPU selections are paused."),
+    t("Active default: {summary}"),
     t("Not available"),
     t("Unknown"),
     t("Any installed build runs on CPU"),
@@ -144,6 +159,381 @@ def support_table(locale=None, refresh=False):
     return {
         "headers": [localize(header, locale) for header in SUPPORT_HEADERS],
         "data": rows,
+    }
+
+
+def _clean_note(note, locale=None):
+    parts = [
+        localize(part, locale)
+        for part in (note or "").split("; ")
+        if part and part != "Exact runtime/device eligibility has not been verified"
+    ]
+    return "; ".join(parts)
+
+
+def support_matrix_payload(
+    locale=None,
+    refresh=False,
+    include_unavailable=False,
+    cpu_forced=False,
+    image_choice="auto",
+    image_engine_choice="auto",
+    llm_runtime_choice="llama.cpp",
+    llama_choice="Auto",
+    xllama_choice="Auto",
+    bg_choice="Auto",
+    bg_provider_choice="Auto",
+    winml_provider_choice="Auto",
+):
+    """Build the interactive 'Supported on this PC' payload without probing devices or installing."""
+    from ruinedfooocus.packaging import support_matrix as matrix
+    from ruinedfooocus.ui import optional_image_runtime as optional
+
+    gpus = inventory.detect_gpus(refresh=refresh)
+    system = platform.system()
+    machine = platform.machine()
+    os_name = "WSL" if system == "Linux" and inventory.is_wsl() else system
+    installed_image = inventory.installed_runtimes(system)
+    image_choices = set(inventory.image_backend_choices(gpus, system, installed_image, machine))
+    image_kind = installed_image.get("kind")
+
+    def _status_pair(raw_status):
+        if raw_status in ("Installed", "Installed (unverified)"):
+            return "installed", localize("Installed", locale)
+        if raw_status in ("Available", "Usable (workload unverified)", "Qualified", "Installable"):
+            return "available", localize("Not installed", locale)
+        return "unavailable", localize("Not available", locale)
+
+    hidden_unsupported = 0
+
+    # 1. Image generation (ComfyUI / PyTorch + optional Vulkan engine)
+    image_rows = []
+    image_auto_main = image_engine_choice in ("auto", "comfy") and image_choice == "auto"
+    image_rows.append(
+        {
+            "id": "image:auto",
+            "label": localize("Automatic (recommended)", locale),
+            "runtimeLabel": "ComfyUI / PyTorch",
+            "detail": localize("Uses your detected GPU automatically", locale),
+            "status": "installed",
+            "statusLabel": localize("Ready", locale),
+            "isMain": image_auto_main,
+            "canSetMain": True,
+            "canInstall": False,
+            "requiresGpu": False,
+        }
+    )
+    for value, label in matrix.IMAGE_LABELS.items():
+        if value == "directml" and not installed_image.get("directml") and not include_unavailable:
+            continue
+        supported = value in image_choices
+        if not supported:
+            if not include_unavailable:
+                hidden_unsupported += 1
+                continue
+            note = (
+                "Legacy install only"
+                if value == "directml" and os_name in ("Windows", "WSL")
+                else matrix._unavailable_note(
+                    gpus,
+                    matrix.IMAGE_VENDORS[value],
+                    os_name,
+                    ("Windows", "WSL") if value == "directml" else ("Windows", "Linux", "WSL"),
+                )
+            )
+            image_rows.append(
+                {
+                    "id": f"image:{value}",
+                    "label": localize(label, locale),
+                    "runtimeLabel": "ComfyUI / PyTorch",
+                    "detail": localize(note, locale),
+                    "status": "unavailable",
+                    "statusLabel": localize("Not available", locale),
+                    "isMain": False,
+                    "canSetMain": False,
+                    "canInstall": False,
+                    "requiresGpu": True,
+                }
+            )
+            continue
+        is_installed = image_kind == value or (value == "directml" and installed_image.get("directml"))
+        if value == "cpu":
+            status_code = "installed"
+            status_label = localize("Ready", locale)
+            detail = (
+                (installed_image.get("torch") or "")
+                if is_installed
+                else localize("Any installed build runs on CPU", locale)
+            )
+            can_install = False
+        else:
+            status_code = "installed" if is_installed else "available"
+            status_label = (
+                localize("Installed", locale) if is_installed else localize("Not installed", locale)
+            )
+            detail = (installed_image.get("torch") or "") if is_installed else ""
+            can_install = not is_installed and value != "directml"
+        image_rows.append(
+            {
+                "id": f"image:{value}",
+                "label": localize(label, locale),
+                "runtimeLabel": "ComfyUI / PyTorch",
+                "detail": detail,
+                "status": status_code,
+                "statusLabel": status_label,
+                "isMain": image_engine_choice in ("auto", "comfy") and image_choice == value,
+                "canSetMain": True,
+                "canInstall": can_install,
+                "installLabel": localize("Install on restart", locale),
+                "requiresGpu": value != "cpu",
+            }
+        )
+
+    if gpus or include_unavailable:
+        try:
+            opt_state = optional.activation.status()
+        except Exception:
+            opt_state = {}
+        opt_ready = bool(opt_state.get("available") or opt_state.get("prepared"))
+        if gpus:
+            image_rows.append(
+                {
+                    "id": "image:sdcpp-vulkan",
+                    "label": "Vulkan (GGUF)",
+                    "runtimeLabel": "stable-diffusion.cpp",
+                    "detail": localize("Optional Vulkan GGUF image engine", locale),
+                    "status": "installed" if opt_ready else "available",
+                    "statusLabel": (
+                        localize("Installed", locale)
+                        if opt_ready
+                        else localize("Not installed", locale)
+                    ),
+                    "isMain": image_engine_choice == "sdcpp-vulkan",
+                    "canSetMain": True,
+                    "canInstall": not opt_ready,
+                    "installLabel": localize("Install", locale),
+                    "requiresGpu": True,
+                }
+            )
+        elif include_unavailable:
+            image_rows.append(
+                {
+                    "id": "image:sdcpp-vulkan",
+                    "label": "Vulkan (GGUF)",
+                    "runtimeLabel": "stable-diffusion.cpp",
+                    "detail": localize("Needs a GPU", locale),
+                    "status": "unavailable",
+                    "statusLabel": localize("Not available", locale),
+                    "isMain": False,
+                    "canSetMain": False,
+                    "canInstall": False,
+                    "requiresGpu": True,
+                }
+            )
+
+    if cpu_forced:
+        image_summary_name = localize("CPU", locale)
+    elif image_engine_choice == "sdcpp-vulkan":
+        image_summary_name = "stable-diffusion.cpp · Vulkan (GGUF)"
+    else:
+        image_summary_name = localize(
+            matrix.IMAGE_LABELS.get(image_choice, "Automatic (recommended)"), locale
+        )
+
+    # 2. Chat & prompt LLM (llama.cpp + xllamacpp unified!)
+    chat_rows = []
+    chat_rows.append(
+        {
+            "id": "llama:Auto",
+            "label": localize("Automatic (recommended)", locale),
+            "runtimeLabel": "llama.cpp",
+            "detail": localize("Uses your detected GPU automatically", locale),
+            "status": "installed",
+            "statusLabel": localize("Ready", locale),
+            "isMain": llm_runtime_choice == "llama.cpp" and llama_choice == "Auto",
+            "canSetMain": True,
+            "canInstall": False,
+            "requiresGpu": False,
+        }
+    )
+    for row in matrix.llama_rows(gpus, system, os_name, machine):
+        status_code, status_label = _status_pair(row["status"])
+        if status_code == "unavailable":
+            if not include_unavailable:
+                hidden_unsupported += 1
+                continue
+        option = row["option"]
+        chat_rows.append(
+            {
+                "id": f"llama:{option}",
+                "label": localize(option, locale) if option == "CPU" else option,
+                "runtimeLabel": "llama.cpp",
+                "detail": _clean_note(row.get("note", ""), locale),
+                "status": status_code,
+                "statusLabel": status_label,
+                "isMain": llm_runtime_choice == "llama.cpp" and llama_choice == option,
+                "canSetMain": status_code != "unavailable",
+                "canInstall": status_code == "available",
+                "installLabel": localize("Install", locale),
+                "requiresGpu": option != "CPU",
+            }
+        )
+    for row in matrix.xllama_rows(gpus, system, os_name, machine):
+        status_code, status_label = _status_pair(row["status"])
+        if status_code == "unavailable":
+            if not include_unavailable:
+                hidden_unsupported += 1
+                continue
+        option = row["option"]
+        chat_rows.append(
+            {
+                "id": f"xllama:{option}",
+                "label": localize(option, locale) if option == "CPU" else option,
+                "runtimeLabel": "xllamacpp",
+                "detail": _clean_note(row.get("note", ""), locale),
+                "status": status_code,
+                "statusLabel": status_label,
+                "isMain": llm_runtime_choice == "xllamacpp" and xllama_choice == option,
+                "canSetMain": status_code != "unavailable",
+                "canInstall": status_code == "available",
+                "installLabel": localize("Install", locale),
+                "requiresGpu": option != "CPU",
+            }
+        )
+
+    if cpu_forced:
+        chat_summary_name = f"{llm_runtime_choice} · {localize('CPU', locale)}"
+    elif llm_runtime_choice == "xllamacpp":
+        chat_choice_label = (
+            localize("Automatic (recommended)", locale) if xllama_choice == "Auto" else xllama_choice
+        )
+        chat_summary_name = f"xllamacpp · {chat_choice_label}"
+    else:
+        chat_choice_label = (
+            localize("Automatic (recommended)", locale) if llama_choice == "Auto" else llama_choice
+        )
+        chat_summary_name = f"llama.cpp · {chat_choice_label}"
+
+    # 3. Background removal (ONNX Runtime + Windows ML)
+    bg_rows = []
+    bg_rows.append(
+        {
+            "id": "onnx:Auto",
+            "label": localize("Automatic (recommended)", locale),
+            "runtimeLabel": "ONNX Runtime",
+            "detail": localize("Uses your detected GPU automatically", locale),
+            "status": "installed",
+            "statusLabel": localize("Ready", locale),
+            "isMain": bg_choice == "Auto",
+            "canSetMain": True,
+            "canInstall": False,
+            "requiresGpu": False,
+        }
+    )
+    onnx_label_to_value = {label: value for value, label in matrix.ONNX_LABELS.items()}
+    for row in matrix.onnx_rows(gpus, system, os_name, machine):
+        value = onnx_label_to_value.get(row["option"], row["option"])
+        status_code, status_label = _status_pair(row["status"])
+        if value == "Windows GPU" and status_code != "installed" and not include_unavailable:
+            continue
+        if status_code == "unavailable":
+            if not include_unavailable:
+                hidden_unsupported += 1
+                continue
+        is_main = (
+            bg_choice == value
+            and (value != "Windows GPU" or bg_provider_choice == "DirectML")
+        )
+        bg_rows.append(
+            {
+                "id": f"onnx:{value}",
+                "label": localize(row["option"], locale),
+                "runtimeLabel": "ONNX Runtime",
+                "detail": _clean_note(row.get("note", ""), locale),
+                "status": status_code,
+                "statusLabel": status_label,
+                "isMain": is_main,
+                "canSetMain": status_code != "unavailable",
+                "canInstall": status_code == "available" and value != "CPU",
+                "installLabel": localize("Install", locale),
+                "requiresGpu": value != "CPU",
+            }
+        )
+    if os_name == "Windows" or include_unavailable:
+        for row in matrix.winml_rows(gpus, os_name, machine):
+            status_code, status_label = _status_pair(row["status"])
+            if status_code == "unavailable":
+                if not include_unavailable:
+                    hidden_unsupported += 1
+                    continue
+            provider_name = row["option"] + "ExecutionProvider"
+            is_main = (
+                bg_choice == "Windows GPU"
+                and bg_provider_choice in ("Auto", "Windows ML")
+                and winml_provider_choice == provider_name
+            )
+            bg_rows.append(
+                {
+                    "id": f"winml:{provider_name}",
+                    "label": row["option"],
+                    "runtimeLabel": "Windows ML",
+                    "detail": _clean_note(row.get("note", ""), locale),
+                    "status": status_code,
+                    "statusLabel": status_label,
+                    "isMain": is_main,
+                    "canSetMain": status_code != "unavailable",
+                    "canInstall": status_code == "available",
+                    "installLabel": localize("Install", locale),
+                    "requiresGpu": True,
+                }
+            )
+
+    if cpu_forced:
+        bg_summary_name = localize("CPU", locale)
+    elif bg_choice == "Windows GPU" and bg_provider_choice in ("Auto", "Windows ML"):
+        if winml_provider_choice and winml_provider_choice != "Auto":
+            bg_summary_name = f"Windows ML · {winml_provider_choice.replace('ExecutionProvider', '')}"
+        else:
+            bg_summary_name = f"Windows ML · {localize('Automatic (recommended)', locale)}"
+    elif bg_choice == "Auto":
+        bg_summary_name = localize("Automatic (recommended)", locale)
+    else:
+        bg_summary_name = localize(matrix.ONNX_LABELS.get(bg_choice, bg_choice), locale)
+
+    return {
+        "groups": [
+            {
+                "id": "image",
+                "title": localize("Image generation", locale),
+                "summary": localize("Active default: {summary}", locale, summary=image_summary_name),
+                "rows": image_rows,
+            },
+            {
+                "id": "chat",
+                "title": localize("Chat & prompt LLM", locale),
+                "summary": localize("Active default: {summary}", locale, summary=chat_summary_name),
+                "rows": chat_rows,
+            },
+            {
+                "id": "background",
+                "title": localize("Background removal", locale),
+                "summary": localize("Active default: {summary}", locale, summary=bg_summary_name),
+                "rows": bg_rows,
+            },
+        ],
+        "labels": {
+            "main": localize("Main", locale),
+            "setMain": localize("Set as main", locale),
+            "install": localize("Install", locale),
+            "installOnRestart": localize("Install on restart", locale),
+            "empty": localize("No supported backends detected.", locale),
+            "cpuForced": localize(
+                "Use CPU for everything is enabled — individual GPU selections are paused.",
+                locale,
+            ),
+        },
+        "cpuForced": bool(cpu_forced),
+        "hiddenUnsupportedCount": hidden_unsupported,
     }
 
 
@@ -455,43 +845,31 @@ def background_status_text(locale=None, cpu_forced=False, choice=None):
     return "\n\n".join(lines) or localize("Background removal has not run in this session.", locale)
 
 
-def create_hardware_tab(device_name=""):
+def create_hardware_tab(device_name="", launch_args=None, profile_base=None):
     from ruinedfooocus.backends.llama import llama_installer
     from ruinedfooocus.backends.llama.llama_build import build_cuda_runtime
+    from ruinedfooocus.backends.llama.llama_runtime_info import runtime_choices
 
     saved = settings.default_settings
     system = platform.system()
     gpus = inventory.detect_gpus()
     forced = effective_backends(saved)["forced_cpu"]
     installed = inventory.installed_runtimes(system)
+    saved_image = saved_image_backend(saved)
+    saved_engine = saved.get("image_engine", "auto")
+    saved_llm_runtime = saved.get("llm_runtime", "llama.cpp")
+    saved_llama = llama_installer.canonical_backend(saved.get("llama_backend", "Auto"))
+    saved_xllama = saved.get("xllamacpp_backend", "Auto")
+    saved_background = saved.get("rembg_backend", "Auto")
+    saved_bg_provider = saved.get("rembg_provider", "Auto")
+    saved_winml_provider = saved.get("rembg_winml_provider", "Auto")
 
-    gr.Markdown(
-        t(
-            "Choose which hardware each component uses. Only options that suit the detected hardware and operating system are listed. Saving never installs anything; use the install buttons."
-        )
-    )
     hardware = gr.Markdown(hardware_text(), elem_classes=["rf-status-card"])
     localized_output(hardware_text, [], [hardware])
-    with gr.Accordion(t("Supported on this PC"), open=False, elem_id="hardware-support"):
-        gr.Markdown(
-            t(
-                "What each component can use with the detected GPUs and operating system, and what is already installed."
-            )
+    with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
+        refresh_hardware = gr.Button(
+            t("Refresh hardware"), size="sm", min_width=120, elem_classes=["rf-inline-action"]
         )
-        support = gr.Dataframe(
-            headers=list(SUPPORT_HEADERS),
-            datatype=["str"] * 4,
-            column_widths=["22%", "24%", "18%", "36%"],
-            value=support_table(),
-            interactive=False,
-            wrap=True,
-            show_search="search",
-            elem_classes=["rf-technical-table"],
-        )
-        localized_output(support_table, [], [support])
-    refresh_hardware = gr.Button(
-        t("Refresh hardware"), size="sm", min_width=120, elem_classes=["rf-inline-action"]
-    )
     cpu_everywhere = gr.Checkbox(
         label=t("Use CPU for everything"),
         value=saved.get("cpu_everywhere", False),
@@ -501,10 +879,35 @@ def create_hardware_tab(device_name=""):
     )
     add_setting("cpu_everywhere", cpu_everywhere)
 
-    # Image generation (PyTorch / ComfyUI)
-    with gr.Accordion(t("Image generation (ComfyUI / PyTorch)"), open=True):
+    assets = Path(__file__).resolve().parent / "assets"
+    with gr.Accordion(t("Supported on this PC"), open=True, elem_id="hardware-support"):
+        support = gr.HTML(
+            value=support_matrix_payload(
+                include_unavailable=False,
+                cpu_forced=forced,
+                image_choice=saved_image,
+                image_engine_choice=saved_engine,
+                llm_runtime_choice=saved_llm_runtime,
+                llama_choice=saved_llama,
+                xllama_choice=saved_xllama,
+                bg_choice=saved_background,
+                bg_provider_choice=saved_bg_provider,
+                winml_provider_choice=saved_winml_provider,
+            ),
+            html_template=(assets / "hardware_matrix.html").read_text(encoding="utf-8"),
+            css_template=(assets / "hardware_matrix.css").read_text(encoding="utf-8"),
+            js_on_load=(assets / "hardware_matrix.js").read_text(encoding="utf-8"),
+            elem_id="hardware-support-matrix",
+        )
+        matrix_status = gr.Markdown("", visible=False, elem_classes=["rf-status-card"])
+        show_unsupported = gr.Checkbox(
+            label=t("Show unsupported options for other GPUs/OS"),
+            value=False,
+        )
+
+    # Image generation options (PyTorch / ComfyUI + optional Vulkan engine)
+    with gr.Accordion(t("Image generation (ComfyUI / PyTorch)"), open=False):
         image_values = inventory.image_backend_choices(gpus, system, installed)
-        saved_image = saved_image_backend(saved)
         image_backend = gr.Dropdown(
             label=t("Image backend"),
             choices=labelled(image_values, IMAGE_LABELS, saved_image),
@@ -591,21 +994,6 @@ def create_hardware_tab(device_name=""):
             show_progress="hidden",
             api_visibility="undocumented",
         )
-        switch_image.click(
-            request_switch,
-            inputs=[image_backend, cpu_everywhere],
-            outputs=image_status,
-            trigger_mode="once",
-            show_progress="minimal",
-            api_visibility="private",
-            concurrency_id="backend-install",
-            concurrency_limit=1,
-        ).then(
-            refresh_support_table,
-            outputs=support,
-            show_progress="hidden",
-            api_visibility="undocumented",
-        )
         cancel_switch.click(
             cancel_pending,
             inputs=[image_backend, cpu_everywhere],
@@ -613,13 +1001,34 @@ def create_hardware_tab(device_name=""):
             show_progress="minimal",
             api_visibility="private",
         )
+        optional_controls = create_optional_image_controls(saved, cpu_everywhere, image_backend)
 
-    create_optional_image_controls(saved, cpu_everywhere, image_backend)
+    # Chat and prompt LLM (unified: main runtime + llama.cpp + xllamacpp)
+    with gr.Accordion(t("Chat and prompt LLM (llama.cpp)"), open=False):
+        llm_runtime = gr.Dropdown(
+            label=t("Chat runtime"),
+            choices=runtime_choices(),
+            value=saved_llm_runtime,
+        )
+        add_setting("llm_runtime", llm_runtime)
+        runtime_signature = gr.State(str(runtime_choices()))
 
-    # Chat and prompt LLM (llama.cpp)
-    with gr.Accordion(t("Chat and prompt LLM (llama.cpp)"), open=True):
+        def refresh_runtime_label(previous):
+            choices = runtime_choices()
+            signature = str(choices)
+            if signature == previous:
+                return gr.skip(), gr.skip()
+            return gr.update(choices=choices), signature
+
+        gr.Timer(2).tick(
+            refresh_runtime_label,
+            inputs=runtime_signature,
+            outputs=[llm_runtime, runtime_signature],
+            queue=False,
+            api_visibility="undocumented",
+            show_progress="hidden",
+        )
         llama_values = inventory.llm_backend_choices(gpus)
-        saved_llama = llama_installer.canonical_backend(saved.get("llama_backend", "Auto"))
         llama_backend = gr.Dropdown(
             label=t("llama.cpp backend"),
             choices=labelled(llama_values, LLAMA_LABELS, saved_llama),
@@ -638,7 +1047,13 @@ def create_hardware_tab(device_name=""):
             [llama_backend, cpu_everywhere],
             [llama_status],
         )
-        install_llama = gr.Button(t("Install now"), variant="primary", size="sm", min_width=160)
+        install_llama = gr.Button(
+            t("Install now"),
+            variant="primary",
+            size="sm",
+            min_width=160,
+            elem_classes=["rf-inline-action"],
+        )
 
         def install_selected_llama(choice, request: gr.Request, progress=gr.Progress()):
             locale = locale_of(request)
@@ -700,21 +1115,6 @@ def create_hardware_tab(device_name=""):
             show_progress="hidden",
             api_visibility="undocumented",
         )
-        install_llama.click(
-            install_selected_llama,
-            inputs=llama_backend,
-            outputs=[install_llama, llama_status],
-            trigger_mode="once",
-            show_progress="minimal",
-            api_visibility="private",
-            concurrency_id="backend-install",
-            concurrency_limit=1,
-        ).then(
-            refresh_support_table,
-            outputs=support,
-            show_progress="hidden",
-            api_visibility="undocumented",
-        )
         if system in ("Windows", "Linux"):
             create_llama_update_controls(llama_backend, cpu_everywhere, saved_llama)
         # Passive OS/vendor eligibility only. The explicit build action validates
@@ -770,127 +1170,107 @@ def create_hardware_tab(device_name=""):
                         ),
                     )
 
-            build_runtime.click(
-                build_native_runtime,
-                outputs=[build_runtime, build_status, llama_backend],
-                trigger_mode="once",
-                concurrency_id="native-runtime-build",
-                concurrency_limit=1,
-                api_visibility="private",
-                show_progress="hidden",
-            ).then(
-                refresh_support_table,
-                outputs=support,
+        # Alternative chat runtime (xllamacpp wheels) inside the unified Chat section
+        with gr.Accordion(t("Chat runtime (xllamacpp)"), open=False):
+            xllama_values = inventory.xllamacpp_backend_choices(gpus, system)
+            xllama_backend = gr.Dropdown(
+                label=t("xllamacpp backend"),
+                choices=labelled(xllama_values, XLLAMA_LABELS, saved_xllama),
+                value=saved_xllama,
+                interactive=not forced,
+                info=t(
+                    "Used when Chat runtime is set to xllamacpp. Automatic follows the installed PyTorch build."
+                ),
+            )
+            add_setting("xllamacpp_backend", xllama_backend)
+            xllama_status = gr.Markdown(
+                xllama_status_text(choice=saved_xllama, cpu_forced=forced),
+                elem_classes=["rf-status-card"],
+            )
+            localized_output(
+                lambda locale, choice, cpu: xllama_status_text(locale, choice, cpu),
+                [xllama_backend, cpu_everywhere],
+                [xllama_status],
+            )
+            install_xllama = gr.Button(
+                t("Install xllamacpp now"),
+                variant="primary",
+                size="sm",
+                min_width=180,
+                elem_classes=["rf-inline-action"],
+            )
+
+            def install_selected_xllama(choice, cpu, request: gr.Request, progress=gr.Progress()):
+                import os
+
+                from ruinedfooocus.packaging.gpu_installer import (
+                    ensure_xllamacpp,
+                    installed_torch_constraints,
+                )
+
+                locale = locale_of(request)
+                choice = "CPU" if cpu else choice
+                if choice not in xllama_values:
+                    raise gr.Error(
+                        localize("This backend is not available on the detected hardware.", locale)
+                    )
+                if skip_dependency_install():
+                    yield (
+                        gr.update(interactive=True),
+                        localize("Installation is disabled by offline/skip-install policy.", locale),
+                    )
+                    return
+                yield (
+                    gr.update(interactive=False),
+                    localize("Installing xllamacpp {backend}…", locale, backend=choice),
+                )
+                progress(None, desc=choice)
+                try:
+                    ensure_xllamacpp(
+                        os.environ.get("TORCH_PLATFORM") or ("cpu" if cpu else "vulkan"),
+                        system,
+                        installed_torch=installed_torch_constraints(),
+                        choice=choice,
+                    )
+                except Exception as error:
+                    yield (
+                        gr.update(interactive=True),
+                        localize("Installation failed: {error}", locale, error=str(error)),
+                    )
+                    return
+                gr.Info(localize("Installed xllamacpp {backend}.", locale, backend=choice))
+                yield (
+                    gr.update(interactive=True),
+                    xllama_status_text(locale, choice, cpu)
+                    + "\n\n"
+                    + localize("Restart RuinedFooocus if xllamacpp was already loaded.", locale),
+                )
+
+            def update_xllama_status(choice, cpu, request: gr.Request):
+                return xllama_status_text(locale_of(request), choice, cpu)
+
+            xllama_backend.change(
+                update_xllama_status,
+                inputs=[xllama_backend, cpu_everywhere],
+                outputs=xllama_status,
                 show_progress="hidden",
                 api_visibility="undocumented",
             )
 
-    # Alternative chat runtime (xllamacpp wheels)
-    with gr.Accordion(t("Chat runtime (xllamacpp)"), open=False):
-        xllama_values = inventory.xllamacpp_backend_choices(gpus, system)
-        saved_xllama = saved.get("xllamacpp_backend", "Auto")
-        xllama_backend = gr.Dropdown(
-            label=t("xllamacpp backend"),
-            choices=labelled(xllama_values, XLLAMA_LABELS, saved_xllama),
-            value=saved_xllama,
-            interactive=not forced,
-            info=t(
-                "Used when Settings > Local Chat > Chat runtime is xllamacpp. Automatic follows the installed PyTorch build."
-            ),
-        )
-        add_setting("xllamacpp_backend", xllama_backend)
-        xllama_status = gr.Markdown(
-            xllama_status_text(choice=saved_xllama, cpu_forced=forced),
-            elem_classes=["rf-status-card"],
-        )
-        localized_output(
-            lambda locale, choice, cpu: xllama_status_text(locale, choice, cpu),
-            [xllama_backend, cpu_everywhere],
-            [xllama_status],
-        )
-        install_xllama = gr.Button(
-            t("Install xllamacpp now"), variant="primary", size="sm", min_width=180
-        )
-
-        def install_selected_xllama(choice, cpu, request: gr.Request, progress=gr.Progress()):
-            import os
-
-            from ruinedfooocus.packaging.gpu_installer import (
-                ensure_xllamacpp,
-                installed_torch_constraints,
-            )
-
-            locale = locale_of(request)
-            choice = "CPU" if cpu else choice
-            if choice not in xllama_values:
-                raise gr.Error(
-                    localize("This backend is not available on the detected hardware.", locale)
+        if launch_args is not None and profile_base is not None:
+            with gr.Accordion(t("Installed chat runtimes"), open=False):
+                from ruinedfooocus.features.chat.ui_runtime_info import (
+                    create_runtime_info_controls,
                 )
-            if skip_dependency_install():
-                yield (
-                    gr.update(interactive=True),
-                    localize("Installation is disabled by offline/skip-install policy.", locale),
-                )
-                return
-            yield (
-                gr.update(interactive=False),
-                localize("Installing xllamacpp {backend}…", locale, backend=choice),
-            )
-            progress(None, desc=choice)
-            try:
-                ensure_xllamacpp(
-                    os.environ.get("TORCH_PLATFORM") or ("cpu" if cpu else "vulkan"),
-                    system,
-                    installed_torch=installed_torch_constraints(),
-                    choice=choice,
-                )
-            except Exception as error:
-                yield (
-                    gr.update(interactive=True),
-                    localize("Installation failed: {error}", locale, error=str(error)),
-                )
-                return
-            gr.Info(localize("Installed xllamacpp {backend}.", locale, backend=choice))
-            yield (
-                gr.update(interactive=True),
-                xllama_status_text(locale, choice, cpu)
-                + "\n\n"
-                + localize("Restart RuinedFooocus if xllamacpp was already loaded.", locale),
-            )
 
-        def update_xllama_status(choice, cpu, request: gr.Request):
-            return xllama_status_text(locale_of(request), choice, cpu)
-
-        xllama_backend.change(
-            update_xllama_status,
-            inputs=[xllama_backend, cpu_everywhere],
-            outputs=xllama_status,
-            show_progress="hidden",
-            api_visibility="undocumented",
-        )
-        install_xllama.click(
-            install_selected_xllama,
-            inputs=[xllama_backend, cpu_everywhere],
-            outputs=[install_xllama, xllama_status],
-            trigger_mode="once",
-            show_progress="minimal",
-            api_visibility="private",
-            concurrency_id="backend-install",
-            concurrency_limit=1,
-        ).then(
-            refresh_support_table,
-            outputs=support,
-            show_progress="hidden",
-            api_visibility="undocumented",
-        )
+                create_runtime_info_controls(launch_args, profile_base)
 
     # Background removal (ONNX Runtime / rembg)
-    with gr.Accordion(t("Background removal (ONNX Runtime)"), open=True):
+    with gr.Accordion(t("Background removal (ONNX Runtime)"), open=False):
         from ruinedfooocus.ui.optional_image_runtime import RuntimeActionSession
 
         background_actions = gr.State(RuntimeActionSession())
         background_values = inventory.onnx_backend_choices(gpus, system)
-        saved_background = saved.get("rembg_backend", "Auto")
         background_backend = gr.Dropdown(
             label=t("Background-removal device"),
             choices=labelled(background_values, BACKGROUND_LABELS, saved_background),
@@ -922,24 +1302,76 @@ def create_hardware_tab(device_name=""):
             show_progress="hidden",
             api_visibility="undocumented",
         )
-        with gr.Row():
-            install_background = gr.Button(
-                t("Install / verify selected ONNX runtime"),
-                variant="primary",
-                size="sm",
-                min_width=240,
+        install_background = gr.Button(
+            t("Install / verify selected ONNX runtime"),
+            variant="primary",
+            size="sm",
+            min_width=240,
+            elem_classes=["rf-inline-action"],
+        )
+
+        matrix_state_inputs = [
+            show_unsupported,
+            cpu_everywhere,
+            image_backend,
+            optional_controls["engine"],
+            llm_runtime,
+            llama_backend,
+            xllama_backend,
+            background_backend,
+        ]
+
+        def render_matrix_for_state(
+            locale,
+            include_unsupported,
+            cpu,
+            img_choice,
+            eng_choice,
+            chat_rt,
+            llama_choice,
+            xllama_choice,
+            bg_choice,
+            bg_prov="Auto",
+            winml_prov="Auto",
+            *,
+            refresh=False,
+        ):
+            return support_matrix_payload(
+                locale=locale,
+                refresh=refresh,
+                include_unavailable=bool(include_unsupported),
+                cpu_forced=bool(cpu),
+                image_choice=img_choice or "auto",
+                image_engine_choice=eng_choice or "auto",
+                llm_runtime_choice=chat_rt or "llama.cpp",
+                llama_choice=llama_choice or "Auto",
+                xllama_choice=xllama_choice or "Auto",
+                bg_choice=bg_choice or "Auto",
+                bg_provider_choice=bg_prov or "Auto",
+                winml_provider_choice=winml_prov or "Auto",
             )
-            refresh_background = gr.Button(
-                t("Refresh background runtime status"), size="sm", min_width=200
-            )
+
+        def refresh_matrix(*values, request: gr.Request = None):
+            return render_matrix_for_state(locale_of(request), *values)
 
         winml_controls = (
             create_windows_ml_controls(
-                saved, gpus, support, cpu_everywhere, background_backend, background_actions
+                saved,
+                gpus,
+                support,
+                cpu_everywhere,
+                background_backend,
+                background_actions,
+                refresh_support=refresh_matrix,
+                refresh_inputs=matrix_state_inputs,
             )
             if system == "Windows"
             else None
         )
+        if winml_controls is not None:
+            matrix_state_inputs.extend(
+                [winml_controls["background_provider"], winml_controls["provider"]]
+            )
 
         def install_selected_background(
             choice,
@@ -1015,32 +1447,469 @@ def create_hardware_tab(device_name=""):
             concurrency_id="onnx-runtime-install",
             concurrency_limit=1,
         ).then(
-            refresh_support_table,
+            refresh_matrix,
+            inputs=matrix_state_inputs,
             outputs=support,
             show_progress="hidden",
             api_visibility="undocumented",
         )
-    else_outputs = [hardware, image_status, llama_status, background_status, support]
 
-    def refresh_all(choice, llama_choice, cpu, background_choice, request: gr.Request):
+    switch_image.click(
+        request_switch,
+        inputs=[image_backend, cpu_everywhere],
+        outputs=image_status,
+        trigger_mode="once",
+        show_progress="minimal",
+        api_visibility="private",
+        concurrency_id="backend-install",
+        concurrency_limit=1,
+    ).then(
+        refresh_matrix,
+        inputs=matrix_state_inputs,
+        outputs=support,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
+    install_llama.click(
+        install_selected_llama,
+        inputs=llama_backend,
+        outputs=[install_llama, llama_status],
+        trigger_mode="once",
+        show_progress="minimal",
+        api_visibility="private",
+        concurrency_id="backend-install",
+        concurrency_limit=1,
+    ).then(
+        refresh_matrix,
+        inputs=matrix_state_inputs,
+        outputs=support,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
+    build_runtime.click(
+        build_native_runtime,
+        outputs=[build_runtime, build_status, llama_backend],
+        trigger_mode="once",
+        concurrency_id="native-runtime-build",
+        concurrency_limit=1,
+        api_visibility="private",
+        show_progress="hidden",
+    ).then(
+        refresh_matrix,
+        inputs=matrix_state_inputs,
+        outputs=support,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
+    install_xllama.click(
+        install_selected_xllama,
+        inputs=[xllama_backend, cpu_everywhere],
+        outputs=[install_xllama, xllama_status],
+        trigger_mode="once",
+        show_progress="minimal",
+        api_visibility="private",
+        concurrency_id="backend-install",
+        concurrency_limit=1,
+    ).then(
+        refresh_matrix,
+        inputs=matrix_state_inputs,
+        outputs=support,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
+
+    localized_output(
+        lambda locale, *vals: render_matrix_for_state(locale, *vals),
+        matrix_state_inputs,
+        [support],
+    )
+    gr.on(
+        triggers=[control.change for control in matrix_state_inputs],
+        fn=refresh_matrix,
+        inputs=matrix_state_inputs,
+        outputs=support,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
+
+    # Interactive "Set as main" & "Install" handler directly from Supported on this PC cards
+    matrix_outputs = [
+        support,
+        matrix_status,
+        image_backend,
+        optional_controls["engine"],
+        llm_runtime,
+        llama_backend,
+        xllama_backend,
+        background_backend,
+        image_status,
+        llama_status,
+        xllama_status,
+        background_status,
+    ]
+    if winml_controls is not None:
+        matrix_outputs.extend(
+            [winml_controls["background_provider"], winml_controls["provider"]]
+        )
+
+    def _matrix_result(
+        locale,
+        include_unsupported,
+        cpu,
+        img_choice,
+        eng_choice,
+        chat_rt,
+        llama_choice,
+        xllama_choice,
+        bg_choice,
+        bg_prov,
+        winml_prov,
+        message,
+    ):
+        payload = render_matrix_for_state(
+            locale,
+            include_unsupported,
+            cpu,
+            img_choice,
+            eng_choice,
+            chat_rt,
+            llama_choice,
+            xllama_choice,
+            bg_choice,
+            bg_prov,
+            winml_prov,
+        )
+        out = [
+            payload,
+            gr.update(value=message, visible=bool(message)),
+            img_choice,
+            eng_choice,
+            chat_rt,
+            llama_choice,
+            xllama_choice,
+            bg_choice,
+            image_status_text(locale, img_choice, cpu, device_name),
+            llama_status_text(locale, llama_choice, cpu),
+            xllama_status_text(locale, xllama_choice, cpu),
+            background_status_text(locale, cpu, bg_choice),
+        ]
+        if winml_controls is not None:
+            out.extend([bg_prov, winml_prov])
+        return tuple(out)
+
+    def handle_matrix_action(
+        evt: gr.EventData,
+        include_unsupported,
+        cpu,
+        img_choice,
+        eng_choice,
+        chat_rt,
+        llama_choice,
+        xllama_choice,
+        bg_choice,
+        bg_session,
+        opt_device,
+        opt_session,
+        bg_prov="Auto",
+        winml_prov="Auto",
+        request: gr.Request = None,
+    ):
+        locale = locale_of(request)
+        data = evt._data if isinstance(getattr(evt, "_data", None), dict) else {}
+        action = data.get("action")
+        row_id = data.get("id") or ""
+        if ":" not in row_id or action not in ("set_main", "install"):
+            yield tuple(gr.skip() for _ in matrix_outputs)
+            return
+        prefix, target = row_id.split(":", 1)
+
+        if action == "set_main":
+            if cpu:
+                yield _matrix_result(
+                    locale,
+                    include_unsupported,
+                    cpu,
+                    img_choice,
+                    eng_choice,
+                    chat_rt,
+                    llama_choice,
+                    xllama_choice,
+                    bg_choice,
+                    bg_prov,
+                    winml_prov,
+                    localize("Disable Use CPU for everything to change default GPU backends.", locale),
+                )
+                return
+            if prefix == "image":
+                if target == "sdcpp-vulkan":
+                    eng_choice = "sdcpp-vulkan"
+                    chosen_label = "stable-diffusion.cpp (Vulkan)"
+                else:
+                    img_choice = target
+                    eng_choice = "auto" if target == "auto" else "comfy"
+                    chosen_label = localize(IMAGE_LABELS.get(target, target), locale)
+                msg = localize(
+                    "Main Image generation backend set to {backend}. Click Save to keep it.",
+                    locale,
+                    backend=chosen_label,
+                )
+            elif prefix == "llama":
+                chat_rt = "llama.cpp"
+                llama_choice = target
+                msg = localize(
+                    "Main Chat runtime set to {runtime} ({backend}). Click Save to keep it.",
+                    locale,
+                    runtime="llama.cpp",
+                    backend=target,
+                )
+            elif prefix == "xllama":
+                chat_rt = "xllamacpp"
+                xllama_choice = target
+                msg = localize(
+                    "Main Chat runtime set to {runtime} ({backend}). Click Save to keep it.",
+                    locale,
+                    runtime="xllamacpp",
+                    backend=target,
+                )
+            elif prefix == "onnx":
+                bg_choice = target
+                if target == "Windows GPU":
+                    bg_prov = "DirectML"
+                msg = localize(
+                    "Main Background removal backend set to {backend}. Click Save to keep it.",
+                    locale,
+                    backend=target,
+                )
+            elif prefix == "winml":
+                bg_choice = "Windows GPU"
+                bg_prov = "Windows ML"
+                winml_prov = target
+                msg = localize(
+                    "Main Background removal backend set to Windows ML ({backend}). Click Save to keep it.",
+                    locale,
+                    backend=target.replace("ExecutionProvider", ""),
+                )
+            else:
+                yield tuple(gr.skip() for _ in matrix_outputs)
+                return
+            yield _matrix_result(
+                locale,
+                include_unsupported,
+                cpu,
+                img_choice,
+                eng_choice,
+                chat_rt,
+                llama_choice,
+                xllama_choice,
+                bg_choice,
+                bg_prov,
+                winml_prov,
+                msg,
+            )
+            return
+
+        # action == "install"
+        try:
+            if prefix == "image":
+                if target == "sdcpp-vulkan":
+                    for msg in optional_controls["install"](
+                        "vulkan", opt_device, cpu, img_choice, opt_session, request
+                    ):
+                        yield _matrix_result(
+                            locale,
+                            include_unsupported,
+                            cpu,
+                            img_choice,
+                            eng_choice,
+                            chat_rt,
+                            llama_choice,
+                            xllama_choice,
+                            bg_choice,
+                            bg_prov,
+                            winml_prov,
+                            msg,
+                        )
+                    return
+                img_choice = target
+                status_msg = request_switch(target, cpu, request)
+                yield _matrix_result(
+                    locale,
+                    include_unsupported,
+                    cpu,
+                    img_choice,
+                    eng_choice,
+                    chat_rt,
+                    llama_choice,
+                    xllama_choice,
+                    bg_choice,
+                    bg_prov,
+                    winml_prov,
+                    status_msg,
+                )
+                return
+            if prefix == "llama":
+                for _, status_msg in install_selected_llama(target, request):
+                    yield _matrix_result(
+                        locale,
+                        include_unsupported,
+                        cpu,
+                        img_choice,
+                        eng_choice,
+                        chat_rt,
+                        llama_choice,
+                        xllama_choice,
+                        bg_choice,
+                        bg_prov,
+                        winml_prov,
+                        status_msg,
+                    )
+                return
+            if prefix == "xllama":
+                for _, status_msg in install_selected_xllama(target, cpu, request):
+                    yield _matrix_result(
+                        locale,
+                        include_unsupported,
+                        cpu,
+                        img_choice,
+                        eng_choice,
+                        chat_rt,
+                        llama_choice,
+                        xllama_choice,
+                        bg_choice,
+                        bg_prov,
+                        winml_prov,
+                        status_msg,
+                    )
+                return
+            if prefix == "onnx":
+                for _, status_msg in install_selected_background(
+                    target, cpu, bg_session, request=request
+                ):
+                    yield _matrix_result(
+                        locale,
+                        include_unsupported,
+                        cpu,
+                        img_choice,
+                        eng_choice,
+                        chat_rt,
+                        llama_choice,
+                        xllama_choice,
+                        bg_choice,
+                        bg_prov,
+                        winml_prov,
+                        status_msg,
+                    )
+                return
+            if prefix == "winml" and winml_controls is not None:
+                for _, status_msg, _ in winml_controls["install"](
+                    target, "Auto", cpu, "Windows GPU", bg_session, request
+                ):
+                    yield _matrix_result(
+                        locale,
+                        include_unsupported,
+                        cpu,
+                        img_choice,
+                        eng_choice,
+                        chat_rt,
+                        llama_choice,
+                        xllama_choice,
+                        bg_choice,
+                        bg_prov,
+                        winml_prov,
+                        status_msg,
+                    )
+                return
+        except gr.Error as error:
+            yield _matrix_result(
+                locale,
+                include_unsupported,
+                cpu,
+                img_choice,
+                eng_choice,
+                chat_rt,
+                llama_choice,
+                xllama_choice,
+                bg_choice,
+                bg_prov,
+                winml_prov,
+                str(error),
+            )
+
+    matrix_click_inputs = [
+        show_unsupported,
+        cpu_everywhere,
+        image_backend,
+        optional_controls["engine"],
+        llm_runtime,
+        llama_backend,
+        xllama_backend,
+        background_backend,
+        background_actions,
+        optional_controls["device"],
+        optional_controls["session"],
+    ]
+    if winml_controls is not None:
+        matrix_click_inputs.extend(
+            [winml_controls["background_provider"], winml_controls["provider"]]
+        )
+
+    support.click(
+        handle_matrix_action,
+        inputs=matrix_click_inputs,
+        outputs=matrix_outputs,
+        show_progress="minimal",
+        api_visibility="private",
+        concurrency_id="backend-install",
+        concurrency_limit=1,
+    )
+
+    else_outputs = [hardware, image_status, llama_status, xllama_status, background_status, support]
+
+    def refresh_all(
+        include_unsupported,
+        cpu,
+        img_choice,
+        eng_choice,
+        chat_rt,
+        llama_choice,
+        xllama_choice,
+        bg_choice,
+        bg_prov="Auto",
+        winml_prov="Auto",
+        request: gr.Request = None,
+    ):
         locale = locale_of(request)
         inventory.detect_gpus(refresh=True)
         return (
             hardware_text(locale),
-            image_status_text(locale, choice, cpu, device_name),
+            image_status_text(locale, img_choice, cpu, device_name),
             llama_status_text(locale, llama_choice, cpu),
-            background_status_text(locale, cpu, background_choice),
-            support_table(locale),
+            xllama_status_text(locale, xllama_choice, cpu),
+            background_status_text(locale, cpu, bg_choice),
+            render_matrix_for_state(
+                locale,
+                include_unsupported,
+                cpu,
+                img_choice,
+                eng_choice,
+                chat_rt,
+                llama_choice,
+                xllama_choice,
+                bg_choice,
+                bg_prov,
+                winml_prov,
+                refresh=True,
+            ),
         )
 
-    for button in (refresh_hardware, refresh_background):
-        button.click(
-            refresh_all,
-            inputs=[image_backend, llama_backend, cpu_everywhere, background_backend],
-            outputs=else_outputs,
-            show_progress="minimal",
-            api_visibility="private",
-        )
+    refresh_hardware.click(
+        refresh_all,
+        inputs=matrix_state_inputs,
+        outputs=else_outputs,
+        show_progress="minimal",
+        api_visibility="private",
+    )
 
     def toggle_cpu(cpu):
         return [gr.update(interactive=not cpu)] * 4
@@ -1052,7 +1921,7 @@ def create_hardware_tab(device_name=""):
         show_progress="hidden",
         api_visibility="undocumented",
     )
-    return cpu_everywhere
+    return cpu_everywhere, llm_runtime
 
 
 def refresh_support_table(request: gr.Request):
@@ -1223,6 +2092,12 @@ def create_optional_image_controls(saved, cpu_everywhere, image_backend):
             show_progress="hidden",
             api_visibility="private",
         )
+    return {
+        "engine": engine,
+        "device": device,
+        "session": action_session,
+        "install": optional_install,
+    }
 
 
 def auxiliary_cpu(cpu=False):
@@ -1275,7 +2150,15 @@ def validate_windows_ml_choice(provider_name, device_type, gpus):
 
 
 def create_windows_ml_controls(
-    saved, gpus, support, cpu_everywhere, background_backend, action_session
+    saved,
+    gpus,
+    support,
+    cpu_everywhere,
+    background_backend,
+    action_session,
+    *,
+    refresh_support=None,
+    refresh_inputs=None,
 ):
     """Windows-only provider controls, moved from Image runtime; keys are unchanged."""
     from ruinedfooocus.backends.onnx.windows_ml import (
@@ -1529,6 +2412,12 @@ def create_windows_ml_controls(
             concurrency_id="onnx-runtime-install",
             concurrency_limit=1,
         )
+        refresh_fn = refresh_support or refresh_support_table
+        refresh_args = (
+            [*refresh_inputs, background_provider, winml_provider]
+            if refresh_inputs is not None
+            else None
+        )
         install_winml.click(
             install_winml_provider,
             inputs=[winml_provider, winml_type, cpu_everywhere, background_backend, action_session],
@@ -1539,7 +2428,8 @@ def create_windows_ml_controls(
             concurrency_id="onnx-runtime-install",
             concurrency_limit=1,
         ).then(
-            refresh_support_table,
+            refresh_fn,
+            inputs=refresh_args,
             outputs=support,
             show_progress="hidden",
             api_visibility="undocumented",
@@ -1604,13 +2494,15 @@ def create_windows_ml_controls(
             concurrency_id="onnx-runtime-install",
             concurrency_limit=1,
         ).then(
-            refresh_support_table,
+            refresh_fn,
+            inputs=refresh_args,
             outputs=support,
             show_progress="hidden",
             api_visibility="undocumented",
         )
 
     return {
+        "background_provider": background_provider,
         "provider": winml_provider,
         "device_type": winml_type,
         "install": install_winml_provider,

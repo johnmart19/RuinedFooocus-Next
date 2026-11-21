@@ -1,0 +1,19 @@
+{
+  "id": "hardware-backends-hub-rework",
+  "subject": "Rework Hardware & backends into an interactive Supported on this PC runtime hub and remove duplicate Settings controls",
+  "requires": ["ui-six-view-polish"],
+  "tests": [
+    "test_settings_ui.py",
+    "test_background_runtime_ui.py",
+    "test_optional_image_runtime_ui.py",
+    "test_release_status_wording.py",
+    "test_llama_update.py",
+    "test_new_ui_localization.py",
+    "test_moe_cache_settings_ui.py",
+    "test_runtime_info_refresh.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
