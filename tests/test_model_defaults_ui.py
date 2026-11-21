@@ -138,10 +138,20 @@ class ModelDefaultsUiTests(unittest.TestCase):
         controls = callback("performance_control_updates", scope)
         automatic = controls("Model Defaults", "Chroma", "local.safetensors")
         self.assertTrue(
-            all(not update["visible"] and "value" not in update for update in automatic[:5])
+            all(update["visible"] and "value" not in update for update in automatic[:5])
         )
         manual = controls("Own settings", "Chroma", "local.safetensors")
         self.assertTrue(all(update["visible"] and "value" not in update for update in manual[:5]))
+        skip = object()
+        switch = callback(
+            "switch_to_own_sampling",
+            dict(
+                performance_settings=self.performance,
+                gr=SimpleNamespace(skip=lambda: skip),
+            ),
+        )
+        self.assertEqual(switch("Model Defaults"), "Own settings")
+        self.assertIs(switch("Own settings"), skip)
         self.performance.model_recommendations.describe = Mock(
             side_effect=AssertionError("No recipe exists")
         )
