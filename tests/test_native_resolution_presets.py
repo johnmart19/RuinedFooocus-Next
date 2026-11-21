@@ -123,6 +123,25 @@ class NativeResolutionPresetTests(unittest.TestCase):
             )
             self.assertNotIn((832, 1216), [settings.aspect_ratios[c] for c in choices[:-1]])
 
+    def test_aspect_ratio_labels_and_math_fallback_without_comfy_extras(self):
+        self.assertEqual(native_resolutions.aspect_ratio_label(1024, 1024), "1:1")
+        self.assertEqual(native_resolutions.aspect_ratio_label(840, 1256), "2:3")
+        self.assertEqual(native_resolutions.aspect_ratio_label(1368, 768), "16:9")
+        native_resolutions._aspect_presets.cache_clear()
+        with patch.dict("sys.modules", {"comfy_extras.nodes_resolution": None}):
+            fallback = native_resolutions.aspect_presets(1024, 1024, 8)
+        self.assertEqual(len(fallback), 8)
+        self.assertIn((840, 1256), fallback)
+        self.assertIn((1368, 768), fallback)
+        with (
+            tempfile.TemporaryDirectory() as folder,
+            patch.object(ResolutionSettings, "RESOLUTIONS_FILE", Path(folder) / "resolutions.json"),
+        ):
+            settings = ResolutionSettings()
+            choices = settings.choices_for_model("Anima")
+            self.assertIn("1024x1024 (1:1 · ComfyUI preset)", choices)
+            self.assertIn("840x1256 (2:3 · ComfyUI preset)", choices)
+
 
 if __name__ == "__main__":
     unittest.main()

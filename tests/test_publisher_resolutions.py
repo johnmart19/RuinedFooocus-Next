@@ -199,6 +199,22 @@ Recommended sizes: 4096x4096
         )
         self.assertEqual(published_resolutions({"description": "Example output 812×1216"}), [])
 
+    def test_modelspec_resolution_and_optimal_native_card_headings(self):
+        self.assertEqual(
+            published_resolutions(
+                {
+                    "modelspec.resolution": "1024x1024",
+                    "recommended_resolutions": "832x1216, 1216x832",
+                    "description": "## Optimal resolutions\n- 896x1152\n- 1152x896\n",
+                }
+            ),
+            [(1024, 1024), (832, 1216), (1216, 832), (896, 1152), (1152, 896)],
+        )
+        self.assertEqual(
+            published_resolutions({"description": "Native sizes: 1440×1440, 1280×1600"}),
+            [(1440, 1440), (1280, 1600)],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -2159,5 +2159,6 @@
   "settings.auto_update_llama_cpp_to_latest_release": "llama.cpp automatisch bijwerken naar de nieuwste versie",
   "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Controleert en installeert automatisch de nieuwste geverifieerde officiële llama.cpp-versie wanneer je online bent.",
   "image_editing.freeu_v2_unet_detail_boost": "FreeU V2 (UNet-detailversterking)",
-  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "Verbetert details en structuur op SDXL / SD 1.5 / SD 2.0 UNet-modellen zonder extra stappen."
+  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "Verbetert details en structuur op SDXL / SD 1.5 / SD 2.0 UNet-modellen zonder extra stappen.",
+  "models.recommended_resolutions": "Aanbevolen resoluties"
 }

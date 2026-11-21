@@ -130,16 +130,16 @@ def parse_civitai(items, category, *, include_mature=False):
             or not url.startswith("https://civitai.com/api/download/models/")
         ):
             continue
-        # Only a picture the site rates for everyone is shown as a thumbnail.
+        # Only a picture the site rates for everyone is shown by default;
+        # when mature listings are explicitly enabled, fall back to the first non-video image.
+        pictures = [
+            picture
+            for picture in version.get("images") or []
+            if isinstance(picture, dict) and picture.get("type") in (None, "image")
+        ]
         image = next(
-            (
-                picture.get("url")
-                for picture in version.get("images") or []
-                if isinstance(picture, dict)
-                and picture.get("type") == "image"
-                and picture.get("nsfwLevel") == 1
-            ),
-            None,
+            (picture.get("url") for picture in pictures if picture.get("nsfwLevel") == 1),
+            next((picture.get("url") for picture in pictures), None) if include_mature else None,
         )
         stats = item.get("stats") or {}
         size = file.get("sizeKB")

@@ -2159,5 +2159,6 @@
   "settings.auto_update_llama_cpp_to_latest_release": "自動將 llama.cpp 更新至最新版本",
   "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "連線時自動檢查並安裝經驗證的最新官方 llama.cpp 版本。",
   "image_editing.freeu_v2_unet_detail_boost": "FreeU V2（UNet 細節增強）",
-  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "在 SDXL / SD 1.5 / SD 2.0 UNet 模型上增強細節與結構，無需額外步數。"
+  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "在 SDXL / SD 1.5 / SD 2.0 UNet 模型上增強細節與結構，無需額外步數。",
+  "models.recommended_resolutions": "建議解析度"
 }

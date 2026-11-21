@@ -1,0 +1,18 @@
+{
+  "id": "resolution-recommendations-and-model-previews",
+  "subject": "Improve model resolution recommendations (aspect ratio labels, ModelSpec/card parsing, math fallback) and download model previews (smart ranking, fallback, mature thumbnails)",
+  "requires": ["hires-inpaint-scheduler-and-freeu-ux-guards"],
+  "tests": [
+    "test_native_resolution_presets.py",
+    "test_publisher_resolutions.py",
+    "test_resolution_settings.py",
+    "test_resolution_transitions.py",
+    "test_catalogue_previews.py",
+    "test_popular_models.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

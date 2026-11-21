@@ -2159,5 +2159,6 @@
   "settings.auto_update_llama_cpp_to_latest_release": "Actualizar llama.cpp automáticamente a la última versión",
   "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Busca e instala automáticamente la última versión oficial verificada de llama.cpp cuando hay conexión.",
   "image_editing.freeu_v2_unet_detail_boost": "FreeU V2 (mejora de detalles UNet)",
-  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "Mejora el detalle y la estructura en modelos UNet SDXL / SD 1.5 / SD 2.0 sin pasos adicionales."
+  "image_editing.enhances_detail_and_structure_on_sdxl_sd_1_5_sd_2_0_unet_models_with_zero_extra_steps": "Mejora el detalle y la estructura en modelos UNet SDXL / SD 1.5 / SD 2.0 sin pasos adicionales.",
+  "models.recommended_resolutions": "Resoluciones recomendadas"
 }

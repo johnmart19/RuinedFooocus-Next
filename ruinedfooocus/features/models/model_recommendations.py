@@ -129,9 +129,15 @@ def published_resolutions(metadata):
     for owner in (config, metadata):
         if not isinstance(owner, dict):
             continue
+        for single_key in ("modelspec.resolution", "resolution"):
+            if isinstance(owner.get(single_key), (str, list, tuple)):
+                add(owner.get(single_key))
         for key in ("recommended_resolutions", "recommended_sizes", "supported_resolutions"):
             values = owner.get(key, [])
-            if isinstance(values, list):
+            if isinstance(values, str):
+                for w, h in re.findall(r"(?<!\d)(\d{3,4})\s*[xX×]\s*(\d{3,4})(?!\d)", values):
+                    add((int(w), int(h)))
+            elif isinstance(values, list):
                 for value in values[:128]:
                     add(
                         (value.get("width"), value.get("height"))
@@ -156,7 +162,7 @@ def published_resolutions(metadata):
         if fenced:
             continue
         named = re.search(
-            r"\b(?:recommended|supported)\s+(?:(?:image|output|generation)\s+)?(?:resolutions?|sizes?)\b"
+            r"\b(?:recommended|supported|optimal|best|native|trained)\s+(?:(?:image|output|generation)\s+)?(?:resolutions?|sizes?)\b"
             r"|(?:推荐|推薦|建议|建議|推奨)\s*(?:生成)?\s*(?:分辨率|解析度|解像度|尺寸|サイズ)",
             line,
             re.I,

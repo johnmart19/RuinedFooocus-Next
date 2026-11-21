@@ -171,11 +171,18 @@ class ResolutionSettings:
         ]
         recommended, source, recipe = self._recommendation(family, checkpoint, performance)
         native_canvas = recipe.get("provenance", {}).get("kind") == "native_workflow"
+        from ruinedfooocus.features.models.native_resolutions import aspect_ratio_label
+
         for width, height in recommended:
             self.aspect_ratios[f"{width}x{height}"] = (width, height)
             if not any(self.aspect_ratios[value] == (width, height) for value in choices):
+                ratio = aspect_ratio_label(width, height)
                 label = (
-                    f"{width}x{height} (ComfyUI preset)"
+                    f"{width}x{height} ({ratio} · ComfyUI preset)"
+                    if native_canvas
+                    and not source.startswith(("Civitai", "Hugging Face", "Cached publisher"))
+                    and ratio
+                    else f"{width}x{height} (ComfyUI preset)"
                     if native_canvas
                     and not source.startswith(("Civitai", "Hugging Face", "Cached publisher"))
                     else f"{width}x{height} ({family} recommended)"
@@ -199,8 +206,11 @@ class ResolutionSettings:
             if not recommended and not presets:
                 presets = ((1024, 1024), (832, 1216), (1216, 832))
             for width, height in presets:
+                ratio = aspect_ratio_label(width, height)
                 label = (
-                    f"{width}x{height} ({'ComfyUI preset' if recommended else 'Generic fallback'})"
+                    f"{width}x{height} ({ratio} · ComfyUI preset)"
+                    if recommended and ratio
+                    else f"{width}x{height} ({'ComfyUI preset' if recommended else 'Generic fallback'})"
                 )
                 self.aspect_ratios[label] = (width, height)
                 self.aspect_ratios[f"{width}x{height}"] = (width, height)

@@ -73,6 +73,49 @@ def _read(url, limit):
     return model_sources.hf_metadata.read(url, limit)
 
 
+_PREVIEW_DEPRIORITIZED = (
+    "logo",
+    "badge",
+    "icon",
+    "diagram",
+    "architecture",
+    "flowchart",
+    "workflow",
+    "license",
+    "benchmark",
+    "chart",
+    "graph",
+    "plot",
+    "loss",
+    "table",
+)
+_PREVIEW_PREFERRED = (
+    "preview",
+    "cover",
+    "thumb",
+    "sample",
+    "example",
+    "showcase",
+    "demo",
+    "output",
+    "result",
+    "gallery",
+    "hero",
+    "banner",
+)
+
+
+def _preview_rank(filename):
+    """Prefer real showcase/preview raster artwork over logos, diagrams, or GIFs."""
+    lower = filename.lower()
+    suffix = Path(lower).suffix
+    is_gif = suffix == ".gif"
+    tokens = set(re.findall(r"[a-z0-9]+", lower))
+    is_deprioritized = bool(tokens.intersection(_PREVIEW_DEPRIORITIZED))
+    is_preferred = bool(tokens.intersection(_PREVIEW_PREFERRED))
+    return (is_gif, is_deprioritized, not is_preferred, filename)
+
+
 def fetch_registered_preview(identity, destination, *, offline=False):
     """Two bounded reads: pinned metadata, then one declared raster image.
 
@@ -103,36 +146,45 @@ def fetch_registered_preview(identity, destination, *, offline=False):
         and ".." not in Path(row["rfilename"]).parts
         and "\\" not in row["rfilename"]
     ]
-    images.sort(key=lambda name: (Path(name).suffix.lower() == ".gif", name))
+    images.sort(key=_preview_rank)
     if not images:
         return None
-    image_url = (
-        f"https://huggingface.co/{repository}/resolve/{revision}/{quote(images[0], safe='/')}"
-    )
-    if is_offline():
-        return None
-    body = _read(image_url, 12 * 1024 * 1024)
-    with Image.open(io.BytesIO(body)) as image:
-        if image.width * image.height > 16 * 1024 * 1024:
-            raise ValueError("Publisher artwork dimensions exceed size limit")
-    published = write_preview(body, destination)
-    save_json(
-        destination.with_suffix(".source.json"),
-        dict(
-            source=identity["source"],
-            sha256=identity["sha256"],
-            revision=revision,
-            image_url=image_url,
-            checked_utc=datetime.now(timezone.utc).isoformat(),
-        ),
-    )
-    return published
+    last_error = None
+    for candidate in images[:3]:
+        image_url = (
+            f"https://huggingface.co/{repository}/resolve/{revision}/{quote(candidate, safe='/')}"
+        )
+        if is_offline():
+            return None
+        try:
+            body = _read(image_url, 12 * 1024 * 1024)
+            with Image.open(io.BytesIO(body)) as image:
+                if image.width * image.height > 16 * 1024 * 1024:
+                    raise ValueError("Publisher artwork dimensions exceed size limit")
+            published = write_preview(body, destination)
+            save_json(
+                destination.with_suffix(".source.json"),
+                dict(
+                    source=identity["source"],
+                    sha256=identity["sha256"],
+                    revision=revision,
+                    image_url=image_url,
+                    checked_utc=datetime.now(timezone.utc).isoformat(),
+                ),
+            )
+            return published
+        except (OSError, ValueError, Image.DecompressionBombError) as error:
+            last_error = error
+            continue
+    if last_error is not None:
+        raise last_error
+    return None
 
 
 class CataloguePreviews:
     """Process-owned bounded workers; session filters/selections never enter a job."""
 
-    def __init__(self, directory, *, workers=2, pending=4, retry_seconds=600, fetcher=None):
+    def __init__(self, directory, *, workers=3, pending=6, retry_seconds=600, fetcher=None):
         if not 1 <= workers <= pending <= 8:
             raise ValueError("Require 1 <= artwork workers <= pending <= 8")
         self.directory = Path(directory)

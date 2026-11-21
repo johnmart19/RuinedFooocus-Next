@@ -206,6 +206,36 @@ class CataloguePreviewTests(unittest.TestCase):
         self.assertIsNone(cache.cached(self.row))
         self.assertEqual(json.dumps(self.row, sort_keys=True), row_before)
 
+    def test_preview_ranking_prefers_artwork_over_diagrams_and_falls_back_on_broken_first_image(self):
+        identity = previews.preview_identity(self.row)
+        metadata = dict(
+            sha="a" * 40,
+            siblings=[
+                dict(rfilename="weight.gguf", lfs=dict(sha256="b" * 64)),
+                dict(rfilename="assets/architecture_diagram.png"),
+                dict(rfilename="assets/logo.png"),
+                dict(rfilename="01-cover.png"),
+                dict(rfilename="02-sample.png"),
+            ],
+        )
+        attempts = []
+
+        def fake_read(url, limit):
+            attempts.append(url)
+            if url.endswith("/01-cover.png"):
+                return b"not-a-valid-image"
+            return self.image()
+
+        with (
+            patch.object(model_sources, "huggingface_manifest", return_value=metadata),
+            patch.object(previews, "_read", side_effect=fake_read),
+        ):
+            result = previews.fetch_registered_preview(identity, self.root / identity["key"])
+        self.assertTrue(result.is_file())
+        self.assertEqual(len(attempts), 2)
+        self.assertTrue(attempts[0].endswith("/01-cover.png"))
+        self.assertTrue(attempts[1].endswith("/02-sample.png"))
+
 
 if __name__ == "__main__":
     unittest.main()

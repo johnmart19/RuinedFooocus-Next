@@ -231,6 +231,36 @@ def card_data(rows, selected, manager, page=1, locale=None, previews=None):
     ), page
 
 
+def _recommended_resolutions_text(row):
+    """Return concise native/recommended resolution summary for an image model card."""
+    if row.get("category_label") != "Image models":
+        return ""
+    annotation = row.get("annotation") or {}
+    family = annotation.get("native_family") or annotation.get("architecture")
+    if not isinstance(family, str) or not family:
+        return ""
+    from ruinedfooocus.features.models.model_recommendations import FAMILY_PRESETS, family_recipe
+    from ruinedfooocus.features.models.native_resolutions import aspect_ratio_label
+
+    recipe = family_recipe(FAMILY_PRESETS.get(family, family)) or family_recipe(family)
+    if not isinstance(recipe, Mapping):
+        return ""
+    sizes = [tuple(size) for size in recipe.get("recommended_sizes", ()) if len(size) == 2]
+    default = recipe.get("default_size")
+    if isinstance(default, (list, tuple)) and len(default) == 2:
+        default = tuple(default)
+        sizes = [default] + [size for size in sizes if size != default]
+    if not sizes:
+        return ""
+    shown = []
+    for width, height in sizes[:5]:
+        ratio = aspect_ratio_label(width, height)
+        shown.append(f"{width}×{height} ({ratio})" if ratio else f"{width}×{height}")
+    if len(sizes) > 5:
+        shown.append(f"+{len(sizes) - 5} more")
+    return ", ".join(shown)
+
+
 def detail_rows(row, locale=None):
     if row is None:
         return [], localize("Select a model or component.", locale), False, False
@@ -277,6 +307,13 @@ def detail_rows(row, locale=None):
             else "Presence is not a checksum or execution check.",
         ],
         ["Memory suitability", memory],
+        *(
+            [[localize("Recommended resolutions", locale), rec_sizes_text]]
+            if (
+                rec_sizes_text := _recommended_resolutions_text(row)
+            )
+            else []
+        ),
         [
             "License",
             license_info.get("declared_upstream") or license_info.get("value") or "Unknown",
