@@ -604,6 +604,8 @@
 /* ---- Optional control help: native keyboard/touch disclosure ---- */
 :is(#app-tabs, #image-stage) .rf-help-host {
   position: relative;
+  min-block-size: calc(max(24px, 1.5rem) + 0.75rem);
+  overflow: visible;
 }
 :is(#app-tabs, #image-stage) .rf-help-host > :is(label, .head, [data-testid="block-info"]),
 :is(#app-tabs, #image-stage) .rf-help-host > .wrap > .head {
@@ -972,6 +974,10 @@
   /* Narrow screens keep short labels on one line instead of 24px side padding. */
   :is(#app-tabs, #image-stage) :is(button.lg, button.md, button.sm) {
     padding-inline: 0.625rem;
+  }
+  /* Keep prose blocks slightly inset from the container clip edge on narrow screens. */
+  :is(#app-tabs, #image-stage) .block:not(.rf-page-head) .prose {
+    padding-inline: 0.125rem;
   }
 }
 /* An empty folder status line takes no space until it has a message. */

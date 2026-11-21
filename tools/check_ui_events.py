@@ -35,7 +35,8 @@ SIDE_EFFECTS = re.compile(
     r"load_model|unload|warm|transfer|acquire|switch|verify|toggle_cpu|interrupt|"
     r"caption|describe|enhance|rewrite|inspect|export|save|cancel|stop|run_|^run$|"
     r"poke|confirm|apply_update|update_llama|refresh_all|trigger_|use_model|"
-    r"local_model_action|prepare|start|retry|slideshow|share|with_attachments",
+    r"local_model_action|prepare|start|retry|slideshow|share|with_attachments|"
+    r"check_current|convert_current",
     re.IGNORECASE,
 )
 

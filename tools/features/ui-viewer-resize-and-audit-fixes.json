@@ -1,0 +1,9 @@
+{
+  "id": "ui-viewer-resize-and-audit-fixes",
+  "subject": "Fix image viewer resize/labels, ResizeObserver loops, mobile help overflow, and UI event audit timeouts",
+  "requires": ["image-viewer-focus"],
+  "tests": ["test_image_viewer.py", "test_ui_events.py", "test_ui_audit_fixes.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

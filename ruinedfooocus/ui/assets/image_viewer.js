@@ -108,7 +108,11 @@
   }
   const workspaceObserver = new MutationObserver(() => schedule(bind));
   const imageObserver = new MutationObserver(() => schedule(bind));
+  const stageObserver = new MutationObserver(() => schedule(reflow));
   const sizeObserver = new ResizeObserver(() => schedule(reflow));
+  const stage = document.getElementById("image-stage");
+  if (stage) stageObserver.observe(stage, { attributes: true, attributeFilter: ["class"] });
+  window.addEventListener("resize", () => schedule(reflow));
   let nextUpdate = null;
   function schedule(update) {
     // Structural changes take precedence over a resize in the same frame.
@@ -170,14 +174,11 @@
       row = controls.getBoundingClientRect();
     handle.hidden = root.classList.contains("fullscreen") || !rect.width;
     if (handle.hidden) return;
-    handle.style.setProperty(
-      "--rf-handle-x",
-      `${rect.right - row.left - handle.offsetWidth - 8}px`,
-    );
-    handle.style.setProperty(
-      "--rf-handle-y",
-      `${rect.bottom - row.top - handle.offsetHeight - 8}px`,
-    );
+    const width = handle.offsetWidth,
+      height = handle.offsetHeight;
+    if (!width || !height) return;
+    handle.style.setProperty("--rf-handle-x", `${rect.right - row.left - width - 8}px`);
+    handle.style.setProperty("--rf-handle-y", `${rect.bottom - row.top - height - 8}px`);
   }
   function setMode(value, smooth = false) {
     bind();
@@ -380,9 +381,15 @@
   }
   const handle = document.getElementById("viewer-resize");
   if (handle) {
-    handle.addEventListener("pointerenter", () => {
-      handle.title = handle.textContent.trim();
-    });
+    const syncHandleLabel = () => {
+      const label = handle.textContent.trim();
+      if (!label) return;
+      handle.setAttribute("aria-label", label);
+      handle.title = label;
+    };
+    syncHandleLabel();
+    handle.addEventListener("pointerenter", syncHandleLabel);
+    handle.addEventListener("focus", syncHandleLabel);
     handle.addEventListener("pointerdown", (event) => {
       if (event.button !== 0 || !root) return;
       event.preventDefault();
@@ -432,11 +439,16 @@
   };
   for (const [id, key] of Object.entries(shortcuts)) {
     const button = document.getElementById(id);
-    button?.addEventListener("pointerenter", () => {
+    if (!button) continue;
+    const syncLabel = () => {
       const label = button.textContent.trim();
+      if (!label) return;
       button.setAttribute("aria-label", label);
       button.title = key ? `${label} (${key})` : label;
-    });
+    };
+    syncLabel();
+    button.addEventListener("pointerenter", syncLabel);
+    button.addEventListener("focus", syncLabel);
   }
   const readout = document.querySelector("#viewer-zoom-value output");
   if (readout) {

@@ -17,7 +17,15 @@
       row.classList.toggle("rf-image-stacked", stacked);
     }
   };
-  row.__rfImageLayoutObserver = new ResizeObserver(update);
+  let frame = 0;
+  const schedule = () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      update();
+    });
+  };
+  row.__rfImageLayoutObserver = new ResizeObserver(schedule);
   row.__rfImageLayoutObserver.observe(row);
   update();
 })();

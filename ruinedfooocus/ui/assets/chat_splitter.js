@@ -37,7 +37,8 @@ handle.addEventListener("keydown", (event) => {
   else setWidth(current + (event.key === "ArrowLeft" ? -2 : 2));
 });
 handle.addEventListener("dblclick", resetWidth);
-const observer = new ResizeObserver(() => {
+let layoutFrame = 0;
+const updateLayout = () => {
   if (row.clientWidth <= 0) return;
   // Native CSS scoping drops container queries. Measure the actual working
   // space here, including font changes, and retain the user's split preference.
@@ -49,5 +50,12 @@ const observer = new ResizeObserver(() => {
   if (row.style.getPropertyValue("--chat-width")) {
     setWidth(Number(handle.getAttribute("aria-valuenow")));
   } else resetWidth();
+};
+const observer = new ResizeObserver(() => {
+  if (layoutFrame) return;
+  layoutFrame = requestAnimationFrame(() => {
+    layoutFrame = 0;
+    updateLayout();
+  });
 });
 observer.observe(row);
