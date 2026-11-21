@@ -206,13 +206,22 @@ def apply_latent_hires_fix(
     latent_image = upscaled["samples"]
     batch_inds = upscaled.get("batch_index")
     noise = comfy.sample.prepare_noise(latent_image, second_seed, batch_inds)
+    hires_scheduler = scheduler
+    try:
+        import comfy.samplers
+
+        valid_schedulers = getattr(getattr(comfy.samplers, "KSampler", None), "SCHEDULERS", None)
+        if valid_schedulers and hires_scheduler not in valid_schedulers:
+            hires_scheduler = "simple"
+    except Exception:
+        pass
     refined = comfy.sample.sample(
         model=model,
         noise=noise,
         steps=steps,
         cfg=cfg,
         sampler_name=sampler_name,
-        scheduler=scheduler,
+        scheduler=hires_scheduler,
         positive=positive,
         negative=negative,
         latent_image=latent_image,

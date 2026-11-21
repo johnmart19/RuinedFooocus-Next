@@ -2449,6 +2449,9 @@ class pipeline:
             guidance.get("hires_enabled")
             and architecture != "StableCascade_C"
             and not layered_model
+            and not gen_data.get("inpaint_toggle")
+            and outpaint_composite is None
+            and not sd4x_model
         ):
             from ruinedfooocus.features.generation.hires_fix import (
                 apply_latent_hires_fix,

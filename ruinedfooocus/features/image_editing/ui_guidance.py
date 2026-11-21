@@ -418,6 +418,7 @@ def create_ui(
             freeu_v2 = gr.Checkbox(
                 label=translate_ui("FreeU V2 (UNet detail boost)"),
                 value=defaults.get("freeu_v2", False),
+                visible=family in ("SDXL", "SD15", "SD20", "SDXLRefiner"),
                 info=translate_ui(
                     "Enhances detail and structure on SDXL / SD 1.5 / SD 2.0 UNet models with zero extra steps."
                 ),
@@ -606,6 +607,7 @@ def create_ui(
             gr.update(visible=family == "Lens", value=normalization_auto_default(family, defaults)),
             gr.update(visible=use_norm),
             gr.update(visible=use_norm),
+            gr.update(visible=family in ("SDXL", "SD15", "SD20", "SDXLRefiner")),
             gr.update(
                 visible=capabilities(family)["qwen_image21"],
                 value=qwen_schedule_for_family(current_schedule, family),
@@ -637,6 +639,7 @@ def create_ui(
                 norm_auto,
                 hires_panel,
                 advanced_guidance_panel,
+                freeu_v2,
                 qwen_schedule,
             ],
             api_visibility="undocumented",
@@ -717,6 +720,8 @@ def create_ui(
                     if key == "sampling_shift"
                     else False
                     if key == "hires_upscaler"
+                    else family in ("SDXL", "SD15", "SD20", "SDXLRefiner")
+                    if key == "freeu_v2"
                     else available["cfg_norm"]
                     if key
                     in (
@@ -725,7 +730,6 @@ def create_ui(
                         "cfg_guidance_mode",
                         "pag_scale",
                         "differential_diffusion",
-                        "freeu_v2",
                         "image_resize_mode",
                         "vae_tiled",
                         "vae_tile_size",

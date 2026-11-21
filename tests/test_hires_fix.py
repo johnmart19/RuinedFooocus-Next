@@ -381,6 +381,43 @@ class HiresFixTests(unittest.TestCase):
         self.assertEqual(req.hires_upscaler, "2× Anime sharp (AnimeSharp V4 Fast)")
         self.assertEqual(req.automatic_upscale, "2× AMD FSR 4")
 
+    def test_custom_recipe_scheduler_falls_back_to_simple_for_hires_pass(self):
+        captured = {}
+
+        class FakeLatentUpscaleBy:
+            def upscale(self, samples, upscale_method, scale_by):
+                return ({"samples": "upscaled"},)
+
+        def fake_sample(**kwargs):
+            captured.update(kwargs)
+            return "refined"
+
+        fake_comfy_sample = NS(prepare_noise=lambda *a: "noise", sample=fake_sample)
+        fake_comfy_samplers = NS(KSampler=NS(SCHEDULERS=("simple", "karras", "beta")))
+        fake_nodes = NS(LatentUpscaleBy=FakeLatentUpscaleBy)
+        guidance = resolve_guidance({"hires_enabled": True, "hires_steps": 10}, {}, "Flux2")
+        with patch.dict(
+            sys.modules,
+            {
+                "comfy": NS(sample=fake_comfy_sample, samplers=fake_comfy_samplers),
+                "comfy.sample": fake_comfy_sample,
+                "comfy.samplers": fake_comfy_samplers,
+                "nodes": fake_nodes,
+            },
+        ):
+            apply_latent_hires_fix(
+                {"samples": "pass1"},
+                model="model",
+                positive="pos",
+                negative="neg",
+                cfg=1.0,
+                sampler_name="euler",
+                scheduler="Flux2Scheduler",
+                base_seed=1,
+                guidance=guidance,
+            )
+        self.assertEqual(captured["scheduler"], "simple")
+
 
 if __name__ == "__main__":
     unittest.main()
