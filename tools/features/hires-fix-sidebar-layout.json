@@ -1,0 +1,14 @@
+{
+  "id": "hires-fix-sidebar-layout",
+  "subject": "Stack Hires Fix controls in a clean single column and remove duplicate upscaler dropdown from Size details",
+  "requires": ["hires-fix-size-details-toggle"],
+  "tests": [
+    "test_hires_fix.py",
+    "test_image_guidance_ui.py",
+    "test_preset_image_guidance.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

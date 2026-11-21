@@ -412,9 +412,6 @@ def create_ui(
                 label=translate_ui("Hires Fix"),
                 value=defaults.get("hires_enabled", False),
                 elem_id="generation-hires-fix-toggle",
-                info=translate_ui(
-                    "Upscale after the first pass (latent or pixel upscaler) and run a second sampling pass for sharper detail. Can also chain with Main Upscale."
-                ),
             )
             with gr.Group(
                 visible=bool(defaults.get("hires_enabled", False)),
@@ -425,64 +422,45 @@ def create_ui(
                     choices=hires_upscaler_choices(),
                     value=initial_hires_upscaler,
                     allow_custom_value=True,
-                    info=translate_ui(
-                        "Latent upscales in latent space; pixel upscalers (Anime, RealESRGAN, AMD FSR) decode, upscale, and re-encode before the second pass."
-                    ),
+                    visible=False,
                 )
-                with gr.Row():
-                    hires_scale = gr.Slider(
-                        label=translate_ui("Scale factor"),
-                        minimum=1.05,
-                        maximum=4.0,
-                        step=0.05,
-                        value=defaults.get("hires_scale", 1.5),
-                        min_width=180,
-                    )
-                    hires_upscale_method = gr.Dropdown(
-                        label=translate_ui("Latent upscale method"),
-                        choices=list(FIELD_SCHEMA["hires_upscale_method"]["choices"]),
-                        value=defaults.get("hires_upscale_method", "nearest-exact"),
-                        visible=initial_hires_upscaler == HIRES_UPSCALER_LATENT,
-                        min_width=180,
-                    )
-                with gr.Row():
-                    hires_steps = gr.Slider(
-                        label=translate_ui("Second-pass steps"),
-                        minimum=1,
-                        maximum=200,
-                        step=1,
-                        value=defaults.get("hires_steps", 20),
-                        min_width=180,
-                    )
-                    hires_denoise = gr.Slider(
-                        label=translate_ui("Second-pass denoise"),
-                        minimum=0.05,
-                        maximum=1.0,
-                        step=0.05,
-                        value=defaults.get("hires_denoise", 0.6),
-                        min_width=180,
-                    )
+                hires_scale = gr.Slider(
+                    label=translate_ui("Scale factor"),
+                    minimum=1.05,
+                    maximum=4.0,
+                    step=0.05,
+                    value=defaults.get("hires_scale", 1.5),
+                )
+                hires_upscale_method = gr.Dropdown(
+                    label=translate_ui("Latent upscale method"),
+                    choices=list(FIELD_SCHEMA["hires_upscale_method"]["choices"]),
+                    value=defaults.get("hires_upscale_method", "nearest-exact"),
+                )
+                hires_steps = gr.Slider(
+                    label=translate_ui("Second-pass steps"),
+                    minimum=1,
+                    maximum=200,
+                    step=1,
+                    value=defaults.get("hires_steps", 20),
+                )
+                hires_denoise = gr.Slider(
+                    label=translate_ui("Second-pass denoise"),
+                    minimum=0.05,
+                    maximum=1.0,
+                    step=0.05,
+                    value=defaults.get("hires_denoise", 0.6),
+                )
                 hires_seed = gr.Textbox(
                     label=translate_ui("Second-pass seed"),
                     placeholder=translate_ui("Auto"),
                     value=""
                     if defaults.get("hires_seed") is None
                     else str(defaults["hires_seed"]),
-                    info=translate_ui(
-                        "Optional second-pass seed. Leave blank to derive from the main seed."
-                    ),
                 )
             hires_enabled.change(
                 lambda enabled: gr.update(visible=bool(enabled)),
                 inputs=hires_enabled,
                 outputs=hires_options,
-                api_visibility="undocumented",
-                show_progress="hidden",
-            )
-            hires_upscaler.change(
-                lambda selection: gr.update(visible=(selection or HIRES_UPSCALER_LATENT) == HIRES_UPSCALER_LATENT),
-                inputs=hires_upscaler,
-                outputs=hires_upscale_method,
                 api_visibility="undocumented",
                 show_progress="hidden",
             )
@@ -695,9 +673,8 @@ def create_ui(
                     if key.startswith("moss_image_slg")
                     else available["sampling_shift"]
                     if key == "sampling_shift"
-                    else available["cfg_norm"]
-                    and selected["hires_upscaler"] == HIRES_UPSCALER_LATENT
-                    if key == "hires_upscale_method"
+                    else False
+                    if key == "hires_upscaler"
                     else available["cfg_norm"]
                     if key
                     in (
@@ -709,7 +686,7 @@ def create_ui(
                         "vae_overlap",
                         "hires_enabled",
                         "hires_scale",
-                        "hires_upscaler",
+                        "hires_upscale_method",
                         "hires_steps",
                         "hires_denoise",
                         "hires_seed",
