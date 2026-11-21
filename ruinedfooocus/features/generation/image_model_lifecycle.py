@@ -36,7 +36,11 @@ def collect_image_models(memory=None):
 
     if memory is None:
         import comfy.model_management as memory
+    from ruinedfooocus.backends.comfy.native_step import end_native_step
 
+    # Drop ComfyUI's reference to the replaced model's largest layer first, or
+    # its whole Dynamic VRAM pool survives the collection below.
+    end_native_step()
     gc.collect(generation=2)
     memory.cleanup_models()
     memory.soft_empty_cache()

@@ -1,0 +1,9 @@
+{
+  "id": "native-step-cleanup",
+  "subject": "Free the previous model's GPU memory after every job and model change",
+  "requires": ["image-viewer-command-bar"],
+  "tests": ["test_native_step.py", "test_benchmark_app.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

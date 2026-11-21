@@ -1470,6 +1470,11 @@ def worker():
             finally:
                 try:
                     cleanup_interrupt(item)
+                    # Upstream ComfyUI's per-node cleanup; without it the previous
+                    # model's Dynamic VRAM pool stays on the GPU (native_step.py).
+                    from ruinedfooocus.backends.comfy.native_step import end_native_step
+
+                    end_native_step()
                 finally:
                     if deferred:
                         pass

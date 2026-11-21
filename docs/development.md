@@ -212,21 +212,31 @@ the server process's dedicated GPU memory and busiest GPU engine from the
 system counters. Record the CPU load next to any timing: on a shared machine,
 other programs changed CPU results by an order of magnitude on 2026-11-20.
 
-Measured 2026-11-20 on an RX 7900 XTX (ROCm, 1024x1024, the model's default
-steps, seed 1234, models used one after another in one session); the run was
-stopped before Krea 2 finished:
+Measured on an RX 7900 XTX (ROCm, 1024x1024, the model's default steps, seed
+1234, models used one after another in one session, three images each):
 
-| Model                    | First image | Later images | GPU memory |
-| ------------------------ | ----------- | ------------ | ---------- |
-| Anima Mayhem 2.9B fp16   | 41 s        | 36-43 s      | 11.5 GB    |
-| JANIMA 2.9B bf16         | 37 s        | 32-33 s      | 17.0 GB    |
-| Flux 3 Klein INT8        | 32 s        | 9.5-11 s     | 21.9 GB    |
-| MOSS Image INT8          | 72 s        | 62-63 s      | 20.1 GB    |
-| Krea 2 BSS INT8 (2 runs) | 37 s        | 103-108 s    | 22.0 GB    |
+| Model                  | 2026-11-20: first / later | 2026-11-21: first / later |
+| ---------------------- | ------------------------- | ------------------------- |
+| Anima Mayhem 2.9B fp16 | 41 s / 36-43 s            | 47 s / 37-39 s            |
+| JANIMA 2.9B bf16       | 37 s / 32-33 s            | 35 s / 30 s               |
+| Flux 3 Klein INT8      | 32 s / 9.5-11 s           | 16.5 s / 9.7 s            |
+| MOSS Image INT8        | 72 s / 62-63 s            | 77 s / 65-66 s            |
+| Krea 2 BSS INT8        | 37 s / 103-108 s          | 29 s / 17-22 s            |
 
-GPU memory grows as models change because earlier ones stay loaded; Krea 2 ran
-about three times slower once 22 of 24 GB were in use. This is not yet
-explained.
+On 2026-11-20 each model change left the previous model's weights on the GPU,
+so by the fifth model 24 of 24 GB were in use and Windows paged GPU memory;
+Krea 2 alone ran at 15 s. ComfyUI's `execution.py` runs a cleanup after every
+node when Dynamic VRAM is on; the embedded app never ran it, so
+`comfy.model_management.LARGEST_AIMDO_CASTED_WEIGHT` kept a layer of the old
+model and, through it, that model's whole Dynamic VRAM pool. The worker now
+runs the same cleanup after every job and before a model is replaced
+(`backends/comfy/native_step.py`): after Anima then JANIMA the GPU holds
+9.4 GB instead of 14.9 GB.
+
+To find what holds GPU memory, list `comfy_aimdo.model_vbar.ModelVBAR`
+instances with `gc.get_objects()` after a job, compare their `loaded_size()`
+with `comfy.model_management.current_loaded_models`, and follow
+`gc.get_referrers()` from any pool no model owns.
 
 Interface callbacks are measured on the server: wrap
 `gradio.blocks.Blocks.process_api` in a scratch launcher to record each
