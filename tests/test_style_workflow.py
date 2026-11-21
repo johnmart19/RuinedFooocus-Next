@@ -240,6 +240,36 @@ class StyleWorkflowTests(unittest.TestCase):
         )
         self.assertIn(words, publish.inputs)
 
+    def test_style_preview_url_prefers_user_override_and_serves_bundled_webp(self):
+        import tempfile
+        from ruinedfooocus.features.prompting.style_catalog import (
+            style_preview_slug,
+            style_preview_url,
+        )
+
+        self.assertEqual(style_preview_slug("Style: photo-film noir"), "style-photo-film-noir")
+        self.assertEqual(style_preview_slug("Artify: Anime"), "artify-anime")
+        with tempfile.TemporaryDirectory() as tmp:
+            bundled = Path(tmp) / "bundled"
+            user = Path(tmp) / "user"
+            bundled.mkdir()
+            user.mkdir()
+            bundled_file = bundled / "style-photo-film-noir.webp"
+            bundled_file.write_bytes(b"RIFF")
+            self.assertEqual(
+                style_preview_url("Style: photo-film noir", preview_dir=bundled, user_dir=user),
+                "/gradio_api/file=" + bundled_file.resolve().as_posix(),
+            )
+            user_file = user / "style-photo-film-noir.png"
+            user_file.write_bytes(b"\x89PNG")
+            self.assertEqual(
+                style_preview_url("Style: photo-film noir", preview_dir=bundled, user_dir=user),
+                "data:image/png;base64,iVBORw==",
+            )
+            self.assertEqual(
+                style_preview_url("Style: nonexistent", preview_dir=bundled, user_dir=user), ""
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

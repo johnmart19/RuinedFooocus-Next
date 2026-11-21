@@ -2184,5 +2184,6 @@
   "settings.disable_use_cpu_for_everything_to_change_default_gpu_backends": "Schakel CPU voor alles gebruiken uit om standaard GPU-backends te wijzigen.",
   "settings.main_background_removal_backend_set_to_backend_click_save_to_keep_it": "Hoofdbackend voor achtergrondverwijdering ingesteld op {backend}. Klik op Opslaan om dit te behouden.",
   "settings.main_background_removal_backend_set_to_windows_ml_backend_click_save_to_keep_it": "Hoofdbackend voor achtergrondverwijdering ingesteld op Windows ML ({backend}). Klik op Opslaan om dit te behouden.",
-  "settings.reinstallation_runs_on_the_next_online_restart_to_switch_or_reinstall_pytorch_use_settings_hardware_backends": "Herinstallatie gebeurt bij de volgende online herstart. Gebruik Instellingen > Hardware & backends om PyTorch te wisselen of opnieuw te installeren."
+  "settings.reinstallation_runs_on_the_next_online_restart_to_switch_or_reinstall_pytorch_use_settings_hardware_backends": "Herinstallatie gebeurt bij de volgende online herstart. Gebruik Instellingen > Hardware & backends om PyTorch te wisselen of opnieuw te installeren.",
+  "prompting.category_list": "Categorielijst"
 }

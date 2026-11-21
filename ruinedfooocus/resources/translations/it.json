@@ -2184,5 +2184,6 @@
   "settings.disable_use_cpu_for_everything_to_change_default_gpu_backends": "Disattiva Usa CPU per tutto per cambiare i backend GPU predefiniti.",
   "settings.main_background_removal_backend_set_to_backend_click_save_to_keep_it": "Backend principale di rimozione sfondo impostato su {backend}. Fai clic su Salva per mantenerlo.",
   "settings.main_background_removal_backend_set_to_windows_ml_backend_click_save_to_keep_it": "Backend principale di rimozione sfondo impostato su Windows ML ({backend}). Fai clic su Salva per mantenerlo.",
-  "settings.reinstallation_runs_on_the_next_online_restart_to_switch_or_reinstall_pytorch_use_settings_hardware_backends": "La reinstallazione verrà eseguita al prossimo riavvio online. Per cambiare o reinstallare PyTorch, usa Impostazioni > Hardware e backend."
+  "settings.reinstallation_runs_on_the_next_online_restart_to_switch_or_reinstall_pytorch_use_settings_hardware_backends": "La reinstallazione verrà eseguita al prossimo riavvio online. Per cambiare o reinstallare PyTorch, usa Impostazioni > Hardware e backend.",
+  "prompting.category_list": "Elenco categorie"
 }

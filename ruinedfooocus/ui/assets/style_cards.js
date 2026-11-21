@@ -53,6 +53,16 @@ function swatchBackground(item) {
   return `radial-gradient(circle at ${rx}% ${ry}%, hsla(${h3}, 85%, 64%, 0.42) 0%, transparent 62%), linear-gradient(${angle}deg, hsl(${h1} 62% 38%) 0%, hsl(${h2} 56% 20%) 100%)`;
 }
 
+function appendFallbackMotif(thumb, item) {
+  thumb.style.background = swatchBackground(item);
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 48 48");
+  svg.setAttribute("class", "rf-style-motif");
+  svg.setAttribute("aria-hidden", "true");
+  svg.innerHTML = GROUP_MOTIFS[item.group] || GROUP_MOTIFS["General styles"];
+  thumb.appendChild(svg);
+}
+
 function renderStyles() {
   const data = props.value || {};
   const tabsEl = element.querySelector(".rf-style-tabs");
@@ -76,9 +86,8 @@ function renderStyles() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "rf-style-tab";
-    btn.role = "tab";
     btn.dataset.group = tab.id;
-    btn.setAttribute("aria-selected", String(activeGroup === tab.id));
+    btn.setAttribute("aria-pressed", String(activeGroup === tab.id));
     btn.textContent = tab.label;
     tabsEl.appendChild(btn);
   }
@@ -108,19 +117,23 @@ function renderStyles() {
 
     const thumb = document.createElement("span");
     thumb.className = "rf-style-thumb";
-    thumb.style.background = swatchBackground(item);
 
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("viewBox", "0 0 48 48");
-    svg.setAttribute("class", "rf-style-motif");
-    svg.setAttribute("aria-hidden", "true");
-    svg.innerHTML = GROUP_MOTIFS[item.group] || GROUP_MOTIFS["General styles"];
-    thumb.appendChild(svg);
-
-    const tag = document.createElement("span");
-    tag.className = "rf-style-group-tag";
-    tag.textContent = item.group;
-    thumb.appendChild(tag);
+    if (item.preview) {
+      thumb.style.background = "var(--background-fill-secondary, #18181b)";
+      const img = document.createElement("img");
+      img.className = "rf-style-img";
+      img.src = item.preview;
+      img.alt = "";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.onerror = () => {
+        img.remove();
+        appendFallbackMotif(thumb, item);
+      };
+      thumb.appendChild(img);
+    } else {
+      appendFallbackMotif(thumb, item);
+    }
 
     if (rank) {
       const badge = document.createElement("span");

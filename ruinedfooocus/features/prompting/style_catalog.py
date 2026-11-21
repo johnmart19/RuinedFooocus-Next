@@ -1,13 +1,15 @@
 """Read-only style discovery shared by prompt composition and the UI."""
 
+import base64
 import csv
 from dataclasses import dataclass, replace
 from functools import lru_cache
 import locale
 from pathlib import Path
 import re
+from urllib.parse import quote
 
-from ruinedfooocus.core.paths import data_path, resource_path
+from ruinedfooocus.core.paths import asset_path, data_path, resource_path
 
 STYLE_ALIASES = {
     value: "Local chat model"
@@ -108,6 +110,42 @@ def style_templates(default_file=None, user_file=None):
         name: (style.prompt, style.negative_prompt)
         for name, style in load_catalog(default_file, user_file).items()
     }
+
+
+def style_preview_slug(name):
+    """Filesystem-safe stable slug for a style's preview image."""
+    slug = re.sub(r"[^a-z0-9]+", "-", (name or "").casefold()).strip("-")
+    return slug or "style"
+
+
+def style_preview_url(name, *, preview_dir=None, user_dir=None):
+    """Return a served URL (or data URI for user overrides) for a style preview image."""
+    slug = style_preview_slug(name)
+    mime_by_ext = {
+        ".webp": "image/webp",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+    }
+    override_root = Path(user_dir) if user_dir is not None else data_path("settings", "style_previews")
+    if override_root.is_dir():
+        for ext, mime in mime_by_ext.items():
+            candidate = override_root / f"{slug}{ext}"
+            if candidate.is_file():
+                try:
+                    raw = candidate.read_bytes()
+                    if 0 < len(raw) <= 512 * 1024:
+                        return f"data:{mime};base64,{base64.b64encode(raw).decode('ascii')}"
+                except OSError:
+                    continue
+    bundled_root = Path(preview_dir) if preview_dir is not None else Path(asset_path("style_previews"))
+    if bundled_root.is_dir():
+        for ext in mime_by_ext:
+            candidate = bundled_root / f"{slug}{ext}"
+            if candidate.is_file():
+                resolved = candidate.resolve()
+                return "/gradio_api/file=" + quote(resolved.as_posix(), safe="/:")
+    return ""
 
 
 def style_label(name):

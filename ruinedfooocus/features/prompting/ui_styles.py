@@ -13,6 +13,7 @@ from ruinedfooocus.features.prompting.style_catalog import (
     merge_selection,
     normalize_selection,
     style_label,
+    style_preview_url,
     resolve_inline_styles,
 )
 from ruinedfooocus.features.prompting.style_catalog import style_templates as load_styles
@@ -41,9 +42,6 @@ def create_ui(settings):
     selection = gr.Dropdown(
         choices=list(load_styles()), value=initial, multiselect=True, visible=False
     )
-    gr.Markdown(
-        translate_ui("Selected styles apply when you generate. Category headings only open groups.")
-    )
     search = gr.Textbox(
         label=translate_ui("Search styles"),
         placeholder=translate_ui("Find a style or category"),
@@ -51,7 +49,7 @@ def create_ui(settings):
         elem_id="style-search",
     )
     summary = gr.Textbox(
-        label=translate_ui("Applied in order"), interactive=False, lines=2, max_lines=6
+        label=translate_ui("Applied in order"), interactive=False, lines=1, max_lines=3
     )
     catalog = load_catalog()
     groups = list(dict.fromkeys([style.group for style in catalog.values()] + ["Custom"]))
@@ -67,7 +65,14 @@ def create_ui(settings):
             label = style_label(name)
             if text and text not in (name + " " + label + " " + group).casefold():
                 continue
-            items.append(dict(name=name, label=label, group=group))
+            items.append(
+                dict(
+                    name=name,
+                    label=label,
+                    group=group,
+                    preview=style_preview_url(name),
+                )
+            )
             if group not in active_groups:
                 active_groups.append(group)
         return dict(
@@ -117,27 +122,30 @@ def create_ui(settings):
             and text in (name + " " + style_label(name) + " " + style.group).casefold()
         ]
 
-    for group in groups:
-        with gr.Accordion(group, open=False, visible=bool(choices_for(group, ""))) as accordion:
-            options = gr.CheckboxGroup(
-                label=group,
-                show_label=False,
-                choices=choices_for(group, ""),
-                elem_classes="rf-style-choices",
+    with gr.Accordion(translate_ui("Category list"), open=False):
+        for group in groups:
+            with gr.Accordion(group, open=False, visible=bool(choices_for(group, ""))) as accordion:
+                options = gr.CheckboxGroup(
+                    label=group,
+                    show_label=False,
+                    choices=choices_for(group, ""),
+                    elem_classes="rf-style-choices",
+                )
+            checkboxes.append(options)
+            accordions.append(accordion)
+
+            def choose(current, chosen, query, group=group):
+                return merge_selection(
+                    current, [name for _, name in choices_for(group, query)], chosen
+                )
+
+            options.input(
+                choose,
+                inputs=[selection, options, search],
+                outputs=selection,
+                queue=False,
+                api_visibility="undocumented",
             )
-        checkboxes.append(options)
-        accordions.append(accordion)
-
-        def choose(current, chosen, query, group=group):
-            return merge_selection(current, [name for _, name in choices_for(group, query)], chosen)
-
-        options.input(
-            choose,
-            inputs=[selection, options, search],
-            outputs=selection,
-            queue=False,
-            api_visibility="undocumented",
-        )
 
     def refresh(current, query):
         chosen = normalize_selection(current)

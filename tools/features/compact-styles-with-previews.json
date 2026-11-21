@@ -1,0 +1,13 @@
+{
+  "id": "compact-styles-with-previews",
+  "subject": "Compact Create Styles grid into 4 columns with real 160x160 WebP preview thumbnails for all 191 styles",
+  "requires": ["hardware-backends-hub-rework"],
+  "tests": [
+    "test_style_workflow.py",
+    "test_style_catalog.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

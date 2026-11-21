@@ -2184,5 +2184,6 @@
   "settings.disable_use_cpu_for_everything_to_change_default_gpu_backends": "기본 GPU 백엔드를 변경하려면 모든 작업에 CPU 사용을 끄세요.",
   "settings.main_background_removal_backend_set_to_backend_click_save_to_keep_it": "기본 배경 제거 백엔드를 {backend}(으)로 설정했습니다. 유지하려면 저장을 클릭하세요.",
   "settings.main_background_removal_backend_set_to_windows_ml_backend_click_save_to_keep_it": "기본 배경 제거 백엔드를 Windows ML ({backend})(으)로 설정했습니다. 유지하려면 저장을 클릭하세요.",
-  "settings.reinstallation_runs_on_the_next_online_restart_to_switch_or_reinstall_pytorch_use_settings_hardware_backends": "재설치는 다음 온라인 재시작 시 실행됩니다. PyTorch 전환 또는 재설치는 설정 > 하드웨어 및 백엔드를 사용하세요."
+  "settings.reinstallation_runs_on_the_next_online_restart_to_switch_or_reinstall_pytorch_use_settings_hardware_backends": "재설치는 다음 온라인 재시작 시 실행됩니다. PyTorch 전환 또는 재설치는 설정 > 하드웨어 및 백엔드를 사용하세요.",
+  "prompting.category_list": "카테고리 목록"
 }
