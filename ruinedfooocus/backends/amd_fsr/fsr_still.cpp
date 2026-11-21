@@ -70,46 +70,103 @@ static void writeRaw(const char* path, const Image& image)
     std::fclose(f);
 }
 
-static float cubic(float x)
+static uint16_t floatToHalf(float value)
 {
-    // Catmull-Rom.
-    x = std::fabs(x);
-    if (x < 1) return 1.5f * x * x * x - 2.5f * x * x + 1;
-    if (x < 2) return -0.5f * x * x * x + 2.5f * x * x - 4 * x + 2;
-    return 0;
+    uint32_t bits = 0;
+    std::memcpy(&bits, &value, sizeof(bits));
+    const uint32_t sign = (bits >> 16) & 0x8000u;
+    int32_t exp = int32_t((bits >> 23) & 0xffu) - 127 + 15;
+    uint32_t mant = bits & 0x7fffffu;
+    if (exp <= 0) {
+        if (exp < -10) return uint16_t(sign);
+        mant = (mant | 0x800000u) >> (1 - exp);
+        return uint16_t(sign | ((mant + 0x1000u) >> 13));
+    }
+    if (exp >= 31) return uint16_t(sign | 0x7bffu);
+    return uint16_t(sign | (uint32_t(exp) << 10) | ((mant + 0x1000u) >> 13));
 }
 
-// The frame a camera shifted by (jx, jy) pixels would render: out(p) = source(p - sign * j).
-static void jittered(const Image& source, float jx, float jy, float sign, uint8_t* out, uint32_t rowPitch)
+static float lanczos3(float x)
+{
+    x = std::fabs(x);
+    if (x < 1e-6f) return 1.0f;
+    if (x >= 3.0f) return 0.0f;
+    const float pi = 3.14159265358979323846f;
+    const float px = pi * x;
+    return (std::sin(px) / px) * (std::sin(px / 3.0f) / (px / 3.0f));
+}
+
+// Separable Lanczos-3 resampling in sRGB float, written as RGBA16F (zero 8-bit quantization).
+static void jitteredSrgb(
+    const std::vector<float>& srgbRgb,
+    uint32_t uw,
+    uint32_t uh,
+    float jx,
+    float jy,
+    float sign,
+    uint8_t* out,
+    uint32_t rowPitch,
+    std::vector<float>& horiz)
 {
     const float sx = -sign * jx, sy = -sign * jy;
     const int bx = int(std::floor(sx)), by = int(std::floor(sy));
-    float wx[4], wy[4];
-    for (int k = 0; k < 4; ++k) {
-        wx[k] = cubic((sx - bx) - float(k - 1));
-        wy[k] = cubic((sy - by) - float(k - 1));
+    const float fx = sx - float(bx), fy = sy - float(by);
+    float wx[6], wy[6], sumX = 0.0f, sumY = 0.0f;
+    for (int k = 0; k < 6; ++k) {
+        wx[k] = lanczos3(fx - float(k - 2));
+        wy[k] = lanczos3(fy - float(k - 2));
+        sumX += wx[k];
+        sumY += wy[k];
     }
-    const int w = int(source.w), h = int(source.h);
-    std::vector<float> row(size_t(w) * 4);
+    for (int k = 0; k < 6; ++k) {
+        wx[k] /= sumX;
+        wy[k] /= sumY;
+    }
+    const int w = int(uw), h = int(uh);
+    horiz.resize(size_t(w) * h * 3);
     for (int y = 0; y < h; ++y) {
+        const float* srcRow = srgbRgb.data() + size_t(y) * w * 3;
+        float* dstRow = horiz.data() + size_t(y) * w * 3;
         for (int x = 0; x < w; ++x) {
-            float acc[4] = {0, 0, 0, 0};
-            for (int j = 0; j < 4; ++j) {
-                int yy = y + by + j - 1;
-                yy = yy < 0 ? 0 : yy >= h ? h - 1 : yy;
-                for (int i = 0; i < 4; ++i) {
-                    int xx = x + bx + i - 1;
-                    xx = xx < 0 ? 0 : xx >= w ? w - 1 : xx;
-                    const uint8_t* p = &source.rgba[(size_t(yy) * w + xx) * 4];
-                    const float weight = wx[i] * wy[j];
-                    for (int c = 0; c < 4; ++c) acc[c] += weight * p[c];
-                }
+            float r = 0.0f, g = 0.0f, b = 0.0f;
+            for (int k = 0; k < 6; ++k) {
+                int xx = x + bx + k - 2;
+                xx = xx < 0 ? 0 : xx >= w ? w - 1 : xx;
+                const float* p = srcRow + size_t(xx) * 3;
+                const float wt = wx[k];
+                r += wt * p[0];
+                g += wt * p[1];
+                b += wt * p[2];
             }
-            uint8_t* o = out + size_t(y) * rowPitch + size_t(x) * 4;
-            for (int c = 0; c < 4; ++c) {
-                float v = acc[c] + 0.5f;
-                o[c] = uint8_t(v < 0 ? 0 : v > 255 ? 255 : v);
+            dstRow[size_t(x) * 3 + 0] = r;
+            dstRow[size_t(x) * 3 + 1] = g;
+            dstRow[size_t(x) * 3 + 2] = b;
+        }
+    }
+    const uint16_t oneHalf = floatToHalf(1.0f);
+    for (int y = 0; y < h; ++y) {
+        uint16_t* oRow = reinterpret_cast<uint16_t*>(out + size_t(y) * rowPitch);
+        int ys[6];
+        for (int k = 0; k < 6; ++k) {
+            int yy = y + by + k - 2;
+            ys[k] = yy < 0 ? 0 : yy >= h ? h - 1 : yy;
+        }
+        for (int x = 0; x < w; ++x) {
+            float r = 0.0f, g = 0.0f, b = 0.0f;
+            for (int k = 0; k < 6; ++k) {
+                const float* p = horiz.data() + (size_t(ys[k]) * w + x) * 3;
+                const float wt = wy[k];
+                r += wt * p[0];
+                g += wt * p[1];
+                b += wt * p[2];
             }
+            r = r < 0.0f ? 0.0f : r > 1.0f ? 1.0f : r;
+            g = g < 0.0f ? 0.0f : g > 1.0f ? 1.0f : g;
+            b = b < 0.0f ? 0.0f : b > 1.0f ? 1.0f : b;
+            oRow[size_t(x) * 4 + 0] = floatToHalf(r);
+            oRow[size_t(x) * 4 + 1] = floatToHalf(g);
+            oRow[size_t(x) * 4 + 2] = floatToHalf(b);
+            oRow[size_t(x) * 4 + 3] = oneHalf;
         }
     }
 }
@@ -219,6 +276,14 @@ int main(int argc, char** argv)
     const float sharpness = argc > 8 ? float(std::atof(argv[8])) : -1.0f;
     if (outW < source.w || outH < source.h) fail("output must not be smaller than the input");
 
+    std::vector<float> srgbRgb(size_t(source.w) * source.h * 3);
+    for (size_t i = 0, n = size_t(source.w) * source.h; i < n; ++i) {
+        srgbRgb[i * 3 + 0] = source.rgba[i * 4 + 0] / 255.0f;
+        srgbRgb[i * 3 + 1] = source.rgba[i * 4 + 1] / 255.0f;
+        srgbRgb[i * 3 + 2] = source.rgba[i * 4 + 2] / 255.0f;
+    }
+    std::vector<float> horizScratch;
+
     Gpu gpu;
     ComPtr<IDXGIFactory6> factory;
     CHECK(CreateDXGIFactory2(0, IID_PPV_ARGS(&factory)), "dxgi factory");
@@ -256,7 +321,7 @@ int main(int argc, char** argv)
     }
     if (!wanted.empty() && !chosen) fail("requested upscaler version is not available");
 
-    auto color = gpu.texture(source.w, source.h, DXGI_FORMAT_R8G8B8A8_UNORM, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_COPY_DEST);
+    auto color = gpu.texture(source.w, source.h, DXGI_FORMAT_R16G16B16A16_FLOAT, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_COPY_DEST);
     auto depth = gpu.texture(source.w, source.h, DXGI_FORMAT_R32_FLOAT, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_COPY_DEST);
     auto motion = gpu.texture(source.w, source.h, DXGI_FORMAT_R16G16_FLOAT, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_COPY_DEST);
     auto output = gpu.texture(outW, outH, DXGI_FORMAT_R16G16B16A16_FLOAT, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
@@ -293,7 +358,7 @@ int main(int argc, char** argv)
     ffxContext context = nullptr;
     ffxCreateContextDescUpscale create{};
     create.header.type = FFX_API_CREATE_CONTEXT_DESC_TYPE_UPSCALE;
-    create.flags = FFX_UPSCALE_ENABLE_AUTO_EXPOSURE | FFX_UPSCALE_ENABLE_NON_LINEAR_COLORSPACE;
+    create.flags = FFX_UPSCALE_ENABLE_NON_LINEAR_COLORSPACE;
     create.maxRenderSize = {source.w, source.h};
     create.maxUpscaleSize = {outW, outH};
     create.fpMessage = message;
@@ -323,7 +388,7 @@ int main(int argc, char** argv)
     phaseQuery.displayWidth = outW;
     phaseQuery.pOutPhaseCount = &phases;
     if (ffxQuery(&context, &phaseQuery.header) != 0 || phases <= 0) fail("jitter phase count");
-    if (frames <= 0) frames = phases * 3;
+    if (frames <= 0) frames = phases;
     std::printf("jitter phases: %d, frames: %d\n", phases, frames);
 
     for (int frame = 0; frame < frames; ++frame) {
@@ -338,7 +403,7 @@ int main(int argc, char** argv)
 
         void* data = nullptr;
         CHECK(colorUpload->Map(0, nullptr, &data), "map color");
-        jittered(source, jx, jy, sign, static_cast<uint8_t*>(data), colorFp.Footprint.RowPitch);
+        jitteredSrgb(srgbRgb, source.w, source.h, jx, jy, sign, static_cast<uint8_t*>(data), colorFp.Footprint.RowPitch, horizScratch);
         colorUpload->Unmap(0, nullptr);
         if (frame) gpu.transition(color.Get(), D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_COPY_DEST);
         gpu.copyFromBuffer(color.Get(), colorUpload.Get(), colorFp);

@@ -1,0 +1,14 @@
+{
+  "id": "amd-fsr-still-calibration",
+  "subject": "Calibrate AMD FSR 2-4 still helper with FP16 Lanczos-3 jitter resampling, single Halton cycle, and no auto-exposure shift",
+  "requires": ["automatic-upscale-amd-fsr"],
+  "tests": [
+    "test_amd_fsr1.py",
+    "test_amd_fsr4.py",
+    "test_amd_fsr_runtime.py",
+    "test_automatic_upscale_fsr.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}
