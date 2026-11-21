@@ -2154,5 +2154,8 @@
   "image_editing.pag_scale": "PAG スケール",
   "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Perturbed Attention Guidance の強度（例: 3.0）。空欄で無効。",
   "image_editing.differential_diffusion_smooth_inpaint": "Differential Diffusion（滑らかなインペイント）",
-  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "グラデーションマスク強度を使用してインペイント境界を滑らかにします。"
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "グラデーションマスク強度を使用してインペイント境界を滑らかにします。",
+  "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "公式 llama.cpp の更新を管理するには Auto、CPU、Vulkan、ROCm、または SYCL を選択してください。",
+  "settings.auto_update_llama_cpp_to_latest_release": "llama.cpp を最新リリースへ自動更新",
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "オンライン時に最新の検証済み公式 llama.cpp リリースを自動でチェックしてインストールします。"
 }

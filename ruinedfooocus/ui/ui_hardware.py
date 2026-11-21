@@ -225,14 +225,34 @@ def image_status_text(locale=None, choice=None, cpu_forced=False, device_name=""
 def create_llama_update_controls(llama_backend, cpu_everywhere, initial_backend):
     from ruinedfooocus.backends.llama import llama_update
 
+    def _auto_update_default():
+        try:
+            import ruinedfooocus.app.state as shared
+
+            return bool(
+                getattr(getattr(shared, "settings", None), "default_settings", {}).get(
+                    "llama_auto_update", True
+                )
+            )
+        except Exception:
+            return True
+
     def local_status(backend, locale=None):
         tag = llama_update.configured_build(backend)
         if tag is None:
             return localize(
-                "Select CPU or Vulkan to check for an official llama.cpp prebuilt.", locale
+                "Select Auto, CPU, Vulkan, ROCm, or SYCL to manage official llama.cpp updates.",
+                locale,
             )
         return localize("Configured llama.cpp build: {tag}.", locale, tag=tag)
 
+    auto_update_toggle = gr.Checkbox(
+        label=t("Auto-update llama.cpp to latest release"),
+        value=_auto_update_default(),
+        info=t(
+            "Automatically check for and install the latest verified official llama.cpp release when online."
+        ),
+    )
     status = gr.Markdown(local_status(initial_backend))
     selection = gr.State(None)
     with gr.Row():
@@ -240,10 +260,31 @@ def create_llama_update_controls(llama_backend, cpu_everywhere, initial_backend)
         update = gr.Button(t("Install llama.cpp update"), size="sm", interactive=False)
         rollback = gr.Button(t("Use pinned llama.cpp build"), size="sm")
 
+    def save_auto_update(enabled):
+        try:
+            import ruinedfooocus.app.state as shared
+
+            if getattr(shared, "settings", None) is not None:
+                shared.settings.default_settings["llama_auto_update"] = bool(enabled)
+                if hasattr(shared.settings, "save_settings"):
+                    shared.settings.save_settings()
+        except Exception:
+            pass
+
+    auto_update_toggle.change(
+        save_auto_update,
+        inputs=auto_update_toggle,
+        api_visibility="private",
+        queue=False,
+        show_progress="hidden",
+    )
+
     def checked_backend(backend, cpu):
-        if cpu and backend == "Vulkan":
+        if cpu and backend in ("Vulkan", "ROCm", "SYCL"):
             raise RuntimeError("CPU-only mode is active. Select CPU to manage updates.")
-        return backend
+        if cpu and backend == "Auto":
+            return "CPU"
+        return llama_update.resolve_backend(backend)
 
     def reset(backend, request: gr.Request):
         return local_status(backend, locale_of(request)), None, gr.update(interactive=False)

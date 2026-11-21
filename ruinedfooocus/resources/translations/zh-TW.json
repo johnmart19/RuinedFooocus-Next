@@ -2154,5 +2154,8 @@
   "image_editing.pag_scale": "PAG 強度",
   "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Perturbed Attention Guidance 強度（例如 3.0）。留空以停用。",
   "image_editing.differential_diffusion_smooth_inpaint": "差分擴散（平滑局部重繪）",
-  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "使用漸層遮罩強度以獲得更平滑的局部重繪過渡。"
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "使用漸層遮罩強度以獲得更平滑的局部重繪過渡。",
+  "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "選擇 Auto、CPU、Vulkan、ROCm 或 SYCL 以管理官方 llama.cpp 更新。",
+  "settings.auto_update_llama_cpp_to_latest_release": "自動將 llama.cpp 更新至最新版本",
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "連線時自動檢查並安裝經驗證的最新官方 llama.cpp 版本。"
 }

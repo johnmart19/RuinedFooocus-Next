@@ -2154,5 +2154,8 @@
   "image_editing.pag_scale": "PAG-skala",
   "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Styrka för Perturbed Attention Guidance (t.ex. 3.0). Lämna tomt för att inaktivera.",
   "image_editing.differential_diffusion_smooth_inpaint": "Differentiell diffusion (mjuk inpainting)",
-  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Använder gradientmaskstyrkor för mjukare inpainting-övergångar."
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Använder gradientmaskstyrkor för mjukare inpainting-övergångar.",
+  "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "Välj Auto, CPU, Vulkan, ROCm eller SYCL för att hantera officiella llama.cpp-uppdateringar.",
+  "settings.auto_update_llama_cpp_to_latest_release": "Uppdatera llama.cpp automatiskt till senaste versionen",
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Sök automatiskt efter och installera den senaste verifierade officiella llama.cpp-versionen när du är online."
 }

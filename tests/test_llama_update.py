@@ -47,7 +47,7 @@ class LlamaUpdateTests(unittest.TestCase):
 
     def release(self, tag, backend="CPU", **overrides):
         name = llama_installer.package_name(
-            "Windows", "AMD64", backend == "Vulkan", backend=backend, version=tag
+            "Windows", "AMD64", backend != "CPU", rocm=backend == "ROCm", backend=backend, version=tag
         )
         asset = {
             "name": name,
@@ -80,19 +80,35 @@ class LlamaUpdateTests(unittest.TestCase):
         self.assertEqual(self.get.call_args.args[0], llama_update._RELEASES)
         self.assertFalse(self.get.call_args.kwargs["allow_redirects"])
 
-    def test_offline_custom_and_auto_checks_make_no_request(self):
+    def test_offline_custom_and_unsupported_checks_make_no_request(self):
         self.offline.return_value = True
         with self.assertRaisesRegex(RuntimeError, "offline"):
             llama_update.check_update("CPU")
         with self.assertRaisesRegex(RuntimeError, "offline"):
             llama_update.install_update("CPU", self.candidate(), Mock())
         self.offline.return_value = False
-        with self.assertRaisesRegex(RuntimeError, "explicit CPU or Vulkan"):
-            llama_update.check_update("Auto")
+        with self.assertRaisesRegex(RuntimeError, "Select CPU, Vulkan, ROCm, SYCL, or Auto"):
+            llama_update.check_update("CUDA 13.5")
         with patch.dict(os.environ, LLAMA_SERVER="custom.exe"):
             with self.assertRaisesRegex(RuntimeError, "custom binary"):
                 llama_update.check_update("CPU")
         self.get.assert_not_called()
+
+    def test_rocm_and_auto_resolve_and_auto_update_to_latest_release(self):
+        rocm_release = self.release("b12608", backend="ROCm")
+        self.get.side_effect = [
+            nullcontext(Response(json.dumps([rocm_release]).encode())),
+            nullcontext(Response(self.archive)),
+        ]
+        with patch.object(llama_installer, "preferred_backend", return_value="ROCm"):
+            tag = llama_update.ensure_latest_build("Auto", max_age_seconds=3600)
+            self.assertEqual(tag, "b12608")
+            selected_tag, executable = llama_update.selected_build("ROCm")
+            self.assertEqual(selected_tag, "b12608")
+            self.assertIsNotNone(executable)
+            # Second call within throttle window makes no extra GitHub request.
+            self.assertIsNone(llama_update.ensure_latest_build("Auto", max_age_seconds=3600))
+        self.assertEqual(self.get.call_count, 2)
 
     def test_cancelled_release_check_never_reaches_network(self):
         with self.assertRaises(CancelledError):
@@ -282,21 +298,23 @@ class LlamaUpdateTests(unittest.TestCase):
             self.assertEqual(tag, candidate.tag)
             self.assertEqual(executable.read_bytes(), binary)
 
-    def test_only_explicit_backend_uses_the_updated_executable(self):
+    def test_auto_and_explicit_managed_backends_use_the_updated_executable(self):
         with (
+            patch.object(llama_update, "ensure_latest_build", return_value=None) as auto_check,
             patch.object(
                 llama_update, "selected_build", return_value=("b12462", Path("updated"))
             ) as selected,
             patch.object(llama_server, "server_path", return_value=Path("pinned")),
             patch.object(llama_server, "runtime_environment", return_value={}),
         ):
-            self.assertEqual(llama_server.resolve_runtime(False, "Auto")[0], Path("pinned"))
-            selected.assert_not_called()
+            self.assertEqual(llama_server.resolve_runtime(False, "Auto")[0], Path("updated"))
             self.assertEqual(llama_server.resolve_runtime(False, "CPU")[0], Path("updated"))
-            selected.assert_called_once_with("CPU")
+            self.assertEqual(auto_check.call_count, 2)
+            self.assertEqual(selected.call_count, 2)
 
     def test_failed_vulkan_initialization_retries_the_pinned_backend(self):
         with (
+            patch.object(llama_update, "ensure_latest_build", return_value=None),
             patch.object(llama_update, "selected_build", return_value=("b12462", Path("updated"))),
             patch.object(llama_server, "server_path", return_value=Path("pinned")),
             patch.object(llama_server, "runtime_environment", return_value={}),
@@ -313,6 +331,7 @@ class LlamaUpdateTests(unittest.TestCase):
 
     def test_vulkan_device_crash_stops_without_trying_a_second_binary(self):
         with (
+            patch.object(llama_update, "ensure_latest_build", return_value=None),
             patch.object(llama_update, "selected_build", return_value=("b12462", Path("updated"))),
             patch.object(llama_server, "server_path") as pinned,
             patch.object(llama_server, "runtime_environment", return_value={}),

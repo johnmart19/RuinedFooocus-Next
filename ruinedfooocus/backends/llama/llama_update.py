@@ -1,4 +1,4 @@
-"""Explicit opt-in updates for the official CPU and Vulkan llama.cpp builds."""
+"""Managed and automatic updates for official llama.cpp prebuilt releases."""
 
 from dataclasses import dataclass
 import hashlib
@@ -27,6 +27,8 @@ from ruinedfooocus.packaging.startup_options import skip_dependency_install
 _RELEASES = "https://api.github.com/repos/ggml-org/llama.cpp/releases"
 _DOWNLOAD = "https://github.com/ggml-org/llama.cpp/releases/download"
 _ASSET_HOSTS = {"release-assets.githubusercontent.com", "objects.githubusercontent.com"}
+MANAGED_BACKENDS = ("CPU", "Vulkan", "ROCm", "SYCL")
+AUTO_UPDATE_CHECK_INTERVAL_SECONDS = 6 * 3600
 # The reviewed Linux CUDA 12.8 cudart companion is 594 MB.
 _MAX_ARCHIVE = 768 * 1024**2
 _MAX_EXTRACTED = 2 * 1024**3
@@ -54,32 +56,48 @@ class PrebuiltUpdate:
         return {"name": self.name, "url": self.url, "sha256": self.sha256}
 
 
+def resolve_backend(backend):
+    """Resolve 'Auto' to the host's preferred managed backend."""
+    if backend == "Auto":
+        system, machine = platform.system(), platform.machine().lower()
+        return installer.preferred_backend(system, machine)
+    return backend
+
+
 def _family(backend):
     system, machine = platform.system(), platform.machine().lower()
+    backend = resolve_backend(backend)
     if (
-        backend not in {"CPU", "Vulkan"}
+        backend not in MANAGED_BACKENDS
         or system not in {"Windows", "Linux"}
         or machine not in {"amd64", "x86_64", "arm64", "aarch64"}
     ):
         raise RuntimeError(
-            "Select an explicit CPU or Vulkan backend on supported Windows/Linux hardware."
+            "Select CPU, Vulkan, ROCm, SYCL, or Auto on supported Windows/Linux hardware."
         )
     if os.environ.get("LLAMA_SERVER"):
         raise RuntimeError(
             "LLAMA_SERVER selects a custom binary. Managed updates apply to the packaged runtime."
         )
-    return system, machine
+    return system, machine, backend
 
 
 def _pointer(backend):
-    system, machine = _family(backend)
+    system, machine, backend = _family(backend)
     return native_runtime_root("llama.cpp", "selected", f"{system}-{machine}-{backend}.json")
 
 
+def _check_stamp(backend):
+    system, machine, backend = _family(backend)
+    return native_runtime_root(
+        "llama.cpp", "selected", f"{system}-{machine}-{backend}.checked.json"
+    )
+
+
 def _package(backend, tag):
-    system, machine = _family(backend)
+    system, machine, backend = _family(backend)
     return installer.package_name(
-        system, machine, backend == "Vulkan", backend=backend, version=tag
+        system, machine, backend != "CPU", rocm=backend == "ROCm", backend=backend, version=tag
     )
 
 
@@ -103,8 +121,12 @@ def _read_selected(backend):
 
 
 def selected_build(backend, *, progress_callback=None, check_cancelled=None):
-    """Return the verified, explicitly selected build for a new Chat process."""
-    if backend not in {"CPU", "Vulkan"} or os.environ.get("LLAMA_SERVER"):
+    """Return the verified, selected build for a new Chat process."""
+    if os.environ.get("LLAMA_SERVER"):
+        return installer.VERSION, None
+    try:
+        _, _, backend = _family(backend)
+    except RuntimeError:
         return installer.VERSION, None
     installer._check(check_cancelled)
     try:
@@ -145,6 +167,7 @@ def _candidate(release, backend):
     tag, assets = release.get("tag_name"), release.get("assets")
     if not isinstance(tag, str) or not _TAG.fullmatch(tag) or not isinstance(assets, list):
         return None
+    _, _, backend = _family(backend)
     name = _package(backend, tag)
     url = f"{_DOWNLOAD}/{tag}/{name}"
     for asset in assets:
@@ -167,7 +190,7 @@ def _candidate(release, backend):
 
 def check_update(backend, *, progress_callback=None, check_cancelled=None):
     """Discover the highest numbered compatible release in GitHub's recent releases."""
-    _family(backend)
+    _, _, backend = _family(backend)
     installer._check(check_cancelled)
     if skip_dependency_install():
         raise RuntimeError("Update checks are disabled by offline or skip-install mode.")
@@ -341,7 +364,7 @@ def _extract(archive, directory, *, check_cancelled=None):
 def _verify_executable(executable, candidate, *, progress_callback=None, check_cancelled=None):
     from ruinedfooocus.backends.llama.runtime_probe import probe_runtime
 
-    gpu = candidate.backend == "Vulkan"
+    gpu = candidate.backend != "CPU"
     environment = installer.runtime_environment(gpu, backend=candidate.backend, acquire=False)
     installer._emit(
         progress_callback,
@@ -382,8 +405,10 @@ def _verify_executable(executable, candidate, *, progress_callback=None, check_c
                     }
                 }
             )
-        if gpu and not probe_runtime(executable, environment, "Vulkan", **callbacks):
-            raise RuntimeError("The staged llama.cpp build did not expose a usable Vulkan device.")
+        if gpu and not probe_runtime(executable, environment, candidate.backend, **callbacks):
+            raise RuntimeError(
+                f"The staged llama.cpp build did not expose a usable {candidate.backend} device."
+            )
     except (OSError, subprocess.TimeoutExpired) as error:
         raise RuntimeError(
             "The staged llama.cpp executable could not be verified on this host."
@@ -392,6 +417,7 @@ def _verify_executable(executable, candidate, *, progress_callback=None, check_c
 
 def install_update(backend, candidate, progress, *, progress_callback=None, check_cancelled=None):
     """Stage and validate the selected candidate before atomically enabling it."""
+    _, _, backend = _family(backend)
     pointer = _pointer(backend)
     installer._check(check_cancelled)
     callbacks = installer._callbacks(progress_callback, check_cancelled)
@@ -485,3 +511,50 @@ def use_pinned_build(backend):
     with installation_lock(pointer, timeout=0):
         pointer.unlink(missing_ok=True)
     return installer.VERSION
+
+
+def ensure_latest_build(
+    backend,
+    *,
+    auto_update=True,
+    max_age_seconds=AUTO_UPDATE_CHECK_INTERVAL_SECONDS,
+    progress_callback=None,
+    check_cancelled=None,
+):
+    """Automatically check and install the latest official llama.cpp release when online.
+
+    Throttled per backend via a local timestamp so startup/Chat loads never exceed
+    GitHub API rate limits. Failures never block Chat startup; callers fall back to
+    the existing selected or pinned build.
+    """
+    if not auto_update or skip_dependency_install() or os.environ.get("LLAMA_SERVER"):
+        return None
+    try:
+        _, _, backend = _family(backend)
+        stamp = _check_stamp(backend)
+    except RuntimeError:
+        return None
+    now = time.time()
+    if max_age_seconds > 0:
+        try:
+            saved = json.loads(stamp.read_text(encoding="utf-8"))
+            if isinstance(saved, dict) and now - float(saved.get("checked_at", 0)) < max_age_seconds:
+                return None
+        except (OSError, ValueError, TypeError):
+            pass
+    callbacks = installer._callbacks(progress_callback, check_cancelled)
+    try:
+        selected, candidate = check_update(backend, **callbacks)
+        try:
+            stamp.parent.mkdir(parents=True, exist_ok=True)
+            save_json(stamp, {"checked_at": now, "tag": candidate.tag if candidate else selected})
+        except OSError:
+            pass
+        if candidate is None:
+            return None
+        tag = install_update(backend, candidate, lambda *_: None, **callbacks)
+        print(f"Auto-updated llama.cpp ({backend}) to {tag}.")
+        return tag
+    except (RuntimeError, OSError, ValueError) as error:
+        print(f"llama.cpp auto-update check skipped ({backend}): {error}")
+        return None

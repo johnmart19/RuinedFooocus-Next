@@ -2154,5 +2154,8 @@
   "image_editing.pag_scale": "PAG ölçeği",
   "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Perturbed Attention Guidance gücü (örn. 3.0). Devre dışı bırakmak için boş bırakın.",
   "image_editing.differential_diffusion_smooth_inpaint": "Diferansiyel difüzyon (yumuşak inpaint)",
-  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Daha yumuşak inpaint geçişleri için gradyan maske güçlerini kullanır."
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Daha yumuşak inpaint geçişleri için gradyan maske güçlerini kullanır.",
+  "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "Resmi llama.cpp güncellemelerini yönetmek için Auto, CPU, Vulkan, ROCm veya SYCL seçin.",
+  "settings.auto_update_llama_cpp_to_latest_release": "llama.cpp sürümünü otomatik olarak en son sürüme güncelle",
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Çevrimiçiyken en son doğrulanmış resmi llama.cpp sürümünü otomatik olarak denetler ve yükler."
 }

@@ -2154,5 +2154,8 @@
   "image_editing.pag_scale": "PAG-schaal",
   "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Sterkte van Perturbed Attention Guidance (bijv. 3.0). Laat leeg om uit te schakelen.",
   "image_editing.differential_diffusion_smooth_inpaint": "Differentiële diffusie (vloeiend inpainten)",
-  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Gebruikt gradiëntmaskersterktes voor vloeiendere inpaint-overgangen."
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Gebruikt gradiëntmaskersterktes voor vloeiendere inpaint-overgangen.",
+  "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "Kies Auto, CPU, Vulkan, ROCm of SYCL om officiële llama.cpp-updates te beheren.",
+  "settings.auto_update_llama_cpp_to_latest_release": "llama.cpp automatisch bijwerken naar de nieuwste versie",
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Controleert en installeert automatisch de nieuwste geverifieerde officiële llama.cpp-versie wanneer je online bent."
 }

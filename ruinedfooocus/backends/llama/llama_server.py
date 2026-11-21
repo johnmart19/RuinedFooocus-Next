@@ -121,18 +121,33 @@ def resolve_runtime(gpu, backend, *, check_cancelled=None, progress_callback=Non
                 # A cached binary can still lack its SDK/WSL bridge. Give its
                 # dependency acquisition one online attempt before CPU fallback.
                 uncached.append(choice)
-    if backend == preferred and backend in ("CPU", "Vulkan") and not os.environ.get("LLAMA_SERVER"):
-        from ruinedfooocus.backends.llama.llama_update import selected_build
+    from ruinedfooocus.backends.llama import llama_update
 
-        tag, updated = selected_build(backend, **callbacks)
+    if preferred in llama_update.MANAGED_BACKENDS and not os.environ.get("LLAMA_SERVER"):
+        auto_update = True
+        try:
+            import ruinedfooocus.app.state as shared
+
+            auto_update = bool(
+                getattr(getattr(shared, "settings", None), "default_settings", {}).get(
+                    "llama_auto_update", True
+                )
+            )
+        except Exception:
+            pass
+        if auto_update:
+            llama_update.ensure_latest_build(preferred, **callbacks)
+        tag, updated = llama_update.selected_build(preferred, **callbacks)
         if updated is not None:
             try:
-                result = attempt(backend, False, executable=updated)
+                result = attempt(preferred, False, executable=updated)
                 if result and result[3]:
                     return (*result, "")
             except RuntimeUnavailable:
                 pass
-            print(f"Chat could not initialize llama.cpp {tag} ({backend}); using the pinned build.")
+            print(
+                f"Chat could not initialize llama.cpp {tag} ({preferred}); using the pinned build."
+            )
 
     first = attempt(preferred, True)
     if first and first[3]:

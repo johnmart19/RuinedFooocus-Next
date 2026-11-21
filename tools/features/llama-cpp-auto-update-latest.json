@@ -1,0 +1,15 @@
+{
+  "id": "llama-cpp-auto-update-latest",
+  "subject": "Enable automatic and managed llama.cpp updates to the latest official release across Auto, CPU, Vulkan, ROCm, and SYCL",
+  "requires": ["comfy-advanced-guidance-and-upscale-factor-fix"],
+  "tests": [
+    "test_llama_update.py",
+    "test_llama_acquisition.py",
+    "test_cached_llama_runtime.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false,
+  "native_comfy_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+}

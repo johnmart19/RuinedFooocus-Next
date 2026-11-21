@@ -2154,5 +2154,8 @@
   "image_editing.pag_scale": "Scala PAG",
   "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Intensità di Perturbed Attention Guidance (es. 3.0). Lascia vuoto per disattivare.",
   "image_editing.differential_diffusion_smooth_inpaint": "Diffusione differenziale (inpaint morbido)",
-  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Usa intensità graduali della maschera per transizioni di inpaint più morbide."
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Usa intensità graduali della maschera per transizioni di inpaint più morbide.",
+  "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "Seleziona Auto, CPU, Vulkan, ROCm o SYCL per gestire gli aggiornamenti ufficiali di llama.cpp.",
+  "settings.auto_update_llama_cpp_to_latest_release": "Aggiorna automaticamente llama.cpp all’ultima versione",
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Controlla e installa automaticamente l’ultima versione ufficiale verificata di llama.cpp quando sei online."
 }

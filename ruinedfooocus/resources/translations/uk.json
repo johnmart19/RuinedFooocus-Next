@@ -2154,5 +2154,8 @@
   "image_editing.pag_scale": "Масштаб PAG",
   "image_editing.perturbed_attention_guidance_strength_e_g_3_0_leave_blank_to_disable": "Сила Perturbed Attention Guidance (напр. 3.0). Залиште порожнім, щоб вимкнути.",
   "image_editing.differential_diffusion_smooth_inpaint": "Диференційна дифузія (плавний inpaint)",
-  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Використовує градієнтну силу маски для плавніших переходів inpaint."
+  "image_editing.uses_gradient_mask_strengths_for_smoother_inpaint_transitions": "Використовує градієнтну силу маски для плавніших переходів inpaint.",
+  "settings.select_auto_cpu_vulkan_rocm_or_sycl_to_manage_official_llama_cpp_updates": "Виберіть Auto, CPU, Vulkan, ROCm або SYCL для керування офіційними оновленнями llama.cpp.",
+  "settings.auto_update_llama_cpp_to_latest_release": "Автоматично оновлювати llama.cpp до останньої версії",
+  "settings.automatically_check_for_and_install_the_latest_verified_official_llama_cpp_release_when_online": "Автоматично перевіряти та встановлювати останній перевірений офіційний реліз llama.cpp за наявності інтернету."
 }
