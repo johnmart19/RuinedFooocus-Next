@@ -18,14 +18,13 @@ from ruinedfooocus.features.gallery.image_metadata import control_value
 def family_for_checkpoint(name):
     import ruinedfooocus.app.state as shared
 
-    info = shared.models.get_models_by_path("checkpoints", name, fetch=False)
-    family = shared.models.get_model_base(info)
     path = shared.models.get_file("checkpoints", name)
     if path is not None:
         detected = shared.models.detect_checkpoint_base(path)
         if detected:
-            family = detected
-    return family
+            return detected
+    info = shared.models.get_models_by_path("checkpoints", name, fetch=False)
+    return shared.models.get_model_base(info)
 
 
 def control_visibility(family):

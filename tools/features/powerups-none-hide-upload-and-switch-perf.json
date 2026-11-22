@@ -1,0 +1,17 @@
+{
+  "id": "powerups-none-hide-upload-and-switch-perf",
+  "subject": "Hide Power-ups image upload and histogram on Image tool None and speed up tool switching",
+  "requires": ["powerups-visibility-and-prompt-tools-redesign"],
+  "tests": [
+    "test_powerup_family_controls.py",
+    "test_image_workflow_modes.py",
+    "test_image_rembg_options.py",
+    "test_qwen_image21_local_edit.py",
+    "test_image_histogram.py",
+    "test_event_coalescing.py",
+    "test_editor_workspace_events.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

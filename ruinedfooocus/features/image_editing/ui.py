@@ -230,7 +230,8 @@ def input_context(
         label = "Input image"
     return [
         gr.update(
-            visible=not composition
+            visible=bool(kind)
+            and not composition
             and kind not in ("qwen-union", "latent-compose")
             and not input_only
             and (not active or not qwen_local and kind not in (None, "img2img")),
@@ -420,7 +421,11 @@ def add_controlnet_tab(
         # True while Image to image stands in for a native edit the checkpoint lacks.
         edit_fell_back = gr.State(False)
         cn_selection.input(
-            lambda: False, outputs=edit_fell_back, api_visibility="undocumented", queue=False
+            lambda: False,
+            outputs=edit_fell_back,
+            api_visibility="undocumented",
+            queue=False,
+            show_progress="hidden",
         )
 
         cn_name = gr.Textbox(
@@ -614,6 +619,8 @@ def add_controlnet_tab(
             inputs=cn_selection,
             outputs=rembg_force,
             api_visibility="undocumented",
+            queue=False,
+            show_progress="hidden",
         )
 
         def cn_changed(selection, control_type, checkpoint, moss_format=None, apply_values=True):
@@ -675,6 +682,8 @@ def add_controlnet_tab(
             inputs=[cn_selection, cn_type, base_model, moss_format_control],
             outputs=cn_outputs + cn_sliders,
             api_visibility="undocumented",
+            queue=False,
+            show_progress="hidden",
         )
         cn_selection.change(
             lambda *values: cn_changed(*values, apply_values=False),
@@ -864,7 +873,7 @@ def add_controlnet_tab(
             type="pil",
             image_mode="RGBA",
             format="png",
-            visible=True,
+            visible=False,
         )
         add_ctrl("input_image", input_image)
         gr.on(
@@ -920,7 +929,7 @@ def add_controlnet_tab(
             create_ui as histogram_ui,
         )
 
-        histogram_ui(input_image)
+        histogram_ui(input_image, tool_selection=cn_selection)
         from ruinedfooocus.features.image_processing.ui_image_composition import (
             create_ui as composition_ui,
         )

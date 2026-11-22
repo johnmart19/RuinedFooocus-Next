@@ -995,6 +995,14 @@ def launch_app(args):
             app_settings.language_control,
         ],
     )
+    coalesce(
+        main_tabs,
+        [
+            shared.get_ctrl("cn_selection"),
+            shared.get_ctrl("cn_type"),
+        ],
+        event="input",
+    )
     normalize_hidden_progress(main_tabs)
     # Show the app's own ValueError/PermissionError/FileNotFoundError text in the
     # browser instead of Gradio's generic "Error".

@@ -86,7 +86,9 @@ class ImageWorkflowModeTests(unittest.TestCase):
         models.detect_checkpoint_base.return_value = "QwenImage"
         values = scope["input_context"](True, "None", "Img2img", "selected")
         self.assertEqual(values[2], {"visible": False, "value": False})
-        self.assertTrue(values[0]["visible"])
+        self.assertFalse(values[0]["visible"])
+        active_values = scope["input_context"](True, "Img2Img", "Img2img", "selected")
+        self.assertTrue(active_values[0]["visible"])
 
     def test_exactly_one_preview_is_visible_for_each_edit_inpaint_and_upscale_mode(self):
         run = function(

@@ -195,10 +195,15 @@ class PowerUpFamilyTests(unittest.TestCase):
             self.assertIn("Canny", choices)
             self.assertIn("Depth", choices)
         models.detect_checkpoint_base.assert_called_with(Path("model.safetensors"))
-        models.get_models_by_path.assert_called_with("checkpoints", "selected", fetch=False)
+        models.get_models_by_path.assert_not_called()
         # Real tensor architecture takes precedence over misleading cached metadata.
         models.detect_checkpoint_base.return_value = "QwenImage"
         self.assertFalse(scope["checkpoint_features"]("selected")["sdxl"])
+        # Cached metadata is consulted only when local header detection returns None.
+        models.detect_checkpoint_base.return_value = None
+        models.get_model_base.return_value = "Pony"
+        self.assertTrue(scope["checkpoint_features"]("selected")["sdxl"])
+        models.get_models_by_path.assert_called_with("checkpoints", "selected", fetch=False)
 
     def test_native_edits_keep_upload_route_and_only_native_control_families_offer_processors(self):
         scope, models = functions()
@@ -312,7 +317,7 @@ class PowerUpFamilyTests(unittest.TestCase):
                 normal, normal_strength = scope["input_context"](
                     False, selection, kind, "selected"
                 )[:2]
-                self.assertTrue(normal["visible"])
+                self.assertEqual(normal["visible"], selection != "None")
                 self.assertEqual(
                     normal_strength["visible"], True if selection != "None" else False
                 )
@@ -332,8 +337,10 @@ class PowerUpFamilyTests(unittest.TestCase):
         for family in ("MageFlow", "Fibo2", "QwenImage"):
             with self.subTest(family=family):
                 models.detect_checkpoint_base.return_value = family
-                update = scope["input_context"](False, "None", "Img2img", "selected")[0]
-                self.assertEqual(update, {"visible": True, "label": "Image edit reference"})
+                none_update = scope["input_context"](False, "None", "Img2img", "selected")[0]
+                self.assertEqual(none_update, {"visible": False, "label": "Image edit reference"})
+                active_update = scope["input_context"](False, "Img2Img", "Img2img", "selected")[0]
+                self.assertEqual(active_update, {"visible": True, "label": "Image edit reference"})
 
     def test_custom_strength_hints_follow_the_type_instead_of_the_previous_preset(self):
         scope, _ = functions()

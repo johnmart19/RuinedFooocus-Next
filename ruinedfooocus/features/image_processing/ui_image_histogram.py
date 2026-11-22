@@ -33,8 +33,10 @@ async def analyze_source(image):
         job.cancelled.set()
 
 
-def create_ui(input_image):
-    with gr.Accordion(translate_ui("Histogram analysis"), open=False):
+def create_ui(input_image, *, tool_selection=None):
+    with gr.Accordion(
+        translate_ui("Histogram analysis"), open=False, visible=tool_selection is None
+    ) as section:
         gr.Markdown(
             translate_ui(
                 "Analyze this source without a model. Shows 256 bins for RGB, BT.709 luminance and each channel. "
@@ -46,6 +48,16 @@ def create_ui(input_image):
             cancel = gr.Button(translate_ui("Cancel analysis"))
         plot = gr.HTML()
         data = gr.JSON(label=translate_ui("Histogram bins and source details"), open=False)
+    if tool_selection is not None:
+        gr.on(
+            triggers=[tool_selection.change, input_image.change],
+            fn=lambda sel, img: gr.update(visible=bool((sel and sel != "None") or img is not None)),
+            inputs=[tool_selection, input_image],
+            outputs=[section],
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
+        )
     event = analyze.click(
         analyze_source,
         inputs=input_image,
