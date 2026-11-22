@@ -9,7 +9,7 @@ def configure_qwen_attention(patcher):
     from comfy.cli_args import args
     from comfy.ldm.modules.attention import attention_sub_quad
 
-    if patcher.model.__class__.__name__ != "QwenImage":
+    if patcher.model.__class__.__name__ not in ("QwenImage", "QwenImage21"):
         return False
     if platform.system() != "Windows" or not torch.version.hip or args.cpu:
         return False

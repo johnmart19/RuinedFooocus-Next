@@ -1,0 +1,14 @@
+{
+  "id": "runtime-optimizations-and-comfy-model-coverage",
+  "subject": "Expose Image FP8/attention/--fast and LLM Flash Attention/KV-cache/batch/mmap optimizations, and close ComfyUI model alias gaps",
+  "requires": ["more-options-file-output-and-auxiliary-cleanup"],
+  "tests": [
+    "test_runtime_optimizations_and_models.py",
+    "test_image_compute.py",
+    "test_settings_ui.py",
+    "test_profile_transactions.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

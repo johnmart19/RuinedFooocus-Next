@@ -2205,5 +2205,16 @@
   "prompting.variations": "バリエーション",
   "prompting.describe": "説明を生成",
   "prompting.image_to_describe": "説明する画像",
-  "shell.images_to_generate": "生成する画像数"
+  "shell.images_to_generate": "生成する画像数",
+  "settings.flash_attention": "Flash Attention",
+  "settings.speeds_up_long_context_attention_and_is_required_for_quantized_kv_caches": "長いコンテキストの注意計算を高速化し、量子化KVキャッシュに必要です。",
+  "settings.kv_cache_quantization": "KVキャッシュ量子化",
+  "settings.q8_0_halves_context_vram_with_minimal_quality_impact_q4_0_saves_more_vram_for_long_contexts": "q8_0は品質への影響を最小限にコンテキストVRAMを半減し、q4_0はさらにVRAMを節約します。",
+  "settings.prompt_batch_size": "プロンプトバッチサイズ",
+  "settings.tokens_processed_per_prompt_evaluation_batch_0_uses_the_llama_cpp_default_e_g_2048": "1回のプロンプト評価バッチで処理するトークン数。0はllama.cppの既定値（例：2048）を使用します。",
+  "settings.memory_mapped_weights_mmap": "メモリマップ重み読み込み (mmap)",
+  "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "自動はllama.cppの既定のmmap読み込みを使用します。低速ドライブやRAM不足時は無効にしてください。",
+  "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "ネイティブPyTorch SDPA、Flash、Sage、AMD Composable Kernel (CK)、SplitまたはQuad Attention。",
+  "settings.fast_matrix_optimizations": "高速行列最適化",
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "オプションのComfyUI --fastカーネル（FP16累積、FP8行列積、またはすべて）。再現性がわずかに変わる場合があります。"
 }

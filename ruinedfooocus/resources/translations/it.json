@@ -2205,5 +2205,16 @@
   "prompting.variations": "Variazioni",
   "prompting.describe": "Descrivi",
   "prompting.image_to_describe": "Immagine da descrivere",
-  "shell.images_to_generate": "Immagini da generare"
+  "shell.images_to_generate": "Immagini da generare",
+  "settings.flash_attention": "Flash Attention",
+  "settings.speeds_up_long_context_attention_and_is_required_for_quantized_kv_caches": "Accelera l'attenzione su contesti lunghi ed è richiesta per cache KV quantizzate.",
+  "settings.kv_cache_quantization": "Quantizzazione cache KV",
+  "settings.q8_0_halves_context_vram_with_minimal_quality_impact_q4_0_saves_more_vram_for_long_contexts": "q8_0 dimezza la VRAM di contesto con impatto minimo; q4_0 risparmia ancora più VRAM.",
+  "settings.prompt_batch_size": "Dimensione batch prompt",
+  "settings.tokens_processed_per_prompt_evaluation_batch_0_uses_the_llama_cpp_default_e_g_2048": "Token elaborati per batch di valutazione. 0 usa il valore predefinito di llama.cpp (es. 2048).",
+  "settings.memory_mapped_weights_mmap": "Pesi mappati in memoria (mmap)",
+  "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "Auto usa il caricamento mmap predefinito di llama.cpp. Disattiva con dischi lenti o poca RAM.",
+  "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "PyTorch SDPA nativo, Flash, Sage, AMD Composable Kernel (CK), split o quad attention.",
+  "settings.fast_matrix_optimizations": "Ottimizzazioni matriciali veloci",
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "Kernel --fast opzionali di ComfyUI (accumulo FP16, matmul FP8 o tutti). Può alterare leggermente il determinismo."
 }

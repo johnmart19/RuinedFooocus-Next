@@ -2205,5 +2205,16 @@
   "prompting.variations": "变体",
   "prompting.describe": "描述图像",
   "prompting.image_to_describe": "要描述的图像",
-  "shell.images_to_generate": "生成图像数量"
+  "shell.images_to_generate": "生成图像数量",
+  "settings.flash_attention": "Flash Attention",
+  "settings.speeds_up_long_context_attention_and_is_required_for_quantized_kv_caches": "加速长上下文注意力计算，且为量化 KV 缓存所必需。",
+  "settings.kv_cache_quantization": "KV 缓存量化",
+  "settings.q8_0_halves_context_vram_with_minimal_quality_impact_q4_0_saves_more_vram_for_long_contexts": "q8_0 可将上下文显存减半且画质影响极小；q4_0 可为长上下文节省更多显存。",
+  "settings.prompt_batch_size": "提示词批处理大小",
+  "settings.tokens_processed_per_prompt_evaluation_batch_0_uses_the_llama_cpp_default_e_g_2048": "每次提示词评估批次处理的 token 数。0 使用 llama.cpp 默认值（如 2048）。",
+  "settings.memory_mapped_weights_mmap": "内存映射权重 (mmap)",
+  "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "自动使用 llama.cpp 默认 mmap 加载。若磁盘较慢或内存吃紧可禁用。",
+  "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "原生 PyTorch SDPA、Flash、Sage、AMD Composable Kernel (CK)、Split 或 Quad 注意力。",
+  "settings.fast_matrix_optimizations": "快速矩阵优化",
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "可选 ComfyUI --fast 内核（FP16 累加、FP8 矩阵乘法或全部）。可能略微影响输出确定性。"
 }

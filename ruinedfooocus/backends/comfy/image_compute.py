@@ -54,12 +54,17 @@ ADVANCED_CONTROLS = (
     (
         "image_attention",
         "Attention implementation",
-        "Native PyTorch, split or quad attention. CUDA/ROCm-specific fused extensions remain explicit CLI options.",
+        "Native PyTorch SDPA, Flash, Sage, AMD Composable Kernel (CK), split, or quad attention.",
     ),
     (
         "image_attention_upcast",
         "Attention upcasting",
         "Auto follows native stability safeguards. Disabling may change numerical quality.",
+    ),
+    (
+        "image_fast_mode",
+        "Fast matrix optimizations",
+        "Optional ComfyUI --fast kernels (FP16 accumulation, FP8 matmul, or all). May slightly alter output determinism.",
     ),
     (
         "image_compiler",
@@ -226,7 +231,7 @@ def apply_compute(args, values, options=()):
                 continue
             flag = precision.lower() + "_" + suffix
             setattr(args, flag, True)
-            if precision in ("FP16", "BF16"):
+            if precision in ("FP16", "BF16", "FP8_E4M3FN", "FP8_E5M2"):
                 args._saved_precision_flags = (*getattr(args, "_saved_precision_flags", ()), flag)
     attention = values.get("image_attention", "Auto")
     attention_flags = {
@@ -234,19 +239,35 @@ def apply_compute(args, values, options=()):
         for kind in ("pytorch-cross", "split-cross", "quad-cross", "sage", "flash", "ck")
     }
     if attention != "Auto" and not options.intersection(attention_flags):
-        setattr(
-            args,
-            "use_"
-            + {"PyTorch": "pytorch", "Split": "split", "Quad": "quad"}[attention]
-            + "_cross_attention",
-            True,
-        )
+        attr = {
+            "PyTorch": "use_pytorch_cross_attention",
+            "Split": "use_split_cross_attention",
+            "Quad": "use_quad_cross_attention",
+            "Flash": "use_flash_attention",
+            "Sage": "use_sage_attention",
+            "CK": "use_ck_attention",
+        }[attention]
+        setattr(args, attr, True)
     upcast = values.get("image_attention_upcast", "Auto")
     if upcast != "Auto" and not options.intersection(
         ("--force-upcast-attention", "--dont-upcast-attention")
     ):
         args.force_upcast_attention = upcast == "Enabled"
         args.dont_upcast_attention = upcast == "Disabled"
+    fast_mode = values.get("image_fast_mode", "Auto")
+    if (
+        fast_mode != "Auto"
+        and "--fast" not in options
+        and not getattr(args, "cpu", False)
+        and os.environ.get("TORCH_PLATFORM") != "cpu"
+    ):
+        from ruinedfooocus.backends.comfy.comfy_args import PerformanceFeature
+
+        args.fast = {
+            "FP16 accumulation": [PerformanceFeature.Fp16Accumulation],
+            "FP8 matrix mult": [PerformanceFeature.Fp8MatrixMultiplication],
+            "All": [],
+        }[fast_mode]
     for key, flag in (
         ("image_compiler", "disable_comfy_compiler"),
         ("image_cuda_graphs", "disable_cuda_graphs"),

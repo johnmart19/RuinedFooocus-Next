@@ -255,13 +255,36 @@ class Server:
         layers = int(settings.get("llm_n_gpu_layers", -1)) if gpu else 0
         gpu_layers = "auto" if layers == -1 else "all" if layers < -1 else str(layers)
         predict = settings.get("llm_n_predict", -1)
+        existing_flags = {token.partition("=")[0] for token in (*model_defaults, *extra)}
+        perf_options = []
+        kv_type = str(settings.get("llm_kv_cache_type", "Auto") or "Auto")
+        flash_attn = str(settings.get("llm_flash_attn", "Auto") or "Auto")
+        if kv_type in ("f16", "q8_0", "q4_0"):
+            if not existing_flags.intersection({"--cache-type-k", "-ctk"}):
+                perf_options += ["--cache-type-k", kv_type]
+            if not existing_flags.intersection({"--cache-type-v", "-ctv"}):
+                perf_options += ["--cache-type-v", kv_type]
+            if flash_attn == "Auto" and kv_type != "f16" and gpu:
+                flash_attn = "On"
+        if flash_attn in ("On", "Off") and not existing_flags.intersection(
+            {"--flash-attn", "-fa"}
+        ):
+            perf_options += ["--flash-attn", flash_attn.lower()]
+        batch_size = int(settings.get("llm_batch_size") or 0)
+        if batch_size > 0 and not existing_flags.intersection({"--batch-size", "-b"}):
+            perf_options += ["--batch-size", str(batch_size)]
+        mmap_mode = str(settings.get("llm_mmap", "Auto") or "Auto")
+        if mmap_mode in ("Enabled", "Disabled") and not existing_flags.intersection(
+            {"--mmap", "--no-mmap"}
+        ):
+            perf_options.append("--mmap" if mmap_mode == "Enabled" else "--no-mmap")
         log_options = []
         if identity.get("manifest_verified") and identity.get("tag") in (
             "b12110",
             "b12327",
             "b12366",
         ):
-            flags = {token.partition("=")[0] for token in (*model_defaults, *extra)}
+            flags = existing_flags
             if "LLAMA_ARG_LOG_JSONL" not in environment:
                 log_options.append("--log-jsonl")
             if "LLAMA_ARG_LOG_VERBOSITY" not in environment and not flags.intersection(
@@ -283,6 +306,7 @@ class Server:
             "1",
             "--jinja",
             *log_options,
+            *perf_options,
             *moe_share["arguments"],
             *model_defaults,
             *extra,

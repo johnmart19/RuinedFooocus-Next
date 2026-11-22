@@ -790,6 +790,45 @@ def create_settings(*, models_in_settings=True):
                         step=1,
                     )
                     add_setting("llm_n_gpu_layers", llm_n_gpu_layers)
+                    llm_flash_attn = gr.Dropdown(
+                        label=t("Flash Attention"),
+                        choices=["Auto", "On", "Off"],
+                        value=settings.default_settings.get("llm_flash_attn", "Auto"),
+                        info=t(
+                            "Speeds up long-context attention and is required for quantized KV caches."
+                        ),
+                    )
+                    add_setting("llm_flash_attn", llm_flash_attn)
+                    llm_kv_cache_type = gr.Dropdown(
+                        label=t("KV cache quantization"),
+                        choices=["Auto", "f16", "q8_0", "q4_0"],
+                        value=settings.default_settings.get("llm_kv_cache_type", "Auto"),
+                        info=t(
+                            "q8_0 halves context VRAM with minimal quality impact; q4_0 saves more VRAM for long contexts."
+                        ),
+                    )
+                    add_setting("llm_kv_cache_type", llm_kv_cache_type)
+                    llm_batch_size = gr.Number(
+                        label=t("Prompt batch size"),
+                        info=t(
+                            "Tokens processed per prompt-evaluation batch. 0 uses the llama.cpp default (e.g. 2048)."
+                        ),
+                        interactive=True,
+                        value=settings.default_settings.get("llm_batch_size", 0),
+                        minimum=0,
+                        maximum=16384,
+                        step=128,
+                    )
+                    add_setting("llm_batch_size", llm_batch_size)
+                    llm_mmap = gr.Dropdown(
+                        label=t("Memory-mapped weights (mmap)"),
+                        choices=["Auto", "Enabled", "Disabled"],
+                        value=settings.default_settings.get("llm_mmap", "Auto"),
+                        info=t(
+                            "Auto uses llama.cpp default mmap loading. Disable if loading from slow drives or troubleshooting RAM pressure."
+                        ),
+                    )
+                    add_setting("llm_mmap", llm_mmap)
                     from ruinedfooocus.features.chat.ui_moe_cache import create_moe_cache_settings
 
                     create_moe_cache_settings(
