@@ -3085,6 +3085,7 @@
         "identity",
         "release",
         "architecture",
+        "capabilities",
         "license",
         "runtime_status",
         "source_urls"
@@ -6567,7 +6568,7 @@
       "sha256": "e2b441dc2b00bedd1634f8f2cb33e86a75226b8efb8be9b462a3aebfe6f8f0e0"
     },
     "families/language_inkling_2_mini.json": {
-      "sha256": "b84b18f7da18e68fd74ab7ea1862e879542853259233d6cd2145090852fbcc85"
+      "sha256": "7e538fd26dfc7c511fa830d6455c4a568043a99c19c9ec59b500b1a4b5e8bcf5"
     }
   },
   "benchmark_order": [
@@ -6734,7 +6735,7 @@
       ]
     }
   ],
-  "source_document_sha256": "f3eef27dd2c10388f6c8632786e064085fcefab2a6d8fea9fd325cbf1021e416",
+  "source_document_sha256": "ed43a76cca11b247f9900ec13e1a6534886422176ae8b9f858454af1968e00e7",
   "migration_baseline": {
     "profiles": [
       "language:qwen3_1_7b",

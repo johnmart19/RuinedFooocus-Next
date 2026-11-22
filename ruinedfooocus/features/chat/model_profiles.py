@@ -67,6 +67,15 @@ def chat_load_profile(artifact, values):
             batch=256,
             microbatch=128,
         )
+    if (
+        artifact is not None
+        and artifact.get("profile_id") == "language:inkling_2_mini"
+        and values.get("llm_use_model_defaults", True)
+        and str(settings.get("llm_kv_cache_type", "Auto") or "Auto") == "Auto"
+    ):
+        # Inkling 2 Mini is a 26.4B looped MoE with 5:1 SWA; q8_0 KV cache (which
+        # also enables Flash Attention) keeps 128k context comfortably on 24 GB GPUs.
+        settings["llm_kv_cache_type"] = "q8_0"
     if not (
         artifact is not None
         and artifact.get("id") == "existing:llm/" + COMPACT_CANDIDATE
@@ -214,6 +223,23 @@ def validate_reasoning_request(values):
     return {"mode": mode, "effort": effort}
 
 
+def _template_variables(template):
+    from jinja2 import Environment, meta
+    from jinja2.ext import Extension
+
+    class _GenerationExtension(Extension):
+        """Accept HuggingFace {% generation %}...{% endgeneration %} template tags."""
+
+        tags = {"generation"}
+
+        def parse(self, parser):
+            next(parser.stream)
+            body = parser.parse_statements(("name:endgeneration",), drop_needle=True)
+            return body
+
+    return meta.find_undeclared_variables(Environment(extensions=[_GenerationExtension]).parse(template))
+
+
 def initialized_reasoning(
     artifact, values, template, *, initialized=False, initialized_runtime=None
 ):
@@ -269,10 +295,10 @@ def initialized_reasoning(
             **result,
             "reason": "LFM3 reasoning controls are unavailable while its template and native reasoning budget interaction is unresolved.",
         }
-    from jinja2 import Environment, TemplateError, meta
+    from jinja2 import TemplateError
 
     try:
-        variables = meta.find_undeclared_variables(Environment().parse(template))
+        variables = _template_variables(template)
     except TemplateError:
         return {
             **result,
@@ -288,12 +314,21 @@ def initialized_reasoning(
             "reason": "Auto keeps the template default; Off/On sends its thinking flag. No graded effort is established.",
         }
     if "reasoning_effort" in control and "reasoning_effort" in variables:
+        allowed = tuple(thinking.get("allowed", ()))
         efforts = tuple(
             value.title()
-            for value in thinking.get("allowed", ())
+            for value in allowed
             if value in ("low", "medium", "high")
         )
         if efforts:
+            if "none" in allowed:
+                return {
+                    **result,
+                    "modes": ("Auto", "Off", "On"),
+                    "efforts": efforts,
+                    "control": "reasoning_effort",
+                    "reason": "Auto keeps the template default; Off sends reasoning_effort=none; On sends the selected effort.",
+                }
             return {
                 **result,
                 "modes": ("Auto", "On"),
@@ -320,6 +355,8 @@ def controlled_reasoning_kwargs(capability, values):
         raise ValueError("This model/mode does not support that reasoning effort.")
     if capability["control"] == "enable_thinking":
         return {} if mode == "Auto" else {"enable_thinking": mode == "On"}
+    if mode == "Off":
+        return {"reasoning_effort": "none"}
     return {} if effort == "Auto" else {"reasoning_effort": effort.lower()}
 
 
@@ -369,7 +406,7 @@ def initialized_image_tools(
         configured_runtime,
         task_eligibility,
     )
-    from jinja2 import Environment, TemplateError, meta
+    from jinja2 import TemplateError
 
     runtime = initialized_runtime or configured_runtime(values.get("llm_runtime", "llama.cpp"))
     if task_eligibility(artifact, runtime).status != "source_supported":
@@ -380,7 +417,7 @@ def initialized_image_tools(
     if not profile_for(artifact).get("capabilities", {}).get("tools"):
         return {**result, "reason": "This exact model has no established tool-template contract."}
     try:
-        variables = meta.find_undeclared_variables(Environment().parse(template))
+        variables = _template_variables(template)
     except TemplateError:
         return {**result, "reason": "The initialized tool template could not be inspected."}
     if "tools" not in variables or "tool_calls" not in template:

@@ -21,6 +21,20 @@
         "native_context_tokens": 1048576,
         "multimodal_vision": true
       },
+      "capabilities": {
+        "tools": true,
+        "thinking": {
+          "control": {
+            "reasoning_effort": "reasoning_effort"
+          },
+          "allowed": [
+            "none",
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      },
       "license": {
         "value": "Apache-2.0",
         "declared_upstream": "apache-2.0",

@@ -100,10 +100,19 @@ def task_eligibility(artifact, runtime, task="text"):
     backend = {"llama.cpp": "native_llama_cpp", "xllamacpp": "xllamacpp"}.get(runtime.name)
     support = artifact.get("runtime", {}).get(backend, {})
     source_build = support.get("tested_source_build", support.get("bundled_build"))
-    if runtime.build is None or (
-        runtime.build != source_build
-        and not _audited_native_build(artifact, runtime, task, source_build)
-    ):
+    audited = _audited_native_build(artifact, runtime, task, source_build)
+    minimum_build = support.get("minimum_build")
+    meets_minimum = bool(
+        isinstance(minimum_build, str)
+        and minimum_build.startswith("b")
+        and minimum_build[1:].isdigit()
+        and isinstance(runtime.build, str)
+        and runtime.build.startswith("b")
+        and runtime.build[1:].isdigit()
+        and int(runtime.build[1:]) >= int(minimum_build[1:])
+        and (audited or runtime.origin == "initialized executable manifest")
+    )
+    if runtime.build is None or (runtime.build != source_build and not audited and not meets_minimum):
         return Eligibility(
             "unknown",
             f"{runtime.name}: this build is not covered by the source audit ({runtime.origin}).",
@@ -116,6 +125,11 @@ def task_eligibility(artifact, runtime, task="text"):
         return Eligibility(
             "unsupported",
             support.get("reason", f"{task} input is unsupported by this runtime build."),
+        )
+    if meets_minimum:
+        return Eligibility(
+            "source_supported",
+            f"Source support at {runtime.build}; device execution and quality remain unverified.",
         )
     if state == "source_supported":
         return Eligibility(

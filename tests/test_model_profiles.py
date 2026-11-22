@@ -308,6 +308,48 @@ class ChatProfileTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 validate_settings({"llm_sampling__top_k": value})
 
+    def test_inkling_2_mini_generation_tag_tools_reasoning_and_128k_kv_default(self):
+        from ruinedfooocus.features.chat.model_profiles import chat_load_profile
+        from ruinedfooocus.features.models.model_capabilities import RuntimeIdentity
+
+        artifact = self.artifact("Inkling-2-Mini-Q4_K_M.gguf")
+        template = (
+            "{% if tools %}{{ tools }}{% endif %}"
+            "{% if reasoning_effort %}{{ reasoning_effort }}{% endif %}"
+            "{% for m in messages %}{% generation %}{{ m.tool_calls }}{% endgeneration %}{% endfor %}"
+        )
+        runtime = RuntimeIdentity("llama.cpp", "b12627", origin="initialized executable manifest")
+        adapter = ProfiledChatClient(
+            Mock(),
+            artifact,
+            {},
+            template=template,
+            initialized=True,
+            resources=(("model", 1, 1, 1), ("mmproj", 1, 1, 1)),
+            vision=True,
+            initialized_runtime=runtime,
+        )
+        self.assertTrue(adapter.image_tool_capability["available"])
+        self.assertTrue(adapter.image_tool_capability["vision"])
+        self.assertEqual(adapter.reasoning_capability["modes"], ("Auto", "Off", "On"))
+        self.assertEqual(adapter.reasoning_capability["efforts"], ("Low", "Medium", "High"))
+        self.assertEqual(
+            adapter.parameters({"_rf_reasoning": {"mode": "Off", "effort": "Auto"}})[
+                "chat_template_kwargs"
+            ],
+            {"reasoning_effort": "none"},
+        )
+        self.assertEqual(
+            adapter.parameters({"_rf_reasoning": {"mode": "On", "effort": "Low"}})[
+                "chat_template_kwargs"
+            ],
+            {"reasoning_effort": "low"},
+        )
+        profile_auto = chat_load_profile(artifact, {"llm_kv_cache_type": "Auto"})
+        self.assertEqual(profile_auto.settings["llm_kv_cache_type"], "q8_0")
+        profile_custom = chat_load_profile(artifact, {"llm_kv_cache_type": "q4_0"})
+        self.assertEqual(profile_custom.settings["llm_kv_cache_type"], "q4_0")
+
 
 if __name__ == "__main__":
     unittest.main()

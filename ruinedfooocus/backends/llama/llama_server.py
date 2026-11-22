@@ -279,10 +279,10 @@ class Server:
         ):
             perf_options.append("--mmap" if mmap_mode == "Enabled" else "--no-mmap")
         log_options = []
-        if identity.get("manifest_verified") and identity.get("tag") in (
-            "b12110",
-            "b12327",
-            "b12366",
+        tag = str(identity.get("tag") or "")
+        if identity.get("manifest_verified") and (
+            tag in ("b12110", "b12327", "b12366")
+            or (tag.startswith("b") and tag[1:].isdigit() and int(tag[1:]) >= 12110)
         ):
             flags = existing_flags
             if "LLAMA_ARG_LOG_JSONL" not in environment:
@@ -319,7 +319,7 @@ class Server:
             "--no-webui",
         ]
         requested = native_request(
-            settings, [*model_defaults, *extra], gpu=gpu, environment=environment
+            settings, [*perf_options, *model_defaults, *extra], gpu=gpu, environment=environment
         )
         # Extra arguments follow the defaults, so account for a GPU-layer override.
         layer_flags = re.findall(

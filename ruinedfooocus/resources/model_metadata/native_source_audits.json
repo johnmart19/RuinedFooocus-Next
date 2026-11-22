@@ -471,6 +471,70 @@
         "input_placement": "src/llama-model-loader.cpp, common/log.cpp, common/fit.cpp and LFM3/GPT-OSS model implementations are byte-identical to reviewed b12327; changed llama-model.cpp does not alter mandatory input placement.",
         "tool_reasoning": "common/chat.cpp and mtmd public APIs are byte-identical; changed HTTP/media validation accepts RF inline data URLs and leaves tool/reasoning completion fields intact."
       }
+    },
+    "b12627": {
+      "base_build": "b12110",
+      "checked_date_utc": "2026-11-22",
+      "scope": "source_only",
+      "qualification": "Adds inkling2_loop architecture and multimodal projector support verified against official ggml-org/llama.cpp b12627 release.",
+      "review": "Retains reviewed b12366 architectures and adds inkling2_loop text and image projector support for Inkling 2 Mini.",
+      "architectures": {
+        "bailingmoe3": {
+          "text": "source_supported"
+        },
+        "gemma3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gemma4": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gpt-oss": {
+          "text": "source_supported"
+        },
+        "granite": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "inkling2_loop": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "lfm2": {
+          "text": "source_supported"
+        },
+        "lfm3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "llama": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "mistral3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported"
+        },
+        "qwen2vl": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3": {
+          "text": "source_supported"
+        },
+        "qwen35": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        }
+      }
     }
   }
 }

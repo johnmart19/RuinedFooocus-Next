@@ -305,6 +305,20 @@ class ModelCapabilityTests(unittest.TestCase):
         self.assertFalse(available)
         self.assertEqual([item[1] for item in choices[:2]], [item[1] for item in catalogue[model]])
 
+    def test_inkling_2_mini_requires_audited_b12600_or_newer_runtime(self):
+        row = load_registry().artifact("existing:llm/Inkling-2-Mini-Q4_K_M.gguf")
+        for build in ("b12110", "b12327", "b12366"):
+            runtime = capabilities.RuntimeIdentity("llama.cpp", build)
+            self.assertEqual(capabilities.task_eligibility(row, runtime, "text").status, "unknown")
+            self.assertEqual(capabilities.task_eligibility(row, runtime, "image").status, "unknown")
+        b12627 = capabilities.RuntimeIdentity("llama.cpp", "b12627")
+        self.assertEqual(
+            capabilities.task_eligibility(row, b12627, "text").status, "source_supported"
+        )
+        self.assertEqual(
+            capabilities.task_eligibility(row, b12627, "image").status, "source_supported"
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

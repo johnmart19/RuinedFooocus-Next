@@ -249,7 +249,7 @@ def model_catalogue(source=None):
         if source == "Downloadable" and installed:
             continue
         match = re.fullmatch(
-            r"(.+?)[.-]((?:I?Q\d|MXFP\d|BF16|F16|F32)[A-Za-z0-9_]*)",
+            r"(.+?)[.-]((?:(?:UD-)?I?Q\d|MXFP\d|BF16|F16|F32)[A-Za-z0-9_]*)",
             Path(name).stem,
             flags=re.IGNORECASE,
         )
