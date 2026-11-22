@@ -1554,6 +1554,12 @@ html {
 #generation-controls button + .rf-actions-compact {
   margin-top: 0.5rem !important;
 }
+/* Prevent slider min/max labels (e.g. -10 ... 10) from clipping past narrow panel edges. */
+#generation-controls .range_slider,
+#generation-controls .slider_input_container {
+  box-sizing: border-box !important;
+  padding-inline: 0.25rem !important;
+}
 .rf-size-dims {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr));

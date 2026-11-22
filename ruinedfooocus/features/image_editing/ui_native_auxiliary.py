@@ -49,50 +49,41 @@ def create_ui(base_model, model_refresh, inpaint_toggle):
         return [(t("Off"), None)] + ([(value, value)] if value else [])
 
     with gr.Accordion(t("Native layout and attention"), open=False, visible=active) as panel:
-        gr.Markdown(
-            t(
-                "Guidance is off until a local model is selected. Expand or refresh to list local files."
-            )
-        )
         with gr.Group(visible=layout_active) as layout_group:
             gligen = gr.Dropdown(
                 label=t("GLIGEN model"),
                 choices=initial("gligen"),
                 value=initial_names["gligen"],
-            )
-            layout = gr.Textbox(
-                label=t("Layout boxes (JSON pixels)"),
-                value=defaults.get("gligen_layout", "[]"),
-                lines=3,
-                max_lines=8,
-            )
-            gr.Markdown(
-                t(
-                    "Describe each box literally with text, x, y, width and height. Use ordered boxes and multiples of eight on a fresh image canvas."
-                )
-            )
-            gr.Markdown(
-                t(
+                info=t(
                     "GLIGEN layout uses its matching SD checkpoint and CLIP. Keep image tools, staged refiners and automatic upscaling off."
-                )
+                ),
             )
+            with gr.Group(visible=bool(initial_names["gligen"])) as gligen_options:
+                layout = gr.Textbox(
+                    label=t("Layout boxes (JSON pixels)"),
+                    value=defaults.get("gligen_layout", "[]"),
+                    lines=3,
+                    max_lines=8,
+                    info=t(
+                        "Describe each box literally with text, x, y, width and height. Use ordered boxes and multiples of eight on a fresh image canvas."
+                    ),
+                )
         hypernetwork = gr.Dropdown(
             label=t("Hypernetwork model"),
             choices=initial("hypernetwork"),
             value=initial_names["hypernetwork"],
-        )
-        strength = gr.Slider(
-            label=t("Hypernetwork strength"),
-            minimum=-10,
-            maximum=10,
-            step=0.01,
-            value=defaults.get("hypernetwork_strength", 1.0),
-        )
-        gr.Markdown(
-            t(
+            info=t(
                 "Hypernetworks use matching SD attention dimensions on the primary checkpoint. A handoff refiner keeps its own attention. Signed strength controls the native attention transform."
-            )
+            ),
         )
+        with gr.Group(visible=bool(initial_names["hypernetwork"])) as hypernetwork_options:
+            strength = gr.Slider(
+                label=t("Hypernetwork strength"),
+                minimum=-10,
+                maximum=10,
+                step=0.01,
+                value=defaults.get("hypernetwork_strength", 1.0),
+            )
         refresh_button = gr.Button(t("Refresh guidance files"), size="sm")
     gligen_signature = gr.State(
         defaults.get("gligen_model_signature") if initial_names["gligen"] else None
@@ -143,6 +134,18 @@ def create_ui(base_model, model_refresh, inpaint_toggle):
 
     bind_identity(gligen, gligen_signature, "gligen")
     bind_identity(hypernetwork, hypernetwork_signature, "hypernetwork")
+    gligen.change(
+        lambda name: gr.update(visible=bool(name)),
+        inputs=gligen,
+        outputs=gligen_options,
+        **quiet,
+    )
+    hypernetwork.change(
+        lambda name: gr.update(visible=bool(name)),
+        inputs=hypernetwork,
+        outputs=hypernetwork_options,
+        **quiet,
+    )
 
     def context(name, selected, kind, painting, gligen_name, hypernetwork_name):
         enabled, layout_enabled = context_caps(name, selected, kind, painting)

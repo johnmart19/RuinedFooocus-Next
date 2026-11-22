@@ -1,0 +1,16 @@
+{
+  "id": "more-options-file-output-and-auxiliary-cleanup",
+  "subject": "Hide single-choice PNG color space, progressively disclose GLIGEN/Hypernetwork options, and prevent slider label clipping",
+  "requires": ["ui-alignment-count-sampling-buttons"],
+  "tests": [
+    "test_native_image_formats.py",
+    "test_native_auxiliary_ui.py",
+    "test_layout_progress_targets.py",
+    "test_image_residual_ui_api.py",
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

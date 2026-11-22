@@ -13,7 +13,7 @@ def format_choices(kind):
     depths, spaces = OPTIONS[kind]
     return (
         gr.update(choices=list(depths), value=depths[0]),
-        gr.update(choices=list(spaces), value=spaces[0]),
+        gr.update(choices=list(spaces), value=spaces[0], visible=len(spaces) > 1),
         gr.update(visible=kind == "avif"),
     )
 
@@ -26,15 +26,16 @@ def create_controls():
         value="png",
         info=t("PNG for standard images; OpenEXR for floating-point HDR; Still AVIF for compact RGB."),
     )
-    with gr.Row(elem_classes=["rf-two-col"]):
-        with gr.Column(min_width=0):
-            controls["output_bit_depth"] = gr.Dropdown(
-                label=t("Image bit depth"), choices=list(OPTIONS["png"][0]), value="8-bit"
-            )
-        with gr.Column(min_width=0):
-            controls["output_color_space"] = gr.Dropdown(
-                label=t("Input color space"), choices=list(OPTIONS["png"][1]), value="sRGB"
-            )
+    with gr.Row():
+        controls["output_bit_depth"] = gr.Dropdown(
+            label=t("Image bit depth"), choices=list(OPTIONS["png"][0]), value="8-bit"
+        )
+        controls["output_color_space"] = gr.Dropdown(
+            label=t("Input color space"),
+            choices=list(OPTIONS["png"][1]),
+            value="sRGB",
+            visible=len(OPTIONS["png"][1]) > 1,
+        )
     controls["output_crf"] = gr.Slider(
         label=t("AVIF CRF"), minimum=1, maximum=63, step=1, precision=0, value=18, visible=False
     )
@@ -67,7 +68,9 @@ def replay_values(metadata):
     return {
         "output_format": gr.update(value=values["output_format"]),
         "output_bit_depth": gr.update(choices=list(depths), value=values["output_bit_depth"]),
-        "output_color_space": gr.update(choices=list(spaces), value=values["output_color_space"]),
+        "output_color_space": gr.update(
+            choices=list(spaces), value=values["output_color_space"], visible=len(spaces) > 1
+        ),
         "output_crf": gr.update(
             value=values["output_crf"], visible=values["output_format"] == "avif"
         ),
