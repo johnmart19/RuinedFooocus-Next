@@ -24,13 +24,17 @@ def create_controls():
         label=t("Image file format"),
         choices=[("PNG", "png"), ("OpenEXR", "exr"), ("Still AVIF", "avif")],
         value="png",
+        info=t("PNG for standard images; OpenEXR for floating-point HDR; Still AVIF for compact RGB."),
     )
-    controls["output_bit_depth"] = gr.Dropdown(
-        label=t("Image bit depth"), choices=list(OPTIONS["png"][0]), value="8-bit"
-    )
-    controls["output_color_space"] = gr.Dropdown(
-        label=t("Input color space"), choices=list(OPTIONS["png"][1]), value="sRGB"
-    )
+    with gr.Row(elem_classes=["rf-two-col"]):
+        with gr.Column(min_width=0):
+            controls["output_bit_depth"] = gr.Dropdown(
+                label=t("Image bit depth"), choices=list(OPTIONS["png"][0]), value="8-bit"
+            )
+        with gr.Column(min_width=0):
+            controls["output_color_space"] = gr.Dropdown(
+                label=t("Input color space"), choices=list(OPTIONS["png"][1]), value="sRGB"
+            )
     controls["output_crf"] = gr.Slider(
         label=t("AVIF CRF"), minimum=1, maximum=63, step=1, precision=0, value=18, visible=False
     )
@@ -49,11 +53,6 @@ def create_ui():
     from ruinedfooocus.app import state as shared
 
     with gr.Accordion(t("Image file output"), open=False):
-        gr.Markdown(
-            t(
-                "PNG keeps the usual output. EXR preserves floating point pixels. Still AVIF supports RGB and grayscale; use PNG or EXR for alpha."
-            )
-        )
         controls = create_controls()
     for key, control in controls.items():
         shared.add_ctrl(key, control)

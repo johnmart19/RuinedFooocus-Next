@@ -2192,5 +2192,11 @@
   "shell.cached": "En cache",
   "shell.reset_to_default": "Rétablir par défaut",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "Prévisualisez une reformulation avec le modèle de chat sélectionné.",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Jetons utilise le tokenizer en cache du modèle d’image actuel."
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Jetons utilise le tokenizer en cache du modèle d’image actuel.",
+  "generation.import_latent_and_conditioning_files": "Importer des fichiers latents et de conditionnement",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "PNG pour les images standard ; OpenEXR pour le HDR virgule flottante ; AVIF fixe pour un RGB compact.",
+  "models.built_in": "Intégré",
+  "models.incompatible": "Incompatible",
+  "models.missing": "Manquant",
+  "prompting.parent_selection": "Sélection du parent"
 }

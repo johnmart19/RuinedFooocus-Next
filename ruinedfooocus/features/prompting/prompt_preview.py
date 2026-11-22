@@ -199,13 +199,15 @@ def create_prompt_action(prompt, *, advanced=None, options_label=None):
         with gr.Row(elem_classes=["rf-prompt-actions"], equal_height=True):
             apply = gr.Button(translate_ui("Apply result"))
             dismiss = gr.Button(translate_ui("Dismiss result"))
-    with gr.Accordion(
-        options_label if options_label is not None else translate_ui("Prompt options"),
-        open=False,
-    ):
-        append = gr.Checkbox(label=translate_ui("Append as another prompt"), value=False)
-        if advanced is not None:
+    if advanced is not None:
+        with gr.Accordion(
+            options_label if options_label is not None else translate_ui("Prompt options"),
+            open=False,
+        ):
+            append = gr.Checkbox(label=translate_ui("Append as another prompt"), value=False)
             advanced()
+    else:
+        append = gr.Checkbox(label=translate_ui("Append as another prompt"), value=False)
 
     prompt.change(
         lambda value: value + 1,

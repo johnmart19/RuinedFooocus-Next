@@ -2192,5 +2192,11 @@
   "shell.cached": "已缓存",
   "shell.reset_to_default": "恢复默认",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "使用所选聊天模型预览提示词改写。",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "词元模式使用当前图像模型已缓存的分词器。"
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "词元模式使用当前图像模型已缓存的分词器。",
+  "generation.import_latent_and_conditioning_files": "导入潜在变量与条件文件",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "标准图像用 PNG；浮点 HDR 用 OpenEXR；紧凑 RGB 用静态 AVIF。",
+  "models.built_in": "内置",
+  "models.incompatible": "不兼容",
+  "models.missing": "缺失",
+  "prompting.parent_selection": "父代选择"
 }

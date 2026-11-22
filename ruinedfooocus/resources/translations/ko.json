@@ -2192,5 +2192,11 @@
   "shell.cached": "캐시됨",
   "shell.reset_to_default": "기본값으로 재설정",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "선택한 채팅 모델로 프롬프트 재작성을 미리 봅니다.",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "토큰은 현재 이미지 모델의 캐시된 토크나이저를 사용합니다."
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "토큰은 현재 이미지 모델의 캐시된 토크나이저를 사용합니다.",
+  "generation.import_latent_and_conditioning_files": "잠재 및 컨디셔닝 파일 가져오기",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "일반 이미지는 PNG, 부동 소수점 HDR은 OpenEXR, 컴팩트 RGB는 Still AVIF를 사용합니다.",
+  "models.built_in": "내장됨",
+  "models.incompatible": "호환 불가",
+  "models.missing": "누락됨",
+  "prompting.parent_selection": "부모 프롬프트 선택"
 }

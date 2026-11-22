@@ -2192,5 +2192,11 @@
   "shell.cached": "Zwischengespeichert",
   "shell.reset_to_default": "Auf Standard zurücksetzen",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "Vorschau einer Umformulierung mit dem ausgewählten Chat-Modell.",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens verwendet den zwischengespeicherten Tokenizer des aktuellen Bildmodells."
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens verwendet den zwischengespeicherten Tokenizer des aktuellen Bildmodells.",
+  "generation.import_latent_and_conditioning_files": "Latent- und Konditionierungsdateien importieren",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "PNG für Standardbilder; OpenEXR für Gleitkomma-HDR; Still-AVIF für kompaktes RGB.",
+  "models.built_in": "Integriert",
+  "models.incompatible": "Inkompatibel",
+  "models.missing": "Fehlt",
+  "prompting.parent_selection": "Elternauswahl"
 }

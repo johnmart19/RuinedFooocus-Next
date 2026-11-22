@@ -500,13 +500,20 @@ class PromptCallbackTests(unittest.TestCase):
         }
         self.assertEqual(len(action_sizes), 1)
         self.assertFalse(any("instant" in str(button.value) for button in buttons))
+        quick = next(
+            component
+            for component in self.demo.blocks.values()
+            if isinstance(component, gr.Accordion)
+            and component.label == "Random Prompt — quick"
+        )
+        self.assertTrue(quick.open)
         configured = next(
             component
             for component in self.demo.blocks.values()
             if isinstance(component, gr.Accordion)
             and component.label == "One Button Prompt — configurable"
         )
-        self.assertTrue(configured.open)
+        self.assertFalse(configured.open)
         advanced = next(
             component
             for component in self.demo.blocks.values()

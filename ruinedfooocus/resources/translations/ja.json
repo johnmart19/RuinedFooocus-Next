@@ -2192,5 +2192,11 @@
   "shell.cached": "キャッシュ",
   "shell.reset_to_default": "デフォルトに戻す",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "選択したチャットモデルでリライトをプレビューします。",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "トークンは現在の画像モデルのキャッシュ済みトークナイザーを使用します。"
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "トークンは現在の画像モデルのキャッシュ済みトークナイザーを使用します。",
+  "generation.import_latent_and_conditioning_files": "潜在ファイルとコンディショニングを読み込む",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "標準画像には PNG、浮動小数点 HDR には OpenEXR、軽量 RGB には Still AVIF を使用します。",
+  "models.built_in": "内蔵",
+  "models.incompatible": "非互換",
+  "models.missing": "未導入",
+  "prompting.parent_selection": "親プロンプト選択"
 }

@@ -148,12 +148,14 @@ def save_choice(name, key, value, advanced, overrides, scope):
 
 def create_ui(base_model, overrides, scope, refresh_callback, refresh_outputs):
     with gr.Accordion(translate_ui("Component choices for this checkpoint"), open=False):
-        gr.Markdown(
-            translate_ui(
+        role = gr.Dropdown(
+            label=translate_ui("Component role"),
+            choices=[],
+            interactive=True,
+            info=translate_ui(
                 "Applies on the next load. Automatic keeps the normal VAE; a full approximate codec requires its encoder and decoder."
-            )
+            ),
         )
-        role = gr.Dropdown(label=translate_ui("Component role"), choices=[], interactive=True)
         alternative = gr.Dropdown(
             label=translate_ui("Installed alternative"), choices=[], interactive=False
         )

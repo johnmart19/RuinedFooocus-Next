@@ -2192,5 +2192,11 @@
   "shell.cached": "Önbellekte",
   "shell.reset_to_default": "Varsayılana sıfırla",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "Seçili sohbet modeliyle yeniden yazmayı önizleyin.",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Belirteçler, geçerli görüntü modelinin önbellekteki belirteçleştiricisini kullanır."
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Belirteçler, geçerli görüntü modelinin önbellekteki belirteçleştiricisini kullanır.",
+  "generation.import_latent_and_conditioning_files": "Latent ve koşullandırma dosyalarını içe aktar",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "Standart görüntüler için PNG; kayan noktalı HDR için OpenEXR; kompakt RGB için durağan AVIF.",
+  "models.built_in": "Yerleşik",
+  "models.incompatible": "Uyumsuz",
+  "models.missing": "Eksik",
+  "prompting.parent_selection": "Üst seçim"
 }

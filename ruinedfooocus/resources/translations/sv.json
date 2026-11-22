@@ -2192,5 +2192,11 @@
   "shell.cached": "Cachad",
   "shell.reset_to_default": "Återställ till standard",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "Förhandsgranska en omskrivning med din valda chattmodell.",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens använder den cachade tokenizern för den aktuella bildmodellen."
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens använder den cachade tokenizern för den aktuella bildmodellen.",
+  "generation.import_latent_and_conditioning_files": "Importera latent- och konditioneringsfiler",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "PNG för standardbilder; OpenEXR för flyttals-HDR; Still AVIF för kompakt RGB.",
+  "models.built_in": "Inbyggd",
+  "models.incompatible": "Inkompatibel",
+  "models.missing": "Saknas",
+  "prompting.parent_selection": "Föräldraval"
 }

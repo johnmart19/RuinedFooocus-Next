@@ -122,23 +122,6 @@ def add_evolve_controls(
     with gr.Accordion(translate_ui("Prompt variations"), open=False, elem_id="evolve-controls"):
         state = gr.State(None)
         previous = gr.JSON(None, visible="hidden")
-        parent = gr.Dropdown(
-            [(f"Parent {i}", i - 1) for i in range(1, 10)],
-            value=0,
-            label=translate_ui("Parent index"),
-            interactive=True,
-        )
-        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-            load_parents = gr.Button(
-                translate_ui("Use current prompts as parents"), size="sm"
-            )
-            use_candidates = gr.Button(
-                translate_ui("Use preview as parents"), size="sm"
-            )
-        original = gr.Textbox(
-            label=translate_ui("Original prompt (preserved)"), lines=2, interactive=False
-        )
-        parent_text = gr.Textbox(label=translate_ui("Selected parent"), lines=2, interactive=False)
         mode = gr.Dropdown(
             [
                 (translate_ui("Words"), "Words"),
@@ -153,19 +136,51 @@ def add_evolve_controls(
         count = gr.Slider(
             1, 9, value=9, step=1, label=translate_ui("Candidate count (including parent)")
         )
-        preview_button = gr.Button(translate_ui("Preview variations"), size="sm")
+        preview_button = gr.Button(
+            translate_ui("Preview variations"), variant="primary", size="sm"
+        )
         selected = gr.Dropdown(choices=[], label=translate_ui("Candidate index"), interactive=True)
-        preview = gr.Textbox(label=translate_ui("Variant preview"), lines=4, interactive=False)
+        preview = gr.Textbox(
+            label=translate_ui("Variant preview"),
+            lines=3,
+            interactive=False,
+            elem_classes=["rf-readonly-box"],
+        )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
             apply_button = gr.Button(translate_ui("Apply candidate to prompt"), size="sm")
-            copy_parent = gr.Button(translate_ui("Copy selected parent to prompt"), size="sm")
-        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
             undo_button = gr.Button(translate_ui("Undo prompt change"), size="sm")
-            generate = gr.Button(
-                translate_ui("Generate reviewed candidates"),
-                size="sm",
-                visible=run_event is not None and image_number is not None,
+        generate = gr.Button(
+            translate_ui("Generate reviewed candidates"),
+            size="sm",
+            visible=run_event is not None and image_number is not None,
+        )
+        with gr.Accordion(translate_ui("Parent selection"), open=False):
+            parent = gr.Dropdown(
+                [(f"Parent {i}", i - 1) for i in range(1, 10)],
+                value=0,
+                label=translate_ui("Parent index"),
+                interactive=True,
             )
+            with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
+                load_parents = gr.Button(
+                    translate_ui("Use current prompts as parents"), size="sm"
+                )
+                use_candidates = gr.Button(
+                    translate_ui("Use preview as parents"), size="sm"
+                )
+            original = gr.Textbox(
+                label=translate_ui("Original prompt (preserved)"),
+                lines=2,
+                interactive=False,
+                elem_classes=["rf-readonly-box"],
+            )
+            parent_text = gr.Textbox(
+                label=translate_ui("Selected parent"),
+                lines=2,
+                interactive=False,
+                elem_classes=["rf-readonly-box"],
+            )
+            copy_parent = gr.Button(translate_ui("Copy selected parent to prompt"), size="sm")
 
         def checked(operation, *args, **kwargs):
             try:

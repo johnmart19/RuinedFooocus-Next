@@ -197,27 +197,32 @@ def run_action(name, action, progress, on_verified=None, *, verify_source=True):
 
 def create_ui(base_model, visible=True, model_refresh=None):
     with gr.Column(visible=visible, elem_id="checkpoint-tools") as group:
-        with gr.Row(equal_height=True, elem_classes=["rf-actions"]):
-            inspect = gr.Button(translate_ui("Inspect"), min_width=100)
+        with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
+            inspect = gr.Button(translate_ui("Inspect"), size="sm")
             check = gr.Button(
                 translate_ui("Check weights"),
-                min_width=100,
+                size="sm",
                 interactive=is_safetensors(base_model.value or ""),
             )
-            convert = gr.Button(translate_ui("Create FP16 copy"), min_width=140, interactive=False)
         # A quantized copy for the INT8 kernels of this GPU, and a timed comparison
         # of the pair so the copy is kept on evidence.
-        with gr.Row(equal_height=True, elem_classes=["rf-actions"]):
+        with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
+            convert = gr.Button(translate_ui("Create FP16 copy"), size="sm", interactive=False)
             optimize = gr.Button(
                 translate_ui("Create INT8 copy"),
-                min_width=140,
+                size="sm",
                 interactive=is_safetensors(base_model.value or ""),
                 elem_id="checkpoint-int8-copy",
             )
-            benchmark = gr.Button(
-                translate_ui("Benchmark pair"), min_width=140, elem_id="checkpoint-benchmark-pair"
-            )
-        report = gr.Textbox(label=translate_ui("Checkpoint report"), lines=7, interactive=False)
+        benchmark = gr.Button(
+            translate_ui("Benchmark pair"), size="sm", elem_id="checkpoint-benchmark-pair"
+        )
+        report = gr.Textbox(
+            label=translate_ui("Checkpoint report"),
+            lines=6,
+            interactive=False,
+            elem_classes=["rf-readonly-box"],
+        )
         selection = gr.State(CheckpointToolSelection())
         selection_version = gr.Number(value=0, precision=0, visible=False)
         revision_control = model_refresh if model_refresh is not None else gr.State(0)

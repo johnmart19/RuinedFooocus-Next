@@ -2192,5 +2192,11 @@
   "shell.cached": "In cache",
   "shell.reset_to_default": "Standaard herstellen",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "Bekijk een herschrijving met het geselecteerde chatmodel.",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens gebruikt de gecachte tokenizer van het huidige beeldmodel."
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens gebruikt de gecachte tokenizer van het huidige beeldmodel.",
+  "generation.import_latent_and_conditioning_files": "Latente en conditioneringsbestanden importeren",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "PNG voor standaardafbeeldingen; OpenEXR voor HDR met drijvende komma; stilstaande AVIF voor compact RGB.",
+  "models.built_in": "Ingebouwd",
+  "models.incompatible": "Incompatibel",
+  "models.missing": "Ontbreekt",
+  "prompting.parent_selection": "Ouderselectie"
 }

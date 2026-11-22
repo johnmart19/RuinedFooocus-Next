@@ -638,7 +638,7 @@ def ui_onebutton(
 
         add_quick_prompt_controls(prompt, checkpoint, register_prompt=register_prompt)
 
-        with gr.Accordion(translate_ui("One Button Prompt — configurable"), open=True):
+        with gr.Accordion(translate_ui("One Button Prompt — configurable"), open=False):
             # Part of presets
             with gr.Row():
                 OBP_preset = gr.Dropdown(

@@ -1,0 +1,22 @@
+{
+  "id": "create-advanced-models-prompt-ux",
+  "subject": "Rework More options, Image model components, Checkpoint tools, and Prompt tools for clarity and progressive disclosure",
+  "requires": ["create-size-count-prompt-cleanup"],
+  "tests": [
+    "test_native_image_formats.py",
+    "test_native_tensor_io.py",
+    "test_image_components.py",
+    "test_component_overrides.py",
+    "test_component_profiles.py",
+    "test_checkpoint_selection_lane.py",
+    "test_prompt_variations.py",
+    "test_prompt_workflows.py",
+    "test_prompt_draft_fence.py",
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

@@ -2192,5 +2192,11 @@
   "shell.cached": "W pamięci",
   "shell.reset_to_default": "Przywróć domyślne",
   "prompting.preview_a_rewrite_using_your_selected_chat_model": "Podejrzyj przeredagowanie przy użyciu wybranego modelu czatu.",
-  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokeny używają buforowanego tokenizera bieżącego modelu obrazów."
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokeny używają buforowanego tokenizera bieżącego modelu obrazów.",
+  "generation.import_latent_and_conditioning_files": "Importuj pliki latentne i warunkowania",
+  "image_processing.png_for_standard_images_openexr_for_floating_point_hdr_still_avif_for_compact_rgb": "PNG dla standardowych obrazów; OpenEXR dla HDR zmiennoprzecinkowego; statyczny AVIF dla kompaktowego RGB.",
+  "models.built_in": "Wbudowany",
+  "models.incompatible": "Niezgodny",
+  "models.missing": "Brak",
+  "prompting.parent_selection": "Wybór rodzica"
 }

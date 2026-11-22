@@ -326,8 +326,9 @@ def create_ui(base_model, models, model_refresh=None, catalogue_button=None):
             label=translate_ui("Selected model"),
             show_label=False,
             value=describe(base_model.value),
-            lines=3,
+            lines=4,
             interactive=False,
+            elem_classes=["rf-readonly-box"],
         )
     gr.on(
         triggers=[base_model.change]

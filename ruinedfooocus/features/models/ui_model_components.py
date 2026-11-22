@@ -1,4 +1,4 @@
-from ruinedfooocus.core.translation_manager import translate_ui
+from ruinedfooocus.core.translation_manager import localize, localized_output, resolve_locale, translate_ui
 
 """Image checkpoint component inventory for Models."""
 
@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 from concurrent.futures import CancelledError
 import threading
+from urllib.parse import urlparse
 
 import gradio as gr
 
@@ -258,6 +259,70 @@ def cancel_download(request: gr.Request):
                 job["handle"].cancel()
 
 
+def _safe_component_url(url):
+    if not isinstance(url, str) or not url:
+        return None
+    parsed = urlparse(url)
+    if parsed.scheme == "https" and parsed.hostname in ("huggingface.co", "civitai.com"):
+        return url
+    return None
+
+
+def build_component_cards_payload(rows, details, locale=None):
+    """Build compact card payload from (rows, details) without showing raw JSON or clipped DataFrame."""
+    items = []
+    detail_map = details if isinstance(details, dict) else {}
+    row_list = rows.values.tolist() if hasattr(rows, "values") else (rows or [])
+    for idx, (key, info) in enumerate(detail_map.items()):
+        if not isinstance(info, dict):
+            continue
+        row = row_list[idx] if idx < len(row_list) else []
+        label = str(row[0]) if len(row) > 0 and row[0] else component_label(key)
+        filename = str(info.get("file") or (row[1] if len(row) > 1 else ""))
+        raw_status = str(row[2]) if len(row) > 2 else ""
+        lines = [part.strip() for part in raw_status.splitlines() if part.strip()]
+        size_note = ""
+        if len(lines) > 1:
+            size_note = lines[1].replace(" (local)", "").replace(" (published)", "")
+        if filename == "Built into checkpoint":
+            status_kind = "ready"
+            status_text = localize("Built-in", locale)
+        elif info.get("compatibility") == "incompatible":
+            status_kind = "bad"
+            status_text = localize("Incompatible", locale)
+        elif "Missing" in (lines[0] if lines else ""):
+            status_kind = "missing"
+            status_text = (
+                f"{localize('Missing', locale)} · {size_note}"
+                if size_note
+                else localize("Missing", locale)
+            )
+        else:
+            status_kind = "ready"
+            status_text = (
+                f"{localize('Installed', locale)} · {size_note}"
+                if size_note
+                else localize("Installed", locale)
+            )
+        items.append(
+            dict(
+                key=key,
+                label=label,
+                filename=filename,
+                statusKind=status_kind,
+                statusText=status_text,
+                selection=str(info.get("selection") or ""),
+                location=str(info.get("location") or ""),
+                sourceUrl=_safe_component_url(info.get("source")),
+                reason=str(info.get("compatibility_reason") or ""),
+            )
+        )
+    return dict(
+        items=items,
+        empty=localize("Select an image checkpoint and click Refresh components.", locale),
+    )
+
+
 def create_ui(base_model, model_refresh=None):
     """Create inside the desired model tab; selection changes refresh local status only."""
     import ruinedfooocus.app.state as shared
@@ -265,7 +330,16 @@ def create_ui(base_model, model_refresh=None):
     overrides, scope = gr.State(None), gr.State(None)
     shared.add_ctrl("image_component_overrides", overrides)
     shared.add_ctrl("_image_component_scope", scope)
+    assets = Path(__file__).resolve().parents[2] / "ui/assets"
     with gr.Column(min_width=0, elem_id="model-components-panel") as panel:
+        cards = gr.HTML(
+            value=build_component_cards_payload([], {}),
+            elem_id="model-component-cards",
+            padding=False,
+            html_template=(assets / "component_cards.html").read_text(encoding="utf-8"),
+            css_template=(assets / "component_cards.css").read_text(encoding="utf-8"),
+            js_on_load=(assets / "component_cards.js").read_text(encoding="utf-8"),
+        )
         table = gr.Dataframe(
             headers=[
                 "Component",
@@ -276,17 +350,23 @@ def create_ui(base_model, model_refresh=None):
             column_widths=["25%", "45%", "30%"],
             interactive=False,
             wrap=True,
+            visible=False,
             elem_id="model-component-inventory",
         )
         status = gr.Markdown(
             translate_ui("Select an image checkpoint and click Refresh components.")
         )
-        with gr.Row(elem_classes=["rf-actions"]):
-            refresh_button = gr.Button(translate_ui("Refresh components"))
-            download_button = gr.Button(translate_ui("Download missing"), interactive=False)
-            cancel = gr.Button(translate_ui("Cancel component download"), size="sm")
-        with gr.Accordion(translate_ui("Component locations and sources"), open=False):
-            details = gr.JSON(label=translate_ui("Selected components"), value={})
+        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
+            refresh_button = gr.Button(translate_ui("Refresh components"), size="sm")
+            download_button = gr.Button(
+                translate_ui("Download missing"), size="sm", interactive=False
+            )
+        cancel = gr.Button(
+            translate_ui("Cancel component download"), size="sm", visible=False
+        )
+        details = gr.JSON(
+            label=translate_ui("Selected components"), value={}, visible=False
+        )
         from ruinedfooocus.features.models.ui_component_overrides import (
             create_ui as create_overrides_ui,
         )
@@ -295,6 +375,32 @@ def create_ui(base_model, model_refresh=None):
         # The editor's role control is the final refresh output.
         role, _, _ = create_overrides_ui(base_model, overrides, scope, refresh, outputs)
         outputs.append(role)
+
+        def sync_component_cards(rows, detail_map, request: gr.Request = None):
+            has_download = not offline() and any(
+                isinstance(v, dict) and v.get("download_available")
+                for v in (detail_map or {}).values()
+            )
+            return (
+                build_component_cards_payload(rows, detail_map, locale=resolve_locale(request=request)),
+                gr.update(visible=has_download),
+            )
+
+        details.change(
+            sync_component_cards,
+            inputs=[table, details],
+            outputs=[cards, cancel],
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
+        )
+        localized_output(
+            lambda locale, rows, detail_map: build_component_cards_payload(
+                rows, detail_map, locale=locale
+            ),
+            [table, details],
+            [cards],
+        )
 
         def refresh_after_choice(name, choices, identity, selected_role):
             result = refresh_selected_role(name, choices, identity, selected_role)
