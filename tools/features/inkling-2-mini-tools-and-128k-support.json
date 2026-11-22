@@ -1,21 +1,15 @@
 {
-  "schema_version": 1,
   "id": "inkling-2-mini-tools-and-128k-support",
-  "title": "Adapt Inkling 2 Mini tool transport, reasoning controls, and 128k KV-cache defaults",
-  "summary": "Parse HF generation Jinja tags for Inkling 2 Mini tool/reasoning inspection, support reasoning_effort=none off switch, audit b12627+ inkling2_loop eligibility and placement logs, group UD- quants, and default Inkling 2 Mini KV cache to q8_0 for 128k context.",
+  "subject": "Adapt Inkling 2 Mini tool calling, reasoning controls, and 128k KV-cache defaults",
   "requires": [
     "llm-catalogue-inkling-2-mini",
     "runtime-optimizations-and-comfy-model-coverage"
   ],
-  "touches": [
-    "ruinedfooocus/backends/llama/llama_server.py",
-    "ruinedfooocus/features/chat/llama_models.py",
-    "ruinedfooocus/features/chat/model_profiles.py",
-    "ruinedfooocus/features/models/model_capabilities.py",
-    "ruinedfooocus/resources/model_metadata/families/language_inkling_2_mini.json",
-    "ruinedfooocus/resources/model_metadata/index.json",
-    "ruinedfooocus/resources/model_metadata/native_source_audits.json",
-    "tests/test_model_capabilities.py",
-    "tests/test_model_profiles.py"
-  ]
+  "tests": [
+    "test_model_capabilities.py",
+    "test_model_profiles.py",
+    "test_model_registry.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
 }
