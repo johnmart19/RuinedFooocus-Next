@@ -2198,5 +2198,10 @@
   "models.built_in": "Integriert",
   "models.incompatible": "Inkompatibel",
   "models.missing": "Fehlt",
-  "prompting.parent_selection": "Elternauswahl"
+  "prompting.parent_selection": "Elternauswahl",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "Noch kein Bild geladen. Lade unten eins hoch oder öffne dein zuletzt erzeugtes Bild im Editor.",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Verwendet das unten gezeigte Bild (von der aktuellen Arbeitsfläche oder hochgeladen).",
+  "prompting.rewrite": "Umschreiben",
+  "prompting.variations": "Variationen",
+  "prompting.describe": "Beschreiben"
 }

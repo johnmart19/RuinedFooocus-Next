@@ -307,14 +307,14 @@ class PowerUpFamilyTests(unittest.TestCase):
             with self.subTest(selection=selection):
                 update, strength = scope["input_context"](True, selection, kind, "selected")[:2]
                 self.assertFalse(update["visible"])
-                self.assertEqual(strength["visible"], "hidden")
+                self.assertIn(strength["visible"], (False, "hidden"))
                 self.assertNotIn("value", update)
                 normal, normal_strength = scope["input_context"](
                     False, selection, kind, "selected"
                 )[:2]
                 self.assertTrue(normal["visible"])
                 self.assertEqual(
-                    normal_strength["visible"], True if selection != "None" else "hidden"
+                    normal_strength["visible"], True if selection != "None" else False
                 )
         for selection in ("Canny", "Depth", "Sketch", "Recolour"):
             for preset in (selection, "New..."):

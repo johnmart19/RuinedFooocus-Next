@@ -2198,5 +2198,10 @@
   "models.built_in": "Вбудовано",
   "models.incompatible": "Несумісно",
   "models.missing": "Відсутній",
-  "prompting.parent_selection": "Вибір батьківського запиту"
+  "prompting.parent_selection": "Вибір батьківського запиту",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "Зображення ще не завантажено. Завантажте його нижче або відкрийте останнє згенероване в Редакторі.",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Використовується зображення нижче (з поточного полотна або завантажене).",
+  "prompting.rewrite": "Переписати",
+  "prompting.variations": "Варіації",
+  "prompting.describe": "Описати"
 }

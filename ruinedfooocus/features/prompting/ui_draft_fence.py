@@ -13,7 +13,7 @@ def capture_draft(prompt, inputs, operation, *, context_inputs=()):
     """Capture the shared browser action serial before a slow builder starts."""
     if not prompt.elem_id:
         prompt.elem_id = f"rf-prompt-draft-{prompt._id}"
-    guard = gr.JSON({}, visible="hidden")
+    guard = gr.JSON({}, visible=False)
     contexts = []
     for component in [*inputs, *context_inputs]:
         if component is prompt or isinstance(component, (gr.State, gr.JSON)):
@@ -73,8 +73,8 @@ def fence_event(
     """
     if not prompt.elem_id:
         prompt.elem_id = f"rf-prompt-draft-{prompt._id}"
-    capture = gr.JSON({}, visible="hidden") if guard_input is None else None
-    result = gr.JSON(None, visible="hidden")
+    capture = gr.JSON({}, visible=False) if guard_input is None else None
+    result = gr.JSON(None, visible=False)
     status = gr.Markdown("", visible=False)
     implementation = asset_path("prompt_draft_fence.js").read_text(encoding="utf-8")
 

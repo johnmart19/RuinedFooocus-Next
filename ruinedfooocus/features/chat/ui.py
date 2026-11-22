@@ -876,11 +876,11 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     """,
                 )
                 llama_system = gr.Textbox(
-                    visible="hidden",
+                    visible=False,
                     value=assistant_info(default_bot)["system"],
                 )
                 llama_embed = gr.Textbox(
-                    visible="hidden",
+                    visible=False,
                     value=assistant_info(default_bot)["embed"],
                 )
 

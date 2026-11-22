@@ -172,7 +172,12 @@ def setup_fixture(random_seed=True, *, progress_owner="gallery"):
             binding_options["editor_workspace"] = workspace
         if progress_owner == "local":
             scope["browser_controls"] = gr.Column()
-            local = SimpleNamespace(notice=gr.Markdown(), operation=gr.State("edit"), bind=Mock())
+            local = SimpleNamespace(
+                notice=gr.Markdown(),
+                operation=gr.State("edit"),
+                panel=gr.Accordion(open=False),
+                bind=Mock(),
+            )
             scope["progress_status"] = local.notice
             binding_options.update(run_request=Mock(), run_controls={"task": gr.State(None)})
             with patch(

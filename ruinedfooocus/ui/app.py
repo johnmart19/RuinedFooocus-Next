@@ -2153,7 +2153,7 @@ with shared.gradio_root as block:
                         )
                 preset_selection = gr.Text(
                     value=None,
-                    visible="hidden",
+                    visible=False,
                 )
                 add_ctrl("preset_selection", preset_selection)
                 preset_selection.change(
@@ -2551,7 +2551,7 @@ with shared.gradio_root as block:
             prompt_tools_tab = next(
                 tab for tab in create_controls_tabs.children if tab.elem_id == "prompt-tools"
             )
-            with prompt_tools_tab:
+            with getattr(prompt_tools_tab, "describe_panel", prompt_tools_tab):
                 add_describe_controls(
                     prompt,
                     main_view,
@@ -3387,10 +3387,10 @@ with shared.gradio_root as block:
                 # Hide resolution controls and update with selected resolution
                 selected_width, selected_height = resolution_settings.get_aspect_ratios(selection)
                 return {
-                    ratio_name: gr.update(visible="hidden"),
-                    custom_width: gr.update(visible="hidden", value=selected_width),
-                    custom_height: gr.update(visible="hidden", value=selected_height),
-                    ratio_save: gr.update(visible="hidden"),
+                    ratio_name: gr.update(visible=False),
+                    custom_width: gr.update(visible=False, value=selected_width),
+                    custom_height: gr.update(visible=False, value=selected_height),
+                    ratio_save: gr.update(visible=False),
                     ratio_delete: gr.update(visible=resolution_settings.is_custom(selection)),
                     target_shortcuts: gr.update(visible=False),
                 }
@@ -3500,7 +3500,7 @@ with shared.gradio_root as block:
             preset = Path(path).with_suffix("").name
             show_perf = gr.update(visible=False)
             show_size = (
-                gr.update(visible="hidden")
+                gr.update(visible=False)
                 if (0b001 & settings.get("preset_mode", 7))
                 else gr.update()
             )
@@ -3521,11 +3521,7 @@ with shared.gradio_root as block:
             }
 
         def preset_unselect(performance_selection_val, aspect_ratios_selection_val):
-            show_size = (
-                True
-                if (aspect_ratios_selection_val == resolution_settings.CUSTOM_RESOLUTION)
-                else "hidden"
-            )
+            show_size = aspect_ratios_selection_val == resolution_settings.CUSTOM_RESOLUTION
 
             return {
                 preset_selection: gr.update(value=""),
@@ -3548,15 +3544,15 @@ with shared.gradio_root as block:
             return {
                 preset_selection: gr.update(value=path),
                 preset_accordion: gr.update(label=t(PNG_PRESET_LABEL) + ": " + preset),
-                performance_selection: gr.update(visible="hidden"),
-                sampling_table: gr.update(visible="hidden"),
-                aspect_ratios_selection: gr.update(visible="hidden"),
-                resolution_auto: gr.update(visible="hidden"),
-                ratio_name: gr.update(visible="hidden"),
-                custom_width: gr.update(visible="hidden"),
-                custom_height: gr.update(visible="hidden"),
-                ratio_save: gr.update(visible="hidden"),
-                target_shortcuts: gr.update(visible="hidden"),
+                performance_selection: gr.update(visible=False),
+                sampling_table: gr.update(visible=False),
+                aspect_ratios_selection: gr.update(visible=False),
+                resolution_auto: gr.update(visible=False),
+                ratio_name: gr.update(visible=False),
+                custom_width: gr.update(visible=False),
+                custom_height: gr.update(visible=False),
+                ratio_save: gr.update(visible=False),
+                target_shortcuts: gr.update(visible=False),
                 model_tab: gr.update(visible=True),
             }
 

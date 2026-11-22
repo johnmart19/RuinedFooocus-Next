@@ -1,0 +1,26 @@
+{
+  "id": "powerups-visibility-and-prompt-tools-redesign",
+  "subject": "Fix Gradio hidden-control leaks in Power-ups/Prompt tools, repair image dropzone, and redesign Prompt tools into 4 focused modes",
+  "requires": ["editor-workflow-fixes-and-powerups-ux"],
+  "tests": [
+    "test_image_rembg_options.py",
+    "test_image_workflow_modes.py",
+    "test_powerup_family_controls.py",
+    "test_qwen_image21_local_edit.py",
+    "test_prompt_workflows.py",
+    "test_prompt_variations.py",
+    "test_prompt_draft_fence.py",
+    "test_style_workflow.py",
+    "test_editor_workspace_actions.py",
+    "test_editor_workspace_events.py",
+    "test_checkpoint_selection_lane.py",
+    "test_gallery_setup_outputs.py",
+    "test_navigation_shell.py",
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

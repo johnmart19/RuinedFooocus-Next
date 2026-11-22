@@ -88,9 +88,9 @@ def create_chat_prompt_action(prompt, *, owner_for_request, context_inputs=()):
     """Connect Chat proposals to the canonical draft fence and Apply/Undo flow."""
     from ruinedfooocus.features.chat.image_tool_requests import ChatToolPermissions
 
-    ticket = gr.JSON(None, visible="hidden")
+    ticket = gr.JSON(None, visible=False)
     permissions = gr.State(None)
-    previous = gr.JSON(None, visible="hidden")
+    previous = gr.JSON(None, visible=False)
     with gr.Group(visible=False) as pending:
         proposed = gr.Textbox(label=translate_ui("Pending prompt"), lines=3, interactive=False)
         with gr.Row(elem_classes=["rf-prompt-actions"], equal_height=True):
@@ -188,8 +188,8 @@ def create_chat_prompt_action(prompt, *, owner_for_request, context_inputs=()):
 def create_prompt_action(prompt, *, advanced=None, options_label=None):
     """One prompt-only action with a pending result when the draft changed."""
     revision = gr.State(0)
-    ticket = gr.JSON(None, visible="hidden")
-    previous = gr.JSON(None, visible="hidden")
+    ticket = gr.JSON(None, visible=False)
+    previous = gr.JSON(None, visible=False)
     with gr.Row(elem_classes=["rf-prompt-actions"], equal_height=True):
         generate = gr.Button(translate_ui("Generate prompt"), variant="primary")
         undo = gr.Button(translate_ui("Undo"))

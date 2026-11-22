@@ -186,7 +186,7 @@ class LibraryEditor:
         )
 
         if prompt_button is not None:
-            prompt_result = gr.JSON(None, visible="hidden")
+            prompt_result = gr.JSON(None, visible=False)
             prompt_inputs = [
                 selected,
                 metadata,
@@ -243,7 +243,7 @@ class LibraryEditor:
             )
 
         if setup_button is not None and setup_values is not None:
-            setup_result = gr.JSON(None, visible="hidden")
+            setup_result = gr.JSON(None, visible=False)
             setup_inputs = [
                 selected,
                 metadata,
@@ -342,7 +342,7 @@ class LibraryEditor:
                 ],
             )
 
-        clear_result = gr.JSON(None, visible="hidden")
+        clear_result = gr.JSON(None, visible=False)
         clear_inputs = [self.prompt, self.setup_choice]
         clear_guard, clear_begin = capture_draft(
             self.prompt, clear_inputs, f"gallery-clear-setup-{clear_result._id}"
@@ -381,7 +381,7 @@ class LibraryEditor:
             outputs=[self.prompt, self.setup_choice, self.notice],
         )
 
-        draft_result = gr.JSON(None, visible="hidden")
+        draft_result = gr.JSON(None, visible=False)
         detail_outputs = [
             self.source,
             self.preview,

@@ -34,7 +34,7 @@ class ImageWorkflowModeTests(unittest.TestCase):
             "Input image only",
         )
         self.assertEqual(image, {"visible": True, "label": "Input image"})
-        self.assertEqual(strength, {"visible": "hidden"})
+        self.assertEqual(strength, {"visible": False})
         self.assertEqual(mask, {"visible": False, "value": False})
         self.assertIn(("Depth map", "Depth map"), scope["powerup_choices"](sdxl=False))
 
@@ -53,13 +53,11 @@ class ImageWorkflowModeTests(unittest.TestCase):
                     self.assertEqual(toggle, {"visible": False, "value": False})
                     self.assertTrue(image["visible"])
                     self.assertNotIn("value", image)
-                    self.assertEqual(strength["visible"], "hidden")
-                    self.assertEqual(options["visible"], "hidden")
+                    self.assertEqual(strength["visible"], False)
+                    self.assertEqual(options["visible"], False)
                     self.assertEqual(
                         rembg_force["visible"],
-                        True
-                        if scope["controlnet"].cn_options[selection]["type"] == "rembg"
-                        else "hidden",
+                        scope["controlnet"].cn_options[selection]["type"] == "rembg",
                     )
 
     def test_input_only_upscale_hides_ignored_controls_and_generated_upscale_keeps_inpaint(self):
@@ -69,7 +67,7 @@ class ImageWorkflowModeTests(unittest.TestCase):
                 True, "Img2Img", "Img2img", "selected", None, "2× General (RealESRGAN)", target
             )
             self.assertEqual(values[2]["visible"], allowed)
-            self.assertEqual(values[3]["visible"], True if allowed else "hidden")
+            self.assertEqual(values[3]["visible"], bool(allowed))
             if not allowed:
                 self.assertFalse(values[0]["visible"])
                 self.assertEqual(values[2]["value"], False)

@@ -118,10 +118,13 @@ def add_evolve_controls(
     replacement_control=None,
     *,
     bind_generation=bind_explicit_generation,
+    open_default=False,
 ):
-    with gr.Accordion(translate_ui("Prompt variations"), open=False, elem_id="evolve-controls"):
+    with gr.Accordion(
+        translate_ui("Prompt variations"), open=open_default, elem_id="evolve-controls"
+    ):
         state = gr.State(None)
-        previous = gr.JSON(None, visible="hidden")
+        previous = gr.JSON(None, visible=False)
         mode = gr.Dropdown(
             [
                 (translate_ui("Words"), "Words"),

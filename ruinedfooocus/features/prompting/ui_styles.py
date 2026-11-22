@@ -222,7 +222,7 @@ def create_ui(settings):
             )
         )
     return StyleControls(
-        selection, preview, bake, undo, panel, positive, negative, gr.JSON(None, visible="hidden")
+        selection, preview, bake, undo, panel, positive, negative, gr.JSON(None, visible=False)
     )
 
 
@@ -248,13 +248,22 @@ def bind_subset(selection, control, names):
     control.value = reflect(selection.value)["value"]
 
 
-def add_processor_controls(selection):
-    with gr.Accordion(translate_ui("Prompt processors"), open=False):
-        processors = gr.Checkbox(label=translate_ui("Enhance with local chat model"), value=False)
-        gr.Markdown(
-            translate_ui(
-                "Uses the selected Chat model only when enabled. Your original prompt is retained; Off makes no LLM request."
+def add_processor_controls(selection, *, accordion=True):
+    info_text = translate_ui(
+        "Uses the selected Chat model only when enabled. Your original prompt is retained; Off makes no LLM request."
+    )
+    if accordion:
+        with gr.Accordion(translate_ui("Prompt processors"), open=False):
+            processors = gr.Checkbox(
+                label=translate_ui("Enhance with local chat model"),
+                value=False,
+                info=info_text,
             )
+    else:
+        processors = gr.Checkbox(
+            label=translate_ui("Enhance with local chat model"),
+            value=False,
+            info=info_text,
         )
     bind_subset(selection, processors, NEURAL_PROCESSORS)
 

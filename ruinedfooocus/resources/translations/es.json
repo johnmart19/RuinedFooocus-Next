@@ -2198,5 +2198,10 @@
   "models.built_in": "Integrado",
   "models.incompatible": "Incompatible",
   "models.missing": "Faltante",
-  "prompting.parent_selection": "Selección de padre"
+  "prompting.parent_selection": "Selección de padre",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "Aún no hay imagen cargada. Sube una abajo o abre tu última imagen generada en el Editor.",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Usando la imagen mostrada abajo (del lienzo actual o subida).",
+  "prompting.rewrite": "Reescribir",
+  "prompting.variations": "Variaciones",
+  "prompting.describe": "Describir"
 }

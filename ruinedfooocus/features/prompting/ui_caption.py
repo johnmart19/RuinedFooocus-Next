@@ -64,7 +64,7 @@ def describe_image(current, image, native_source=None):
 def add_describe_controls(
     prompt, image_source, native_source=None, *, input_source=None, source_kind=None
 ):
-    previous = gr.JSON(None, visible="hidden")
+    previous = gr.JSON(None, visible=False)
     with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
         describe = gr.Button(translate_ui("Describe image"), size="sm")
         undo = gr.Button(translate_ui("Undo description"), size="sm", interactive=False)

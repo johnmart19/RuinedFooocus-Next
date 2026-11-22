@@ -2198,5 +2198,10 @@
   "models.built_in": "內建",
   "models.incompatible": "不相容",
   "models.missing": "缺少",
-  "prompting.parent_selection": "父代選擇"
+  "prompting.parent_selection": "父代選擇",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "尚未載入影像。請在下方上傳，或在編輯器中開啟最近產生的影像。",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "正在使用下方顯示的影像（來自目前畫布或已上傳）。",
+  "prompting.rewrite": "改寫",
+  "prompting.variations": "變化",
+  "prompting.describe": "描述影像"
 }

@@ -2198,5 +2198,10 @@
   "models.built_in": "내장됨",
   "models.incompatible": "호환 불가",
   "models.missing": "누락됨",
-  "prompting.parent_selection": "부모 프롬프트 선택"
+  "prompting.parent_selection": "부모 프롬프트 선택",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "아직 불러온 이미지가 없습니다. 아래에 업로드하거나 편집기에서 최근 생성 이미지를 여세요.",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "아래에 표시된 이미지를 사용합니다(현재 캔버스 또는 업로드).",
+  "prompting.rewrite": "다시 쓰기",
+  "prompting.variations": "변형",
+  "prompting.describe": "설명"
 }

@@ -2198,5 +2198,10 @@
   "models.built_in": "内置",
   "models.incompatible": "不兼容",
   "models.missing": "缺失",
-  "prompting.parent_selection": "父代选择"
+  "prompting.parent_selection": "父代选择",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "尚未加载图像。请在下方上传，或在编辑器中打开最近生成的图像。",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "正在使用下方显示的图像（来自当前画布或已上传）。",
+  "prompting.rewrite": "改写",
+  "prompting.variations": "变体",
+  "prompting.describe": "描述图像"
 }

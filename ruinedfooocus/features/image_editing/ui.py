@@ -1,4 +1,4 @@
-from ruinedfooocus.core.translation_manager import translate_ui
+from ruinedfooocus.core.translation_manager import localize, localized_output, resolve_locale, translate_ui
 import ruinedfooocus.features.image_editing.controlnet as controlnet
 from ruinedfooocus.features.image_editing.controlnet import (
     load_cnsettings,
@@ -236,10 +236,10 @@ def input_context(
             and (not active or not qwen_local and kind not in (None, "img2img")),
             label=t(label),
         ),
-        gr.update(visible=True if strength else "hidden"),
+        gr.update(visible=bool(strength)),
         gr.update(visible=allowed, **({"value": False} if inpainting and not allowed else {})),
-        gr.update(visible=True if active else "hidden"),
-        gr.update(visible=True if not input_only and kind == "rembg" else "hidden"),
+        gr.update(visible=bool(active)),
+        gr.update(visible=bool(not input_only and kind == "rembg")),
     ]
 
 
@@ -428,11 +428,11 @@ def add_controlnet_tab(
             show_label=True,
             placeholder=t("Name"),
             interactive=True,
-            visible="hidden",
+            visible=False,
         )
         cn_save_btn = gr.Button(
             value=t("Save tool preset"),
-            visible="hidden",
+            visible=False,
         )
 
         type_choices = control_types(initial_features)
@@ -441,7 +441,7 @@ def add_controlnet_tab(
             choices=type_choices
             + [kind.capitalize() for kind in ("image-transform", "image-mask", "image-color")],
             value=type_choices[0],
-            visible="hidden",
+            visible=False,
         )
         add_ctrl("cn_type", cn_type)
 
@@ -451,7 +451,7 @@ def add_controlnet_tab(
             maximum=1.0,
             step=0.01,
             value=0.2,
-            visible="hidden",
+            visible=False,
         )
         add_ctrl("cn_edge_low", cn_edge_low)
 
@@ -461,7 +461,7 @@ def add_controlnet_tab(
             maximum=1.0,
             step=0.01,
             value=0.8,
-            visible="hidden",
+            visible=False,
         )
         add_ctrl("cn_edge_high", cn_edge_high)
 
@@ -472,7 +472,7 @@ def add_controlnet_tab(
             maximum=1.0,
             step=0.01,
             value=0.0,
-            visible="hidden",
+            visible=False,
         )
         add_ctrl("cn_start", cn_start)
 
@@ -483,18 +483,18 @@ def add_controlnet_tab(
             maximum=1.0,
             step=0.01,
             value=1.0,
-            visible="hidden",
+            visible=False,
         )
         add_ctrl("cn_stop", cn_stop)
 
-        with gr.Group(visible="hidden") as strength_options:
+        with gr.Group(visible=False) as strength_options:
             cn_strength = gr.Slider(
                 label=t("Strength"),
                 minimum=0.0,
                 maximum=2.0,
                 step=0.01,
                 value=1.0,
-                visible="hidden",
+                visible=False,
             )
         add_ctrl("cn_strength", cn_strength)
 
@@ -516,7 +516,7 @@ def add_controlnet_tab(
                 }
             ),
             value="None",
-            visible="hidden",
+            visible=False,
         )
         add_ctrl("cn_upscale", cn_upscaler)
 
@@ -594,7 +594,7 @@ def add_controlnet_tab(
         rembg_force = gr.Checkbox(
             label=t("Reprocess transparent images"),
             value=False,
-            visible="hidden",
+            visible=False,
             info=translate_ui("Run removal even when the image already has alpha."),
         )
         add_ctrl("rembg_force", rembg_force)
@@ -621,7 +621,7 @@ def add_controlnet_tab(
             if selection != NEWCN:
                 options = controlnet.cn_options.get(selection, {})
                 kind = options.get("type")
-                updates = [gr.update(visible="hidden")] * len(cn_sliders)
+                updates = [gr.update(visible=False)] * len(cn_sliders)
                 if kind == "img2img":
                     updates[2] = gr.update(
                         visible=True,
@@ -658,7 +658,7 @@ def add_controlnet_tab(
                         {key: value for key, value in update.items() if key != "value"}
                         for update in updates
                     ]
-                return [gr.update(visible="hidden")] * len(cn_outputs) + updates
+                return [gr.update(visible=False)] * len(cn_outputs) + updates
             else:
                 return (
                     [gr.update(value="", visible=True)]
@@ -690,7 +690,7 @@ def add_controlnet_tab(
                 ]
             features = checkpoint_features(checkpoint, moss_format)
             if selection not in control_types(features):
-                return [gr.update(visible="hidden")] * len(cn_sliders)
+                return [gr.update(visible=False)] * len(cn_sliders)
             # cn_start,cn_stop,cn_strength,cn_edge_low,cn_edge_high, cn_upscaler
             slider_states = {
                 "canny": [True, True, True, True, True, False],
@@ -709,7 +709,7 @@ def add_controlnet_tab(
 
             result = []
             for vis in show:
-                result += [gr.update(visible=True if vis else "hidden")]
+                result += [gr.update(visible=bool(vis))]
 
             if selection.lower() == "img2img":
                 result[2] = gr.update(
@@ -833,8 +833,31 @@ def add_controlnet_tab(
         create_union_ui(
             cn_selection, cn_type, base_model, model_refresh, tool_kind, checkpoint_features
         )
+
+        def source_status_text(selection, image, locale=None):
+            if not selection or selection == "None":
+                return gr.update(value="", visible=False)
+            if image is None:
+                return gr.update(
+                    value=localize(
+                        "No image loaded yet. Upload one below, or open your latest generated image in Editor.",
+                        locale,
+                    ),
+                    visible=True,
+                )
+            return gr.update(
+                value=localize(
+                    "Using the image shown below (from current canvas or upload).",
+                    locale,
+                ),
+                visible=True,
+            )
+
+        tool_source_status = gr.Markdown(
+            "", visible=False, elem_id="image-tool-source-status", elem_classes=["rf-status-card"]
+        )
         input_image = gr.Image(
-            height="11rem",
+            height=220,
             elem_id="image-tool-input",
             buttons=["download", "fullscreen"],
             label=t(input_label(initial_features)),
@@ -844,6 +867,22 @@ def add_controlnet_tab(
             visible=True,
         )
         add_ctrl("input_image", input_image)
+        gr.on(
+            triggers=[cn_selection.change, input_image.change],
+            fn=lambda sel, img, request=None: source_status_text(
+                sel, img, locale=resolve_locale(request=request)
+            ),
+            inputs=[cn_selection, input_image],
+            outputs=[tool_source_status],
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
+        )
+        localized_output(
+            lambda locale, sel, img: source_status_text(sel, img, locale=locale),
+            [cn_selection, input_image],
+            [tool_source_status],
+        )
         from ruinedfooocus.features.image_processing.ui_native_vision import (
             create_ui as native_vision_ui,
         )
@@ -1013,7 +1052,7 @@ def add_controlnet_tab(
             inpaint_toggle,
             tool_kind,
         )
-        with gr.Group(visible="hidden") as inpaint_options:
+        with gr.Group(visible=False) as inpaint_options:
             with gr.Column(visible=False) as qwen_local_options:
                 qwen_local_mode = gr.Radio(
                     choices=[(t("Paint guide"), "paint"), (t("Mask"), "mask")],
@@ -1299,7 +1338,7 @@ def add_controlnet_tab(
                 )
                 and not (scale != "Off" and target == "Input image only")
             )
-            return [gr.update(visible=True if active else "hidden") for _ in generation_groups]
+            return [gr.update(visible=bool(active)) for _ in generation_groups]
 
         gr.on(
             triggers=[component.change for component in generation_inputs],

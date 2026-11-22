@@ -2198,5 +2198,10 @@
   "models.built_in": "Wbudowany",
   "models.incompatible": "Niezgodny",
   "models.missing": "Brak",
-  "prompting.parent_selection": "Wybór rodzica"
+  "prompting.parent_selection": "Wybór rodzica",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "Nie załadowano jeszcze obrazu. Prześlij go poniżej lub otwórz ostatnio wygenerowany obraz w Edytorze.",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Używa obrazu pokazanego poniżej (z bieżącego płótna lub przesłanego).",
+  "prompting.rewrite": "Przeredaguj",
+  "prompting.variations": "Warianty",
+  "prompting.describe": "Opisz"
 }

@@ -487,7 +487,7 @@ def checked_undo(current, previous):
 
 
 def add_quick_prompt_controls(prompt, checkpoint, *, register_prompt):
-    with gr.Accordion(translate_ui("Random Prompt — quick"), open=True):
+    with gr.Accordion(translate_ui("Random Prompt — quick"), open=True) as panel:
         subject = gr.Textbox(label=translate_ui("Optional subject for Random Prompt"), value="")
         seed = None
 
@@ -507,6 +507,7 @@ def add_quick_prompt_controls(prompt, checkpoint, *, register_prompt):
         register_prompt(
             bind, build_quick, [subject, seed] + ([checkpoint] if checkpoint is not None else [])
         )
+    return panel
 
 
 def ui_onebutton(
@@ -618,14 +619,22 @@ def ui_onebutton(
 
         return finalize(prompt, fmt)
 
-    with gr.Tab(label=translate_ui("Prompt tools"), elem_id="prompt-tools"):
+    with gr.Tab(label=translate_ui("Prompt tools"), elem_id="prompt-tools") as prompt_tools_tab:
         from ruinedfooocus.features.prompting.ui_evolve import add_evolve_controls
 
-        if style_selection is not None:
-            from ruinedfooocus.features.prompting.ui_styles import add_processor_controls
-
-            add_processor_controls(style_selection)
-        with gr.Row():
+        prompt_tool_mode = gr.Radio(
+            label=translate_ui("Prompt tools"),
+            show_label=False,
+            choices=[
+                (translate_ui("Generate"), "generate"),
+                (translate_ui("Rewrite"), "rewrite"),
+                (translate_ui("Variations"), "variations"),
+                (translate_ui("Describe"), "describe"),
+            ],
+            value="generate",
+            elem_id="prompt-tools-mode",
+        )
+        with gr.Row() as replace_row:
             assumedirectcontrol = gr.Checkbox(
                 label=translate_ui("Replace typed prompt"),
                 value=False,
@@ -636,9 +645,9 @@ def ui_onebutton(
             )
             add_ctrl("obp_assume_direct_control", assumedirectcontrol)
 
-        add_quick_prompt_controls(prompt, checkpoint, register_prompt=register_prompt)
+        quick_panel = add_quick_prompt_controls(prompt, checkpoint, register_prompt=register_prompt)
 
-        with gr.Accordion(translate_ui("One Button Prompt — configurable"), open=False):
+        with gr.Accordion(translate_ui("One Button Prompt — configurable"), open=False) as obp_panel:
             # Part of presets
             with gr.Row():
                 OBP_preset = gr.Dropdown(
@@ -707,28 +716,28 @@ def ui_onebutton(
                         subjectsubtypesobject,
                         label=translate_ui("Type of object"),
                         value=custom_obp_values["chosensubjectsubtypeobject"],
-                        visible="hidden",
+                        visible=False,
                     )
                     add_ctrl("obp_chosensubjectsubtypeobject", chosensubjectsubtypeobject)
                     chosensubjectsubtypehumanoid = gr.Dropdown(
                         subjectsubtypeshumanoid,
                         label=translate_ui("Type of humanoids"),
                         value=custom_obp_values["chosensubjectsubtypehumanoid"],
-                        visible="hidden",
+                        visible=False,
                     )
                     add_ctrl("obp_chosensubjectsubtypehumanoid", chosensubjectsubtypehumanoid)
                     chosensubjectsubtypeconcept = gr.Dropdown(
                         subjectsubtypesconcept,
                         label=translate_ui("Type of concept"),
                         value=custom_obp_values["chosensubjectsubtypeconcept"],
-                        visible="hidden",
+                        visible=False,
                     )
                     add_ctrl("obp_chosensubjectsubtypeconcept", chosensubjectsubtypeconcept)
                     chosengender = gr.Dropdown(
                         genders,
                         label=translate_ui("gender"),
                         value=custom_obp_values["chosengender"],
-                        visible="hidden",
+                        visible=False,
                     )
                     add_ctrl("obp_chosengender", chosengender)
                 with gr.Row():
@@ -913,7 +922,7 @@ def ui_onebutton(
 
                 else:
                     return {
-                        obp_preset_name: gr.update(visible="hidden"),
+                        obp_preset_name: gr.update(visible=False),
                         maingroup: gr.update(visible=False),
                     }
 
@@ -983,7 +992,7 @@ def ui_onebutton(
 
             # turn things on and off for gender
             def subjectsvalue(subject):
-                enable = True if ("human" in subject) else "hidden"
+                enable = "human" in subject
                 return {
                     chosengender: gr.update(visible=enable),
                 }
@@ -997,7 +1006,7 @@ def ui_onebutton(
 
             # turn things on and off for subject subtype object
             def subjectsvalueforsubtypeobject(subject):
-                enable = True if (subject == "object") else "hidden"
+                enable = subject == "object"
                 return {
                     chosensubjectsubtypeobject: gr.update(visible=enable),
                 }
@@ -1011,7 +1020,7 @@ def ui_onebutton(
 
             # turn things on and off for subject subtype humanoid
             def subjectsvalueforsubtypeobject(subject):
-                enable = True if (subject == "humanoid") else "hidden"
+                enable = subject == "humanoid"
                 return {
                     chosensubjectsubtypehumanoid: gr.update(visible=enable),
                 }
@@ -1025,7 +1034,7 @@ def ui_onebutton(
 
             # turn things on and off for subject subtype concept
             def subjectsvalueforsubtypeconcept(subject):
-                enable = True if (subject == "concept") else "hidden"
+                enable = subject == "concept"
                 return {
                     chosensubjectsubtypeconcept: gr.update(visible=enable),
                 }
@@ -1065,23 +1074,54 @@ def ui_onebutton(
 
             register_prompt(bind_obp, build_one_button, [*builder_inputs, subject_override])
 
-        add_evolve_controls(
-            prompt,
-            run_event,
-            image_number,
-            checkpoint,
-            assumedirectcontrol,
-            bind_generation=register_generation,
-        )
+        with gr.Column(visible=True, elem_id="prompt-mode-generate") as generate_panel:
+            quick_panel.unrender().render()
+            obp_panel.unrender().render()
+            replace_row.unrender().render()
 
         from ruinedfooocus.features.prompting.ui_rewrite import add_rewrite_controls
 
-        with gr.Accordion(translate_ui("Rewrite with chat model"), open=False):
+        with gr.Column(visible=False, elem_id="prompt-mode-rewrite") as rewrite_panel:
             add_rewrite_controls(prompt)
+            if style_selection is not None:
+                from ruinedfooocus.features.prompting.ui_styles import add_processor_controls
 
-        if qwen_rewrite:
-            from ruinedfooocus.features.prompting.ui_rewrite import add_qwen_rewrite_controls
+                add_processor_controls(style_selection, accordion=False)
+            if qwen_rewrite:
+                from ruinedfooocus.features.prompting.ui_rewrite import add_qwen_rewrite_controls
 
-            bind_qwen_rewrite = add_qwen_rewrite_controls(prompt, checkpoint)
+                bind_qwen_rewrite = add_qwen_rewrite_controls(prompt, checkpoint)
+
+        with gr.Column(visible=False, elem_id="prompt-mode-variations") as variations_panel:
+            add_evolve_controls(
+                prompt,
+                run_event,
+                image_number,
+                checkpoint,
+                assumedirectcontrol,
+                bind_generation=register_generation,
+                open_default=True,
+            )
+
+        with gr.Column(visible=False, elem_id="prompt-mode-describe") as describe_panel:
+            pass
+        prompt_tools_tab.describe_panel = describe_panel
+
+        def switch_prompt_mode(mode):
+            return (
+                gr.update(visible=mode == "generate"),
+                gr.update(visible=mode == "rewrite"),
+                gr.update(visible=mode == "variations"),
+                gr.update(visible=mode == "describe"),
+            )
+
+        prompt_tool_mode.change(
+            switch_prompt_mode,
+            inputs=[prompt_tool_mode],
+            outputs=[generate_panel, rewrite_panel, variations_panel, describe_panel],
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
+        )
 
     return bind_generation

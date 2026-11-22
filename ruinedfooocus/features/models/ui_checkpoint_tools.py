@@ -295,7 +295,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
             ),
             (check, check_current, report),
         ):
-            result = gr.JSON(None, visible="hidden")
+            result = gr.JSON(None, visible=False)
             event = button.click(
                 callback,
                 inputs=[base_model, revision_control, selection, selection_version]
@@ -311,7 +311,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
             publish_checkpoint_result(
                 event, result, outputs if isinstance(outputs, list) else [outputs]
             )
-        conversion_result = gr.JSON(None, visible="hidden")
+        conversion_result = gr.JSON(None, visible=False)
         conversion = convert.click(
             convert_current,
             inputs=[base_model, selection, selection_version],
@@ -350,7 +350,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
             (optimize, optimize_current, [report, base_model]),
             (benchmark, benchmark_current, [report]),
         ):
-            optimizer_result = gr.JSON(None, visible="hidden")
+            optimizer_result = gr.JSON(None, visible=False)
             optimizer_event = button.click(
                 callback,
                 inputs=[base_model, selection, selection_version],
@@ -406,7 +406,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
             except CancelledError:
                 return gr.skip()
 
-        selection_result = gr.JSON(None, visible="hidden")
+        selection_result = gr.JSON(None, visible=False)
         selection_event = base_model.change(
             begin_selection,
             inputs=[base_model, selection, selection_version],

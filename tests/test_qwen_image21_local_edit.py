@@ -106,7 +106,7 @@ class QwenImage21LocalEditTests(unittest.TestCase):
                 True, selection, "Img2Img", "qwen"
             )
             self.assertFalse(upload["visible"])
-            self.assertEqual(strength["visible"], "hidden")
+            self.assertIn(strength["visible"], (False, "hidden"))
             self.assertTrue(toggle["visible"])
             self.assertTrue(options["visible"])
         for selection in ("Canny", "Remove background"):

@@ -2198,5 +2198,10 @@
   "models.built_in": "Встроено",
   "models.incompatible": "Несовместимо",
   "models.missing": "Отсутствует",
-  "prompting.parent_selection": "Выбор исходного варианта"
+  "prompting.parent_selection": "Выбор исходного варианта",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "Изображение ещё не загружено. Загрузите его ниже или откройте последнее сгенерированное в Редакторе.",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Используется изображение ниже (с текущего холста или загруженное).",
+  "prompting.rewrite": "Переписать",
+  "prompting.variations": "Вариации",
+  "prompting.describe": "Описать"
 }

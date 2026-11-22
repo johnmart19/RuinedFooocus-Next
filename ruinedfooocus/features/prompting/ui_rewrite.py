@@ -102,7 +102,7 @@ def add_rewrite_controls(prompt):
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
             llama_btn = gr.Button(value=translate_ui("Preview rewrite"), size="sm")
             refresh_btn = gr.Button(value=translate_ui("Refresh presets"), size="sm")
-    previous_prompt = gr.JSON(None, visible="hidden")
+    previous_prompt = gr.JSON(None, visible=False)
     original_prompt = gr.State(None)
     preview = gr.Textbox(label=translate_ui("Suggested prompt"), lines=4, visible=False)
     with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
@@ -187,7 +187,7 @@ def add_qwen_rewrite_controls(prompt, checkpoint):
             undo_btn = gr.Button(translate_ui("Undo rewrite"), interactive=False)
 
     ticket = gr.State(None)
-    previous = gr.JSON(None, visible="hidden")
+    previous = gr.JSON(None, visible=False)
     checkpoint.change(
         lambda name: gr.update(visible=available(name)),
         inputs=checkpoint,

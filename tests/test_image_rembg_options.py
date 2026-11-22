@@ -35,7 +35,7 @@ class BackgroundOptionTests(unittest.TestCase):
                 updates = scope["input_context"](
                     False, selection, kind, "selected", None, scale, target
                 )
-                self.assertEqual(updates[4], {"visible": True if visible else "hidden"})
+                self.assertEqual(updates[4], {"visible": bool(visible)})
                 self.assertNotIn("value", updates[4])
 
     def test_force_is_saved_with_custom_background_preset_and_reloaded(self):

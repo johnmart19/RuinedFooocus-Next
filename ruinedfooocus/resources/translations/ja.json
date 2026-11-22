@@ -2198,5 +2198,10 @@
   "models.built_in": "内蔵",
   "models.incompatible": "非互換",
   "models.missing": "未導入",
-  "prompting.parent_selection": "親プロンプト選択"
+  "prompting.parent_selection": "親プロンプト選択",
+  "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "画像がまだ読み込まれていません。下からアップロードするか、エディターで最新の生成画像を開いてください。",
+  "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "下に表示されている画像を使用します（現在のキャンバスまたはアップロード画像）。",
+  "prompting.rewrite": "リライト",
+  "prompting.variations": "バリエーション",
+  "prompting.describe": "説明を生成"
 }

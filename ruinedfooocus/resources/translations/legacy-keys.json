@@ -2194,5 +2194,10 @@
   "Built-in": "models.built_in",
   "Incompatible": "models.incompatible",
   "Missing": "models.missing",
-  "Parent selection": "prompting.parent_selection"
+  "Parent selection": "prompting.parent_selection",
+  "Using the image shown below (from current canvas or upload).": "image_editing.using_the_image_shown_below_from_current_canvas_or_upload",
+  "No image loaded yet. Upload one below, or open your latest generated image in Editor.": "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor",
+  "Rewrite": "prompting.rewrite",
+  "Variations": "prompting.variations",
+  "Describe": "prompting.describe"
 }

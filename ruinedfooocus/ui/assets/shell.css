@@ -1476,6 +1476,48 @@ html {
   text-align: center;
   white-space: nowrap;
 }
+/* Ensure Gradio visible="hidden" controls never leak into layout. */
+:is(#app-tabs, #image-stage) :is(.block, .gr-group, .form, .styler, button, fieldset).hidden {
+  display: none !important;
+}
+/* Keep Power-ups image dropzone label and bottom source icons crisp and unclipped. */
+#image-tool-input {
+  height: auto !important;
+  min-height: 236px !important;
+}
+#image-tool-input .upload-container {
+  padding-top: 2.5rem !important;
+  padding-bottom: 0.75rem !important;
+}
+#image-tool-input .source-selection {
+  min-height: 2.25rem !important;
+  padding: 0.25rem 0 !important;
+}
+#image-tool-input .source-selection > button {
+  min-height: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  width: 32px !important;
+  padding: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#image-tool-input .source-selection > button svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+/* Prompt tools 4-mode segmented selector. */
+#prompt-tools-mode .wrap {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+#prompt-tools-mode .wrap > label {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+}
 :is(#app-tabs, #image-stage) #sampling-table .prose table {
   margin: 0 !important;
 }

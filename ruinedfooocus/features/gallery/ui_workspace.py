@@ -1163,8 +1163,14 @@ class EditorWorkspace:
                 show_progress="hidden",
                 api_visibility="private",
             )
+            _tool_actions = {
+                "Adjust image": "adjust-image",
+                "RemBG": "remove-background",
+                "Depth map": "depth-map",
+                "Restore still image (SeedVR2)": "restore-seedvr2",
+            }
             legacy_tool.input(
-                lambda choice: ("adjust-image" if choice == "Adjust image" else "generate", False),
+                lambda choice: (_tool_actions.get(choice, "generate"), False),
                 inputs=legacy_tool,
                 outputs=[self.action, run_controls["inpaint_toggle"]],
                 queue=False,
@@ -1503,7 +1509,7 @@ class EditorWorkspace:
             self.run_controls["task"],
             self.version,
         ]
-        result = gr.JSON(None, visible="hidden")
+        result = gr.JSON(None, visible=False)
         guard, capture = capture_draft(self.controls["prompt"], inputs, f"editor-open-{result._id}")
         begin = (
             "(...values) => { window.__rfEditorRequest=(window.__rfEditorRequest||1)+1; values[values.length-2]=window.__rfEditorRequest; return ("
