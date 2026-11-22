@@ -2216,5 +2216,7 @@
   "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "自動はllama.cppの既定のmmap読み込みを使用します。低速ドライブやRAM不足時は無効にしてください。",
   "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "ネイティブPyTorch SDPA、Flash、Sage、AMD Composable Kernel (CK)、SplitまたはQuad Attention。",
   "settings.fast_matrix_optimizations": "高速行列最適化",
-  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "オプションのComfyUI --fastカーネル（FP16累積、FP8行列積、またはすべて）。再現性がわずかに変わる場合があります。"
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "オプションのComfyUI --fastカーネル（FP16累積、FP8行列積、またはすべて）。再現性がわずかに変わる場合があります。",
+  "models.create_bf16_copy": "BF16 コピーを作成",
+  "models.create_fp8_copy": "FP8 コピーを作成"
 }

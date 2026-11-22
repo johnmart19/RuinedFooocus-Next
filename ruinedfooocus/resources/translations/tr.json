@@ -2216,5 +2216,7 @@
   "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "Otomatik, llama.cpp varsayılan mmap yüklemesini kullanır. Yavaş disklerde veya RAM baskısında devre dışı bırakın.",
   "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "Yerel PyTorch SDPA, Flash, Sage, AMD Composable Kernel (CK), split veya quad attention.",
   "settings.fast_matrix_optimizations": "Hızlı matris optimizasyonları",
-  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "İsteğe bağlı ComfyUI --fast çekirdekleri (FP16 birikimi, FP8 matmul veya tümü). Çıktı determinizmini hafifçe değiştirebilir."
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "İsteğe bağlı ComfyUI --fast çekirdekleri (FP16 birikimi, FP8 matmul veya tümü). Çıktı determinizmini hafifçe değiştirebilir.",
+  "models.create_bf16_copy": "BF16 kopyası oluştur",
+  "models.create_fp8_copy": "FP8 kopyası oluştur"
 }

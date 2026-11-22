@@ -190,16 +190,23 @@ def _publish(source, target):
         raise
 
 
-def create_fp16_copy(
-    path, cache_dir, model_info=None, preview=None, progress=lambda fraction, description: None
+def _create_reduced_copy(
+    path,
+    cache_dir,
+    target_dtype,
+    model_info=None,
+    preview=None,
+    progress=lambda fraction, description: None,
 ):
+    label = "BF16" if target_dtype == "BF16" else "FP16"
+    suffix = ".bf16.safetensors" if target_dtype == "BF16" else ".fp16.safetensors"
     path = Path(path)
     report = inspect_checkpoint(path)
     if not report["saving_bytes"]:
         return dict(path=None, message="No FP32 tensors to reduce. No copy created.")
     if report["saving_bytes"] < sum(report["dtypes"].values()) * 0.01:
-        return dict(path=None, message="FP16 would save less than 1%. No copy created.")
-    destination = path.with_name(path.stem + ".fp16.safetensors")
+        return dict(path=None, message=f"{label} would save less than 1%. No copy created.")
+    destination = path.with_name(path.stem + suffix)
     cache_dir = Path(cache_dir)
     cached = cache_dir / destination.name
     metadata_destination = cached.with_suffix(".json")
@@ -210,7 +217,7 @@ def create_fp16_copy(
             raise FileExistsError(f"Already exists: {target.name}")
     needed = report["bytes"] - report["saving_bytes"] + CHUNK_SIZE
     if shutil.disk_usage(path.parent).free < needed:
-        raise ValueError("Not enough free disk space for the FP16 copy.")
+        raise ValueError(f"Not enough free disk space for the {label} copy.")
     before = _stamp(path)
     checked = check_weights(path, progress)
     if checked["invalid"]:
@@ -223,12 +230,12 @@ def create_fp16_copy(
         size = (end - start) // 2 if tensor["dtype"] == "F32" else end - start
         converted[name] = tensor | {"data_offsets": [position, position + size]}
         if tensor["dtype"] == "F32":
-            converted[name]["dtype"] = "F16"
+            converted[name]["dtype"] = target_dtype
         position += size
     converted["__metadata__"] = header.get("__metadata__", {}) | {
         "rf.source_sha256": checked["sha256"],
         "rf.source_name": path.name,
-        "rf.conversion": "FP32 to FP16; other dtypes preserved",
+        "rf.conversion": f"FP32 to {label}; other dtypes preserved",
     }
     encoded = json.dumps(converted, separators=(",", ":")).encode()
     encoded += b" " * (-len(encoded) % 8)
@@ -255,15 +262,24 @@ def create_fp16_copy(
                     remaining -= len(raw)
                     if tensor["dtype"] == "F32":
                         values = np.frombuffer(raw, dtype="<f4")
-                        with np.errstate(over="ignore", under="ignore"):
-                            reduced = values.astype("<f2")
-                        if not np.isfinite(reduced).all():
-                            raise ValueError(f"FP16 overflow in {name}. Conversion stopped.")
-                        underflow += int(np.count_nonzero((values != 0) & (reduced == 0)))
-                        raw = reduced.tobytes()
+                        if target_dtype == "BF16":
+                            bits = np.frombuffer(raw, dtype="<u4")
+                            rounding = np.uint32(0x7FFF) + ((bits >> np.uint32(16)) & np.uint32(1))
+                            bf16_u16 = ((bits + rounding) >> np.uint32(16)).astype("<u2")
+                            underflow += int(
+                                np.count_nonzero((values != 0) & ((bf16_u16 & np.uint16(0x7FFF)) == 0))
+                            )
+                            raw = bf16_u16.tobytes()
+                        else:
+                            with np.errstate(over="ignore", under="ignore"):
+                                reduced = values.astype("<f2")
+                            if not np.isfinite(reduced).all():
+                                raise ValueError(f"FP16 overflow in {name}. Conversion stopped.")
+                            underflow += int(np.count_nonzero((values != 0) & (reduced == 0)))
+                            raw = reduced.tobytes()
                     output.write(raw)
                     digest.update(raw)
-                    progress(source.tell() / before[0], "Writing FP16 copy")
+                    progress(source.tell() / before[0], f"Writing {label} copy")
             output.flush()
             os.fsync(output.fileno())
         with safe_open(temporary, framework="pt", device="cpu"):
@@ -305,6 +321,18 @@ def create_fp16_copy(
         message=f"Created {destination.name}. Saved {format_size(report['saving_bytes'])}. "
         f"Values rounded to zero: {underflow}. Original retained.",
     )
+
+
+def create_fp16_copy(
+    path, cache_dir, model_info=None, preview=None, progress=lambda fraction, description: None
+):
+    return _create_reduced_copy(path, cache_dir, "F16", model_info, preview, progress)
+
+
+def create_bf16_copy(
+    path, cache_dir, model_info=None, preview=None, progress=lambda fraction, description: None
+):
+    return _create_reduced_copy(path, cache_dir, "BF16", model_info, preview, progress)
 
 
 def format_size(size):

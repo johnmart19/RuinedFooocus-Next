@@ -33,9 +33,12 @@ from ruinedfooocus.features.models.checkpoint_tools import (
 )
 
 SUFFIX = ".int8.safetensors"
+FP8_SUFFIX = ".fp8.safetensors"
+PAIR_SUFFIXES = (SUFFIX, FP8_SUFFIX, ".bf16.safetensors", ".fp16.safetensors")
 GROUP_SIZE = 256
 MIN_FEATURES = 1024
 RECORD = {"format": "int8_tensorwise", "convrot": True, "convrot_groupsize": GROUP_SIZE}
+FP8_RECORD = {"format": "float8_e4m3fn"}
 FLOAT_DTYPES = {"F16": "float16", "BF16": "bfloat16", "F32": "float32"}
 # Only transformer blocks: their attention and MLP projections carry the weight.
 BLOCK = re.compile(r"(?:^|\.)(?:[a-z_]*blocks|layers)\.(?:[a-z_]+\.)?\d+\.")
@@ -240,22 +243,169 @@ def create_int8_copy(
     )
 
 
+def _quantize_fp8(raw, tensor):
+    import torch
+    from comfy_kitchen.tensor.fp8 import TensorCoreFP8Layout
+
+    weight = torch.frombuffer(bytearray(raw), dtype=getattr(torch, FLOAT_DTYPES[tensor["dtype"]]))
+    weight = weight.reshape(tensor["shape"]).float()
+    data, params = TensorCoreFP8Layout.quantize(weight, dtype=torch.float8_e4m3fn)
+    scale = params.scale.float().reshape(())
+    if tuple(data.shape) != tuple(weight.shape):
+        raise ValueError("The FP8 kernel returned an unexpected layout. Conversion stopped.")
+    if not bool(torch.isfinite(scale).all()):
+        raise ValueError("A layer has no finite FP8 scale. Conversion stopped.")
+    return data.view(torch.uint8).contiguous().numpy().tobytes(), scale.contiguous().numpy().tobytes()
+
+
+def create_fp8_copy(
+    path, cache_dir, model_info=None, preview=None, progress=lambda fraction, description: None
+):
+    """Write `<name>.fp8.safetensors` beside the source using ComfyUI float8_e4m3fn layout."""
+    path = Path(path)
+    planned = plan(path)
+    destination = path.with_name(path.stem + FP8_SUFFIX)
+    cache_dir = Path(cache_dir)
+    cached = cache_dir / destination.name
+    metadata_destination = cached.with_suffix(".json")
+    preview = Path(preview) if preview else None
+    preview_destination = cached.with_suffix(preview.suffix) if preview else None
+    for target in (destination, metadata_destination, preview_destination):
+        if target and target.exists():
+            raise FileExistsError(f"Already exists: {target.name}")
+    if shutil.disk_usage(path.parent).free < planned["bytes_after"] + CHUNK_SIZE:
+        raise ValueError("Not enough free disk space for the FP8 copy.")
+    before = _stamp(path)
+    checked = check_weights(path, progress)
+    if checked["invalid"]:
+        raise ValueError("Checkpoint contains NaN/Inf weights. Conversion stopped.")
+    header, source_offset = _header(path)
+    chosen = set(planned["layers"])
+    record = json.dumps(FP8_RECORD).encode("utf-8")
+    converted, position = {}, 0
+
+    def place(name, dtype, shape, size):
+        nonlocal position
+        converted[name] = dict(dtype=dtype, shape=shape, data_offsets=[position, position + size])
+        position += size
+
+    for name, tensor in _tensors(header):
+        if name in chosen:
+            rows, columns = tensor["shape"]
+            prefix = name[: -len("weight")]
+            place(name, "F8_E4M3", [rows, columns], rows * columns)
+            place(prefix + "weight_scale", "F32", [], 4)
+            place(prefix + "comfy_quant", "U8", [len(record)], len(record))
+        else:
+            start, end = tensor["data_offsets"]
+            place(name, tensor["dtype"], tensor["shape"], end - start)
+    converted["__metadata__"] = (header.get("__metadata__") or {}) | {
+        "rf.source_sha256": checked["sha256"],
+        "rf.source_name": path.name,
+        "rf.conversion": f"FP8 E4M3FN with per-tensor scale for {len(chosen)} linear layers; "
+        "other tensors preserved",
+    }
+    encoded = json.dumps(converted, separators=(",", ":")).encode()
+    encoded += b" " * (-len(encoded) % 8)
+    started = time.monotonic()
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    with (
+        TemporaryDirectory(prefix=".checkpoint-", dir=path.parent) as directory,
+        TemporaryDirectory(prefix=".checkpoint-", dir=cache_dir) as cache_temporary,
+    ):
+        temporary = Path(directory) / "weights.tmp"
+        digest = hashlib.sha256()
+        with path.open("rb") as source, temporary.open("wb") as output:
+
+            def write(raw):
+                output.write(raw)
+                digest.update(raw)
+
+            write(len(encoded).to_bytes(8, "little") + encoded)
+            for name, tensor in _tensors(header):
+                start, end = tensor["data_offsets"]
+                source.seek(source_offset + start)
+                if name in chosen:
+                    raw = source.read(end - start)
+                    if len(raw) != end - start:
+                        raise ValueError("Checkpoint was truncated during conversion.")
+                    data, scale = _quantize_fp8(raw, tensor)
+                    write(data)
+                    write(scale)
+                    write(record)
+                else:
+                    remaining = end - start
+                    while remaining:
+                        raw = source.read(min(CHUNK_SIZE, remaining))
+                        if not raw:
+                            raise ValueError("Checkpoint was truncated during conversion.")
+                        remaining -= len(raw)
+                        write(raw)
+                progress(source.tell() / before[0], "Writing FP8 copy")
+            output.flush()
+            os.fsync(output.fileno())
+        if temporary.stat().st_size != 8 + len(encoded) + position:
+            raise ValueError("File verification failed. Conversion stopped.")
+        from safetensors import safe_open
+
+        with safe_open(temporary, framework="pt", device="cpu"):
+            pass
+        if _stamp(path) != before:
+            raise ValueError("Checkpoint changed during conversion; try again.")
+        info = dict(model_info or {})
+        info.update(
+            baseModel=info.get("baseModel") or "Unknown",
+            files=[{"name": destination.name, "hashes": {"SHA256": digest.hexdigest()}}],
+            rf_source={"name": path.name, "sha256": checked["sha256"]},
+        )
+        metadata = Path(cache_temporary) / "metadata.tmp"
+        metadata.write_text(json.dumps(info, indent=2), encoding="utf-8")
+        publish = [(metadata, metadata_destination)]
+        if preview:
+            staged_preview = Path(cache_temporary) / "preview.tmp"
+            shutil.copyfile(preview, staged_preview)
+            publish.append((staged_preview, preview_destination))
+        publish.append((temporary, destination))
+        created = []
+        try:
+            for source, target in publish:
+                _publish(source, target)
+                created.append(target)
+        except OSError:
+            for target in reversed(created):
+                target.unlink()
+            raise
+    saved = planned["bytes_before"] - (8 + len(encoded) + position)
+    return dict(
+        path=destination,
+        preview=preview_destination,
+        layers=len(chosen),
+        message=f"Created {destination.name} in {time.monotonic() - started:.0f} s. "
+        f"{len(chosen)} linear layers stored as FP8 E4M3FN, saving {format_size(max(0, saved))}. "
+        "Original retained. Use Benchmark pair to compare speed on this GPU.",
+    )
+
+
 def pair(name, names):
-    """(original, int8 copy) for a selected checkpoint when both are installed."""
+    """(original, optimized copy) for a selected checkpoint when both are installed."""
     current = Path(name)
-    if current.name.endswith(SUFFIX):
-        stem = current.name[: -len(SUFFIX)]
-        originals = [
-            other
-            for other in names
-            if Path(other).parent == current.parent
-            and Path(other).stem == stem
-            and not Path(other).name.endswith(SUFFIX)
-        ]
-        return (originals[0], name) if originals else None
-    copy = str(current.with_name(current.stem + SUFFIX)).replace("\\", "/")
-    matches = [other for other in names if other.replace("\\", "/") == copy]
-    return (name, matches[0]) if matches else None
+    for suffix in PAIR_SUFFIXES:
+        if current.name.endswith(suffix):
+            stem = current.name[: -len(suffix)]
+            originals = [
+                other
+                for other in names
+                if Path(other).parent == current.parent
+                and Path(other).stem == stem
+                and not any(Path(other).name.endswith(s) for s in PAIR_SUFFIXES)
+            ]
+            return (originals[0], name) if originals else None
+    for suffix in PAIR_SUFFIXES:
+        copy = str(current.with_name(current.stem + suffix)).replace("\\", "/")
+        matches = [other for other in names if other.replace("\\", "/") == copy]
+        if matches:
+            return (name, matches[0])
+    return None
 
 
 def device_memory_used():
@@ -296,10 +446,21 @@ def benchmark_pair(original, copy, *, size="1024x1024", runs=2, generate=None, m
         used[name] = memory()
     first, second = timings[original], timings[copy]
     change = (first - second) / first * 100
+    label = (
+        "INT8"
+        if copy.endswith(SUFFIX)
+        else "FP8"
+        if copy.endswith(FP8_SUFFIX)
+        else "BF16"
+        if copy.endswith(".bf16.safetensors")
+        else "FP16"
+        if copy.endswith(".fp16.safetensors")
+        else "optimized"
+    )
     verdict = (
-        f"The INT8 copy is {change:.0f}% faster."
+        f"The {label} copy is {change:.0f}% faster."
         if change >= 2
-        else f"The INT8 copy is {-change:.0f}% slower."
+        else f"The {label} copy is {-change:.0f}% slower."
         if change <= -2
         else "No measurable speed difference."
     )

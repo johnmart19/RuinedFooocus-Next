@@ -189,7 +189,7 @@ class CheckpointSelectionLaneTests(unittest.TestCase):
             self.assertTrue(self.started.wait(2))
             self.functions["begin_selection"].fn("b.safetensors", self.session, 2)
             self.release.set()
-            self.assertEqual(future.result(timeout=2)["updates"], [gr.skip()] * 3)
+            self.assertEqual(future.result(timeout=2)["updates"], [gr.skip()] * 6)
         finally:
             self.release.set()
             executor.shutdown(wait=True, cancel_futures=True)

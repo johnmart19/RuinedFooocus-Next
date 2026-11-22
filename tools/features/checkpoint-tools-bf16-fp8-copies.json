@@ -1,0 +1,14 @@
+{
+  "id": "checkpoint-tools-bf16-fp8-copies",
+  "subject": "Add Create BF16 copy and Create FP8 copy to Checkpoint tools and generalize Benchmark pair",
+  "requires": ["runtime-optimizations-and-comfy-model-coverage"],
+  "tests": [
+    "test_runtime_optimizations_and_models.py",
+    "test_gpu_optimizer.py",
+    "test_model_files.py",
+    "test_checkpoint_selection_lane.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

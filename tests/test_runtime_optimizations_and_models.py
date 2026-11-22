@@ -183,5 +183,44 @@ class LlmOptimizationSchemaTests(unittest.TestCase):
         self.assertIn("--no-mmap", cmd)
 
 
+class CheckpointOptimizationCopyTests(unittest.TestCase):
+    def test_create_bf16_and_fp8_copies_and_pair_matching(self):
+        import torch
+        from safetensors.torch import save_file
+        from safetensors import safe_open
+        from ruinedfooocus.features.models import checkpoint_tools, gpu_optimizer
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            cache = root / "cache"
+            src = root / "tiny_transformer.safetensors"
+            save_file(
+                {
+                    "blocks.0.attn.to_q.weight": torch.randn(1024, 1024, dtype=torch.float32),
+                    "final_layer.bias": torch.zeros(16, dtype=torch.float32),
+                },
+                str(src),
+            )
+            bf16 = checkpoint_tools.create_bf16_copy(src, cache)
+            self.assertTrue(bf16["path"].name.endswith(".bf16.safetensors"))
+            with safe_open(bf16["path"], framework="pt", device="cpu") as f:
+                self.assertEqual(f.get_tensor("blocks.0.attn.to_q.weight").dtype, torch.bfloat16)
+
+            fp8 = gpu_optimizer.create_fp8_copy(src, cache)
+            self.assertTrue(fp8["path"].name.endswith(".fp8.safetensors"))
+            with safe_open(fp8["path"], framework="pt", device="cpu") as f:
+                self.assertEqual(
+                    f.get_tensor("blocks.0.attn.to_q.weight").dtype, torch.float8_e4m3fn
+                )
+                self.assertIn("blocks.0.attn.to_q.weight_scale", f.keys())
+                self.assertIn("blocks.0.attn.to_q.comfy_quant", f.keys())
+
+            names = [src.name, fp8["path"].name, bf16["path"].name]
+            self.assertEqual(gpu_optimizer.pair(src.name, names), (src.name, fp8["path"].name))
+            self.assertEqual(
+                gpu_optimizer.pair(bf16["path"].name, names), (src.name, bf16["path"].name)
+            )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -2216,5 +2216,7 @@
   "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "Авто использует стандартную загрузку mmap в llama.cpp. Отключите при медленном диске или нехватке ОЗУ.",
   "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "Нативный PyTorch SDPA, Flash, Sage, AMD Composable Kernel (CK), split или quad attention.",
   "settings.fast_matrix_optimizations": "Быстрые матричные оптимизации",
-  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "Опциональные ядра ComfyUI --fast (FP16 accumulation, FP8 matmul или все). Может слегка изменить детерминизм."
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "Опциональные ядра ComfyUI --fast (FP16 accumulation, FP8 matmul или все). Может слегка изменить детерминизм.",
+  "models.create_bf16_copy": "Создать копию BF16",
+  "models.create_fp8_copy": "Создать копию FP8"
 }

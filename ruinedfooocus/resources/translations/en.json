@@ -2216,5 +2216,7 @@
   "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "Auto uses llama.cpp default mmap loading. Disable if loading from slow drives or troubleshooting RAM pressure.",
   "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "Native PyTorch SDPA, Flash, Sage, AMD Composable Kernel (CK), split, or quad attention.",
   "settings.fast_matrix_optimizations": "Fast matrix optimizations",
-  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "Optional ComfyUI --fast kernels (FP16 accumulation, FP8 matmul, or all). May slightly alter output determinism."
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "Optional ComfyUI --fast kernels (FP16 accumulation, FP8 matmul, or all). May slightly alter output determinism.",
+  "models.create_bf16_copy": "Create BF16 copy",
+  "models.create_fp8_copy": "Create FP8 copy"
 }

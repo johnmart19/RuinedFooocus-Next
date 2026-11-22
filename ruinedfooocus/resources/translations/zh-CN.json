@@ -2216,5 +2216,7 @@
   "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "自动使用 llama.cpp 默认 mmap 加载。若磁盘较慢或内存吃紧可禁用。",
   "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "原生 PyTorch SDPA、Flash、Sage、AMD Composable Kernel (CK)、Split 或 Quad 注意力。",
   "settings.fast_matrix_optimizations": "快速矩阵优化",
-  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "可选 ComfyUI --fast 内核（FP16 累加、FP8 矩阵乘法或全部）。可能略微影响输出确定性。"
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "可选 ComfyUI --fast 内核（FP16 累加、FP8 矩阵乘法或全部）。可能略微影响输出确定性。",
+  "models.create_bf16_copy": "创建 BF16 副本",
+  "models.create_fp8_copy": "创建 FP8 副本"
 }

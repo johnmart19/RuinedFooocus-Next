@@ -2216,5 +2216,7 @@
   "settings.auto_uses_llama_cpp_default_mmap_loading_disable_if_loading_from_slow_drives_or_troubleshooting_ram_pressure": "Auto använder llama.cpp:s standard-mmap. Inaktivera vid långsamma diskar eller RAM-brist.",
   "settings.native_pytorch_sdpa_flash_sage_amd_composable_kernel_ck_split_or_quad_attention": "Inbyggd PyTorch SDPA, Flash, Sage, AMD Composable Kernel (CK), split- eller quad-attention.",
   "settings.fast_matrix_optimizations": "Snabba matrisoptimeringar",
-  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "Valfria ComfyUI --fast-kärnor (FP16-ackumulering, FP8-matmul eller alla). Kan lätt påverka determinism."
+  "settings.optional_comfyui_fast_kernels_fp16_accumulation_fp8_matmul_or_all_may_slightly_alter_output_determinism": "Valfria ComfyUI --fast-kärnor (FP16-ackumulering, FP8-matmul eller alla). Kan lätt påverka determinism.",
+  "models.create_bf16_copy": "Skapa BF16-kopia",
+  "models.create_fp8_copy": "Skapa FP8-kopia"
 }

@@ -136,9 +136,13 @@ def run_action(name, action, progress, on_verified=None, *, verify_source=True):
                 "No tensors were loaded or checked for NaN/Inf. "
                 "Workflow controls refresh automatically."
             )
-        if action in ("convert", "optimize"):
+        if action in ("convert", "convert_bf16", "optimize", "optimize_fp8"):
             if action == "optimize":
                 from ruinedfooocus.features.models.gpu_optimizer import create_int8_copy as create
+            elif action == "optimize_fp8":
+                from ruinedfooocus.features.models.gpu_optimizer import create_fp8_copy as create
+            elif action == "convert_bf16":
+                create = tools.create_bf16_copy
             else:
                 create = tools.create_fp16_copy
             result = create(
@@ -204,10 +208,18 @@ def create_ui(base_model, visible=True, model_refresh=None):
                 size="sm",
                 interactive=is_safetensors(base_model.value or ""),
             )
-        # A quantized copy for the INT8 kernels of this GPU, and a timed comparison
+        # Precision and quantized copies for this GPU, plus a timed comparison
         # of the pair so the copy is kept on evidence.
         with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
             convert = gr.Button(translate_ui("Create FP16 copy"), size="sm", interactive=False)
+            convert_bf16 = gr.Button(translate_ui("Create BF16 copy"), size="sm", interactive=False)
+        with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
+            optimize_fp8 = gr.Button(
+                translate_ui("Create FP8 copy"),
+                size="sm",
+                interactive=is_safetensors(base_model.value or ""),
+                elem_id="checkpoint-fp8-copy",
+            )
             optimize = gr.Button(
                 translate_ui("Create INT8 copy"),
                 size="sm",
@@ -239,6 +251,9 @@ def create_ui(base_model, visible=True, model_refresh=None):
                     run_action(name, "inspect", progress, lambda: verified.append(True)),
                     gr.update(interactive=False),
                     gr.update(interactive=False),
+                    gr.update(interactive=False),
+                    gr.update(interactive=False),
+                    gr.update(interactive=False),
                 )
             else:
                 result = selection_report(
@@ -264,7 +279,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
                 name,
                 version,
                 lambda: inspect_selected(name, revision, progress),
-                outputs=3 + (model_refresh is not None),
+                outputs=6 + (model_refresh is not None),
             )
             return checkpoint_result(version, updates)
 
@@ -291,7 +306,8 @@ def create_ui(base_model, visible=True, model_refresh=None):
             (
                 inspect,
                 inspect_current,
-                [report, convert, check] + ([model_refresh] if model_refresh is not None else []),
+                [report, convert, convert_bf16, check, optimize_fp8, optimize]
+                + ([model_refresh] if model_refresh is not None else []),
             ),
             (check, check_current, report),
         ):
@@ -324,6 +340,12 @@ def create_ui(base_model, visible=True, model_refresh=None):
         )
         publish_checkpoint_result(conversion, conversion_result, [report, base_model])
 
+        def convert_bf16_current(name, session, version, progress=gr.Progress()):
+            return convert_current(name, session, version, progress, "convert_bf16")
+
+        def optimize_fp8_current(name, session, version, progress=gr.Progress()):
+            return convert_current(name, session, version, progress, "optimize_fp8")
+
         def optimize_current(name, session, version, progress=gr.Progress()):
             return convert_current(name, session, version, progress, "optimize")
 
@@ -335,8 +357,8 @@ def create_ui(base_model, visible=True, model_refresh=None):
                     found = gpu_optimizer.pair(name, shared.models.get_names("checkpoints"))
                     if found is None:
                         return (
-                            "Benchmark pair: select a checkpoint that has an INT8 copy, "
-                            "or create the copy first."
+                            "Benchmark pair: select a checkpoint that has an optimized copy "
+                            "(INT8, FP8, BF16, or FP16), or create one first."
                         )
                     progress(0, "Generating with both files")
                     return gpu_optimizer.benchmark_pair(*found)["message"]
@@ -347,6 +369,8 @@ def create_ui(base_model, visible=True, model_refresh=None):
             return checkpoint_result(version, [update])
 
         for button, callback, outputs in (
+            (convert_bf16, convert_bf16_current, [report, base_model]),
+            (optimize_fp8, optimize_fp8_current, [report, base_model]),
             (optimize, optimize_current, [report, base_model]),
             (benchmark, benchmark_current, [report]),
         ):
@@ -377,12 +401,16 @@ def create_ui(base_model, visible=True, model_refresh=None):
                             else "Click Inspect to verify a reviewed source identity. No tensors are opened on selection.",
                             gr.update(interactive=False),
                             gr.update(interactive=False),
+                            gr.update(interactive=False),
+                            gr.update(interactive=False),
+                            gr.update(interactive=False),
                         )
                     inspection = tools.inspect_checkpoint(path)
                     payload = sum(inspection["dtypes"].values())
                     useful = bool(payload and inspection["saving_bytes"] >= payload * 0.01)
                 except (OSError, ValueError, SafetensorError):
                     pass
+            can_quantize = bool(name) and is_safetensors(name)
             return (
                 run_action(
                     name, "inspect", lambda *_: None, on_verified, verify_source=verify_source
@@ -390,12 +418,15 @@ def create_ui(base_model, visible=True, model_refresh=None):
                 if name
                 else "",
                 gr.update(interactive=useful),
-                gr.update(interactive=bool(name) and is_safetensors(name)),
+                gr.update(interactive=useful),
+                gr.update(interactive=can_quantize),
+                gr.update(interactive=can_quantize),
+                gr.update(interactive=can_quantize),
             )
 
         def selection_current(name, session, version):
             updates = selected_result(
-                session, name, version, lambda: selection_report(name), outputs=3
+                session, name, version, lambda: selection_report(name), outputs=6
             )
             return checkpoint_result(version, updates)
 
@@ -429,5 +460,9 @@ def create_ui(base_model, visible=True, model_refresh=None):
             show_progress_on=[],
             api_visibility="undocumented",
         )
-        publish_checkpoint_result(selection_event, selection_result, [report, convert, check])
+        publish_checkpoint_result(
+            selection_event,
+            selection_result,
+            [report, convert, convert_bf16, check, optimize_fp8, optimize],
+        )
     return group
