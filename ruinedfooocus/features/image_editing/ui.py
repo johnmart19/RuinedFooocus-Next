@@ -409,11 +409,6 @@ def add_controlnet_tab(
 ):
     initial_features = checkpoint_features(base_model.value)
     with gr.Tab(label=t("Image tools"), id="image-tools"):
-        gr.Markdown(
-            translate_ui(
-                "Choose a tool and add its image. Inpainting and upscaling are set in Main."
-            )
-        )
         with gr.Row():
             cn_selection = gr.Dropdown(
                 label=t("Image tool"),
@@ -839,7 +834,7 @@ def add_controlnet_tab(
             cn_selection, cn_type, base_model, model_refresh, tool_kind, checkpoint_features
         )
         input_image = gr.Image(
-            height="clamp(12rem, 30dvh, 24rem)",
+            height="11rem",
             elem_id="image-tool-input",
             buttons=["download", "fullscreen"],
             label=t(input_label(initial_features)),
@@ -953,12 +948,6 @@ def add_controlnet_tab(
             )
             add_ctrl("obp_image_prompt", random_image_prompt)
             with gr.Group(visible=False) as image_prompt_options:
-                gr.Markdown(
-                    translate_ui(
-                        "Uses the Prompt tools settings; it does not describe the input image. "
-                        "Advanced prompt options are under Prompt tools."
-                    )
-                )
                 for name, label in (
                     ("OBP_preset", "One Button preset"),
                     ("OBP_promptenhance", "Prompt enhancement"),
@@ -1035,13 +1024,6 @@ def add_controlnet_tab(
                         "outside the brush stroke."
                     ),
                 )
-                gr.Markdown(
-                    translate_ui(
-                        "Paint over the area on Main, then describe the edit. For example: "
-                        "‘Make the jacket in the red area blue.’ Keep the stroke inside the "
-                        "area you want to change."
-                    )
-                )
             add_ctrl("qwen_local_edit_mode", qwen_local_mode)
             inpaint_denoise = gr.Slider(
                 label=t("Inpainting denoise"),
@@ -1066,53 +1048,52 @@ def add_controlnet_tab(
             )
             add_ctrl("inpaint_mask_grow", inpaint_mask_grow)
             with gr.Accordion(t("Extend canvas"), open=False) as outpaint_options:
-                gr.Markdown(
-                    translate_ui(
-                        "Add pixels on one or more sides to extend Main using the prompt. Set every side to zero to use the painted mask."
-                    )
-                )
-                with gr.Row():
-                    add_ctrl(
-                        "outpaint_left",
-                        gr.Number(
-                            label=t("Left"),
-                            minimum=0,
-                            maximum=OUTPAINT_MAX_MARGIN,
-                            precision=0,
-                            value=0,
-                        ),
-                    )
-                    add_ctrl(
-                        "outpaint_right",
-                        gr.Number(
-                            label=t("Right"),
-                            minimum=0,
-                            maximum=OUTPAINT_MAX_MARGIN,
-                            precision=0,
-                            value=0,
-                        ),
-                    )
-                with gr.Row():
-                    add_ctrl(
-                        "outpaint_top",
-                        gr.Number(
-                            label=t("Top"),
-                            minimum=0,
-                            maximum=OUTPAINT_MAX_MARGIN,
-                            precision=0,
-                            value=0,
-                        ),
-                    )
-                    add_ctrl(
-                        "outpaint_bottom",
-                        gr.Number(
-                            label=t("Bottom"),
-                            minimum=0,
-                            maximum=OUTPAINT_MAX_MARGIN,
-                            precision=0,
-                            value=0,
-                        ),
-                    )
+                with gr.Row(elem_classes=["rf-two-col"]):
+                    with gr.Column(min_width=0):
+                        add_ctrl(
+                            "outpaint_left",
+                            gr.Number(
+                                label=t("Left"),
+                                minimum=0,
+                                maximum=OUTPAINT_MAX_MARGIN,
+                                precision=0,
+                                value=0,
+                            ),
+                        )
+                    with gr.Column(min_width=0):
+                        add_ctrl(
+                            "outpaint_right",
+                            gr.Number(
+                                label=t("Right"),
+                                minimum=0,
+                                maximum=OUTPAINT_MAX_MARGIN,
+                                precision=0,
+                                value=0,
+                            ),
+                        )
+                with gr.Row(elem_classes=["rf-two-col"]):
+                    with gr.Column(min_width=0):
+                        add_ctrl(
+                            "outpaint_top",
+                            gr.Number(
+                                label=t("Top"),
+                                minimum=0,
+                                maximum=OUTPAINT_MAX_MARGIN,
+                                precision=0,
+                                value=0,
+                            ),
+                        )
+                    with gr.Column(min_width=0):
+                        add_ctrl(
+                            "outpaint_bottom",
+                            gr.Number(
+                                label=t("Bottom"),
+                                minimum=0,
+                                maximum=OUTPAINT_MAX_MARGIN,
+                                precision=0,
+                                value=0,
+                            ),
+                        )
                 add_ctrl(
                     "outpaint_feather",
                     gr.Slider(

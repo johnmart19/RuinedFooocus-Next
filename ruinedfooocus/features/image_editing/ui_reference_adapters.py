@@ -60,11 +60,11 @@ def create_ui(base_model, *, main_model=None, model_refresh=None):
     vision = defaults.get("reference_adapter_vision", "") if selected != "none" else ""
     controls = {}
     with gr.Accordion(t("Image prompt adapter"), open=False, visible=len(modes) > 1) as panel:
-        gr.Markdown(t("Use with None or Image to image; add a separate reference image below."))
         controls["reference_adapter"] = ReferenceDropdown(
             choices=[(t(LABELS[mode]), mode) for mode in modes],
             value=selected,
             label=t("Reference adapter"),
+            info=t("Use with None or Image to image; add a separate reference image below."),
         )
         controls["reference_adapter_model"] = gr.Dropdown(
             choices=_choices(

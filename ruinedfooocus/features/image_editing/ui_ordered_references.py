@@ -39,11 +39,13 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
         saved = "auto"
     initial = kind_for(selection.value, tool_type.value) == "edit" and len(available) > 1
     with gr.Accordion(t("Edit recipe"), open=False, visible=initial) as panel:
-        recipe = gr.Dropdown(label=t("Edit recipe"), choices=available, value=saved)
-        gr.Markdown(
-            t(
+        recipe = gr.Dropdown(
+            label=t("Edit recipe"),
+            choices=available,
+            value=saved,
+            info=t(
                 "Choose the matching Edit checkpoint and recipe. Add the primary image first, followed by the other references in upload order."
-            )
+            ),
         )
         from ruinedfooocus.features.image_editing.krea_style import DEFAULT_LORA
 

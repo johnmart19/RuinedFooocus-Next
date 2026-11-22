@@ -2447,6 +2447,7 @@ class pipeline:
         sampled_latent["samples"] = samples
         if (
             guidance.get("hires_enabled")
+            and gen_data.get("_image_workflow_step") is None
             and architecture != "StableCascade_C"
             and not layered_model
             and not gen_data.get("inpaint_toggle")

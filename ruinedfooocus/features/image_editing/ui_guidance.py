@@ -273,12 +273,6 @@ def create_ui(
         open=False,
         visible=generation_active(*[control.value for control in tool_inputs]),
     ) as guidance_panel:
-        gr.Markdown(
-            translate_ui(
-                "These controls apply to the current image without restarting. "
-                "Select a checkpoint under Models to see its supported options."
-            )
-        )
         qwen_schedule = gr.Dropdown(
             label=translate_ui("Qwen sampling schedule"),
             choices=[
@@ -510,29 +504,29 @@ def create_ui(
                     "Off uses automatic VRAM fitting. Tiling can introduce slight seams."
                 ),
             )
-            with gr.Row():
-                vae_size = gr.Textbox(
-                    label=translate_ui("VAE tile size"),
-                    placeholder=translate_ui("Auto"),
-                    min_width=200,
-                    value=""
-                    if defaults.get("vae_tile_size") is None
-                    else str(defaults["vae_tile_size"]),
-                    info=translate_ui(
-                        "Pixels (64–4096, step 32). Auto fits VRAM; smaller tiles save memory."
-                    ),
-                )
-                vae_overlap = gr.Textbox(
-                    label=translate_ui("VAE tile overlap"),
-                    placeholder=translate_ui("Auto"),
-                    min_width=200,
-                    value=""
-                    if defaults.get("vae_overlap") is None
-                    else str(defaults["vae_overlap"]),
-                    info=translate_ui(
-                        "Pixels (0–4096, step 32). Auto blends edges; capped to fit the tile."
-                    ),
-                )
+            with gr.Row(elem_classes=["rf-two-col"]):
+                with gr.Column(min_width=0):
+                    vae_size = gr.Textbox(
+                        label=translate_ui("VAE tile size"),
+                        placeholder=translate_ui("Auto"),
+                        value=""
+                        if defaults.get("vae_tile_size") is None
+                        else str(defaults["vae_tile_size"]),
+                        info=translate_ui(
+                            "Pixels (64–4096, step 32). Auto fits VRAM; smaller tiles save memory."
+                        ),
+                    )
+                with gr.Column(min_width=0):
+                    vae_overlap = gr.Textbox(
+                        label=translate_ui("VAE tile overlap"),
+                        placeholder=translate_ui("Auto"),
+                        value=""
+                        if defaults.get("vae_overlap") is None
+                        else str(defaults["vae_overlap"]),
+                        info=translate_ui(
+                            "Pixels (0–4096, step 32). Auto blends edges; capped to fit the tile."
+                        ),
+                    )
         references = gr.Gallery(
             label=translate_ui("Additional references (2–16, upload order)"),
             value=[],

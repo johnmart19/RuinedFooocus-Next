@@ -1,0 +1,21 @@
+{
+  "id": "editor-workflow-fixes-and-powerups-ux",
+  "subject": "Fix Editor Hires Fix/Preserve frame bugs and clean up Editor & Power-ups UX",
+  "requires": ["create-advanced-models-prompt-ux"],
+  "tests": [
+    "test_editor_workspace_actions.py",
+    "test_editor_workspace_events.py",
+    "test_image_workflow_handoffs.py",
+    "test_editor_run_outputs.py",
+    "test_hires_fix.py",
+    "test_powerup_family_controls.py",
+    "test_navigation_shell.py",
+    "test_tool_navigation.py",
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

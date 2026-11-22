@@ -384,6 +384,7 @@ def worker_request(step, store, *, owner):
         inpaint_toggle=False,
         automatic_upscale="Off",
         automatic_upscale_target="Generated image",
+        hires_enabled=False,
         aspect_ratios_selection="Custom...",
         custom_width=values["target_width"],
         custom_height=values["target_height"],

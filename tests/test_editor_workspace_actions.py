@@ -537,6 +537,49 @@ class EditorWorkspaceActionTests(unittest.TestCase):
             data["_image_workflow_step"].mask.source_id, self.snapshot.current.artifact_id
         )
 
+    def test_editor_workflows_disable_hires_fix_and_preserve_source_frame_when_auto_off(self):
+        with patch(
+            "ruinedfooocus.features.image_editing.ui_guidance.family_for_checkpoint",
+            return_value="SDXL",
+        ):
+            for action in ("generate-background", "prompt-edit"):
+                data = self.workspace.build_request(
+                    dict(
+                        self.values,
+                        _editor_action=action,
+                        hires_enabled=True,
+                        resolution_auto=False,
+                        aspect_ratios_selection="1344x768",
+                        _editor_framing="preserve",
+                        custom_width=1024,
+                        custom_height=1024,
+                    ),
+                    request=self.request,
+                )
+                self.assertFalse(data["hires_enabled"])
+                step = data["_image_workflow_step"]
+                self.assertEqual(
+                    (step.parameters["target_width"], step.parameters["target_height"]),
+                    (73, 121),
+                )
+                self.assertEqual((data["custom_width"], data["custom_height"]), (73, 121))
+
+            padded = self.workspace.build_request(
+                dict(
+                    self.values,
+                    _editor_action="generate-background",
+                    hires_enabled=True,
+                    resolution_auto=False,
+                    _editor_framing="pad",
+                    aspect_ratios_selection="1344x768",
+                    custom_width=1024,
+                    custom_height=1024,
+                ),
+                request=self.request,
+            )
+            self.assertFalse(padded["hires_enabled"])
+            self.assertEqual((padded["custom_width"], padded["custom_height"]), (1344, 768))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -119,6 +119,7 @@ class EditorWorkspace:
             # One-click entry to image tools that otherwise sit in the tool list.
             self.quick_tool = gr.Radio(
                 label=t("Image tools"),
+                elem_id="editor-quick-tools",
                 choices=[
                     (t("Face landmarks"), "Face landmarks"),
                     (t("Pose"), "Whole-body pose"),
@@ -151,7 +152,10 @@ class EditorWorkspace:
             )
             with gr.Accordion(t("Action inputs"), open=True) as self.action_inputs:
                 self.mask = gr.File(
-                    label=t("Selection mask (grayscale)"), type="filepath", visible=False
+                    label=t("Selection mask (grayscale)"),
+                    type="filepath",
+                    visible=False,
+                    elem_classes=["rf-compact-file"],
                 )
                 self.mask_choice = gr.Radio(
                     [(t("Union mask"), "union"), (t("Instance mask"), "instance")],
@@ -169,12 +173,16 @@ class EditorWorkspace:
                     label=t("Invert selection mask"), value=False, visible=False
                 )
                 self.background = gr.File(
-                    label=t("Background image"), type="filepath", visible=False
+                    label=t("Background image"),
+                    type="filepath",
+                    visible=False,
+                    elem_classes=["rf-compact-file"],
                 )
                 self.framing = gr.Radio(
                     [(t("Preserve frame"), "preserve"), (t("Pad"), "pad"), (t("Crop"), "crop")],
                     label=t("Image framing"),
                     value="preserve",
+                    elem_id="editor-framing",
                 )
                 self.preview = gr.Button(t("Check resources"), size="sm")
             from ruinedfooocus.features.gallery.ui_paint import PaintCanvas
@@ -1984,12 +1992,31 @@ class EditorWorkspace:
                 values.get("custom_width", source.frame.width),
                 values.get("custom_height", source.frame.height),
             )
+            selected_ratio = values.get("aspect_ratios_selection")
+            explicit_custom_size = (
+                not values.get("resolution_auto", True)
+                and (selected_ratio in (None, "", "Custom..."))
+            )
             if action in ("remove-background", "compose") or (
                 action in ("prompt-edit", "inpaint", "generate-background")
-                and values.get("resolution_auto", True)
                 and parameters["image_resize_mode"] == "preserve"
+                and not explicit_custom_size
             ):
+                # Preserve frame keeps the source image's exact dimensions unless
+                # the user explicitly typed custom target dimensions on Custom...
                 width, height = source.frame.size
+            elif parameters["image_resize_mode"] in ("pad", "crop") and selected_ratio not in (
+                None,
+                "",
+                "Custom...",
+            ):
+                from ruinedfooocus.features.models.resolution_dropdown import dimension_value
+
+                dim = dimension_value(selected_ratio)
+                if dim and "x" in dim:
+                    parts = dim.split("x", 1)
+                    if all(part.isdigit() for part in parts):
+                        width, height = int(parts[0]), int(parts[1])
             if int(width) != width or int(height) != height:
                 raise ValueError("Choose whole-number output dimensions.")
             parameters.update(target_width=int(width), target_height=int(height))

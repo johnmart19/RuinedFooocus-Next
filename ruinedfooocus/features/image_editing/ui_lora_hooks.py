@@ -61,6 +61,9 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
                 label=t("Scheduled source type"),
                 choices=[(t("LoRA weights"), "lora"), (t("Checkpoint as LoRA"), "checkpoint")],
                 value=saved["lora_hook_source_type"],
+                info=t(
+                    "Scheduled sources apply after the selected and prompt LoRAs. Checkpoint sources use the native difference from the primary model weights. File compatibility is checked on Run."
+                ),
             )
             controls["lora_hook_model"] = gr.Dropdown(
                 label=t("Primary scheduled source"),
@@ -71,11 +74,6 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
                     source_type=saved["lora_hook_source_type"],
                 ),
                 value=saved["lora_hook_model"],
-            )
-            gr.Markdown(
-                t(
-                    "Scheduled sources apply after the selected and prompt LoRAs. Checkpoint sources use the native difference from the primary model weights. File compatibility is checked on Run."
-                )
             )
             controls["lora_hook_model_strength"] = gr.Slider(
                 label=t("Scheduled model strength"),

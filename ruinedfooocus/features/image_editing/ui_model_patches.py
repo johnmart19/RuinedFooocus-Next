@@ -45,6 +45,9 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
             label=t("Patch recipe"),
             choices=[(t(LABELS[value]), value) for value in available],
             value=initial,
+            info=t(
+                "Choose a matching local patch and add its own images. Generate runs the selected recipe."
+            ),
         )
         controls["model_patch_model"] = gr.Dropdown(
             label=t("Model patch"),
@@ -104,11 +107,6 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
             format="png",
             visible=initial != "uso-style",
             height=180,
-        )
-        gr.Markdown(
-            t(
-                "Choose a matching local patch and add its own images. Generate runs the selected recipe."
-            )
         )
     for key, component in controls.items():
         shared.add_ctrl(key, component)
