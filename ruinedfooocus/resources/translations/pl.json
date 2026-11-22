@@ -2190,5 +2190,7 @@
   "shell.override": "Nadpisano",
   "shell.preset": "Preset",
   "shell.cached": "W pamięci",
-  "shell.reset_to_default": "Przywróć domyślne"
+  "shell.reset_to_default": "Przywróć domyślne",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Podejrzyj przeredagowanie przy użyciu wybranego modelu czatu.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokeny używają buforowanego tokenizera bieżącego modelu obrazów."
 }

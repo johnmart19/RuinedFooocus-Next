@@ -2186,5 +2186,7 @@
   "Reset to default": "shell.reset_to_default",
   "Override": "shell.override",
   "Cached": "shell.cached",
-  "Value": "shell.value"
+  "Value": "shell.value",
+  "Tokens uses the cached tokenizer for the current image model.": "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model",
+  "Preview a rewrite using your selected Chat model.": "prompting.preview_a_rewrite_using_your_selected_chat_model"
 }

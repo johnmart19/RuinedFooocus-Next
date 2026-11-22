@@ -2190,5 +2190,7 @@
   "shell.override": "Перевизначено",
   "shell.preset": "Пресет",
   "shell.cached": "Кеш",
-  "shell.reset_to_default": "Скинути до типового"
+  "shell.reset_to_default": "Скинути до типового",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Попередній перегляд перефразування за допомогою вибраної моделі чату.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Токени використовують кешований токенізатор поточної моделі зображень."
 }

@@ -2190,5 +2190,7 @@
   "shell.override": "上書き",
   "shell.preset": "プリセット",
   "shell.cached": "キャッシュ",
-  "shell.reset_to_default": "デフォルトに戻す"
+  "shell.reset_to_default": "デフォルトに戻す",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "選択したチャットモデルでリライトをプレビューします。",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "トークンは現在の画像モデルのキャッシュ済みトークナイザーを使用します。"
 }

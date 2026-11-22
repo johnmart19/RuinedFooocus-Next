@@ -96,22 +96,18 @@ def add_rewrite_controls(prompt):
         llama_select = gr.Dropdown(
             choices=rewrite_presets(),
             label=translate_ui("Rewrite preset"),
+            info=translate_ui("Preview a rewrite using your selected Chat model."),
             show_label=True,
         )
-        llama_btn = gr.Button(value=translate_ui("Preview rewrite"), size="sm")
+        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
+            llama_btn = gr.Button(value=translate_ui("Preview rewrite"), size="sm")
+            refresh_btn = gr.Button(value=translate_ui("Refresh presets"), size="sm")
     previous_prompt = gr.JSON(None, visible="hidden")
     original_prompt = gr.State(None)
     preview = gr.Textbox(label=translate_ui("Suggested prompt"), lines=4, visible=False)
-    with gr.Row(equal_height=True, elem_classes=["rf-prompt-actions"]):
-        apply_btn = gr.Button(value=translate_ui("Apply rewrite"), interactive=False)
+    with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
+        apply_btn = gr.Button(value=translate_ui("Apply rewrite"), size="sm", interactive=False)
         undo_btn = gr.Button(value=translate_ui("Undo rewrite"), size="sm", interactive=False)
-    with gr.Accordion(translate_ui("Rewrite options"), open=False):
-        refresh_btn = gr.Button(value=translate_ui("Refresh presets"), size="sm")
-    gr.Markdown(
-        translate_ui(
-            "Uses the local model selected in **Chat**. Preview the suggestion, then apply it explicitly."
-        )
-    )
     llama_btn.click(
         suggest,
         api_visibility="undocumented",

@@ -2190,5 +2190,7 @@
   "shell.override": "覆盖",
   "shell.preset": "预设",
   "shell.cached": "已缓存",
-  "shell.reset_to_default": "恢复默认"
+  "shell.reset_to_default": "恢复默认",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "使用所选聊天模型预览提示词改写。",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "词元模式使用当前图像模型已缓存的分词器。"
 }

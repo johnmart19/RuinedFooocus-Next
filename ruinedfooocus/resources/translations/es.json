@@ -2190,5 +2190,7 @@
   "shell.override": "Personalizado",
   "shell.preset": "Preajuste",
   "shell.cached": "En caché",
-  "shell.reset_to_default": "Restablecer al valor predeterminado"
+  "shell.reset_to_default": "Restablecer al valor predeterminado",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Previsualiza una reescritura con el modelo de chat seleccionado.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens usa el tokenizador en caché del modelo de imagen actual."
 }

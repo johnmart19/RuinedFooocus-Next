@@ -1423,15 +1423,18 @@ html {
 :is(#app-tabs, #image-stage) .prose a:hover {
   text-decoration: underline;
 }
-#sampling-table,
-#sampling-table > .wrap,
-#sampling-table .html-container,
-#sampling-table .prose {
+#generation-controls .tabitem :is(#sampling-table, #aspect-ratio-picker, #style-cards),
+#generation-controls .tabitem :is(#sampling-table, #aspect-ratio-picker, #style-cards) > .wrap,
+#generation-controls .tabitem :is(#sampling-table, #aspect-ratio-picker, #style-cards) .html-container,
+#generation-controls .tabitem :is(#sampling-table, #aspect-ratio-picker, #style-cards) .prose {
   padding: 0 !important;
   margin: 0 !important;
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
+}
+:is(#app-tabs, #image-stage) #sampling-table .prose table {
+  margin: 0 !important;
 }
 :is(#app-tabs, #image-stage) #sampling-table .prose a.rf-st-badge-network {
   color: #93c5fd !important;
@@ -1451,13 +1454,21 @@ html {
   min-height: 2.375rem;
   padding: 0.25rem 0.5rem;
 }
-#generation-sampling .rf-actions-compact {
+#generation-controls .rf-actions-compact {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.375rem !important;
 }
-#generation-sampling .rf-actions-compact > button {
+#generation-controls .rf-actions-compact > button {
   inline-size: 100% !important;
   min-inline-size: 0 !important;
   padding: 0.25rem 0.5rem !important;
+}
+.rf-size-dims {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem !important;
+}
+.rf-size-dims:not(:has(.block:not(.hidden))) {
+  display: none !important;
 }

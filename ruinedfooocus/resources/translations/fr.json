@@ -2190,5 +2190,7 @@
   "shell.override": "Remplacement",
   "shell.preset": "Préréglage",
   "shell.cached": "En cache",
-  "shell.reset_to_default": "Rétablir par défaut"
+  "shell.reset_to_default": "Rétablir par défaut",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Prévisualisez une reformulation avec le modèle de chat sélectionné.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Jetons utilise le tokenizer en cache du modèle d’image actuel."
 }

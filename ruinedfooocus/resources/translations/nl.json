@@ -2190,5 +2190,7 @@
   "shell.override": "Overschreven",
   "shell.preset": "Voorinstelling",
   "shell.cached": "In cache",
-  "shell.reset_to_default": "Standaard herstellen"
+  "shell.reset_to_default": "Standaard herstellen",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Bekijk een herschrijving met het geselecteerde chatmodel.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens gebruikt de gecachte tokenizer van het huidige beeldmodel."
 }

@@ -88,6 +88,7 @@ def create_ui(settings):
     style_cards = gr.HTML(
         value=style_cards_payload(initial, ""),
         elem_id="style-cards",
+        padding=False,
         html_template=(assets / "style_cards.html").read_text(encoding="utf-8"),
         js_on_load=(assets / "style_cards.js").read_text(encoding="utf-8"),
         css_template=(assets / "style_cards.css").read_text(encoding="utf-8"),
@@ -122,7 +123,7 @@ def create_ui(settings):
             and text in (name + " " + style_label(name) + " " + style.group).casefold()
         ]
 
-    with gr.Accordion(translate_ui("Category list"), open=False):
+    with gr.Accordion(translate_ui("Category list"), open=False, visible=False):
         for group in groups:
             with gr.Accordion(group, open=False, visible=bool(choices_for(group, ""))) as accordion:
                 options = gr.CheckboxGroup(
@@ -191,7 +192,7 @@ def create_ui(settings):
         value="Style: Pick Random" in initial,
     )
     bind_subset(selection, random_style, ("Style: Pick Random",))
-    with gr.Row():
+    with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
         clear = gr.Button(translate_ui("Clear styles"), size="sm")
         preview = gr.Button(translate_ui("Preview styles"), size="sm")
     clear.click(
@@ -205,7 +206,7 @@ def create_ui(settings):
         queue=False,
         api_visibility="undocumented",
     )
-    with gr.Row():
+    with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
         bake = gr.Button(translate_ui("Bake into prompt"), size="sm")
         undo = gr.Button(translate_ui("Undo bake"), size="sm", interactive=False)
     with gr.Group(visible=False) as panel:

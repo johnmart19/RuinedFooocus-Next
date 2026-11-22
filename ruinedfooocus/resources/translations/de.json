@@ -2190,5 +2190,7 @@
   "shell.override": "Überschrieben",
   "shell.preset": "Vorgabe",
   "shell.cached": "Zwischengespeichert",
-  "shell.reset_to_default": "Auf Standard zurücksetzen"
+  "shell.reset_to_default": "Auf Standard zurücksetzen",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Vorschau einer Umformulierung mit dem ausgewählten Chat-Modell.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens verwendet den zwischengespeicherten Tokenizer des aktuellen Bildmodells."
 }

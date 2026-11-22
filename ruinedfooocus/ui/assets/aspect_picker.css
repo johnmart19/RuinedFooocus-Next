@@ -101,7 +101,7 @@
 
 .rf-count-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(54px, 1.15fr);
   align-items: stretch;
   gap: 5px;
   margin: 0 !important;
@@ -137,4 +137,33 @@
   background: color-mix(in srgb, var(--color-accent, #f97316) 22%, var(--background-fill-primary, #1f2937));
   border-color: var(--color-accent, #f97316);
   color: var(--body-text-color, #ffffff);
+}
+
+.rf-count-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 32px !important;
+  min-height: 32px !important;
+  margin: 0 !important;
+  padding: 2px 6px !important;
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.14)) !important;
+  border-radius: 6px !important;
+  background: var(--input-background-fill, #1f1f23) !important;
+  color: var(--body-text-color, #f3f4f6) !important;
+  font-size: 0.82rem !important;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.rf-count-input:hover,
+.rf-count-input:focus,
+.rf-count-input[data-custom="true"] {
+  border-color: var(--color-accent, #f97316) !important;
+}
+
+.rf-count-input[data-custom="true"] {
+  background: color-mix(in srgb, var(--color-accent, #f97316) 16%, var(--input-background-fill, #1f1f23)) !important;
 }

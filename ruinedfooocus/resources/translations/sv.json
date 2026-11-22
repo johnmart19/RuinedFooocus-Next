@@ -2190,5 +2190,7 @@
   "shell.override": "Åsidosatt",
   "shell.preset": "Förval",
   "shell.cached": "Cachad",
-  "shell.reset_to_default": "Återställ till standard"
+  "shell.reset_to_default": "Återställ till standard",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Förhandsgranska en omskrivning med din valda chattmodell.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Tokens använder den cachade tokenizern för den aktuella bildmodellen."
 }

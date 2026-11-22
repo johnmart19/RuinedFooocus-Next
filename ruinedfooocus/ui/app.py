@@ -1643,6 +1643,7 @@ with shared.gradio_root as block:
                             KSampler.SCHEDULERS,
                         ),
                         elem_id="sampling-table",
+                        padding=False,
                         html_template=(ui_assets_dir / "sampling_table.html").read_text(
                             encoding="utf-8"
                         ),
@@ -1801,8 +1802,10 @@ with shared.gradio_root as block:
                         return dict(
                             aspectLabel=localize("Aspect ratio", locale),
                             countLabel=localize("Count", locale),
+                            imageNumberLabel=localize("Image number", locale),
                             selectedDimension=dimension_value(current_resolution) or "",
-                            count=int(current_count or 1),
+                            count=0 if current_count == 0 else int(current_count or 1),
+                            maxCount=int(settings.get("image_number_max", 50)),
                             counts=[1, 2, 4, 8],
                             ratios=ratios,
                         )
@@ -1815,6 +1818,7 @@ with shared.gradio_root as block:
                             settings.get("image_number", 1),
                         ),
                         elem_id="aspect-ratio-picker",
+                        padding=False,
                         html_template=(ui_assets_dir / "aspect_picker.html").read_text(
                             encoding="utf-8"
                         ),
@@ -1835,24 +1839,55 @@ with shared.gradio_root as block:
                     restore_recommended_size = gr.Button(
                         t("Use model recommended size"), size="sm", visible=False
                     )
-                    with gr.Accordion(t("Size details"), open=False):
-                        resolution_recommendation = gr.Markdown(
-                            resolution_settings.recommendation_text(
-                                initial_model_base,
-                                checkpoint=initial_checkpoint,
-                                performance=performance_settings,
-                                selection=initial_resolution,
-                                width=settings.get("custom_width", 1024),
-                                height=settings.get("custom_height", 1024),
-                                automatic=initial_resolution_auto,
-                            )
-                        )
+                    resolution_recommendation = gr.Markdown(
+                        resolution_settings.recommendation_text(
+                            initial_model_base,
+                            checkpoint=initial_checkpoint,
+                            performance=performance_settings,
+                            selection=initial_resolution,
+                            width=settings.get("custom_width", 1024),
+                            height=settings.get("custom_height", 1024),
+                            automatic=initial_resolution_auto,
+                        ),
+                        visible=False,
+                    )
                     ratio_delete = gr.Button(
                         t("Remove saved custom size"),
                         variant="stop",
                         visible=resolution_settings.is_custom(initial_resolution),
                         size="sm",
                     )
+                    default_resolution = resolution_settings.aspect_ratios.get(
+                        initial_resolution,
+                        (settings.get("custom_width", 1024), settings.get("custom_height", 1024)),
+                    )
+                    with gr.Row(elem_classes=["rf-size-dims"]):
+                        with gr.Column(min_width=0):
+                            custom_width = DimensionNumber(
+                                label=t("Width"),
+                                elem_id="output-target-width",
+                                minimum=1,
+                                maximum=32768,
+                                precision=0,
+                                visible=custom_resolution,
+                                value=default_resolution[0],
+                            )
+                        with gr.Column(min_width=0):
+                            custom_height = DimensionNumber(
+                                label=t("Height"),
+                                elem_id="output-target-height",
+                                minimum=1,
+                                maximum=32768,
+                                precision=0,
+                                visible=custom_resolution,
+                                value=default_resolution[1],
+                            )
+                    add_ctrl("custom_width", custom_width)
+                    add_ctrl("custom_height", custom_height)
+                    with gr.Row(visible=custom_resolution) as target_shortcuts:
+                        target_1080p = gr.Button(t("1080p"), size="sm", min_width=80)
+                        target_1440p = gr.Button(t("1440p"), size="sm", min_width=80)
+                        target_4k = gr.Button(t("4K"), size="sm", min_width=80)
                     ratio_name = gr.Textbox(
                         label=t("Saved size name"),
                         show_label=True,
@@ -1860,34 +1895,11 @@ with shared.gradio_root as block:
                         interactive=True,
                         visible=custom_resolution,
                     )
-                    default_resolution = resolution_settings.aspect_ratios.get(
-                        initial_resolution,
-                        (settings.get("custom_width", 1024), settings.get("custom_height", 1024)),
-                    )
-                    custom_width = DimensionNumber(
-                        label=t("Width"),
-                        elem_id="output-target-width",
-                        minimum=1,
-                        maximum=32768,
-                        precision=0,
+                    ratio_save = gr.Button(
+                        value=t("Save size"),
+                        size="sm",
                         visible=custom_resolution,
-                        value=default_resolution[0],
                     )
-                    add_ctrl("custom_width", custom_width)
-                    custom_height = DimensionNumber(
-                        label=t("Height"),
-                        elem_id="output-target-height",
-                        minimum=1,
-                        maximum=32768,
-                        precision=0,
-                        visible=custom_resolution,
-                        value=default_resolution[1],
-                    )
-                    add_ctrl("custom_height", custom_height)
-                    with gr.Row(visible=custom_resolution) as target_shortcuts:
-                        target_1080p = gr.Button(t("1080p"), size="sm", min_width=80)
-                        target_1440p = gr.Button(t("1440p"), size="sm", min_width=80)
-                        target_4k = gr.Button(t("4K"), size="sm", min_width=80)
                     for button, dimensions in (
                         (target_1080p, (1920, 1080)),
                         (target_1440p, (2560, 1440)),
@@ -1982,10 +1994,6 @@ with shared.gradio_root as block:
                             outputs=automatic_upscale,
                             api_visibility="undocumented",
                         )
-                    ratio_save = gr.Button(
-                        value=t("Save size"),
-                        visible=custom_resolution,
-                    )
 
                     @ratio_save.click(
                         api_visibility="undocumented",
@@ -2032,6 +2040,7 @@ with shared.gradio_root as block:
                     maximum=settings.get("image_number_max", 50),
                     step=1,
                     value=settings.get("image_number", 1),
+                    visible=False,
                 )
                 add_ctrl("image_number", image_number)
 
@@ -2052,7 +2061,7 @@ with shared.gradio_root as block:
                         except (TypeError, ValueError):
                             return gr.skip(), gr.skip(), gr.skip()
                         max_count = int(settings.get("image_number_max", 50))
-                        return gr.skip(), gr.skip(), max(1, min(count, max_count))
+                        return gr.skip(), gr.skip(), max(0, min(count, max_count))
                     return gr.skip(), gr.skip(), gr.skip()
 
                 aspect_picker.click(

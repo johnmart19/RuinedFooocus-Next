@@ -2190,5 +2190,7 @@
   "shell.override": "Geçersiz kılındı",
   "shell.preset": "Ön ayar",
   "shell.cached": "Önbellekte",
-  "shell.reset_to_default": "Varsayılana sıfırla"
+  "shell.reset_to_default": "Varsayılana sıfırla",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "Seçili sohbet modeliyle yeniden yazmayı önizleyin.",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "Belirteçler, geçerli görüntü modelinin önbellekteki belirteçleştiricisini kullanır."
 }

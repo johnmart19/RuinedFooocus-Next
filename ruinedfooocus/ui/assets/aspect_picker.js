@@ -1,11 +1,22 @@
+let lastPickerJson = null;
+
 function renderPicker() {
   const data = props.value || {};
+  const nextJson = JSON.stringify(data);
+  if (nextJson === lastPickerJson) return;
+  lastPickerJson = nextJson;
+
   const aspectLabel = element.querySelector(".rf-aspect-label");
   const aspectGrid = element.querySelector(".rf-aspect-grid");
   const countSection = element.querySelector(".rf-count-section");
   const countLabel = element.querySelector(".rf-count-label");
   const countRow = element.querySelector(".rf-count-row");
   if (!aspectGrid || !countRow) return;
+
+  const wasCountInputFocused =
+    document.activeElement &&
+    document.activeElement.classList?.contains("rf-count-input") &&
+    element.contains(document.activeElement);
 
   aspectLabel.textContent = data.aspectLabel || "Aspect ratio";
   aspectGrid.setAttribute("aria-label", aspectLabel.textContent);
@@ -56,8 +67,10 @@ function renderPicker() {
   countSection.hidden = counts.length === 0;
   countLabel.textContent = data.countLabel || "Count";
   countRow.setAttribute("aria-label", countLabel.textContent);
-  countRow.style.gridTemplateColumns = `repeat(${counts.length}, 1fr)`;
-  const activeCount = Number(data.count || 1);
+  countRow.style.gridTemplateColumns = `repeat(${counts.length}, minmax(0, 1fr)) minmax(54px, 1.15fr)`;
+  const rawCount = data.count === 0 ? 0 : Number(data.count || 1);
+  const activeCount = Number.isFinite(rawCount) ? rawCount : 1;
+  const maxCount = Number(data.maxCount || 50);
 
   countRow.replaceChildren();
   for (const n of counts) {
@@ -69,6 +82,22 @@ function renderPicker() {
     btn.setAttribute("aria-pressed", String(Number(n) === activeCount));
     btn.textContent = String(n);
     countRow.appendChild(btn);
+  }
+
+  const inp = document.createElement("input");
+  inp.type = "number";
+  inp.className = "rf-count-input";
+  inp.min = "0";
+  inp.max = String(maxCount);
+  inp.step = "1";
+  inp.value = String(activeCount);
+  inp.setAttribute("aria-label", data.imageNumberLabel || data.countLabel || "Count");
+  inp.title = `${data.imageNumberLabel || data.countLabel || "Count"} (0 = ∞)`;
+  inp.dataset.custom = String(!counts.includes(activeCount));
+  countRow.appendChild(inp);
+
+  if (wasCountInputFocused) {
+    inp.focus({ preventScroll: true });
   }
 }
 
@@ -85,14 +114,42 @@ element.addEventListener("click", (event) => {
       choice: btn.dataset.choice,
     });
   } else if (btn.dataset.kind === "count") {
+    const val = Number(btn.dataset.count);
     for (const pill of element.querySelectorAll("button.rf-count-pill")) {
       pill.setAttribute("aria-pressed", String(pill === btn));
     }
+    const inp = element.querySelector("input.rf-count-input");
+    if (inp) {
+      inp.value = String(val);
+      inp.dataset.custom = "false";
+    }
     trigger("click", {
       kind: "count",
-      count: Number(btn.dataset.count),
+      count: val,
     });
   }
+});
+
+element.addEventListener("change", (event) => {
+  const inp = event.target.closest?.("input.rf-count-input");
+  if (!inp) return;
+  const parsed = Number(inp.value);
+  if (!Number.isFinite(parsed)) return;
+  const max = Number(inp.max || 50);
+  const clamped = Math.max(0, Math.min(max, Math.round(parsed)));
+  inp.value = String(clamped);
+  const pills = Array.from(element.querySelectorAll("button.rf-count-pill"));
+  let matched = false;
+  for (const pill of pills) {
+    const isMatch = Number(pill.dataset.count) === clamped;
+    pill.setAttribute("aria-pressed", String(isMatch));
+    if (isMatch) matched = true;
+  }
+  inp.dataset.custom = String(!matched);
+  trigger("click", {
+    kind: "count",
+    count: clamped,
+  });
 });
 
 watch("value", renderPicker);

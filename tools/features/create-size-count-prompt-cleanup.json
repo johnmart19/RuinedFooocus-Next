@@ -1,0 +1,20 @@
+{
+  "id": "create-size-count-prompt-cleanup",
+  "subject": "Remove useless Size details, unify Count with inline custom input, clean up Custom dimensions, Styles, and Prompt tools",
+  "requires": ["sampling-inline-editable-table"],
+  "tests": [
+    "test_model_control_events.py",
+    "test_resolution_settings.py",
+    "test_resolution_ui_events.py",
+    "test_model_defaults_ui.py",
+    "test_style_workflow.py",
+    "test_prompt_workflows.py",
+    "test_tool_navigation.py",
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

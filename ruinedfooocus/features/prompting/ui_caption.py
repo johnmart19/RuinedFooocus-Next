@@ -65,10 +65,9 @@ def add_describe_controls(
     prompt, image_source, native_source=None, *, input_source=None, source_kind=None
 ):
     previous = gr.JSON(None, visible="hidden")
-    with gr.Row(elem_classes=["rf-prompt-actions"], equal_height=True):
-        describe = gr.Button(translate_ui("Describe image"))
+    with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
+        describe = gr.Button(translate_ui("Describe image"), size="sm")
         undo = gr.Button(translate_ui("Undo description"), size="sm", interactive=False)
-    gr.Markdown(translate_ui("Uses the image description engine selected in Settings."))
     inputs = [prompt, image_source] + ([native_source] if native_source is not None else [])
     inputs += [input_source] if input_source is not None else []
     inputs += [source_kind] if source_kind is not None else []

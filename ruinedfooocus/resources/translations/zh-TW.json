@@ -2190,5 +2190,7 @@
   "shell.override": "覆寫",
   "shell.preset": "預設",
   "shell.cached": "已快取",
-  "shell.reset_to_default": "還原預設"
+  "shell.reset_to_default": "還原預設",
+  "prompting.preview_a_rewrite_using_your_selected_chat_model": "使用所選聊天模型預覽提示詞改寫。",
+  "prompting.tokens_uses_the_cached_tokenizer_for_the_current_image_model": "詞元模式使用目前影像模型已快取的分詞器。"
 }

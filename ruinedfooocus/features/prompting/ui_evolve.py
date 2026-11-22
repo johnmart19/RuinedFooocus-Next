@@ -120,26 +120,20 @@ def add_evolve_controls(
     bind_generation=bind_explicit_generation,
 ):
     with gr.Accordion(translate_ui("Prompt variations"), open=False, elem_id="evolve-controls"):
-        gr.Markdown(
-            translate_ui(
-                "Choose an indexed parent, preview up to nine candidates, then apply one or explicitly generate the reviewed batch. The first candidate is the unchanged parent. Generate sets one image per candidate and turns off Replace typed prompt and the image tools' Generate random prompt switch."
-            )
-        )
         state = gr.State(None)
         previous = gr.JSON(None, visible="hidden")
-        with gr.Row():
-            parent = gr.Dropdown(
-                [(f"Parent {i}", i - 1) for i in range(1, 10)],
-                value=0,
-                label=translate_ui("Parent index"),
-                interactive=True,
-                min_width=200,
-            )
+        parent = gr.Dropdown(
+            [(f"Parent {i}", i - 1) for i in range(1, 10)],
+            value=0,
+            label=translate_ui("Parent index"),
+            interactive=True,
+        )
+        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
             load_parents = gr.Button(
-                translate_ui("Use current prompts as parents"), size="sm", min_width=200
+                translate_ui("Use current prompts as parents"), size="sm"
             )
             use_candidates = gr.Button(
-                translate_ui("Use preview as parents"), size="sm", min_width=200
+                translate_ui("Use preview as parents"), size="sm"
             )
         original = gr.Textbox(
             label=translate_ui("Original prompt (preserved)"), lines=2, interactive=False
@@ -153,11 +147,7 @@ def add_evolve_controls(
             ],
             value="Words",
             label=translate_ui("Variation method"),
-        )
-        gr.Markdown(
-            translate_ui(
-                "Tokens is opt-in and uses only the selected image model's compatible tokenizer already cached in memory. Unloaded, changed and multi-encoder models are unsupported; this tool never loads an encoder. Quoted text, numbers and prompt syntax are protected."
-            )
+            info=translate_ui("Tokens uses the cached tokenizer for the current image model."),
         )
         strength = gr.Slider(0, 100, value=10, step=1, label=translate_ui("Variation strength %"))
         count = gr.Slider(
@@ -166,9 +156,10 @@ def add_evolve_controls(
         preview_button = gr.Button(translate_ui("Preview variations"), size="sm")
         selected = gr.Dropdown(choices=[], label=translate_ui("Candidate index"), interactive=True)
         preview = gr.Textbox(label=translate_ui("Variant preview"), lines=4, interactive=False)
-        with gr.Row():
+        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
             apply_button = gr.Button(translate_ui("Apply candidate to prompt"), size="sm")
             copy_parent = gr.Button(translate_ui("Copy selected parent to prompt"), size="sm")
+        with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
             undo_button = gr.Button(translate_ui("Undo prompt change"), size="sm")
             generate = gr.Button(
                 translate_ui("Generate reviewed candidates"),
