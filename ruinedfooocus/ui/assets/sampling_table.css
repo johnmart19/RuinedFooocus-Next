@@ -45,15 +45,15 @@
 }
 
 .rf-st-col-setting {
-  width: 24%;
+  width: 23%;
 }
 
 .rf-st-col-value {
-  width: 56%;
+  width: 58%;
 }
 
 .rf-st-col-source {
-  width: 20%;
+  width: 19%;
   text-align: end !important;
 }
 
@@ -89,27 +89,45 @@
 
 .rf-st-input,
 .rf-st-select {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
+  display: block;
   width: 100%;
   min-width: 0;
-  height: 30px !important;
-  min-height: 30px !important;
+  height: 32px !important;
+  min-height: 32px !important;
   margin: 0 !important;
-  padding: 2px 6px !important;
+  padding: 0 10px !important;
   border-radius: 6px !important;
   border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.16)) !important;
-  background: var(--input-background-fill, #1f1f23) !important;
+  background-color: var(--input-background-fill, #1f1f23) !important;
   color: var(--body-text-color, #f3f4f6) !important;
   font-family: var(--font, inherit);
-  font-size: 0.78rem !important;
+  font-size: 0.8rem !important;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 30px !important;
   outline: none;
   transition: border-color 120ms ease;
 }
 
+.rf-st-input {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.rf-st-input::-webkit-inner-spin-button,
+.rf-st-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .rf-st-select {
-  padding-inline-end: 20px !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  padding-inline: 10px 28px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 9px center !important;
+  background-size: 12px 12px !important;
   text-overflow: ellipsis;
   cursor: pointer;
 }

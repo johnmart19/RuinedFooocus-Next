@@ -1,0 +1,11 @@
+{
+  "id": "ui-alignment-count-sampling-buttons",
+  "subject": "Fix horizontal button grid alignment, Images to generate row height, and Sampling table input/select styling",
+  "requires": ["ui-describe-viewer-lora-count-table-polish"],
+  "tests": [
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

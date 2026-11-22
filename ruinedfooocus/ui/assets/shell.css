@@ -1551,8 +1551,7 @@ html {
   padding: 0.375rem 0.625rem !important;
 }
 #generation-controls .rf-actions-compact + button,
-#generation-controls button + .rf-actions-compact,
-#generation-controls button + button {
+#generation-controls button + .rf-actions-compact {
   margin-top: 0.5rem !important;
 }
 .rf-size-dims {
