@@ -117,6 +117,39 @@ def _preview(path):
                 return candidate
 
 
+def _quant_summary(path):
+    if not is_safetensors(path):
+        return {"eligible": False, "reason": "not a safetensors file"}
+    try:
+        from ruinedfooocus.features.models import gpu_optimizer
+
+        planned = gpu_optimizer.plan(path)
+        return {
+            "eligible": True,
+            "layers": len(planned["layers"]),
+            "bytes_before": planned["bytes_before"],
+            "bytes_after": planned["bytes_after"],
+        }
+    except ValueError as error:
+        return {"eligible": False, "reason": str(error).rstrip(".")}
+    except Exception:
+        return None
+
+
+def _paired_copy(name):
+    if not name:
+        return None
+    try:
+        from ruinedfooocus.features.models import gpu_optimizer
+
+        found = gpu_optimizer.pair(name, shared.models.get_names("checkpoints"))
+        if found is None:
+            return None
+        return found[1] if found[0] == name else found[0]
+    except Exception:
+        return None
+
+
 def run_action(name, action, progress, on_verified=None, *, verify_source=True):
     try:
         path, info = _selected(name)
@@ -165,7 +198,13 @@ def run_action(name, action, progress, on_verified=None, *, verify_source=True):
             return result["message"]
         report = tools.inspect_checkpoint(path)
         checked = tools.check_weights(path, progress) if action == "check" else None
-        message = tools.format_report(report, shared.models.get_model_base(info), checked)
+        message = tools.format_report(
+            report,
+            shared.models.get_model_base(info),
+            checked,
+            quant_summary=_quant_summary(path),
+            paired_copy=_paired_copy(name),
+        )
         if action == "inspect" and verify_source and is_safetensors(path):
             from ruinedfooocus.features.models.model_identity import is_native_checkpoint_source
             from ruinedfooocus.features.models.model_registry import load_registry
@@ -227,11 +266,14 @@ def create_ui(base_model, visible=True, model_refresh=None):
                 elem_id="checkpoint-int8-copy",
             )
         benchmark = gr.Button(
-            translate_ui("Benchmark pair"), size="sm", elem_id="checkpoint-benchmark-pair"
+            translate_ui("Benchmark pair"),
+            size="sm",
+            interactive=_paired_copy(base_model.value or "") is not None,
+            elem_id="checkpoint-benchmark-pair",
         )
         report = gr.Textbox(
             label=translate_ui("Checkpoint report"),
-            lines=6,
+            lines=8,
             interactive=False,
             elem_classes=["rf-readonly-box"],
         )
@@ -249,6 +291,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
             if Path(name).suffix.lower() in (*NATIVE_TORCH_SUFFIXES, ".gguf"):
                 result = (
                     run_action(name, "inspect", progress, lambda: verified.append(True)),
+                    gr.update(interactive=False),
                     gr.update(interactive=False),
                     gr.update(interactive=False),
                     gr.update(interactive=False),
@@ -279,7 +322,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
                 name,
                 version,
                 lambda: inspect_selected(name, revision, progress),
-                outputs=6 + (model_refresh is not None),
+                outputs=7 + (model_refresh is not None),
             )
             return checkpoint_result(version, updates)
 
@@ -306,7 +349,7 @@ def create_ui(base_model, visible=True, model_refresh=None):
             (
                 inspect,
                 inspect_current,
-                [report, convert, convert_bf16, check, optimize_fp8, optimize]
+                [report, convert, convert_bf16, check, optimize_fp8, optimize, benchmark]
                 + ([model_refresh] if model_refresh is not None else []),
             ),
             (check, check_current, report),
@@ -390,6 +433,8 @@ def create_ui(base_model, visible=True, model_refresh=None):
         def selection_report(name, *, verify_source=False, on_verified=None):
             # Selection reads headers only; source verification needs an explicit click.
             useful = False
+            quant_eligible = False
+            has_pair = _paired_copy(name) is not None
             if name:
                 try:
                     path, info = _selected(name)
@@ -404,13 +449,16 @@ def create_ui(base_model, visible=True, model_refresh=None):
                             gr.update(interactive=False),
                             gr.update(interactive=False),
                             gr.update(interactive=False),
+                            gr.update(interactive=False),
                         )
                     inspection = tools.inspect_checkpoint(path)
                     payload = sum(inspection["dtypes"].values())
                     useful = bool(payload and inspection["saving_bytes"] >= payload * 0.01)
+                    qsum = _quant_summary(path)
+                    quant_eligible = bool(qsum and qsum.get("eligible"))
                 except (OSError, ValueError, SafetensorError):
                     pass
-            can_quantize = bool(name) and is_safetensors(name)
+            can_check = bool(name) and is_safetensors(name)
             return (
                 run_action(
                     name, "inspect", lambda *_: None, on_verified, verify_source=verify_source
@@ -419,14 +467,15 @@ def create_ui(base_model, visible=True, model_refresh=None):
                 else "",
                 gr.update(interactive=useful),
                 gr.update(interactive=useful),
-                gr.update(interactive=can_quantize),
-                gr.update(interactive=can_quantize),
-                gr.update(interactive=can_quantize),
+                gr.update(interactive=can_check),
+                gr.update(interactive=quant_eligible),
+                gr.update(interactive=quant_eligible),
+                gr.update(interactive=has_pair),
             )
 
         def selection_current(name, session, version):
             updates = selected_result(
-                session, name, version, lambda: selection_report(name), outputs=6
+                session, name, version, lambda: selection_report(name), outputs=7
             )
             return checkpoint_result(version, updates)
 
@@ -463,6 +512,6 @@ def create_ui(base_model, visible=True, model_refresh=None):
         publish_checkpoint_result(
             selection_event,
             selection_result,
-            [report, convert, convert_bf16, check, optimize_fp8, optimize],
+            [report, convert, convert_bf16, check, optimize_fp8, optimize, benchmark],
         )
     return group

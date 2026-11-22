@@ -1,0 +1,14 @@
+{
+  "id": "checkpoint-tools-clear-report-and-eligibility",
+  "subject": "Make Checkpoint tools Inspect, Check weights, and button enablement clearly show applicable optimizations",
+  "requires": ["checkpoint-tools-bf16-fp8-copies"],
+  "tests": [
+    "test_checkpoint_selection_lane.py",
+    "test_runtime_optimizations_and_models.py",
+    "test_gpu_optimizer.py",
+    "test_model_files.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

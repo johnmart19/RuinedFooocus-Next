@@ -343,28 +343,62 @@ def format_size(size):
         size /= 1024
 
 
-def format_report(report, family="Unknown", checked=None):
+def format_report(report, family="Unknown", checked=None, *, quant_summary=None, paired_copy=None):
     dtypes = ", ".join(f"{name}: {format_size(size)}" for name, size in report["dtypes"].items())
+    payload = sum(report["dtypes"].values())
+    fp16_useful = bool(payload and report["saving_bytes"] >= payload * 0.01)
     lines = [
         report["name"],
-        f"Model: {family} | {report['tensors']} tensors",
-        f"Tensor data: {dtypes}",
-        "Generation also needs memory for activations and decoding.",
-        f"File size: {format_size(report['bytes'])} | FP32 to FP16 saving: {format_size(report['saving_bytes'])}",
+        f"Model: {family} | {format_size(report['bytes'])} | {report['tensors']} tensors",
+        f"Precision: {dtypes}",
+        "",
+        "Optimization options:",
     ]
-    if report["previous_repair"]:
+    if fp16_useful:
         lines.append(
-            "Previous optimizer reports donor-replaced weights; this cannot verify their origin."
+            f"• FP16 / BF16 copy: Recommended — saves ~{format_size(report['saving_bytes'])} from FP32 weights (BF16 avoids overflow on modern transformers)."
         )
-    if checked is None:
-        lines.append("Weight values have not been checked.")
     else:
         lines.append(
-            f"NaN/Inf tensors: {len(checked['invalid'])}. All-zero tensors: {checked['zero_tensors']} (may be intentional)."
+            "• FP16 / BF16 copy: Not needed (already reduced precision; no significant FP32 weights)."
         )
-        lines.extend(
-            f"{item['name']}: {item['nan']} NaN, {item['inf']} Inf"
-            for item in checked["invalid"][:8]
+    if quant_summary is not None:
+        if quant_summary.get("eligible"):
+            saved = max(0, quant_summary["bytes_before"] - quant_summary["bytes_after"])
+            lines.append(
+                f"• FP8 / INT8 copy: Available — {quant_summary['layers']} transformer layers, "
+                f"{format_size(quant_summary['bytes_before'])} → ~{format_size(quant_summary['bytes_after'])} "
+                f"(saves ~{format_size(saved)})."
+            )
+        else:
+            lines.append(f"• FP8 / INT8 copy: Not applicable ({quant_summary.get('reason', 'not eligible')}).")
+    if paired_copy:
+        lines.append(f"• Benchmark pair: Ready to compare against {Path(paired_copy).name}.")
+    else:
+        lines.append("• Benchmark pair: Create an optimized copy first to compare speed and VRAM.")
+    if report["previous_repair"]:
+        lines.append(
+            "Note: Previous optimizer reports donor-replaced weights; this cannot verify their origin."
         )
+    lines.append("")
+    if checked is None:
+        lines.append(
+            "Weight integrity: Not scanned yet (click Check weights to scan every tensor for NaN/Inf and compute SHA-256)."
+        )
+    else:
+        if checked["invalid"]:
+            lines.append(
+                f"Weight integrity: CORRUPTED — {len(checked['invalid'])} tensor(s) contain NaN/Inf! "
+                f"All-zero tensors: {checked['zero_tensors']}."
+            )
+            lines.extend(
+                f"  - {item['name']}: {item['nan']} NaN, {item['inf']} Inf"
+                for item in checked["invalid"][:8]
+            )
+        else:
+            lines.append(
+                f"Weight integrity: PASS — all {report['tensors']} tensors are finite (0 NaN/Inf). "
+                f"All-zero tensors: {checked['zero_tensors']} (may be intentional)."
+            )
         lines.append(f"SHA-256 (local): {checked['sha256']}")
     return "\n".join(lines)

@@ -29,6 +29,8 @@ def checkpoint_ui_scope(values):
         "selected_result",
         "checkpoint_result",
         "publish_checkpoint_result",
+        "_quant_summary",
+        "_paired_copy",
         "run_action",
         "create_ui",
     }
@@ -189,7 +191,7 @@ class CheckpointSelectionLaneTests(unittest.TestCase):
             self.assertTrue(self.started.wait(2))
             self.functions["begin_selection"].fn("b.safetensors", self.session, 2)
             self.release.set()
-            self.assertEqual(future.result(timeout=2)["updates"], [gr.skip()] * 6)
+            self.assertEqual(future.result(timeout=2)["updates"], [gr.skip()] * 7)
         finally:
             self.release.set()
             executor.shutdown(wait=True, cancel_futures=True)
