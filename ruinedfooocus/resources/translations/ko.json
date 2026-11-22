@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "아래에 표시된 이미지를 사용합니다(현재 캔버스 또는 업로드).",
   "prompting.rewrite": "다시 쓰기",
   "prompting.variations": "변형",
-  "prompting.describe": "설명"
+  "prompting.describe": "설명",
+  "prompting.image_to_describe": "설명할 이미지",
+  "shell.images_to_generate": "생성할 이미지 수"
 }

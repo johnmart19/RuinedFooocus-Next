@@ -9,7 +9,32 @@ from ruinedfooocus.features.image_editing import lora_hooks, lora_hook_sources
 def local_choices(manager, mode, current, locale=None, source_type="lora"):
     values = [(t("Select a local file"), "")]
     if mode != "off":
-        values.extend((name, name) for name in lora_hooks.choices(manager, source_type))
+        from collections import Counter
+        from ruinedfooocus.features.models.resource_cards import resource_metadata
+        from ruinedfooocus.features.models.selection import model_label
+
+        names = list(lora_hooks.choices(manager, source_type))
+        cache_dir = None
+        path_for = None
+        try:
+            from ruinedfooocus.app import state as shared
+
+            model_type = "checkpoints" if source_type == "checkpoint" else "loras"
+            cache_dir = shared.models.cache_paths.get(model_type)
+            path_for = lambda item: shared.models.get_file(model_type, item)
+        except Exception:
+            pass
+        labels = []
+        for name in names:
+            file_path = path_for(name) if path_for is not None else None
+            meta = resource_metadata(file_path, cache_dir=cache_dir) if file_path is not None else {}
+            labels.append(model_label(name, meta))
+        counts = Counter(labels)
+        seen = Counter()
+        for name, label in zip(names, labels):
+            seen[label] += 1
+            display = f"{label} · {seen[label]}" if counts[label] > 1 else label
+            values.append((display, name))
     if current and current not in {value for _, value in values}:
         values.append((localize("Unavailable: {name}", locale, name=current), current))
     return values

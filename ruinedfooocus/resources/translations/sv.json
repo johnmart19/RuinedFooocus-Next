@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Använder bilden nedan (från aktuell arbetsyta eller uppladdning).",
   "prompting.rewrite": "Skriv om",
   "prompting.variations": "Variationer",
-  "prompting.describe": "Beskriv"
+  "prompting.describe": "Beskriv",
+  "prompting.image_to_describe": "Bild att beskriva",
+  "shell.images_to_generate": "Bilder att generera"
 }

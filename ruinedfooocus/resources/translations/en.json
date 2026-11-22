@@ -2203,5 +2203,7 @@
   "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor": "No image loaded yet. Upload one below, or open your latest generated image in Editor.",
   "prompting.rewrite": "Rewrite",
   "prompting.variations": "Variations",
-  "prompting.describe": "Describe"
+  "prompting.describe": "Describe",
+  "prompting.image_to_describe": "Image to describe",
+  "shell.images_to_generate": "Images to generate"
 }

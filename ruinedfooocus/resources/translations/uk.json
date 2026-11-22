@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Використовується зображення нижче (з поточного полотна або завантажене).",
   "prompting.rewrite": "Переписати",
   "prompting.variations": "Варіації",
-  "prompting.describe": "Описати"
+  "prompting.describe": "Описати",
+  "prompting.image_to_describe": "Зображення для опису",
+  "shell.images_to_generate": "Кількість зображень"
 }

@@ -65,12 +65,13 @@ function renderPicker() {
 
   const counts = Array.isArray(data.counts) ? data.counts : [1, 2, 4, 8];
   countSection.hidden = counts.length === 0;
-  countLabel.textContent = data.countLabel || "Count";
+  countLabel.textContent = data.countLabel || "Images to generate";
   countRow.setAttribute("aria-label", countLabel.textContent);
-  countRow.style.gridTemplateColumns = `repeat(${counts.length}, minmax(0, 1fr)) minmax(54px, 1.15fr)`;
+  countRow.style.gridTemplateColumns = `repeat(${counts.length}, minmax(0, 1fr)) minmax(66px, 1.35fr)`;
   const rawCount = data.count === 0 ? 0 : Number(data.count || 1);
   const activeCount = Number.isFinite(rawCount) ? rawCount : 1;
   const maxCount = Number(data.maxCount || 50);
+  const isCustomCount = !counts.includes(activeCount);
 
   countRow.replaceChildren();
   for (const n of counts) {
@@ -90,10 +91,11 @@ function renderPicker() {
   inp.min = "0";
   inp.max = String(maxCount);
   inp.step = "1";
-  inp.value = String(activeCount);
-  inp.setAttribute("aria-label", data.imageNumberLabel || data.countLabel || "Count");
-  inp.title = `${data.imageNumberLabel || data.countLabel || "Count"} (0 = ∞)`;
-  inp.dataset.custom = String(!counts.includes(activeCount));
+  inp.placeholder = data.customCountLabel || "Custom";
+  inp.value = isCustomCount ? String(activeCount) : "";
+  inp.setAttribute("aria-label", data.imageNumberLabel || data.countLabel || "Images to generate");
+  inp.title = `${data.imageNumberLabel || data.countLabel || "Images to generate"} (0 = ∞)`;
+  inp.dataset.custom = String(isCustomCount);
   countRow.appendChild(inp);
 
   if (wasCountInputFocused) {
@@ -120,7 +122,7 @@ element.addEventListener("click", (event) => {
     }
     const inp = element.querySelector("input.rf-count-input");
     if (inp) {
-      inp.value = String(val);
+      inp.value = "";
       inp.dataset.custom = "false";
     }
     trigger("click", {
@@ -133,11 +135,11 @@ element.addEventListener("click", (event) => {
 element.addEventListener("change", (event) => {
   const inp = event.target.closest?.("input.rf-count-input");
   if (!inp) return;
+  if (inp.value === "") return;
   const parsed = Number(inp.value);
   if (!Number.isFinite(parsed)) return;
   const max = Number(inp.max || 50);
   const clamped = Math.max(0, Math.min(max, Math.round(parsed)));
-  inp.value = String(clamped);
   const pills = Array.from(element.querySelectorAll("button.rf-count-pill"));
   let matched = false;
   for (const pill of pills) {
@@ -145,6 +147,7 @@ element.addEventListener("change", (event) => {
     pill.setAttribute("aria-pressed", String(isMatch));
     if (isMatch) matched = true;
   }
+  inp.value = matched ? "" : String(clamped);
   inp.dataset.custom = String(!matched);
   trigger("click", {
     kind: "count",

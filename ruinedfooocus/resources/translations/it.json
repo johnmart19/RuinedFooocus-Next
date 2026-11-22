@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Usa l’immagine mostrata sotto (dalla tela corrente o caricata).",
   "prompting.rewrite": "Riscrivi",
   "prompting.variations": "Variazioni",
-  "prompting.describe": "Descrivi"
+  "prompting.describe": "Descrivi",
+  "prompting.image_to_describe": "Immagine da descrivere",
+  "shell.images_to_generate": "Immagini da generare"
 }

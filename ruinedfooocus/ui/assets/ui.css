@@ -222,8 +222,9 @@
   display: none !important;
 }
 #image-view-controls > button {
-  display: grid;
-  place-items: center;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   flex: 0 0 auto !important;
   inline-size: var(--rf-bar-button);
   min-inline-size: var(--rf-bar-button) !important;
@@ -237,6 +238,7 @@
   color: var(--body-text-color) !important;
   /* The visible mark is the icon; the text stays as the accessible name. */
   font-size: 0 !important;
+  line-height: 0 !important;
 }
 #image-view-controls > button:hover {
   background: color-mix(in srgb, var(--body-text-color) 10%, transparent) !important;

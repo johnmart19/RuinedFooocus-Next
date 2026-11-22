@@ -62,24 +62,51 @@ def describe_image(current, image, native_source=None):
 
 
 def add_describe_controls(
-    prompt, image_source, native_source=None, *, input_source=None, source_kind=None
+    prompt,
+    image_source,
+    native_source=None,
+    *,
+    input_source=None,
+    source_kind=None,
+    allow_upload=False,
 ):
     previous = gr.JSON(None, visible=False)
+    describe_upload = None
+    if allow_upload:
+        describe_upload = gr.Image(
+            label=translate_ui("Image to describe"),
+            height=180,
+            type="pil",
+            image_mode="RGBA",
+            format="png",
+            elem_id="describe-image-input",
+            buttons=["download", "fullscreen"],
+        )
     with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
         describe = gr.Button(translate_ui("Describe image"), size="sm")
         undo = gr.Button(translate_ui("Undo description"), size="sm", interactive=False)
     inputs = [prompt, image_source] + ([native_source] if native_source is not None else [])
     inputs += [input_source] if input_source is not None else []
     inputs += [source_kind] if source_kind is not None else []
+    inputs += [describe_upload] if describe_upload is not None else []
 
     def describe_current(current, image, *context):
         values = iter(context)
         native = next(values) if native_source is not None else None
         uploaded = next(values) if input_source is not None else None
         selected = next(values) if source_kind is not None else None
-        if selected == "input":
+        direct_upload = next(values) if describe_upload is not None else None
+        if direct_upload is not None:
+            image, native = direct_upload, None
+        elif selected == "input":
             image, native = uploaded, None
         return describe_image(current, image, native)
+
+    image_contexts = (image_source,)
+    if input_source is not None:
+        image_contexts += (input_source,)
+    if describe_upload is not None:
+        image_contexts += (describe_upload,)
 
     fence_event(
         describe.click,
@@ -88,7 +115,7 @@ def add_describe_controls(
         inputs=inputs,
         outputs=[prompt, previous, undo],
         history_output=1,
-        image_contexts=(image_source,) + ((input_source,) if input_source is not None else ()),
+        image_contexts=image_contexts,
         discard_context_stale=True,
         api_visibility="undocumented",
         concurrency_id="image_description",

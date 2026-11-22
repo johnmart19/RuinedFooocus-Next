@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Используется изображение ниже (с текущего холста или загруженное).",
   "prompting.rewrite": "Переписать",
   "prompting.variations": "Вариации",
-  "prompting.describe": "Описать"
+  "prompting.describe": "Описать",
+  "prompting.image_to_describe": "Изображение для описания",
+  "shell.images_to_generate": "Количество изображений"
 }

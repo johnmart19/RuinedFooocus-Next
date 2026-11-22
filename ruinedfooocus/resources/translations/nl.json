@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "Gebruikt de onderstaande afbeelding (van het huidige canvas of geüpload).",
   "prompting.rewrite": "Herschrijven",
   "prompting.variations": "Variaties",
-  "prompting.describe": "Beschrijven"
+  "prompting.describe": "Beschrijven",
+  "prompting.image_to_describe": "Afbeelding om te beschrijven",
+  "shell.images_to_generate": "Te genereren afbeeldingen"
 }

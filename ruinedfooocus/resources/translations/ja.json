@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "下に表示されている画像を使用します（現在のキャンバスまたはアップロード画像）。",
   "prompting.rewrite": "リライト",
   "prompting.variations": "バリエーション",
-  "prompting.describe": "説明を生成"
+  "prompting.describe": "説明を生成",
+  "prompting.image_to_describe": "説明する画像",
+  "shell.images_to_generate": "生成する画像数"
 }

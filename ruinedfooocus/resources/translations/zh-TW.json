@@ -2203,5 +2203,7 @@
   "image_editing.using_the_image_shown_below_from_current_canvas_or_upload": "正在使用下方顯示的影像（來自目前畫布或已上傳）。",
   "prompting.rewrite": "改寫",
   "prompting.variations": "變化",
-  "prompting.describe": "描述影像"
+  "prompting.describe": "描述影像",
+  "prompting.image_to_describe": "要描述的影像",
+  "shell.images_to_generate": "產生影像數量"
 }

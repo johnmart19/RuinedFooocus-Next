@@ -1809,7 +1809,8 @@ with shared.gradio_root as block:
                         )[:8]
                         return dict(
                             aspectLabel=localize("Aspect ratio", locale),
-                            countLabel=localize("Count", locale),
+                            countLabel=localize("Images to generate", locale),
+                            customCountLabel=localize("Custom", locale),
                             imageNumberLabel=localize("Image number", locale),
                             selectedDimension=dimension_value(current_resolution) or "",
                             count=0 if current_count == 0 else int(current_count or 1),
@@ -2566,6 +2567,7 @@ with shared.gradio_root as block:
                     native_main_source,
                     input_source=shared.get_ctrl("input_image"),
                     source_kind=editor_workspace.source_input,
+                    allow_upload=True,
                 )
             from ruinedfooocus.features.image_processing.ui_native_formats import (
                 create_ui as create_output_format_ui,

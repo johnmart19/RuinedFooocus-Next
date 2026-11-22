@@ -2199,5 +2199,7 @@
   "No image loaded yet. Upload one below, or open your latest generated image in Editor.": "image_editing.no_image_loaded_yet_upload_one_below_or_open_your_latest_generated_image_in_editor",
   "Rewrite": "prompting.rewrite",
   "Variations": "prompting.variations",
-  "Describe": "prompting.describe"
+  "Describe": "prompting.describe",
+  "Image to describe": "prompting.image_to_describe",
+  "Images to generate": "shell.images_to_generate"
 }

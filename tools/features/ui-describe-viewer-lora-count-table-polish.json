@@ -1,0 +1,18 @@
+{
+  "id": "ui-describe-viewer-lora-count-table-polish",
+  "subject": "Add inline upload to Prompt Describe, fix viewer toolbar and button spacing, show adapted LoRA names, and polish Count & Sampling table",
+  "requires": ["powerups-none-hide-upload-and-switch-perf"],
+  "tests": [
+    "test_prompt_caption.py",
+    "test_native_lora_hooks_ui.py",
+    "test_native_lora_hook_callers.py",
+    "test_prompt_variations.py",
+    "test_image_viewer.py",
+    "test_ui_audit_fixes.py",
+    "test_responsive_ui_layout.py",
+    "test_localization.py",
+    "test_ui_wiring.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

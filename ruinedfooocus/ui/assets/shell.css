@@ -1480,20 +1480,20 @@ html {
 :is(#app-tabs, #image-stage) :is(.block, .gr-group, .form, .styler, button, fieldset).hidden {
   display: none !important;
 }
-/* Keep Power-ups image dropzone label and bottom source icons crisp and unclipped. */
-#image-tool-input {
+/* Keep Power-ups & Describe image dropzone labels and bottom source icons crisp and unclipped. */
+:is(#image-tool-input, #describe-image-input) {
   height: auto !important;
-  min-height: 236px !important;
+  min-height: 210px !important;
 }
-#image-tool-input .upload-container {
+:is(#image-tool-input, #describe-image-input) .upload-container {
   padding-top: 2.5rem !important;
   padding-bottom: 0.75rem !important;
 }
-#image-tool-input .source-selection {
+:is(#image-tool-input, #describe-image-input) .source-selection {
   min-height: 2.25rem !important;
   padding: 0.25rem 0 !important;
 }
-#image-tool-input .source-selection > button {
+:is(#image-tool-input, #describe-image-input) .source-selection > button {
   min-height: 32px !important;
   height: 32px !important;
   min-width: 32px !important;
@@ -1503,7 +1503,7 @@ html {
   align-items: center !important;
   justify-content: center !important;
 }
-#image-tool-input .source-selection > button svg {
+:is(#image-tool-input, #describe-image-input) .source-selection > button svg {
   width: 18px !important;
   height: 18px !important;
 }
@@ -1542,12 +1542,18 @@ html {
 #generation-controls .rf-actions-compact {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.375rem !important;
+  gap: 0.5rem !important;
+  margin-block: 0.375rem !important;
 }
 #generation-controls .rf-actions-compact > button {
   inline-size: 100% !important;
   min-inline-size: 0 !important;
-  padding: 0.25rem 0.5rem !important;
+  padding: 0.375rem 0.625rem !important;
+}
+#generation-controls .rf-actions-compact + button,
+#generation-controls button + .rf-actions-compact,
+#generation-controls button + button {
+  margin-top: 0.5rem !important;
 }
 .rf-size-dims {
   display: grid !important;
