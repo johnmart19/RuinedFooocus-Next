@@ -1189,6 +1189,57 @@
         "license": "apache-2.0",
         "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
       }
+    },
+    "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf": {
+      "id": "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf",
+      "catalogue_key": "vision/mmproj-Inkling-2-Mini-BF16.gguf",
+      "state": "existing",
+      "profile_id": "language:inkling_2_mini",
+      "label": "Inkling 2 Mini",
+      "role": "vision_projector",
+      "chat_weight": false,
+      "uses_chat_runtime": true,
+      "architecture": "inkling2_loop",
+      "format": "gguf",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "af8397403055bdd6c35e5d35fbc9fccaae0f15c1c1c5599f86bb326fa18895ed",
+      "artifact": {
+        "bytes": 641805888,
+        "sha256": "45fc9cdc581dbf1adfe908ad936bcade13c53a5a47c27caaae83322902c87a6e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/mmproj-Inkling-2-Mini-BF16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-22T06:33:00+00:00",
+        "evidence_scope": "Remote HF API blob metadata; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "companion_only"
+        },
+        "xllamacpp": {
+          "status": "companion_only"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": "2026-11",
+        "status": "publisher_hf_repo"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
     }
   }
 }

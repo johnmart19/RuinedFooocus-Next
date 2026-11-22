@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:inkling_2_mini": {
+      "label": "Inkling 2 Mini",
+      "identity": {
+        "checkpoint_repo_requested": "thinkingmachines/Inkling-2-Mini",
+        "artifact_repo_requested": "lmstudio-community/Inkling-2-Mini-GGUF",
+        "gguf_architecture": "inkling2_loop"
+      },
+      "release": {
+        "announced_release_date": "2026-11",
+        "release_date_status": "publisher_announced"
+      },
+      "architecture": {
+        "gguf_architecture": "inkling2_loop",
+        "parameter_count_total_billions": 26.4,
+        "parameter_count_active_billions": 5.4,
+        "moe": true,
+        "looped_transformer": true,
+        "native_context_tokens": 1048576,
+        "multimodal_vision": true
+      },
+      "license": {
+        "value": "Apache-2.0",
+        "declared_upstream": "apache-2.0",
+        "status": "publisher_metadata"
+      },
+      "runtime_status": {
+        "native_llama_cpp": {
+          "status": "source_supported_not_device_benchmarked",
+          "minimum_build": "b12600",
+          "tested_source_build": "b12627",
+          "note": "Requires llama.cpp b12600+ with inkling2_loop architecture support."
+        },
+        "xllamacpp": {
+          "status": "unsupported_older_build",
+          "note": "Requires native llama.cpp b12600+ for inkling2_loop architecture."
+        }
+      },
+      "source_urls": [
+        "https://huggingface.co/ggml-org/Inkling-2-Mini-GGUF",
+        "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF",
+        "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF"
+      ]
+    }
+  }
+}

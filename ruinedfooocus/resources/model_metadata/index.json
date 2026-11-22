@@ -30,8 +30,39 @@
       }
     },
     "hardware_policy": {
-      "gpu_tier_values_gib": [2, 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128, 192],
-      "system_ram_tier_values_gib": [8, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512],
+      "gpu_tier_values_gib": [
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        16,
+        20,
+        24,
+        32,
+        40,
+        48,
+        64,
+        80,
+        96,
+        128,
+        192
+      ],
+      "system_ram_tier_values_gib": [
+        8,
+        16,
+        24,
+        32,
+        48,
+        64,
+        96,
+        128,
+        192,
+        256,
+        384,
+        512
+      ],
       "cpu_tier_axes": [
         "working_set_RAM_band",
         "architecture_and_active_parameter_compute_class",
@@ -2097,359 +2128,940 @@
     },
     "generation:lens_checkpoints": {
       "path": "families/generation_lens_checkpoints.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:lens_clip": {
       "path": "families/generation_lens_clip.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:ming_image_checkpoints": {
       "path": "families/generation_ming_image_checkpoints.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:ming_image_clip": {
       "path": "families/generation_ming_image_clip.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:ming_image_vae": {
       "path": "families/generation_ming_image_vae.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:qwen_image21_checkpoints": {
       "path": "families/generation_qwen_image21_checkpoints.json",
-      "keys": ["kind", "display_name", "consumers", "license", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "consumers",
+        "license",
+        "evidence_scope"
+      ]
     },
     "generation:qwen_image21_community_lora": {
       "path": "families/generation_qwen_image21_community_lora.json",
-      "keys": ["kind", "display_name", "consumers", "license"]
+      "keys": [
+        "kind",
+        "display_name",
+        "consumers",
+        "license"
+      ]
     },
     "generation:qwen_image21_clip": {
       "path": "families/generation_qwen_image21_clip.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:qwen_image21_vae": {
       "path": "families/generation_qwen_image21_vae.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:hunyuan_image21_clip": {
       "path": "families/generation_hunyuan_image21_clip.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:hunyuan_image21_vae": {
       "path": "families/generation_hunyuan_image21_vae.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:cascade_b": {
       "path": "families/generation_cascade_b.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:cascade_c": {
       "path": "families/generation_cascade_c.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:hunyuan_refiner_vae": {
       "path": "families/generation_hunyuan_refiner_vae.json",
-      "keys": ["kind", "display_name", "evidence_scope"]
+      "keys": [
+        "kind",
+        "display_name",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_anima_base": {
       "path": "families/generation_reviewed_anima_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_omnigen2_base": {
       "path": "families/generation_reviewed_omnigen2_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_kandinsky5image_base": {
       "path": "families/generation_reviewed_kandinsky5image_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_fluxschnell_schnell": {
       "path": "families/generation_reviewed_fluxschnell_schnell.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_hidream_dev": {
       "path": "families/generation_reviewed_hidream_dev.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_hidream_fast": {
       "path": "families/generation_reviewed_hidream_fast.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_hidreamo1_dev": {
       "path": "families/generation_reviewed_hidreamo1_dev.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_mageflow_base": {
       "path": "families/generation_reviewed_mageflow_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_mageflow_turbo": {
       "path": "families/generation_reviewed_mageflow_turbo.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_krea2_turbo": {
       "path": "families/generation_reviewed_krea2_turbo.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_boogu_edit": {
       "path": "families/generation_reviewed_modern_boogu_edit.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_boogu_turbo": {
       "path": "families/generation_reviewed_modern_boogu_turbo.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_chroma_base": {
       "path": "families/generation_reviewed_modern_chroma_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_chromaradiance_radiance_x0": {
       "path": "families/generation_reviewed_modern_chromaradiance_radiance_x0.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_fibo2_dev": {
       "path": "families/generation_reviewed_modern_fibo2_dev.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_fibo2_edit_turbo": {
       "path": "families/generation_reviewed_modern_fibo2_edit_turbo.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_flux_1_d_krea_dev": {
       "path": "families/generation_reviewed_modern_flux_1_d_krea_dev.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_flux_1_d_kontext_dev": {
       "path": "families/generation_reviewed_modern_flux_1_d_kontext_dev.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_fluxinpaint_fill_dev": {
       "path": "families/generation_reviewed_modern_fluxinpaint_fill_dev.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_flux2klein4b_klein_base_4b": {
       "path": "families/generation_reviewed_modern_flux2klein4b_klein_base_4b.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_flux2klein4b_klein_distilled_4b": {
       "path": "families/generation_reviewed_modern_flux2klein4b_klein_distilled_4b.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_flux2klein9b_klein_distilled_9b_kv": {
       "path": "families/generation_reviewed_modern_flux2klein9b_klein_distilled_9b_kv.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_flux2_dev": {
       "path": "families/generation_reviewed_modern_flux2_dev.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_ideogram4_conditional": {
       "path": "families/generation_reviewed_modern_ideogram4_conditional.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_ideogram4_unconditional_companion": {
       "path": "families/generation_reviewed_modern_ideogram4_unconditional_companion.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_joyimage_edit": {
       "path": "families/generation_reviewed_modern_joyimage_edit.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_longcatimage_base": {
       "path": "families/generation_reviewed_modern_longcatimage_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_longcatimage_edit": {
       "path": "families/generation_reviewed_modern_longcatimage_edit.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_newbieimage_exp0.1": {
       "path": "families/generation_reviewed_modern_newbieimage_exp0.1.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_lumina2_netayume_v3.5": {
       "path": "families/generation_reviewed_modern_lumina2_netayume_v3.5.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_mossimage_base": {
       "path": "families/generation_reviewed_modern_mossimage_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_mossimage_sft": {
       "path": "families/generation_reviewed_modern_mossimage_sft.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_pixelditt2i_t2i": {
       "path": "families/generation_reviewed_modern_pixelditt2i_t2i.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_pid_flux1_1024_to_4096_4step": {
       "path": "families/generation_reviewed_modern_pid_flux1_1024_to_4096_4step.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_qwenimage_base": {
       "path": "families/generation_reviewed_modern_qwenimage_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_qwenimage_2512": {
       "path": "families/generation_reviewed_modern_qwenimage_2512.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_qwenimage_edit": {
       "path": "families/generation_reviewed_modern_qwenimage_edit.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_qwenimage_edit_2509": {
       "path": "families/generation_reviewed_modern_qwenimage_edit_2509.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_qwenimage_edit_2511": {
       "path": "families/generation_reviewed_modern_qwenimage_edit_2511.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_qwenimage_layered": {
       "path": "families/generation_reviewed_modern_qwenimage_layered.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_zimage_base": {
       "path": "families/generation_reviewed_modern_zimage_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_zimage_turbo": {
       "path": "families/generation_reviewed_modern_zimage_turbo.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_ernieimage_base": {
       "path": "families/generation_reviewed_modern_ernieimage_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_ernieimage_turbo": {
       "path": "families/generation_reviewed_modern_ernieimage_turbo.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_modern_qwen_layered_codec": {
       "path": "families/generation_reviewed_modern_qwen_layered_codec.json",
-      "keys": ["title", "consumers", "architecture", "license", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "architecture",
+        "license",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_seedvr2_codec": {
       "path": "families/generation_reviewed_extended_seedvr2_codec.json",
-      "keys": ["title", "consumers", "license", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "license",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sd15_base": {
       "path": "families/generation_reviewed_extended_sd15_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sd20_wd_beta2_aesthetic": {
       "path": "families/generation_reviewed_extended_sd20_wd_beta2_aesthetic.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sd21unclipl_unclip_l": {
       "path": "families/generation_reviewed_extended_sd21unclipl_unclip_l.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sd21uncliph_unclip_h": {
       "path": "families/generation_reviewed_extended_sd21uncliph_unclip_h.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sd15_instructpix2pix_base": {
       "path": "families/generation_reviewed_extended_sd15_instructpix2pix_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sdxl_instructpix2pix_base": {
       "path": "families/generation_reviewed_extended_sdxl_instructpix2pix_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sdxlrefiner_base": {
       "path": "families/generation_reviewed_extended_sdxlrefiner_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_ssd1b_base": {
       "path": "families/generation_reviewed_extended_ssd1b_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_koala_700m_base": {
       "path": "families/generation_reviewed_extended_koala_700m_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_koala_1b_base": {
       "path": "families/generation_reviewed_extended_koala_1b_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_segmind_vega_base": {
       "path": "families/generation_reviewed_extended_segmind_vega_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sd3_3.5_large": {
       "path": "families/generation_reviewed_extended_sd3_3.5_large.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_auraflow_0.3": {
       "path": "families/generation_reviewed_extended_auraflow_0.3.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_pixartalpha_xl_2_1024_ms": {
       "path": "families/generation_reviewed_extended_pixartalpha_xl_2_1024_ms.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_pixartsigma_xl_2_1024_ms": {
       "path": "families/generation_reviewed_extended_pixartsigma_xl_2_1024_ms.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_hunyuandit1_1.0": {
       "path": "families/generation_reviewed_extended_hunyuandit1_1.0.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_hunyuandit1_1.1": {
       "path": "families/generation_reviewed_extended_hunyuandit1_1.1.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_hunyuanimage21_base": {
       "path": "families/generation_reviewed_extended_hunyuanimage21_base.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_hunyuanimage21refiner_refiner": {
       "path": "families/generation_reviewed_extended_hunyuanimage21refiner_refiner.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_cosmost2ipredict2_2b_t2i": {
       "path": "families/generation_reviewed_extended_cosmost2ipredict2_2b_t2i.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_lotusd_depth_v1.1": {
       "path": "families/generation_reviewed_extended_lotusd_depth_v1.1.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_lotusd_sdpose_wholebody": {
       "path": "families/generation_reviewed_extended_lotusd_sdpose_wholebody.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_rt_detr_v4_sdpose_detect": {
       "path": "families/generation_reviewed_extended_rt_detr_v4_sdpose_detect.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_sam31_multiplex_3.1": {
       "path": "families/generation_reviewed_extended_sam31_multiplex_3.1.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_seedvr2_3b_int8": {
       "path": "families/generation_reviewed_extended_seedvr2_3b_int8.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:reviewed_extended_seedvr2_7b_int8": {
       "path": "families/generation_reviewed_extended_seedvr2_7b_int8.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:zeta_chroma_pixel_x0": {
       "path": "families/generation_zeta_chroma_pixel_x0.json",
-      "keys": ["title", "consumers", "native_class", "license", "settings", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "license",
+        "settings",
+        "evidence_scope"
+      ]
     },
     "generation:minimax_h3_image": {
       "path": "families/generation_minimax_h3_image.json",
-      "keys": ["title", "consumers", "dependencies", "settings", "hardware_notes", "sources"]
+      "keys": [
+        "title",
+        "consumers",
+        "dependencies",
+        "settings",
+        "hardware_notes",
+        "sources"
+      ]
     },
     "generation:bernini_image": {
       "path": "families/generation_bernini_image.json",
-      "keys": ["title", "consumers", "native_class", "settings", "license", "evidence_scope"]
+      "keys": [
+        "title",
+        "consumers",
+        "native_class",
+        "settings",
+        "license",
+        "evidence_scope"
+      ]
     },
     "auxiliary:cn_union_sdxl": {
       "path": "families/control_sdxl_union.json",
@@ -2464,6 +3076,18 @@
         "unsupported_modes",
         "normal_convention",
         "standalone_vram_status"
+      ]
+    },
+    "language:inkling_2_mini": {
+      "path": "families/language_inkling_2_mini.json",
+      "keys": [
+        "label",
+        "identity",
+        "release",
+        "architecture",
+        "license",
+        "runtime_status",
+        "source_urls"
       ]
     }
   },
@@ -5036,6 +5660,48 @@
       "state": "existing",
       "role": "control_conditioning",
       "profile_id": "auxiliary:cn_union_sdxl"
+    },
+    "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf": {
+      "path": "artifacts/vision_projector.json",
+      "catalogue_key": "vision/mmproj-Inkling-2-Mini-BF16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "language:inkling_2_mini"
+    },
+    "existing:llm/Inkling-2-Mini-UD-Q3_K_XL.gguf": {
+      "path": "artifacts/language_model.json",
+      "catalogue_key": "llm/Inkling-2-Mini-UD-Q3_K_XL.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "language:inkling_2_mini"
+    },
+    "existing:llm/Inkling-2-Mini-Q4_K_M.gguf": {
+      "path": "artifacts/language_model.json",
+      "catalogue_key": "llm/Inkling-2-Mini-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "language:inkling_2_mini"
+    },
+    "existing:llm/Inkling-2-Mini-IQ4_NL.gguf": {
+      "path": "artifacts/language_model.json",
+      "catalogue_key": "llm/Inkling-2-Mini-IQ4_NL.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "language:inkling_2_mini"
+    },
+    "existing:llm/Inkling-2-Mini-Q6_K.gguf": {
+      "path": "artifacts/language_model.json",
+      "catalogue_key": "llm/Inkling-2-Mini-Q6_K.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "language:inkling_2_mini"
+    },
+    "existing:llm/Inkling-2-Mini-Q8_0.gguf": {
+      "path": "artifacts/language_model.json",
+      "catalogue_key": "llm/Inkling-2-Mini-Q8_0.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "language:inkling_2_mini"
     }
   },
   "qualification": {
@@ -5760,7 +6426,7 @@
       "sha256": "69ef11fc758ca7f1b6ce0d371a9ae5eb499d1d6e5a30fe19fc9f2cb08408e200"
     },
     "artifacts/language_model.json": {
-      "sha256": "48b280e07f1ddaaa755da532d7b356f9932c36982a029f527bf48bf5472a1c1e"
+      "sha256": "bf873ee8e9c0a2ae2286db7fb0560bd55a186b2ffb4d4a7375669ce74319e123"
     },
     "artifacts/text_conditioning_encoder.json": {
       "sha256": "d40a2ed1f16633d4ae9f62d653daba79cedc5752a11814924816779c29b0ad06"
@@ -5787,7 +6453,7 @@
       "sha256": "a0138ace3b5f319c4022652eb572988ebe1a297e0af0be7ae0b56d5bd70c6306"
     },
     "artifacts/vision_projector.json": {
-      "sha256": "0a46e2f4e705a78d99f18bee576a845524186b9237c3791a4457b69ea39e677d"
+      "sha256": "f0cc66eaa7d7060ada1b386cf1f5a379a94381c9cd2dc4b37051f02aa6eed7e0"
     },
     "artifacts/latent_autoencoder.json": {
       "sha256": "70ea68bbb0e26989c41e68c9144f3d9655a090c300a02fba6ef36e7b5ccb5c13"
@@ -5899,6 +6565,9 @@
     },
     "qualification/auxiliary_dat_4x_pth.json": {
       "sha256": "e2b441dc2b00bedd1634f8f2cb33e86a75226b8efb8be9b462a3aebfe6f8f0e0"
+    },
+    "families/language_inkling_2_mini.json": {
+      "sha256": "b84b18f7da18e68fd74ab7ea1862e879542853259233d6cd2145090852fbcc85"
     }
   },
   "benchmark_order": [
@@ -6038,11 +6707,17 @@
   "payload_alias_groups": [
     {
       "sha256": "a5812231fc936b42af08a5edba784195495d303d5b3248c24489ef0c4021fe01",
-      "artifact_ids": ["existing:4x-UltraSharp.pth", "existing:ESRGAN-UltraSharp-4x.pth"]
+      "artifact_ids": [
+        "existing:4x-UltraSharp.pth",
+        "existing:ESRGAN-UltraSharp-4x.pth"
+      ]
     },
     {
       "sha256": "afc8e28272cd15db3919bacdb6918ce9c1ed22e96cb12c4d5ed0fba823529e38",
-      "artifact_ids": ["existing:vae/ae.safetensors", "existing:vae/lumina2_vae_fp32.safetensors"]
+      "artifact_ids": [
+        "existing:vae/ae.safetensors",
+        "existing:vae/lumina2_vae_fp32.safetensors"
+      ]
     },
     {
       "sha256": "1598f3d24932bcfe6634e8b618ea1e30ab1d57f5aad13a6d2de446d2199f2341",
@@ -6059,7 +6734,7 @@
       ]
     }
   ],
-  "source_document_sha256": "54c79b96eecb8fefed8f5d7da91cbc5054bba4564ba500a5e94295a9ca67d3b4",
+  "source_document_sha256": "f3eef27dd2c10388f6c8632786e064085fcefab2a6d8fea9fd325cbf1021e416",
   "migration_baseline": {
     "profiles": [
       "language:qwen3_1_7b",
@@ -6730,8 +7405,39 @@
         }
       },
       "hardware_policy": {
-        "gpu_tier_values_gib": [2, 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128, 192],
-        "system_ram_tier_values_gib": [8, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, 512],
+        "gpu_tier_values_gib": [
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          16,
+          20,
+          24,
+          32,
+          40,
+          48,
+          64,
+          80,
+          96,
+          128,
+          192
+        ],
+        "system_ram_tier_values_gib": [
+          8,
+          16,
+          24,
+          32,
+          48,
+          64,
+          96,
+          128,
+          192,
+          256,
+          384,
+          512
+        ],
         "cpu_tier_axes": [
           "working_set_RAM_band",
           "architecture_and_active_parameter_compute_class",
@@ -6831,10 +7537,12 @@
         "a4afb801b6c5640dc9be1516e99dae224832028c1c6de78661c050002b88cc06",
         "4ca085505eebb5f5f3e1ee82e69faf19e88fa25171b8f5646ec9d35a5d5b3a24"
       ],
-      "alias_digests": ["038a1c407f6347d0b0072dcfadba0b33cedc02e75b16e4fc94312dfb6fdaed05"],
+      "alias_digests": [
+        "038a1c407f6347d0b0072dcfadba0b33cedc02e75b16e4fc94312dfb6fdaed05"
+      ],
       "source_document_sha256": "78fe28c0da9ac3592e74f6259db1c217e06de9e419836ef56798b6ddf9bd3e28",
       "download_identities_sha256": "c2d454cd743cf7f338506a70d4d4230fdcde0b3324ebd73c4c571730d5f77455"
     }
   },
-  "download_identities_sha256": "40e297731af59f53defacd46fba2a4e1b31054472fc66edeedc5e2a5d1e1b1f9"
+  "download_identities_sha256": "cc0f397a01ca617b53efb3191c173cb1d5025a51545267e845a20e2b5ec816a1"
 }

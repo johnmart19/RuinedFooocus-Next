@@ -171,7 +171,10 @@
             "recurrent_state_reserve_included_gib": 1.0,
             "analytical_cache_ref": "language:lfm3_1_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.86, 3.36],
+            "estimated_full_offload_vram_range_gib": [
+              2.86,
+              3.36
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -191,7 +194,10 @@
             "recurrent_state_reserve_included_gib": 1.0,
             "analytical_cache_ref": "language:lfm3_1_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.95, 3.45],
+            "estimated_full_offload_vram_range_gib": [
+              2.95,
+              3.45
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -264,7 +270,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.5-9B-BF16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.5-9B-BF16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -380,7 +388,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:gpt_oss_20b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [12.72, 13.84],
+            "estimated_full_offload_vram_range_gib": [
+              12.72,
+              13.84
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           },
@@ -400,7 +411,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:gpt_oss_20b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [12.9, 14.03],
+            "estimated_full_offload_vram_range_gib": [
+              12.9,
+              14.03
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -486,7 +500,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [16.72, 18.21],
+            "estimated_full_offload_vram_range_gib": [
+              16.72,
+              18.21
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           },
@@ -506,7 +523,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [17.22, 18.71],
+            "estimated_full_offload_vram_range_gib": [
+              17.22,
+              18.71
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           }
@@ -592,7 +612,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.21, 4.71],
+            "estimated_full_offload_vram_range_gib": [
+              4.21,
+              4.71
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -612,7 +635,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.71, 5.21],
+            "estimated_full_offload_vram_range_gib": [
+              4.71,
+              5.21
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -698,7 +724,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.33, 4.83],
+            "estimated_full_offload_vram_range_gib": [
+              4.33,
+              4.83
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -718,7 +747,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.83, 5.33],
+            "estimated_full_offload_vram_range_gib": [
+              4.83,
+              5.33
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -804,7 +836,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.99, 5.49],
+            "estimated_full_offload_vram_range_gib": [
+              4.99,
+              5.49
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -824,7 +859,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.49, 5.99],
+            "estimated_full_offload_vram_range_gib": [
+              5.49,
+              5.99
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -910,7 +948,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.33, 6.83],
+            "estimated_full_offload_vram_range_gib": [
+              6.33,
+              6.83
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -930,7 +971,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.83, 7.33],
+            "estimated_full_offload_vram_range_gib": [
+              6.83,
+              7.33
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -1016,7 +1060,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.09, 7.62],
+            "estimated_full_offload_vram_range_gib": [
+              7.09,
+              7.62
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -1036,7 +1083,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.59, 8.12],
+            "estimated_full_offload_vram_range_gib": [
+              7.59,
+              8.12
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -1122,7 +1172,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.89, 8.51],
+            "estimated_full_offload_vram_range_gib": [
+              7.89,
+              8.51
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -1142,7 +1195,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.39, 9.01],
+            "estimated_full_offload_vram_range_gib": [
+              8.39,
+              9.01
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -1228,7 +1284,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.7, 10.5],
+            "estimated_full_offload_vram_range_gib": [
+              9.7,
+              10.5
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -1248,7 +1307,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:deepseek_r1_distill_llama_8b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [10.2, 11.0],
+            "estimated_full_offload_vram_range_gib": [
+              10.2,
+              11.0
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           }
@@ -1334,7 +1396,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.67, 6.17],
+            "estimated_full_offload_vram_range_gib": [
+              5.67,
+              6.17
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -1354,7 +1419,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [6.71, 7.21],
+            "estimated_full_offload_vram_range_gib": [
+              6.71,
+              7.21
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -1440,7 +1508,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.53, 5.03],
+            "estimated_full_offload_vram_range_gib": [
+              4.53,
+              5.03
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -1460,7 +1531,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.57, 6.07],
+            "estimated_full_offload_vram_range_gib": [
+              5.57,
+              6.07
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -1546,7 +1620,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.29, 5.79],
+            "estimated_full_offload_vram_range_gib": [
+              5.29,
+              5.79
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -1566,7 +1643,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [6.34, 6.84],
+            "estimated_full_offload_vram_range_gib": [
+              6.34,
+              6.84
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -1652,7 +1732,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.96, 5.46],
+            "estimated_full_offload_vram_range_gib": [
+              4.96,
+              5.46
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -1672,7 +1755,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [6.01, 6.51],
+            "estimated_full_offload_vram_range_gib": [
+              6.01,
+              6.51
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -1758,7 +1844,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.57, 7.07],
+            "estimated_full_offload_vram_range_gib": [
+              6.57,
+              7.07
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -1778,7 +1867,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.62, 8.12],
+            "estimated_full_offload_vram_range_gib": [
+              7.62,
+              8.12
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -1864,7 +1956,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.37, 6.87],
+            "estimated_full_offload_vram_range_gib": [
+              6.37,
+              6.87
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -1884,7 +1979,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.42, 7.92],
+            "estimated_full_offload_vram_range_gib": [
+              7.42,
+              7.92
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -1970,7 +2068,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.18, 7.68],
+            "estimated_full_offload_vram_range_gib": [
+              7.18,
+              7.68
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -1990,7 +2091,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.22, 8.72],
+            "estimated_full_offload_vram_range_gib": [
+              8.22,
+              8.72
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -2076,7 +2180,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.06, 8.64],
+            "estimated_full_offload_vram_range_gib": [
+              8.06,
+              8.64
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -2096,7 +2203,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.11, 9.68],
+            "estimated_full_offload_vram_range_gib": [
+              9.11,
+              9.68
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -2182,7 +2292,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.76, 10.51],
+            "estimated_full_offload_vram_range_gib": [
+              9.76,
+              10.51
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -2202,7 +2315,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [10.81, 11.55],
+            "estimated_full_offload_vram_range_gib": [
+              10.81,
+              11.55
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           }
@@ -2288,7 +2404,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.29, 7.79],
+            "estimated_full_offload_vram_range_gib": [
+              7.29,
+              7.79
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -2308,7 +2427,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:rogue_creative_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.34, 8.84],
+            "estimated_full_offload_vram_range_gib": [
+              8.34,
+              8.84
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -2394,7 +2516,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.83, 3.33],
+            "estimated_full_offload_vram_range_gib": [
+              2.83,
+              3.33
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -2414,7 +2539,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.27, 3.77],
+            "estimated_full_offload_vram_range_gib": [
+              3.27,
+              3.77
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -2498,7 +2626,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.72, 3.22],
+            "estimated_full_offload_vram_range_gib": [
+              2.72,
+              3.22
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -2518,7 +2649,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.16, 3.66],
+            "estimated_full_offload_vram_range_gib": [
+              3.16,
+              3.66
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -2602,7 +2736,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.09, 3.59],
+            "estimated_full_offload_vram_range_gib": [
+              3.09,
+              3.59
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -2622,7 +2759,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.52, 4.02],
+            "estimated_full_offload_vram_range_gib": [
+              3.52,
+              4.02
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -2706,7 +2846,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.58, 3.08],
+            "estimated_full_offload_vram_range_gib": [
+              2.58,
+              3.08
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -2726,7 +2869,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.02, 3.52],
+            "estimated_full_offload_vram_range_gib": [
+              3.02,
+              3.52
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -2810,7 +2956,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.94, 3.44],
+            "estimated_full_offload_vram_range_gib": [
+              2.94,
+              3.44
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -2830,7 +2979,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.37, 3.87],
+            "estimated_full_offload_vram_range_gib": [
+              3.37,
+              3.87
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -2914,7 +3066,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.04, 3.54],
+            "estimated_full_offload_vram_range_gib": [
+              3.04,
+              3.54
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -2934,7 +3089,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.47, 3.97],
+            "estimated_full_offload_vram_range_gib": [
+              3.47,
+              3.97
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -3018,7 +3176,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.92, 3.42],
+            "estimated_full_offload_vram_range_gib": [
+              2.92,
+              3.42
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -3038,7 +3199,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.35, 3.85],
+            "estimated_full_offload_vram_range_gib": [
+              3.35,
+              3.85
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -3122,7 +3286,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.78, 3.28],
+            "estimated_full_offload_vram_range_gib": [
+              2.78,
+              3.28
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -3142,7 +3309,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.22, 3.72],
+            "estimated_full_offload_vram_range_gib": [
+              3.22,
+              3.72
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -3226,7 +3396,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.36, 3.86],
+            "estimated_full_offload_vram_range_gib": [
+              3.36,
+              3.86
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -3246,7 +3419,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.79, 4.29],
+            "estimated_full_offload_vram_range_gib": [
+              3.79,
+              4.29
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -3330,7 +3506,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.18, 3.68],
+            "estimated_full_offload_vram_range_gib": [
+              3.18,
+              3.68
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -3350,7 +3529,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.62, 4.12],
+            "estimated_full_offload_vram_range_gib": [
+              3.62,
+              4.12
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -3434,7 +3616,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.55, 4.05],
+            "estimated_full_offload_vram_range_gib": [
+              3.55,
+              4.05
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -3454,7 +3639,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.98, 4.48],
+            "estimated_full_offload_vram_range_gib": [
+              3.98,
+              4.48
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -3538,7 +3726,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.27, 3.77],
+            "estimated_full_offload_vram_range_gib": [
+              3.27,
+              3.77
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -3558,7 +3749,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.71, 4.21],
+            "estimated_full_offload_vram_range_gib": [
+              3.71,
+              4.21
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -3642,7 +3836,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.19, 3.69],
+            "estimated_full_offload_vram_range_gib": [
+              3.19,
+              3.69
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -3662,7 +3859,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.63, 4.13],
+            "estimated_full_offload_vram_range_gib": [
+              3.63,
+              4.13
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -3746,7 +3946,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.83, 4.33],
+            "estimated_full_offload_vram_range_gib": [
+              3.83,
+              4.33
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -3766,7 +3969,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.27, 4.77],
+            "estimated_full_offload_vram_range_gib": [
+              4.27,
+              4.77
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -3850,7 +4056,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.6, 4.1],
+            "estimated_full_offload_vram_range_gib": [
+              3.6,
+              4.1
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -3870,7 +4079,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.04, 4.54],
+            "estimated_full_offload_vram_range_gib": [
+              4.04,
+              4.54
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -3954,7 +4166,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.55, 4.05],
+            "estimated_full_offload_vram_range_gib": [
+              3.55,
+              4.05
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -3974,7 +4189,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.99, 4.49],
+            "estimated_full_offload_vram_range_gib": [
+              3.99,
+              4.49
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -4058,7 +4276,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.95, 4.45],
+            "estimated_full_offload_vram_range_gib": [
+              3.95,
+              4.45
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -4078,7 +4299,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.39, 4.89],
+            "estimated_full_offload_vram_range_gib": [
+              4.39,
+              4.89
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -4162,7 +4386,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.13, 4.63],
+            "estimated_full_offload_vram_range_gib": [
+              4.13,
+              4.63
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -4182,7 +4409,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.57, 5.07],
+            "estimated_full_offload_vram_range_gib": [
+              4.57,
+              5.07
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -4266,7 +4496,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.76, 5.26],
+            "estimated_full_offload_vram_range_gib": [
+              4.76,
+              5.26
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -4286,7 +4519,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.2, 5.7],
+            "estimated_full_offload_vram_range_gib": [
+              5.2,
+              5.7
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -4370,7 +4606,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.41, 9.09],
+            "estimated_full_offload_vram_range_gib": [
+              8.41,
+              9.09
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -4390,7 +4629,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:chuanli_llama32_3b_uncensored.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.85, 9.52],
+            "estimated_full_offload_vram_range_gib": [
+              8.85,
+              9.52
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -4474,7 +4716,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.56, 4.06],
+            "estimated_full_offload_vram_range_gib": [
+              3.56,
+              4.06
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -4494,7 +4739,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.78, 4.28],
+            "estimated_full_offload_vram_range_gib": [
+              3.78,
+              4.28
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -4580,7 +4828,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.3, 4.8],
+            "estimated_full_offload_vram_range_gib": [
+              4.3,
+              4.8
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -4600,7 +4851,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.52, 5.02],
+            "estimated_full_offload_vram_range_gib": [
+              4.52,
+              5.02
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -4686,7 +4940,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.09, 4.59],
+            "estimated_full_offload_vram_range_gib": [
+              4.09,
+              4.59
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -4706,7 +4963,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.3, 4.8],
+            "estimated_full_offload_vram_range_gib": [
+              4.3,
+              4.8
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -4792,7 +5052,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.6, 6.1],
+            "estimated_full_offload_vram_range_gib": [
+              5.6,
+              6.1
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -4812,7 +5075,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.82, 6.32],
+            "estimated_full_offload_vram_range_gib": [
+              5.82,
+              6.32
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -4898,7 +5164,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.9, 5.4],
+            "estimated_full_offload_vram_range_gib": [
+              4.9,
+              5.4
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -4918,7 +5187,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.12, 5.62],
+            "estimated_full_offload_vram_range_gib": [
+              5.12,
+              5.62
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -5004,7 +5276,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.78, 4.28],
+            "estimated_full_offload_vram_range_gib": [
+              3.78,
+              4.28
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -5024,7 +5299,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.0, 4.5],
+            "estimated_full_offload_vram_range_gib": [
+              4.0,
+              4.5
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -5110,7 +5388,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.27, 4.77],
+            "estimated_full_offload_vram_range_gib": [
+              4.27,
+              4.77
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -5130,7 +5411,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.49, 4.99],
+            "estimated_full_offload_vram_range_gib": [
+              4.49,
+              4.99
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -5216,7 +5500,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.78, 5.28],
+            "estimated_full_offload_vram_range_gib": [
+              4.78,
+              5.28
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -5236,7 +5523,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.0, 5.5],
+            "estimated_full_offload_vram_range_gib": [
+              5.0,
+              5.5
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -5322,7 +5612,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.52, 5.02],
+            "estimated_full_offload_vram_range_gib": [
+              4.52,
+              5.02
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -5342,7 +5635,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.73, 5.23],
+            "estimated_full_offload_vram_range_gib": [
+              4.73,
+              5.23
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -5428,7 +5724,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.22, 4.72],
+            "estimated_full_offload_vram_range_gib": [
+              4.22,
+              4.72
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -5448,7 +5747,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.44, 4.94],
+            "estimated_full_offload_vram_range_gib": [
+              4.44,
+              4.94
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -5534,7 +5836,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.72, 6.22],
+            "estimated_full_offload_vram_range_gib": [
+              5.72,
+              6.22
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -5554,7 +5859,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.94, 6.44],
+            "estimated_full_offload_vram_range_gib": [
+              5.94,
+              6.44
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -5640,7 +5948,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.61, 6.11],
+            "estimated_full_offload_vram_range_gib": [
+              5.61,
+              6.11
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -5660,7 +5971,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.83, 6.33],
+            "estimated_full_offload_vram_range_gib": [
+              5.83,
+              6.33
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -5746,7 +6060,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.01, 6.51],
+            "estimated_full_offload_vram_range_gib": [
+              6.01,
+              6.51
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -5766,7 +6083,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.23, 6.73],
+            "estimated_full_offload_vram_range_gib": [
+              6.23,
+              6.73
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -5852,7 +6172,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.21, 6.71],
+            "estimated_full_offload_vram_range_gib": [
+              6.21,
+              6.71
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -5872,7 +6195,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.43, 6.93],
+            "estimated_full_offload_vram_range_gib": [
+              6.43,
+              6.93
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -5958,7 +6284,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.83, 6.33],
+            "estimated_full_offload_vram_range_gib": [
+              5.83,
+              6.33
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -5978,7 +6307,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.05, 6.55],
+            "estimated_full_offload_vram_range_gib": [
+              6.05,
+              6.55
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -6064,7 +6396,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.62, 6.12],
+            "estimated_full_offload_vram_range_gib": [
+              5.62,
+              6.12
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -6084,7 +6419,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.84, 6.34],
+            "estimated_full_offload_vram_range_gib": [
+              5.84,
+              6.34
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -6170,7 +6508,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.85, 7.39],
+            "estimated_full_offload_vram_range_gib": [
+              6.85,
+              7.39
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -6190,7 +6531,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.07, 7.61],
+            "estimated_full_offload_vram_range_gib": [
+              7.07,
+              7.61
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -6276,7 +6620,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.54, 7.05],
+            "estimated_full_offload_vram_range_gib": [
+              6.54,
+              7.05
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -6296,7 +6643,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.76, 7.27],
+            "estimated_full_offload_vram_range_gib": [
+              6.76,
+              7.27
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -6382,7 +6732,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.42, 6.92],
+            "estimated_full_offload_vram_range_gib": [
+              6.42,
+              6.92
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -6402,7 +6755,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.64, 7.14],
+            "estimated_full_offload_vram_range_gib": [
+              6.64,
+              7.14
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -6488,7 +6844,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.29, 7.88],
+            "estimated_full_offload_vram_range_gib": [
+              7.29,
+              7.88
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -6508,7 +6867,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.51, 8.09],
+            "estimated_full_offload_vram_range_gib": [
+              7.51,
+              8.09
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -6594,7 +6956,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.54, 8.15],
+            "estimated_full_offload_vram_range_gib": [
+              7.54,
+              8.15
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -6614,7 +6979,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.76, 8.37],
+            "estimated_full_offload_vram_range_gib": [
+              7.76,
+              8.37
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -6700,7 +7068,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.01, 9.77],
+            "estimated_full_offload_vram_range_gib": [
+              9.01,
+              9.77
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -6720,7 +7091,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.23, 9.98],
+            "estimated_full_offload_vram_range_gib": [
+              9.23,
+              9.98
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -6806,7 +7180,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [15.66, 17.08],
+            "estimated_full_offload_vram_range_gib": [
+              15.66,
+              17.08
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           },
@@ -6826,7 +7203,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [15.88, 17.3],
+            "estimated_full_offload_vram_range_gib": [
+              15.88,
+              17.3
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           }
@@ -6912,7 +7292,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [29.84, 32.68],
+            "estimated_full_offload_vram_range_gib": [
+              29.84,
+              32.68
+            ],
             "recommended_gpu_tier_gib": 40,
             "recommended_system_ram_gib": 48
           },
@@ -6932,7 +7315,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:openthinker_7b_v1.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [30.06, 32.9],
+            "estimated_full_offload_vram_range_gib": [
+              30.06,
+              32.9
+            ],
             "recommended_gpu_tier_gib": 40,
             "recommended_system_ram_gib": 48
           }
@@ -7018,7 +7404,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.56, 4.06],
+            "estimated_full_offload_vram_range_gib": [
+              3.56,
+              4.06
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -7038,7 +7427,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.78, 4.28],
+            "estimated_full_offload_vram_range_gib": [
+              3.78,
+              4.28
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -7122,7 +7514,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.62, 6.12],
+            "estimated_full_offload_vram_range_gib": [
+              5.62,
+              6.12
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -7142,7 +7537,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.84, 6.34],
+            "estimated_full_offload_vram_range_gib": [
+              5.84,
+              6.34
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -7226,7 +7624,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.42, 6.92],
+            "estimated_full_offload_vram_range_gib": [
+              6.42,
+              6.92
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -7246,7 +7647,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.64, 7.14],
+            "estimated_full_offload_vram_range_gib": [
+              6.64,
+              7.14
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -7330,7 +7734,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.01, 9.77],
+            "estimated_full_offload_vram_range_gib": [
+              9.01,
+              9.77
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -7350,7 +7757,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.23, 9.98],
+            "estimated_full_offload_vram_range_gib": [
+              9.23,
+              9.98
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -7434,7 +7844,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [15.66, 17.08],
+            "estimated_full_offload_vram_range_gib": [
+              15.66,
+              17.08
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           },
@@ -7454,7 +7867,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:pokee_research_7b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [15.88, 17.3],
+            "estimated_full_offload_vram_range_gib": [
+              15.88,
+              17.3
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           }
@@ -7539,7 +7955,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.3, 4.8],
+            "estimated_full_offload_vram_range_gib": [
+              4.3,
+              4.8
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -7559,7 +7978,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.52, 5.02],
+            "estimated_full_offload_vram_range_gib": [
+              4.52,
+              5.02
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -7647,7 +8069,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.23, 4.73],
+            "estimated_full_offload_vram_range_gib": [
+              4.23,
+              4.73
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -7667,7 +8092,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.45, 4.95],
+            "estimated_full_offload_vram_range_gib": [
+              4.45,
+              4.95
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -7755,7 +8183,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.09, 4.59],
+            "estimated_full_offload_vram_range_gib": [
+              4.09,
+              4.59
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -7775,7 +8206,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.3, 4.8],
+            "estimated_full_offload_vram_range_gib": [
+              4.3,
+              4.8
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -7863,7 +8297,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.93, 5.43],
+            "estimated_full_offload_vram_range_gib": [
+              4.93,
+              5.43
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -7883,7 +8320,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.15, 5.65],
+            "estimated_full_offload_vram_range_gib": [
+              5.15,
+              5.65
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -7971,7 +8411,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.78, 4.28],
+            "estimated_full_offload_vram_range_gib": [
+              3.78,
+              4.28
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -7991,7 +8434,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.0, 4.5],
+            "estimated_full_offload_vram_range_gib": [
+              4.0,
+              4.5
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -8079,7 +8525,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.78, 5.28],
+            "estimated_full_offload_vram_range_gib": [
+              4.78,
+              5.28
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -8099,7 +8548,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.0, 5.5],
+            "estimated_full_offload_vram_range_gib": [
+              5.0,
+              5.5
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -8187,7 +8639,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.52, 5.02],
+            "estimated_full_offload_vram_range_gib": [
+              4.52,
+              5.02
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -8207,7 +8662,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.73, 5.23],
+            "estimated_full_offload_vram_range_gib": [
+              4.73,
+              5.23
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -8295,7 +8753,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.22, 4.72],
+            "estimated_full_offload_vram_range_gib": [
+              4.22,
+              4.72
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -8315,7 +8776,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.44, 4.94],
+            "estimated_full_offload_vram_range_gib": [
+              4.44,
+              4.94
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -8403,7 +8867,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.83, 6.33],
+            "estimated_full_offload_vram_range_gib": [
+              5.83,
+              6.33
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -8423,7 +8890,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.05, 6.55],
+            "estimated_full_offload_vram_range_gib": [
+              6.05,
+              6.55
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -8511,7 +8981,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.62, 6.12],
+            "estimated_full_offload_vram_range_gib": [
+              5.62,
+              6.12
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -8531,7 +9004,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [5.84, 6.34],
+            "estimated_full_offload_vram_range_gib": [
+              5.84,
+              6.34
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -8619,7 +9095,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.54, 7.05],
+            "estimated_full_offload_vram_range_gib": [
+              6.54,
+              7.05
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -8639,7 +9118,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.76, 7.27],
+            "estimated_full_offload_vram_range_gib": [
+              6.76,
+              7.27
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -8727,7 +9209,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.42, 6.92],
+            "estimated_full_offload_vram_range_gib": [
+              6.42,
+              6.92
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -8747,7 +9232,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [6.64, 7.14],
+            "estimated_full_offload_vram_range_gib": [
+              6.64,
+              7.14
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -8835,7 +9323,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.29, 7.88],
+            "estimated_full_offload_vram_range_gib": [
+              7.29,
+              7.88
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -8855,7 +9346,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.51, 8.09],
+            "estimated_full_offload_vram_range_gib": [
+              7.51,
+              8.09
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -8943,7 +9437,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.01, 9.77],
+            "estimated_full_offload_vram_range_gib": [
+              9.01,
+              9.77
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -8963,7 +9460,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.23, 9.98],
+            "estimated_full_offload_vram_range_gib": [
+              9.23,
+              9.98
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           }
@@ -9051,7 +9551,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [15.66, 17.08],
+            "estimated_full_offload_vram_range_gib": [
+              15.66,
+              17.08
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           },
@@ -9071,7 +9574,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_7b_abliterated_v2.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [15.88, 17.3],
+            "estimated_full_offload_vram_range_gib": [
+              15.88,
+              17.3
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           }
@@ -9137,7 +9643,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf"]
+        "image": [
+          "existing:vision/mmproj-SmolVLM-256M-Instruct-Q8_0.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -9158,7 +9666,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:smolvlm_256m.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [1.0, 1.5],
+            "estimated_full_offload_vram_range_gib": [
+              1.0,
+              1.5
+            ],
             "recommended_gpu_tier_gib": 2,
             "recommended_system_ram_gib": 8
           },
@@ -9178,7 +9689,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:smolvlm_256m.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [1.09, 1.59],
+            "estimated_full_offload_vram_range_gib": [
+              1.09,
+              1.59
+            ],
             "recommended_gpu_tier_gib": 2,
             "recommended_system_ram_gib": 8
           },
@@ -9198,7 +9712,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:smolvlm_256m.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [2.1, 2.6],
+            "estimated_full_offload_vram_range_gib": [
+              2.1,
+              2.6
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -9218,7 +9735,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:smolvlm_256m.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [2.19, 2.69],
+            "estimated_full_offload_vram_range_gib": [
+              2.19,
+              2.69
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           }
@@ -9284,7 +9804,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen2.5-VL-3B-Instruct-f16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -9305,7 +9827,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_vl_3b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.69, 3.19],
+            "estimated_full_offload_vram_range_gib": [
+              2.69,
+              3.19
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -9325,7 +9850,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_vl_3b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.83, 3.33],
+            "estimated_full_offload_vram_range_gib": [
+              2.83,
+              3.33
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -9345,7 +9873,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_vl_3b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [4.93, 5.43],
+            "estimated_full_offload_vram_range_gib": [
+              4.93,
+              5.43
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -9365,7 +9896,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": "language:qwen25_vl_3b.architecture.geometry.kv_estimate_4k",
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [5.08, 5.58],
+            "estimated_full_offload_vram_range_gib": [
+              5.08,
+              5.58
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -9430,7 +9964,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-gemma-3-4b-it-f16.gguf"]
+        "image": [
+          "existing:vision/mmproj-gemma-3-4b-it-f16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -9451,7 +9987,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.07, 4.57],
+            "estimated_full_offload_vram_range_gib": [
+              4.07,
+              4.57
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -9471,7 +10010,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.07, 5.57],
+            "estimated_full_offload_vram_range_gib": [
+              5.07,
+              5.57
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -9491,7 +10033,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [5.86, 6.36],
+            "estimated_full_offload_vram_range_gib": [
+              5.86,
+              6.36
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -9511,7 +10056,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [6.86, 7.36],
+            "estimated_full_offload_vram_range_gib": [
+              6.86,
+              7.36
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -9602,7 +10150,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.51, 10.08],
+            "estimated_full_offload_vram_range_gib": [
+              9.51,
+              10.08
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -9629,7 +10180,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [12.01, 12.58],
+            "estimated_full_offload_vram_range_gib": [
+              12.01,
+              12.58
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -9695,7 +10249,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.5-4B-F16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.5-4B-F16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -9716,7 +10272,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.3, 4.8],
+            "estimated_full_offload_vram_range_gib": [
+              4.3,
+              4.8
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -9736,7 +10295,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.3, 5.8],
+            "estimated_full_offload_vram_range_gib": [
+              5.3,
+              5.8
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -9756,7 +10318,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [5.93, 6.43],
+            "estimated_full_offload_vram_range_gib": [
+              5.93,
+              6.43
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -9776,7 +10341,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [6.93, 7.43],
+            "estimated_full_offload_vram_range_gib": [
+              6.93,
+              7.43
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -9841,7 +10409,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.5-4B-F16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.5-4B-F16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -9862,7 +10432,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.68, 5.18],
+            "estimated_full_offload_vram_range_gib": [
+              4.68,
+              5.18
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -9882,7 +10455,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [5.68, 6.18],
+            "estimated_full_offload_vram_range_gib": [
+              5.68,
+              6.18
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -9902,7 +10478,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [6.3, 6.8],
+            "estimated_full_offload_vram_range_gib": [
+              6.3,
+              6.8
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -9922,7 +10501,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [7.3, 7.8],
+            "estimated_full_offload_vram_range_gib": [
+              7.3,
+              7.8
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -9987,7 +10569,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.5-9B-F16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.5-9B-F16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -10008,7 +10592,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.54, 9.07],
+            "estimated_full_offload_vram_range_gib": [
+              8.54,
+              9.07
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -10028,7 +10615,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [10.54, 11.07],
+            "estimated_full_offload_vram_range_gib": [
+              10.54,
+              11.07
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -10048,7 +10638,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [10.4, 11.01],
+            "estimated_full_offload_vram_range_gib": [
+              10.4,
+              11.01
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -10068,7 +10661,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [12.4, 13.01],
+            "estimated_full_offload_vram_range_gib": [
+              12.4,
+              13.01
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -10133,7 +10729,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.5-9B-F16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.5-9B-F16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -10154,7 +10752,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.38, 9.99],
+            "estimated_full_offload_vram_range_gib": [
+              9.38,
+              9.99
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -10174,7 +10775,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [11.38, 11.99],
+            "estimated_full_offload_vram_range_gib": [
+              11.38,
+              11.99
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -10194,7 +10798,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [11.23, 11.93],
+            "estimated_full_offload_vram_range_gib": [
+              11.23,
+              11.93
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -10214,7 +10821,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [13.23, 13.93],
+            "estimated_full_offload_vram_range_gib": [
+              13.23,
+              13.93
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -10280,7 +10890,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-gemma-4-12b-it-F16.gguf"]
+        "image": [
+          "existing:vision/mmproj-gemma-4-12b-it-F16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -10301,7 +10913,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [10.38, 11.05],
+            "estimated_full_offload_vram_range_gib": [
+              10.38,
+              11.05
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -10321,7 +10936,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [12.88, 13.55],
+            "estimated_full_offload_vram_range_gib": [
+              12.88,
+              13.55
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           },
@@ -10341,7 +10959,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [11.55, 12.23],
+            "estimated_full_offload_vram_range_gib": [
+              11.55,
+              12.23
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           },
@@ -10361,7 +10982,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [14.05, 14.73],
+            "estimated_full_offload_vram_range_gib": [
+              14.05,
+              14.73
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -10446,7 +11070,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [7.74, 8.24],
+            "estimated_full_offload_vram_range_gib": [
+              7.74,
+              8.24
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -10466,7 +11093,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [9.74, 10.24],
+            "estimated_full_offload_vram_range_gib": [
+              9.74,
+              10.24
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           }
@@ -10529,7 +11159,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Ministral-3-8B-Instruct-2512-BF16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Ministral-3-8B-Instruct-2512-BF16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -10550,7 +11182,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.09, 8.59],
+            "estimated_full_offload_vram_range_gib": [
+              8.09,
+              8.59
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -10570,7 +11205,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [10.09, 10.59],
+            "estimated_full_offload_vram_range_gib": [
+              10.09,
+              10.59
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -10590,7 +11228,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [9.89, 10.46],
+            "estimated_full_offload_vram_range_gib": [
+              9.89,
+              10.46
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -10610,7 +11251,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [11.89, 12.46],
+            "estimated_full_offload_vram_range_gib": [
+              11.89,
+              12.46
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -10694,7 +11338,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.84, 4.34],
+            "estimated_full_offload_vram_range_gib": [
+              3.84,
+              4.34
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -10714,7 +11361,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.84, 5.34],
+            "estimated_full_offload_vram_range_gib": [
+              4.84,
+              5.34
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -10798,7 +11448,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.23, 8.73],
+            "estimated_full_offload_vram_range_gib": [
+              8.23,
+              8.73
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -10818,7 +11471,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [10.23, 10.73],
+            "estimated_full_offload_vram_range_gib": [
+              10.23,
+              10.73
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           }
@@ -10882,7 +11538,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.8-27B-F16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.8-27B-F16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -10903,7 +11561,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [18.58, 20.12],
+            "estimated_full_offload_vram_range_gib": [
+              18.58,
+              20.12
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -10923,7 +11584,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [20.58, 22.12],
+            "estimated_full_offload_vram_range_gib": [
+              20.58,
+              22.12
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -10943,7 +11607,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [20.45, 22.07],
+            "estimated_full_offload_vram_range_gib": [
+              20.45,
+              22.07
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -10963,7 +11630,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [22.45, 24.07],
+            "estimated_full_offload_vram_range_gib": [
+              22.45,
+              24.07
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           }
@@ -11029,7 +11699,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.8-27B-Humanlike-Chat-2.0-BF16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.8-27B-Humanlike-Chat-2.0-BF16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -11050,7 +11722,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [18.67, 20.21],
+            "estimated_full_offload_vram_range_gib": [
+              18.67,
+              20.21
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -11070,7 +11745,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [20.67, 22.21],
+            "estimated_full_offload_vram_range_gib": [
+              20.67,
+              22.21
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -11090,7 +11768,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [20.54, 22.17],
+            "estimated_full_offload_vram_range_gib": [
+              20.54,
+              22.17
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -11110,7 +11791,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [22.54, 24.17],
+            "estimated_full_offload_vram_range_gib": [
+              22.54,
+              24.17
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           }
@@ -11175,7 +11859,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-LFM3-VL-2B-F16.gguf"]
+        "image": [
+          "existing:vision/mmproj-LFM3-VL-2B-F16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -11196,7 +11882,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.73, 3.23],
+            "estimated_full_offload_vram_range_gib": [
+              2.73,
+              3.23
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11216,7 +11905,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.73, 4.23],
+            "estimated_full_offload_vram_range_gib": [
+              3.73,
+              4.23
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -11236,7 +11928,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [4.08, 4.58],
+            "estimated_full_offload_vram_range_gib": [
+              4.08,
+              4.58
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -11256,7 +11951,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [5.08, 5.58],
+            "estimated_full_offload_vram_range_gib": [
+              5.08,
+              5.58
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -11321,7 +12019,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-MiniCPM-V-4_7-1B-f16-16x.gguf"]
+        "image": [
+          "existing:vision/mmproj-MiniCPM-V-4_7-1B-f16-16x.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -11342,7 +12042,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.38, 2.88],
+            "estimated_full_offload_vram_range_gib": [
+              2.38,
+              2.88
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11362,7 +12065,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.38, 3.88],
+            "estimated_full_offload_vram_range_gib": [
+              3.38,
+              3.88
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11382,7 +12088,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [4.41, 4.91],
+            "estimated_full_offload_vram_range_gib": [
+              4.41,
+              4.91
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -11402,7 +12111,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [5.41, 5.91],
+            "estimated_full_offload_vram_range_gib": [
+              5.41,
+              5.91
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -11466,7 +12178,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.5-0.8B-BF16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.5-0.8B-BF16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -11487,7 +12201,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.24, 2.74],
+            "estimated_full_offload_vram_range_gib": [
+              2.24,
+              2.74
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11507,7 +12224,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.24, 3.74],
+            "estimated_full_offload_vram_range_gib": [
+              3.24,
+              3.74
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11527,7 +12247,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [3.43, 3.93],
+            "estimated_full_offload_vram_range_gib": [
+              3.43,
+              3.93
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11547,7 +12270,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [4.43, 4.93],
+            "estimated_full_offload_vram_range_gib": [
+              4.43,
+              4.93
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -11610,7 +12336,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf"]
+        "image": [
+          "existing:vision/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -11631,7 +12359,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.16, 2.66],
+            "estimated_full_offload_vram_range_gib": [
+              2.16,
+              2.66
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11651,7 +12382,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.16, 3.66],
+            "estimated_full_offload_vram_range_gib": [
+              3.16,
+              3.66
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11671,7 +12405,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [3.34, 3.84],
+            "estimated_full_offload_vram_range_gib": [
+              3.34,
+              3.84
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11691,7 +12428,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [4.34, 4.84],
+            "estimated_full_offload_vram_range_gib": [
+              4.34,
+              4.84
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -11754,7 +12494,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf"]
+        "image": [
+          "existing:vision/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -11775,7 +12517,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [1.91, 2.41],
+            "estimated_full_offload_vram_range_gib": [
+              1.91,
+              2.41
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11795,7 +12540,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.91, 3.41],
+            "estimated_full_offload_vram_range_gib": [
+              2.91,
+              3.41
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11815,7 +12563,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [3.09, 3.59],
+            "estimated_full_offload_vram_range_gib": [
+              3.09,
+              3.59
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11835,7 +12586,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [4.09, 4.59],
+            "estimated_full_offload_vram_range_gib": [
+              4.09,
+              4.59
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           }
@@ -11899,7 +12653,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-Qwen3.5-2B-BF16.gguf"]
+        "image": [
+          "existing:vision/mmproj-Qwen3.5-2B-BF16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -11920,7 +12676,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [2.93, 3.43],
+            "estimated_full_offload_vram_range_gib": [
+              2.93,
+              3.43
+            ],
             "recommended_gpu_tier_gib": 4,
             "recommended_system_ram_gib": 8
           },
@@ -11940,7 +12699,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.93, 4.43],
+            "estimated_full_offload_vram_range_gib": [
+              3.93,
+              4.43
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -11960,7 +12722,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [4.56, 5.06],
+            "estimated_full_offload_vram_range_gib": [
+              4.56,
+              5.06
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -11980,7 +12745,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [5.56, 6.06],
+            "estimated_full_offload_vram_range_gib": [
+              5.56,
+              6.06
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -12043,7 +12811,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-MiniCPM-V-4_7-35B-A3B-f16-16x.gguf"]
+        "image": [
+          "existing:vision/mmproj-MiniCPM-V-4_7-35B-A3B-f16-16x.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -12064,7 +12834,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [22.96, 24.93],
+            "estimated_full_offload_vram_range_gib": [
+              22.96,
+              24.93
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           },
@@ -12084,7 +12857,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [24.96, 26.93],
+            "estimated_full_offload_vram_range_gib": [
+              24.96,
+              26.93
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           },
@@ -12104,7 +12880,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [25.01, 27.08],
+            "estimated_full_offload_vram_range_gib": [
+              25.01,
+              27.08
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           },
@@ -12124,7 +12903,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [27.01, 29.08],
+            "estimated_full_offload_vram_range_gib": [
+              27.01,
+              29.08
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 48
           }
@@ -12187,7 +12969,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-granite-vision-4.1-4b-f16.gguf"]
+        "image": [
+          "existing:vision/mmproj-granite-vision-4.1-4b-f16.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -12208,7 +12992,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [3.71, 4.21],
+            "estimated_full_offload_vram_range_gib": [
+              3.71,
+              4.21
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -12228,7 +13015,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [4.71, 5.21],
+            "estimated_full_offload_vram_range_gib": [
+              4.71,
+              5.21
+            ],
             "recommended_gpu_tier_gib": 6,
             "recommended_system_ram_gib": 16
           },
@@ -12248,7 +13038,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [5.79, 6.29],
+            "estimated_full_offload_vram_range_gib": [
+              5.79,
+              6.29
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -12268,7 +13061,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [6.79, 7.29],
+            "estimated_full_offload_vram_range_gib": [
+              6.79,
+              7.29
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           }
@@ -12333,7 +13129,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-gemma-4-12B-it-QAT.gguf"]
+        "image": [
+          "existing:vision/mmproj-gemma-4-12B-it-QAT.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -12354,7 +13152,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [10.25, 10.9],
+            "estimated_full_offload_vram_range_gib": [
+              10.25,
+              10.9
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -12374,7 +13175,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [12.75, 13.4],
+            "estimated_full_offload_vram_range_gib": [
+              12.75,
+              13.4
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           },
@@ -12394,7 +13198,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [11.41, 12.08],
+            "estimated_full_offload_vram_range_gib": [
+              11.41,
+              12.08
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           },
@@ -12414,7 +13221,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [13.91, 14.58],
+            "estimated_full_offload_vram_range_gib": [
+              13.91,
+              14.58
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -12480,7 +13290,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-gemma-4-26B-A4B-it-QAT.gguf"]
+        "image": [
+          "existing:vision/mmproj-gemma-4-26B-A4B-it-QAT.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -12501,7 +13313,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [17.2, 18.54],
+            "estimated_full_offload_vram_range_gib": [
+              17.2,
+              18.54
+            ],
             "recommended_gpu_tier_gib": 20,
             "recommended_system_ram_gib": 24
           },
@@ -12521,7 +13336,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [19.7, 21.04],
+            "estimated_full_offload_vram_range_gib": [
+              19.7,
+              21.04
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -12541,7 +13359,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [19.31, 20.77],
+            "estimated_full_offload_vram_range_gib": [
+              19.31,
+              20.77
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -12561,7 +13382,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [21.81, 23.27],
+            "estimated_full_offload_vram_range_gib": [
+              21.81,
+              23.27
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           }
@@ -12627,7 +13451,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-gemma-4-31B-it-QAT.gguf"]
+        "image": [
+          "existing:vision/mmproj-gemma-4-31B-it-QAT.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -12648,7 +13474,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [20.19, 21.83],
+            "estimated_full_offload_vram_range_gib": [
+              20.19,
+              21.83
+            ],
             "recommended_gpu_tier_gib": 24,
             "recommended_system_ram_gib": 32
           },
@@ -12668,7 +13497,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [22.69, 24.33],
+            "estimated_full_offload_vram_range_gib": [
+              22.69,
+              24.33
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           },
@@ -12688,7 +13520,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [22.31, 24.06],
+            "estimated_full_offload_vram_range_gib": [
+              22.31,
+              24.06
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           },
@@ -12708,7 +13543,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [24.81, 26.56],
+            "estimated_full_offload_vram_range_gib": [
+              24.81,
+              26.56
+            ],
             "recommended_gpu_tier_gib": 32,
             "recommended_system_ram_gib": 32
           }
@@ -12774,7 +13612,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-gemma-4-E4B-it-QAT.gguf"]
+        "image": [
+          "existing:vision/mmproj-gemma-4-E4B-it-QAT.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -12802,7 +13642,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [8.55, 9.05],
+            "estimated_full_offload_vram_range_gib": [
+              8.55,
+              9.05
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -12829,7 +13672,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.25,
-            "estimated_full_offload_vram_range_gib": [11.05, 11.55],
+            "estimated_full_offload_vram_range_gib": [
+              11.05,
+              11.55
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -12856,7 +13702,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [10.47, 11.05],
+            "estimated_full_offload_vram_range_gib": [
+              10.47,
+              11.05
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           },
@@ -12883,7 +13732,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 2.25,
-            "estimated_full_offload_vram_range_gib": [12.97, 13.55],
+            "estimated_full_offload_vram_range_gib": [
+              12.97,
+              13.55
+            ],
             "recommended_gpu_tier_gib": 16,
             "recommended_system_ram_gib": 24
           }
@@ -12949,7 +13801,9 @@
       },
       "companions": {
         "text": [],
-        "image": ["existing:vision/mmproj-gemma-4-E2B-it-QAT.gguf"]
+        "image": [
+          "existing:vision/mmproj-gemma-4-E2B-it-QAT.gguf"
+        ]
       },
       "hardware": {
         "standalone_vram_status": "not_measured",
@@ -12977,7 +13831,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [6.37, 6.87],
+            "estimated_full_offload_vram_range_gib": [
+              6.37,
+              6.87
+            ],
             "recommended_gpu_tier_gib": 8,
             "recommended_system_ram_gib": 16
           },
@@ -13004,7 +13861,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 0.75,
-            "estimated_full_offload_vram_range_gib": [8.87, 9.37],
+            "estimated_full_offload_vram_range_gib": [
+              8.87,
+              9.37
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -13031,7 +13891,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [8.29, 8.79],
+            "estimated_full_offload_vram_range_gib": [
+              8.29,
+              8.79
+            ],
             "recommended_gpu_tier_gib": 10,
             "recommended_system_ram_gib": 16
           },
@@ -13058,7 +13921,10 @@
             "recurrent_state_reserve_included_gib": 0.0,
             "analytical_cache_ref": null,
             "compute_reserve_gib": 1.75,
-            "estimated_full_offload_vram_range_gib": [10.79, 11.29],
+            "estimated_full_offload_vram_range_gib": [
+              10.79,
+              11.29
+            ],
             "recommended_gpu_tier_gib": 12,
             "recommended_system_ram_gib": 16
           }
@@ -13073,6 +13939,316 @@
       "repository_license_declaration": {
         "license": "apache-2.0",
         "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+      }
+    },
+    "existing:llm/Inkling-2-Mini-UD-Q3_K_XL.gguf": {
+      "id": "existing:llm/Inkling-2-Mini-UD-Q3_K_XL.gguf",
+      "catalogue_key": "llm/Inkling-2-Mini-UD-Q3_K_XL.gguf",
+      "state": "existing",
+      "profile_id": "language:inkling_2_mini",
+      "label": "Inkling 2 Mini",
+      "role": "language_model",
+      "chat_weight": true,
+      "uses_chat_runtime": true,
+      "architecture": "inkling2_loop",
+      "format": "gguf",
+      "quantization": {
+        "label": "UD-Q3_K_XL",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": true
+      },
+      "download_identity": "ad212949d4997f4c06ca528f297e933a3f143590066b517a4788d9e7b445da2f",
+      "artifact": {
+        "bytes": 13631778016,
+        "sha256": "f72f396d1b479b14d76346df80baa449c8b1f399653bff38fa4764b359a40048",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF/resolve/45fd08764f2b0bf16b03a5483a80e5c7aaec8772/Inkling-2-Mini-UD-Q3_K_XL.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-22T06:33:00+00:00",
+        "evidence_scope": "Remote HF API blob metadata; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "requires_newer_runtime_b12600",
+          "tested_source_build": "b12110",
+          "minimum_build": "b12600",
+          "chat": "unknown",
+          "image": "unknown",
+          "tools": "see_profile_template_and_quality_evidence"
+        },
+        "xllamacpp": {
+          "status": "unsupported_older_build",
+          "chat": "unsupported",
+          "image": "unsupported"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": [
+          "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf"
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "not_measured",
+        "cpu_supported_by_runtime_source": true,
+        "cpu_support_reference_runtime": "native_llama_cpp_b12627_source_only"
+      },
+      "artifact_publication": {
+        "date": "2026-11",
+        "status": "publisher_hf_repo"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:llm/Inkling-2-Mini-Q4_K_M.gguf": {
+      "id": "existing:llm/Inkling-2-Mini-Q4_K_M.gguf",
+      "catalogue_key": "llm/Inkling-2-Mini-Q4_K_M.gguf",
+      "state": "existing",
+      "profile_id": "language:inkling_2_mini",
+      "label": "Inkling 2 Mini",
+      "role": "language_model",
+      "chat_weight": true,
+      "uses_chat_runtime": true,
+      "architecture": "inkling2_loop",
+      "format": "gguf",
+      "quantization": {
+        "label": "Q4_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "4205f8715bcdddb77bc32cd4c7aeda82a006b3102710734360e698dcc9df4b2b",
+      "artifact": {
+        "bytes": 17478094048,
+        "sha256": "dac3702abcb5684cbcb1fbd148d94b2d531283be974630ac61964d194db483de",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/Inkling-2-Mini-Q4_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-22T06:33:00+00:00",
+        "evidence_scope": "Remote HF API blob metadata; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "requires_newer_runtime_b12600",
+          "tested_source_build": "b12110",
+          "minimum_build": "b12600",
+          "chat": "unknown",
+          "image": "unknown",
+          "tools": "see_profile_template_and_quality_evidence"
+        },
+        "xllamacpp": {
+          "status": "unsupported_older_build",
+          "chat": "unsupported",
+          "image": "unsupported"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": [
+          "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf"
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "not_measured",
+        "cpu_supported_by_runtime_source": true,
+        "cpu_support_reference_runtime": "native_llama_cpp_b12627_source_only"
+      },
+      "artifact_publication": {
+        "date": "2026-11",
+        "status": "publisher_hf_repo"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:llm/Inkling-2-Mini-IQ4_NL.gguf": {
+      "id": "existing:llm/Inkling-2-Mini-IQ4_NL.gguf",
+      "catalogue_key": "llm/Inkling-2-Mini-IQ4_NL.gguf",
+      "state": "existing",
+      "profile_id": "language:inkling_2_mini",
+      "label": "Inkling 2 Mini",
+      "role": "language_model",
+      "chat_weight": true,
+      "uses_chat_runtime": true,
+      "architecture": "inkling2_loop",
+      "format": "gguf",
+      "quantization": {
+        "label": "IQ4_NL",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "892d76cb3a876a196be8797675dc2fc7056e474244233655ebbff2c24e190e06",
+      "artifact": {
+        "bytes": 17627940768,
+        "sha256": "cbdf3fa9dc50a4124977980f37da4f1fa764b0cfe800d275cd43d26ce2a81af4",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/ggml-org/Inkling-2-Mini-GGUF/resolve/e8a2cecf0e78914f07cc27b9be711a9b2c7561d9/Inkling-2-Mini-IQ4_NL.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-22T06:33:00+00:00",
+        "evidence_scope": "Remote HF API blob metadata; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "requires_newer_runtime_b12600",
+          "tested_source_build": "b12110",
+          "minimum_build": "b12600",
+          "chat": "unknown",
+          "image": "unknown",
+          "tools": "see_profile_template_and_quality_evidence"
+        },
+        "xllamacpp": {
+          "status": "unsupported_older_build",
+          "chat": "unsupported",
+          "image": "unsupported"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": [
+          "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf"
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "not_measured",
+        "cpu_supported_by_runtime_source": true,
+        "cpu_support_reference_runtime": "native_llama_cpp_b12627_source_only"
+      },
+      "artifact_publication": {
+        "date": "2026-11",
+        "status": "publisher_hf_repo"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:llm/Inkling-2-Mini-Q6_K.gguf": {
+      "id": "existing:llm/Inkling-2-Mini-Q6_K.gguf",
+      "catalogue_key": "llm/Inkling-2-Mini-Q6_K.gguf",
+      "state": "existing",
+      "profile_id": "language:inkling_2_mini",
+      "label": "Inkling 2 Mini",
+      "role": "language_model",
+      "chat_weight": true,
+      "uses_chat_runtime": true,
+      "architecture": "inkling2_loop",
+      "format": "gguf",
+      "quantization": {
+        "label": "Q6_K",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "16b0feea85498e431a90e78b6583b21e1997d8188b53cb6583ace67c36756de4",
+      "artifact": {
+        "bytes": 23489840992,
+        "sha256": "351ec9793fd3f6355dd1ed624cbcfaa98aee4a64e86cfb08846f760f312e01e8",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/Inkling-2-Mini-Q6_K.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-22T06:33:00+00:00",
+        "evidence_scope": "Remote HF API blob metadata; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "requires_newer_runtime_b12600",
+          "tested_source_build": "b12110",
+          "minimum_build": "b12600",
+          "chat": "unknown",
+          "image": "unknown",
+          "tools": "see_profile_template_and_quality_evidence"
+        },
+        "xllamacpp": {
+          "status": "unsupported_older_build",
+          "chat": "unsupported",
+          "image": "unsupported"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": [
+          "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf"
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "not_measured",
+        "cpu_supported_by_runtime_source": true,
+        "cpu_support_reference_runtime": "native_llama_cpp_b12627_source_only"
+      },
+      "artifact_publication": {
+        "date": "2026-11",
+        "status": "publisher_hf_repo"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:llm/Inkling-2-Mini-Q8_0.gguf": {
+      "id": "existing:llm/Inkling-2-Mini-Q8_0.gguf",
+      "catalogue_key": "llm/Inkling-2-Mini-Q8_0.gguf",
+      "state": "existing",
+      "profile_id": "language:inkling_2_mini",
+      "label": "Inkling 2 Mini",
+      "role": "language_model",
+      "chat_weight": true,
+      "uses_chat_runtime": true,
+      "architecture": "inkling2_loop",
+      "format": "gguf",
+      "quantization": {
+        "label": "Q8_0",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "0fe3558a7ac0f06f887ae0d8001ae221f0084cd87b0c3c6bfd5882767f993cc2",
+      "artifact": {
+        "bytes": 27820099168,
+        "sha256": "0689d67d5693af17c6701be70f5fd1bb9f03dbe99b22f2831d7f21c0282c6ea1",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/Inkling-2-Mini-Q8_0.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-22T06:33:00+00:00",
+        "evidence_scope": "Remote HF API blob metadata; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "requires_newer_runtime_b12600",
+          "tested_source_build": "b12110",
+          "minimum_build": "b12600",
+          "chat": "unknown",
+          "image": "unknown",
+          "tools": "see_profile_template_and_quality_evidence"
+        },
+        "xllamacpp": {
+          "status": "unsupported_older_build",
+          "chat": "unsupported",
+          "image": "unsupported"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": [
+          "existing:vision/mmproj-Inkling-2-Mini-BF16.gguf"
+        ]
+      },
+      "hardware": {
+        "standalone_vram_status": "not_measured",
+        "cpu_supported_by_runtime_source": true,
+        "cpu_support_reference_runtime": "native_llama_cpp_b12627_source_only"
+      },
+      "artifact_publication": {
+        "date": "2026-11",
+        "status": "publisher_hf_repo"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
       }
     }
   }

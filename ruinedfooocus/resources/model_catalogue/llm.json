@@ -35,6 +35,46 @@
     "path": "path_llm",
     "filename": "gpt-oss-20b-MXFP4.gguf"
   },
+  "llm/Inkling-2-Mini-UD-Q3_K_XL.gguf": {
+    "url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF/resolve/45fd08764f2b0bf16b03a5483a80e5c7aaec8772/Inkling-2-Mini-UD-Q3_K_XL.gguf",
+    "path": "path_llm",
+    "filename": "Inkling-2-Mini-UD-Q3_K_XL.gguf",
+    "size": 13631778016,
+    "sha256": "f72f396d1b479b14d76346df80baa449c8b1f399653bff38fa4764b359a40048",
+    "mmproj": "mmproj-Inkling-2-Mini-BF16.gguf"
+  },
+  "llm/Inkling-2-Mini-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/Inkling-2-Mini-Q4_K_M.gguf",
+    "path": "path_llm",
+    "filename": "Inkling-2-Mini-Q4_K_M.gguf",
+    "size": 17478094048,
+    "sha256": "dac3702abcb5684cbcb1fbd148d94b2d531283be974630ac61964d194db483de",
+    "mmproj": "mmproj-Inkling-2-Mini-BF16.gguf"
+  },
+  "llm/Inkling-2-Mini-IQ4_NL.gguf": {
+    "url": "https://huggingface.co/ggml-org/Inkling-2-Mini-GGUF/resolve/e8a2cecf0e78914f07cc27b9be711a9b2c7561d9/Inkling-2-Mini-IQ4_NL.gguf",
+    "path": "path_llm",
+    "filename": "Inkling-2-Mini-IQ4_NL.gguf",
+    "size": 17627940768,
+    "sha256": "cbdf3fa9dc50a4124977980f37da4f1fa764b0cfe800d275cd43d26ce2a81af4",
+    "mmproj": "mmproj-Inkling-2-Mini-BF16.gguf"
+  },
+  "llm/Inkling-2-Mini-Q6_K.gguf": {
+    "url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/Inkling-2-Mini-Q6_K.gguf",
+    "path": "path_llm",
+    "filename": "Inkling-2-Mini-Q6_K.gguf",
+    "size": 23489840992,
+    "sha256": "351ec9793fd3f6355dd1ed624cbcfaa98aee4a64e86cfb08846f760f312e01e8",
+    "mmproj": "mmproj-Inkling-2-Mini-BF16.gguf"
+  },
+  "llm/Inkling-2-Mini-Q8_0.gguf": {
+    "url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/Inkling-2-Mini-Q8_0.gguf",
+    "path": "path_llm",
+    "filename": "Inkling-2-Mini-Q8_0.gguf",
+    "size": 27820099168,
+    "sha256": "0689d67d5693af17c6701be70f5fd1bb9f03dbe99b22f2831d7f21c0282c6ea1",
+    "mmproj": "mmproj-Inkling-2-Mini-BF16.gguf"
+  },
   "llm/DeepSeek-R1-Distill-Llama-8B-F16.gguf": {
     "url": "https://huggingface.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF/resolve/main/DeepSeek-R1-Distill-Llama-8B-F16.gguf",
     "path": "path_llm",

@@ -1,0 +1,14 @@
+{
+  "id": "llm-catalogue-inkling-2-mini",
+  "subject": "Add Inkling 2 Mini GGUF quants and vision projector to the LLM download catalogue and model registry",
+  "requires": ["checkpoint-tools-clear-report-and-eligibility"],
+  "tests": [
+    "test_model_registry.py",
+    "test_model_registry_resources.py",
+    "test_registry_download_audit.py",
+    "test_chat_model_identity.py",
+    "test_model_capabilities.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

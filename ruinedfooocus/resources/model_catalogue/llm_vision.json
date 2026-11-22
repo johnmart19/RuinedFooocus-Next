@@ -36,5 +36,12 @@
     "url": "https://huggingface.co/llmfan46/Qwen3.5-9B-Ultra-Uncensored-Heretic-GGUF/resolve/56152d16c9f4656a71e42cf3ad8af9273b9238bb/Qwen3.5-9B-mmproj-BF16.gguf",
     "path": "path_vision",
     "filename": "mmproj-Qwen3.5-9B-BF16.gguf"
+  },
+  "vision/mmproj-Inkling-2-Mini-BF16.gguf": {
+    "url": "https://huggingface.co/lmstudio-community/Inkling-2-Mini-GGUF/resolve/23c938b028945d4b0fa9f71fb603b5cd1a683e71/mmproj-Inkling-2-Mini-BF16.gguf",
+    "path": "path_vision",
+    "filename": "mmproj-Inkling-2-Mini-BF16.gguf",
+    "size": 641805888,
+    "sha256": "45fc9cdc581dbf1adfe908ad936bcade13c53a5a47c27caaae83322902c87a6e"
   }
 }
