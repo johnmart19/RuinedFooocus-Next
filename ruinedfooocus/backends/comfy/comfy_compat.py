@@ -17,6 +17,35 @@ _runtime_platform = None
 _aimdo_log_detach_registered = False
 
 
+def _preload_wsl_rocm_dxg():
+    """Preload wheel-owned librocdxg.so.1 on WSL before ROCm/Torch initializes.
+
+    ROCm 10.2 wheels bundle _rocm_sdk_core/lib/librocdxg.so.1 without an
+    unversioned librocdxg.so symlink. On WSL hosts with an older system
+    /opt/rocm/lib/librocdxg.so (e.g. ROCm 10.0), dlopen("librocdxg.so") can
+    resolve the older library and fail with missing hsaKmt* symbols unless the
+    wheel's librocdxg.so.1 is preloaded with RTLD_GLOBAL first.
+    """
+    from pathlib import Path
+    import ctypes
+    import sysconfig
+    from ruinedfooocus.packaging.hardware_inventory import is_wsl
+
+    if not is_wsl():
+        return
+    for key in ("platlib", "purelib"):
+        root = sysconfig.get_path(key)
+        if not root:
+            continue
+        candidate = Path(root) / "_rocm_sdk_core" / "lib" / "librocdxg.so.1"
+        if candidate.is_file():
+            try:
+                ctypes.CDLL(str(candidate), mode=ctypes.RTLD_GLOBAL)
+            except OSError:
+                pass
+            return
+
+
 def initialize_backend(launch_args):
     """Configure once before metadata scanning can import backend/GPU modules."""
     global _runtime_platform
@@ -47,6 +76,7 @@ def initialize_backend(launch_args):
         # AIMDO reserves a large virtual address space; match native startup
         # before Torch or the controller loads the ROCm runtime.
         os.environ["OCL_SET_SVM_SIZE"] = "4194304"
+        _preload_wsl_rocm_dxg()
     configure_rocm_blas(torch_platform, os_platform)
     import comfy.cli_args
 

@@ -1,0 +1,12 @@
+{
+  "id": "wsl-rocm10-preload-wheel-librocdxg",
+  "subject": "Preload wheel-owned librocdxg.so.1 on WSL before ROCm/Torch initialization",
+  "requires": [
+    "xllamacpp-2026-11-12361-tests-and-vulkan-auto"
+  ],
+  "tests": [
+    "test_comfy_runtime.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
