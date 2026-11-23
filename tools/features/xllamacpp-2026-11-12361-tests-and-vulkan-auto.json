@@ -1,0 +1,15 @@
+{
+  "id": "xllamacpp-2026-11-12361-tests-and-vulkan-auto",
+  "subject": "Preserve Vulkan-first Auto selection in xllamacpp_index and update xllamacpp 2026.11.12361 tests",
+  "requires": [
+    "xllamacpp-2026-11-12361-and-platform-selection"
+  ],
+  "tests": [
+    "test_gpu_support_matrix.py",
+    "test_installer_gpu.py",
+    "test_execution_feature_entrypoints.py",
+    "test_model_capabilities.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

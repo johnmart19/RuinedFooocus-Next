@@ -103,9 +103,9 @@ class ComponentChoices(unittest.TestCase):
         )
         self.assertEqual(
             inventory.xllamacpp_backend_choices([AMD], "Linux", "x86_64", "2.14.1+cpu"),
-            ["Auto", "CPU", "Vulkan", "ROCm 7.2"],
+            ["Auto", "CPU", "Vulkan", "ROCm 6.4", "ROCm 7.2"],
         )
-        # The ROCm 7.2 wheel crashes in the same process as ROCm 10 PyTorch.
+        # ROCm 6.4 / 7.2 wheels crash in the same process as ROCm 10 PyTorch.
         self.assertEqual(
             inventory.xllamacpp_backend_choices([AMD], "Linux", "x86_64", "2.15.0+rocm10.2.0"),
             ["Auto", "CPU", "Vulkan"],
@@ -113,6 +113,14 @@ class ComponentChoices(unittest.TestCase):
         self.assertEqual(
             inventory.xllamacpp_backend_choices([AMD], "Windows", "AMD64"),
             ["Auto", "CPU", "Vulkan"],
+        )
+        self.assertEqual(
+            inventory.xllamacpp_backend_choices([AMD], "Windows", "ARM64"),
+            ["Auto", "CPU", "Vulkan"],
+        )
+        self.assertEqual(
+            inventory.xllamacpp_backend_choices([NVIDIA], "Linux", "aarch64"),
+            ["Auto", "CPU", "CUDA 12.8", "CUDA 13.2"],
         )
         self.assertEqual(
             inventory.xllamacpp_backend_choices([], "Linux", "x86_64"), ["Auto", "CPU"]
@@ -266,9 +274,10 @@ class SavedValues(unittest.TestCase):
         from ruinedfooocus.core.settings_schema import validate_known
 
         validate_known({"image_backend": "xpu", "xllamacpp_backend": "ROCm 7.2"})
+        validate_known({"xllamacpp_backend": "ROCm 6.4"})
         validate_known({"rembg_backend": "OpenVINO"})
         with self.assertRaises(ValueError):
-            validate_known({"xllamacpp_backend": "ROCm 6.4"})
+            validate_known({"xllamacpp_backend": "ROCm 6.3"})
 
     def test_windows_ml_providers_follow_the_detected_vendor(self):
         from ruinedfooocus.backends.onnx.windows_ml import CATALOG_PROVIDERS

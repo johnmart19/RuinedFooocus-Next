@@ -111,13 +111,16 @@ class ExecutionFeatureEntrypointTests(unittest.TestCase):
         self.stack.enter_context(patch.dict(sys.modules, xllamacpp=self.engine))
 
         # Actual installer identity/selection code reads an owned external-wheel RECORD.
-        record = self.folder / "xllamacpp-2026.10.11870.dist-info" / "RECORD"
+        from ruinedfooocus.packaging import gpu_installer
+
+        xlc_ver = gpu_installer.XLLAMACPP_VERSION
+        record = self.folder / f"xllamacpp-{xlc_ver}.dist-info" / "RECORD"
         record.parent.mkdir()
         record.write_text("", encoding="utf-8")
         distribution = SimpleNamespace(
-            version="2026.10.11870", locate_file=lambda path: self.folder / path
+            version=xlc_ver, locate_file=lambda path: self.folder / path
         )
-        entry = metadata.PackagePath("xllamacpp-2026.10.11870.dist-info/RECORD")
+        entry = metadata.PackagePath(f"xllamacpp-{xlc_ver}.dist-info/RECORD")
         entry.dist, entry.hash = distribution, None
         distribution.files = [entry]
         original = metadata.distribution
@@ -128,7 +131,6 @@ class ExecutionFeatureEntrypointTests(unittest.TestCase):
                 side_effect=lambda name: distribution if name == "xllamacpp" else original(name),
             )
         )
-        from ruinedfooocus.packaging import gpu_installer
 
         self.installer = gpu_installer
         gpu_installer.record_xllamacpp_backend("https://pypi.org/simple")

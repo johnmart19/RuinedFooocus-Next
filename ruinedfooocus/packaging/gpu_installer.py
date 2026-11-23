@@ -202,10 +202,7 @@ def xllamacpp_index(torch_platform, os_platform, version=None, choice="Auto", *,
     else:
         from ruinedfooocus.backends.llama.runtime_policy import preferred_backend
 
-        if torch_platform == "cpu":
-            backend = None
-            candidates = []
-        elif os_platform == "Linux" and arm64:
+        if os_platform == "Linux" and arm64:
             # No Linux ARM64 Vulkan/ROCm wheels exist; select CUDA when on a CUDA Torch build.
             if torch_platform.startswith("cu13"):
                 backend = "cu132"

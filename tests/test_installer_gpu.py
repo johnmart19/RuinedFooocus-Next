@@ -162,7 +162,7 @@ class TorchPackagePlanTests(unittest.TestCase):
             patch.object(gpu_installer, "cached_xllamacpp_backend_matches", return_value=True),
         ):
             gpu_installer.ensure_xllamacpp("rocm10.2", "Windows")
-            installed.assert_called_once_with("xllamacpp==2026.10.11870")
+            installed.assert_called_once_with("xllamacpp==2026.11.12361")
         with (
             patch(
                 "ruinedfooocus.packaging.startup_options.skip_dependency_install", return_value=True
