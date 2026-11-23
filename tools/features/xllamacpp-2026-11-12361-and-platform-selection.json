@@ -1,0 +1,13 @@
+{
+  "id": "xllamacpp-2026-11-12361-and-platform-selection",
+  "subject": "Update xllamacpp to 2026.11.12361 (b12361) and refine platform/architecture wheel selection",
+  "requires": [
+    "inkling-2-mini-tools-and-128k-support"
+  ],
+  "tests": [
+    "test_model_capabilities.py",
+    "test_model_registry.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}

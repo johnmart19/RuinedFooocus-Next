@@ -307,12 +307,13 @@ def onnx_backend_choices(gpus=(), system=None, machine=None, *, decisions=None):
     return [choice for choice in ONNX_BACKENDS if choice in allowed]
 
 
-# xllamacpp publishes one wheel index per backend; ROCm wheels are Linux-only.
+# xllamacpp publishes one wheel index per backend; ROCm wheels are Linux x86_64-only.
 XLLAMACPP_INDEXES = {
     "CPU": None,
     "Vulkan": "vulkan",
     "CUDA 12.8": "cu128",
     "CUDA 13.2": "cu132",
+    "ROCm 6.4": "rocm-6.4.1",
     "ROCm 7.2": "rocm-7.2.4",
 }
 
@@ -345,14 +346,25 @@ def xllamacpp_backend_choices(
             )
         )
     system = system or platform.system()
-    native = system in ("Windows", "Linux") and _x64(machine)
+    arch = (machine or platform.machine()).lower()
+    x64 = arch in ("amd64", "x86_64")
+    arm64 = arch in ("arm64", "aarch64")
     allowed = {"Auto", "CPU"}
-    if native and gpus:
+    # Vulkan wheels: Windows (x64, ARM64), Linux (x64), macOS (x64).
+    vulkan_os = (
+        (system == "Windows" and (x64 or arm64))
+        or (system == "Linux" and x64)
+        or (system == "Darwin" and x64)
+    )
+    if vulkan_os and gpus:
         allowed.add("Vulkan")
-    if native and has_vendor(gpus, "nvidia"):
+    # CUDA 12.8 / 13.2 wheels: Windows (x64) and Linux (x64, ARM64).
+    cuda_os = (system == "Windows" and x64) or (system == "Linux" and (x64 or arm64))
+    if cuda_os and has_vendor(gpus, "nvidia"):
         allowed.update(("CUDA 12.8", "CUDA 13.2"))
-    if native and system == "Linux" and has_vendor(gpus, "amd") and not rocm10_torch(torch_version):
-        allowed.add("ROCm 7.2")
+    # ROCm 6.4 / 7.2 wheels: Linux x64 only, incompatible in-process with ROCm 10 PyTorch.
+    if system == "Linux" and x64 and has_vendor(gpus, "amd") and not rocm10_torch(torch_version):
+        allowed.update(("ROCm 6.4", "ROCm 7.2"))
     return [choice for choice in XLLAMACPP_BACKENDS if choice in allowed]
 
 

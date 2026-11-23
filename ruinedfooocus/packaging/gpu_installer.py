@@ -151,42 +151,110 @@ def torch_install_commands(torchruntime, torch_platform, os_platform, nightly=Fa
     return commands
 
 
-def xllamacpp_index(torch_platform, os_platform, version=None, choice="Auto"):
-    """Vulkan-first LLM policy, independent of the image Torch backend.
+XLLAMACPP_VERSION = "2026.11.12361"
+XLLAMACPP_LLAMA_TAG = "b12361"
+
+
+def xllamacpp_index(torch_platform, os_platform, version=None, choice="Auto", *, machine=None):
+    """Platform-aware LLM wheel policy, independent of the image Torch backend.
+
+    Published xllamacpp 2026.11.12361 wheel matrix:
+    - PyPI (CPU / macOS Metal): Win x64, Linux x64/ARM64, macOS x64/ARM64.
+    - Vulkan: Win x64/ARM64, Linux x64, macOS x64.
+    - CUDA 12.8 / 13.2: Win x64, Linux x64/ARM64.
+    - ROCm 6.4 / 7.2: Linux x64 only (conflicts in-process with ROCm 10 PyTorch).
 
     Selecting an index is acquisition policy, not proof of a usable device.
     Runtime activation separately verifies the selected native device.
     """
+    import platform as _platform
+
+    arch = (machine or _platform.machine()).lower()
+    x64 = arch in ("amd64", "x86_64")
+    arm64 = arch in ("arm64", "aarch64")
     explicit = choice not in (None, "Auto")
+    torch_platform = str(torch_platform or "")
     if explicit:
         from ruinedfooocus.packaging.hardware_inventory import XLLAMACPP_INDEXES
 
         if choice not in XLLAMACPP_INDEXES:
             raise RuntimeError(f"Unknown xllamacpp backend {choice!r}.")
-        if choice.startswith("ROCm") and os_platform != "Linux":
-            raise RuntimeError("xllamacpp ROCm wheels exist only for Linux and WSL.")
-        if choice.startswith("ROCm") and torch_platform.startswith("rocm1"):
-            raise RuntimeError(
-                "The xllamacpp ROCm 7.2 wheel crashes beside ROCm 10 PyTorch. "
-                "Use native llama.cpp with ROCm, or xllamacpp on CPU."
-            )
+        if choice.startswith("ROCm"):
+            if os_platform != "Linux" or not x64:
+                raise RuntimeError("xllamacpp ROCm wheels exist only for Linux/WSL x86_64.")
+            if torch_platform.startswith("rocm1"):
+                raise RuntimeError(
+                    f"The xllamacpp {choice} wheel crashes beside ROCm 10 PyTorch. "
+                    "Use native llama.cpp with ROCm, or xllamacpp on Vulkan/CPU."
+                )
+        elif choice.startswith("CUDA"):
+            if os_platform not in ("Windows", "Linux") or (os_platform == "Windows" and not x64):
+                raise RuntimeError(
+                    f"xllamacpp {choice} wheels exist only for Windows x86_64 and Linux x86_64/ARM64."
+                )
+        elif choice == "Vulkan":
+            if (os_platform == "Linux" and not x64) or (os_platform == "Darwin" and not x64):
+                raise RuntimeError(
+                    "xllamacpp Vulkan wheels exist only for Windows (x86_64/ARM64), Linux x86_64, and Intel macOS."
+                )
         backend = XLLAMACPP_INDEXES[choice]
+        candidates = [backend] if backend else []
     else:
         from ruinedfooocus.backends.llama.runtime_policy import preferred_backend
 
-        backend = "vulkan" if preferred_backend(os_platform) == "Vulkan" else None
+        if torch_platform == "cpu":
+            backend = None
+            candidates = []
+        elif os_platform == "Linux" and arm64:
+            # No Linux ARM64 Vulkan/ROCm wheels exist; select CUDA when on a CUDA Torch build.
+            if torch_platform.startswith("cu13"):
+                backend = "cu132"
+                candidates = ["cu132", "cu128"]
+            elif torch_platform.startswith("cu12"):
+                backend = "cu128"
+                candidates = ["cu128"]
+            else:
+                backend = None
+                candidates = []
+        elif preferred_backend(os_platform) == "Vulkan":
+            backend = "vulkan"
+            candidates = ["vulkan"]
+            if torch_platform.startswith("cu13") and (
+                (os_platform == "Windows" and x64) or (os_platform == "Linux" and (x64 or arm64))
+            ):
+                candidates.append("cu132")
+            elif torch_platform.startswith("cu12") and (
+                (os_platform == "Windows" and x64) or (os_platform == "Linux" and (x64 or arm64))
+            ):
+                candidates.append("cu128")
+            elif (
+                os_platform == "Linux"
+                and x64
+                and torch_platform.startswith("rocm")
+                and not torch_platform.startswith("rocm1")
+            ):
+                candidates += ["rocm-7.2.4", "rocm-6.4.1"]
+        else:
+            backend = None
+            candidates = []
     root = "https://xorbitsai.github.io/xllamacpp/whl"
     if version and backend:
         from ruinedfooocus.packaging.cuda_selection import wheel_available
 
-        if not wheel_available(f"{root}/{backend}", "xllamacpp", version):
-            if backend != "vulkan" and not explicit:
-                print(f"No matching xllamacpp {backend} wheel for this Python; trying Vulkan.")
-                backend = "vulkan"
-            if not wheel_available(f"{root}/{backend}", "xllamacpp", version):
-                raise RuntimeError(
-                    f"No xllamacpp {version} {backend} wheel matches this Python/OS. Use native llama.cpp or a supported Python version."
-                )
+        selected = None
+        for candidate in candidates:
+            if wheel_available(f"{root}/{candidate}", "xllamacpp", version):
+                if candidate != backend and not explicit:
+                    print(
+                        f"No matching xllamacpp {backend} wheel for this Python/OS; using {candidate}."
+                    )
+                selected = candidate
+                break
+        if selected is None:
+            raise RuntimeError(
+                f"No xllamacpp {version} {backend} wheel matches this Python/OS. Use native llama.cpp or a supported Python version."
+            )
+        backend = selected
     return f"{root}/{backend}" if backend else "https://pypi.org/simple"
 
 
@@ -318,7 +386,8 @@ def has_vulkan_xllamacpp():
             (
                 file.name.lower() == "ggml-vulkan.dll"
                 or re.fullmatch(r"vulkan-1(?:-[0-9a-f]+)?\.dll", file.name.lower())
-                or re.fullmatch(r"libvulkan(?:-[0-9a-f]+)?\.so(?:\.[0-9]+)*", file.name.lower())
+                or re.fullmatch(r"lib(?:ggml-)?vulkan(?:-[0-9a-f]+)?\.so(?:\.[0-9]+)*", file.name.lower())
+                or re.fullmatch(r"lib(?:ggml-)?vulkan(?:\.[0-9]+)*\.dylib", file.name.lower())
             )
             and Path(file.locate()).is_file()
             for file in files
@@ -363,7 +432,7 @@ def _ensure_xllamacpp(torch_platform, os_platform, reinstall, installed_torch, c
     from ruinedfooocus.packaging.launch_util import is_installed
     from ruinedfooocus.packaging.startup_options import skip_dependency_install
 
-    xlc_version = "xllamacpp==2026.10.11870"
+    xlc_version = f"xllamacpp=={XLLAMACPP_VERSION}"
     # No wheel-index/network/device access while validating offline identity.
     index = xllamacpp_index(torch_platform, os_platform, choice=choice)
     if skip_dependency_install():
@@ -391,16 +460,19 @@ def _ensure_xllamacpp(torch_platform, os_platform, reinstall, installed_torch, c
             )
         return {"backend": "CPU" if choice == "CPU" else choice, "fallback_reason": ""}
     index = xllamacpp_index(
-        torch_platform, os_platform, version=xlc_version.split("==")[1], choice=choice
+        torch_platform, os_platform, version=XLLAMACPP_VERSION, choice=choice
     )
     needs_vulkan = index.endswith("/vulkan")
     needs_cuda = index.rsplit("/", 1)[-1] in ("cu128", "cu132")
+    needs_rocm = "/rocm-" in index
     wrong_backend = (
         not cached_xllamacpp_backend_matches(index, cpu=choice == "CPU")
         or needs_vulkan
         and not has_vulkan_xllamacpp()
         or needs_cuda
         and not has_cuda_xllamacpp()
+        or needs_rocm
+        and not has_xllamacpp_device("ROCm")
     )
     installed_before = is_installed(xlc_version)
     if reinstall or not installed_before or wrong_backend:
@@ -455,6 +527,10 @@ def _ensure_xllamacpp(torch_platform, os_platform, reinstall, installed_torch, c
         if needs_cuda and not has_cuda_xllamacpp():
             raise RuntimeError(
                 "xllamacpp CUDA installed but no CUDA device is available. Check the NVIDIA driver, or use native llama.cpp with Vulkan."
+            )
+        if needs_rocm and not has_xllamacpp_device("ROCm"):
+            raise RuntimeError(
+                "xllamacpp ROCm installed but no ROCm device is available. Check the AMD ROCm driver, or use Vulkan."
             )
         if needs_vulkan and not has_vulkan_xllamacpp():
             raise RuntimeError("xllamacpp Vulkan installed but its Vulkan libraries are missing.")

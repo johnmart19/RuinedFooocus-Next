@@ -25,11 +25,17 @@ def _native_source_audits():
 
 
 def _audited_native_build(artifact, runtime, task, source_build):
-    if runtime.name != "llama.cpp" or runtime.build is None:
+    if runtime.name not in ("llama.cpp", "xllamacpp") or runtime.build is None:
         return False
     audit = _native_source_audits().get(runtime.build, {})
+    base_builds = audit.get("base_builds")
+    base_ok = (
+        source_build in base_builds
+        if isinstance(base_builds, list)
+        else audit.get("base_build") == source_build
+    )
     return (
-        audit.get("base_build") == source_build
+        base_ok
         and audit.get("scope") == "source_only"
         and audit.get("architectures", {}).get(artifact.get("architecture"), {}).get(task)
         == "source_supported"
@@ -119,6 +125,15 @@ def task_eligibility(artifact, runtime, task="text"):
         )
     state = support.get("chat" if task == "text" else "image", "unknown")
     if (
+        audited
+        and runtime.name == "xllamacpp"
+        and support.get("status") in ("unsupported_older_build", "unsupported_architecture")
+    ):
+        return Eligibility(
+            "source_supported",
+            f"Source support at {runtime.build}; device execution and quality remain unverified.",
+        )
+    if (
         state.startswith(("unsupported", "blocked_"))
         or support.get("status") == "unsupported_architecture"
     ):
@@ -126,7 +141,7 @@ def task_eligibility(artifact, runtime, task="text"):
             "unsupported",
             support.get("reason", f"{task} input is unsupported by this runtime build."),
         )
-    if meets_minimum:
+    if meets_minimum or (audited and runtime.name == "xllamacpp"):
         return Eligibility(
             "source_supported",
             f"Source support at {runtime.build}; device execution and quality remain unverified.",

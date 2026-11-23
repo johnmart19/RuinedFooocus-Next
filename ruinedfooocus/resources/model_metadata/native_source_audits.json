@@ -472,6 +472,70 @@
         "tool_reasoning": "common/chat.cpp and mtmd public APIs are byte-identical; changed HTTP/media validation accepts RF inline data URLs and leaves tool/reasoning completion fields intact."
       }
     },
+    "b12361": {
+      "base_build": "b11870",
+      "base_builds": [
+        "b11870",
+        "b12110"
+      ],
+      "checked_date_utc": "2026-11-23",
+      "scope": "source_only",
+      "qualification": "Embedded llama.cpp b12361 bundled in xllamacpp 2026.11.12361 (between reviewed native builds b12327 and b12366). Does not include inkling2_loop (b12600+).",
+      "review": "Covers architectures verified across b12327..b12366 including LFM3, Gemma 4, Qwen3.5, and GPT-OSS.",
+      "architectures": {
+        "bailingmoe3": {
+          "text": "source_supported"
+        },
+        "gemma3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gemma4": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gpt-oss": {
+          "text": "source_supported"
+        },
+        "granite": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "lfm2": {
+          "text": "source_supported"
+        },
+        "lfm3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "llama": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "mistral3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported"
+        },
+        "qwen2vl": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3": {
+          "text": "source_supported"
+        },
+        "qwen35": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        }
+      }
+    },
     "b12627": {
       "base_build": "b12110",
       "checked_date_utc": "2026-11-22",

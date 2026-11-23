@@ -27,6 +27,7 @@ XLLAMA_VENDORS = {
     "Vulkan": "gpu",
     "CUDA 12.8": "nvidia",
     "CUDA 13.2": "nvidia",
+    "ROCm 6.4": "amd",
     "ROCm 7.2": "amd",
 }
 ONNX_VENDORS = {

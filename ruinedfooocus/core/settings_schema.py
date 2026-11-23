@@ -13,8 +13,9 @@ from ipaddress import ip_address
 IMAGE_BACKENDS = ("auto", "cuda", "rocm", "xpu", "cpu", "directml")
 # Background removal: native ONNX Runtime builds run in an isolated worker.
 ONNX_BACKENDS = ("Auto", "CPU", "CUDA", "MIGraphX", "OpenVINO", "Windows GPU")
-# The xllamacpp ROCm 6.4 index stopped at an older release; ROCm 7.2 is Linux-only.
-XLLAMACPP_BACKENDS = ("Auto", "CPU", "Vulkan", "CUDA 12.8", "CUDA 13.2", "ROCm 7.2")
+# xllamacpp 2026.11.12361 publishes Vulkan (Win x64/ARM64, Linux x64, macOS x64),
+# CUDA 12.8/13.2 (Win x64, Linux x64/ARM64), and ROCm 6.4/7.2 (Linux x64).
+XLLAMACPP_BACKENDS = ("Auto", "CPU", "Vulkan", "CUDA 12.8", "CUDA 13.2", "ROCm 6.4", "ROCm 7.2")
 RAG_EMBEDDING_DEVICES = ("Auto", "CPU")
 RAG_EMBEDDING_MODELS = (
     "sentence-transformers/all-MiniLM-L6-v2",
