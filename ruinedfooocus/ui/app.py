@@ -2568,6 +2568,7 @@ with shared.gradio_root as block:
                     input_source=shared.get_ctrl("input_image"),
                     source_kind=editor_workspace.source_input,
                     allow_upload=True,
+                    run_event=run_event,
                 )
             from ruinedfooocus.features.image_processing.ui_native_formats import (
                 create_ui as create_output_format_ui,
