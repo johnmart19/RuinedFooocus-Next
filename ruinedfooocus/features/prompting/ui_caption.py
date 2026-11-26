@@ -191,7 +191,7 @@ def add_describe_controls(
             )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
             describe = gr.Button(
-                translate_ui("Describe image"),
+                translate_ui("Generate prompt"),
                 variant="primary",
                 size="sm",
                 elem_id=f"{id_prefix}-generate-prompt",
@@ -205,7 +205,7 @@ def add_describe_controls(
             undo = gr.Button(translate_ui("Undo description"), size="sm", interactive=False)
         result_box = gr.Textbox(
             label=translate_ui("Generated prompt"),
-            placeholder="Generated prompt will appear here. You can edit, copy, or send it straight to Generate.",
+            placeholder="Click 'Generate prompt' above. You can edit, copy, or send it straight to Generate.",
             lines=5,
             max_lines=10,
             buttons=["copy"],
@@ -217,6 +217,7 @@ def add_describe_controls(
                 translate_ui("Generate image"),
                 variant="primary",
                 size="md",
+                interactive=False,
                 elem_id=f"{id_prefix}-generate-image",
             )
     else:
@@ -264,14 +265,14 @@ def add_describe_controls(
             detail=detail,
         )
         if allow_upload:
-            return (
-                description,
-                history,
-                undo_update,
+            extra_outputs = [
                 description,
                 _char_count_markdown(description),
                 gr.update(interactive=True),
-            )
+            ]
+            if generate_btn is not None:
+                extra_outputs.append(gr.update(interactive=True))
+            return (description, history, undo_update, *extra_outputs)
         return description, history, undo_update
 
     image_contexts = (image_source,)
@@ -283,6 +284,8 @@ def add_describe_controls(
     outputs = [prompt, previous, undo]
     if allow_upload:
         outputs += [result_box, result_meta, append_btn]
+        if generate_btn is not None:
+            outputs.append(generate_btn)
 
     fence_event(
         describe.click,
@@ -338,10 +341,21 @@ def add_describe_controls(
             show_progress="hidden",
             api_visibility="private",
         )
+        result_change_outputs = [result_meta, append_btn]
+        if generate_btn is not None:
+            result_change_outputs.append(generate_btn)
+
+        def on_result_change(text):
+            has_text = bool((text or "").strip())
+            updates = [_char_count_markdown(text), gr.update(interactive=has_text)]
+            if generate_btn is not None:
+                updates.append(gr.update(interactive=has_text))
+            return tuple(updates)
+
         result_box.change(
-            lambda text: (_char_count_markdown(text), gr.update(interactive=bool((text or "").strip()))),
+            on_result_change,
             inputs=[result_box],
-            outputs=[result_meta, append_btn],
+            outputs=result_change_outputs,
             queue=False,
             show_progress="hidden",
             api_visibility="private",
