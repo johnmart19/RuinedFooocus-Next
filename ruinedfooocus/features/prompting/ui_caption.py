@@ -110,6 +110,8 @@ def add_describe_controls(
     source_kind=None,
     allow_upload=False,
     run_event=None,
+    embedded_source=False,
+    id_prefix="describe",
 ):
     previous = gr.JSON(None, visible=False)
     describe_upload = None
@@ -126,31 +128,32 @@ def add_describe_controls(
     if allow_upload:
         from ruinedfooocus.app.state import settings
 
-        gr.Markdown(
-            "### "
-            + str(translate_ui("Image to Prompt"))
-            + "\n"
-            + str(
-                translate_ui(
-                    "Upload an image or use the current canvas image to generate a structured prompt."
+        if not embedded_source:
+            gr.Markdown(
+                "### "
+                + str(translate_ui("Image to Prompt"))
+                + "\n"
+                + str(
+                    translate_ui(
+                        "Upload an image or use the current canvas image to generate a structured prompt."
+                    )
                 )
             )
-        )
-        describe_upload = gr.Image(
-            label=translate_ui("Image to describe"),
-            height=240,
-            type="pil",
-            image_mode="RGBA",
-            format="png",
-            elem_id="describe-image-input",
-            buttons=["download", "fullscreen"],
-        )
+            describe_upload = gr.Image(
+                label=translate_ui("Image to describe"),
+                height=240,
+                type="pil",
+                image_mode="RGBA",
+                format="png",
+                elem_id=f"{id_prefix}-image-input",
+                buttons=["download", "fullscreen"],
+            )
         style_picker = gr.Radio(
             label=translate_ui("Prompt style"),
             choices=list(PROMPT_STYLES),
             value=DEFAULT_STYLE,
             elem_classes=["rf-chips"],
-            elem_id="describe-prompt-style",
+            elem_id=f"{id_prefix}-prompt-style",
         )
         default_engine = settings.default_settings.get("interrogator", "auto")
         if default_engine not in {value for _, value in ENGINE_CHOICES}:
@@ -161,7 +164,7 @@ def add_describe_controls(
                 choices=list(ENGINE_CHOICES),
                 value=default_engine,
                 interactive=True,
-                elem_id="describe-engine",
+                elem_id=f"{id_prefix}-engine",
             )
             vision_picker = gr.Dropdown(
                 label=translate_ui("Vision model"),
@@ -169,34 +172,34 @@ def add_describe_controls(
                 value="Auto",
                 interactive=True,
                 visible=default_engine in ("auto", "vlm"),
-                elem_id="describe-vision-model",
+                elem_id=f"{id_prefix}-vision-model",
             )
         with gr.Accordion(translate_ui("Prompt options"), open=False):
             extra_box = gr.Textbox(
                 label=translate_ui("Extra instructions (optional)"),
                 placeholder="e.g. Focus on outfit, pose, and lighting; ignore background",
                 lines=1,
-                elem_id="describe-extra-instructions",
+                elem_id=f"{id_prefix}-extra-instructions",
             )
             detail_picker = gr.Radio(
                 label=translate_ui("Vision detail"),
                 choices=[("Standard (1024 px)", "standard"), ("High detail (2048 px)", "high")],
                 value="standard",
                 elem_classes=["rf-chips"],
-                elem_id="describe-vision-detail",
+                elem_id=f"{id_prefix}-vision-detail",
             )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
             describe = gr.Button(
                 translate_ui("Describe image"),
                 variant="primary",
                 size="sm",
-                elem_id="describe-generate-prompt",
+                elem_id=f"{id_prefix}-generate-prompt",
             )
             append_btn = gr.Button(
                 translate_ui("Append to prompt"),
                 size="sm",
                 interactive=False,
-                elem_id="describe-append-prompt",
+                elem_id=f"{id_prefix}-append-prompt",
             )
             undo = gr.Button(translate_ui("Undo description"), size="sm", interactive=False)
         result_box = gr.Textbox(
@@ -205,15 +208,15 @@ def add_describe_controls(
             lines=5,
             max_lines=10,
             buttons=["copy"],
-            elem_id="describe-result-prompt",
+            elem_id=f"{id_prefix}-result-prompt",
         )
-        result_meta = gr.Markdown("", elem_id="describe-result-meta")
+        result_meta = gr.Markdown("", elem_id=f"{id_prefix}-result-meta")
         if run_event is not None:
             generate_btn = gr.Button(
                 translate_ui("Generate image"),
                 variant="primary",
                 size="md",
-                elem_id="describe-generate-image",
+                elem_id=f"{id_prefix}-generate-image",
             )
     else:
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
@@ -224,8 +227,9 @@ def add_describe_controls(
     inputs += [input_source] if input_source is not None else []
     inputs += [source_kind] if source_kind is not None else []
     if allow_upload:
+        if describe_upload is not None:
+            inputs += [describe_upload]
         inputs += [
-            describe_upload,
             engine_picker,
             style_picker,
             extra_box,
@@ -238,7 +242,7 @@ def add_describe_controls(
         native = next(values) if native_source is not None else None
         uploaded = next(values) if input_source is not None else None
         selected = next(values) if source_kind is not None else None
-        direct_upload = next(values) if allow_upload else None
+        direct_upload = next(values) if describe_upload is not None else None
         engine = next(values) if allow_upload else None
         style = next(values) if allow_upload else None
         extra = next(values) if allow_upload else ""

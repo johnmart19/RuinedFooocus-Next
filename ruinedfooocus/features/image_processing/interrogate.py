@@ -223,6 +223,7 @@ def auto_look(image, prompt, gr, *, style="tags", extra_instructions="", vision_
         settings_values=shared.settings.default_settings,
         local=local_models(),
         manager=shared.path_manager,
+        auto_only=True,
     )
     if chosen:
         return vlm_look(
@@ -282,6 +283,7 @@ def queued_caption(
                     settings_values=shared.settings.default_settings,
                     local=local_models(),
                     manager=shared.path_manager,
+                    auto_only=True,
                 )
             )
         except Exception:

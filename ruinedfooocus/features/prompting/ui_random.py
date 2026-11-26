@@ -629,7 +629,7 @@ def ui_onebutton(
                 (translate_ui("Generate"), "generate"),
                 (translate_ui("Rewrite"), "rewrite"),
                 (translate_ui("Variations"), "variations"),
-                (translate_ui("Describe"), "describe"),
+                (translate_ui("Image to prompt"), "describe"),
             ],
             value="generate",
             elem_id="prompt-tools-mode",

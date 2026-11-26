@@ -226,11 +226,26 @@ def installed_vision_models(local=None, manager=None):
     return matches
 
 
-def resolve_vision_model(selected=None, *, settings_values=None, local=None, manager=None):
+MIN_AUTO_VLM_BYTES = 500 * 1024 * 1024  # Skip tiny <500MB VLMs (e.g. SmolVLM-256M) in Auto mode.
+
+
+def resolve_vision_model(
+    selected=None, *, settings_values=None, local=None, manager=None, auto_only=False
+):
     """Pick the best available local Vision LLM GGUF, or None if none is installed."""
     if selected and selected not in ("Auto", "None"):
         return selected
     candidates = installed_vision_models(local=local, manager=manager)
+    if auto_only:
+        filtered = []
+        for label, path in candidates:
+            try:
+                size = Path(path).stat().st_size
+            except OSError:
+                size = 0
+            if size >= MIN_AUTO_VLM_BYTES:
+                filtered.append((label, path))
+        candidates = filtered
     if not candidates:
         return None
     if settings_values:

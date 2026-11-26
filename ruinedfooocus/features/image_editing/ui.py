@@ -151,6 +151,8 @@ def sd4x_output_info(
 
 
 def tool_kind(selection, control_type):
+    if selection == "Image to prompt":
+        return "image-to-prompt"
     from ruinedfooocus.features.image_processing.still_image_utilities import adjustment_kind
 
     adjustment = adjustment_kind(selection, control_type)
@@ -203,6 +205,7 @@ def input_context(
             "latent-compose",
             "qwen-union",
             "restore-seedvr2",
+            "image-to-prompt",
             *DEPTH_UTILITIES,
         )
         and (not qwen_local or kind in (None, "", "img2img", "edit"))
@@ -217,7 +220,9 @@ def input_context(
         or (kind == "qwen-union" and features.get("qwen_union"))
     )
     label = "Control guide" if kind in (*SDXL_CONTROLS, "control") else input_label(features)
-    if kind in (
+    if kind == "image-to-prompt":
+        label = "Image to describe"
+    elif kind in (
         "upscale",
         "rembg",
         "detect",
@@ -307,6 +312,10 @@ def powerup_choices(
             else name
         )
         choices.append((label, name))
+        if name == "Img2Img":
+            choices.append((t("Image to prompt"), "Image to prompt"))
+    if ("Image to prompt" not in {value for _, value in choices}):
+        choices.insert(1, (t("Image to prompt"), "Image to prompt"))
     return choices + [(NEWCN, NEWCN)]
 
 
@@ -940,6 +949,25 @@ def add_controlnet_tab(
         )
 
         latent_composition_ui(cn_selection, cn_type, tool_kind)
+        with gr.Group(visible=False, elem_id="powerup-image-to-prompt") as image_to_prompt_panel:
+            from ruinedfooocus.features.prompting.ui_caption import add_describe_controls
+
+            add_describe_controls(
+                prompt,
+                input_image,
+                allow_upload=True,
+                run_event=run_event,
+                embedded_source=True,
+                id_prefix="powerup-describe",
+            )
+        cn_selection.change(
+            lambda selection: gr.update(visible=selection == "Image to prompt"),
+            inputs=[cn_selection],
+            outputs=[image_to_prompt_panel],
+            queue=False,
+            show_progress="hidden",
+            api_visibility="private",
+        )
         sd4x_output = gr.Markdown(
             translate_ui("Add a source image to see its four-times output size."),
             visible=initial_features.get("sd4x", False),
