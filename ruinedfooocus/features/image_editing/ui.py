@@ -959,6 +959,7 @@ def add_controlnet_tab(
                 run_event=run_event,
                 embedded_source=True,
                 id_prefix="powerup-describe",
+                tool_selection=cn_selection,
             )
         cn_selection.change(
             lambda selection: gr.update(visible=selection == "Image to prompt"),

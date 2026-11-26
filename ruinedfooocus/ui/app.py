@@ -1213,6 +1213,14 @@ def generate_request(values):
             )  # Preserve the generated image while using the upload view.
         return updates
 
+    if values.get("cn_selection") == "Image to prompt":
+        gr.Info(
+            "Use 'Describe image' in the Image to prompt panel to generate a prompt, "
+            "then click 'Generate image'."
+        )
+        yield display(update_results([]))
+        return
+
     yield display(update_clicked())
 
     try:

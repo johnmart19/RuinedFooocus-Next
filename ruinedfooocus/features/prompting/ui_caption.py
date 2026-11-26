@@ -112,6 +112,7 @@ def add_describe_controls(
     run_event=None,
     embedded_source=False,
     id_prefix="describe",
+    tool_selection=None,
 ):
     previous = gr.JSON(None, visible=False)
     describe_upload = None
@@ -369,12 +370,19 @@ def add_describe_controls(
                 text = (generated or "").strip() or (current or "").strip()
                 if not text:
                     raise gr.Error("Generate or enter a prompt first.")
+                if tool_selection is not None:
+                    return text, "None", (counter or 0) + 1
                 return text, (counter or 0) + 1
 
+            gen_outputs = (
+                [prompt, tool_selection, run_event]
+                if tool_selection is not None
+                else [prompt, run_event]
+            )
             generate_btn.click(
                 apply_and_generate,
                 inputs=[prompt, result_box, run_event],
-                outputs=[prompt, run_event],
+                outputs=gen_outputs,
                 queue=False,
                 show_progress="hidden",
                 api_visibility="private",
