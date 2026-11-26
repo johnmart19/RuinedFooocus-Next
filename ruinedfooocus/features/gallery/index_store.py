@@ -23,7 +23,7 @@ LIVE_PREVIEW = re.compile(r"preview(-[\w-]+)?\.jpe?g", re.IGNORECASE)
 
 
 def discard_live_previews(current, *, keep=(), max_age=86400):
-    """Delete a finished job's preview unless it is a result, and day-old previews.
+    """Delete a finished job's preview(s) unless kept as a result, and day-old previews.
 
     A preview grid returned as a result must outlive its job for the viewer, so a
     later job removes it.
@@ -33,12 +33,18 @@ def discard_live_previews(current, *, keep=(), max_age=86400):
     stem = current.stem.split("-")[0]
     try:
         candidates = list(current.parent.glob(f"{stem}-*{current.suffix}"))
+        candidates.extend(current.parent.glob(f".{stem}-*.tmp"))
     except OSError:
         return
     for path in candidates:
         try:
             stale = time.time() - path.stat().st_mtime > max_age
-            if (path == current and str(path) not in kept) or stale:
+            same_job = (
+                path == current
+                or path.stem.startswith(f"{current.stem}-")
+                or path.name.startswith(f".{current.stem}")
+            )
+            if (same_job and str(path) not in kept) or stale:
                 path.unlink()
         except OSError:
             continue

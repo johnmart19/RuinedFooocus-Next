@@ -1746,9 +1746,13 @@ class EditorWorkspace:
                                 for name in ("run", "stop", "progress", "task", "hint")
                             ]
                         }
-                        if values.get("main_view") is not None:
+                        previous_preview = values.get("main_view")
+                        if previous_preview is not None and (
+                            not isinstance(previous_preview, (str, Path))
+                            or Path(previous_preview).is_file()
+                        ):
                             updates[self.run_controls["preview"]] = gr.update(
-                                value=values["main_view"], visible=True
+                                value=previous_preview, visible=True
                             )
                     if records or terminal is not None and terminal.get("status") == "completed":
                         if terminal is not None and terminal.get("status") != "completed":
@@ -1761,9 +1765,13 @@ class EditorWorkspace:
                                 self.run_controls["progress"]: gr.update(visible=False),
                                 self.run_controls["task"]: None,
                             }
-                            if values.get("main_view") is not None:
+                            previous_preview = values.get("main_view")
+                            if previous_preview is not None and (
+                                not isinstance(previous_preview, (str, Path))
+                                or Path(previous_preview).is_file()
+                            ):
                                 rejected[self.run_controls["preview"]] = gr.update(
-                                    value=values["main_view"], visible=True
+                                    value=previous_preview, visible=True
                                 )
                             yield rejected
                             continue

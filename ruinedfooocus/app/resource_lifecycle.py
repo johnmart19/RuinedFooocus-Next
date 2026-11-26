@@ -570,12 +570,13 @@ def service_scope(service, state, *, item=None):
 
 def cleanup_interrupt(item):
     """Only the owner of native cancellation may reset the native global flag."""
-    if item.state.get("native_interrupt") and current_job() is not item:
-        raise OwnershipError("Only the active job may clear its native interrupt state")
-    if item.state.pop("native_interrupt", False):
-        module = sys.modules.get("comfy.model_management")
-        if module is not None:
-            module.interrupt_current_processing(False)
+    with registry.condition:
+        if item.state.get("native_interrupt") and current_job() is not item:
+            raise OwnershipError("Only the active job may clear its native interrupt state")
+        if item.state.pop("native_interrupt", False):
+            module = sys.modules.get("comfy.model_management")
+            if module is not None:
+                module.interrupt_current_processing(False)
 
 
 class RuntimeState(MutableMapping):

@@ -57,10 +57,11 @@ def interrupt_processing(task_id=None):
     """Cancel only this authenticated UI session's selected/latest job."""
     if not registry.cancel(task_id):
         return False
-    item = _active_job
-    if item is not None and item.cancelled.is_set() and item.state.get("native_active"):
-        item.state["native_interrupt"] = True
-        model_management.interrupt_current_processing(True)
+    with registry.condition:
+        item = _active_job
+        if item is not None and item.cancelled.is_set() and item.state.get("native_active"):
+            item.state["native_interrupt"] = True
+            model_management.interrupt_current_processing(True)
     return True
 
 
@@ -366,15 +367,21 @@ def image_stage(function):
             prompt_preparation_scope(item, gen_data),
             service_scope(group, shared.state, item=item),
         ):
-            item.state["native_active"] = group != "rembg"
+            with registry.condition:
+                if item.cancelled.is_set():
+                    raise model_management.InterruptProcessingException()
+                if group != "rembg":
+                    model_management.interrupt_current_processing(False)
+                item.state["native_active"] = group != "rembg"
             try:
                 result = function(gen_data)
                 if gen_data.get("_editor_operation") is not None:
                     stage_editor_result(gen_data, result)
                 return result
             finally:
-                item.state.pop("native_active", None)
-                cleanup_interrupt(item)
+                with registry.condition:
+                    item.state.pop("native_active", None)
+                    cleanup_interrupt(item)
 
     return run
 
@@ -437,6 +444,38 @@ def _preview_path(gen_data):
     item = gen_data.get("_job") or current_job()
     token = item.identity.token if item is not None else str(gen_data.get("task_id", "inline"))
     return str(base.with_name(f"{base.stem}-{token}{base.suffix}"))
+
+
+def _save_step_preview(frame, gen_data, *, final=False):
+    """Write a step preview atomically to a fresh path so Gradio never reads a truncated JPEG."""
+    import os
+
+    base = Path(_preview_path(gen_data))
+    base.parent.mkdir(parents=True, exist_ok=True)
+    seq = int(gen_data.get("_preview_seq", 0)) + 1
+    gen_data["_preview_seq"] = seq
+    target = base if final else base.with_name(f"{base.stem}-{seq}{base.suffix}")
+    tmp = target.with_name(f".{target.stem}.tmp")
+    try:
+        frame.save(tmp, format="JPEG", optimize=final, quality=70 if final else 35)
+        os.replace(tmp, target)
+    except BaseException:
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
+        raise
+    history = gen_data.setdefault("_preview_history", [])
+    history.append(target)
+    while len(history) > 2:
+        old = history.pop(0)
+        if old != target:
+            try:
+                old.unlink(missing_ok=True)
+            except OSError:
+                pass
+    gen_data["_last_preview_path"] = str(target)
+    return str(target)
 
 
 def is_sha256_hash(input_string):
@@ -736,9 +775,7 @@ def _process(gen_data):
                     (max(1, round(frame.width * scale)), max(1, round(frame.height * scale))),
                     Image.BILINEAR,
                 )
-            frame.save(_preview_path(gen_data), optimize=final, quality=70 if final else 35)
-
-            preview = _preview_path(gen_data)
+            preview = _save_step_preview(frame, gen_data, final=final)
         else:
             preview = None
 
@@ -1336,40 +1373,44 @@ def worker():
 
         results = []
         metadatastrings = []
-        while True:
-            reset_preview()
-            gen_data["index"] = (0, (gen_data["image_total"]))
-            if isinstance(gen_data["prompt"], list):
-                tmp_data = gen_data.copy()
-                for prompt in gen_data["prompt"]:
-                    tmp_data["prompt"] = prompt
-                    if gen_data["generate_forever"]:
-                        reset_preview()
-                    results.extend(_process(tmp_data))
-                    if shared.state["interrupted"]:
-                        break
-                    tmp_data["index"] = (tmp_data["index"][0] + 1, tmp_data["index"][1])
-            else:
-                gen_data["index"] = (0, 1)
-                results.extend(_process(gen_data))
+        try:
+            while True:
+                reset_preview()
+                gen_data["index"] = (0, (gen_data["image_total"]))
+                if isinstance(gen_data["prompt"], list):
+                    tmp_data = gen_data.copy()
+                    for prompt in gen_data["prompt"]:
+                        tmp_data["prompt"] = prompt
+                        if gen_data["generate_forever"]:
+                            reset_preview()
+                        results.extend(_process(tmp_data))
+                        if shared.state["interrupted"]:
+                            break
+                        tmp_data["index"] = (tmp_data["index"][0] + 1, tmp_data["index"][1])
+                else:
+                    gen_data["index"] = (0, 1)
+                    results.extend(_process(gen_data))
 
-            if not (gen_data["generate_forever"] and shared.state["interrupted"] == False):
-                break
+                if not (gen_data["generate_forever"] and shared.state["interrupted"] == False):
+                    break
 
-        # Prepend preview-grid (maybe)
-        if (
-            "preview_grid" in shared.state
-            and shared.state["preview_grid"] is not None
-            and shared.state["preview_total"] > 1
-            and ("show_preview" not in gen_data or gen_data["show_preview"] == True)
-            and not gen_data["generate_forever"]
-        ):
-            results = [_preview_path(gen_data)] + results
+            # Prepend preview-grid (maybe)
+            if (
+                "preview_grid" in shared.state
+                and shared.state["preview_grid"] is not None
+                and shared.state["preview_total"] > 1
+                and ("show_preview" not in gen_data or gen_data["show_preview"] == True)
+                and not gen_data["generate_forever"]
+            ):
+                grid_path = gen_data.get("_last_preview_path") or _preview_path(gen_data)
+                if Path(grid_path).is_file():
+                    results = [grid_path] + results
 
-        add_result(gen_data["task_id"], "results", results)
-        from ruinedfooocus.features.gallery.index_store import discard_live_previews
+            add_result(gen_data["task_id"], "results", results)
+        finally:
+            from ruinedfooocus.features.gallery.index_store import discard_live_previews
 
-        discard_live_previews(_preview_path(gen_data), keep=results)
+            discard_live_previews(_preview_path(gen_data), keep=results)
 
     def txt2txt_process(gen_data):
 
