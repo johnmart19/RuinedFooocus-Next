@@ -76,6 +76,30 @@ def refresh_sampling_recommendations(quant):
 
 def create_model_diagnostics(selected_quant, runtime_status, sampling_status):
     """Use the browser's selected quant and initialized-state projections."""
+
+    def _has_installed_gguf(quant):
+        if not quant:
+            return False
+        from pathlib import Path as _Path
+
+        try:
+            candidate = _Path(quant)
+            if candidate.is_absolute():
+                return candidate.is_file()
+            from ruinedfooocus.app.state import path_manager as _pm
+            from ruinedfooocus.features.chat.model_browser import catalogue_local_file as _clf
+
+            roots = {}
+            for key in ("path_llm", "path_vision"):
+                folders = _pm.paths.get(key, [])
+                if isinstance(folders, str):
+                    folders = [folders]
+                roots[key] = [_pm.get_abspath(folder) for folder in folders]
+            found = _clf(quant, _pm.DOWNLOADABLE_FILES, roots)
+            return found is not None and found.is_file()
+        except Exception:
+            return False
+
     with gr.Accordion(t("Chat model diagnostics"), open=False) as group:
         gr.Markdown(t("Last Chat session load and sampling"))
         runtime = gr.Markdown("")
@@ -86,7 +110,7 @@ def create_model_diagnostics(selected_quant, runtime_status, sampling_status):
                 t("Refresh sampling recommendations"),
                 size="sm",
                 min_width=112,
-                interactive=_installed_gguf_path(getattr(selected_quant, "value", None)) is not None,
+                interactive=_has_installed_gguf(getattr(selected_quant, "value", None)),
             )
         details = gr.Dataframe(
             headers=["Field", "Evidence"],
@@ -99,7 +123,7 @@ def create_model_diagnostics(selected_quant, runtime_status, sampling_status):
         )
 
     def _recommendations_update(quant):
-        return gr.update(interactive=_installed_gguf_path(quant) is not None)
+        return gr.update(interactive=_has_installed_gguf(quant))
 
     selected_quant.change(
         _recommendations_update,
