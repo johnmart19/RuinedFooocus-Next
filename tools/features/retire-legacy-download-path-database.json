@@ -1,0 +1,8 @@
+{
+  "id": "retire-legacy-download-path-database",
+  "subject": "Retire the legacy download path database",
+  "requires": ["retire-legacy-shared-state"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
