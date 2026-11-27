@@ -1,6 +1,6 @@
 {
   "diffusion_models/zeta-chroma-base-x0-pixel-no-dino-1024.safetensors": {
-    "url": "https://huggingface.co/lodestones/Zeta-Chroma/resolve/38ddc5f3e26fbbcb0ee4ff374b3f5cc384376d4b/zeta-chroma-base-x0-pixel-no-dino-1024.safetensors",
+    "url": "https://huggingface.co/lodestones/Zeta-Chroma/resolve/3a76053a0a4ce9b53c8c76739cccf91f69af2910/zeta-chroma-base-x0-pixel-no-dino-1024.safetensors",
     "path": "path_diffusion_models",
     "filename": "zeta-chroma-base-x0-pixel-no-dino-1024.safetensors",
     "size": 12997743288,
