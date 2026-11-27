@@ -52,13 +52,15 @@ class EditorWorkspace:
         self.panel = gr.Accordion(t("Image workspace"), open=True, elem_id="editor-workspace")
         with self.panel:
             with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-                self.open_current = gr.Button(t("Open current image"), size="sm")
+                self.open_current = gr.Button(
+                    t("Open current image"), size="sm", interactive=False
+                )
                 self.open_latest = gr.Button(t("Latest generated"), size="sm")
                 self.choose_gallery = gr.Button(t("Choose from Gallery"), size="sm")
             with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-                self.undo = gr.Button(t("Undo"), size="sm")
-                self.redo = gr.Button(t("Redo"), size="sm")
-                self.reopen = gr.Button(t("Reopen image history"), size="sm")
+                self.undo = gr.Button(t("Undo"), size="sm", interactive=False)
+                self.redo = gr.Button(t("Redo"), size="sm", interactive=False)
+                self.reopen = gr.Button(t("Reopen image history"), size="sm", interactive=False)
                 self.use_selection = gr.Button(
                     t("Use result as selection mask"), size="sm", visible=False
                 )
@@ -82,13 +84,15 @@ class EditorWorkspace:
                 )
                 with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
                     self.picker_previous = gr.Button(
-                        t("Previous"), size="sm", min_width=72, scale=0
+                        t("Previous"), size="sm", min_width=72, scale=0, interactive=False
                     )
                     self.picker_page = gr.Number(
                         1, label=t("Page"), minimum=1, precision=0, min_width=72, scale=0
                     )
                     self.picker_total = gr.Markdown()
-                    self.picker_next = gr.Button(t("Next"), size="sm", min_width=72, scale=0)
+                    self.picker_next = gr.Button(
+                        t("Next"), size="sm", min_width=72, scale=0, interactive=False
+                    )
                 with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
                     self.picker_open = gr.Button(
                         t("Open selected image"), size="sm", interactive=False, visible=False
@@ -184,7 +188,7 @@ class EditorWorkspace:
                     value="preserve",
                     elem_id="editor-framing",
                 )
-                self.preview = gr.Button(t("Check resources"), size="sm")
+                self.preview = gr.Button(t("Check resources"), size="sm", interactive=False)
             from ruinedfooocus.features.gallery.ui_paint import PaintCanvas
 
             self.paint = PaintCanvas()
@@ -246,6 +250,38 @@ class EditorWorkspace:
             for name, value in self.SOURCE_REFERENCES.items()
             if name in self.controls
         }
+
+    @property
+    def action_buttons(self):
+        return [
+            self.open_current,
+            self.undo,
+            self.redo,
+            self.reopen,
+            self.preview,
+            self.paint.load,
+        ]
+
+    @staticmethod
+    def _is_placeholder_preview(value):
+        if value is None:
+            return True
+        if isinstance(value, (str, Path)):
+            from ruinedfooocus.core.paths import asset_path
+
+            try:
+                return Path(value).resolve() == asset_path("init_image.png").resolve()
+            except OSError:
+                return False
+        return False
+
+    @classmethod
+    def _has_usable_source(cls, preview, input_image, source_input):
+        if input_image is not None:
+            return True
+        if source_input == "placeholder" and cls._is_placeholder_preview(preview):
+            return False
+        return not cls._is_placeholder_preview(preview)
 
     @property
     def source_outputs(self):
@@ -466,9 +502,18 @@ class EditorWorkspace:
 
     def _bind_chat_open(self, button, result):
         def open_chat(value, task_id, version, request: gr.Request = None):
-            return self._source_action(
-                task_id, version, request, lambda: self.open_result(value, request), prepare=True
-            )
+            try:
+                return self._source_action(
+                    task_id,
+                    version,
+                    request,
+                    lambda: self.open_result(value, request),
+                    prepare=True,
+                )
+            except PermissionError:
+                raise
+            except (ValueError, OSError) as error:
+                raise gr.Error(str(error)) from None
 
         button.click(
             open_chat,
@@ -601,7 +646,9 @@ class EditorWorkspace:
         def open_current(
             path, source, native_source, automatic, task_id, version, request: gr.Request = None
         ):
-            selected = path or source
+            selected = None if self._is_placeholder_preview(path) else path
+            if selected is None:
+                selected = source
             if selected is None:
                 raise gr.Error("Open a source image first.")
 
@@ -622,7 +669,12 @@ class EditorWorkspace:
                     )
                 return updates
 
-            return self._source_action(task_id, version, request, adopt, prepare=True)
+            try:
+                return self._source_action(task_id, version, request, adopt, prepare=True)
+            except PermissionError:
+                raise
+            except (ValueError, OSError) as error:
+                raise gr.Error(str(error)) from None
 
         self.paint.bind(self)
 
@@ -702,7 +754,12 @@ class EditorWorkspace:
                     )
                 return self.snapshot_updates(snapshot, request=request)
 
-            return self._source_action(task_id, version, request, move)
+            try:
+                return self._source_action(task_id, version, request, move)
+            except PermissionError:
+                raise
+            except (ValueError, OSError) as error:
+                raise gr.Error(str(error)) from None
 
         from functools import partial
 
@@ -742,7 +799,12 @@ class EditorWorkspace:
                 )
                 return updates
 
-            return self._source_action(task_id, version, request, attach)
+            try:
+                return self._source_action(task_id, version, request, attach)
+            except PermissionError:
+                raise
+            except (ValueError, OSError) as error:
+                raise gr.Error(str(error)) from None
 
         if guide_control_plan is None:
             self.use_selection.click(
@@ -1207,8 +1269,56 @@ class EditorWorkspace:
             api_visibility="private",
         )
 
+        def sync_action_buttons(
+            context, preview_value, input_value, source_origin, request: gr.Request = None
+        ):
+            has_source = self._has_usable_source(preview_value, input_value, source_origin)
+            has_context = isinstance(context, dict) and bool(context.get("session_id"))
+            can_undo = False
+            can_redo = False
+            if has_context:
+                try:
+                    snapshot = self.selected_store().snapshot(
+                        context["session_id"], owner=ui_request_owner(request)
+                    )
+                    can_undo = snapshot.can_undo
+                    can_redo = snapshot.can_redo
+                except (ValueError, OSError, PermissionError, KeyError):
+                    has_context = False
+            return {
+                self.open_current: gr.update(interactive=has_source),
+                self.undo: gr.update(interactive=can_undo),
+                self.redo: gr.update(interactive=can_redo),
+                self.reopen: gr.update(interactive=has_context),
+                self.preview: gr.update(interactive=has_context or has_source),
+                self.paint.load: gr.update(interactive=has_context),
+            }
+
+        gr.on(
+            triggers=[
+                self.context.change,
+                run_controls["preview"].change,
+                controls["input_image"].change,
+                self.source_input.change,
+            ],
+            fn=sync_action_buttons,
+            inputs=[
+                self.context,
+                run_controls["preview"],
+                controls["input_image"],
+                self.source_input,
+            ],
+            outputs=self.action_buttons,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="private",
+        )
+
         def preview_readiness(*values, request: gr.Request = None):
-            return self.readiness(dict(zip(self.controls, values)), request=request)
+            try:
+                return self.readiness(dict(zip(self.controls, values)), request=request)
+            except (ValueError, OSError, PermissionError, CancelledError) as error:
+                return str(error)
 
         self.preview.click(
             preview_readiness,
@@ -1481,11 +1591,11 @@ class EditorWorkspace:
 
         def close_picker(request: gr.Request = None):
             latest_ui_requests.cancel(ui_request_owner(request), channel)
-            return gr.update(visible=False), None
+            return gr.update(visible=False), None, gr.update(interactive=False)
 
         self.picker_close.click(
             close_picker,
-            outputs=[self.picker, self.picker_selected],
+            outputs=[self.picker, self.picker_selected, self.picker_open],
             queue=False,
             show_progress="hidden",
             api_visibility="private",
@@ -1610,6 +1720,10 @@ class EditorWorkspace:
                 return latest_ui_requests.publish(ticket, lambda: updates)
             except CancelledError:
                 return gr.skip()
+            except PermissionError:
+                raise
+            except (ValueError, OSError) as error:
+                raise gr.Error(str(error)) from None
             finally:
                 latest_ui_requests.finish(ticket)
 

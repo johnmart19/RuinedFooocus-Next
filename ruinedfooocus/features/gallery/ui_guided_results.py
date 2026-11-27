@@ -308,7 +308,12 @@ class GuidedResultActions:
             request: gr.Request = None,
         ):
             owner = ui_request_owner(request)
-            snapshot = self._current(workspace, context, owner)
+            try:
+                snapshot = self._current(workspace, context, owner)
+            except CancelledError:
+                return {control: gr.skip() for control in self.outputs}
+            except (ValueError, OSError, PermissionError, KeyError) as error:
+                raise gr.Error(str(error)) from None
             if self._selection(snapshot):
                 derived = self._derived(snapshot)
                 if derived is not None:

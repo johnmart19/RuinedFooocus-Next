@@ -1538,7 +1538,10 @@ def create_image_gallery():
 
                 def local_action(record, request: gr.Request = None, kind=kind):
                     validate_view_record(record, request)
-                    source_path(record)
+                    try:
+                        source_path(record)
+                    except ValueError as error:
+                        raise gr.Error(str(error)) from None
                     return kind, gr.update(open=True)
 
                 button.click(

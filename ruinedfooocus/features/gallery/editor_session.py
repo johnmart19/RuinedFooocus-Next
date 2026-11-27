@@ -155,6 +155,15 @@ class SessionSnapshot:
     steps_json: str
     expires_at: float
     derived_results_json: str = "null"
+    redo_count: int = 0
+
+    @property
+    def can_undo(self):
+        return any(item.get("result_id") == self.head_id for item in self.steps)
+
+    @property
+    def can_redo(self):
+        return self.redo_count > 0
 
     @property
     def source_generation(self):
@@ -437,6 +446,7 @@ class EditorSessionStore:
             _json(value["steps"], limit=MAX_MANIFEST_BYTES),
             value["expires_at"],
             _json(value.get("derived_results")),
+            len(value["redo"]),
         )
 
     def start(self, path, *, provenance=None, owner=None):

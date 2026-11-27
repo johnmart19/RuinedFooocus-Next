@@ -214,7 +214,10 @@ class LibraryEditor:
                 request: gr.Request = None,
             ):
                 validate_record(record, request)
-                source_path(record)
+                try:
+                    source_path(record)
+                except ValueError as error:
+                    raise gr.Error(str(error)) from None
                 data = read_metadata(saved) or {}
                 original = version == "Original prompt"
                 prompt = data.get("raw_prompt" if original else "prompt")
@@ -275,7 +278,10 @@ class LibraryEditor:
                 request: gr.Request = None,
             ):
                 validate_record(record, request)
-                source_path(record)
+                try:
+                    source_path(record)
+                except ValueError as error:
+                    raise gr.Error(str(error)) from None
                 updates = setup_values(saved)
                 values = {
                     name: updates[control]["value"]

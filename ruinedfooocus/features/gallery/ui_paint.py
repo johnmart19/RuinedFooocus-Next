@@ -87,8 +87,10 @@ class PaintCanvas:
                 )
             )
             with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-                self.load = gr.Button(t("Load current image"), size="sm")
-                self.apply = gr.Button(t("Apply painting"), variant="primary", size="sm")
+                self.load = gr.Button(t("Load current image"), size="sm", interactive=False)
+                self.apply = gr.Button(
+                    t("Apply painting"), variant="primary", size="sm", interactive=False
+                )
             self.canvas = gr.ImageEditor(
                 type="pil",
                 format="png",
@@ -122,21 +124,43 @@ class PaintCanvas:
             from PIL import Image, ImageOps
 
             owner = ui_request_owner(request)
-            snapshot = current(context, owner)
-            record = store().artifact(
-                snapshot.session_id,
-                snapshot.current.artifact_id,
-                revision=snapshot.revision,
-                owner=owner,
-            )
-            with Image.open(record.path) as image:
-                return ImageOps.exif_transpose(image).convert("RGBA")
+            try:
+                snapshot = current(context, owner)
+                record = store().artifact(
+                    snapshot.session_id,
+                    snapshot.current.artifact_id,
+                    revision=snapshot.revision,
+                    owner=owner,
+                )
+                with Image.open(record.path) as image:
+                    return ImageOps.exif_transpose(image).convert("RGBA"), gr.update(
+                        interactive=True
+                    )
+            except (ValueError, OSError, KeyError) as error:
+                raise gr.Error(str(error)) from None
 
         self.load.click(
             load,
             inputs=workspace.context,
-            outputs=self.canvas,
+            outputs=[self.canvas, self.apply],
             show_progress="minimal",
+            api_visibility="private",
+        )
+
+        def sync_paint_buttons(context, value):
+            has_context = isinstance(context, dict) and bool(context.get("session_id"))
+            return (
+                gr.update(interactive=has_context),
+                gr.update(interactive=has_context and flattened(value) is not None),
+            )
+
+        gr.on(
+            triggers=[workspace.context.change, self.canvas.change],
+            fn=sync_paint_buttons,
+            inputs=[workspace.context, self.canvas],
+            outputs=[self.load, self.apply],
+            queue=False,
+            show_progress="hidden",
             api_visibility="private",
         )
 
@@ -178,7 +202,10 @@ class PaintCanvas:
                     raise
                 return workspace.snapshot_updates(completed, request=request)
 
-            return workspace._source_action(task_id, version, request, commit, prepare=True)
+            try:
+                return workspace._source_action(task_id, version, request, commit, prepare=True)
+            except (ValueError, OSError, KeyError) as error:
+                raise gr.Error(str(error)) from None
 
         self.apply.click(
             apply,
