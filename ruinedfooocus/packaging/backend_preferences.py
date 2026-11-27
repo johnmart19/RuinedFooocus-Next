@@ -13,7 +13,6 @@ from ruinedfooocus.packaging.hardware_inventory import installed_torch_kind
 
 # Flags that already express an image-device decision; a saved choice never overrides them.
 CLI_DEVICE_ATTRIBUTES = (
-    "directml",
     "rocm10",
     "cuda_nightly",
     "legacy",
@@ -34,6 +33,8 @@ def saved_image_backend(values):
     backend = values.get("image_backend")
     if backend in IMAGE_BACKENDS:
         return backend
+    if backend == "directml":
+        return "auto"
     return "cpu" if values.get("image_device") == "CPU" else "auto"
 
 
@@ -94,8 +95,6 @@ def torch_switch_decision(values, installed_kind, *, reinstall_pending, override
         }
     if backend == installed_kind:
         return {"action": "none", "backend": backend, "note": ""}
-    if backend == "directml":
-        return {"action": "apply", "backend": backend, "note": ""}
     if not reinstall_pending:
         return {
             "action": "pending",
@@ -116,7 +115,7 @@ def record_decision(args, **decision):
 
 
 def apply_saved_image_backend(args, os_platform, *, reinstall):
-    """Bootstrap hook: map a saved CUDA/ROCm/DirectML choice to ``TORCH_PLATFORM``.
+    """Bootstrap hook: map a saved CUDA/ROCm/XPU choice to ``TORCH_PLATFORM``.
 
     CPU needs no platform change (installed torch runs on CPU) and is applied while
     arguments are parsed. A different GPU build is only installed when the user
@@ -140,12 +139,6 @@ def apply_saved_image_backend(args, os_platform, *, reinstall):
     if decision["action"] != "apply":
         return decision
     backend = decision["backend"]
-    if backend == "directml":
-        from ruinedfooocus.packaging.runtime_support import installed_directml_matches_requirements
-
-        if installed_directml_matches_requirements(os_platform):
-            os.environ["TORCH_PLATFORM"] = "directml"
-        return decision
     if backend == "xpu":
         os.environ["TORCH_PLATFORM"] = "xpu"
         print("Saved image backend xpu: using torch platform xpu.")

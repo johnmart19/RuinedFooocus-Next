@@ -236,6 +236,7 @@ class SupportTable(unittest.TestCase):
         self.assertEqual(rows[("ONNX Runtime", "MIGraphX (AMD)")]["note"], "Native Linux only")
         self.assertEqual(rows[("Windows ML", "AMDGPU")]["status"], "Candidate")
         self.assertEqual(rows[("Windows ML", "OpenVINO")]["note"], "Needs an Intel GPU")
+        self.assertFalse(any("directml" in option.lower() for _, option in rows))
 
     def test_wsl_lists_no_windows_ml_and_no_migraphx(self):
         with patch.object(inventory, "rocm10_torch", return_value=False):
@@ -276,6 +277,8 @@ class SavedValues(unittest.TestCase):
         validate_known({"image_backend": "xpu", "xllamacpp_backend": "ROCm 7.2"})
         validate_known({"xllamacpp_backend": "ROCm 6.4"})
         validate_known({"rembg_backend": "OpenVINO"})
+        normalized = validate_known({"image_backend": "directml", "rembg_provider": "DirectML"})
+        self.assertEqual(normalized, {"image_backend": "auto", "rembg_provider": "Auto"})
         with self.assertRaises(ValueError):
             validate_known({"xllamacpp_backend": "ROCm 6.3"})
 

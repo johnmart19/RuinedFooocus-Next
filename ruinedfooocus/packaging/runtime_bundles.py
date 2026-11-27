@@ -99,8 +99,6 @@ def python_bundle_supported(runtime, python_version=None, implementation="cpytho
     version = sys.version_info[:2] if python_version is None else python_version
     if implementation != "cpython":
         return False
-    if runtime == "directml":
-        return (3, 10) <= version <= (3, 12)
     if runtime == "cu134":
         return (3, 11) <= version <= (3, 14)
     if runtime not in BUNDLES:

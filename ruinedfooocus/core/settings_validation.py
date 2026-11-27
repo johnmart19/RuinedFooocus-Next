@@ -73,7 +73,7 @@ def validate_settings(values):
     from ruinedfooocus.backends.onnx.windows_ml import PROVIDERS, CATALOG_PROVIDERS, DEVICE_TYPES
 
     if result.get("rembg_provider", "Auto") not in PROVIDERS:
-        raise ValueError("Choose Auto, Windows ML or DirectML for the background provider.")
+        raise ValueError("Choose Auto or Windows ML for the background provider.")
     if result.get("rembg_winml_provider", "Auto") not in ("Auto", *CATALOG_PROVIDERS):
         raise ValueError("Choose a listed Windows ML execution provider.")
     if result.get("rembg_winml_type", "Auto") not in DEVICE_TYPES:

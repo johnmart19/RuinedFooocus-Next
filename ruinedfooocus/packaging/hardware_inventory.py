@@ -182,22 +182,11 @@ def installed_torch_kind(version=None):
 
 def installed_runtimes(os_platform=None):
     """Cheap facts about the installed image runtime (no torch import)."""
-    os_platform = os_platform or platform.system()
     try:
         version = importlib.metadata.version("torch")
     except importlib.metadata.PackageNotFoundError:
         version = None
-    directml = False
-    if os_platform in ("Windows", "Linux"):
-        try:
-            from ruinedfooocus.packaging.runtime_support import (
-                installed_directml_matches_requirements,
-            )
-
-            directml = installed_directml_matches_requirements(os_platform)
-        except Exception:
-            directml = False
-    return {"torch": version, "kind": installed_torch_kind(version), "directml": directml}
+    return {"torch": version, "kind": installed_torch_kind(version)}
 
 
 def image_backend_choices(gpus, os_platform=None, installed=None, machine=None, *, decisions=None):
@@ -216,7 +205,7 @@ def image_backend_choices(gpus, os_platform=None, installed=None, machine=None, 
     if decisions is not None:
         return choices + [
             name
-            for name in ("cuda", "rocm", "xpu", "cpu", "directml")
+            for name in ("cuda", "rocm", "xpu", "cpu")
             if any(
                 row["operation"] == "image" and row["backend"] == name and row["eligible"]
                 for row in decisions
@@ -232,8 +221,6 @@ def image_backend_choices(gpus, os_platform=None, installed=None, machine=None, 
     if supported_os and ((has_vendor(gpus, "intel") and x64) or kind == "xpu"):
         choices.append("xpu")
     choices.append("cpu")
-    if installed.get("directml"):
-        choices.append("directml")
     return choices
 
 
@@ -282,7 +269,7 @@ def onnx_backend_choices(gpus=(), system=None, machine=None, *, decisions=None):
     """Background-removal runtimes this hardware can use (stable values).
 
     Vendor ONNX Runtime builds (CUDA, MIGraphX, OpenVINO) are x64 wheels installed
-    into an isolated folder; Windows GPU covers Windows ML and the deprecated DirectML.
+    into an isolated folder; Windows GPU uses Windows ML.
     """
     if decisions is not None:
         return ["Auto"] + list(
@@ -439,7 +426,6 @@ def component_status(os_platform=None):
         "image": {
             "torch": installed["torch"],
             "kind": installed["kind"],
-            "directml": installed["directml"],
             "platform_override": os.environ.get("TORCH_PLATFORM") or None,
         },
         "llm": {

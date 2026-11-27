@@ -13,13 +13,12 @@ from ruinedfooocus.packaging import hardware_inventory as inventory
 COMPONENTS = ("ComfyUI (PyTorch)", "llama.cpp", "xllamacpp", "ONNX Runtime", "Windows ML")
 
 # Vendor each option needs; None means any machine (CPU) and "gpu" any GPU vendor.
-IMAGE_VENDORS = {"cuda": "nvidia", "rocm": "amd", "xpu": "intel", "cpu": None, "directml": "gpu"}
+IMAGE_VENDORS = {"cuda": "nvidia", "rocm": "amd", "xpu": "intel", "cpu": None}
 IMAGE_LABELS = {
     "cuda": "CUDA (NVIDIA)",
     "rocm": "ROCm (AMD)",
     "xpu": "XPU (Intel)",
     "cpu": "CPU",
-    "directml": "DirectML (deprecated)",
 }
 LLAMA_VENDORS = {"CPU": None, "Vulkan": "gpu", "ROCm": "amd", "SYCL": "intel"}
 XLLAMA_VENDORS = {
@@ -35,14 +34,12 @@ ONNX_VENDORS = {
     "CUDA": "nvidia",
     "MIGraphX": "amd",
     "OpenVINO": "intel",
-    "Windows GPU": "gpu",
 }
 ONNX_LABELS = {
     "CPU": "CPU",
     "CUDA": "CUDA (NVIDIA)",
     "MIGraphX": "MIGraphX (AMD)",
     "OpenVINO": "OpenVINO (Intel)",
-    "Windows GPU": "DirectML (deprecated)",
 }
 # Windows ML vendor providers and the GPU vendor each one serves.
 WINML_VENDORS = {
@@ -105,10 +102,10 @@ def image_rows(gpus, system, os_name, installed, machine):
     kind = installed.get("kind")
     choices = set(inventory.image_backend_choices(gpus, system, installed, machine))
     rows = []
-    for value in ("cuda", "rocm", "xpu", "cpu", "directml"):
+    for value in ("cuda", "rocm", "xpu", "cpu"):
         label = IMAGE_LABELS[value]
         if value in choices:
-            active = kind == value or (value == "directml" and installed.get("directml"))
+            active = kind == value
             if value == "cpu" and not active:
                 rows.append(
                     _row(COMPONENTS[0], label, "Available", "Any installed build runs on CPU")
@@ -123,15 +120,11 @@ def image_rows(gpus, system, os_name, installed, machine):
                     )
                 )
         else:
-            note = (
-                "Legacy install only"
-                if value == "directml" and os_name in ("Windows", "WSL")
-                else _unavailable_note(
-                    gpus,
-                    IMAGE_VENDORS[value],
-                    os_name,
-                    ("Windows", "WSL") if value == "directml" else ("Windows", "Linux", "WSL"),
-                )
+            note = _unavailable_note(
+                gpus,
+                IMAGE_VENDORS[value],
+                os_name,
+                ("Windows", "Linux", "WSL"),
             )
             rows.append(_row(COMPONENTS[0], label, "Not available", note))
     return rows
@@ -227,10 +220,7 @@ def onnx_rows(gpus, system, os_name, machine):
     rows = []
     for value, label in ONNX_LABELS.items():
         if value not in usable:
-            needs = {
-                "Windows GPU": ("Windows",),
-                "MIGraphX": ("Linux",),
-            }.get(value)
+            needs = ("Linux",) if value == "MIGraphX" else None
             rows.append(
                 _row(
                     COMPONENTS[3],
@@ -242,8 +232,6 @@ def onnx_rows(gpus, system, os_name, machine):
             continue
         if value == "CPU":
             installed, note = cpu_version is not None, cpu_version or ""
-        elif value == "Windows GPU":
-            installed, note = onnx_installer.runtime_available(), ""
         else:
             installed = onnx_installer.native_runtime_available(value)
             note = onnx_installer.NATIVE_RUNTIMES[value].version if installed else ""

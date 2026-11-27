@@ -10,7 +10,7 @@ from decimal import Decimal, InvalidOperation
 from ipaddress import ip_address
 
 # Stable saved values per component; hardware filtering happens in hardware_inventory.
-IMAGE_BACKENDS = ("auto", "cuda", "rocm", "xpu", "cpu", "directml")
+IMAGE_BACKENDS = ("auto", "cuda", "rocm", "xpu", "cpu")
 # Background removal: native ONNX Runtime builds run in an isolated worker.
 ONNX_BACKENDS = ("Auto", "CPU", "CUDA", "MIGraphX", "OpenVINO", "Windows GPU")
 # xllamacpp 2026.11.12361 publishes Vulkan (Win x64/ARM64, Linux x64, macOS x64),
@@ -135,7 +135,7 @@ ENUM_FIELDS = {
     "image_engine": ("auto", "native", "sdcpp-vulkan", "sdcpp-cpu"),
     "rembg_backend": ONNX_BACKENDS,
     "xllamacpp_backend": XLLAMACPP_BACKENDS,
-    "rembg_provider": ("Auto", "Windows ML", "DirectML"),
+    "rembg_provider": ("Auto", "Windows ML"),
     "rembg_winml_type": ("Auto", "CPU", "GPU", "NPU"),
     "llm_rewrite_reasoning": ("Low", "Medium", "High"),
     "llm_chat_reasoning_mode": ("Auto", "Off", "On"),
@@ -175,6 +175,11 @@ STARTUP_CONTROLS = (
 
 def validate_known(values):
     result = dict(values)
+    # Normalize removed legacy DirectML settings cleanly so existing profiles still load.
+    if result.get("image_backend") == "directml":
+        result["image_backend"] = "auto"
+    if result.get("rembg_provider") == "DirectML":
+        result["rembg_provider"] = "Auto"
     from ruinedfooocus.features.image_processing.image_composition import FIELDS, settings
 
     if any(key in result for key in FIELDS):

@@ -79,6 +79,10 @@ class TorchPackagePlanTests(unittest.TestCase):
             legacy = gpu_installer.torch_install_commands(None, "cpu", "Windows")
         self.assertEqual(legacy[0][:2], ["torch==2.14.1", "torchvision==0.29.1"])
 
+    def test_directml_torch_platform_is_rejected_with_actionable_error(self):
+        with self.assertRaisesRegex(RuntimeError, "removed"):
+            gpu_installer.torch_install_commands(None, "directml", "Windows")
+
     def test_cuda_channels_require_only_image_torch_companions_without_execution(self):
         with (
             patch(

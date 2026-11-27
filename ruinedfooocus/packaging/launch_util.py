@@ -177,7 +177,7 @@ def reinstall_requirements(requirements_file, constraints=""):
             )
         resolved[requirement.name] = installed
     # --no-deps does not check dependency bounds. Reusing version ranges here
-    # could replace DirectML-compatible OpenCV/rembg/Tokenizers with newer builds.
+    # could replace pinned OpenCV/rembg/Tokenizers builds with incompatible versions.
     with TemporaryDirectory(prefix="ruinedfooocus-reinstall-") as directory:
         pinned = Path(directory) / "requirements.txt"
         pinned.write_text(

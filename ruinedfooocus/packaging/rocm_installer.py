@@ -270,12 +270,12 @@ def automatic_rocm_plan(os_platform, selected_platform, force=False):
     if (
         not force
         and not override
-        and selected_platform not in ("cpu", "directml")
+        and selected_platform != "cpu"
         and not selected_platform.startswith("rocm")
     ):
         return None
     targets = []
-    if not force and not override and selected_platform in ("cpu", "directml"):
+    if not force and not override and selected_platform == "cpu":
         from torchruntime.device_db import get_gpus
 
         if not any(gpu.vendor_id.lower() == "1002" for gpu in get_gpus()):

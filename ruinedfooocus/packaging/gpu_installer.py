@@ -32,8 +32,6 @@ def preserve_installed_cuda(bundle, torch_platform, reinstall=False):
 def installed_torch_constraints():
     versions = {}
     packages = ["torch", "torchvision"]
-    if os.environ.get("TORCH_PLATFORM") == "directml":
-        packages += ["numpy", "scipy", "torch-directml"]
     for name in packages:
         try:
             versions[name] = importlib.metadata.version(name)
@@ -46,10 +44,6 @@ def installed_torch_constraints():
         name = (distribution.metadata.get("Name") or "").lower().replace("_", "-")
         if name.startswith(("rocm-sdk-", "nvidia-", "pytorch-triton", "triton")) or name == "rocm":
             versions[name] = distribution.version
-    # Transformers 5.17 disables its torch integration on Torch 2.4, which
-    # Microsoft DirectML still requires. Preserve the last verified integration.
-    if versions.get("torch", "").split(".")[:2] == ["2", "4"]:
-        versions["transformers"] = "5.13.0"
     return {"versions": versions} if versions else None
 
 
@@ -90,28 +84,9 @@ def torch_install_commands(torchruntime, torch_platform, os_platform, nightly=Fa
             ]
         ]
     if torch_platform == "directml":
-        import platform
-
-        if os_platform not in ("Windows", "Linux") or not (3, 10) <= sys.version_info[:2] <= (
-            3,
-            12,
-        ):
-            raise RuntimeError("DirectML requires Python 3.10–3.12 on Windows or WSL.")
-        if platform.machine().lower() not in ("amd64", "x86_64"):
-            raise RuntimeError("The published DirectML wheels require x86_64 Python.")
-        if os_platform == "Linux" and "microsoft" not in platform.release().lower():
-            raise RuntimeError(
-                "DirectML requires Windows or WSL, not native Linux. Use --cpu or your GPU's native backend."
-            )
-        return [
-            [
-                "torch==2.4.1+cpu",
-                "torchvision==0.19.1+cpu",
-                "--index-url",
-                "https://download.pytorch.org/whl/cpu",
-            ],
-            ["--no-deps", "torch-directml==0.2.5.dev240914", "numpy==1.26.4", "scipy==1.15.3"],
-        ]
+        raise RuntimeError(
+            "PyTorch DirectML (torch-directml) has been removed. Use CUDA (NVIDIA), ROCm (AMD), XPU (Intel), or CPU."
+        )
     if torch_platform == "cu124" and not (3, 10) <= sys.version_info[:2] <= (3, 13):
         raise RuntimeError(
             "CUDA 12.4 requires Python 3.10–3.13 in RuinedFooocus. Use Python 3.10 or 3.12 for GTX 1080 Ti."

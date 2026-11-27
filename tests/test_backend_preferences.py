@@ -15,7 +15,7 @@ from ruinedfooocus.packaging import backend_preferences as prefs
 
 
 def launch_args(**values):
-    base = dict(cpu=False, directml=None, rocm10=False, cuda_nightly=False, legacy=False)
+    base = dict(cpu=False, rocm10=False, cuda_nightly=False, legacy=False)
     return SimpleNamespace(**(base | values))
 
 
@@ -76,7 +76,7 @@ class SavedImageBackend(unittest.TestCase):
         result = apply(saved, environment={"TORCH_PLATFORM": "rocm10.2"})
         self.assertFalse(result.cpu)
         # Explicit device-selecting flags keep priority as well.
-        for option in ("--directml", "--gpu-only", "--rocm10", "--legacy", "--cuda-nightly"):
+        for option in ("--gpu-only", "--rocm10", "--legacy", "--cuda-nightly"):
             with self.subTest(option=option):
                 self.assertFalse(apply(saved, options=(option,)).cpu)
         # An explicit --cpu is applied by the launcher itself, not by the profile.
@@ -229,10 +229,9 @@ class TorchSwitchDecision(unittest.TestCase):
     def test_cli_overrides_are_reported_by_name(self):
         self.assertEqual(prefs.cli_overrides(launch_args(), {}), [])
         self.assertEqual(
-            prefs.cli_overrides(launch_args(directml=-1, rocm10=True), {"TORCH_PLATFORM": "cpu"}),
-            ["directml", "rocm10", "TORCH_PLATFORM"],
+            prefs.cli_overrides(launch_args(rocm10=True), {"TORCH_PLATFORM": "cpu"}),
+            ["rocm10", "TORCH_PLATFORM"],
         )
-        self.assertEqual(prefs.cli_overrides(launch_args(directml=0), {}), ["directml"])
         self.assertEqual(prefs.cli_overrides(launch_args(gpu_device_id=0), {}), ["gpu_device_id"])
         self.assertEqual(
             prefs.cli_overrides(launch_args(oneapi_device_selector=""), {}),
@@ -287,26 +286,25 @@ class TorchSwitchDecision(unittest.TestCase):
                 self.assertFalse(os.environ.get("TORCH_PLATFORM"))
                 producer.assert_not_called()
 
-    def test_real_saved_xpu_and_matching_directml_choices_are_preserved(self):
-        for backend in ("xpu", "directml"):
-            with (
-                self.subTest(backend=backend),
-                saved_profile({"image_backend": backend}),
-                patch.object(prefs, "installed_torch_kind", return_value="cuda"),
-                patch(
-                    "ruinedfooocus.packaging.runtime_support.installed_directml_matches_requirements",
-                    return_value=True,
-                ) as matching_directml,
-            ):
-                decision = prefs.apply_saved_image_backend(
-                    launch_args(_compute_status={}), "Windows", reinstall=True
-                )
-                self.assertEqual((decision["action"], decision["backend"]), ("apply", backend))
-                self.assertEqual(os.environ["TORCH_PLATFORM"], backend)
-                if backend == "directml":
-                    matching_directml.assert_called_once_with("Windows")
-                else:
-                    matching_directml.assert_not_called()
+    def test_real_saved_xpu_is_preserved_and_legacy_directml_normalizes_to_auto(self):
+        with (
+            saved_profile({"image_backend": "xpu"}),
+            patch.object(prefs, "installed_torch_kind", return_value="cuda"),
+        ):
+            decision = prefs.apply_saved_image_backend(
+                launch_args(_compute_status={}), "Windows", reinstall=True
+            )
+            self.assertEqual((decision["action"], decision["backend"]), ("apply", "xpu"))
+            self.assertEqual(os.environ["TORCH_PLATFORM"], "xpu")
+        with (
+            saved_profile({"image_backend": "directml"}),
+            patch.object(prefs, "installed_torch_kind", return_value="cuda"),
+        ):
+            decision = prefs.apply_saved_image_backend(
+                launch_args(_compute_status={}), "Windows", reinstall=True
+            )
+            self.assertEqual((decision["action"], decision["backend"]), ("none", "auto"))
+            self.assertFalse(os.environ.get("TORCH_PLATFORM"))
 
     def test_real_saved_backend_keeps_cli_and_environment_override_priority(self):
         with (

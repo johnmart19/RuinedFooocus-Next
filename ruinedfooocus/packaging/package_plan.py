@@ -367,7 +367,7 @@ def execute_plan(plan, digest, *, runner=None, force=False, interpreter=None):
             raise RuntimeError(
                 "Optional interpreter ABI/environment differs from the frozen package plan"
             )
-    native_names = {"torch", "xllamacpp", "onnxruntime", "torch-directml", "numpy"}
+    native_names = {"torch", "xllamacpp", "onnxruntime", "numpy"}
 
     def check_imports():
         if not main_environment:

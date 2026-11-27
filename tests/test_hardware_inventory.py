@@ -41,9 +41,9 @@ class ImageChoices(unittest.TestCase):
         self.assertIn("rocm", image([], "Linux", kind="rocm"))
         self.assertIn("cuda", image([], "Linux", kind="cuda"))
 
-    def test_directml_only_appears_when_already_installed(self):
+    def test_directml_is_never_offered(self):
         self.assertNotIn("directml", image([AMD]))
-        self.assertIn("directml", image([AMD], directml=True))
+        self.assertNotIn("directml", image([AMD], directml=True))
 
 
 class LlmChoices(unittest.TestCase):

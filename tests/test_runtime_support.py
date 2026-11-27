@@ -582,66 +582,18 @@ class InstalledRuntimeTests(unittest.TestCase):
             ):
                 self.assertEqual(runtime_support.select_torch_platform(None, platform), expected)
 
-    def test_fresh_automatic_directml_does_not_downgrade_modern_torch(self):
+    def test_automatic_directml_falls_back_to_cpu_and_explicit_override_fails(self):
         runtime = SimpleNamespace(
             device_db=SimpleNamespace(get_gpus=lambda: []),
             platform_detection=SimpleNamespace(get_torch_platform=lambda _: "directml"),
         )
-        with (
-            patch("ruinedfooocus.packaging.cuda_selection.nvidia_info", return_value=(None, None)),
-            patch.object(
-                runtime_support, "installed_directml_matches_requirements", return_value=False
-            ) as installed,
-        ):
+        with patch("ruinedfooocus.packaging.cuda_selection.nvidia_info", return_value=(None, None)):
             self.assertEqual(runtime_support.select_torch_platform(runtime, "Windows"), "cpu")
-            installed.assert_called_once_with("Windows")
-            with patch.dict(os.environ, TORCH_PLATFORM="directml"):
-                self.assertEqual(runtime_support.select_torch_platform(None, "Windows"), "directml")
-            installed.assert_called_once()
         with (
-            patch("ruinedfooocus.packaging.cuda_selection.nvidia_info", return_value=(None, None)),
-            patch.object(
-                runtime_support, "installed_directml_matches_requirements", return_value=True
-            ),
+            patch.dict(os.environ, TORCH_PLATFORM="directml"),
+            self.assertRaisesRegex(RuntimeError, "no longer supported"),
         ):
-            self.assertEqual(runtime_support.select_torch_platform(runtime, "Windows"), "directml")
-
-    def test_existing_directml_requires_its_declared_torch_companions_and_numpy_abi(self):
-        versions = {
-            "torch-directml": "0.2.5.dev240914",
-            "torch": "2.4.1",
-            "torchvision": "0.19.1",
-            "numpy": "1.26.4",
-        }
-        with (
-            patch.object(
-                runtime_support.importlib.metadata, "version", side_effect=versions.__getitem__
-            ),
-            patch.object(
-                runtime_support.importlib.metadata,
-                "requires",
-                return_value=["torch==2.4.1", "torchvision==0.19.1"],
-            ),
-        ):
-            self.assertTrue(runtime_support.installed_directml_matches_requirements("Windows"))
-            versions["torch"] = "2.15.0+cu132"
-            self.assertFalse(runtime_support.installed_directml_matches_requirements("Windows"))
-            versions["torch"] = "2.4.1"
-            versions["numpy"] = "2.5.0"
-            self.assertFalse(runtime_support.installed_directml_matches_requirements("Windows"))
-            versions["numpy"] = "1.26.4"
-            with patch.object(runtime_support.platform, "release", return_value="6.8.0-generic"):
-                self.assertFalse(runtime_support.installed_directml_matches_requirements("Linux"))
-            with patch.object(
-                runtime_support.platform, "release", return_value="6.6.87.2-microsoft-standard-WSL2"
-            ):
-                self.assertTrue(runtime_support.installed_directml_matches_requirements("Linux"))
-        with patch.object(
-            runtime_support.importlib.metadata,
-            "version",
-            side_effect=runtime_support.importlib.metadata.PackageNotFoundError,
-        ):
-            self.assertFalse(runtime_support.installed_directml_matches_requirements("Windows"))
+            runtime_support.select_torch_platform(None, "Windows")
 
 
 if __name__ == "__main__":

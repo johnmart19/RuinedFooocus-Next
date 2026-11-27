@@ -195,10 +195,10 @@ class RocmPackagePlanTests(unittest.TestCase):
                 return_value=[type("Gpu", (), {"vendor_id": "1002"})()],
             ),
         ):
-            self.assertIsNone(rocm_installer.automatic_rocm_plan("Windows", "directml"))
+            self.assertIsNone(rocm_installer.automatic_rocm_plan("Windows", "cpu"))
             self.assertIsNone(rocm_installer.automatic_rocm_plan("Linux", "rocm6.2"))
             with self.assertRaises(RuntimeError):
-                rocm_installer.automatic_rocm_plan("Windows", "directml", force=True)
+                rocm_installer.automatic_rocm_plan("Windows", "cpu", force=True)
         with (
             patch.dict(os.environ, {"TORCH_PLATFORM": rocm_installer.ROCM_PLATFORM}),
             patch.object(rocm_installer, "detect_rocm_targets", return_value=["gfx803"]),

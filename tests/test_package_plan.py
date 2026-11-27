@@ -274,7 +274,7 @@ class PackagePlanTests(unittest.TestCase):
             wrong = tuple(changed if item.name == changed.name else item for item in closure)
             self.assertFalse(self.plan((base,), (overlay,), wrong).ready)
 
-    def test_transitive_mcp_gradio_and_directml_conflicts_are_rejected(self):
+    def test_transitive_mcp_gradio_and_version_conflicts_are_rejected(self):
         cases = [
             (artifact("gradio", requirements=("Pillow<13",)), artifact("Pillow", "13.0")),
             (artifact("mcp", requirements=("pydantic<=2.12.5",)), artifact("pydantic", "2.13")),
@@ -404,7 +404,7 @@ class PackagePlanTests(unittest.TestCase):
             patch.dict(sys.modules),
             patch.object(plans.subprocess, "run", side_effect=fail) as execute,
         ):
-            for name in ("torch", "xllamacpp", "onnxruntime", "torch_directml"):
+            for name in ("torch", "xllamacpp", "onnxruntime"):
                 sys.modules.pop(name, None)
             with self.assertRaises(subprocess.CalledProcessError):
                 plans.execute_plan(result, result.digest)

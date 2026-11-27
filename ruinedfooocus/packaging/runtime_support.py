@@ -700,39 +700,8 @@ def installed_rocm_platform(bundle):
     return f"rocm{match[1]}.{match[2]}"
 
 
-def installed_directml_matches_requirements(os_platform):
-    """Retain an old explicit environment without importing its binary runtime.
-
-    This checks package declarations, not device execution. Fresh installations
-    must not downgrade modern Torch just because PCI detection suggests DML.
-    """
-    if os_platform != "Windows" and not (
-        os_platform == "Linux" and "microsoft" in platform.release().lower()
-    ):
-        return False
-    from packaging.requirements import Requirement, InvalidRequirement
-    from packaging.version import Version, InvalidVersion
-
-    try:
-        importlib.metadata.version("torch-directml")
-        requirements = {}
-        for raw in importlib.metadata.requires("torch-directml") or ():
-            requirement = Requirement(raw)
-            if requirement.marker is None or requirement.marker.evaluate():
-                requirements[requirement.name.lower().replace("_", "-")] = requirement
-        return all(
-            name in requirements
-            and requirements[name].specifier.contains(
-                importlib.metadata.version(name), prereleases=True
-            )
-            for name in ("torch", "torchvision")
-        ) and Version(importlib.metadata.version("numpy")) < Version("2")
-    except (importlib.metadata.PackageNotFoundError, InvalidRequirement, InvalidVersion):
-        return False
-
-
 def _platform_for(torchruntime, gpus):
-    """Try every vendor group before a mixed list falls back to CPU/DirectML.
+    """Try every vendor group before a mixed list falls back to CPU.
 
     This legacy discovery adapter is not an eligibility certificate; new callers
     pass exact artifact/device decisions to ``select_torch_platform``.
@@ -752,7 +721,7 @@ def _platform_for(torchruntime, gpus):
             continue
         if selected not in ("cpu", "directml", "rocm5.5"):
             return selected
-    return fallback
+    return "cpu" if fallback == "directml" else fallback
 
 
 def wsl_device_infos(torchruntime, gpus):
@@ -783,6 +752,11 @@ def select_torch_platform(
         return result["platform"]
     override = os.environ.get("TORCH_PLATFORM")
     if override:
+        if override.strip().lower() == "directml":
+            raise RuntimeError(
+                "TORCH_PLATFORM=directml is no longer supported; PyTorch DirectML has been removed. "
+                "Unset TORCH_PLATFORM or choose a supported backend (CUDA, ROCm, XPU, or CPU)."
+            )
         selected = override
     elif installed_rocm:
         selected = installed_rocm_platform(installed_rocm)
@@ -811,15 +785,6 @@ def select_torch_platform(
                     print(f"NVIDIA CUDA unavailable: {error}")
         else:
             selected = _platform_for(torchruntime, gpus)
-    if (
-        selected == "directml"
-        and not override
-        and not installed_directml_matches_requirements(os_platform)
-    ):
-        print(
-            "Automatic torch-directml downgrades are disabled; checking native AMD support or using CPU. Use --directml explicitly only in a compatible legacy environment."
-        )
-        return "cpu"
-    if selected == "rocm5.5" or (selected == "mps" and os_platform != "Darwin"):
+    if selected in ("directml", "rocm5.5") or (selected == "mps" and os_platform != "Darwin"):
         return "cpu"
     return selected
