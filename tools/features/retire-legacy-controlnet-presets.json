@@ -1,0 +1,8 @@
+{
+  "id": "retire-legacy-controlnet-presets",
+  "subject": "Retire the legacy ControlNet preset helper",
+  "requires": ["retire-legacy-worker-pipelines"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
