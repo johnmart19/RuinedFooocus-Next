@@ -1,0 +1,8 @@
+{
+  "id": "retire-sd-inference-configs",
+  "subject": "Drop the bundled SD1 and SD2 inference configs",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
