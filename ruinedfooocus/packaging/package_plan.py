@@ -609,7 +609,10 @@ def bootstrap_plan(
                 index,
                 ("https://files.pythonhosted.org/packages",)
                 if index == "https://pypi.org/simple"
-                else ("https://stable.repo.amd.com/rocm/pytorch/whl-next",)
+                else (
+                    "https://stable.repo.amd.com/rocm/pytorch/whl-next",
+                    "https://stable.repo.amd.com/rocm/core/whl-next",
+                )
                 if index.rstrip("/") == "https://stable.repo.amd.com/rocm/whl-next"
                 else ("https://download-r2.pytorch.org" + urlsplit(index).path.rstrip("/"),)
                 if urlsplit(index).scheme == "https"

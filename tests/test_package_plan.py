@@ -352,6 +352,39 @@ class PackagePlanTests(unittest.TestCase):
         other = replace(selector, source="file:///C:/other/rocm-10.1.0-py3-none-any.whl")
         self.assertFalse(self.plan((recipe,), artifacts=(other,)).ready)
 
+    def test_rocm_whl_next_accepts_both_pytorch_and_core_sdk_sources(self):
+        recipe = replace(
+            layer("recipe", "rocm-sdk-core==10.2.0"),
+            artifact_index="https://stable.repo.amd.com/rocm/whl-next/",
+            artifact_sources=(
+                "https://stable.repo.amd.com/rocm/pytorch/whl-next",
+                "https://stable.repo.amd.com/rocm/core/whl-next",
+            ),
+        )
+        wheel = replace(
+            artifact("rocm-sdk-core", "10.2.0"),
+            filename="rocm_sdk_core-10.2.0-py3-none-any.whl",
+        )
+        for source, accepted in (
+            (
+                "https://stable.repo.amd.com/rocm/core/whl-next/rocm-sdk-core/rocm_sdk_core-10.2.0-py3-none-win_amd64.whl",
+                True,
+            ),
+            (
+                "https://stable.repo.amd.com/rocm/pytorch/whl-next/torch/torch-2.15.0+rocm10.2.0-cp312-cp312-win_amd64.whl",
+                True,
+            ),
+            (
+                "https://evil.example/rocm/core/whl-next/rocm_sdk_core-10.2.0-py3-none-win_amd64.whl",
+                False,
+            ),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(
+                    self.plan((recipe,), artifacts=(replace(wheel, source=source),)).ready,
+                    accepted,
+                )
+
     def test_pytorch_download_host_keeps_channel_and_host_boundaries(self):
         recipe = replace(
             layer("recipe", "torch==2.14"),
