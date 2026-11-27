@@ -180,7 +180,8 @@ class LlmOptimizationSchemaTests(unittest.TestCase):
         self.assertEqual(cmd[cmd.index("--flash-attn") + 1], "on")
         self.assertIn("--batch-size", cmd)
         self.assertEqual(cmd[cmd.index("--batch-size") + 1], "1024")
-        self.assertIn("--no-mmap", cmd)
+        self.assertIn("--load-mode", cmd)
+        self.assertEqual(cmd[cmd.index("--load-mode") + 1], "none")
 
 
 class CheckpointOptimizationCopyTests(unittest.TestCase):
