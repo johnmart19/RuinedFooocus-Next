@@ -1,0 +1,8 @@
+{
+  "id": "retire-legacy-prompt-processing",
+  "subject": "Retire the legacy prompt processing and style modules",
+  "requires": ["retire-legacy-worker-pipelines"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
