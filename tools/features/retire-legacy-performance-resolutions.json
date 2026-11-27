@@ -1,0 +1,8 @@
+{
+  "id": "retire-legacy-performance-resolutions",
+  "subject": "Retire the legacy performance and resolution option modules",
+  "requires": ["retire-legacy-shared-state"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
