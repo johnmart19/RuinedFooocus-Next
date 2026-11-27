@@ -1,0 +1,8 @@
+{
+  "id": "bounded-subprocess",
+  "subject": "Run small subprocesses with bounded output, a deadline and cancellation",
+  "requires": ["app-root-paths", "child-process-ownership"],
+  "tests": ["test_bounded_subprocess.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
