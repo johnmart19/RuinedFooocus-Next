@@ -35,7 +35,7 @@ def run(
     probe=False,
     device_id=None,
     site_dir=None,
-    provider="DirectML",
+    provider="Windows ML",
     manifest=None,
     ep_device="Auto",
     list_devices=False,
@@ -196,16 +196,7 @@ def run(
             provider_options = {"device_id": str(device_id)}
         providers = [(expected_provider, provider_options), "CPUExecutionProvider"]
     else:
-        if "DmlExecutionProvider" not in ort.get_available_providers():
-            raise RuntimeError("The isolated ONNX runtime has no DirectML provider.")
-        provider_options = (
-            {"device_id": str(device_id)}
-            if device_id is not None
-            else {"performance_preference": "high_performance", "device_filter": "gpu"}
-        )
-        providers = [("DmlExecutionProvider", provider_options), "CPUExecutionProvider"]
-        expected_provider = "DmlExecutionProvider"
-        active_type = "GPU"
+        raise RuntimeError(f"Unsupported ONNX worker provider: {provider}.")
     if probe:
         options.add_session_config_entry("session.disable_cpu_ep_fallback", "1")
         session = ort.InferenceSession(
@@ -347,7 +338,7 @@ def main():
     parser.add_argument("--device-id", type=int)
     parser.add_argument("--site-dir")
     parser.add_argument(
-        "--provider", choices=["DirectML", "Windows ML", *NATIVE_PROVIDERS], default="DirectML"
+        "--provider", choices=["Windows ML", *NATIVE_PROVIDERS], default="Windows ML"
     )
     parser.add_argument("--manifest")
     parser.add_argument("--ep-device", default="Auto")

@@ -26,14 +26,13 @@ from ruinedfooocus.packaging.backend_preferences import (
 )
 from ruinedfooocus.packaging.startup_options import skip_dependency_install
 
-# Product names (CUDA, ROCm, Vulkan, DirectML, Windows ML) stay as written in every language.
+# Product names (CUDA, ROCm, Vulkan, Windows ML) stay as written in every language.
 IMAGE_LABELS = {
     "auto": t("Automatic (recommended)"),
     "cuda": t("CUDA (NVIDIA)"),
     "rocm": t("ROCm (AMD)"),
     "xpu": t("XPU (Intel)"),
     "cpu": t("CPU"),
-    "directml": t("DirectML (deprecated)"),
 }
 LLAMA_LABELS = {
     "Auto": t("Automatic (recommended)"),
@@ -75,7 +74,6 @@ SUPPORT_TEXTS = (
     t("Not available"),
     t("Unknown"),
     t("Any installed build runs on CPU"),
-    t("Legacy install only"),
     t("Windows only"),
     t("Linux and WSL only"),
     t("Native Linux only"),
@@ -224,22 +222,18 @@ def support_matrix_payload(
         }
     )
     for value, label in matrix.IMAGE_LABELS.items():
-        if value == "directml" and not installed_image.get("directml") and not include_unavailable:
+        if value == "directml":
             continue
         supported = value in image_choices
         if not supported:
             if not include_unavailable:
                 hidden_unsupported += 1
                 continue
-            note = (
-                "Legacy install only"
-                if value == "directml" and os_name in ("Windows", "WSL")
-                else matrix._unavailable_note(
-                    gpus,
-                    matrix.IMAGE_VENDORS[value],
-                    os_name,
-                    ("Windows", "WSL") if value == "directml" else ("Windows", "Linux", "WSL"),
-                )
+            note = matrix._unavailable_note(
+                gpus,
+                matrix.IMAGE_VENDORS[value],
+                os_name,
+                ("Windows", "Linux", "WSL"),
             )
             image_rows.append(
                 {
@@ -256,7 +250,7 @@ def support_matrix_payload(
                 }
             )
             continue
-        is_installed = image_kind == value or (value == "directml" and installed_image.get("directml"))
+        is_installed = image_kind == value
         if value == "cpu":
             status_code = "installed"
             status_label = localize("Ready", locale)
@@ -272,7 +266,7 @@ def support_matrix_payload(
                 localize("Installed", locale) if is_installed else localize("Not installed", locale)
             )
             detail = (installed_image.get("torch") or "") if is_installed else ""
-            can_install = not is_installed and value != "directml"
+            can_install = not is_installed
         image_rows.append(
             {
                 "id": f"image:{value}",
@@ -433,17 +427,14 @@ def support_matrix_payload(
     onnx_label_to_value = {label: value for value, label in matrix.ONNX_LABELS.items()}
     for row in matrix.onnx_rows(gpus, system, os_name, machine):
         value = onnx_label_to_value.get(row["option"], row["option"])
-        status_code, status_label = _status_pair(row["status"])
-        if value == "Windows GPU" and status_code != "installed" and not include_unavailable:
+        if value == "Windows GPU":
             continue
+        status_code, status_label = _status_pair(row["status"])
         if status_code == "unavailable":
             if not include_unavailable:
                 hidden_unsupported += 1
                 continue
-        is_main = (
-            bg_choice == value
-            and (value != "Windows GPU" or bg_provider_choice == "DirectML")
-        )
+        is_main = bg_choice == value
         bg_rows.append(
             {
                 "id": f"onnx:{value}",
@@ -944,13 +935,6 @@ def create_hardware_tab(device_name="", launch_args=None, profile_base=None):
                 gr.Info(
                     localize(
                         "No installation is needed for this choice. Save settings and restart to apply it.",
-                        locale,
-                    )
-                )
-            elif choice == "directml":
-                raise gr.Error(
-                    localize(
-                        "DirectML is deprecated and cannot be installed from here. Use the --directml launch option in a compatible legacy environment.",
                         locale,
                     )
                 )
@@ -1674,8 +1658,6 @@ def create_hardware_tab(device_name="", launch_args=None, profile_base=None):
                 )
             elif prefix == "onnx":
                 bg_choice = target
-                if target == "Windows GPU":
-                    bg_prov = "DirectML"
                 msg = localize(
                     "Main Background removal backend set to {backend}. Click Save to keep it.",
                     locale,
@@ -2169,7 +2151,7 @@ def create_windows_ml_controls(
 
     background_provider = gr.Dropdown(
         label=t("Windows background provider"),
-        choices=["Auto", "Windows ML", ("DirectML (deprecated)", "DirectML")],
+        choices=["Auto", "Windows ML"],
         value=provider_preference(saved),
     )
     add_setting("rembg_provider", background_provider)
@@ -2205,7 +2187,7 @@ def create_windows_ml_controls(
             ),
             value=saved_device,
             info=t(
-                "Provider device identities are separate from PyTorch and DirectML indices. Refresh explicitly enumerates provider devices; no device probe runs while browsing Settings."
+                "Provider device identities are separate from PyTorch indices. Refresh explicitly enumerates provider devices; no device probe runs while browsing Settings."
             ),
         )
         add_setting("rembg_winml_device", winml_device)
@@ -2447,58 +2429,6 @@ def create_windows_ml_controls(
             queue=False,
             show_progress="hidden",
             api_visibility="private",
-        )
-        gr.Markdown(
-            t(
-                "Installs an isolated ONNX runtime without replacing the app’s packages. "
-                "GPU resources are released before other model jobs."
-            )
-        )
-        onnx_status = gr.Markdown(t("Use Install/verify to enable the optional GPU runtime."))
-        onnx_install = gr.Button(
-            t("Install / verify deprecated DirectML runtime"),
-            variant="primary",
-            size="sm",
-            min_width=240,
-        )
-
-        def install_background_runtime(cpu, background_choice, session):
-            from ruinedfooocus.backends.onnx.onnx_installer import install_runtime
-
-            if auxiliary_cpu(cpu or background_choice == "CPU"):
-                yield (
-                    gr.update(interactive=True),
-                    "CPU authority is active; no DirectML installation/probe was started.",
-                )
-                return
-            yield (
-                gr.update(interactive=False),
-                "Queued for the serial model worker…",
-            )
-            try:
-                result = session.run_admitted(lambda check: install_runtime(check_cancelled=check))
-                yield gr.update(interactive=True), result
-            except Exception as error:
-                yield (
-                    gr.update(interactive=True),
-                    f"GPU runtime unavailable; CPU fallback remains active. {error}",
-                )
-
-        onnx_install.click(
-            install_background_runtime,
-            inputs=[cpu_everywhere, background_backend, action_session],
-            outputs=[onnx_install, onnx_status],
-            trigger_mode="once",
-            show_progress="minimal",
-            api_visibility="private",
-            concurrency_id="onnx-runtime-install",
-            concurrency_limit=1,
-        ).then(
-            refresh_fn,
-            inputs=refresh_args,
-            outputs=support,
-            show_progress="hidden",
-            api_visibility="undocumented",
         )
 
     return {

@@ -227,36 +227,28 @@ class OnnxInstallerTests(unittest.TestCase):
         for argv, offline in [([], "1"), (["--offline"], ""), (["--skip-dependency-install"], "")]:
             with (
                 self.subTest(argv=argv, offline=offline),
+                tempfile.TemporaryDirectory() as folder,
                 patch.object(sys, "argv", ["test", *argv]),
                 patch.dict(os.environ, RF_OFFLINE=offline),
-                patch.object(installer, "runtime_path") as location,
-                patch.object(installer.subprocess, "run") as execute,
+                patch.object(
+                    installer, "native_runtime_path", return_value=Path(folder) / "runtime"
+                ),
+                patch.object(acquisition, "run") as execute,
             ):
                 with self.assertRaisesRegex(RuntimeError, "installation is disabled"):
-                    installer.install_runtime()
-                location.assert_not_called()
+                    installer.install_native_runtime("CUDA")
                 execute.assert_not_called()
 
     def test_optional_install_is_isolated_pinned_and_does_not_replace_cpu_ort(self):
         with (
             patch.object(installer.platform, "system", return_value="Windows"),
             patch.object(installer.platform, "machine", return_value="AMD64"),
-        ):
-            plan = installer.install_plan("isolated-folder")
-        self.assertIn("--target", plan)
-        self.assertIn("--no-deps", plan)
-        self.assertIn("onnxruntime-windowsml==" + installer.VERSION, plan)
-        self.assertNotIn("onnxruntime", plan)
-        with (
-            patch.object(installer.platform, "system", return_value="Windows"),
-            patch.object(installer.platform, "machine", return_value="AMD64"),
             patch.object(installer.sys, "version_info", (3, 14)),
         ):
-            self.assertIn(
-                "onnxruntime-windowsml==" + installer.VERSION,
-                installer.install_plan("isolated-directml"),
-            )
             cuda_plan = installer.native_install_plan("CUDA", "isolated-cuda")
+            self.assertIn("--target", cuda_plan)
+            self.assertIn("--no-deps", cuda_plan)
+            self.assertNotIn("onnxruntime", cuda_plan)
             self.assertTrue(
                 any(
                     value.startswith("onnxruntime-gpu") and "1.32.0" in value for value in cuda_plan
@@ -264,22 +256,18 @@ class OnnxInstallerTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(RuntimeError, "Python"):
                 installer.native_install_plan("OpenVINO", "isolated-openvino")
-        with patch.object(installer.platform, "system", return_value="Linux"):
-            with self.assertRaises(RuntimeError):
-                installer.install_plan()
 
     def test_marker_rejects_changed_binary_or_python_abi(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             (root / "binary.pyd").write_bytes(b"original")
             marker = dict(
-                version=installer.VERSION,
+                version="1.32.0",
                 python=list(sys.version_info[:2]),
                 binary="binary.pyd",
                 sha256=hashlib.sha256(b"original").hexdigest(),
             )
             (root / "verified.json").write_text(json.dumps(marker))
-            with patch.object(installer, "runtime_path", return_value=root):
-                self.assertTrue(installer.runtime_available())
-                (root / "binary.pyd").write_bytes(b"changed")
-                self.assertFalse(installer.runtime_available())
+            self.assertTrue(installer._verified(root, "1.32.0"))
+            (root / "binary.pyd").write_bytes(b"changed")
+            self.assertFalse(installer._verified(root, "1.32.0"))

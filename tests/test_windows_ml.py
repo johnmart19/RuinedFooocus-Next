@@ -14,13 +14,16 @@ from ruinedfooocus.core.settings_validation import validate_settings
 
 
 class WindowsMLTests(unittest.TestCase):
-    def test_old_explicit_windows_backend_preserves_intent_without_rewriting_saved_values(self):
+    def test_legacy_directml_and_windows_backend_normalize_to_auto_without_mutating_saved_values(
+        self,
+    ):
         import onnxruntime as ort
 
-        for values, legacy in (
-            ({"rembg_backend": "Windows GPU"}, True),
-            ({"rembg_backend": "Auto"}, False),
-            ({"rembg_backend": "Windows GPU", "rembg_provider": "Auto"}, False),
+        for values in (
+            {"rembg_backend": "Windows GPU"},
+            {"rembg_backend": "Windows GPU", "rembg_provider": "DirectML"},
+            {"rembg_backend": "Auto"},
+            {"rembg_backend": "Windows GPU", "rembg_provider": "Auto"},
         ):
             original = dict(values)
             with (
@@ -32,21 +35,17 @@ class WindowsMLTests(unittest.TestCase):
                             settings=SimpleNamespace(default_settings=values)
                         ),
                         "ruinedfooocus.app.arguments": SimpleNamespace(
-                            args=SimpleNamespace(cpu=False, directml=None)
+                            args=SimpleNamespace(cpu=False)
                         ),
                     },
                 ),
                 patch.object(ort, "get_available_providers", return_value=["CPUExecutionProvider"]),
                 patch.object(runtime.platform, "system", return_value="Windows"),
-                patch.object(runtime, "runtime_available", return_value=True),
                 patch.object(runtime, "create_mask_session") as cpu,
             ):
-                session = runtime.new_session()
-                if legacy:
-                    self.assertEqual(session.provider, "DirectML")
-                    cpu.assert_not_called()
-                else:
-                    cpu.assert_called_once_with(providers=["CPUExecutionProvider"])
+                self.assertEqual(winml.provider_preference(values), "Auto")
+                runtime.new_session()
+                cpu.assert_called_once_with(providers=["CPUExecutionProvider"])
                 self.assertEqual(values, original)
 
     def test_acquisition_uses_requested_device_type_and_only_certified_candidates(self):
@@ -154,7 +153,7 @@ class WindowsMLTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "compatible NPU"):
                 winml.select_device(ort, {"name": provider}, device_type="NPU")
 
-    def test_directml_is_never_selected_automatically(self):
+    def test_auto_without_qualified_gpu_falls_back_to_cpu(self):
         import onnxruntime as ort
 
         with (
@@ -162,12 +161,11 @@ class WindowsMLTests(unittest.TestCase):
                 "sys.modules",
                 {
                     "ruinedfooocus.app.arguments": SimpleNamespace(
-                        args=SimpleNamespace(cpu=False, directml=None)
+                        args=SimpleNamespace(cpu=False)
                     )
                 },
             ),
             patch.object(ort, "get_available_providers", return_value=["CPUExecutionProvider"]),
-            patch.object(runtime, "runtime_available", return_value=True),
             patch.object(runtime.platform, "system", return_value="Windows"),
             patch.object(runtime, "create_mask_session") as factory,
         ):
@@ -250,7 +248,7 @@ class WindowsMLTests(unittest.TestCase):
             winml.select_device(ort, record, identity)
 
     def test_explicit_winml_and_cpu_override_never_inherit_directml_device_number(self):
-        args = SimpleNamespace(cpu=False, directml=None)
+        args = SimpleNamespace(cpu=False)
         state = SimpleNamespace(args=args)
         with (
             patch.dict("sys.modules", {"ruinedfooocus.app.arguments": state}),

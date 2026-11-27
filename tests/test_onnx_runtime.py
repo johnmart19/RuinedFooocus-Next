@@ -148,11 +148,10 @@ class OnnxRuntimeTests(unittest.TestCase):
                 {
                     "rembg": rembg,
                     "ruinedfooocus.app.arguments": SimpleNamespace(
-                        args=SimpleNamespace(directml=None)
+                        args=SimpleNamespace(cpu=False)
                     ),
                 },
             ),
-            patch.object(runtime, "runtime_available", return_value=False),
             patch.object(
                 runtime, "create_audited_mask_session", return_value=rembg.new_session.return_value
             ) as audited,
@@ -169,27 +168,28 @@ class OnnxRuntimeTests(unittest.TestCase):
             runtime.new_session(preference="Windows GPU")
             rembg.new_session.assert_called_with(providers=["CPUExecutionProvider"])
 
-    def test_explicit_directml_does_not_use_an_installed_cuda_provider(self):
+    def test_removed_directml_provider_is_rejected_and_windows_ml_does_not_use_cuda(self):
         import onnxruntime as ort
+        from ruinedfooocus.backends.onnx import windows_ml as winml
 
         rembg = SimpleNamespace(new_session=Mock())
-        args = SimpleNamespace(directml=2)
+        args = SimpleNamespace(cpu=False)
         with (
             patch.object(ort, "get_available_providers", return_value=["CUDAExecutionProvider"]),
             patch.dict(
                 "sys.modules",
                 {"rembg": rembg, "ruinedfooocus.app.arguments": SimpleNamespace(args=args)},
             ),
-            patch.object(runtime.platform, "system", return_value="Windows"),
-            patch.object(runtime, "runtime_available", return_value=True),
+            patch.object(
+                winml, "installed_provider", return_value={"name": "MIGraphXExecutionProvider"}
+            ),
         ):
-            selected = runtime.new_session(preference="Auto")
+            with self.assertRaisesRegex(ValueError, "Auto or Windows ML"):
+                runtime.new_session(preference="Auto", provider="DirectML")
+            selected = runtime.new_session(preference="Windows GPU", provider="Windows ML")
             self.assertIsInstance(selected, runtime.IsolatedMaskSession)
-            self.assertEqual(selected.device_id, 2)
+            self.assertEqual(selected.provider, "Windows ML")
             rembg.new_session.assert_not_called()
-            with patch.object(runtime, "runtime_available", return_value=False):
-                runtime.new_session(preference="Auto")
-            rembg.new_session.assert_called_once_with(providers=["CPUExecutionProvider"])
 
     def test_gpu_worker_failure_retries_cpu_once_and_stays_on_cpu(self):
         session = runtime.IsolatedMaskSession()

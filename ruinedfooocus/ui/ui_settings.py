@@ -20,7 +20,7 @@ SETTINGS_INDEX = {
     "Models / downloads": "installed, available, catalogue, download, cancel, components, source, license, disk, memory, quantization",
     "Appearance & language": "language, text size, theme, metadata, batch size, LoRA weights, update interval",
     "Profiles & storage": "Save, Save as profile, Use next launch, browser, port, offline, installed packages, paths, archive, library",
-    "Hardware & backends": "GPU, CPU, Use CPU for everything, CUDA, ROCm, Vulkan, DirectML, Windows ML, PyTorch, Torch, llama.cpp, xllamacpp, Chat runtime, ONNX, background removal, install, main, default",
+    "Hardware & backends": "GPU, CPU, Use CPU for everything, CUDA, ROCm, Vulkan, Windows ML, PyTorch, Torch, llama.cpp, xllamacpp, Chat runtime, ONNX, background removal, install, main, default",
     "Image runtime": "device, CPU, preview, dynamic VRAM, precision, attention, offload, deterministic, smart memory, pinned memory, mmap, allocator, compiler, CUDA graphs, gguf, dequant, patch",
     "Local Chat": "llama.cpp, sampling, context, GPU layers, history, rewrite reasoning, documents, RAG, embeddings, diagnostics, file presence, sampling recommendations",
     "Generation defaults": "presets, hints, metadata, framing, VAE tiles, MOSS, HiDream, LCM, sampling shifts",

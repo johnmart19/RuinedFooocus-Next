@@ -20,7 +20,7 @@ from ruinedfooocus.backends.onnx.qualification import (
     fingerprint,
 )
 
-PROVIDERS = ("Auto", "Windows ML", "DirectML")
+PROVIDERS = ("Auto", "Windows ML")
 CATALOG_PACKAGES = (
     "wasdk-Microsoft.Windows.AI.MachineLearning==2.3.0",
     "wasdk-Microsoft.Windows.ApplicationModel.DynamicDependency.Bootstrap==2.3.0",
@@ -45,11 +45,10 @@ DEVICE_TYPES = ("Auto", "CPU", "GPU", "NPU")
 
 
 def provider_preference(values):
-    # The old explicit Windows GPU choice requested isolated DirectML. Retain
-    # that intent without rewriting saved settings or enabling DML for fresh Auto.
-    return values.get(
-        "rembg_provider", "DirectML" if values.get("rembg_backend") == "Windows GPU" else "Auto"
-    )
+    # Normalize legacy/unknown saved provider values (such as removed DirectML)
+    # to Auto without mutating saved settings.
+    value = values.get("rembg_provider")
+    return value if value in PROVIDERS else "Auto"
 
 
 def manifest_path():
@@ -285,7 +284,7 @@ def _install_provider(name="Auto", device_type="Auto", *, check_cancelled=None):
     if not bridge_compatible(name):
         raise RuntimeError(
             "AMDGPU requires Windows ML 2.5.96+; the audited Python projection is 2.3.0. "
-            "No compatible Python/App SDK/ORT closure has been qualified. Use DirectML or CPU."
+            "No compatible Python/App SDK/ORT closure has been qualified. Use CPU or another qualified provider."
         )
     if skip_dependency_install():
         raise RuntimeError("Windows ML installation is disabled by offline/skip-dependency policy.")

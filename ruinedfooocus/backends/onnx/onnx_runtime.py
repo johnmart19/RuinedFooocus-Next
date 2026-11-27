@@ -32,8 +32,6 @@ from ruinedfooocus.backends.onnx.onnx_installer import (
     native_runtime_available,
     native_runtime_auto_eligible,
     native_runtime_path,
-    runtime_available,
-    runtime_path,
     worker_command,
 )
 
@@ -63,7 +61,7 @@ def session_request_identity(cpu=False, *, values=None):
         values = settings.default_settings
     from ruinedfooocus.backends.onnx.windows_ml import manifest_path
 
-    records = [manifest_path(), runtime_path() / "verified.json"]
+    records = [manifest_path()]
     from ruinedfooocus.backends.onnx.onnx_installer import native_runtime, LEGACY_MIGRAPHX
 
     records.extend(
@@ -188,7 +186,7 @@ class IsolatedMaskSession:
         self,
         device_id=None,
         *,
-        provider="DirectML",
+        provider="Windows ML",
         ep_device="Auto",
         ep_name="Auto",
         ep_type="Auto",
@@ -311,7 +309,7 @@ class IsolatedMaskSession:
             )
             command += ["--provider", self.provider, "--ep-type", self.ep_type]
         else:
-            command = worker_command(runtime_path(), device_id=self.device_id, worker=WORKER)
+            raise GPUWorkerError(f"Unsupported isolated ONNX provider: {self.provider}.")
         command += ["--profile-root", self.scratch.name]
         try:
             self.log = log_path.open("a", encoding="utf-8")
@@ -495,8 +493,8 @@ def new_session(
     from ruinedfooocus.backends.onnx.windows_ml import PROVIDERS, installed_provider
 
     if provider not in PROVIDERS:
-        raise ValueError("Choose Auto, Windows ML or DirectML for the background provider.")
-    if provider == "Windows ML" and args.directml is None:
+        raise ValueError("Choose Auto or Windows ML for the background provider.")
+    if provider == "Windows ML":
         if ep_type == "CPU" and ep_name in (None, "Auto"):
             report_status("CPU: native ONNX Runtime (built-in provider; no vendor package needed).")
             return create_mask_session(providers=["CPUExecutionProvider"])
@@ -515,7 +513,7 @@ def new_session(
         )
         return create_mask_session(providers=["CPUExecutionProvider"])
 
-    if preference == "Auto" and provider == "Auto" and native_gpu and args.directml is None:
+    if preference == "Auto" and provider == "Auto" and native_gpu:
         selected = next(
             name
             for name in (
@@ -529,19 +527,12 @@ def new_session(
             selected, providers=[selected, "CPUExecutionProvider"]
         )
         return NativeMaskSession(factory, expected_provider=selected)
-    if preference == "Auto" and provider == "Auto" and args.directml is None:
+    if preference == "Auto" and provider == "Auto":
         # A vendor build the user installed here was verified on this machine.
         for name in NATIVE_RUNTIMES:
             if native_runtime_auto_eligible(name):
                 return IsolatedMaskSession(provider=name)
-    if (
-        platform.system() == "Windows"
-        and (provider == "DirectML" or args.directml is not None)
-        and runtime_available()
-    ):
-        device_id = args.directml if args.directml is not None and args.directml >= 0 else None
-        return IsolatedMaskSession(device_id=device_id)
-    if preference == "Windows GPU" or provider == "DirectML" or args.directml is not None:
+    if preference == "Windows GPU":
         logging.warning(
             "Optional Windows GPU ONNX runtime is not installed; using native/CPU removal."
         )

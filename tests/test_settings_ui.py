@@ -311,7 +311,6 @@ class SettingsProgressTests(unittest.TestCase):
                 "install_xllama",
                 "install_background",
                 "install_winml",
-                "onnx_install",
             }
             <= refreshed
         )
@@ -438,8 +437,12 @@ class SettingsProgressTests(unittest.TestCase):
         self.assertTrue(compact_rows["llama:ROCm"]["canSetMain"])
         self.assertTrue(compact_rows["xllama:Vulkan"]["canInstall"])
         self.assertTrue(compact_rows["winml:AMDGPUExecutionProvider"]["isMain"])
+        self.assertNotIn("image:directml", compact_rows)
+        self.assertNotIn("onnx:Windows GPU", compact_rows)
 
         full_rows = {row["id"]: row for group in full["groups"] for row in group["rows"]}
+        self.assertNotIn("image:directml", full_rows)
+        self.assertNotIn("onnx:Windows GPU", full_rows)
         self.assertIn("image:cuda", full_rows)
         self.assertEqual(full_rows["image:cuda"]["status"], "unavailable")
         self.assertFalse(full_rows["image:cuda"]["canInstall"])
