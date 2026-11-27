@@ -136,24 +136,17 @@ def fetch_registered_preview(identity, destination, *, offline=False):
         for row in siblings
     ):
         return None
-    images = [
-        row["rfilename"]
-        for row in siblings
-        if isinstance(row, dict)
-        and isinstance(row.get("rfilename"), str)
-        and Path(row["rfilename"]).suffix.lower() in SUFFIXES
-        and not row["rfilename"].startswith("/")
-        and ".." not in Path(row["rfilename"]).parts
-        and "\\" not in row["rfilename"]
-    ]
-    images.sort(key=_preview_rank)
+    images = model_sources.extract_hf_artwork_urls(
+        metadata,
+        repository,
+        revision,
+        offline=is_offline(),
+        rank=_preview_rank,
+    )
     if not images:
         return None
     last_error = None
-    for candidate in images[:3]:
-        image_url = (
-            f"https://huggingface.co/{repository}/resolve/{revision}/{quote(candidate, safe='/')}"
-        )
+    for image_url in images[:3]:
         if is_offline():
             return None
         try:
@@ -184,9 +177,9 @@ def fetch_registered_preview(identity, destination, *, offline=False):
 class CataloguePreviews:
     """Process-owned bounded workers; session filters/selections never enter a job."""
 
-    def __init__(self, directory, *, workers=3, pending=6, retry_seconds=600, fetcher=None):
-        if not 1 <= workers <= pending <= 8:
-            raise ValueError("Require 1 <= artwork workers <= pending <= 8")
+    def __init__(self, directory, *, workers=6, pending=24, retry_seconds=600, fetcher=None):
+        if not 1 <= workers <= pending <= 32:
+            raise ValueError("Require 1 <= artwork workers <= pending <= 32")
         self.directory = Path(directory)
         self.executor = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="model-artwork")
         self.limit = pending

@@ -1006,6 +1006,7 @@ def create_ui(manager, models, *, offline):
                 key=row["key"],
                 artworkKey=(preview_identity(row) or {}).get("key", ""),
                 preview=card_picture(preview, roots),
+                preview_is_default=False,
             )
             for row in visible_rows
             if (preview := previews.cached(row))

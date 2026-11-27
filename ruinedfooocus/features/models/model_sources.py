@@ -23,11 +23,13 @@ class HuggingFaceMetadata:
     Cache state is deliberately memory-only: a restart permits one fresh attempt.
     """
 
+    MAX_CONCURRENT_REQUESTS = 6
+
     def __init__(self, *, clock=None, wall_clock=None):
         self.clock = clock or time.monotonic
         self.wall_clock = wall_clock or time.time
         self.lock = threading.RLock()
-        self.slots = threading.BoundedSemaphore(2)
+        self.slots = threading.BoundedSemaphore(self.MAX_CONCURRENT_REQUESTS)
         self.cache = OrderedDict()
         self.inflight = {}
         self.not_before = 0
@@ -136,7 +138,7 @@ class HuggingFaceMetadata:
                 return None
             waiting = self.inflight.get(key)
             if waiting is None:
-                if len(self.inflight) >= 8:
+                if len(self.inflight) >= 24:
                     return None
                 waiting = self.inflight[key] = threading.Event()
                 owner = True
@@ -369,32 +371,157 @@ def huggingface_preview(path, sha256, source="", *, offline=False):
             ):
                 continue
             matched_revision = data["sha"]
-            images = [
-                item["rfilename"]
-                for item in files
-                if isinstance(item, dict)
-                and isinstance(item.get("rfilename"), str)
-                and Path(item["rfilename"]).suffix.lower()
-                in (".png", ".jpg", ".jpeg", ".webp", ".gif")
-                and not item["rfilename"].startswith("/")
-                and ".." not in Path(item["rfilename"]).parts
-                and "\\" not in item["rfilename"]
-            ]
-            images.sort(
-                key=lambda name: (
+            urls = extract_hf_artwork_urls(
+                data,
+                repository,
+                matched_revision,
+                rank=lambda name: (
                     Path(name).suffix.lower() == ".gif",
                     Path(name).stem != path.stem,
                     name,
-                )
+                ),
             )
-            previews = [
-                {
-                    "url": f"https://huggingface.co/{repository}/resolve/{matched_revision}/{quote(name, safe='/')}",
-                    "type": "image",
-                }
-                for name in images[:5]
-            ]
+            previews = [{"url": url, "type": "image"} for url in urls[:5]]
             return {"hf_repo_id": repository, "hf_revision": matched_revision, "images": previews}
         except (ValueError, TypeError, KeyError):
             continue
     return None
+
+
+_HF_IMAGE_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp", ".gif")
+_HF_README_IMAGE_RE = re.compile(
+    r'!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)|<img\b[^>]*\bsrc=["\']([^"\']+)["\']',
+    re.I,
+)
+_HF_SKIP_IMAGE_TOKENS = (
+    "shields.io",
+    "badgen.net",
+    "img.shields",
+    "favicon",
+    "social-thumbnails",
+)
+
+
+def is_hf_artwork_url(url):
+    """True when `url` is a bounded HTTPS Hugging Face artwork URL (no SVG/social)."""
+    if not isinstance(url, str):
+        return False
+    text = url.strip()
+    if not text or any(token in text.lower() for token in _HF_SKIP_IMAGE_TOKENS):
+        return False
+    parsed = urlparse(text)
+    host = (parsed.hostname or "").lower()
+    if (
+        parsed.scheme != "https"
+        or parsed.username
+        or not (host == "huggingface.co" or host.endswith((".huggingface.co", ".hf.co")))
+    ):
+        return False
+    suffix = Path(parsed.path).suffix.lower()
+    if suffix == ".svg":
+        return False
+    return True
+
+
+def _resolve_hf_image_url(raw, repository, revision):
+    if not isinstance(raw, str):
+        return None
+    text = raw.strip().strip("<>").strip()
+    if not text or text.startswith(("#", "data:", "mailto:")):
+        return None
+    lower = text.lower()
+    if any(token in lower for token in _HF_SKIP_IMAGE_TOKENS):
+        return None
+    if lower.startswith("https://"):
+        parsed = urlparse(text)
+        path = parsed.path
+        if (parsed.hostname or "").lower() == "huggingface.co" and "/blob/" in path:
+            path = path.replace("/blob/", "/resolve/", 1)
+            text = urlunparse(parsed._replace(path=path))
+        if not is_hf_artwork_url(text):
+            return None
+        suffix = Path(urlparse(text).path).suffix.lower()
+        host = (parsed.hostname or "").lower()
+        if suffix and suffix not in _HF_IMAGE_SUFFIXES:
+            return None
+        if not suffix and host != "cdn-uploads.huggingface.co":
+            return None
+        return text
+    if lower.startswith("http://") or "://" in text:
+        return None
+    rel = text.split("?", 1)[0].split("#", 1)[0].lstrip("/")
+    while rel.startswith("./"):
+        rel = rel[2:]
+    if (
+        not rel
+        or "\\" in rel
+        or ".." in Path(rel).parts
+        or Path(rel).suffix.lower() not in _HF_IMAGE_SUFFIXES
+    ):
+        return None
+    return f"https://huggingface.co/{repository}/resolve/{revision}/{quote(rel, safe='/')}"
+
+
+def extract_hf_artwork_urls(
+    metadata,
+    repository,
+    revision,
+    *,
+    offline=False,
+    allow_readme=True,
+    rank=None,
+):
+    """Return ordered HTTPS artwork URLs from a HF manifest: siblings -> cardData -> README."""
+    if not isinstance(metadata, dict) or not repository or not revision:
+        return []
+    siblings = metadata.get("siblings") if isinstance(metadata.get("siblings"), list) else []
+    sibling_images = [
+        item["rfilename"]
+        for item in siblings
+        if isinstance(item, dict)
+        and isinstance(item.get("rfilename"), str)
+        and Path(item["rfilename"]).suffix.lower() in _HF_IMAGE_SUFFIXES
+        and not item["rfilename"].startswith("/")
+        and ".." not in Path(item["rfilename"]).parts
+        and "\\" not in item["rfilename"]
+    ]
+    rank_key = rank or (lambda name: (Path(name).suffix.lower() == ".gif", name))
+    sibling_images.sort(key=rank_key)
+    urls = [
+        f"https://huggingface.co/{repository}/resolve/{revision}/{quote(name, safe='/')}"
+        for name in sibling_images
+    ]
+    card_data = metadata.get("cardData")
+    if isinstance(card_data, dict):
+        thumb = _resolve_hf_image_url(card_data.get("thumbnail"), repository, revision)
+        if thumb and thumb not in urls:
+            urls.append(thumb)
+    if not urls and allow_readme and not offline and not hf_metadata.cooling_down():
+        readme_name = next(
+            (
+                item["rfilename"]
+                for item in siblings
+                if isinstance(item, dict)
+                and isinstance(item.get("rfilename"), str)
+                and item["rfilename"].casefold() == "readme.md"
+            ),
+            None,
+        )
+        if readme_name:
+            readme_url = (
+                f"https://huggingface.co/{repository}/resolve/{revision}/"
+                f"{quote(readme_name, safe='/')}"
+            )
+            try:
+                body = hf_metadata.read(readme_url, 64 * 1024, offline=offline)
+                text = body.decode("utf-8", errors="ignore")
+            except (OSError, ValueError):
+                text = ""
+            found = []
+            for md_url, html_url in _HF_README_IMAGE_RE.findall(text):
+                resolved = _resolve_hf_image_url(md_url or html_url, repository, revision)
+                if resolved and resolved not in found:
+                    found.append(resolved)
+            found.sort(key=lambda u: rank_key(Path(urlparse(u).path).name or u))
+            urls.extend(found)
+    return list(dict.fromkeys(urls))

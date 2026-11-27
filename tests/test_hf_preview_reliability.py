@@ -521,6 +521,7 @@ class PreviewReliabilityTests(unittest.TestCase):
             self.assertEqual(published.read_bytes(), original)
 
     def test_metadata_cache_and_transport_concurrency_are_bounded(self):
+        limit = model_sources.HuggingFaceMetadata.MAX_CONCURRENT_REQUESTS
         entered, release = threading.Event(), threading.Event()
         active, maximum = 0, 0
         lock = threading.Lock()
@@ -530,7 +531,7 @@ class PreviewReliabilityTests(unittest.TestCase):
             with lock:
                 active += 1
                 maximum = max(maximum, active)
-                if active == 2:
+                if active == limit:
                     entered.set()
             self.assertTrue(release.wait(5))
             with lock:
@@ -538,18 +539,18 @@ class PreviewReliabilityTests(unittest.TestCase):
             return FakeResponse({})
 
         with patch.object(model_sources.requests, "get", side_effect=get) as http:
-            with ThreadPoolExecutor(max_workers=3) as pool:
+            with ThreadPoolExecutor(max_workers=limit + 1) as pool:
                 jobs = [
                     pool.submit(model_sources.huggingface_manifest, f"owner/image{i}")
-                    for i in range(2)
+                    for i in range(limit)
                 ]
                 self.assertTrue(entered.wait(5))
-                self.assertIsNone(model_sources.huggingface_manifest("owner/third"))
+                self.assertIsNone(model_sources.huggingface_manifest("owner/overflow"))
                 release.set()
                 for job in jobs:
                     job.result(5)
-            self.assertEqual(http.call_count, 2)
-            self.assertEqual(maximum, 2)
+            self.assertEqual(http.call_count, limit)
+            self.assertEqual(maximum, limit)
         with patch.object(model_sources.requests, "get", return_value=FakeResponse({})):
             for index in range(140):
                 model_sources.huggingface_manifest(f"owner/cache{index}")

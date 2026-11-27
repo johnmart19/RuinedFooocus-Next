@@ -11,7 +11,7 @@ cached in the data cache and refreshed when older than `MAX_AGE_SECONDS`; a
 failed refresh keeps showing the last good list.
 """
 
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 import hashlib
 import io
@@ -169,6 +169,8 @@ def parse_civitai(items, category, *, include_mature=False):
 
 def parse_huggingface(items):
     """Public, ungated GGUF chat repositories; the file is chosen at download time."""
+    from ruinedfooocus.features.models.model_sources import is_hf_artwork_url
+
     entries = []
     for item in items if isinstance(items, list) else []:
         identity = item.get("id") if isinstance(item, dict) else None
@@ -180,6 +182,9 @@ def parse_huggingface(items):
             or "gguf" not in (item.get("tags") or [])
         ):
             continue
+        card_data = item.get("cardData") if isinstance(item.get("cardData"), dict) else {}
+        raw_thumb = card_data.get("thumbnail")
+        image = raw_thumb.strip() if is_hf_artwork_url(raw_thumb) else None
         entries.append(
             dict(
                 key=f"huggingface:{identity}",
@@ -193,7 +198,7 @@ def parse_huggingface(items):
                 downloads=int(item.get("downloads") or 0),
                 likes=int(item.get("likes") or 0),
                 repository=identity,
-                image=None,
+                image=image,
                 page=f"https://huggingface.co/{identity}",
                 mature=False,
             )
@@ -258,6 +263,7 @@ def query(source, category, sort, period):
             sort=SORTS[source][sort],
             direction=-1,
             limit=60,
+            cardData="true",
         ),
     )
 
@@ -272,41 +278,96 @@ def _cache_file(cache_dir, source, category, sort, period, include_mature):
 def thumbnail_path(entry, cache_dir):
     """Where an entry's cached thumbnail is kept; the file may not exist yet."""
     url = entry.get("image")
-    if not isinstance(url, str) or not url:
+    if isinstance(url, str) and url:
+        key = url
+    elif (
+        entry.get("source") == "Hugging Face"
+        and isinstance(entry.get("repository"), str)
+        and entry["repository"]
+    ):
+        key = f"hf-repo:{entry['repository']}"
+    else:
         return None
-    name = hashlib.sha256(url.encode()).hexdigest()[:24] + ".jpeg"
+    name = hashlib.sha256(key.encode()).hexdigest()[:24] + ".jpeg"
     # Publisher artwork lives in the cache folder the interface already serves;
     # anywhere else Gradio copies every picture again on each update.
     return Path(cache_dir) / "catalogue-previews" / "popular" / name
 
 
-def fetch_artwork(entries, cache_dir, fetch_image=None):
-    """Download the thumbnails that are not cached yet. Returns how many arrived."""
+def _resolve_popular_artwork_urls(entry):
+    url = entry.get("image")
+    if isinstance(url, str) and url:
+        return [url]
+    repo = entry.get("repository")
+    if entry.get("source") != "Hugging Face" or not isinstance(repo, str) or not repo:
+        return []
+    from ruinedfooocus.features.models import model_sources
+    from ruinedfooocus.features.models.catalogue_previews import _preview_rank
+
+    manifest = model_sources.huggingface_manifest(repo, offline=offline())
+    if not isinstance(manifest, dict):
+        return []
+    revision = manifest.get("sha") or "main"
+    return model_sources.extract_hf_artwork_urls(
+        manifest, repo, revision, offline=offline(), rank=_preview_rank
+    )[:3]
+
+
+def fetch_artwork_iter(entries, cache_dir, fetch_image=None, *, batch_size=4):
+    """Stream thumbnail downloads in small batches so cards appear progressively."""
     from ruinedfooocus.features.models.model_previews import write_preview
 
     fetch = fetch_image or _read_image
     missing = [
-        (entry["image"], target)
+        (entry, target)
         for entry in entries
         if (target := thumbnail_path(entry, cache_dir)) is not None and not target.is_file()
     ]
     if not missing or offline():
-        return 0
+        return
 
     def one(item):
-        url, target = item
+        entry, target = item
         try:
-            body = fetch(url)
-            if not body or len(body) > MAX_THUMBNAIL_BYTES:
-                return 0
-            target.parent.mkdir(parents=True, exist_ok=True)
-            write_preview(body, target)
-            return 1
+            urls = _resolve_popular_artwork_urls(entry)
+            for url in urls:
+                try:
+                    body = fetch(url)
+                    if not body or len(body) > MAX_THUMBNAIL_BYTES:
+                        continue
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    write_preview(body, target)
+                    return 1
+                except Exception:
+                    continue
+            return 0
         except Exception:  # One missing picture leaves that card on its placeholder.
             return 0
 
-    with ThreadPoolExecutor(max_workers=16, thread_name_prefix="popular-artwork") as pool:
-        return sum(pool.map(one, missing))
+    arrived = 0
+    last_yielded = 0
+    step = max(1, int(batch_size or 1))
+    with ThreadPoolExecutor(max_workers=12, thread_name_prefix="popular-artwork") as pool:
+        futures = [pool.submit(one, item) for item in missing]
+        for future in as_completed(futures):
+            try:
+                if future.result():
+                    arrived += 1
+                    if arrived - last_yielded >= step:
+                        last_yielded = arrived
+                        yield arrived
+            except Exception:
+                continue
+    if arrived > last_yielded:
+        yield arrived
+
+
+def fetch_artwork(entries, cache_dir, fetch_image=None):
+    """Download the thumbnails that are not cached yet. Returns how many arrived."""
+    total = 0
+    for total in fetch_artwork_iter(entries, cache_dir, fetch_image=fetch_image):
+        pass
+    return total
 
 
 def _read_image(url):

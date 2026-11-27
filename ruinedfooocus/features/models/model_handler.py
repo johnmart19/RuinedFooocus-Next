@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 import requests
 import base64
 import hashlib
@@ -47,14 +48,28 @@ class Models:
                 self._metadata_checked[model_type] = time.monotonic()
             self.revision += 1
 
+    def _notify_preview_updated(self, model_type, cache_file=None):
+        from ruinedfooocus.app.state import shared_cache
+
+        if cache_file is not None:
+            stem = cache_file.with_suffix("")
+            for key in list(shared_cache):
+                if isinstance(key, Path) and key.with_suffix("") == stem:
+                    shared_cache.pop(key, None)
+        else:
+            for key in list(shared_cache):
+                if isinstance(key, Path) and key.parent == self.cache_paths[model_type]:
+                    shared_cache.pop(key, None)
+        with self._metadata_lock:
+            self.revision += 1
+
     def _update_models(self, model_type, folder_paths):
         if model_type == "embeddings":
             return self._update_embeddings(folder_paths)
 
-        updated = 0
-
-        # Go through and check previews
+        # Go through and collect unique model files first, then update concurrently.
         seen_names = set()
+        items = []
         for folder in folder_paths:
             for path in folder.rglob("*"):
                 if path.suffix.lower() in self.EXTENSIONS:
@@ -62,154 +77,190 @@ class Models:
                     if name in seen_names:
                         continue
                     seen_names.add(name)
-                    # get file name, add cache path change suffix
-                    cache_file = Path(self.cache_paths[model_type] / path.name)
-                    from ruinedfooocus.features.models.model_previews import (
-                        SUFFIXES,
-                        VERSION,
-                        is_warning,
-                        local_preview,
-                        valid_preview,
+                    items.append((name, path))
+
+        if not items:
+            return
+
+        from ruinedfooocus.features.models.model_previews import (
+            SUFFIXES,
+            VERSION,
+            is_warning,
+            local_preview,
+            valid_preview,
+            write_preview,
+        )
+
+        stem_counts = {}
+        for candidate in self.get_names(model_type):
+            stem_key = Path(candidate).with_suffix("").as_posix().casefold()
+            stem_counts[stem_key] = stem_counts.get(stem_key, 0) + 1
+
+        suffixes = list(SUFFIXES)
+
+        def notify_preview(cache_file):
+            notify = getattr(self, "_notify_preview_updated", None)
+            if callable(notify):
+                notify(model_type, cache_file)
+
+        def process_one(item):
+            name, path = item
+            changed = 0
+            cache_file = Path(self.cache_paths[model_type] / path.name)
+            stem_key = Path(name).with_suffix("").as_posix().casefold()
+            local = local_preview(path, ambiguous=stem_counts.get(stem_key, 0) > 1)
+            has_preview = False
+            thumbcheck = None
+            for suffix in suffixes:
+                candidate_thumb = cache_file.with_suffix(suffix)
+                if (
+                    candidate_thumb.is_file()
+                    and valid_preview(candidate_thumb)
+                    and not is_warning(candidate_thumb)
+                ):
+                    # Retain valid artwork if its online refresh fails.
+                    has_preview = True
+                    thumbcheck = candidate_thumb
+                    break
+
+            if local:
+                if not has_preview:
+                    write_preview(Path(local).read_bytes(), cache_file)
+                    notify_preview(cache_file)
+                    changed += 1
+                has_preview = True
+            # A display hit must also prevent unnecessary remote artwork
+            # and weight hashing in the background presentation scan.
+            model_data = self.get_models_by_path(
+                model_type, path, fetch=not has_preview, discover_hf=False
+            )
+
+            # Rebuild legacy low-resolution/animated network thumbnails
+            # once, preserving the old valid file if fetching fails.
+            marker = cache_file.with_suffix(".preview.json")
+            try:
+                preview_state = json.loads(marker.read_text())
+                preview_state = preview_state if isinstance(preview_state, dict) else {}
+            except (OSError, ValueError):
+                preview_state = {}
+            real_artwork = any(
+                isinstance(entry, dict)
+                and entry.get("url")
+                and "cdn-thumbnails.huggingface.co/social-thumbnails/" not in entry["url"]
+                for entry in (model_data.get("images") or [])
+            )
+            replace_generated = preview_state.get("generated") and real_artwork
+            if (
+                has_preview
+                and thumbcheck is not None
+                and not local
+                and not self.offline
+                and (preview_state.get("version") != VERSION or replace_generated)
+                and model_data.get("images")
+            ):
+                from PIL import Image
+
+                with Image.open(thumbcheck) as image:
+                    legacy = (
+                        replace_generated
+                        or max(image.size) <= 166
+                        or getattr(image, "n_frames", 1) > 1
+                    )
+                if legacy and self.get_image(model_data, cache_file):
+                    notify_preview(cache_file)
+                    changed += 1
+
+            if not has_preview:
+                if self.copy_embedded_preview(path, cache_file):
+                    has_preview = True
+                    notify_preview(cache_file)
+                    changed += 1
+
+            if not has_preview and not self.offline:
+                # Try existing publisher images first, then make one HF
+                # attempt here. Metadata lookup above suppresses its own
+                # HF discovery, including when Civitai artwork fails.
+                fetched = self.get_image(model_data, cache_file)
+                if not fetched:
+                    from ruinedfooocus.features.models.model_identity import (
+                        checkpoint_hashes,
+                        verified_native_source,
+                    )
+                    from ruinedfooocus.features.models.model_sources import (
+                        huggingface_preview,
+                        huggingface_source,
                     )
 
-                    suffixes = list(SUFFIXES)
-                    local = local_preview(
-                        path,
-                        ambiguous=sum(
-                            Path(candidate).with_suffix("").as_posix().casefold()
-                            == Path(name).with_suffix("").as_posix().casefold()
-                            for candidate in self.get_names(model_type)
-                        )
-                        > 1,
+                    digest = checkpoint_hashes(model_data).get("SHA256")
+                    header = self.read_safetensors_header(path).get("__metadata__", {})
+                    source = huggingface_source(
+                        model_data, header, verified_native_source(path, model_data)
                     )
-                    has_preview = False
-                    for suffix in suffixes:
-                        thumbcheck = cache_file.with_suffix(suffix)
-                        if (
-                            thumbcheck.is_file()
-                            and valid_preview(thumbcheck)
-                            and not is_warning(thumbcheck)
-                        ):
-                            # Retain valid artwork if its online refresh fails.
-                            has_preview = True
-                            break
+                    fallback = huggingface_preview(path, digest, source)
+                    if fallback:
+                        attempted = {
+                            entry.get("url")
+                            for entry in (model_data.get("images") or [])[:5]
+                            if isinstance(entry, dict) and isinstance(entry.get("url"), str)
+                        }
+                        model_data = model_data | fallback
+                        save_json(cache_file.with_suffix(".json"), model_data)
+                        fresh_images = [
+                            entry
+                            for entry in fallback["images"]
+                            if entry["url"] not in attempted
+                        ]
+                        if fresh_images:
+                            fetched = self.get_image(
+                                model_data | {"images": fresh_images}, cache_file
+                            )
+                if fetched:
+                    notify_preview(cache_file)
+                changed += 1
 
-                    if local:
-                        if not has_preview:
-                            from ruinedfooocus.features.models.model_previews import write_preview
-
-                            write_preview(Path(local).read_bytes(), cache_file)
-                        has_preview = True
-                    # A display hit must also prevent unnecessary remote artwork
-                    # and weight hashing in the background presentation scan.
-                    model_data = self.get_models_by_path(
-                        model_type, path, fetch=not has_preview, discover_hf=False
+            txtcheck = cache_file.with_suffix(".txt")
+            if (
+                model_type == "loras"
+                and model_data.get("trainedWords")
+                and not txtcheck.exists()
+            ):
+                print(
+                    t(
+                        "Get LoRA keywords for {name} ({base} - {type})",
+                        mapping={
+                            "name": Path(path).name,
+                            "base": self.get_model_base(model_data),
+                            "type": self.get_model_type(model_data),
+                        },
                     )
+                )
+                keywords = self.get_keywords(model_data)
+                with open(txtcheck, "w") as f:
+                    f.write(", ".join(keywords))
+                changed += 1
 
-                    # Rebuild legacy low-resolution/animated network thumbnails
-                    # once, preserving the old valid file if fetching fails.
-                    marker = cache_file.with_suffix(".preview.json")
-                    try:
-                        preview_state = json.loads(marker.read_text())
-                        preview_state = preview_state if isinstance(preview_state, dict) else {}
-                    except (OSError, ValueError):
-                        preview_state = {}
-                    real_artwork = any(
-                        isinstance(item, dict)
-                        and item.get("url")
-                        and "cdn-thumbnails.huggingface.co/social-thumbnails/" not in item["url"]
-                        for item in (model_data.get("images") or [])
-                    )
-                    replace_generated = preview_state.get("generated") and real_artwork
-                    if (
-                        has_preview
-                        and not local
-                        and not self.offline
-                        and (preview_state.get("version") != VERSION or replace_generated)
-                        and model_data.get("images")
-                    ):
-                        from PIL import Image
+            try:
+                from ruinedfooocus.features.models.model_identity import checkpoint_hashes
 
-                        with Image.open(thumbcheck) as image:
-                            legacy = (
-                                replace_generated
-                                or max(image.size) <= 166
-                                or getattr(image, "n_frames", 1) > 1
-                            )
-                        if legacy:
-                            self.get_image(model_data, cache_file)
-
-                    if not has_preview:
-                        has_preview = self.copy_embedded_preview(path, cache_file)
-
-                    if not has_preview and not self.offline:
-                        # Try existing publisher images first, then make one HF
-                        # attempt here. Metadata lookup above suppresses its own
-                        # HF discovery, including when Civitai artwork fails.
-                        if not self.get_image(model_data, cache_file):
-                            from ruinedfooocus.features.models.model_identity import (
-                                checkpoint_hashes,
-                                verified_native_source,
-                            )
-                            from ruinedfooocus.features.models.model_sources import (
-                                huggingface_preview,
-                                huggingface_source,
-                            )
-
-                            digest = checkpoint_hashes(model_data).get("SHA256")
-                            header = self.read_safetensors_header(path).get("__metadata__", {})
-                            source = huggingface_source(
-                                model_data, header, verified_native_source(path, model_data)
-                            )
-                            fallback = huggingface_preview(path, digest, source)
-                            if fallback:
-                                attempted = {
-                                    item.get("url")
-                                    for item in (model_data.get("images") or [])[:5]
-                                    if isinstance(item, dict) and isinstance(item.get("url"), str)
-                                }
-                                model_data = model_data | fallback
-                                save_json(cache_file.with_suffix(".json"), model_data)
-                                fresh_images = [
-                                    item
-                                    for item in fallback["images"]
-                                    if item["url"] not in attempted
-                                ]
-                                if fresh_images:
-                                    self.get_image(
-                                        model_data | {"images": fresh_images}, cache_file
-                                    )
-                        updated += 1
-
-                    txtcheck = cache_file.with_suffix(".txt")
-                    if (
-                        model_type == "loras"
-                        and model_data.get("trainedWords")
-                        and not txtcheck.exists()
-                    ):
-                        print(
-                            t(
-                                "Get LoRA keywords for {name} ({base} - {type})",
-                                mapping={
-                                    "name": Path(path).name,
-                                    "base": self.get_model_base(model_data),
-                                    "type": self.get_model_type(model_data),
-                                },
-                            )
-                        )
-                        keywords = self.get_keywords(model_data)
-                        with open(txtcheck, "w") as f:
-                            f.write(", ".join(keywords))
-                        updated += 1
-
-                    try:
-                        from ruinedfooocus.features.models.model_identity import checkpoint_hashes
-
-                        digest = checkpoint_hashes(model_data).get("SHA256")
-                        if digest:
+                digest = checkpoint_hashes(model_data).get("SHA256")
+                if digest:
+                    lock = getattr(self, "_metadata_lock", None)
+                    if lock is not None:
+                        with lock:
                             self.model_hash[model_type][digest] = str(path)
-                    except (AttributeError, TypeError):
-                        pass
+                    else:
+                        self.model_hash[model_type][digest] = str(path)
+            except (AttributeError, TypeError):
+                pass
+            return changed
+
+        if len(items) == 1:
+            updated = process_one(items[0])
+        else:
+            with ThreadPoolExecutor(
+                max_workers=4, thread_name_prefix=f"civit-artwork-{model_type}"
+            ) as pool:
+                updated = sum(pool.map(process_one, items))
 
         if updated > 0:
             print(t("CivitAI update for {type} done.", mapping={"type": model_type}))
@@ -225,7 +276,8 @@ class Models:
 
         entries, _ = scan_embeddings(folder_paths)
         self.ready["embeddings"] = True
-        for entry in entries:
+
+        def process_embedding(entry):
             path = Path(entry.signature[0])
             # Reuse local artwork/cache lookup. PIL neutral markers mean no
             # publisher preview is installed; never persist a fake author image.
@@ -241,9 +293,20 @@ class Models:
                     and image.get("type", "image") == "image"
                 ]
                 if safe_images:
-                    self.get_image(
-                        data | {"images": safe_images}, self.cache_paths["embeddings"] / path.name
-                    )
+                    cache_file = self.cache_paths["embeddings"] / path.name
+                    if self.get_image(data | {"images": safe_images}, cache_file):
+                        notify = getattr(self, "_notify_preview_updated", None)
+                        if callable(notify):
+                            notify("embeddings", cache_file)
+
+        if len(entries) <= 1:
+            for entry in entries:
+                process_embedding(entry)
+        else:
+            with ThreadPoolExecutor(
+                max_workers=4, thread_name_prefix="civit-artwork-embeddings"
+            ) as pool:
+                list(pool.map(process_embedding, entries))
 
     def get_names(self, model_type):
         return list(self.names[model_type])

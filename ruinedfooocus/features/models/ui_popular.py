@@ -266,7 +266,7 @@ def create_ui(manager, models):
             yield view(saved or dict(entries=[], fetched=None, stale=False, error=""), waiting)
         result = feed.load(*chosen_list, force=force, **options)
         yield view(result)
-        if feed.fetch_artwork(result["entries"], cache):
+        for _ in feed.fetch_artwork_iter(result["entries"], cache):
             # Pictures only: a model chosen while they arrived stays chosen.
             rows, value, _, shown, *_ = view(result)
             value.pop("selected")
