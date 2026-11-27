@@ -1,0 +1,8 @@
+{
+  "id": "api-requirement-pins",
+  "subject": "Pin the packages required by the --api server",
+  "requires": ["application-requirement-pins"],
+  "tests": ["test_api_requirement_pins.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
