@@ -1,0 +1,8 @@
+{
+  "id": "task-error-descriptions",
+  "subject": "Describe task failures with actionable messages",
+  "requires": ["app-root-paths"],
+  "tests": ["test_task_errors.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
