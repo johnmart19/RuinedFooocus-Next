@@ -1,0 +1,8 @@
+{
+  "id": "repository-text-conventions",
+  "subject": "Declare line endings and indentation for every tracked text type",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
