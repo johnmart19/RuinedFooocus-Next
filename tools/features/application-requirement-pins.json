@@ -1,0 +1,8 @@
+{
+  "id": "application-requirement-pins",
+  "subject": "Pin the application packages as an overlay on the ComfyUI requirements",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
