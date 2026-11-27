@@ -1,0 +1,13 @@
+{
+  "id": "retire-legacy-shared-state",
+  "subject": "Retire the legacy shared state, settings and path manager",
+  "requires": [
+    "retire-legacy-image-browser",
+    "retire-legacy-interrogate",
+    "retire-legacy-controlnet-presets",
+    "retire-legacy-prompt-expansion"
+  ],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
