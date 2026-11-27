@@ -1,0 +1,8 @@
+{
+  "id": "model-folder-roots",
+  "subject": "Share one ordered list of model roots across discovery and native loaders",
+  "requires": ["app-root-paths"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
