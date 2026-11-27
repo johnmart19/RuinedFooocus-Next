@@ -1,0 +1,8 @@
+{
+  "id": "retire-model-and-cache-placeholders",
+  "subject": "Stop tracking model and cache folder placeholders",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
