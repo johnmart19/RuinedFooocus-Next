@@ -142,7 +142,10 @@ def resolve_runtime(gpu, backend, *, check_cancelled=None, progress_callback=Non
             try:
                 result = attempt(preferred, False, executable=updated)
                 if result and result[3]:
-                    return (*result, "")
+                    reason = "; ".join(failures)
+                    if reason:
+                        print(f"Chat Auto selected {result[3]} after {reason}.")
+                    return (*result, reason)
             except RuntimeUnavailable:
                 pass
             print(
@@ -257,31 +260,113 @@ class Server:
         predict = settings.get("llm_n_predict", -1)
         existing_flags = {token.partition("=")[0] for token in (*model_defaults, *extra)}
         perf_options = []
+        tag = str(identity.get("tag") or "")
+        legacy_mmap_build = (
+            tag in ("b12110", "b12327", "b12366")
+            or (tag.startswith("b") and tag[1:].isdigit() and int(tag[1:]) < 12700)
+        )
         kv_type = str(settings.get("llm_kv_cache_type", "Auto") or "Auto")
         flash_attn = str(settings.get("llm_flash_attn", "Auto") or "Auto")
-        if kv_type in ("f16", "q8_0", "q4_0"):
-            if not existing_flags.intersection({"--cache-type-k", "-ctk"}):
+        if kv_type in (
+            "f32",
+            "f16",
+            "bf16",
+            "f8_e4m3",
+            "q8_0",
+            "q4_0",
+            "q4_1",
+            "iq4_nl",
+            "q5_0",
+            "q5_1",
+        ):
+            if (
+                "LLAMA_ARG_CACHE_TYPE_K" not in environment
+                and not existing_flags.intersection({"--cache-type-k", "-ctk"})
+            ):
                 perf_options += ["--cache-type-k", kv_type]
-            if not existing_flags.intersection({"--cache-type-v", "-ctv"}):
+            if (
+                "LLAMA_ARG_CACHE_TYPE_V" not in environment
+                and not existing_flags.intersection({"--cache-type-v", "-ctv"})
+            ):
                 perf_options += ["--cache-type-v", kv_type]
-            if flash_attn == "Auto" and kv_type != "f16" and gpu:
+            if flash_attn == "Auto" and kv_type not in ("f32", "f16", "bf16") and gpu:
                 flash_attn = "On"
-        if flash_attn in ("On", "Off") and not existing_flags.intersection(
-            {"--flash-attn", "-fa"}
+        if (
+            flash_attn in ("On", "Off")
+            and "LLAMA_ARG_FLASH_ATTN" not in environment
+            and not existing_flags.intersection({"--flash-attn", "-fa"})
         ):
             perf_options += ["--flash-attn", flash_attn.lower()]
         batch_size = int(settings.get("llm_batch_size") or 0)
-        if batch_size > 0 and not existing_flags.intersection({"--batch-size", "-b"}):
-            perf_options += ["--batch-size", str(batch_size)]
-        mmap_mode = str(settings.get("llm_mmap", "Auto") or "Auto")
-        if mmap_mode in ("Enabled", "Disabled") and not existing_flags.intersection(
-            {"--mmap", "--no-mmap"}
+        if (
+            batch_size > 0
+            and "LLAMA_ARG_BATCH" not in environment
+            and not existing_flags.intersection({"--batch-size", "-b"})
         ):
-            perf_options.append("--mmap" if mmap_mode == "Enabled" else "--no-mmap")
+            perf_options += ["--batch-size", str(batch_size)]
+        ubatch_size = int(settings.get("llm_ubatch_size") or 0)
+        if (
+            ubatch_size > 0
+            and "LLAMA_ARG_UBATCH" not in environment
+            and not existing_flags.intersection({"--ubatch-size", "-ub"})
+        ):
+            perf_options += ["--ubatch-size", str(ubatch_size)]
+        cache_reuse = int(settings.get("llm_cache_reuse") or 0)
+        if (
+            cache_reuse > 0
+            and "LLAMA_ARG_CACHE_REUSE" not in environment
+            and not existing_flags.intersection({"--cache-reuse"})
+        ):
+            perf_options += ["--cache-reuse", str(cache_reuse)]
+        n_cpu_moe = int(settings.get("llm_n_cpu_moe") or 0)
+        if (
+            n_cpu_moe > 0
+            and "LLAMA_ARG_N_CPU_MOE" not in environment
+            and "LLAMA_ARG_CPU_MOE" not in environment
+            and not existing_flags.intersection({"--n-cpu-moe", "-ncmoe", "--cpu-moe", "-cmoe"})
+        ):
+            perf_options += ["--n-cpu-moe", str(n_cpu_moe)]
+        fit_mode = str(settings.get("llm_fit", "Auto") or "Auto")
+        if (
+            fit_mode in ("On", "Off")
+            and "LLAMA_ARG_FIT" not in environment
+            and not existing_flags.intersection({"--fit", "-fit"})
+        ):
+            perf_options += ["--fit", fit_mode.lower()]
+        reasoning_budget = settings.get("llm_reasoning_budget")
+        if (
+            reasoning_budget is not None
+            and "LLAMA_ARG_THINK_BUDGET" not in environment
+            and not existing_flags.intersection({"--reasoning-budget"})
+        ):
+            perf_options += ["--reasoning-budget", str(int(reasoning_budget))]
+        reasoning_effort = str(settings.get("llm_reasoning_effort", "") or "").strip().lower()
+        if (
+            reasoning_effort in ("minimal", "low", "medium", "high", "xhigh", "max")
+            and "LLAMA_ARG_REASONING_EFFORT" not in environment
+            and not existing_flags.intersection({"--reasoning-effort"})
+        ):
+            perf_options += ["--reasoning-effort", reasoning_effort]
+        mmap_mode = str(settings.get("llm_mmap", "Auto") or "Auto")
+        if (
+            mmap_mode in ("Enabled", "Disabled", "mmap", "none", "mlock", "mmap+mlock", "dio")
+            and "LLAMA_ARG_LOAD_MODE" not in environment
+            and not existing_flags.intersection({"--mmap", "--no-mmap", "--load-mode", "-lm"})
+        ):
+            if legacy_mmap_build and mmap_mode in ("Enabled", "Disabled"):
+                perf_options.append("--mmap" if mmap_mode == "Enabled" else "--no-mmap")
+            else:
+                load_mode = (
+                    "mmap"
+                    if mmap_mode == "Enabled"
+                    else "none"
+                    if mmap_mode == "Disabled"
+                    else mmap_mode
+                )
+                perf_options += ["--load-mode", load_mode]
         log_options = []
-        tag = str(identity.get("tag") or "")
         if identity.get("manifest_verified") and (
-            tag in ("b12110", "b12327", "b12366")
+            tag in ("b12110", "b12327", "b12366", "b12803")
             or (tag.startswith("b") and tag[1:].isdigit() and int(tag[1:]) >= 12110)
         ):
             flags = existing_flags
@@ -292,6 +377,7 @@ class Server:
             ):
                 # Native model/buffer information uses trace level, not debug.
                 log_options += ["--verbosity", "4"]
+        jinja_options = [] if "--no-jinja" in existing_flags else ["--jinja"]
         command = [
             str(executable),
             "--model",
@@ -304,7 +390,7 @@ class Server:
             gpu_layers,
             "--parallel",
             "1",
-            "--jinja",
+            *jinja_options,
             *log_options,
             *perf_options,
             *moe_share["arguments"],
@@ -339,7 +425,7 @@ class Server:
                 header
                 if (
                     identity.get("manifest_verified")
-                    and identity.get("tag") in ("b12110", "b12327", "b12366")
+                    and identity.get("tag") in ("b12110", "b12327", "b12366", "b12803")
                     and header is not None
                     and header.get("architecture") in ("gpt-oss", "lfm3")
                     and not requested.get("tensor_overrides")

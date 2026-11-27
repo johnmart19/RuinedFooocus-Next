@@ -37,6 +37,11 @@ _MODULAR_PARSERS = {
         "1f768bd4b9d58a211152227bbe48782ebe9d706afd92723dd35ed793a5cb8f16",
         "8e999279b1c898eac3da45ddd38a42972f49e0e005584eb8be3c1d0e7da673d0",
     ),
+    ("b12803", "llama-b12803-bin-win-vulkan-x64.zip"): (
+        "b97e8e89a329ad61302056cb03cf9787b6f306125d19ccb7d82e6f8eb250d9de",
+        "f20843bf69f44ba9b5dfbced1109972013bd938f16f65ee868cf907193527168",
+        "5a1fbc0b2a090701f6ed63fb5049f109f9a3c3a81280c0a4a7ff06baf2eafefd",
+    ),
 }
 
 
@@ -235,7 +240,9 @@ def moe_cache_cpu_share_capability(
         raise ValueError("--moe-cache-mib cannot be negative.")
     counts, _ = _options(extra, {"-ncmoe", "--n-cpu-moe"})
     count = _number(
-        counts[-1] if counts else environment.get("LLAMA_ARG_N_CPU_MOE", 0),
+        counts[-1]
+        if counts
+        else settings.get("llm_n_cpu_moe", environment.get("LLAMA_ARG_N_CPU_MOE", 0)),
         "--n-cpu-moe",
         integer=True,
     )

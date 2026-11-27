@@ -128,11 +128,27 @@ SAMPLERS = {
     "top_k": (0, None),
     "min_p": (0, 1),
     "typical_p": (0, 1),
+    "top_n_sigma": (None, None),
     "repeat_penalty": (0, None),
+    "repeat_last_n": (-1, None),
     "presence_penalty": (None, None),
     "frequency_penalty": (None, None),
+    "dry_multiplier": (0, None),
+    "dry_base": (0, None),
+    "dry_allowed_length": (0, None),
+    "dry_penalty_last_n": (-1, None),
+    "xtc_probability": (0, 1),
+    "xtc_threshold": (0, 1),
+    "dynatemp_range": (0, None),
+    "dynatemp_exp": (0, None),
 }
-CLI_SAMPLERS = {"--temp": "temperature", **{"--" + key.replace("_", "-"): key for key in SAMPLERS}}
+_INT_SAMPLERS = frozenset({"top_k", "repeat_last_n", "dry_allowed_length", "dry_penalty_last_n"})
+CLI_SAMPLERS = {
+    "--temp": "temperature",
+    "--typical": "typical_p",
+    "--top-nsigma": "top_n_sigma",
+    **{"--" + key.replace("_", "-"): key for key in SAMPLERS},
+}
 
 
 def validate_sampling(values):
@@ -149,8 +165,11 @@ def validate_sampling(values):
             or (low is not None and value < low)
             or (high is not None and value > high)
             or (name == "top_k" and type(value) is not int)
+            or (name in _INT_SAMPLERS and not float(value).is_integer())
         ):
             raise ValueError(f"Invalid Chat sampling value: {name}")
+        if name in _INT_SAMPLERS and type(value) is float:
+            value = int(value)
         result[name] = value
     return result
 
@@ -164,7 +183,7 @@ def cli_sampling(arguments):
         if name:
             value = value if separator else tokens[index + 1] if index + 1 < len(tokens) else ""
             try:
-                result[name] = int(value) if name == "top_k" else float(value)
+                result[name] = int(value) if name in _INT_SAMPLERS else float(value)
             except ValueError:
                 raise ValueError(f"{flag} requires a numeric value.") from None
     return validate_sampling(result)
@@ -218,7 +237,7 @@ def validate_reasoning_request(values):
     mode, effort = values.get("mode", "Auto"), values.get("effort", "Auto")
     if mode not in ("Auto", "Off", "On"):
         raise ValueError("Choose reasoning Auto, Off or On.")
-    if effort not in ("Auto", "Low", "Medium", "High"):
+    if effort not in ("Auto", "Minimal", "Low", "Medium", "High", "Xhigh", "Max"):
         raise ValueError("Choose a listed reasoning effort or Auto.")
     return {"mode": mode, "effort": effort}
 
@@ -270,7 +289,7 @@ def initialized_reasoning(
             token.partition("=")[0] for token in shlex.split(values.get("llama_server_args", ""))
         }
         if any(
-            flag.startswith(("--chat-template", "--reasoning")) or flag == "--no-jinja"
+            flag.startswith(("--chat-template", "--reasoning")) or flag in ("--no-jinja", "-rea")
             for flag in flags
         ):
             return {
@@ -318,7 +337,7 @@ def initialized_reasoning(
         efforts = tuple(
             value.title()
             for value in allowed
-            if value in ("low", "medium", "high")
+            if value in ("minimal", "low", "medium", "high", "xhigh", "max")
         )
         if efforts:
             if "none" in allowed:

@@ -527,12 +527,14 @@ def ensure_latest_build(
     GitHub API rate limits. Failures never block Chat startup; callers fall back to
     the existing selected or pinned build.
     """
-    if not auto_update or skip_dependency_install() or os.environ.get("LLAMA_SERVER"):
+    if not auto_update or os.environ.get("LLAMA_SERVER"):
         return None
     try:
+        if skip_dependency_install():
+            return None
         _, _, backend = _family(backend)
         stamp = _check_stamp(backend)
-    except RuntimeError:
+    except (RuntimeError, OSError, ValueError):
         return None
     now = time.time()
     if max_age_seconds > 0:

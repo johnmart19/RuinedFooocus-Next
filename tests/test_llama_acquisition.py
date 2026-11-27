@@ -79,7 +79,7 @@ class AcquisitionTests(unittest.TestCase):
             ).read_text()
         )
         assets = {item["name"]: item for item in manifest["assets"]}
-        self.assertEqual(manifest["target_commitish"], "31953bcf74ba489a8bbb0c936c5fcf24fcf9485c")
+        self.assertEqual(manifest["target_commitish"], "492d23cc9e1e387402bba1ad0e3babbb8d980237")
         for system in ("Windows", "Linux"):
             for machine in ("x86_64", "aarch64"):
                 with patch(

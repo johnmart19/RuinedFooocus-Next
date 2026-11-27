@@ -59,17 +59,17 @@ class LlamaUpdateTests(unittest.TestCase):
         asset.update(overrides)
         return {"tag_name": tag, "draft": False, "prerelease": True, "assets": [asset]}
 
-    def candidate(self, tag="b12462", backend="CPU"):
+    def candidate(self, tag="b19462", backend="CPU"):
         return llama_update._candidate(self.release(tag, backend), backend)
 
     def test_check_selects_highest_verified_compatible_build(self):
         releases = [
             self.release("v0.9.0"),
-            self.release("b12465", backend="Vulkan"),
-            self.release("b12464", digest=None),
-            self.release("b12463", browser_download_url="https://example.test/unknown.zip"),
-            self.release("b12460"),
-            self.release("b12462"),
+            self.release("b19465", backend="Vulkan"),
+            self.release("b19464", digest=None),
+            self.release("b19463", browser_download_url="https://example.test/unknown.zip"),
+            self.release("b19460"),
+            self.release("b19462"),
             self.release("b12109"),
         ]
         self.get.return_value = nullcontext(Response(json.dumps(releases).encode()))
@@ -95,16 +95,16 @@ class LlamaUpdateTests(unittest.TestCase):
         self.get.assert_not_called()
 
     def test_rocm_and_auto_resolve_and_auto_update_to_latest_release(self):
-        rocm_release = self.release("b12608", backend="ROCm")
+        rocm_release = self.release("b19608", backend="ROCm")
         self.get.side_effect = [
             nullcontext(Response(json.dumps([rocm_release]).encode())),
             nullcontext(Response(self.archive)),
         ]
         with patch.object(llama_installer, "preferred_backend", return_value="ROCm"):
             tag = llama_update.ensure_latest_build("Auto", max_age_seconds=3600)
-            self.assertEqual(tag, "b12608")
+            self.assertEqual(tag, "b19608")
             selected_tag, executable = llama_update.selected_build("ROCm")
-            self.assertEqual(selected_tag, "b12608")
+            self.assertEqual(selected_tag, "b19608")
             self.assertIsNotNone(executable)
             # Second call within throttle window makes no extra GitHub request.
             self.assertIsNone(llama_update.ensure_latest_build("Auto", max_age_seconds=3600))
@@ -154,7 +154,7 @@ class LlamaUpdateTests(unittest.TestCase):
         self.get.return_value = nullcontext(Response(self.archive))
         llama_update.install_update("CPU", candidate, Mock())
         before = llama_update.selected_build("CPU")
-        newer = self.candidate("b12463")
+        newer = self.candidate("b19463")
         self.get.return_value = nullcontext(Response(b"x" * len(self.archive)))
         with self.assertRaisesRegex(RuntimeError, "published size and SHA256"):
             llama_update.install_update("CPU", newer, Mock())
@@ -188,7 +188,7 @@ class LlamaUpdateTests(unittest.TestCase):
             with self.subTest(phase=phase), self.assertRaises(CancelledError):
                 llama_update.install_update(
                     "CPU",
-                    self.candidate("b12463"),
+                    self.candidate("b19463"),
                     Mock(),
                     progress_callback=progress,
                     check_cancelled=check,
@@ -202,7 +202,7 @@ class LlamaUpdateTests(unittest.TestCase):
         llama_update.install_update("CPU", candidate, Mock())
         pointer = llama_update._pointer("CPU")
         original_pointer = pointer.read_bytes()
-        newer = self.candidate("b12463")
+        newer = self.candidate("b19463")
         # An earlier cancelled selection may leave a complete verified candidate cached.
         directory = llama_installer.package_directory(newer.name, version=newer.tag)
         directory.mkdir(parents=True)
@@ -285,10 +285,10 @@ class LlamaUpdateTests(unittest.TestCase):
                 item.size = len(binary)
                 archive.addfile(item, io.BytesIO(binary))
             self.archive = buffer.getvalue()
-            release = self.release("b12462")
-            name = "llama-b12462-bin-ubuntu-x64.tar.gz"
+            release = self.release("b19462")
+            name = "llama-b19462-bin-ubuntu-x64.tar.gz"
             release["assets"][0].update(
-                name=name, browser_download_url=f"{llama_update._DOWNLOAD}/b12462/{name}"
+                name=name, browser_download_url=f"{llama_update._DOWNLOAD}/b19462/{name}"
             )
             candidate = llama_update._candidate(release, "CPU")
             self.assertEqual(candidate.name, name)
@@ -302,7 +302,7 @@ class LlamaUpdateTests(unittest.TestCase):
         with (
             patch.object(llama_update, "ensure_latest_build", return_value=None) as auto_check,
             patch.object(
-                llama_update, "selected_build", return_value=("b12462", Path("updated"))
+                llama_update, "selected_build", return_value=("b19462", Path("updated"))
             ) as selected,
             patch.object(llama_server, "server_path", return_value=Path("pinned")),
             patch.object(llama_server, "runtime_environment", return_value={}),
@@ -315,7 +315,7 @@ class LlamaUpdateTests(unittest.TestCase):
     def test_failed_vulkan_initialization_retries_the_pinned_backend(self):
         with (
             patch.object(llama_update, "ensure_latest_build", return_value=None),
-            patch.object(llama_update, "selected_build", return_value=("b12462", Path("updated"))),
+            patch.object(llama_update, "selected_build", return_value=("b19462", Path("updated"))),
             patch.object(llama_server, "server_path", return_value=Path("pinned")),
             patch.object(llama_server, "runtime_environment", return_value={}),
             patch.object(
@@ -332,7 +332,7 @@ class LlamaUpdateTests(unittest.TestCase):
     def test_vulkan_device_crash_stops_without_trying_a_second_binary(self):
         with (
             patch.object(llama_update, "ensure_latest_build", return_value=None),
-            patch.object(llama_update, "selected_build", return_value=("b12462", Path("updated"))),
+            patch.object(llama_update, "selected_build", return_value=("b19462", Path("updated"))),
             patch.object(llama_server, "server_path") as pinned,
             patch.object(llama_server, "runtime_environment", return_value={}),
             patch.object(
@@ -352,9 +352,9 @@ class RuntimeVerificationTests(unittest.TestCase):
     def test_windows_prerelease_reports_the_build_after_semver_on_stderr(self):
         import subprocess
 
-        candidate = llama_update.PrebuiltUpdate("CPU", "b12462", "fixture.zip", "", "", 1, True)
+        candidate = llama_update.PrebuiltUpdate("CPU", "b19462", "fixture.zip", "", "", 1, True)
         output = (
-            "version: 0.9.0-dev (build 12462, commit 15759e0ca)\n"
+            "version: 0.9.0-dev (build 19462, commit 15759e0ca)\n"
             "built with Clang 20.1.8 for Windows x86_64\n"
         )
         with (
@@ -363,7 +363,7 @@ class RuntimeVerificationTests(unittest.TestCase):
         ):
             run.return_value = subprocess.CompletedProcess([], 0, "", output)
             llama_update._verify_executable(Path("fixture"), candidate)
-            for invalid in (output.replace("12462", "12463"), "version: 0.9.0-dev\n"):
+            for invalid in (output.replace("19462", "19463"), "version: 0.9.0-dev\n"):
                 with self.subTest(output=invalid):
                     run.return_value = subprocess.CompletedProcess([], 0, "", invalid)
                     with self.assertRaisesRegex(RuntimeError, "did not report"):
@@ -372,13 +372,13 @@ class RuntimeVerificationTests(unittest.TestCase):
     def test_staged_binary_must_report_expected_build_and_backend(self):
         import subprocess
 
-        candidate = llama_update.PrebuiltUpdate("Vulkan", "b12462", "fixture.zip", "", "", 1, True)
+        candidate = llama_update.PrebuiltUpdate("Vulkan", "b19462", "fixture.zip", "", "", 1, True)
         with (
             patch.object(llama_installer, "runtime_environment", return_value={}),
             patch.object(
                 llama_update.subprocess,
                 "run",
-                return_value=subprocess.CompletedProcess([], 0, "", "version: 12462 (abc)"),
+                return_value=subprocess.CompletedProcess([], 0, "", "version: 19462 (abc)"),
             ) as run,
             patch.object(runtime_probe, "probe_runtime", return_value="Vulkan") as probe,
         ):
@@ -388,14 +388,14 @@ class RuntimeVerificationTests(unittest.TestCase):
             probe.return_value = None
             with self.assertRaisesRegex(RuntimeError, "usable Vulkan"):
                 llama_update._verify_executable(Path("fixture"), candidate)
-            run.return_value = subprocess.CompletedProcess([], 0, "", "version: 12460 (abc)")
+            run.return_value = subprocess.CompletedProcess([], 0, "", "version: 19460 (abc)")
             with self.assertRaisesRegex(RuntimeError, "did not report"):
                 llama_update._verify_executable(Path("fixture"), candidate)
 
     def test_callback_probe_is_independent_of_server_and_keeps_runtime_identity(self):
         import subprocess
 
-        candidate = llama_update.PrebuiltUpdate("Vulkan", "b12462", "fixture.zip", "", "", 1, True)
+        candidate = llama_update.PrebuiltUpdate("Vulkan", "b19462", "fixture.zip", "", "", 1, True)
         events = []
         check = Mock()
         with (
@@ -403,7 +403,7 @@ class RuntimeVerificationTests(unittest.TestCase):
             patch.object(
                 llama_installer,
                 "_run_cancellable",
-                return_value=subprocess.CompletedProcess([], 0, "version: 12462 (abc)", ""),
+                return_value=subprocess.CompletedProcess([], 0, "version: 19462 (abc)", ""),
             ),
             patch.object(
                 runtime_probe, "run_bounded", return_value=(b"Vulkan0: inert device", b"")
@@ -449,7 +449,7 @@ class UpdateControlsTests(unittest.TestCase):
             "create_llama_update_controls",
             {"gr": gr, "t": str, "localize": localize, "locale_of": lambda request: "en"},
         )
-        candidate = llama_update.PrebuiltUpdate("CPU", "b12462", "fixture.zip", "", "", 1, True)
+        candidate = llama_update.PrebuiltUpdate("CPU", "b19462", "fixture.zip", "", "", 1, True)
         with (
             patch.object(llama_update, "configured_build", return_value=llama_installer.VERSION),
             patch.object(

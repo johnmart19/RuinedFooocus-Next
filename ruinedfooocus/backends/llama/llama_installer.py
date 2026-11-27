@@ -18,10 +18,10 @@ import requests
 from ruinedfooocus.packaging.startup_options import skip_dependency_install
 from ruinedfooocus.backends.llama.runtime_policy import preferred_backend
 
-VERSION = "b12366"
+VERSION = "b12803"
 # These native CLI contracts are also supported by llama_server. Reuse is
 # limited to CPU/Vulkan, whose environment needs no version-specific SDK.
-COMPATIBLE_CACHED_VERSIONS = ("b12327", "b12110")
+COMPATIBLE_CACHED_VERSIONS = ("b12366", "b12327", "b12110")
 CUDA_BACKEND = "CUDA 13.5"
 RELEASES = "https://api.github.com/repos/ggml-org/llama.cpp/releases/tags/"
 
