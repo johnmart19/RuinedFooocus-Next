@@ -1,0 +1,8 @@
+{
+  "id": "preparation-service",
+  "subject": "Prepare model files through a bounded single-flight download service",
+  "requires": ["derived-cache-contract", "download-sync"],
+  "tests": ["test_preparation_queue.py", "test_preparation_verification_receipt.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
