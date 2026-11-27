@@ -1,0 +1,8 @@
+{
+  "id": "derived-cache-contract",
+  "subject": "Define versioned records for derived caches",
+  "requires": ["app-root-paths", "atomic-config-io"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
