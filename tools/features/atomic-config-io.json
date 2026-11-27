@@ -1,0 +1,8 @@
+{
+  "id": "atomic-config-io",
+  "subject": "Write configuration files atomically so a failed save keeps the last working file",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
