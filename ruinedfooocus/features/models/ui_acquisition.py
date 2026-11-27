@@ -163,6 +163,28 @@ def listed_records(rows):
     )
 
 
+def _vram_badge(row):
+    """Return a concise approximate full-offload VRAM badge for LLM/Vision cards."""
+    annotation = row.get("annotation") or {}
+    estimates = annotation.get("hardware", {}).get("planning_profiles") or ()
+    for estimate in estimates:
+        if isinstance(estimate, Mapping):
+            span = estimate.get("estimated_full_offload_vram_range_gib")
+            if span and str(span).lower() != "unknown":
+                if isinstance(span, (list, tuple)) and len(span) == 2:
+                    text = f"{span[0]}–{span[1]}"
+                else:
+                    text = str(span).replace("-", "–")
+                return f"~{text} GiB VRAM"
+    if row.get("task") == "Chat" or row.get("category") in ("llm", "vision"):
+        size = row.get("published_bytes") or row.get("local_bytes")
+        if isinstance(size, (int, float)) and size > 0:
+            gib = size / (1024**3)
+            est = max(0.5, round(gib * 1.2 + 0.5, 1))
+            return f"~{est:g} GiB VRAM"
+    return ""
+
+
 def card_label(row):
     label = row["label"]
     is_filename = bool(re.search(r"\.(?:safetensors|gguf|ckpt|pt|pth|bin)$", label, re.I))
@@ -202,6 +224,7 @@ def card_data(rows, selected, manager, page=1, locale=None, previews=None):
                         (
                             localize(row["status"], locale),
                             quantization_label(row["quantization"]),
+                            _vram_badge(row),
                             row["task"] if row["task"] == "Bundle" else "",
                         ),
                     )

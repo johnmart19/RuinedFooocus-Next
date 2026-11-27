@@ -207,15 +207,61 @@ def remove_local_model(filename, delete_file=False):
         invalidate_model_catalogue()
 
 
+def _vram_hint(name, value, installed, registry=None):
+    """Return concise approximate VRAM label for a Chat/Vision GGUF without opening weights."""
+    entry = None
+    if registry is not None:
+        base = Path(name).name
+        for key in (f"llm/{base}", f"vision/{base}"):
+            entry = registry.by_catalogue_key(key) if hasattr(registry, "by_catalogue_key") else None
+            if entry is not None:
+                break
+        if entry is None:
+            for item in registry.entries(role="language_model"):
+                if Path(item.get("catalogue_key", "")).name == base:
+                    entry = item
+                    break
+    if entry is not None:
+        from collections.abc import Mapping
+
+        for estimate in entry.get("hardware", {}).get("planning_profiles", ()):
+            span = (
+                estimate.get("estimated_full_offload_vram_range_gib")
+                if isinstance(estimate, Mapping)
+                else None
+            )
+            if span and str(span).lower() != "unknown":
+                if isinstance(span, (list, tuple)) and len(span) == 2:
+                    text = f"{span[0]}–{span[1]}"
+                else:
+                    text = str(span).replace("-", "–")
+                return f"~{text} GiB VRAM"
+        size = (entry.get("artifact") or {}).get("bytes")
+        if isinstance(size, (int, float)) and size > 0:
+            est = max(0.5, round((size / (1024**3)) * 1.2 + 0.5, 1))
+            return f"~{est:g} GiB VRAM"
+    if installed:
+        try:
+            size = Path(value).stat().st_size
+            if size > 1024**2:
+                est = max(0.5, round((size / (1024**3)) * 1.2 + 0.5, 1))
+                return f"~{est:g} GiB VRAM"
+        except OSError:
+            pass
+    return ""
+
+
 def model_catalogue(source=None):
     local = local_models()
     downloadable = path_manager.get_folder_list("llm")
     from ruinedfooocus.features.models.model_registry import load_registry, RegistryError
 
+    registry = None
     try:
+        registry = load_registry()
         downloadable = list(downloadable) + [
             row["catalogue_key"].removeprefix("vision/")
-            for row in load_registry().entries(role="language_model")
+            for row in registry.entries(role="language_model")
             if row["chat_weight"]
             and row["catalogue_key"].startswith("vision/")
             and row["catalogue_key"] in path_manager.DOWNLOADABLE_FILES
@@ -257,7 +303,9 @@ def model_catalogue(source=None):
         status = "Local" if installed else "Download"
         if installed and name != Path(name).name:
             status += " · " + str(Path(value).parent)
-        catalogue.setdefault(model, []).append((f"{quant.upper()} · {status}", value))
+        vram = _vram_hint(name, value, installed, registry)
+        parts = [quant.upper(), vram, status] if vram else [quant.upper(), status]
+        catalogue.setdefault(model, []).append((" · ".join(parts), value))
     return catalogue
 
 

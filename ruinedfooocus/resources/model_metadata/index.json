@@ -3087,6 +3087,171 @@
         "runtime_status",
         "source_urls"
       ]
+    },
+    "curated:qwen3_4b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:qwen3_8b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:qwen3_14b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:qwen3_30b_a3b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:qwen3_coder_30b_a3b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:qwen25_vl_7b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:qwen3_vl_4b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:qwen3_vl_8b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:gemma_3_12b_it": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:gemma_3_27b_it": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:mistral_small_31_24b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:phi_4_14b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:deepseek_r1_distill_qwen_14b": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:llama_31_8b_instruct": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
+    },
+    "curated:internvl3_8b_instruct": {
+      "path": "families/popular_llm_vision.json",
+      "keys": [
+        "display_name",
+        "architecture",
+        "context_native_tokens",
+        "license",
+        "sources",
+        "hardware_notes"
+      ]
     }
   },
   "artifacts": {
@@ -5700,6 +5865,160 @@
       "state": "existing",
       "role": "language_model",
       "profile_id": "language:inkling_2_mini"
+    },
+    "existing:llm/Qwen3-4B-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen3-4B-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen3_4b"
+    },
+    "existing:llm/Qwen3-8B-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen3-8B-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen3_8b"
+    },
+    "existing:llm/Qwen3-14B-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen3-14B-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen3_14b"
+    },
+    "existing:llm/Qwen3-30B-A3B-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen3-30B-A3B-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen3_30b_a3b"
+    },
+    "existing:llm/Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen3_coder_30b_a3b"
+    },
+    "existing:vision/mmproj-Qwen2.5-VL-7B-Instruct-f16.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "vision/mmproj-Qwen2.5-VL-7B-Instruct-f16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "curated:qwen25_vl_7b"
+    },
+    "existing:llm/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen25_vl_7b"
+    },
+    "existing:vision/mmproj-Qwen3-VL-4B-Instruct-F16.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "vision/mmproj-Qwen3-VL-4B-Instruct-F16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "curated:qwen3_vl_4b"
+    },
+    "existing:llm/Qwen3-VL-4B-Instruct-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen3-VL-4B-Instruct-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen3_vl_4b"
+    },
+    "existing:vision/mmproj-Qwen3-VL-8B-Instruct-F16.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "vision/mmproj-Qwen3-VL-8B-Instruct-F16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "curated:qwen3_vl_8b"
+    },
+    "existing:llm/Qwen3-VL-8B-Instruct-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Qwen3-VL-8B-Instruct-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:qwen3_vl_8b"
+    },
+    "existing:vision/mmproj-gemma-3-12b-it-f16.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "vision/mmproj-gemma-3-12b-it-f16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "curated:gemma_3_12b_it"
+    },
+    "existing:llm/gemma-3-12b-it-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/gemma-3-12b-it-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:gemma_3_12b_it"
+    },
+    "existing:vision/mmproj-gemma-3-27b-it-f16.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "vision/mmproj-gemma-3-27b-it-f16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "curated:gemma_3_27b_it"
+    },
+    "existing:llm/gemma-3-27b-it-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/gemma-3-27b-it-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:gemma_3_27b_it"
+    },
+    "existing:vision/mmproj-Mistral-Small-3.1-24B-Instruct-2503-F16.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "vision/mmproj-Mistral-Small-3.1-24B-Instruct-2503-F16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "curated:mistral_small_31_24b"
+    },
+    "existing:llm/Mistral-Small-3.1-24B-Instruct-2503-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Mistral-Small-3.1-24B-Instruct-2503-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:mistral_small_31_24b"
+    },
+    "existing:llm/phi-4-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/phi-4-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:phi_4_14b"
+    },
+    "existing:llm/DeepSeek-R1-Distill-Qwen-14B-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/DeepSeek-R1-Distill-Qwen-14B-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:deepseek_r1_distill_qwen_14b"
+    },
+    "existing:llm/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:llama_31_8b_instruct"
+    },
+    "existing:vision/mmproj-InternVL3-8B-Instruct-f16.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "vision/mmproj-InternVL3-8B-Instruct-f16.gguf",
+      "state": "existing",
+      "role": "vision_projector",
+      "profile_id": "curated:internvl3_8b_instruct"
+    },
+    "existing:llm/InternVL3-8B-Instruct-Q4_K_M.gguf": {
+      "path": "artifacts/popular_llm_vision.json",
+      "catalogue_key": "llm/InternVL3-8B-Instruct-Q4_K_M.gguf",
+      "state": "existing",
+      "role": "language_model",
+      "profile_id": "curated:internvl3_8b_instruct"
     }
   },
   "qualification": {
@@ -5736,14 +6055,11 @@
     "auxiliary:dat_4x_pth": "qualification/auxiliary_dat_4x_pth.json"
   },
   "shards": {
-    "families/utility_mediapipe_face.json": {
-      "sha256": "5e278a281ca23e697d3914831d5d9853faa120479d8604642f6263578c8d8ac5"
-    },
-    "artifacts/mediapipe_face.json": {
-      "sha256": "10c9fd95f74e0ad389d0fd5b1e78d0c9669bec2d854d76ec59504673d333238d"
-    },
     "families/language_qwen3_1_7b.json": {
       "sha256": "927afe2bc20748ec00cf1423142805ff95d89780034fbe37504df83816955bfc"
+    },
+    "families/utility_mediapipe_face.json": {
+      "sha256": "5e278a281ca23e697d3914831d5d9853faa120479d8604642f6263578c8d8ac5"
     },
     "families/utility_wevisone_vl_2b_int8_convrot.json": {
       "sha256": "c7075a19bb92953086ebeeb8ea7f3ca02c03a6426ca13d539374ce54fc0a17f0"
@@ -6402,6 +6718,15 @@
     "families/control_sdxl_union.json": {
       "sha256": "ac81d8e461e4718943f3a78f4d857b45b80c5d599920c7b37cfcd6a268e802bd"
     },
+    "families/language_inkling_2_mini.json": {
+      "sha256": "7e538fd26dfc7c511fa830d6455c4a568043a99c19c9ec59b500b1a4b5e8bcf5"
+    },
+    "families/popular_llm_vision.json": {
+      "sha256": "03145584d305f1e55a937d414a016571979a4458101c7bd68e08731184f6067d"
+    },
+    "artifacts/mediapipe_face.json": {
+      "sha256": "10c9fd95f74e0ad389d0fd5b1e78d0c9669bec2d854d76ec59504673d333238d"
+    },
     "artifacts/image_utility_encoder.json": {
       "sha256": "e9c87c57a8adc068b741deff11562608db4413f716e5258ebe47f052de456df0"
     },
@@ -6470,6 +6795,9 @@
     },
     "artifacts/control_sdxl_union.json": {
       "sha256": "b16e466695f05deb488449465b9b64fc16abe78b5a8f6698ac8c1e05aa986a11"
+    },
+    "artifacts/popular_llm_vision.json": {
+      "sha256": "21ca483de2b1cae132aede00a85edd260b99f6703240ea2fc2dfa09d42e3ba9b"
     },
     "qualification/language_qwen3_1_7b.json": {
       "sha256": "4b1a8a677a78f1f7ffce10ddd2d6ddd202903d65a53e3b2fe9d63045d63f2f5f"
@@ -6563,9 +6891,6 @@
     },
     "qualification/auxiliary_dat_4x_pth.json": {
       "sha256": "e2b441dc2b00bedd1634f8f2cb33e86a75226b8efb8be9b462a3aebfe6f8f0e0"
-    },
-    "families/language_inkling_2_mini.json": {
-      "sha256": "7e538fd26dfc7c511fa830d6455c4a568043a99c19c9ec59b500b1a4b5e8bcf5"
     }
   },
   "benchmark_order": [
@@ -6732,7 +7057,7 @@
       ]
     }
   ],
-  "source_document_sha256": "dbfd7ed2808098b602a692f5a6086183e7c74af1e365009358d74651991167b3",
+  "source_document_sha256": "328c51b480aee2dee97f4436e70ae37d70cfdcb13dc6162a0974c02e93076ac4",
   "migration_baseline": {
     "profiles": [
       "language:qwen3_1_7b",
@@ -7542,5 +7867,5 @@
       "download_identities_sha256": "c2d454cd743cf7f338506a70d4d4230fdcde0b3324ebd73c4c571730d5f77455"
     }
   },
-  "download_identities_sha256": "cc0f397a01ca617b53efb3191c173cb1d5025a51545267e845a20e2b5ec816a1"
+  "download_identities_sha256": "2d6ccc056cc8732775c13eb8b31e5c9e14eac2e7cb15f78ad3cea8f1f561d830"
 }
