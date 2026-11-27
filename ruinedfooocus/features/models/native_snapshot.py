@@ -16,8 +16,8 @@ from types import MappingProxyType
 
 SCHEMA_VERSION = 1
 PARSER_VERSION = "native-image-facts-1"
-ACCEPTED_COMFY_PIN = "989d93d0d968e704c589ce0146bb18c77f6b50cc"
-ACCEPTED_GGUF_PIN = "da5f435cd9a9e54ad27eed417ed72b1f2543ef41"
+ACCEPTED_COMFY_PIN = "cab5f4e13b83c58482cd514afb22ca925e117638"
+ACCEPTED_GGUF_PIN = "35da9968d8eeb0a3c03a1e468203ffd2f6f48348"
 DEFAULT_SNAPSHOT = Path(__file__).with_name("native_snapshot.json")
 _MAX_SNAPSHOT_BYTES = 16 * 1024 * 1024
 _lock = RLock()

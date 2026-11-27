@@ -270,9 +270,9 @@ class EffectiveImagePlanTests(unittest.TestCase):
         with patch.object(plans, "_native_facts", side_effect=self.real_native_facts):
             facts = self.capture()[plans.KEY].metadata()["native_facts"]
         self.assertEqual(
-            facts["snapshot"]["native_pin"], "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+            facts["snapshot"]["native_pin"], "cab5f4e13b83c58482cd514afb22ca925e117638"
         )
-        self.assertEqual(facts["snapshot"]["gguf_pin"], "da5f435cd9a9e54ad27eed417ed72b1f2543ef41")
+        self.assertEqual(facts["snapshot"]["gguf_pin"], "35da9968d8eeb0a3c03a1e468203ffd2f6f48348")
         self.assertEqual(len(facts["snapshot"]["snapshot_sha256"]), 64)
         self.assertEqual(facts["family"]["family_id"], "SDXL")
 

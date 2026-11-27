@@ -7,7 +7,7 @@
       "media": "image",
       "native_family": "SD15_instructpix2pix",
       "component_family": "SD15_instructpix2pix",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L510",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L511",
       "native_contract_sha256": "d7bfd0f34f70f3938c337497d56a880b18925b06ceae9469cf814542b2d8458f",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -15,13 +15,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/instruct-pix2pix-00-22000.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/instruct-pix2pix-00-22000.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l"],
+        "text": [
+          "clip_l"
+        ],
         "vae": "vae_sd"
       }
     },
@@ -30,7 +34,7 @@
       "media": "image",
       "native_family": "SD 1.5",
       "component_family": "BaseModel",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L54",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L55",
       "native_contract_sha256": "b4f19edc2602b70ec3b07bd012d678897607813f1ca9ed899f746694c57e85b8",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -38,13 +42,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/sd15_unet_fp16.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/sd15_unet_fp16.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l"],
+        "text": [
+          "clip_l"
+        ],
         "vae": "vae_sd"
       }
     },
@@ -53,7 +61,7 @@
       "media": "image",
       "native_family": "SD 2.0",
       "component_family": "SD20",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L100",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L101",
       "native_contract_sha256": "794889386d55346776d1c744cb54a81a7fdff7b913955b52990d8a595bef9bf9",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -61,13 +69,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/wd-1-5-beta2-aesthetic-fp16.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/wd-1-5-beta2-aesthetic-fp16.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_sd4x_h"],
+        "text": [
+          "clip_sd4x_h"
+        ],
         "vae": "vae_sd"
       }
     },
@@ -76,7 +88,7 @@
       "media": "image",
       "native_family": "SD21UnclipL",
       "component_family": "SD21UNCLIP",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L144",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L145",
       "native_contract_sha256": "3370fba13ad6b52e1f87f2dcad05ec0b87806c36edbbe6a5f40521a461a2b275",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -92,7 +104,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_sd4x_h"],
+        "text": [
+          "clip_sd4x_h"
+        ],
         "vae": "vae_sd"
       }
     },
@@ -101,7 +115,7 @@
       "media": "image",
       "native_family": "SD21UnclipH",
       "component_family": "SD21UNCLIP",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L157",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L158",
       "native_contract_sha256": "275170710b728b1ba6769c4ecc3306c7bd58504adbbfc291da21ea05b0c4f542",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -117,7 +131,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_sd4x_h"],
+        "text": [
+          "clip_sd4x_h"
+        ],
         "vae": "vae_sd"
       }
     },
@@ -126,7 +142,7 @@
       "media": "image",
       "native_family": "SDXL_instructpix2pix",
       "component_family": "SDXL_instructpix2pix",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L523",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L524",
       "native_contract_sha256": "42847117c7e531621589165c20c310baf3d54d67cef6d426c992bafb6f4b5efa",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -134,13 +150,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/sdxl_instructpix2pix_unet.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/sdxl_instructpix2pix_unet.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_g"],
+        "text": [
+          "clip_l",
+          "clip_g"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -149,7 +170,7 @@
       "media": "image",
       "native_family": "SDXLRefiner",
       "component_family": "SDXLRefiner",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L169",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L170",
       "native_contract_sha256": "8c63bc746ed1b84aebce693bc3fe8e1934041c0d307e4ea7731a12e0f9296ce5",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -157,13 +178,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/sd_xl_refiner_1.0.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/sd_xl_refiner_1.0.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_g"],
+        "text": [
+          "clip_g"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -172,7 +197,7 @@
       "media": "image",
       "native_family": "SDXL 1.0",
       "component_family": "SDXL",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L207",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L208",
       "native_contract_sha256": "7f62eed999142ba6ed2ea20988e55b9f489c23dee56b563e786ce4880b5df295",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -189,7 +214,10 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_g"],
+        "text": [
+          "clip_l",
+          "clip_g"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -198,7 +226,7 @@
       "media": "image",
       "native_family": "SSD1B",
       "component_family": "SDXL",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L279",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L280",
       "native_contract_sha256": "627672befa5f1ebf0a1fa81a3db659434b23b0b882a960ac5af781d074672bec",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -206,13 +234,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/SSD-1B.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/SSD-1B.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_g"],
+        "text": [
+          "clip_l",
+          "clip_g"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -221,7 +254,7 @@
       "media": "image",
       "native_family": "KOALA_700M",
       "component_family": "SDXL",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L299",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L300",
       "native_contract_sha256": "b811cc3a8c9e6ebb60b7fa724de03a054cee10f8fc72bafb9979e5d12aef7c31",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -229,13 +262,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/koala_700m_unet_fp16.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/koala_700m_unet_fp16.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_g"],
+        "text": [
+          "clip_l",
+          "clip_g"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -244,7 +282,7 @@
       "media": "image",
       "native_family": "KOALA_1B",
       "component_family": "SDXL",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L309",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L310",
       "native_contract_sha256": "a40864afe968a87871f5148018609f80c2eccab2c26b5764096f03aaadf2bd97",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -252,13 +290,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/koala_1b_unet_fp16.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/koala_1b_unet_fp16.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_g"],
+        "text": [
+          "clip_l",
+          "clip_g"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -267,7 +310,7 @@
       "media": "image",
       "native_family": "Segmind_Vega",
       "component_family": "SDXL",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L289",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L290",
       "native_contract_sha256": "1b07d0b194d96cf36df5367b640c5e15ecf99c94911e07a6cabd425b73c0ebf8",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -275,13 +318,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/segmind-vega.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/segmind-vega.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_g"],
+        "text": [
+          "clip_l",
+          "clip_g"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -290,7 +338,7 @@
       "media": "image",
       "native_family": "SD_X4Upscaler",
       "component_family": "SD_X4Upscaler",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L416",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L417",
       "native_contract_sha256": "3bf675c4d09641e60303847a6aa0e6ab4a62c3e221a2d32e965fc409b76860fe",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -298,13 +346,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/x4-upscaler-ema.ckpt"],
+      "available_artifact_ids": [
+        "existing:checkpoints/x4-upscaler-ema.ckpt"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Exact registered downloader tuples only; availability and byte verification are reported by each artifact annotation.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_sd4x_h"],
+        "text": [
+          "clip_sd4x_h"
+        ],
         "vae": "vae_sd4x"
       }
     },
@@ -313,7 +365,7 @@
       "media": "image",
       "native_family": "Stable_Cascade_C",
       "component_family": "StableCascade_C",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L444",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L445",
       "native_contract_sha256": "10b3cce742de47188fc938f4fb6b8bfa877fe93d9bda123bcc37d22bc5db366a",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -321,13 +373,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/stable_cascade_stage_c.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/stable_cascade_stage_c.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Exact registered downloader tuples only; availability and byte verification are reported by each artifact annotation.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_g"],
+        "text": [
+          "clip_g"
+        ],
         "vae": "vae_cascade_c"
       }
     },
@@ -336,7 +392,7 @@
       "media": "image",
       "native_family": "Stable_Cascade_B",
       "component_family": "Stable_Cascade_B",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L490",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L491",
       "native_contract_sha256": "adac15e7e58855435e4bdfd9c3911a4eb295e439a1fa7dca69dcdc3116573b96",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "stage-b-companion",
@@ -344,7 +400,9 @@
       "ui_route": "Create > Stable Cascade C; captured stage-B companion",
       "RF_source_route": "features/generation/cascade.py",
       "reason": "Stage B is acquired/loaded as the Stage C companion; it is not an independent text-to-image selection.",
-      "available_artifact_ids": ["existing:checkpoints/stable_cascade_stage_b.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/stable_cascade_stage_b.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Exact registered downloader tuples only; availability and byte verification are reported by each artifact annotation.",
       "installed_status": "runtime-inventory-not-examined",
@@ -356,7 +414,7 @@
       "media": "image",
       "native_family": "SD3",
       "component_family": "SD3",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L554",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L555",
       "native_contract_sha256": "9d5479f30deedf1a241cfd1cf702ce71b2e497774af6885d66b92c03ea269d7e",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -364,13 +422,19 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/sd3.5_large_fp8_scaled.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/sd3.5_large_fp8_scaled.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_g", "clip_t5"],
+        "text": [
+          "clip_l",
+          "clip_g",
+          "clip_t5"
+        ],
         "vae": "vae_sd3"
       }
     },
@@ -379,7 +443,7 @@
       "media": "image",
       "native_family": "AuraFlow",
       "component_family": "AuraFlow",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L644",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L645",
       "native_contract_sha256": "ff4be685ca05b6b495b5cf1ceb8ac909be8654830a949bd9620cc67eb92faf8f",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -387,13 +451,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/aura_flow_0.3.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/aura_flow_0.3.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_aura"],
+        "text": [
+          "clip_aura"
+        ],
         "vae": "vae_auraflow"
       }
     },
@@ -402,7 +470,7 @@
       "media": "image",
       "native_family": "PixArt",
       "component_family": "PixArt",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L667",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L668",
       "native_contract_sha256": "637ca57b2d5bddd46f1175a41473f3f13f53b8663d7c3545aaebf2fe8a11dca6",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -410,13 +478,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/pixart_alpha_xl_2_1024_ms.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/pixart_alpha_xl_2_1024_ms.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_t5"],
+        "text": [
+          "clip_t5"
+        ],
         "vae": "vae_pixart"
       }
     },
@@ -425,7 +497,7 @@
       "media": "image",
       "native_family": "PixArt",
       "component_family": "PixArt",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L694",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L695",
       "native_contract_sha256": "8a0733e931422fe8b14ac43778c70dbc4dcb0631cc63ac32bd5746c28f0d8c9d",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -433,13 +505,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/pixart_sigma_xl_2_1024_ms.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/pixart_sigma_xl_2_1024_ms.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_t5"],
+        "text": [
+          "clip_t5"
+        ],
         "vae": "vae_pixart"
       }
     },
@@ -448,7 +524,7 @@
       "media": "image",
       "native_family": "HunyuanDiT",
       "component_family": "HunyuanDiT",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L700",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L701",
       "native_contract_sha256": "57674a4e692566cd76698ea3f97707ae547f2209e133615f165e2ddefc29651b",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -456,13 +532,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/hunyuan_dit_1.2.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/hunyuan_dit_1.2.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Exact registered downloader tuples only; availability and byte verification are reported by each artifact annotation.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_hydit_bert", "clip_hydit_mt5"],
+        "text": [
+          "clip_hydit_bert",
+          "clip_hydit_mt5"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -471,7 +552,7 @@
       "media": "image",
       "native_family": "HunyuanDiT1",
       "component_family": "HunyuanDiT",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L728",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L729",
       "native_contract_sha256": "7c34be49f33bb48cee6a812d454dd67ab5064af7cf0eed99dbd0853bd5fc9455",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -488,7 +569,10 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_hydit_bert", "clip_hydit_mt5"],
+        "text": [
+          "clip_hydit_bert",
+          "clip_hydit_mt5"
+        ],
         "vae": "vae_sdxl"
       }
     },
@@ -497,7 +581,7 @@
       "media": "image",
       "native_family": "FluxInpaint",
       "component_family": "Flux",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L777",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L778",
       "native_contract_sha256": "982f32b621862db81427a5bd1334658927cb4bbe957ef01835473328e279c969",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -505,13 +589,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/flux1-fill-dev.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/flux1-fill-dev.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native header classification; per-artifact component/schedule requirements and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_t5"],
+        "text": [
+          "clip_l",
+          "clip_t5"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -520,7 +609,7 @@
       "media": "image",
       "native_family": "Flux.1 D",
       "component_family": "Flux",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L740",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L741",
       "native_contract_sha256": "5a1938640bf548526587fde86dbf56adcc930b7b4e9c4551304540dd72db41a7",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -537,7 +626,10 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_t5"],
+        "text": [
+          "clip_l",
+          "clip_t5"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -546,7 +638,7 @@
       "media": "image",
       "native_family": "LongCatImage",
       "component_family": "LongCatImage",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2469",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2492",
       "native_contract_sha256": "3b87e1edf6a7d33cc4bee33a33acdb63f210319e926b4e2e1d06a6b526ea65de",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -563,7 +655,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen25"],
+        "text": [
+          "clip_qwen25"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -572,7 +666,7 @@
       "media": "image",
       "native_family": "Flux.1 S",
       "component_family": "Flux",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L786",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L787",
       "native_contract_sha256": "6e6369e4b77055a17e779945c7122b888c037c46e8cc9f46937e3d101df17506",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -580,13 +674,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/flux1-schnell-fp8.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/flux1-schnell-fp8.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple, SHA256, bytes and bounded native header classification; no full-payload or hardware qualification.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_l", "clip_t5"],
+        "text": [
+          "clip_l",
+          "clip_t5"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -595,7 +694,7 @@
       "media": "image",
       "native_family": "HunyuanImage21Refiner",
       "component_family": "HunyuanImage21Refiner",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2267",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2290",
       "native_contract_sha256": "6eab6980e03cc44e8bc0fcb3f2a36f7021aeb7659033cce1bcce40e746df84f4",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -611,7 +710,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen25"],
+        "text": [
+          "clip_qwen25"
+        ],
         "vae": "vae_hunyuan_refiner"
       }
     },
@@ -620,7 +721,7 @@
       "media": "image",
       "native_family": "HunyuanImage21",
       "component_family": "HunyuanImage21",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2242",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2265",
       "native_contract_sha256": "f6e3bf9a042beeb0f101918947fb7c668f5de9c38ccd849e9070ca8a0836821c",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -636,7 +737,10 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen25", "clip_hunyuan_byt5"],
+        "text": [
+          "clip_qwen25",
+          "clip_hunyuan_byt5"
+        ],
         "vae": "vae_hunyuan_image21"
       }
     },
@@ -645,7 +749,7 @@
       "media": "image",
       "native_family": "CosmosT2IPredict2",
       "component_family": "CosmosPredict2",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1136",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1137",
       "native_contract_sha256": "8a9ab8188d8b9378e145599da59b7c55a16efc7da7b2b9d35c2c5611bf706a96",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -653,13 +757,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/cosmos_predict2_2B_t2i.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/cosmos_predict2_2B_t2i.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native-classified header; per-artifact conditioning, codec, staging, utility route and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_oldt5"],
+        "text": [
+          "clip_oldt5"
+        ],
         "vae": "vae_wan"
       }
     },
@@ -668,7 +776,7 @@
       "media": "image",
       "native_family": "ZImagePixelSpace",
       "component_family": "ZImagePixelSpace",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1265",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1266",
       "native_contract_sha256": "7927aea98708e0ba66c5677b899e0931a26038aab689a3f6465b67d60b897066",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -684,7 +792,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3_4b"],
+        "text": [
+          "clip_qwen3_4b"
+        ],
         "vae": "pixel_space"
       },
       "excluded_source": {
@@ -698,7 +808,7 @@
       "media": "image",
       "native_family": "MingImage",
       "component_family": "MingImage",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1279",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1280",
       "native_contract_sha256": "53b4691a931da3b62c5793eca73a3d68f4917bea310a3a18bd43829cf8d0f6c6",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -714,7 +824,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_ming_image"],
+        "text": [
+          "clip_ming_image"
+        ],
         "vae": "vae_ming_image"
       }
     },
@@ -723,7 +835,7 @@
       "media": "image",
       "native_family": "ZImage",
       "component_family": "ZImage",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1239",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1240",
       "native_contract_sha256": "b6ed730a904849fd35f9ed71b101f5905b423ea7fb132155611b5806f740e5d2",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -740,7 +852,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3_4b"],
+        "text": [
+          "clip_qwen3_4b"
+        ],
         "vae": "vae_lumina2"
       }
     },
@@ -749,7 +863,7 @@
       "media": "image",
       "native_family": "PiD",
       "component_family": "PiD",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1349",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1350",
       "native_contract_sha256": "04f2c0bd8fc7f128b7fbf1d9c45194ab3e4bce62c98c4aad00d1a8326e0cf43f",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -765,7 +879,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_gemma2_it_elm"],
+        "text": [
+          "clip_gemma2_it_elm"
+        ],
         "vae": "pixel_space"
       }
     },
@@ -774,7 +890,7 @@
       "media": "image",
       "native_family": "PixelDiTT2I",
       "component_family": "PixelDiTT2I",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1297",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1298",
       "native_contract_sha256": "e65081439cd908f002b966089cbd1402c42c58588e4c1b1391de426a719485a2",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -790,7 +906,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_gemma2_it_elm"],
+        "text": [
+          "clip_gemma2_it_elm"
+        ],
         "vae": "pixel_space"
       }
     },
@@ -799,7 +917,7 @@
       "media": "image",
       "native_family": "Lumina2",
       "component_family": "Lumina2",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1210",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1211",
       "native_contract_sha256": "e7112d02fb1fac4f9fcb8bbca32383ae9a34d2cde60c31542d64007734f106e6",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -816,7 +934,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_gemma"],
+        "text": [
+          "clip_gemma"
+        ],
         "vae": "vae_lumina2"
       }
     },
@@ -825,7 +945,7 @@
       "media": "image",
       "native_family": "HiDream",
       "component_family": "HiDream",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1718",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1719",
       "native_contract_sha256": "0e9392c606281371a538c35e562582273c1efe41d0d7d4a22ffe8dc97be0302e",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -842,7 +962,12 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_g", "clip_l", "clip_llama", "clip_t5"],
+        "text": [
+          "clip_g",
+          "clip_l",
+          "clip_llama",
+          "clip_t5"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -851,7 +976,7 @@
       "media": "image",
       "native_family": "HiDreamO1",
       "component_family": "HiDreamO1",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1747",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1748",
       "native_contract_sha256": "1240929623db8d25cdb80572d59ed0e0274b4ebc0353f867097b53f2d55b1b52",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -876,8 +1001,8 @@
       "media": "image",
       "native_family": "SenseNovaU15",
       "component_family": "SenseNovaU15",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1791",
-      "native_contract_sha256": "48c6a04147d4a09a03832dfde81306f250eebffd1c656e9b530c80e104a3d3ea",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1792",
+      "native_contract_sha256": "4d9c406f440f591e6e826b7fcea3b8b1eee7aa34d142ff6b3b91adb91495657d",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
       "app_route": "image-source-route",
@@ -908,7 +1033,7 @@
       "media": "image",
       "native_family": "Chroma",
       "component_family": "Chroma",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1829",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1823",
       "native_contract_sha256": "5f6dbc60f162b6197e79f411bc0c04f35238c28a8ae069b3b41cd6417b0d99d0",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -916,13 +1041,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/Chroma1-HD-fp8mixed.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/Chroma1-HD-fp8mixed.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native header classification; per-artifact component/schedule requirements and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_t5"],
+        "text": [
+          "clip_t5"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -931,7 +1060,7 @@
       "media": "image",
       "native_family": "ChromaRadiance",
       "component_family": "ChromaRadiance",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1899",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1893",
       "native_contract_sha256": "67ea16b12c56c00650f76d0bae9e99e1baf8d87a8baa21e87208af24b826cee5",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -939,13 +1068,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/chroma-radiance-x0.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/chroma-radiance-x0.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native header classification; per-artifact component/schedule requirements and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_t5"],
+        "text": [
+          "clip_t5"
+        ],
         "vae": "pixel_space"
       }
     },
@@ -954,7 +1087,7 @@
       "media": "image",
       "native_family": "Omnigen2",
       "component_family": "Omnigen2",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1940",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1934",
       "native_contract_sha256": "1a206c85730ecc9a60acee5e7ad9ccb5dd3b89ba13651d21100787d90a263760",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -962,13 +1095,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/omnigen2_fp16.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/omnigen2_fp16.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple, SHA256, bytes and bounded native header classification; no full-payload or hardware qualification.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_omnigen2_3b"],
+        "text": [
+          "clip_omnigen2_3b"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -977,7 +1114,7 @@
       "media": "image",
       "native_family": "Boogu",
       "component_family": "Boogu",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1974",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1968",
       "native_contract_sha256": "cd65311741d7aae866caca5aca10fd1b679dee1b5936b899717db58058b1ea39",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -994,7 +1131,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3vl_8b_scaled"],
+        "text": [
+          "clip_qwen3vl_8b_scaled"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -1003,7 +1142,7 @@
       "media": "image",
       "native_family": "MageFlow",
       "component_family": "MageFlow",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2123",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2146",
       "native_contract_sha256": "4cdcdb794c72d5f5ff9e9774fd824f937c8ab4f164d51baf8af38602042cd713",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1020,7 +1159,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3vl_4b"],
+        "text": [
+          "clip_qwen3vl_4b"
+        ],
         "vae": "vae_mage_flow"
       }
     },
@@ -1029,7 +1170,7 @@
       "media": "image",
       "native_family": "QwenImage",
       "component_family": "QwenImage",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2152",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2175",
       "native_contract_sha256": "333d2aa0af26fc5ed5b926591d143b89305eb1f49635ba0111e7c417b1a3eb78",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1050,7 +1191,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen25"],
+        "text": [
+          "clip_qwen25"
+        ],
         "vae": "vae_qwen_image"
       }
     },
@@ -1059,7 +1202,7 @@
       "media": "image",
       "native_family": "QwenImage21",
       "component_family": "QwenImage21",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2181",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2204",
       "native_contract_sha256": "d7528d4f9671f741870c648e56d75dcbe0ab0eb2a7733cdf06d155e64a0b78b3",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1077,7 +1220,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen_image21"],
+        "text": [
+          "clip_qwen_image21"
+        ],
         "vae": "vae_qwen_image21"
       }
     },
@@ -1086,7 +1231,7 @@
       "media": "image",
       "native_family": "JoyImage",
       "component_family": "JoyImage",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2210",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2233",
       "native_contract_sha256": "d36ee99668f51b3c161d695e3364fa7cbb31aadef2f2265db2f69e2cfca23784",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1102,7 +1247,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_joyimage_8b"],
+        "text": [
+          "clip_joyimage_8b"
+        ],
         "vae": "vae_wan"
       }
     },
@@ -1111,7 +1258,7 @@
       "media": "image",
       "native_family": "Ideogram4",
       "component_family": "Ideogram4",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1995",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1989",
       "native_contract_sha256": "9452a521b3c30416fa051635a2569a35ff9879a69aebb942ee199f9122cc6815",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1119,13 +1266,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/ideogram4_fp8_scaled.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/ideogram4_fp8_scaled.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple and bounded native header classification; per-artifact component/schedule requirements and hardware qualification remain separate.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3vl_8b"],
+        "text": [
+          "clip_qwen3vl_8b"
+        ],
         "vae": "vae_flux2"
       }
     },
@@ -1134,7 +1285,7 @@
       "media": "image",
       "native_family": "Krea2",
       "component_family": "Krea2",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2034",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2028",
       "native_contract_sha256": "54f7da7518bd58d9d5110894fb7ad8c3a465d1b8ea39f354732e20c816fee493",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1142,13 +1293,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/krea2_turbo_fp8_scaled.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/krea2_turbo_fp8_scaled.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple, SHA256, bytes and bounded native header classification; no full-payload or hardware qualification.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3vl_4b_scaled"],
+        "text": [
+          "clip_qwen3vl_4b_scaled"
+        ],
         "vae": "vae_qwen_image"
       }
     },
@@ -1157,7 +1312,7 @@
       "media": "image",
       "native_family": "MOSSImage",
       "component_family": "MOSSImage",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2062",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2056",
       "native_contract_sha256": "e4960c9170e6299538c02f7a04f5ffe799024f84c8e7f01d48cd91aaef46d545",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1174,7 +1329,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen35_9b"],
+        "text": [
+          "clip_qwen35_9b"
+        ],
         "vae": "vae_flux2"
       }
     },
@@ -1183,7 +1340,7 @@
       "media": "image",
       "native_family": "Fibo2",
       "component_family": "Fibo2",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2095",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2089",
       "native_contract_sha256": "4eeed7d938958e75bc72e62e7111886e3b483fc0b07bca8e3b8c3296701187a5",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1200,7 +1357,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3vl_4b"],
+        "text": [
+          "clip_qwen3vl_4b"
+        ],
         "vae": "vae_flux2"
       }
     },
@@ -1209,7 +1368,7 @@
       "media": "image",
       "native_family": "Flux2",
       "component_family": "Flux2",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L801",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L802",
       "native_contract_sha256": "89fc97c9ef156b1f465aa0265b862d2e1be9c93063cbb94904ef95df23816e8d",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1228,7 +1387,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_mistral3"],
+        "text": [
+          "clip_mistral3"
+        ],
         "vae": "vae_flux2"
       }
     },
@@ -1237,7 +1398,7 @@
       "media": "image",
       "native_family": "Flux3",
       "component_family": "Flux3",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L847",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L848",
       "native_contract_sha256": "9955ec2070e34410a1186e3b2923fd39ee51013400aba51d59dd5233700d0fc6",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1251,7 +1412,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3vl_4b"],
+        "text": [
+          "clip_qwen3vl_4b"
+        ],
         "vae": "vae_flux2"
       },
       "acquisition_blocker": {
@@ -1269,7 +1432,7 @@
       "media": "image",
       "native_family": "Lens",
       "component_family": "Lens",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L867",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L868",
       "native_contract_sha256": "598e0382c3e4e8cbeed5aa90f58860bdd7d52382ccb937dca7f2f3a0ed0badb2",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1277,13 +1440,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:checkpoints/lens_bf16.safetensors"],
+      "available_artifact_ids": [
+        "existing:checkpoints/lens_bf16.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Exact registered downloader tuples only; availability and byte verification are reported by each artifact annotation.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_lens_gpt_oss"],
+        "text": [
+          "clip_lens_gpt_oss"
+        ],
         "vae": "vae_flux2"
       }
     },
@@ -1292,7 +1459,7 @@
       "media": "image",
       "native_family": "Kandinsky5Image",
       "component_family": "Kandinsky5Image",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2362",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2385",
       "native_contract_sha256": "18d8c5245ccf17e74833f100adbc06e43da7ac554da5ff87d143b6e7597ac8b9",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1300,13 +1467,18 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/kandinsky5lite_t2i.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/kandinsky5lite_t2i.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple, SHA256, bytes and bounded native header classification; no full-payload or hardware qualification.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen25", "clip_l"],
+        "text": [
+          "clip_qwen25",
+          "clip_l"
+        ],
         "vae": "vae_flux"
       }
     },
@@ -1315,7 +1487,7 @@
       "media": "image",
       "native_family": "Anima",
       "component_family": "Anima",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1168",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1169",
       "native_contract_sha256": "9c108f3bf8254d2cbf06b630efba466a95c7eea1a17d26c6d1fff6630aa119b6",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1323,13 +1495,17 @@
       "ui_route": "Create > Image model; API image generations/edits",
       "RF_source_route": "features/generation/image_pipeline.py",
       "reason": "Native class and image component route are present; exact components, behavioral recipe and real output require separate checks.",
-      "available_artifact_ids": ["existing:diffusion_models/anima-base-v1.0.safetensors"],
+      "available_artifact_ids": [
+        "existing:diffusion_models/anima-base-v1.0.safetensors"
+      ],
       "download_disposition": "registered-artifacts",
       "download_reason": "Published immutable tuple, SHA256, bytes and bounded native header classification; no full-payload or hardware qualification.",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_qwen3_06b"],
+        "text": [
+          "clip_qwen3_06b"
+        ],
         "vae": "vae_qwen_image"
       }
     },
@@ -1338,7 +1514,7 @@
       "media": "image",
       "native_family": "ErnieImage",
       "component_family": "ErnieImage",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L2533",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L2556",
       "native_contract_sha256": "c78b040c9f65d39103893a3e0238992023eb1851e93b8a0df07d300fbd495ebd",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "image-generation-or-edit",
@@ -1355,7 +1531,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text": ["clip_ministral3"],
+        "text": [
+          "clip_ministral3"
+        ],
         "vae": "vae_flux2"
       }
     },
@@ -1364,7 +1542,7 @@
       "media": "image",
       "native_family": "MiniMaxH3Image",
       "component_family": "MiniMaxH3Image",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/supported_models.py#L1014",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/supported_models.py#L1015",
       "native_contract_sha256": "a213d973be5fea7ad4073fc0112a8ed730acfe9fc03d80b0f43980e95b971fd3",
       "source_support": "registered-at-pinned-native-revision",
       "operation": "still-image-generation-or-edit",
@@ -1380,7 +1558,9 @@
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "not-inherited-from-source-support",
       "component_roles": {
-        "text_encoder": ["clip_minimax_h3_image"],
+        "text_encoder": [
+          "clip_minimax_h3_image"
+        ],
         "vae": "vae_minimax_h3_image"
       },
       "native_execution_node": "MiniMaxH3ImageConditioning",

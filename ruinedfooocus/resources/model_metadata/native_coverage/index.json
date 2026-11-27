@@ -1,20 +1,20 @@
 {
   "schema_version": 1,
   "source": {
-    "native_pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
-    "gguf_pin": "da5f435cd9a9e54ad27eed417ed72b1f2543ef41",
+    "native_pin": "cab5f4e13b83c58482cd514afb22ca925e117638",
+    "gguf_pin": "35da9968d8eeb0a3c03a1e468203ffd2f6f48348",
     "scope_revision": "6b1edc68e804c60abd9256f734456daddeebade8",
     "scope": "Reviewed RF image and utility consumers only; native registrations do not automatically become product capabilities."
   },
   "shards": {
     "configurations-utility.json": {
-      "sha256": "3e87707128124d4c949943cc0f69fbfec8ed48dd5d2824f82ef04892b41f50bf",
+      "sha256": "be2de2b04e3f0c0f591552d44ea99b53a93c93155b48141e144c77c5e7742382",
       "kind": "configurations",
       "rows": 6,
       "media": "utility"
     },
     "configurations-image.json": {
-      "sha256": "08e892e99d600c332484b733ccfdd743b876a05e663f44228320b5ca3c4e95fe",
+      "sha256": "151f4c82d01d63bb02d25007be928270b068d38041ad10190559659212ad48a8",
       "kind": "configurations",
       "rows": 56,
       "media": "image"
@@ -25,21 +25,30 @@
       "rows": 23
     },
     "text-encoder-types.json": {
-      "sha256": "3f818090b236ad45889b9fa927144e4c7b46df4461f6992db4ad3f601ce013fe",
+      "sha256": "fe0df9361c2353420a3389f530ae498eb62f02539836d7e9e7fcaa9fa65f1f6f",
       "kind": "clip_types",
       "rows": 28
     },
     "text-encoder-models.json": {
       "kind": "te_models",
-      "sha256": "66cbd4150d31479f556272484f437c85493574541cb0e58709df20aa5dafbd3e",
+      "sha256": "e51e57279f805fd1147a1c57721c8640fbc16e1631f0f75ca1aae4eb43f3c72c",
       "rows": 26
     }
   },
   "groups": {
-    "configurations": ["configurations-utility.json", "configurations-image.json"],
-    "roles": ["folder-roles.json"],
-    "clip_types": ["text-encoder-types.json"],
-    "te_models": ["text-encoder-models.json"]
+    "configurations": [
+      "configurations-utility.json",
+      "configurations-image.json"
+    ],
+    "roles": [
+      "folder-roles.json"
+    ],
+    "clip_types": [
+      "text-encoder-types.json"
+    ],
+    "te_models": [
+      "text-encoder-models.json"
+    ]
   },
   "counts": {
     "configurations": 62,

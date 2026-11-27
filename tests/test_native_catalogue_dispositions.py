@@ -81,7 +81,7 @@ class NativeCatalogueTests(unittest.TestCase):
             self.assertEqual(row["qualification"], "not-inherited-from-source-support")
             self.assertTrue(row["reason"])
             self.assertTrue(row["download_reason"])
-            self.assertIn("989d93d0d968e704c589ce0146bb18c77f6b50cc", row["native_source_url"])
+            self.assertIn("cab5f4e13b83c58482cd514afb22ca925e117638", row["native_source_url"])
             if not row["available_artifact_ids"] and row["media"] in ("image", "utility"):
                 self.assertIn(
                     row["download_disposition"],

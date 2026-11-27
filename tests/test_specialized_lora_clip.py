@@ -87,7 +87,7 @@ class SpecializedClipHookTests(unittest.TestCase):
                 name: [[(i, 1, i) for i in range(77)]] for name in ("l", "g")
             }
         )
-        self.clip.layer_idx, self.clip.tokenizer_options = None, {}
+        self.clip.layer_idx, self.clip.tokenizer_options, self.clip.tokenizer_metadata = None, {}, {}
         self.clip.apply_hooks_to_conds = None
         self.clip.use_clip_schedule = True
         group = native.HookGroup()

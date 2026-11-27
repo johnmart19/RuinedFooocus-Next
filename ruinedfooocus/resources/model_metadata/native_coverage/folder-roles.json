@@ -36,7 +36,9 @@
       "qualification": "not-inherited-from-role-registration"
     },
     {
-      "native_discovery_tokens": [".yaml"],
+      "native_discovery_tokens": [
+        ".yaml"
+      ],
       "source": {
         "source_key": "native/folder_paths.py",
         "line": 26
@@ -291,7 +293,9 @@
       "qualification": "not-inherited-from-role-registration"
     },
     {
-      "native_discovery_tokens": ["folder"],
+      "native_discovery_tokens": [
+        "folder"
+      ],
       "source": {
         "source_key": "native/folder_paths.py",
         "line": 35
@@ -645,7 +649,10 @@
       "qualification": "not-inherited-from-role-registration"
     },
     {
-      "native_base_roles": ["diffusion_models", "unet"],
+      "native_base_roles": [
+        "diffusion_models",
+        "unet"
+      ],
       "source": {
         "source_key": "gguf/nodes.py",
         "line": 67
@@ -669,7 +676,10 @@
       "qualification": "not-inherited-from-role-registration"
     },
     {
-      "native_base_roles": ["text_encoders", "clip"],
+      "native_base_roles": [
+        "text_encoders",
+        "clip"
+      ],
       "source": {
         "source_key": "gguf/nodes.py",
         "line": 68
@@ -693,7 +703,9 @@
       "qualification": "not-inherited-from-role-registration"
     },
     {
-      "native_base_roles": ["loras"],
+      "native_base_roles": [
+        "loras"
+      ],
       "source": {
         "source_key": "gguf/nodes.py",
         "line": 69

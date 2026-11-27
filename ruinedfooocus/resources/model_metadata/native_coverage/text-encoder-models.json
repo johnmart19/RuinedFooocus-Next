@@ -13,7 +13,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1730",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1730",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -24,7 +24,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_l"]
+      "RF_component_roles": [
+        "clip_l"
+      ]
     },
     {
       "id": "CLIP_H",
@@ -37,7 +39,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1731",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1731",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -48,7 +50,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_sd4x_h"]
+      "RF_component_roles": [
+        "clip_sd4x_h"
+      ]
     },
     {
       "id": "CLIP_G",
@@ -61,7 +65,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1732",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1732",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -72,7 +76,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_g"]
+      "RF_component_roles": [
+        "clip_g"
+      ]
     },
     {
       "id": "T5_XXL",
@@ -85,7 +91,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1733",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1733",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -96,7 +102,10 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_t5", "clip_aura"]
+      "RF_component_roles": [
+        "clip_t5",
+        "clip_aura"
+      ]
     },
     {
       "id": "T5_XL",
@@ -109,7 +118,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1734",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1734",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -120,7 +129,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_aura (native AuraFlow T5_XL reader)"]
+      "RF_component_roles": [
+        "clip_aura (native AuraFlow T5_XL reader)"
+      ]
     },
     {
       "id": "LLAMA3_8",
@@ -133,7 +144,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1736",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1736",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -144,7 +155,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_llama"]
+      "RF_component_roles": [
+        "clip_llama"
+      ]
     },
     {
       "id": "T5_XXL_OLD",
@@ -157,7 +170,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1737",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1737",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -168,7 +181,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_oldt5"]
+      "RF_component_roles": [
+        "clip_oldt5"
+      ]
     },
     {
       "id": "GEMMA_2_2B",
@@ -181,7 +196,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1738",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1738",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -192,7 +207,10 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_gemma", "clip_gemma2_it_elm"]
+      "RF_component_roles": [
+        "clip_gemma",
+        "clip_gemma2_it_elm"
+      ]
     },
     {
       "id": "QWEN25_3B",
@@ -205,7 +223,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1739",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1739",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -216,7 +234,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_omnigen2_3b"]
+      "RF_component_roles": [
+        "clip_omnigen2_3b"
+      ]
     },
     {
       "id": "QWEN25_7B",
@@ -229,7 +249,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1740",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1740",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -240,7 +260,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_qwen25"]
+      "RF_component_roles": [
+        "clip_qwen25"
+      ]
     },
     {
       "id": "BYT5_SMALL_GLYPH",
@@ -253,7 +275,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1741",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1741",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -264,7 +286,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_hunyuan_byt5"]
+      "RF_component_roles": [
+        "clip_hunyuan_byt5"
+      ]
     },
     {
       "id": "GEMMA_3_4B",
@@ -277,7 +301,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1742",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1742",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -288,7 +312,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_gemma3"]
+      "RF_component_roles": [
+        "clip_gemma3"
+      ]
     },
     {
       "id": "MISTRAL3_24B_PRUNED_FLUX2",
@@ -301,7 +327,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1744",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1744",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -312,7 +338,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_mistral3"]
+      "RF_component_roles": [
+        "clip_mistral3"
+      ]
     },
     {
       "id": "QWEN3_4B",
@@ -325,7 +353,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1745",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1745",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -336,7 +364,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_qwen3_4b"]
+      "RF_component_roles": [
+        "clip_qwen3_4b"
+      ]
     },
     {
       "id": "JINA_CLIP_2",
@@ -349,7 +379,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1748",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1748",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -360,7 +390,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_jina"]
+      "RF_component_roles": [
+        "clip_jina"
+      ]
     },
     {
       "id": "QWEN3_8B",
@@ -373,7 +405,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1749",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1749",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -384,7 +416,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_qwen3_8b"]
+      "RF_component_roles": [
+        "clip_qwen3_8b"
+      ]
     },
     {
       "id": "QWEN3_06B",
@@ -397,7 +431,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1750",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1750",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -408,7 +442,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_qwen3_06b"]
+      "RF_component_roles": [
+        "clip_qwen3_06b"
+      ]
     },
     {
       "id": "QWEN35_9B",
@@ -421,7 +457,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1755",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1755",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -432,7 +468,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_qwen35_9b"]
+      "RF_component_roles": [
+        "clip_qwen35_9b"
+      ]
     },
     {
       "id": "MINISTRAL_3_3B",
@@ -445,7 +483,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1757",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1757",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -456,7 +494,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_ministral3"]
+      "RF_component_roles": [
+        "clip_ministral3"
+      ]
     },
     {
       "id": "GPT_OSS_20B",
@@ -469,7 +509,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1762",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1762",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -480,7 +520,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_lens_gpt_oss"]
+      "RF_component_roles": [
+        "clip_lens_gpt_oss"
+      ]
     },
     {
       "id": "QWEN3VL_4B",
@@ -493,7 +535,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1763",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1763",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -504,7 +546,10 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_qwen3vl_4b", "clip_qwen3vl_4b_scaled"]
+      "RF_component_roles": [
+        "clip_qwen3vl_4b",
+        "clip_qwen3vl_4b_scaled"
+      ]
     },
     {
       "id": "QWEN3VL_8B",
@@ -517,7 +562,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1764",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1764",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -546,7 +591,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1766",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1766",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -557,7 +602,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_minimax_h3_image"]
+      "RF_component_roles": [
+        "clip_minimax_h3_image"
+      ]
     },
     {
       "id": "MING_IMAGE",
@@ -570,7 +617,7 @@
       "native_role": "text-encoder-component",
       "app_route": "component-contract-needs-validation",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1767",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1767",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -581,7 +628,9 @@
       },
       "available_artifact_ids": [],
       "new_in_release": false,
-      "RF_component_roles": ["clip_ming_image"]
+      "RF_component_roles": [
+        "clip_ming_image"
+      ]
     },
     {
       "id": "WEVISONE_2B",
@@ -594,7 +643,7 @@
       "native_role": "image-utility-text-and-mask-decoder",
       "app_route": "native-wevisone-image-utility",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1768",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1768",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {
@@ -603,7 +652,9 @@
         "real_runtime": "pending",
         "visual_quality": "pending"
       },
-      "available_artifact_ids": ["existing:clip/wevisone_vl_2b_int8_convrot.safetensors"],
+      "available_artifact_ids": [
+        "existing:clip/wevisone_vl_2b_int8_convrot.safetensors"
+      ],
       "new_in_release": true,
       "ui_route": "Create > Image tools > WeVisOne detection or matting",
       "RF_source_route": "ruinedfooocus/features/image_processing/wevisone.py",
@@ -623,7 +674,7 @@
       "native_role": "image-utility-text-and-mask-decoder",
       "app_route": "native-wevisone-image-utility",
       "source_support": "native-TEModel-enum-registered",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1769",
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1769",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
       "evidence": {

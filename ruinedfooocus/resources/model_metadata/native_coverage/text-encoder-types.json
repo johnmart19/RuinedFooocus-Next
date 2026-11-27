@@ -32,7 +32,7 @@
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1671"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1671"
     },
     {
       "id": "STABLE_CASCADE",
@@ -48,11 +48,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["StableCascade_C"],
+      "image_component_families": [
+        "StableCascade_C"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1672"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1672"
     },
     {
       "id": "SD3",
@@ -68,11 +70,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["SD3"],
+      "image_component_families": [
+        "SD3"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1673"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1673"
     },
     {
       "id": "HUNYUAN_DIT",
@@ -88,11 +92,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["HunyuanDiT"],
+      "image_component_families": [
+        "HunyuanDiT"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1675"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1675"
     },
     {
       "id": "FLUX",
@@ -108,11 +114,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Flux"],
+      "image_component_families": [
+        "Flux"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1676"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1676"
     },
     {
       "id": "PIXART",
@@ -128,11 +136,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["PixArt"],
+      "image_component_families": [
+        "PixArt"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1680"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1680"
     },
     {
       "id": "COSMOS",
@@ -148,11 +158,14 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Anima", "CosmosPredict2"],
+      "image_component_families": [
+        "Anima",
+        "CosmosPredict2"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1681"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1681"
     },
     {
       "id": "LUMINA2",
@@ -168,11 +181,15 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Lumina2", "ZImage", "ZImagePixelSpace"],
+      "image_component_families": [
+        "Lumina2",
+        "ZImage",
+        "ZImagePixelSpace"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1682"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1682"
     },
     {
       "id": "HIDREAM",
@@ -188,11 +205,14 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["HiDream", "HiDreamO1"],
+      "image_component_families": [
+        "HiDream",
+        "HiDreamO1"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1684"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1684"
     },
     {
       "id": "CHROMA",
@@ -208,11 +228,14 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Chroma", "ChromaRadiance"],
+      "image_component_families": [
+        "Chroma",
+        "ChromaRadiance"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1685"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1685"
     },
     {
       "id": "OMNIGEN2",
@@ -228,11 +251,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Omnigen2"],
+      "image_component_families": [
+        "Omnigen2"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1687"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1687"
     },
     {
       "id": "QWEN_IMAGE",
@@ -248,11 +273,14 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["QwenImage21", "QwenImage"],
+      "image_component_families": [
+        "QwenImage21",
+        "QwenImage"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1688"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1688"
     },
     {
       "id": "HUNYUAN_IMAGE",
@@ -268,11 +296,14 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["HunyuanImage21Refiner", "HunyuanImage21"],
+      "image_component_families": [
+        "HunyuanImage21Refiner",
+        "HunyuanImage21"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1689"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1689"
     },
     {
       "id": "KANDINSKY5_IMAGE",
@@ -288,11 +319,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Kandinsky5Image"],
+      "image_component_families": [
+        "Kandinsky5Image"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1693"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1693"
     },
     {
       "id": "NEWBIE",
@@ -308,11 +341,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["NewBieImage"],
+      "image_component_families": [
+        "NewBieImage"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1694"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1694"
     },
     {
       "id": "FLUX2",
@@ -328,11 +363,16 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["ErnieImage", "Flux2", "Flux2Klein4B", "Flux2Klein9B"],
+      "image_component_families": [
+        "ErnieImage",
+        "Flux2",
+        "Flux2Klein4B",
+        "Flux2Klein9B"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1695"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1695"
     },
     {
       "id": "LONGCAT_IMAGE",
@@ -348,11 +388,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["LongCatImage"],
+      "image_component_families": [
+        "LongCatImage"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1696"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1696"
     },
     {
       "id": "LENS",
@@ -368,11 +410,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Lens"],
+      "image_component_families": [
+        "Lens"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1698"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1698"
     },
     {
       "id": "PIXELDIT",
@@ -388,11 +432,14 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["PiD", "PixelDiTT2I"],
+      "image_component_families": [
+        "PiD",
+        "PixelDiTT2I"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1699"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1699"
     },
     {
       "id": "IDEOGRAM4",
@@ -408,11 +455,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Ideogram4"],
+      "image_component_families": [
+        "Ideogram4"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1700"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1700"
     },
     {
       "id": "BOOGU",
@@ -428,11 +477,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Boogu"],
+      "image_component_families": [
+        "Boogu"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1701"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1701"
     },
     {
       "id": "KREA2",
@@ -448,11 +499,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Krea2"],
+      "image_component_families": [
+        "Krea2"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1702"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1702"
     },
     {
       "id": "JOYIMAGE",
@@ -468,11 +521,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["JoyImage"],
+      "image_component_families": [
+        "JoyImage"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1703"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1703"
     },
     {
       "id": "MAGE",
@@ -488,11 +543,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["MageFlow"],
+      "image_component_families": [
+        "MageFlow"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1704"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1704"
     },
     {
       "id": "MINIMAX",
@@ -512,7 +569,7 @@
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1705"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1705"
     },
     {
       "id": "FLUX3",
@@ -528,11 +585,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Flux3"],
+      "image_component_families": [
+        "Flux3"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1707"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1707"
     },
     {
       "id": "MOSS_IMAGE",
@@ -548,11 +607,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["MOSSImage"],
+      "image_component_families": [
+        "MOSSImage"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1708"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1708"
     },
     {
       "id": "FIBO2",
@@ -568,11 +629,13 @@
         "visual_quality": "pending"
       },
       "media": "image",
-      "image_component_families": ["Fibo2"],
+      "image_component_families": [
+        "Fibo2"
+      ],
       "source_support": "native-CLIP-enum-registered",
       "installed_status": "runtime-inventory-not-examined",
       "qualification": "requires-exact-encoder-tokenizer-and-companion-validation",
-      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/comfy/sd.py#L1709"
+      "native_source_url": "https://github.com/Comfy-Org/ComfyUI/blob/cab5f4e13b83c58482cd514afb22ca925e117638/comfy/sd.py#L1709"
     }
   ]
 }

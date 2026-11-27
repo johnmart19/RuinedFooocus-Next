@@ -33,6 +33,7 @@ REMOVED_NATIVE_CLASSES = {
     "LTXV",
     "MiniMaxH3",
     "MiniMaxMusic3",
+    "PAN2",
     "SV3D_p",
     "SV3D_u",
     "SVD_img2vid",
@@ -71,6 +72,7 @@ REMOVED_CLIP_TYPES = {
     "OVIS",
     "KANDINSKY5",
     "COGVIDEOX",
+    "PAN2",
     "YUE2",
 }
 REMOVED_FOLDER_ROLES = {

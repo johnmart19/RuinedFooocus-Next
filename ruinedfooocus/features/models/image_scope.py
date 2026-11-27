@@ -12,7 +12,7 @@ _RETIRED_FAMILIES = frozenset(
     WAN21_Vace WAN21_Camera WAN22_Camera WAN22_S2V WAN21_HuMo WAN22_Animate
     WAN_Animate2 WAN21_FlowRVS WAN21_SCAIL WAN21_SCAIL2 WAN22_RelayVSR
     WAN22_WanDancer Kandinsky5 CogVideoX_Inpaint CogVideoX_I2V CogVideoX_T2V
-    SVD_img2vid WAN21_T2V WAN21_I2V""".split()
+    SVD_img2vid WAN21_T2V WAN21_I2V PAN2""".split()
 ) | {"Wan Video", "Wan 2.2 5B", "Hunyuan Video", "LTXV 2.3", "LTXV 2.5"}
 _RETIRED_IDS = ("video/", "audio/", "music/", "speech/", "3d/", "mesh/", "splat/")
 _RETIRED_OPERATIONS = frozenset(
