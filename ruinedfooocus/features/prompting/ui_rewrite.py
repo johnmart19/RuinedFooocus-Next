@@ -63,19 +63,17 @@ def add_rewrite_controls(prompt):
             # The chat runtime returns the prompt itself when it cannot run a model.
             raise gr.Error(
                 "The rewrite returned your prompt unchanged. Choose or download a model in "
-                "Chat, then preview again.",
-                print_exception=False,
+                "Chat, then preview again."
             )
         return gr.update(value=result, visible=True), current, gr.update(interactive=True)
 
     def apply_rewrite(current, original, proposed):
         if current != original:
             raise gr.Error(
-                "The prompt changed after this preview. Preview a new rewrite before applying it.",
-                print_exception=False,
+                "The prompt changed after this preview. Preview a new rewrite before applying it."
             )
         if not proposed or not proposed.strip():
-            raise gr.Error("The rewrite is empty.", print_exception=False)
+            raise gr.Error("The rewrite is empty.")
         return (
             proposed,
             (current, proposed),
@@ -88,8 +86,7 @@ def add_rewrite_controls(prompt):
             return gr.skip(), None, gr.update(interactive=False)
         if current != previous[1]:
             raise gr.Error(
-                "The prompt changed after applying the rewrite. Undo would overwrite your edits.",
-                print_exception=False,
+                "The prompt changed after applying the rewrite. Undo would overwrite your edits."
             )
         return gr.update(value=previous[0]), None, gr.update(interactive=False)
 

@@ -712,7 +712,7 @@ class UtilitySamplingCaptureTests(unittest.TestCase):
 
     def test_effective_metadata_controls_select_the_owned_compute_service(self):
         observed = []
-        job = SimpleNamespace(state={})
+        job = SimpleNamespace(state={}, cancelled=SimpleNamespace(is_set=lambda: False))
 
         @contextmanager
         def service_scope(group, state, *, item):
@@ -728,6 +728,11 @@ class UtilitySamplingCaptureTests(unittest.TestCase):
                 "control_tools": self.controls,
                 "shared": SimpleNamespace(state={}),
                 "service_scope": service_scope,
+                "registry": SimpleNamespace(condition=nullcontext()),
+                "model_management": SimpleNamespace(
+                    interrupt_current_processing=lambda *args: None,
+                    InterruptProcessingException=RuntimeError,
+                ),
                 "cleanup_interrupt": lambda item: None,
             },
         )

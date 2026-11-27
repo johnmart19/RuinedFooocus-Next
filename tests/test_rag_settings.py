@@ -52,10 +52,6 @@ class RagSettingsTests(unittest.TestCase):
             ),
             ("CPU", "global"),
         )
-        self.assertEqual(
-            rag.embedding_device_policy(settings, SimpleNamespace(cpu=False, directml=0)),
-            ("CPU", "directml"),
-        )
         with self.assertRaisesRegex(ValueError, "listed option"):
             validate_known({"rag_embedding_device": "GPU"})
 

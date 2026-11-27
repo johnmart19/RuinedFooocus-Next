@@ -139,7 +139,7 @@ class NativeBackgroundTests(unittest.TestCase):
 
     def test_actual_worker_stage_retains_native_interrupt_and_compute_owner(self):
         groups = []
-        job = NS(state={})
+        job = NS(state={}, cancelled=NS(is_set=lambda: False))
 
         @contextmanager
         def service(group, *args, **kwargs):
@@ -152,6 +152,11 @@ class NativeBackgroundTests(unittest.TestCase):
             control_tools=NS(get_settings=lambda data: {"type": "rembg"}),
             service_scope=service,
             shared=NS(state={}),
+            registry=NS(condition=nullcontext()),
+            model_management=NS(
+                interrupt_current_processing=lambda *args: None,
+                InterruptProcessingException=RuntimeError,
+            ),
             cleanup_interrupt=Mock(),
         )
         decorate = function("image_stage", scope)

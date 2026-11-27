@@ -79,7 +79,8 @@ class NativeStepTests(unittest.TestCase):
 
     def test_every_worker_job_ends_with_the_cleanup(self):
         source = (ROOT / "ruinedfooocus/app/async_worker.py").read_text(encoding="utf-8")
-        block = source[source.index("                    cleanup_interrupt(item)") :][:400]
+        worker_source = source[source.index("def worker():") :]
+        block = worker_source[worker_source.index("cleanup_interrupt(item)") :][:400]
         self.assertIn("end_native_step()", block)
 
     def test_release_native_runs_cleanup_before_unloading_models(self):

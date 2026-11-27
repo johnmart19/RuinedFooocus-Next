@@ -58,6 +58,7 @@ class WorkflowControlsTests(unittest.TestCase):
             "CheckpointToolSelection": Mock(),
             "version_js": lambda channel: "(...values) => values",
             "publish_checkpoint_result": Mock(),
+            "_paired_copy": lambda name: None,
             "shared": SimpleNamespace(models=SimpleNamespace(get_names=lambda category: ["model"])),
         }
         create = function_from(

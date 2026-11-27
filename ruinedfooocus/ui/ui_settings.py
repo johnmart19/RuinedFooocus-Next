@@ -104,7 +104,7 @@ def save_clicked(*args, save_as=False, profile=..., base=None, return_snapshot=F
 
         settings.save_profile(new_settings, new_paths, profile=target, on_publish=publish_paths)
     except (ValueError, OSError) as error:
-        raise gr.Error(str(error), print_exception=False) from error
+        raise gr.Error(str(error)) from error
     from ruinedfooocus.app.arguments import args as launch_args
     import os
 
@@ -137,7 +137,7 @@ def use_next_launch_clicked(name):
     try:
         use_next_launch(name)
     except (ValueError, OSError) as error:
-        raise gr.Error(str(error), print_exception=False) from error
+        raise gr.Error(str(error)) from error
     return f"Next launch: {profile_name(name) or 'default'}. An explicit --settings remains authoritative."
 
 

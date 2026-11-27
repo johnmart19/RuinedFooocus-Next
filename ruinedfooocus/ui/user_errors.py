@@ -35,7 +35,8 @@ def as_user_errors(fn):
                 async with aclosing(fn(*args, **kwargs)) as values:
                     async for item in values:
                         yield item
-            except gr.Error:
+            except gr.Error as error:
+                error.print_exception = False
                 raise
             except USER_ERRORS as error:
                 raise _user_error(error) from error
@@ -46,7 +47,8 @@ def as_user_errors(fn):
         def wrapper(*args, **kwargs):
             try:
                 yield from fn(*args, **kwargs)
-            except gr.Error:
+            except gr.Error as error:
+                error.print_exception = False
                 raise
             except USER_ERRORS as error:
                 raise _user_error(error) from error
@@ -57,7 +59,8 @@ def as_user_errors(fn):
         async def wrapper(*args, **kwargs):
             try:
                 return await fn(*args, **kwargs)
-            except gr.Error:
+            except gr.Error as error:
+                error.print_exception = False
                 raise
             except USER_ERRORS as error:
                 raise _user_error(error) from error
@@ -68,7 +71,8 @@ def as_user_errors(fn):
         def wrapper(*args, **kwargs):
             try:
                 return fn(*args, **kwargs)
-            except gr.Error:
+            except gr.Error as error:
+                error.print_exception = False
                 raise
             except USER_ERRORS as error:
                 raise _user_error(error) from error

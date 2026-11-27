@@ -69,10 +69,9 @@ class NativeRuntimeStorageTests(unittest.TestCase):
             )
         )
         self.assertTrue(llama_build.build_root().is_relative_to(repository / "llama.cpp"))
-        with patch.object(llama_update, "_family", return_value=("Windows", "amd64")):
+        with patch.object(llama_update, "_family", return_value=("Windows", "amd64", "CPU")):
             self.assertTrue(llama_update._pointer("CPU").is_relative_to(repository / "llama.cpp"))
         with patch.object(onnx_installer, "ROOT", self.root):
-            self.assertTrue(onnx_installer.runtime_path().is_relative_to(repository / "onnx"))
             self.assertTrue(
                 onnx_installer.native_runtime_path("OpenVINO").is_relative_to(repository / "onnx")
             )
@@ -117,7 +116,7 @@ class NativeRuntimeStorageTests(unittest.TestCase):
             server = installer._install_server(target, "package", acquire=False, version="b12366")
         self.assertEqual(server.read_bytes(), b"inert executable; never run")
         self.assertEqual(json.loads((target / "rf-runtime.json").read_text()), receipt)
-        with patch.object(llama_update, "_family", return_value=("Windows", "amd64")):
+        with patch.object(llama_update, "_family", return_value=("Windows", "amd64", "CPU")):
             self.assertEqual(llama_update._read_selected("CPU"), ("b12366", "a" * 64))
         self.assertEqual(
             (self.root / "repositories/llama.cpp/xllamacpp-backend.json").read_text(),

@@ -43,8 +43,16 @@
           "text": "source_supported",
           "image": "source_supported"
         },
-        "qwen2": {
+        "phi3": {
           "text": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen25vl": {
+          "text": "source_supported",
+          "image": "source_supported"
         },
         "qwen2vl": {
           "text": "source_supported",
@@ -58,6 +66,13 @@
           "image": "source_supported"
         },
         "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3moe": {
+          "text": "source_supported"
+        },
+        "qwen3vl": {
           "text": "source_supported",
           "image": "source_supported"
         }
@@ -223,8 +238,16 @@
           "text": "source_supported",
           "image": "source_supported"
         },
-        "qwen2": {
+        "phi3": {
           "text": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen25vl": {
+          "text": "source_supported",
+          "image": "source_supported"
         },
         "qwen2vl": {
           "text": "source_supported",
@@ -238,6 +261,13 @@
           "image": "source_supported"
         },
         "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3moe": {
+          "text": "source_supported"
+        },
+        "qwen3vl": {
           "text": "source_supported",
           "image": "source_supported"
         }
@@ -516,8 +546,16 @@
           "text": "source_supported",
           "image": "source_supported"
         },
-        "qwen2": {
+        "phi3": {
           "text": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen25vl": {
+          "text": "source_supported",
+          "image": "source_supported"
         },
         "qwen2vl": {
           "text": "source_supported",
@@ -531,6 +569,13 @@
           "image": "source_supported"
         },
         "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3moe": {
+          "text": "source_supported"
+        },
+        "qwen3vl": {
           "text": "source_supported",
           "image": "source_supported"
         }
@@ -580,8 +625,16 @@
           "text": "source_supported",
           "image": "source_supported"
         },
-        "qwen2": {
+        "phi3": {
           "text": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen25vl": {
+          "text": "source_supported",
+          "image": "source_supported"
         },
         "qwen2vl": {
           "text": "source_supported",
@@ -595,6 +648,99 @@
           "image": "source_supported"
         },
         "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3moe": {
+          "text": "source_supported"
+        },
+        "qwen3vl": {
+          "text": "source_supported",
+          "image": "source_supported"
+        }
+      }
+    },
+    "b12803": {
+      "base_build": "b12110",
+      "base_builds": [
+        "b11870",
+        "b12110",
+        "b12327",
+        "b12366",
+        "b12627"
+      ],
+      "checked_date_utc": "2026-11-27",
+      "scope": "source_only",
+      "qualification": "Retains reviewed b12627 architectures on ggml-org/llama.cpp b12803 with --load-mode, KV cache types, --ubatch-size, --cache-reuse, --n-cpu-moe, --fit, and reasoning controls.",
+      "review": "Retains reviewed b12627 text and multimodal projector architectures on b12803.",
+      "architectures": {
+        "bailingmoe3": {
+          "text": "source_supported"
+        },
+        "gemma3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gemma4": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "gpt-oss": {
+          "text": "source_supported"
+        },
+        "granite": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "inkling2_loop": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "lfm2": {
+          "text": "source_supported"
+        },
+        "lfm3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "llama": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "mistral3": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "phi3": {
+          "text": "source_supported"
+        },
+        "qwen2": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen25vl": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen2vl": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3": {
+          "text": "source_supported"
+        },
+        "qwen35": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen35moe": {
+          "text": "source_supported",
+          "image": "source_supported"
+        },
+        "qwen3moe": {
+          "text": "source_supported"
+        },
+        "qwen3vl": {
           "text": "source_supported",
           "image": "source_supported"
         }

@@ -111,8 +111,6 @@ def create_rag_settings(tab, settings, launch_args, add_setting):
         policy = localize("Placement for new requests: {device}.", locale, device=selected)
         if reason == "global":
             policy += " " + localize("Global CPU mode is active.", locale)
-        elif reason == "directml":
-            policy += " " + localize("DirectML image mode uses CPU for Chat embeddings.", locale)
         observed = initialized_device(service_pipeline("chat"))
         if observed is not None:
             policy += " " + localize(
