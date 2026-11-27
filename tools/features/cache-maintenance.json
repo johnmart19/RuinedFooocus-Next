@@ -1,0 +1,8 @@
+{
+  "id": "cache-maintenance",
+  "subject": "Clean derived cache records with a bounded allowlisted sweep",
+  "requires": ["preparation-service"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
