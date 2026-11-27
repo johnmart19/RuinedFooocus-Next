@@ -88,6 +88,12 @@ _PREVIEW_DEPRIORITIZED = (
     "plot",
     "loss",
     "table",
+    "qr",
+    "qrcode",
+    "wechat",
+    "discord",
+    "twitter",
+    "github",
 )
 _PREVIEW_PREFERRED = (
     "preview",

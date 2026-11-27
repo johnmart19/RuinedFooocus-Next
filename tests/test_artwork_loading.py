@@ -189,6 +189,59 @@ class PopularArtworkStreamingTests(unittest.TestCase):
             self.assertIsNotNone(hf_target)
             self.assertTrue(hf_target.is_file())
 
+    def test_ui_popular_open_list_streams_preview_patches_without_error(self):
+        from types import SimpleNamespace
+        import gradio as gr
+        from ruinedfooocus.features.models import ui_popular
+
+        png = _png_bytes("gold")
+        entry = {
+            "key": "civitai:10",
+            "source": "Civitai",
+            "category": "Image models",
+            "name": "Sample",
+            "version": "v1",
+            "base": "SDXL",
+            "family": "SDXL",
+            "published": "2026-11-01",
+            "downloads": 100,
+            "likes": 10,
+            "file": "sample.safetensors",
+            "bytes": 1024,
+            "sha256": "ab" * 32,
+            "url": "https://civitai.com/api/download/models/10",
+            "image": "https://image.civitai.com/a/b/width=320/1.jpeg",
+            "page": "https://civitai.com/models/1",
+            "mature": False,
+        }
+        with tempfile.TemporaryDirectory() as folder:
+            manager = SimpleNamespace(
+                model_paths=dict(
+                    modelfile_path=[folder],
+                    lorafile_path=[folder],
+                    llm_path=folder,
+                    cache_path=folder,
+                )
+            )
+            with gr.Blocks():
+                handles = ui_popular.create_ui(manager, SimpleNamespace())
+            with (
+                patch.object(feed, "peek", return_value=dict(entries=[entry], fetched="now", stale=False, error="")),
+                patch.object(feed, "load", return_value=dict(entries=[entry], fetched="now", stale=False, error="")),
+                patch.object(feed, "offline", return_value=False),
+                patch.object(feed, "_read_image", return_value=png),
+            ):
+                yielded = list(
+                    handles["open"](
+                        "Civitai", "Image models", "Most downloaded", "This month", False, "All"
+                    )
+                )
+            self.assertGreaterEqual(len(yielded), 2)
+            patch_payload = yielded[-1][1]
+            self.assertIn("previewPatch", patch_payload)
+            self.assertEqual(patch_payload["previewPatch"][0]["key"], "civitai:10")
+            self.assertFalse(patch_payload["previewPatch"][0]["preview_is_default"])
+
 
 class CivitUpdateLiveRefreshTests(unittest.TestCase):
     def test_civit_update_bumps_revision_and_evicts_shared_cache_per_thumbnail(self):

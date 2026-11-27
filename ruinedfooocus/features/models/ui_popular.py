@@ -266,6 +266,8 @@ def create_ui(manager, models):
             yield view(saved or dict(entries=[], fetched=None, stale=False, error=""), waiting)
         result = feed.load(*chosen_list, force=force, **options)
         yield view(result)
+        from ruinedfooocus.integrations.media_paths import card_picture, card_picture_roots
+
         roots = card_picture_roots(cache=cache)
         for batch in feed.fetch_artwork_batches(result["entries"], cache):
             # Surgical previewPatch: update only arrived cards without rebuilding the grid.
