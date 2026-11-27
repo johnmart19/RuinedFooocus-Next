@@ -1,0 +1,8 @@
+{
+  "id": "hub-download",
+  "subject": "Download Hugging Face Hub files with byte progress and verified resume",
+  "requires": ["preparation-service"],
+  "tests": ["test_hub_download.py", "test_preparation_transfer_status.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
