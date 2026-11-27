@@ -3,19 +3,11 @@
 import logging
 
 import torch
-from ruinedfooocus.core.device_fallback import warn_cpu_fallback
 
 
 def caption_device():
     from comfy import model_management
 
-    # Transformers generation has no qualified DirectML operator coverage.
-    if model_management.is_directml_enabled():
-        warn_cpu_fallback(
-            "image captioning",
-            "Transformers caption inference is not qualified for the selected DirectML backend",
-        )
-        return torch.device("cpu")
     return model_management.get_torch_device()
 
 

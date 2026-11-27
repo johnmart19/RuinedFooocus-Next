@@ -162,7 +162,6 @@ class ComputePreferencesTests(unittest.TestCase):
         parser = self.parser()
         for flag in (
             "--cpu",
-            "--directml",
             "--gpu-only",
             "--highvram",
             "--lowvram",

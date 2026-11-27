@@ -188,7 +188,7 @@ class RagPreparationTests(unittest.TestCase):
         values = {"cpu_everywhere": False}
         chat = ModelPreparation(self.root / "chat.gguf", (), json.dumps(values))
         args = SimpleNamespace(
-            cpu=True, directml=None, offline=True, _compute_status={"cli": ["--cpu"]}
+            cpu=True, offline=True, _compute_status={"cli": ["--cpu"]}
         )
         captured = capture_chat_request(
             {
@@ -226,7 +226,7 @@ class RagPreparationTests(unittest.TestCase):
     def test_skip_package_install_does_not_disable_explicit_model_preparation(self):
         chat = ModelPreparation(self.root / "chat.gguf", (), "{}")
         args = SimpleNamespace(
-            cpu=False, directml=None, offline=False, skip_dependency_install=True
+            cpu=False, offline=False, skip_dependency_install=True
         )
         with patch.dict(os.environ, {"RF_OFFLINE": "0"}):
             captured = capture_chat_request(

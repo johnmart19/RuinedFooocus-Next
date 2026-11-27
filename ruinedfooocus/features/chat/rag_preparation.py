@@ -104,8 +104,6 @@ def embedding_device_policy(values, launch_args):
         return "CPU", "global"
     if saved == "CPU":
         return "CPU", "profile"
-    if getattr(launch_args, "directml", None) is not None:
-        return "CPU", "directml"
     return saved, "profile"
 
 
@@ -113,17 +111,12 @@ def _chat_preparation_options(values, launch_args):
     if launch_args is None:
         from ruinedfooocus.app.arguments import args as launch_args
 
-    device, origin = embedding_device_policy(values, launch_args)
-    options = dict(
+    device, _ = embedding_device_policy(values, launch_args)
+    return dict(
         cpu=device == "CPU",
         offline=bool(getattr(launch_args, "offline", False)) or os.environ.get("RF_OFFLINE") == "1",
         model_id=model_spec(values.get("rag_embedding_model", MODEL_ID)).model_id,
     )
-    if origin == "directml":
-        options["cpu_reason"] = (
-            "Transformers text embeddings are not qualified for the selected DirectML backend"
-        )
-    return options
 
 
 def capture_embedding_model(values, *, launch_args=None):

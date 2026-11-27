@@ -46,7 +46,13 @@ class ComputeArgumentContractTests(unittest.TestCase):
         options = types.ModuleType("comfy.options")
         options.args_parsing = False
         comfy.options = options
-        source = Path(__file__).resolve().parents[1] / "repositories/ComfyUI/comfy/cli_args.py"
+        comfy_root = Path(
+            os.environ.get(
+                "RF_TEST_COMFY_SOURCE",
+                Path(__file__).resolve().parents[1] / "repositories/ComfyUI",
+            )
+        )
+        source = comfy_root / "comfy/cli_args.py"
         with patch.dict(sys.modules, {"comfy": comfy, "comfy.options": options}):
             upstream = runpy.run_path(str(source))
         local = argparse.ArgumentParser()
@@ -339,7 +345,6 @@ class DynamicMemoryTests(unittest.TestCase):
             reserve_vram=1.5,
             disable_nvml_pressure=False,
             vram_headroom=0.5,
-            directml=None,
             cpu=False,
             enable_dynamic_vram=False,
             disable_dynamic_vram=False,
@@ -375,11 +380,10 @@ class DynamicMemoryTests(unittest.TestCase):
         self.scope.start()
         self.addCleanup(self.scope.stop)
 
-    def test_forced_dynamic_never_initializes_controller_on_cpu_or_directml(self):
+    def test_forced_dynamic_never_initializes_controller_on_cpu(self):
         self.args.enable_dynamic_vram = True
-        for cpu, directml in ((True, None), (False, -1), (False, 0)):
-            self.args.cpu, self.args.directml = cpu, directml
-            self.assertFalse(initialize_comfy_memory())
+        self.args.cpu = True
+        self.assertFalse(initialize_comfy_memory())
         self.control.init.assert_not_called()
 
     def test_controller_failure_never_selects_dynamic_patcher(self):
@@ -447,16 +451,15 @@ class DynamicMemoryTests(unittest.TestCase):
         self.assertTrue(initialize_comfy_memory())
 
     def test_unsupported_hardware_and_old_torch_skip_even_when_forced(self):
-        for kind in ("old_rocm", "directml", "cpu", "old_torch", "other"):
+        for kind in ("old_rocm", "cpu", "old_torch", "other"):
             with self.subTest(kind=kind):
                 self.args.enable_dynamic_vram = True
                 self.args.cpu = kind == "cpu"
-                self.args.directml = 0 if kind == "directml" else None
-                self.management.is_nvidia.return_value = kind in ("directml", "cpu", "old_torch")
+                self.management.is_nvidia.return_value = kind in ("cpu", "old_torch")
                 self.management.is_amd.return_value = kind == "old_rocm"
                 self.management.rocm_version = (7, 2)
                 self.management.torch_version_numeric = (2, 6) if kind == "old_torch" else (2, 14)
-                if kind in ("directml", "cpu"):
+                if kind == "cpu":
                     self.assertFalse(initialize_comfy_memory())
                 else:
                     with self.assertLogs(level="WARNING") as logs:

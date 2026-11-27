@@ -169,14 +169,6 @@ def add_comfy_arguments(parser):
         help="Force channels last format when inferencing the models.",
     )
     parser.add_argument(
-        "--directml",
-        type=int,
-        nargs="?",
-        metavar="DIRECTML_DEVICE",
-        const=-1,
-        help="Legacy DirectML selector (removed in ComfyUI v0.46+; retained for startup compatibility).",
-    )
-    parser.add_argument(
         "--supports-fp8-compute",
         action="store_true",
         help="ComfyUI will act like if the device supports fp8 compute.",

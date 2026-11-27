@@ -441,10 +441,8 @@ class pipeline:
                 from ruinedfooocus.packaging.backend_preferences import effective_backends
 
                 runtime_settings["llama_backend"] = effective_backends(load_settings)["llama"]
-                if args.directml is not None and runtime_settings.get("llama_backend") != "CPU":
-                    runtime_settings["llama_backend"] = "Vulkan"
                 # llama.cpp probes its own devices; a CPU PyTorch wheel does not
-                # mean Vulkan is unavailable (notably in WSL and DirectML setups).
+                # mean Vulkan is unavailable (notably in WSL setups).
                 gpu = (
                     not force_cpu_for_auxiliary(args)
                     and runtime_settings.get("llama_backend", "Auto") != "CPU"

@@ -11,9 +11,8 @@ import ruinedfooocus.features.image_processing.interrogate as interrogate
 
 
 class CaptionRuntimeTests(unittest.TestCase):
-    def backend(self, device="cuda", directml=False):
+    def backend(self, device="cuda"):
         management = SimpleNamespace(
-            is_directml_enabled=lambda: directml,
             get_torch_device=lambda: torch.device(device),
             free_memory=Mock(),
         )
@@ -44,15 +43,13 @@ class CaptionRuntimeTests(unittest.TestCase):
         self.assertEqual([call.args[0].type for call in infer.call_args_list], ["cuda", "cpu"])
         self.assertEqual(model.to.call_args.args, ("cpu",))
 
-    def test_cpu_and_directml_use_cpu_without_gpu_memory_calls(self):
-        for device, directml in [("cpu", False), ("privateuseone", True)]:
-            with self.subTest(device=device):
-                memory, scope = self.backend(device, directml)
-                model = Mock()
-                with scope:
-                    result = runtime.run_caption(model, lambda actual: actual.type)
-                self.assertEqual(result, "cpu")
-                memory.free_memory.assert_not_called()
+    def test_cpu_uses_cpu_without_gpu_memory_calls(self):
+        memory, scope = self.backend("cpu")
+        model = Mock()
+        with scope:
+            result = runtime.run_caption(model, lambda actual: actual.type)
+        self.assertEqual(result, "cpu")
+        memory.free_memory.assert_not_called()
 
     def test_other_errors_propagate_and_always_offload(self):
         _, scope = self.backend()
@@ -85,8 +82,8 @@ class CaptionRuntimeTests(unittest.TestCase):
             "florence-community/Florence-2-base", dtype=torch.float32, local_files_only=True
         )
 
-    def test_clip_uses_cpu_for_directml_and_releases_both_models(self):
-        memory, scope = self.backend("privateuseone", True)
+    def test_clip_uses_cpu_and_releases_both_models(self):
+        memory, scope = self.backend("cpu")
         config = Mock(return_value=SimpleNamespace(apply_low_vram_defaults=Mock()))
         model = SimpleNamespace(
             interrogate=Mock(return_value="CLIP caption"), caption_model=Mock(), clip_model=Mock()

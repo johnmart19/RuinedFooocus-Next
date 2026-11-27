@@ -86,21 +86,6 @@ def initialize_backend(launch_args):
     configure_comfy_runtime(launch_args, comfy.cli_args.args)
     if torch_platform == "cpu":
         comfy.cli_args.args.cpu = True
-    requested_directml = getattr(launch_args, "directml", None)
-    if requested_directml is not None or torch_platform == "directml":
-        if hasattr(comfy.cli_args.args, "directml"):
-            comfy.cli_args.args.directml = (
-                requested_directml if requested_directml is not None else -1
-            )
-        else:
-            warn_cpu_fallback(
-                "ComfyUI image processing",
-                "DirectML support was removed in ComfyUI v0.46+",
-            )
-            torch_platform = "cpu"
-            finalize_compute(launch_args, cpu=True)
-            configure_comfy_runtime(launch_args, comfy.cli_args.args)
-            comfy.cli_args.args.cpu = True
     configure_torch_allocator(torch_platform, os_platform, launch_args, native=True)
     if reason := unavailable_accelerator(torch_platform):
         warn_cpu_fallback("ComfyUI image processing", reason)
@@ -358,7 +343,7 @@ def initialize_comfy_memory():
     """Initialize the pinned DynamicVRAM controller without starting its server."""
     from comfy.cli_args import args, enables_dynamic_vram
 
-    if args.cpu or getattr(args, "directml", None) is not None or not enables_dynamic_vram():
+    if args.cpu or not enables_dynamic_vram():
         return False
     import comfy_aimdo.control as control
 
@@ -377,10 +362,8 @@ def initialize_comfy_memory():
     import comfy.memory_management as memory
     import comfy.model_patcher as patcher
 
-    supported = (
-        getattr(args, "directml", None) is None
-        and not args.cpu
-        and (management.is_nvidia() or (management.is_amd() and management.rocm_version >= (7, 14)))
+    supported = not args.cpu and (
+        management.is_nvidia() or (management.is_amd() and management.rocm_version >= (7, 14))
     )
     if not supported or management.torch_version_numeric < (2, 8):
         logging.warning(
@@ -588,22 +571,3 @@ def configure_torch_compatibility():
         for annotation, schema in list(supported.items()):
             if typing.get_origin(annotation) is list:
                 supported.setdefault(list[typing.get_args(annotation)[0]], schema)
-    if tuple(int(v) for v in torch.__version__.split(".")[:2]) == (2, 4):
-        # DirectML's torch predates resolution of postponed custom-op annotations.
-        import torch._custom_op.impl as custom_ops
-
-        if not getattr(custom_ops.infer_schema, "_rf_annotations", False):
-            original = custom_ops.infer_schema
-
-            def infer_schema(fn, *args, **kwargs):
-                annotations = fn.__annotations__
-                try:
-                    fn.__annotations__ = typing.get_type_hints(fn)
-                    if fn.__annotations__.get("return") is type(None):
-                        fn.__annotations__["return"] = None
-                    return original(fn, *args, **kwargs)
-                finally:
-                    fn.__annotations__ = annotations
-
-            infer_schema._rf_annotations = True
-            custom_ops.infer_schema = infer_schema

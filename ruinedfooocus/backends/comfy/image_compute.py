@@ -119,7 +119,6 @@ def apply_compute(args, values, options=()):
         and not options.intersection(
             (
                 "--cpu",
-                "--directml",
                 "--gpu-device-id",
                 "--cuda-device",
                 "--default-device",
@@ -173,7 +172,6 @@ def apply_compute(args, values, options=()):
             "disable_dynamic_vram",
             (
                 "--cpu",
-                "--directml",
                 "--gpu-only",
                 "--highvram",
                 "--lowvram",

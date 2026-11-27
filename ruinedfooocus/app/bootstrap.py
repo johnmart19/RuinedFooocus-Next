@@ -213,8 +213,6 @@ def prepare_environment(skip_install=False):
                     "ComfyUI image processing", "no compatible PyTorch GPU backend was detected"
                 )
             args.cpu = True
-        elif torch_platform == "directml" and args.directml is None:
-            args.directml = -1
         os.environ["TORCH_PLATFORM"] = torch_platform
         configure_torch_allocator(torch_platform, os_platform, args)
 
@@ -509,34 +507,24 @@ finalize_compute(args)
 
 offline = os.environ.get("RF_OFFLINE") == "1" or args.offline
 skip_install = skip_dependency_install()
-if args.cpu and args.directml is not None:
-    raise RuntimeError("Choose --cpu or --directml, not both.")
-if args.directml is not None and args.directml < -1:
-    raise RuntimeError(
-        "--directml expects a non-negative GPU index, or no value for the default GPU."
-    )
-if args.cpu or args.directml is not None:
-    os.environ["TORCH_PLATFORM"] = "cpu" if args.cpu else "directml"
+if args.cpu:
+    os.environ["TORCH_PLATFORM"] = "cpu"
 if os.environ.get("TORCH_PLATFORM") == "cpu":
     args.cpu = True
-elif os.environ.get("TORCH_PLATFORM") == "directml" and args.directml is None:
-    args.directml = -1
 
-if args.rocm10 and (skip_install or args.cpu or args.directml is not None or TORCH_FROZEN):
+if args.rocm10 and (skip_install or args.cpu or TORCH_FROZEN):
     raise RuntimeError(
-        "--rocm10 cannot be combined with offline/--skip-dependency-install, CPU, DirectML or freezetorch mode."
+        "--rocm10 cannot be combined with offline/--skip-dependency-install, CPU or freezetorch mode."
     )
-if args.cuda_nightly and (
-    skip_install or args.rocm10 or args.cpu or args.directml is not None or TORCH_FROZEN
-):
+if args.cuda_nightly and (skip_install or args.rocm10 or args.cpu or TORCH_FROZEN):
     raise RuntimeError(
-        "--cuda-nightly cannot be combined with offline/--skip-dependency-install, ROCm, CPU, DirectML or freezetorch mode."
+        "--cuda-nightly cannot be combined with offline/--skip-dependency-install, ROCm, CPU or freezetorch mode."
     )
 
 if args.legacy:
-    if args.cuda_nightly or args.rocm10 or args.cpu or args.directml is not None:
+    if args.cuda_nightly or args.rocm10 or args.cpu:
         raise RuntimeError(
-            "--legacy is a CUDA profile and cannot be combined with CPU, DirectML, ROCm or CUDA nightly."
+            "--legacy is a CUDA profile and cannot be combined with CPU, ROCm or CUDA nightly."
         )
     from ruinedfooocus.packaging.cuda_selection import select_cuda_legacy
     import platform

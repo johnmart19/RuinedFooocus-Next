@@ -65,9 +65,10 @@ class ComfyV0463PinAndParserTests(unittest.TestCase):
         self.assertNotIn("directml", COMFY_DESTINATIONS)
         parser = argparse.ArgumentParser()
         add_comfy_arguments(parser)
-        # Legacy --directml remains accepted by RuinedFooocus's parser for startup compatibility.
-        parsed = parser.parse_args(["--directml"])
-        self.assertEqual(parsed.directml, -1)
+        self.assertNotIn(
+            "--directml",
+            {opt for action in parser._actions for opt in action.option_strings},
+        )
 
         cli_args_path = COMFY_SOURCE / "comfy/cli_args.py"
         if not cli_args_path.is_file():
@@ -86,7 +87,7 @@ class ComfyV0463PinAndParserTests(unittest.TestCase):
             return value.value if isinstance(value, enum.Enum) else value
 
         for action in parser._actions:
-            if action.dest in ("help", "normalvram", "directml"):
+            if action.dest in ("help", "normalvram"):
                 continue
             with self.subTest(dest=action.dest):
                 self.assertIn(action.dest, COMFY_DESTINATIONS)
@@ -105,7 +106,7 @@ class ComfyV0463PinAndParserTests(unittest.TestCase):
 
 
 class DirectMLRemovalAndCudaWarningTests(unittest.TestCase):
-    def _memory_modules(self, *, has_directml=False):
+    def _memory_modules(self):
         names = (
             "comfy",
             "comfy.cli_args",
@@ -131,8 +132,6 @@ class DirectMLRemovalAndCudaWarningTests(unittest.TestCase):
             gpu_only=False,
             novram=False,
         )
-        if has_directml:
-            cli_attrs["directml"] = None
         cli_args = types.SimpleNamespace(**cli_attrs)
         modules["comfy.cli_args"].args = cli_args
         modules["comfy.cli_args"].enables_dynamic_vram = lambda: not cli_args.cpu
@@ -151,50 +150,15 @@ class DirectMLRemovalAndCudaWarningTests(unittest.TestCase):
         return modules
 
     def test_initialize_comfy_memory_handles_missing_directml_attr_in_v046(self):
-        modules = self._memory_modules(has_directml=False)
+        modules = self._memory_modules()
         self.assertFalse(hasattr(modules["comfy.cli_args"].args, "directml"))
         with patch.dict(sys.modules, modules):
             self.assertTrue(comfy_compat.initialize_comfy_memory())
             self.assertTrue(modules["comfy.memory_management"].aimdo_enabled)
 
-    def test_initialize_backend_falls_back_to_cpu_when_directml_removed_in_v046(self):
-        modules = self._memory_modules(has_directml=False)
-        launch_args = types.SimpleNamespace(cpu=False, directml=0, offline=True)
-        support = types.SimpleNamespace(
-            inspect_installed_rocm=lambda p: None,
-            inspect_installed_cuda=lambda p: None,
-            select_torch_platform=lambda *a: "directml",
-        )
-        with (
-            patch.dict(
-                sys.modules,
-                {
-                    **modules,
-                    "torchruntime": types.SimpleNamespace(),
-                    "ruinedfooocus.packaging.runtime_support": support,
-                },
-            ),
-            patch.object(comfy_compat, "_runtime_platform", None),
-            patch.object(comfy_compat, "warn_cpu_fallback") as warn_fallback,
-            patch.object(comfy_compat, "configure_comfy_runtime"),
-            patch.object(comfy_compat, "configure_torch_allocator"),
-            patch.object(comfy_compat, "configure_torch_compatibility"),
-            patch.object(comfy_compat, "initialize_comfy_memory"),
-            patch.object(comfy_compat, "unavailable_accelerator", return_value=None),
-            patch(
-                "ruinedfooocus.backends.comfy.cpu_startup.initialize_cpu_model_management"
-            ) as init_cpu,
-        ):
-            platform_result = comfy_compat.initialize_backend(launch_args)
-        self.assertEqual(platform_result[0], "cpu")
-        self.assertTrue(modules["comfy.cli_args"].args.cpu)
-        warn_fallback.assert_called_once()
-        self.assertIn("DirectML", warn_fallback.call_args.args[1])
-        init_cpu.assert_called_once()
-
     def test_initialize_backend_calls_cuda_version_warning_on_cuda(self):
-        modules = self._memory_modules(has_directml=False)
-        launch_args = types.SimpleNamespace(cpu=False, directml=None, offline=True)
+        modules = self._memory_modules()
+        launch_args = types.SimpleNamespace(cpu=False, offline=True)
         support = types.SimpleNamespace(
             inspect_installed_rocm=lambda p: None,
             inspect_installed_cuda=lambda p: None,

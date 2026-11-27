@@ -138,7 +138,6 @@ def _device_failure(error):
             "cuda",
             "hip error",
             "rocm",
-            "directml",
             "privateuse",
             "mps",
             "xpu",

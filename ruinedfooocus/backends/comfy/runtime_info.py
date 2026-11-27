@@ -13,8 +13,6 @@ _PREVIEW_POLICIES = {
 def runtime_details(torch, device, device_name, args, memory, package_version=version):
     if device.type == "cpu":
         backend = "CPU"
-    elif getattr(args, "directml", None) is not None:
-        backend = "DirectML (legacy PyTorch)"
     elif device.type == "cuda":
         backend = "ROCm / HIP" if torch.version.hip else "CUDA"
     else:

@@ -30,7 +30,6 @@ def _startup_arguments():
     """Retain install/device intent before argparse applies it to the environment."""
     flags = (
         "--cpu",
-        "--directml",
         "--gpu-device-id",
         "--cuda-device",
         "--default-device",
