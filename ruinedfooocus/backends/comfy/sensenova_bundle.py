@@ -53,6 +53,12 @@ def load_bundle_model(bundle, model_options=None, *, disable_dynamic=False):
             del loaded
             bundle.verify(_check_cancelled)
         _check_cancelled()
+        try:
+            import comfy.checkpoint_convert as checkpoint_convert
+        except ImportError:
+            checkpoint_convert = None
+        if checkpoint_convert is not None and hasattr(checkpoint_convert, "convert_checkpoint"):
+            state = checkpoint_convert.convert_checkpoint(state)
         model = comfy.sd.load_diffusion_model_state_dict(
             state,
             model_options=options,

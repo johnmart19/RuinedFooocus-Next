@@ -31,7 +31,6 @@ COMFY_DESTINATIONS = (
     "bf16_text_enc",
     "fp16_intermediates",
     "force_channels_last",
-    "directml",
     "supports_fp8_compute",
     "enable_triton_backend",
     "disable_triton_backend",
@@ -175,7 +174,7 @@ def add_comfy_arguments(parser):
         nargs="?",
         metavar="DIRECTML_DEVICE",
         const=-1,
-        help="Use torch-directml.",
+        help="Legacy DirectML selector (removed in ComfyUI v0.46+; retained for startup compatibility).",
     )
     parser.add_argument(
         "--supports-fp8-compute",

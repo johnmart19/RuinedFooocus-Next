@@ -54,10 +54,17 @@ def load_sensenova_clip(
     import comfy.sd
     import comfy.utils
 
-    sentinel = model_config.process_clip_state_dict({})
+    process_clip = getattr(model_config, "process_clip_state_dict", None)
+    sentinel = process_clip({}) if callable(process_clip) else {}
+    target = model_config.clip_target(sentinel)
+    if target is None:
+        raise ValueError(
+            "SenseNova U1.5 in ComfyUI v0.46+ requires text encoder weights in the checkpoint; "
+            "the tokenizer-only sentinel was removed upstream."
+        )
     options = dict(model_options or {})
     clip = comfy.sd.CLIP(
-        model_config.clip_target(),
+        target,
         embedding_directory=embedding_directory,
         tokenizer_data=sentinel,
         state_dict=sentinel,
