@@ -109,6 +109,43 @@ class ModelCatalogueSyncTests(unittest.TestCase):
         )
         self.assertEqual(len(issues), 5)
 
+    def test_model_registry_accepts_both_downloadable_and_legacy_existing_states(self):
+        from ruinedfooocus.features.models.model_registry import (
+            ACTIVE_STATES,
+            ModelRegistry,
+            download_identity,
+        )
+
+        self.assertIn("downloadable", ACTIVE_STATES)
+        self.assertIn("existing", ACTIVE_STATES)
+        entry = {
+            "url": "https://huggingface.co/org/repo/resolve/abc/demo.safetensors",
+            "path": "path_loras",
+            "filename": "demo.safetensors",
+        }
+        reg = ModelRegistry(
+            {
+                "schema_version": 1,
+                "profiles": {"demo:p": {"display_name": "Demo"}},
+                "benchmarks": [],
+                "artifacts": [
+                    {
+                        "id": "downloadable:loras/demo.safetensors",
+                        "catalogue_key": "loras/demo.safetensors",
+                        "state": "downloadable",
+                        "profile_id": "demo:p",
+                        "role": "acceleration_lora",
+                        "chat_weight": False,
+                        "download_identity": download_identity(entry),
+                        "artifact": {"bytes": 123, "sha256": "a" * 64},
+                        "companions": {"text": [], "image": []},
+                    }
+                ],
+            }
+        )
+        self.assertEqual(len(reg.entries()), 1)
+        self.assertIsNotNone(reg.annotations_for("loras/demo.safetensors", entry))
+
 
 if __name__ == "__main__":
     unittest.main()

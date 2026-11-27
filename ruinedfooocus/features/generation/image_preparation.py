@@ -201,8 +201,14 @@ def capture_pending_image_selection(
             continue
         if Path(filename).is_absolute() or ".." in Path(filename).parts:
             raise ValueError("The registered image filename leaves its configured model folder.")
+        from ruinedfooocus.features.models.model_registry import ACTIVE_STATES
+
         row = registry.annotations_for(key, info)
-        if row is None or row.get("state") != "existing" or not is_native_checkpoint_source(row):
+        if (
+            row is None
+            or row.get("state") not in ACTIVE_STATES
+            or not is_native_checkpoint_source(row)
+        ):
             raise ValueError(
                 "The selected image model is not installed and cannot be downloaded "
                 "automatically. Choose an installed model under Models, or add this "

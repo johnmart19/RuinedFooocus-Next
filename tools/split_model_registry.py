@@ -157,11 +157,13 @@ def split(
         path = "qualification/" + re.sub(r"[^a-zA-Z0-9_.-]", "_", identity) + ".json"
         index["qualification"][identity] = path
         write(path, {"profile_id": identity, **payload})
+    from ruinedfooocus.features.models.model_registry import ACTIVE_STATES
+
     index["download_identities_sha256"] = document_digest(
         {
             entry["catalogue_key"]: entry["download_identity"]
             for entry in document["artifacts"]
-            if entry["state"] == "existing"
+            if entry["state"] in ACTIVE_STATES
         }
     )
     index_path = (destination / "index.json").resolve()
@@ -178,10 +180,12 @@ def verify(destination):
     index = json.loads((Path(destination) / "index.json").read_text(encoding="utf-8"))
     if document_digest(document) != index["source_document_sha256"]:
         raise ValueError("Split resources differ from the recorded source document.")
+    from ruinedfooocus.features.models.model_registry import ACTIVE_STATES
+
     actual = {
         entry["catalogue_key"]: entry["download_identity"]
         for entry in document["artifacts"]
-        if entry["state"] == "existing"
+        if entry["state"] in ACTIVE_STATES
     }
     if document_digest(actual) != index["download_identities_sha256"]:
         raise ValueError("Split resources changed existing download tuples.")

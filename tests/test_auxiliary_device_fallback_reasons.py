@@ -1,10 +1,10 @@
-"""Unsupported DirectML auxiliary paths explain CPU at runtime, not capture."""
+"""Auxiliary caption and RAG CPU placement paths stay passive at capture."""
 
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace as NS
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import torch
 
@@ -13,27 +13,12 @@ from ruinedfooocus.features.image_processing import caption_runtime
 
 
 class AuxiliaryDeviceFallbackReasonTests(unittest.TestCase):
-    def test_directml_caption_has_an_explicit_reason_without_a_gpu_attempt(self):
-        native = NS(is_directml_enabled=lambda: True, get_torch_device=Mock())
-        with (
-            patch.dict("sys.modules", {"comfy": NS(model_management=native)}),
-            patch.object(caption_runtime, "warn_cpu_fallback") as warning,
-        ):
+    def test_native_cpu_caption_returns_cpu_device(self):
+        native = NS(get_torch_device=lambda: torch.device("cpu"))
+        with patch.dict("sys.modules", {"comfy": NS(model_management=native)}):
             self.assertEqual(caption_runtime.caption_device(), torch.device("cpu"))
-        native.get_torch_device.assert_not_called()
-        self.assertIn("DirectML", warning.call_args.args[1])
-        self.assertIn("not qualified", warning.call_args.args[1])
 
-    def test_native_cpu_caption_does_not_claim_a_directml_failure(self):
-        native = NS(is_directml_enabled=lambda: False, get_torch_device=lambda: torch.device("cpu"))
-        with (
-            patch.dict("sys.modules", {"comfy": NS(model_management=native)}),
-            patch.object(caption_runtime, "warn_cpu_fallback") as warning,
-        ):
-            self.assertEqual(caption_runtime.caption_device(), torch.device("cpu"))
-        warning.assert_not_called()
-
-    def test_rag_reason_is_captured_passively_and_reported_only_at_runtime(self):
+    def test_rag_cpu_policy_is_captured_passively_without_network(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             for name, _, _ in rag.MODEL_FILES:
@@ -43,38 +28,29 @@ class AuxiliaryDeviceFallbackReasonTests(unittest.TestCase):
             with (
                 patch.object(rag, "data_path", return_value=root),
                 patch.object(rag, "snapshot_download", side_effect=AssertionError("No network")),
-                patch("ruinedfooocus.core.device_fallback.warn_cpu_fallback") as warning,
             ):
-                prepared = rag.capture_chat_rag(
+                global_cpu = rag.capture_chat_rag(
                     [["text", "local context"]],
                     {},
-                    launch_args=NS(cpu=False, directml=0, offline=False),
+                    launch_args=NS(cpu=True, offline=False),
                 )
-                self.assertFalse(prepared.settings["gpu"])
-                self.assertIn("DirectML", prepared.settings["cpu_reason"])
-                warning.assert_not_called()
-                options = rag.runtime_options(prepared)
-                self.assertIsNone(options["gpu"])
-                warning.assert_called_once_with(
-                    "Chat text embeddings", prepared.settings["cpu_reason"]
-                )
-                warning.reset_mock()
+                self.assertFalse(global_cpu.settings["gpu"])
+                self.assertIsNone(rag.runtime_options(global_cpu)["gpu"])
+
                 explicit = rag.capture_chat_rag(
                     [["text", "local context"]],
                     {"rag_embedding_device": "CPU"},
-                    launch_args=NS(cpu=False, directml=0, offline=False),
+                    launch_args=NS(cpu=False, offline=False),
                 )
-                self.assertNotIn("cpu_reason", explicit.settings)
+                self.assertFalse(explicit.settings["gpu"])
                 self.assertIsNone(rag.runtime_options(explicit)["gpu"])
-                warning.assert_not_called()
+
                 automatic = rag.capture_chat_rag(
                     [["text", "local context"]],
                     {},
-                    launch_args=NS(cpu=False, directml=None, offline=False),
+                    launch_args=NS(cpu=False, offline=False),
                 )
                 self.assertTrue(rag.runtime_options(automatic)["gpu"])
-                self.assertNotIn("cpu_reason", automatic.settings)
-                warning.assert_not_called()
 
 
 if __name__ == "__main__":

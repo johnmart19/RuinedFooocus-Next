@@ -24,6 +24,8 @@ class CpuStartupTests(unittest.TestCase):
         cli.PerformanceFeature = PerformanceFeature
         cli.LatentPreviewMethod = types.SimpleNamespace(from_string=lambda name: name)
         comfy.cli_args = cli
+        mm = types.ModuleType("comfy.model_management")
+        comfy.model_management = mm
         support = types.SimpleNamespace(
             inspect_installed_rocm=Mock(return_value=None),
             inspect_installed_cuda=Mock(return_value=None),
@@ -37,6 +39,7 @@ class CpuStartupTests(unittest.TestCase):
                 {
                     "comfy": comfy,
                     "comfy.cli_args": cli,
+                    "comfy.model_management": mm,
                     "ruinedfooocus.packaging.runtime_support": support,
                     "torchruntime": runtime,
                 },
@@ -62,24 +65,22 @@ class CpuStartupTests(unittest.TestCase):
         return result, cli.args, support
 
     def test_cpu_skips_gpu_detection_even_with_an_installed_gpu_provider(self):
-        for provider in ("rocm10.2", "cu130", "directml"):
+        for provider in ("rocm10.2", "cu130"):
             with self.subTest(provider=provider):
                 result, backend, support = self.initialize(
                     ["--cpu"], provider, forbid_detection=True
                 )
                 self.assertEqual(result, ("cpu", "Windows"))
                 self.assertTrue(backend.cpu)
-                self.assertIsNone(backend.directml)
                 for function in vars(support).values():
                     function.assert_not_called()
 
-    def test_automatic_cuda_rocm_cpu_and_directml_selection_stays_native(self):
-        for provider in ("rocm10.2", "cu130", "directml"):
+    def test_automatic_cuda_rocm_and_cpu_selection_stays_native(self):
+        for provider in ("rocm10.2", "cu130", "cpu"):
             with self.subTest(provider=provider):
                 result, backend, support = self.initialize([], provider)
                 self.assertEqual(result, (provider, "Windows"))
                 self.assertEqual(backend.cpu, provider == "cpu")
-                self.assertEqual(backend.directml, -1 if provider == "directml" else None)
                 support.select_torch_platform.assert_called_once()
 
     def test_missing_gpu_and_unavailable_installed_gpu_report_cpu_fallback(self):
@@ -90,11 +91,6 @@ class CpuStartupTests(unittest.TestCase):
                 self.assertTrue(backend.cpu)
                 self.assertIn(reason or "no compatible PyTorch GPU backend", logs.output[0])
                 self.assertIn("Using CPU fallback", logs.output[0])
-
-    def test_explicit_directml_device_is_retained(self):
-        _, backend, _ = self.initialize(["--directml", "0"])
-        self.assertFalse(backend.cpu)
-        self.assertEqual(backend.directml, 0)
 
 
 if __name__ == "__main__":

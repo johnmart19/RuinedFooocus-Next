@@ -72,12 +72,19 @@ def _sha256(value):
     return isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
 
 
+# "downloadable" (and legacy "existing") identify entries active in
+# resources/model_catalogue/ (not on-disk installation status). "proposed"
+# identifies unpromoted research candidates not yet in model_catalogue.
+ACTIVE_STATES = ("existing", "downloadable")
+VALID_STATES = (*ACTIVE_STATES, "proposed")
+
+
 def _validate_artifact(entry, profiles):
     """Validate one artifact without loading other artifacts or qualification."""
     _require(isinstance(entry, Mapping), "Invalid model artifact.")
     identity, key = entry.get("id"), entry.get("catalogue_key")
     _require(_text(identity) and _text(key), "Missing model artifact identity.")
-    _require(entry.get("state") in ("existing", "proposed"), f"Invalid state: {key}")
+    _require(entry.get("state") in VALID_STATES, f"Invalid state: {key}")
     _require(identity == f"{entry['state']}:{key}", f"Inconsistent model identity: {key}")
     _require(
         _text(entry.get("profile_id")) and entry["profile_id"] in profiles,
@@ -201,7 +208,7 @@ class ModelRegistry:
         return tuple(
             entry
             for entry in self._document["artifacts"]
-            if (include_proposed or entry["state"] == "existing")
+            if (include_proposed or entry["state"] in ACTIVE_STATES)
             and (role is None or entry["role"] == role)
         )
 
@@ -337,7 +344,7 @@ class IndexedModelRegistry(ModelRegistry):
             key, state = descriptor.get("catalogue_key"), descriptor.get("state")
             _require(_text(key) and key not in self._by_key, f"Duplicate model identity: {key}")
             _require(
-                state in ("existing", "proposed") and identity == f"{state}:{key}",
+                state in VALID_STATES and identity == f"{state}:{key}",
                 "Invalid artifact identity.",
             )
             _require(
@@ -394,7 +401,7 @@ class IndexedModelRegistry(ModelRegistry):
     def entries(self, *, role=None, include_proposed=False):
         shards, result = {}, []
         for identity, descriptor in self._index["artifacts"].items():
-            if (include_proposed or descriptor["state"] == "existing") and (
+            if (include_proposed or descriptor["state"] in ACTIVE_STATES) and (
                 role is None or descriptor["role"] == role
             ):
                 path = descriptor["path"]

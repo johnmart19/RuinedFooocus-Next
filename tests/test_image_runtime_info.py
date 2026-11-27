@@ -41,13 +41,11 @@ class ImageRuntimeInfoTests(unittest.TestCase):
         self.assertEqual(rows["ROCm wheel SDK"], "10.1")
         self.assertEqual(rows["Dynamic VRAM active"], "No")
 
-    def test_cuda_and_legacy_directml_do_not_infer_rocm_from_gpu_api_spelling(self):
+    def test_cuda_does_not_infer_rocm_from_gpu_api_spelling(self):
         no_sdk = Mock(side_effect=AssertionError("No AMD package query on CUDA"))
         rows = self.details(device="cuda", hip=None, cuda="13.2", sdk=no_sdk)
         self.assertEqual(rows["Active image backend"], "CUDA")
         self.assertEqual(rows["Compiled CUDA runtime"], "13.2")
-        rows = self.details(device="privateuseone", hip=None, directml=0, sdk=no_sdk)
-        self.assertEqual(rows["Active image backend"], "DirectML (legacy PyTorch)")
         no_sdk.assert_not_called()
 
     def test_non_wheel_rocm_does_not_invent_a_matching_sdk_release(self):
