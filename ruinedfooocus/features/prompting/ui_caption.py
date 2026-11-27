@@ -187,6 +187,7 @@ def add_describe_controls(
         default_engine = settings.default_settings.get("interrogator", "auto")
         if default_engine not in {value for _, value in ENGINE_CHOICES}:
             default_engine = "auto"
+        vision_choices = _vision_model_choices()
         with gr.Row():
             engine_picker = gr.Dropdown(
                 label=translate_ui("Engine"),
@@ -197,10 +198,10 @@ def add_describe_controls(
             )
             vision_picker = gr.Dropdown(
                 label=translate_ui("Vision model"),
-                choices=_vision_model_choices(),
+                choices=vision_choices,
                 value="Auto",
                 interactive=True,
-                visible=default_engine in ("auto", "vlm"),
+                visible=default_engine in ("auto", "vlm") and len(vision_choices) > 1,
                 elem_id=f"{id_prefix}-vision-model",
             )
         with gr.Accordion(translate_ui("Prompt options"), open=False):
@@ -397,11 +398,15 @@ def add_describe_controls(
     )
 
     if allow_upload:
+        def _sync_vision_picker(engine):
+            choices = _vision_model_choices()
+            return gr.update(
+                visible=engine in ("auto", "vlm") and len(choices) > 1,
+                choices=choices,
+            )
+
         engine_picker.change(
-            lambda engine: gr.update(
-                visible=engine in ("auto", "vlm"),
-                choices=_vision_model_choices(),
-            ),
+            _sync_vision_picker,
             inputs=[engine_picker],
             outputs=[vision_picker],
             queue=False,

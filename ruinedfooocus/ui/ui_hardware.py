@@ -2151,20 +2151,23 @@ def create_windows_ml_controls(
 
     background_provider = gr.Dropdown(
         label=t("Windows background provider"),
-        choices=["Auto", "Windows ML"],
-        value=provider_preference(saved),
+        choices=["Windows ML"],
+        value="Windows ML",
+        visible=False,
     )
     add_setting("rembg_provider", background_provider)
     with gr.Accordion(t("Optional Windows ML providers"), open=False):
+        initial_winml_choices = windows_ml_choices(
+            catalog_status()["providers"],
+            gpus,
+            saved.get("rembg_winml_provider", "Auto"),
+            saved.get("rembg_winml_type", "Auto"),
+        )
         winml_provider = gr.Dropdown(
             label=t("Windows ML execution provider"),
-            choices=windows_ml_choices(
-                catalog_status()["providers"],
-                gpus,
-                saved.get("rembg_winml_provider", "Auto"),
-                saved.get("rembg_winml_type", "Auto"),
-            ),
+            choices=initial_winml_choices,
             value=saved.get("rembg_winml_provider", "Auto"),
+            visible=len(initial_winml_choices) > 1,
         )
         add_setting("rembg_winml_provider", winml_provider)
         winml_type = gr.Dropdown(
@@ -2177,15 +2180,16 @@ def create_windows_ml_controls(
         )
         add_setting("rembg_winml_type", winml_type)
         saved_device = saved.get("rembg_winml_device", "Auto")
+        initial_device_choices = [("Auto", "Auto")] + (
+            [("Saved device (refresh to resolve)", saved_device)]
+            if saved_device != "Auto"
+            else []
+        )
         winml_device = gr.Dropdown(
             label=t("Windows ML device"),
-            choices=[("Auto", "Auto")]
-            + (
-                [("Saved device (refresh to resolve)", saved_device)]
-                if saved_device != "Auto"
-                else []
-            ),
+            choices=initial_device_choices,
             value=saved_device,
+            visible=len(initial_device_choices) > 1,
             info=t(
                 "Provider device identities are separate from PyTorch indices. Refresh explicitly enumerates provider devices; no device probe runs while browsing Settings."
             ),
@@ -2227,9 +2231,13 @@ def create_windows_ml_controls(
                 if auxiliary_cpu(cpu or background_choice == "CPU")
                 else cache["reason"]
             )
+            updated_choices = windows_ml_choices(
+                cache["providers"], gpus, provider_name, device_type
+            )
             return gr.update(
-                choices=windows_ml_choices(cache["providers"], gpus, provider_name, device_type),
+                choices=updated_choices,
                 value=provider_name,
+                visible=len(updated_choices) > 1,
             ), requested + "\n\n" + reason
 
         localized_output(
@@ -2316,7 +2324,9 @@ def create_windows_ml_controls(
                 choices = [("Auto", "Auto")] + [(row["label"], row["id"]) for row in rows]
                 if current not in {value for _, value in choices}:
                     choices.append(("Saved device (unavailable)", current))
-                return gr.update(choices=choices, value=current), localize(
+                return gr.update(
+                    choices=choices, value=current, visible=len(choices) > 1
+                ), localize(
                     "Device discovery complete; no model loaded.", locale
                 )
             except Exception as error:
