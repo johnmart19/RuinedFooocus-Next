@@ -179,6 +179,7 @@ def add_describe_controls(
             )
         style_picker = gr.Radio(
             label=translate_ui("Prompt style"),
+            info=translate_ui("Output format for the generated prompt (tags, detailed prose, concise, cinematic, or FLUX/DiT)."),
             choices=list(PROMPT_STYLES),
             value=DEFAULT_STYLE,
             elem_classes=["rf-chips"],
@@ -191,6 +192,7 @@ def add_describe_controls(
         with gr.Row():
             engine_picker = gr.Dropdown(
                 label=translate_ui("Engine"),
+                info=translate_ui("Choose Auto to prefer a local Vision LLM and fall back to Florence-2."),
                 choices=list(ENGINE_CHOICES),
                 value=default_engine,
                 interactive=True,
@@ -198,6 +200,7 @@ def add_describe_controls(
             )
             vision_picker = gr.Dropdown(
                 label=translate_ui("Vision model"),
+                info=translate_ui("Local GGUF Vision model used when describing images with the Vision LLM engine."),
                 choices=vision_choices,
                 value="Auto",
                 interactive=True,
@@ -213,6 +216,7 @@ def add_describe_controls(
             )
             detail_picker = gr.Radio(
                 label=translate_ui("Vision detail"),
+                info=translate_ui("Image resolution sent to the Vision LLM. High detail captures small text and details at higher VRAM/time cost."),
                 choices=[("Standard (1024 px)", "standard"), ("High detail (2048 px)", "high")],
                 value="standard",
                 elem_classes=["rf-chips"],

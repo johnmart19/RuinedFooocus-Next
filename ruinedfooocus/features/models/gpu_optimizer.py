@@ -245,12 +245,19 @@ def create_int8_copy(
 
 def _quantize_fp8(raw, tensor):
     import torch
-    from comfy_kitchen.tensor.fp8 import TensorCoreFP8Layout
 
     weight = torch.frombuffer(bytearray(raw), dtype=getattr(torch, FLOAT_DTYPES[tensor["dtype"]]))
     weight = weight.reshape(tensor["shape"]).float()
-    data, params = TensorCoreFP8Layout.quantize(weight, dtype=torch.float8_e4m3fn)
-    scale = params.scale.float().reshape(())
+    try:
+        from comfy_kitchen.tensor.fp8 import TensorCoreFP8Layout
+
+        data, params = TensorCoreFP8Layout.quantize(weight, dtype=torch.float8_e4m3fn)
+        scale = params.scale.float().reshape(())
+    except (ImportError, RuntimeError):
+        fp8_max = float(torch.finfo(torch.float8_e4m3fn).max)
+        max_abs = weight.abs().max()
+        scale = (max_abs / fp8_max).clamp(min=1e-12).float().reshape(())
+        data = (weight / scale).clamp(-fp8_max, fp8_max).to(torch.float8_e4m3fn)
     if tuple(data.shape) != tuple(weight.shape):
         raise ValueError("The FP8 kernel returned an unexpected layout. Conversion stopped.")
     if not bool(torch.isfinite(scale).all()):

@@ -496,16 +496,29 @@ def create_ui(manager, models, *, offline):
                 wrap=True,
             )
         with gr.Accordion(t("Download options"), open=False):
-            companions = gr.Checkbox(label=t("Include registered companions"), value=True)
+            companions = gr.Checkbox(
+                label=t("Include registered companions"),
+                info=t("Automatically queue required text encoders, VAEs, or vision projectors alongside the selected model."),
+                value=True,
+            )
             mode = gr.Radio(
                 [("Text companions", "text"), ("Image companions", "image")],
                 value="text",
                 label=t("Companion set"),
+                info=t("Choose Text companions for chat/prompting or Image companions to include multimodal vision projectors."),
             )
             reserve = gr.Number(
-                label=t("Keep free disk space (GiB)"), value=100, minimum=0, maximum=10000
+                label=t("Keep free disk space (GiB)"),
+                info=t("Block downloads that would leave less than this amount of free space on the target drive."),
+                value=100,
+                minimum=0,
+                maximum=10000,
             )
-            unknown = gr.Checkbox(label=t("Allow downloads with unknown total size"), value=False)
+            unknown = gr.Checkbox(
+                label=t("Allow downloads with unknown total size"),
+                info=t("Permit downloading entries whose publisher did not publish an exact byte size."),
+                value=False,
+            )
         progress = gr.Markdown(t("No download running."))
         cancel = gr.Button(t("Cancel this download"), interactive=False, visible=False, size="sm")
         timer = gr.Timer(0.5, active=False)

@@ -234,12 +234,18 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 )
                 rewrite_image_prompt = gr.Radio(
                     label=translate_ui("Rewrite image prompts"),
+                    info=translate_ui(
+                        "Let Chat expand or refine your image prompt before generating."
+                    ),
                     choices=[(translate_ui("Off"), False), (translate_ui("On"), True)],
                     value=False,
                     elem_classes=["rf-chat-permission"],
                 )
                 update_create_prompt = gr.Radio(
                     label=translate_ui("Update Create prompt"),
+                    info=translate_ui(
+                        "Allow Chat to write its suggested prompt directly into the Create prompt box."
+                    ),
                     choices=[(translate_ui("Off"), False), (translate_ui("On"), True)],
                     value=False,
                     elem_classes=["rf-chat-permission"],
@@ -564,6 +570,9 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     )
                     llama_quant = gr.Dropdown(
                         label=translate_ui("Quantization"),
+                        info=translate_ui(
+                            "Higher precision keeps more detail; lower bits use less VRAM and download faster."
+                        ),
                         interactive=len(default_choices) > 1,
                         visible=bool(default_quant),
                         choices=default_choices,

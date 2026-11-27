@@ -2261,5 +2261,16 @@
   "settings.embed_generation_prompt_model_and_settings_inside_saved_image_files": "Embed generation prompt, model, and settings inside saved image files.",
   "settings.lowest_weight_allowed_on_lora_sliders_use_negative_values_to_subtract_a_lora": "Lowest weight allowed on LoRA sliders (use negative values to subtract a LoRA).",
   "settings.highest_weight_allowed_on_lora_sliders": "Highest weight allowed on LoRA sliders.",
-  "settings.seconds_between_live_preview_and_progress_updates_during_generation": "Seconds between live preview and progress updates during generation."
+  "settings.seconds_between_live_preview_and_progress_updates_during_generation": "Seconds between live preview and progress updates during generation.",
+  "chat.let_chat_expand_or_refine_your_image_prompt_before_generating": "Let Chat expand or refine your image prompt before generating.",
+  "chat.allow_chat_to_write_its_suggested_prompt_directly_into_the_create_prompt_box": "Allow Chat to write its suggested prompt directly into the Create prompt box.",
+  "chat.higher_precision_keeps_more_detail_lower_bits_use_less_vram_and_download_faster": "Higher precision keeps more detail; lower bits use less VRAM and download faster.",
+  "models.automatically_queue_required_text_encoders_vaes_or_vision_projectors_alongside_the_selected_model": "Automatically queue required text encoders, VAEs, or vision projectors alongside the selected model.",
+  "models.choose_text_companions_for_chat_prompting_or_image_companions_to_include_multimodal_vision_projectors": "Choose Text companions for chat/prompting or Image companions to include multimodal vision projectors.",
+  "models.block_downloads_that_would_leave_less_than_this_amount_of_free_space_on_the_target_drive": "Block downloads that would leave less than this amount of free space on the target drive.",
+  "models.permit_downloading_entries_whose_publisher_did_not_publish_an_exact_byte_size": "Permit downloading entries whose publisher did not publish an exact byte size.",
+  "prompting.output_format_for_the_generated_prompt_tags_detailed_prose_concise_cinematic_or_flux_dit": "Output format for the generated prompt (tags, detailed prose, concise, cinematic, or FLUX/DiT).",
+  "prompting.choose_auto_to_prefer_a_local_vision_llm_and_fall_back_to_florence_2": "Choose Auto to prefer a local Vision LLM and fall back to Florence-2.",
+  "prompting.local_gguf_vision_model_used_when_describing_images_with_the_vision_llm_engine": "Local GGUF Vision model used when describing images with the Vision LLM engine.",
+  "prompting.image_resolution_sent_to_the_vision_llm_high_detail_captures_small_text_and_details_at_higher_vram_time_cost": "Image resolution sent to the Vision LLM. High detail captures small text and details at higher VRAM/time cost."
 }
