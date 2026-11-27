@@ -86,6 +86,24 @@ class HuggingFaceArtworkExtractionTests(unittest.TestCase):
         self.assertEqual(urls, [])
         mock_read.assert_not_called()
 
+    def test_repackaged_repo_inherits_artwork_from_card_data_base_model(self):
+        repackaged = {
+            "sha": "1" * 40,
+            "siblings": [{"rfilename": "weights.safetensors"}],
+            "cardData": {"base_model": ["upstream/Original-Model"]},
+        }
+        upstream = {
+            "sha": "2" * 40,
+            "siblings": [{"rfilename": "showcase.png"}],
+        }
+        with patch.object(model_sources, "huggingface_manifest", return_value=upstream) as mock_m:
+            urls = model_sources.extract_hf_artwork_urls(repackaged, "Comfy-Org/Repack", "1" * 40)
+        mock_m.assert_called_once_with("upstream/Original-Model", offline=False)
+        self.assertEqual(
+            urls,
+            [f"https://huggingface.co/upstream/Original-Model/resolve/{'2' * 40}/showcase.png"],
+        )
+
     def test_fetch_registered_preview_uses_card_data_thumbnail(self):
         digest = "12" * 32
         revision = "d" * 40

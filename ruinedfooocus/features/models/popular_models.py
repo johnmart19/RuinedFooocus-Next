@@ -232,12 +232,29 @@ def choose_chat_file(manifest):
     return None
 
 
-def _get_json(url, params):
-    import requests
+_HTTP_SESSION = None
+_HTTP_SESSION_LOCK = threading.Lock()
 
-    response = requests.get(
-        url, params=params, timeout=(8, 40), headers={"User-Agent": "RuinedFooocus"}
-    )
+
+def _http_session():
+    global _HTTP_SESSION
+    if _HTTP_SESSION is None:
+        with _HTTP_SESSION_LOCK:
+            if _HTTP_SESSION is None:
+                import requests
+                from requests.adapters import HTTPAdapter
+
+                session = requests.Session()
+                adapter = HTTPAdapter(pool_connections=32, pool_maxsize=32)
+                session.mount("https://", adapter)
+                session.mount("http://", adapter)
+                session.headers.update({"User-Agent": "RuinedFooocus"})
+                _HTTP_SESSION = session
+    return _HTTP_SESSION
+
+
+def _get_json(url, params):
+    response = _http_session().get(url, params=params, timeout=(8, 40))
     response.raise_for_status()
     return response.json()
 
@@ -313,8 +330,8 @@ def _resolve_popular_artwork_urls(entry):
     )[:3]
 
 
-def fetch_artwork_iter(entries, cache_dir, fetch_image=None, *, batch_size=4):
-    """Stream thumbnail downloads in small batches so cards appear progressively."""
+def fetch_artwork_batches(entries, cache_dir, fetch_image=None, *, batch_size=6, max_wait=0.2):
+    """Stream newly cached `(entry, target)` batches over pooled keep-alive sockets."""
     from ruinedfooocus.features.models.model_previews import write_preview
 
     fetch = fetch_image or _read_image
@@ -337,28 +354,43 @@ def fetch_artwork_iter(entries, cache_dir, fetch_image=None, *, batch_size=4):
                         continue
                     target.parent.mkdir(parents=True, exist_ok=True)
                     write_preview(body, target)
-                    return 1
+                    return entry, target
                 except Exception:
                     continue
-            return 0
+            return None
         except Exception:  # One missing picture leaves that card on its placeholder.
-            return 0
+            return None
 
-    arrived = 0
-    last_yielded = 0
     step = max(1, int(batch_size or 1))
-    with ThreadPoolExecutor(max_workers=12, thread_name_prefix="popular-artwork") as pool:
+    pending_batch = []
+    last_flush = time.monotonic()
+    with ThreadPoolExecutor(max_workers=24, thread_name_prefix="popular-artwork") as pool:
         futures = [pool.submit(one, item) for item in missing]
         for future in as_completed(futures):
             try:
-                if future.result():
-                    arrived += 1
-                    if arrived - last_yielded >= step:
-                        last_yielded = arrived
-                        yield arrived
+                saved = future.result()
+                if saved is not None:
+                    pending_batch.append(saved)
+                    now = time.monotonic()
+                    if len(pending_batch) >= step or (
+                        max_wait and now - last_flush >= max_wait
+                    ):
+                        yield pending_batch
+                        pending_batch = []
+                        last_flush = now
             except Exception:
                 continue
-    if arrived > last_yielded:
+    if pending_batch:
+        yield pending_batch
+
+
+def fetch_artwork_iter(entries, cache_dir, fetch_image=None, *, batch_size=4):
+    """Stream cumulative arrival counts in small batches."""
+    arrived = 0
+    for batch in fetch_artwork_batches(
+        entries, cache_dir, fetch_image=fetch_image, batch_size=batch_size, max_wait=0
+    ):
+        arrived += len(batch)
         yield arrived
 
 
@@ -371,9 +403,7 @@ def fetch_artwork(entries, cache_dir, fetch_image=None):
 
 
 def _read_image(url):
-    import requests
-
-    with requests.get(url, timeout=(8, 20), stream=True) as response:
+    with _http_session().get(url, timeout=(6, 15), stream=True) as response:
         response.raise_for_status()
         body = io.BytesIO()
         for chunk in response.iter_content(64 * 1024):

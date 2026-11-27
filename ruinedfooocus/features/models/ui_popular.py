@@ -266,11 +266,19 @@ def create_ui(manager, models):
             yield view(saved or dict(entries=[], fetched=None, stale=False, error=""), waiting)
         result = feed.load(*chosen_list, force=force, **options)
         yield view(result)
-        for _ in feed.fetch_artwork_iter(result["entries"], cache):
-            # Pictures only: a model chosen while they arrived stays chosen.
-            rows, value, _, shown, *_ = view(result)
-            value.pop("selected")
-            yield rows, value, gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip()
+        roots = card_picture_roots(cache=cache)
+        for batch in feed.fetch_artwork_batches(result["entries"], cache):
+            # Surgical previewPatch: update only arrived cards without rebuilding the grid.
+            patches = [
+                dict(
+                    key=entry["key"],
+                    artworkKey="",
+                    preview=card_picture(str(target), roots),
+                    preview_is_default=False,
+                )
+                for entry, target in batch
+            ]
+            yield gr.skip(), dict(previewPatch=patches), gr.skip(), gr.skip(), gr.skip(), gr.skip(), gr.skip()
 
     def open_list(chosen, kind, order, span, with_mature, base, request: gr.Request = None):
         yield from show(chosen, kind, order, span, with_mature, base, False, request)

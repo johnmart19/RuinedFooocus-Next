@@ -403,10 +403,10 @@ def create_ui(manager, models, *, offline):
     selection_version = gr.Number(0, visible=False, precision=0)
     page_version = gr.Number(0, visible=False, precision=0)
     roles_version = gr.Number(0, visible=False, precision=0)
-    # A page shows 36 entries; fetch artwork for several at once so it fills in
-    # within seconds. Each fetch is two small bounded reads.
+    # A page shows 36 entries; queue the full page in one batch over pooled
+    # keep-alive connections so cards fill in within ~1-2 seconds.
     previews = CataloguePreviews(
-        Path(manager.model_paths["cache_path"]) / "catalogue-previews", workers=4, pending=8
+        Path(manager.model_paths["cache_path"]) / "catalogue-previews", workers=12, pending=36
     )
     preview_revision = gr.State(0)
     with gr.Column(elem_id="model-acquisition", min_width=0):
@@ -522,7 +522,7 @@ def create_ui(manager, models, *, offline):
         progress = gr.Markdown(t("No download running."))
         cancel = gr.Button(t("Cancel this download"), interactive=False, visible=False, size="sm")
         timer = gr.Timer(0.5, active=False)
-        artwork_timer = gr.Timer(1, active=True)
+        artwork_timer = gr.Timer(0.4, active=True)
 
     def refresh_rows(
         search, kind, view, workflow, quant, selected, current_page, request=None, ticket=None

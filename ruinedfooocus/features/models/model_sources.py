@@ -10,9 +10,20 @@ from pathlib import Path
 from urllib.parse import parse_qsl, quote, urlencode, urljoin, urlparse, urlunparse
 
 import requests
+from requests.adapters import HTTPAdapter
 
+_DEFAULT_REQUESTS_GET = requests.get
 _civitai_not_found = {}
 _REPOSITORY = r"[A-Za-z0-9][A-Za-z0-9._-]*/[A-Za-z0-9][A-Za-z0-9._-]*"
+
+
+def _pooled_session(pool_size=32):
+    session = requests.Session()
+    adapter = HTTPAdapter(pool_connections=pool_size, pool_maxsize=pool_size)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    session.headers.update({"User-Agent": "RuinedFooocus"})
+    return session
 
 
 class HuggingFaceMetadata:
@@ -23,13 +34,14 @@ class HuggingFaceMetadata:
     Cache state is deliberately memory-only: a restart permits one fresh attempt.
     """
 
-    MAX_CONCURRENT_REQUESTS = 6
+    MAX_CONCURRENT_REQUESTS = 16
 
     def __init__(self, *, clock=None, wall_clock=None):
         self.clock = clock or time.monotonic
         self.wall_clock = wall_clock or time.time
         self.lock = threading.RLock()
         self.slots = threading.BoundedSemaphore(self.MAX_CONCURRENT_REQUESTS)
+        self.session = _pooled_session(32)
         self.cache = OrderedDict()
         self.inflight = {}
         self.not_before = 0
@@ -91,7 +103,8 @@ class HuggingFaceMetadata:
                     raise ValueError("Publisher artwork redirect is outside its source service")
                 if self.cooling_down():
                     raise ValueError("Publisher artwork is cooling down")
-                with requests.get(
+                getter = self.session.get if requests.get is _DEFAULT_REQUESTS_GET else requests.get
+                with getter(
                     url,
                     params=params,
                     stream=True,
@@ -138,7 +151,7 @@ class HuggingFaceMetadata:
                 return None
             waiting = self.inflight.get(key)
             if waiting is None:
-                if len(self.inflight) >= 24:
+                if len(self.inflight) >= 48:
                     return None
                 waiting = self.inflight[key] = threading.Event()
                 owner = True
@@ -469,9 +482,10 @@ def extract_hf_artwork_urls(
     *,
     offline=False,
     allow_readme=True,
+    allow_base_model=True,
     rank=None,
 ):
-    """Return ordered HTTPS artwork URLs from a HF manifest: siblings -> cardData -> README."""
+    """Return ordered HTTPS artwork URLs: siblings -> cardData -> README -> base_model."""
     if not isinstance(metadata, dict) or not repository or not revision:
         return []
     siblings = metadata.get("siblings") if isinstance(metadata.get("siblings"), list) else []
@@ -524,4 +538,46 @@ def extract_hf_artwork_urls(
                     found.append(resolved)
             found.sort(key=lambda u: rank_key(Path(urlparse(u).path).name or u))
             urls.extend(found)
+    if (
+        not urls
+        and allow_base_model
+        and not offline
+        and not hf_metadata.cooling_down()
+        and isinstance(card_data, dict)
+    ):
+        raw_bases = card_data.get("base_model")
+        if isinstance(raw_bases, str):
+            raw_bases = [raw_bases]
+        elif not isinstance(raw_bases, list):
+            raw_bases = []
+        upstreams = []
+        for candidate in raw_bases:
+            if not isinstance(candidate, str):
+                continue
+            repo_id = candidate.strip()
+            if (
+                re.fullmatch(_REPOSITORY, repo_id)
+                and repo_id.casefold() != repository.casefold()
+                and repo_id not in upstreams
+            ):
+                upstreams.append(repo_id)
+        for upstream in upstreams[:2]:
+            if hf_metadata.cooling_down():
+                break
+            upstream_meta = huggingface_manifest(upstream, offline=offline)
+            if not isinstance(upstream_meta, dict):
+                continue
+            upstream_rev = upstream_meta.get("sha") or "main"
+            upstream_urls = extract_hf_artwork_urls(
+                upstream_meta,
+                upstream,
+                upstream_rev,
+                offline=offline,
+                allow_readme=allow_readme,
+                allow_base_model=False,
+                rank=rank,
+            )
+            if upstream_urls:
+                urls.extend(upstream_urls)
+                break
     return list(dict.fromkeys(urls))

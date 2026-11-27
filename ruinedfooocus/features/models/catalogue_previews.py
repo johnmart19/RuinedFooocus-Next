@@ -177,9 +177,9 @@ def fetch_registered_preview(identity, destination, *, offline=False):
 class CataloguePreviews:
     """Process-owned bounded workers; session filters/selections never enter a job."""
 
-    def __init__(self, directory, *, workers=6, pending=24, retry_seconds=600, fetcher=None):
-        if not 1 <= workers <= pending <= 32:
-            raise ValueError("Require 1 <= artwork workers <= pending <= 32")
+    def __init__(self, directory, *, workers=12, pending=36, retry_seconds=600, fetcher=None):
+        if not 1 <= workers <= pending <= 64:
+            raise ValueError("Require 1 <= artwork workers <= pending <= 64")
         self.directory = Path(directory)
         self.executor = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="model-artwork")
         self.limit = pending
