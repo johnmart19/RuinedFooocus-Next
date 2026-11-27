@@ -357,12 +357,14 @@ def create_ui(base_model, model_refresh=None):
             translate_ui("Select an image checkpoint and click Refresh components.")
         )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-            refresh_button = gr.Button(translate_ui("Refresh components"), size="sm")
+            refresh_button = gr.Button(
+                translate_ui("Refresh components"), size="sm", interactive=bool(base_model.value)
+            )
             download_button = gr.Button(
                 translate_ui("Download missing"), size="sm", interactive=False
             )
         cancel = gr.Button(
-            translate_ui("Cancel component download"), size="sm", visible=False
+            translate_ui("Cancel component download"), size="sm", interactive=False, visible=False
         )
         details = gr.JSON(
             label=translate_ui("Selected components"), value={}, visible=False
@@ -377,19 +379,22 @@ def create_ui(base_model, model_refresh=None):
         outputs.append(role)
 
         def sync_component_cards(rows, detail_map, request: gr.Request = None):
-            has_download = not offline() and any(
-                isinstance(v, dict) and v.get("download_available")
-                for v in (detail_map or {}).values()
-            )
-            return (
-                build_component_cards_payload(rows, detail_map, locale=resolve_locale(request=request)),
-                gr.update(visible=has_download),
+            return build_component_cards_payload(
+                rows, detail_map, locale=resolve_locale(request=request)
             )
 
         details.change(
             sync_component_cards,
             inputs=[table, details],
-            outputs=[cards, cancel],
+            outputs=cards,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
+        )
+        base_model.change(
+            lambda name: gr.update(interactive=bool(name)),
+            inputs=base_model,
+            outputs=refresh_button,
             queue=False,
             show_progress="hidden",
             api_visibility="undocumented",
@@ -433,6 +438,19 @@ def create_ui(base_model, model_refresh=None):
             show_progress="hidden",
             api_visibility="undocumented",
         )
+        def begin_component_download():
+            return gr.update(interactive=False), gr.update(visible=True, interactive=True)
+
+        def end_component_download():
+            return gr.update(visible=False, interactive=False)
+
+        download_button.click(
+            begin_component_download,
+            outputs=[download_button, cancel],
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
+        )
         download_button.click(
             download_selected,
             inputs=[base_model, overrides, scope],
@@ -441,6 +459,18 @@ def create_ui(base_model, model_refresh=None):
             concurrency_limit=1,
             show_progress="minimal",
             api_visibility="undocumented",
+        ).then(
+            end_component_download,
+            outputs=cancel,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
         )
-        cancel.click(cancel_download, queue=False, api_visibility="undocumented")
+        cancel.click(cancel_download, queue=False, api_visibility="undocumented").then(
+            end_component_download,
+            outputs=cancel,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
+        )
     return panel

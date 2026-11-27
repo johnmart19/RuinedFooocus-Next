@@ -408,7 +408,7 @@ def create_ui(
                 value=(choices or {}).get(card["name"], "Auto") if not is_lora else "Auto",
             ),
             gr.update(interactive=True),
-            gr.update(interactive=True),
+            gr.update(interactive=(card["name"] in lora_values(gallery)) if is_lora else True),
         )
 
     selection_outputs = [
@@ -632,6 +632,33 @@ def create_ui(
         clear_selection,
         inputs=selected,
         outputs=[detail, weight, activate, remove],
+        queue=False,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
+
+    def sync_remove_button(records, key, gallery, positive, negative):
+        if not key:
+            return gr.update(interactive=False)
+        is_active = any(
+            (card["kind"], card["name"]) == tuple(key)
+            for card, _ in active_cards(
+                records, gallery, positive, negative, cache_dir / "embeddings"
+            )
+        )
+        return gr.update(interactive=is_active)
+
+    gr.on(
+        triggers=[
+            selected.change,
+            transport.change,
+            prompt.change,
+            negative_prompt.change,
+            catalog.change,
+        ],
+        fn=sync_remove_button,
+        inputs=[catalog, selected, transport, prompt, negative_prompt],
+        outputs=remove,
         queue=False,
         show_progress="hidden",
         api_visibility="undocumented",

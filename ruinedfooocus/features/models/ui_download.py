@@ -21,7 +21,12 @@ def download_default(progress=gr.Progress()):
     def report(received, total, speed):
         progress(received / total if total else 0, desc=f"Downloading {name}")
 
-    shared.path_manager.get_folder_file_path("checkpoints", name, progress=report)
+    try:
+        shared.path_manager.get_folder_file_path("checkpoints", name, progress=report)
+    except (OSError, ValueError, RuntimeError) as error:
+        raise gr.Error(
+            f"Could not download the default image model ({name}): {error}"
+        ) from None
     shared.models.update_all_models()
     return gr.update(
         choices=checkpoint_choices(

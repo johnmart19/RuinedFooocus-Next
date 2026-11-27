@@ -58,7 +58,7 @@ def create_runtime_info_controls(launch_args, profile_base):
     session = gr.State(RuntimeInfoSession(), delete_callback=lambda item: item.cancel())
     with gr.Row():
         refresh = gr.Button(t("Refresh"), size="sm")
-        cancel = gr.Button(t("Cancel runtime refresh"), size="sm")
+        cancel = gr.Button(t("Cancel runtime refresh"), size="sm", interactive=False)
     gr.Markdown(
         t(
             "Detected devices are separate from PyTorch. CPU mode and GPU-layer settings still apply."
@@ -84,9 +84,24 @@ def create_runtime_info_controls(launch_args, profile_base):
             yield result, ""
 
     def stop(item, request: gr.Request):
+        if item.cancelled is None:
+            return gr.skip()
         item.cancel()
         return localize("Stopping runtime refresh…", resolve_locale(request=request))
 
+    def begin_refresh():
+        return gr.update(interactive=False), gr.update(interactive=True)
+
+    def end_refresh():
+        return gr.update(interactive=True), gr.update(interactive=False)
+
+    refresh.click(
+        begin_refresh,
+        outputs=[refresh, cancel],
+        queue=False,
+        api_visibility="private",
+        show_progress="hidden",
+    )
     refresh_event = refresh.click(
         inspect,
         inputs=[session, profile_base],
@@ -96,12 +111,25 @@ def create_runtime_info_controls(launch_args, profile_base):
         concurrency_limit=2,
         show_progress="hidden",
     )
+    refresh_event.then(
+        end_refresh,
+        outputs=[refresh, cancel],
+        queue=False,
+        api_visibility="private",
+        show_progress="hidden",
+    )
     cancel.click(
         stop,
         inputs=session,
         outputs=status,
         queue=False,
         cancels=[refresh_event],
+        api_visibility="private",
+        show_progress="hidden",
+    ).then(
+        end_refresh,
+        outputs=[refresh, cancel],
+        queue=False,
         api_visibility="private",
         show_progress="hidden",
     )

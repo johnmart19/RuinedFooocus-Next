@@ -9,6 +9,7 @@ import gradio as gr
 from ruinedfooocus.core.translation_manager import localize, resolve_locale, translate_ui as t
 from ruinedfooocus.features.models import popular_models as feed
 from ruinedfooocus.features.models.resource_cards import default_preview
+from ruinedfooocus.features.models.ui_model_components import offline
 
 ALL = "All"
 
@@ -329,7 +330,11 @@ def create_ui(manager, models):
         return (
             entry["key"] if entry else "",
             details_text(entry, manager, locale),
-            gr.update(interactive=entry is not None and not is_installed(entry, manager)),
+            gr.update(
+                interactive=entry is not None
+                and not is_installed(entry, manager)
+                and not offline()
+            ),
         )
 
     cards.click(
@@ -343,6 +348,13 @@ def create_ui(manager, models):
 
     def run_download(rows, key, base, request: gr.Request = None):
         locale = resolve_locale(None, request)
+        if offline():
+            raise gr.Error(
+                localize(
+                    "Offline mode: downloads are disabled. Restart online to download models.",
+                    locale,
+                )
+            )
         entry = find(rows, key)
         if entry is None:
             raise gr.Error(localize("Select a model first.", locale))
@@ -429,15 +441,21 @@ def create_ui(manager, models):
         api_visibility="undocumented",
     )
 
-    def cancelled(request: gr.Request = None):
+    def cancelled(rows, key, request: gr.Request = None):
+        entry = find(rows, key)
         return (
             localize("Download cancelled.", resolve_locale(None, request)),
             gr.update(visible=False),
-            gr.update(interactive=True),
+            gr.update(
+                interactive=entry is not None
+                and not is_installed(entry, manager)
+                and not offline()
+            ),
         )
 
     cancel.click(
         cancelled,
+        inputs=[entries, selection],
         outputs=[progress, cancel, download],
         cancels=[running],
         queue=False,

@@ -317,7 +317,9 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                             "Lower values preserve the source; higher values redraw more."
                         ),
                     )
-                    preview_image = gr.Button(translate_ui("Check image readiness"), size="sm")
+                    preview_image = gr.Button(
+                        translate_ui("Check image readiness"), size="sm", interactive=False
+                    )
                     checkpoint_control = image_controls.get("base_model_name")
                     format_control = image_controls.get("moss_image_edit_format")
 
@@ -370,7 +372,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                                 else capability["reason"],
                             ),
                             gr.update(visible=intent != "text"),
-                            gr.update(visible=intent != "text"),
+                            gr.update(visible=intent != "text", interactive=bool(active)),
                         )
 
             gr.HTML(
@@ -441,10 +443,17 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                     )
                     with gr.Row(elem_classes=["rf-actions"], equal_height=True):
                         assistant_save = gr.Button(
-                            translate_ui("Save"), variant="primary", size="sm", min_width=96
+                            translate_ui("Save"),
+                            variant="primary",
+                            size="sm",
+                            min_width=96,
+                            interactive=False,
                         )
                         assistant_save_as = gr.Button(
-                            translate_ui("Save as new"), size="sm", min_width=96
+                            translate_ui("Save as new"),
+                            size="sm",
+                            min_width=96,
+                            interactive=False,
                         )
                         assistant_cancel = gr.Button(
                             translate_ui("Cancel"), size="sm", min_width=96
@@ -637,8 +646,21 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 add_ctrl("chat_runtime_status", active_status)
                 add_ctrl("chat_sampling_status", sampling_status)
                 llama_active_model.change(
-                    fn=lambda loaded: gr.update(interactive=bool(loaded)),
-                    inputs=llama_active_model,
+                    fn=lambda loaded, msg=None: gr.update(
+                        interactive=bool(loaded) and (msg is None or bool(str(msg).strip()))
+                    ),
+                    inputs=[llama_active_model, llama_msg],
+                    outputs=send_message,
+                    queue=False,
+                    show_progress="hidden",
+                    api_visibility="undocumented",
+                )
+                gr.on(
+                    triggers=[llama_msg.input, llama_msg.change],
+                    fn=lambda loaded, msg: gr.update(
+                        interactive=bool(loaded) and bool(str(msg or "").strip())
+                    ),
+                    inputs=[llama_active_model, llama_msg],
                     outputs=send_message,
                     queue=False,
                     show_progress="hidden",
@@ -1409,6 +1431,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 if isinstance(result, dict) and result.get("unloaded"):
                     session.active = None
                     session.initialized_runtime = None
+                    post_unload = action_updates(session.selected, session)
                     yield {
                         llama_active_model: None,
                         chat_reasoning_capability: None,
@@ -1416,7 +1439,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                         sampling_status: "No active Chat model sampling state.",
                         llama_model_status: "Model unloaded.",
                         llama_msg: gr.update(interactive=False),
-                        llama_use: gr.update(value="Load", interactive=True),
+                        llama_use: post_unload[llama_use],
                     }
                 else:
                     message = (
@@ -2106,7 +2129,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
             if ui_turn is not None:
                 latest_ui_requests.finish(ui_turn)
             yield {
-                send_message: gr.update(interactive=True),
+                send_message: gr.update(interactive=False),
                 clear_chat: gr.update(interactive=True),
                 **(
                     {attachment_controls.stop_reply: gr.update(visible=False)}
@@ -2645,6 +2668,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
             updates.update(
                 {
                     llama_assistants: gr_llama_get_assistants(current),
+                    assistant_delete: gr.update(interactive=current != "__normal__"),
                     assistant_status: translate_ui("Assistant deleted."),
                 }
             )
@@ -2753,6 +2777,18 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
             outputs=[pending_assistant_delete, assistant_delete_dialog, assistant_status],
             api_visibility="undocumented",
         )
+        gr.on(
+            triggers=[assistant_name.input, assistant_name.change],
+            fn=lambda name: (
+                gr.update(interactive=bool((name or "").strip())),
+                gr.update(interactive=bool((name or "").strip())),
+            ),
+            inputs=assistant_name,
+            outputs=[assistant_save, assistant_save_as],
+            queue=False,
+            api_visibility="undocumented",
+            show_progress="hidden",
+        )
         assistant_delete_dialog.click(
             confirm_assistant_delete,
             inputs=[pending_assistant_delete, llama_assistants],
@@ -2760,6 +2796,7 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
                 pending_assistant_delete,
                 assistant_delete_dialog,
                 llama_assistants,
+                assistant_delete,
                 assistant_status,
                 llama_avatar,
                 llama_system,

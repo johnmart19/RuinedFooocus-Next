@@ -46,6 +46,15 @@ def selected_evidence(quant):
     return evidence
 
 
+def _installed_gguf_path(quant):
+    path = (
+        Path(quant)
+        if quant and Path(quant).is_absolute()
+        else catalogue_local_file(quant, path_manager.DOWNLOADABLE_FILES, _roots())
+    )
+    return path if path is not None and path.is_file() else None
+
+
 def refresh_sampling_recommendations(quant):
     from ruinedfooocus.features.chat.sampling_sources import prepare_sampling_source
 
@@ -74,7 +83,10 @@ def create_model_diagnostics(selected_quant, runtime_status, sampling_status):
         with gr.Row(elem_classes=["rf-actions"], equal_height=True):
             refresh = gr.Button(t("Refresh file presence"), size="sm", min_width=112)
             recommendations = gr.Button(
-                t("Refresh sampling recommendations"), size="sm", min_width=112
+                t("Refresh sampling recommendations"),
+                size="sm",
+                min_width=112,
+                interactive=_installed_gguf_path(getattr(selected_quant, "value", None)) is not None,
             )
         details = gr.Dataframe(
             headers=["Field", "Evidence"],
@@ -85,17 +97,34 @@ def create_model_diagnostics(selected_quant, runtime_status, sampling_status):
             wrap=True,
             elem_classes=["rf-technical-table"],
         )
+
+    def _recommendations_update(quant):
+        return gr.update(interactive=_installed_gguf_path(quant) is not None)
+
+    selected_quant.change(
+        _recommendations_update,
+        inputs=selected_quant,
+        outputs=recommendations,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
     group.expand(
-        lambda quant, active, sample: (active, sample, selected_evidence(quant)),
+        lambda quant, active, sample: (
+            active,
+            sample,
+            selected_evidence(quant),
+            _recommendations_update(quant),
+        ),
         inputs=[selected_quant, runtime_status, sampling_status],
-        outputs=[runtime, sampling, details],
+        outputs=[runtime, sampling, details, recommendations],
         queue=False,
         api_visibility="undocumented",
     )
     refresh.click(
-        selected_evidence,
+        lambda quant: (selected_evidence(quant), _recommendations_update(quant)),
         inputs=selected_quant,
-        outputs=details,
+        outputs=[details, recommendations],
         queue=False,
         api_visibility="undocumented",
     )

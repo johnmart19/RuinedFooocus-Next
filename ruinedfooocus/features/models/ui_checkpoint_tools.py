@@ -241,7 +241,9 @@ def run_action(name, action, progress, on_verified=None, *, verify_source=True):
 def create_ui(base_model, visible=True, model_refresh=None):
     with gr.Column(visible=visible, elem_id="checkpoint-tools") as group:
         with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
-            inspect = gr.Button(translate_ui("Inspect"), size="sm")
+            inspect = gr.Button(
+                translate_ui("Inspect"), size="sm", interactive=bool(base_model.value)
+            )
             check = gr.Button(
                 translate_ui("Check weights"),
                 size="sm",
@@ -287,6 +289,17 @@ def create_ui(base_model, visible=True, model_refresh=None):
         }"""
 
         def inspect_selected(name, revision=0, progress=gr.Progress()):
+            if not name:
+                result = (
+                    "Select an installed checkpoint first.",
+                    gr.update(interactive=False),
+                    gr.update(interactive=False),
+                    gr.update(interactive=False),
+                    gr.update(interactive=False),
+                    gr.update(interactive=False),
+                    gr.update(interactive=False),
+                )
+                return result + ((gr.skip(),) if model_refresh is not None else ())
             verified = []
             if Path(name).suffix.lower() in (*NATIVE_TORCH_SUFFIXES, ".gguf"):
                 result = (
@@ -513,5 +526,13 @@ def create_ui(base_model, visible=True, model_refresh=None):
             selection_event,
             selection_result,
             [report, convert, convert_bf16, check, optimize_fp8, optimize, benchmark],
+        )
+        base_model.change(
+            lambda name: gr.update(interactive=bool(name)),
+            inputs=base_model,
+            outputs=inspect,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
         )
     return group

@@ -646,7 +646,7 @@ def create_ui(manager, models, *, offline):
         request: gr.Request = None,
         version=None,
     ):
-        key = evt._data.get("key")
+        key = evt._data.get("key") if isinstance(evt._data, dict) else None
         if not any(row["key"] == key for row in listed_records(rows)):
             raise gr.Error("The list changed. Select the model again.")
 
