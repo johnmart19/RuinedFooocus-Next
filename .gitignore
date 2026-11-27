@@ -1,4 +1,9 @@
 __pycache__
+/ruinedfooocus/features/generation/dimension_number.pyi
+# Gradio writes these component stubs when the app starts.
+/ruinedfooocus/features/image_editing/tool_type_dropdown.pyi
+/ruinedfooocus/features/image_editing/ui_reference_adapters.pyi
+/ruinedfooocus/features/models/resolution_dropdown.pyi
 *.ckpt
 *.safetensors
 *.pth
@@ -6,6 +11,8 @@ __pycache__
 *.gguf
 !taesdxl_decoder.pth
 /repositories
+# Locally built native runtimes, such as the AMD FSR helper and AMD's signed DLLs.
+/runtime/
 /venv
 /tmp
 /ui-config.json
@@ -33,6 +40,7 @@ models/vae/config.json
 settings.json
 styles.csv
 !/random_prompt/csvfiles/templates/styles.csv
+!/ruinedfooocus/features/prompting/one_button/csvfiles/templates/styles.csv
 paths.json
 notification.mp3
 resolutions.json
@@ -42,17 +50,31 @@ performance.json
 /models/loras/
 /models/checkpoints/
 /models/diffusers/
+/models/.validation-downloads/
 /models/clip/*
 /cache/
 chatbots/
-presets/
+/presets/
 llamas/
 random_prompt/userfiles/obp_presets.json
 /reinstall
 /reinstalltorch
-prompt_expansion/pytorch_model.bin
-/superprompter/model_files
+/prompt_expansion/
+/superprompter/
 models/upscale_models/*.jpeg
 .gradio/flagged/dataset1.csv
 cache/images.db
 settings/pip.json
+/settings/model_settings.json
+random_prompt/userfiles/config_anime.csv
+node_modules/
+/.ruff_cache/
+/dist/
+/settings/
+/assistants/
+/prompt_presets/
+/random_prompt/userfiles/
+/models/**
+!/models/
+!/models/**/
+!/models/README.md

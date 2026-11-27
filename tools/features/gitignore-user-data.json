@@ -1,0 +1,8 @@
+{
+  "id": "gitignore-user-data",
+  "subject": "Ignore user data, model weights and local build output in the new layout",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
