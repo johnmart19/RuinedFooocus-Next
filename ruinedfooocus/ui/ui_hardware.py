@@ -893,6 +893,7 @@ def create_hardware_tab(device_name="", launch_args=None, profile_base=None):
         matrix_status = gr.Markdown("", visible=False, elem_classes=["rf-status-card"])
         show_unsupported = gr.Checkbox(
             label=t("Show unsupported options for other GPUs/OS"),
+            info=t("Reveal backends and packages intended for other GPUs or operating systems."),
             value=False,
         )
 
@@ -991,6 +992,7 @@ def create_hardware_tab(device_name="", launch_args=None, profile_base=None):
     with gr.Accordion(t("Chat and prompt LLM (llama.cpp)"), open=False):
         llm_runtime = gr.Dropdown(
             label=t("Chat runtime"),
+            info=t("Backend used to run local GGUF Chat and Vision models (llama.cpp server or in-process xllamacpp)."),
             choices=runtime_choices(),
             value=saved_llm_runtime,
         )
@@ -1939,6 +1941,7 @@ def create_optional_image_controls(saved, cpu_everywhere, image_backend):
         add_setting("sdcpp_vulkan_device", device)
         package = gr.Dropdown(
             label=t("Optional runtime package"),
+            info=t("Variant of the optional stable-diffusion.cpp package to install (Vulkan GPU or CPU)."),
             choices=[("Vulkan", "vulkan"), ("CPU", "cpu")],
             value="vulkan",
         )
@@ -2165,6 +2168,7 @@ def create_windows_ml_controls(
         )
         winml_provider = gr.Dropdown(
             label=t("Windows ML execution provider"),
+            info=t("Explicit Windows ML vendor provider to use for background removal; unsupported providers fall back to CPU."),
             choices=initial_winml_choices,
             value=saved.get("rembg_winml_provider", "Auto"),
             visible=len(initial_winml_choices) > 1,

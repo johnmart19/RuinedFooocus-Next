@@ -245,6 +245,7 @@ def create_settings(*, models_in_settings=True):
                     add_setting("local_model_metadata", local_metadata)
                     image_number_max = gr.Number(
                         label=t("Maximum batch size"),
+                        info=t("Upper limit for the Images slider on Create."),
                         minimum=1,
                         step=1,
                         value=settings.default_settings.get("image_number_max", 50),
@@ -253,10 +254,12 @@ def create_settings(*, models_in_settings=True):
                     with gr.Row():
                         lora_min = gr.Number(
                             label=t("LoRA weight minimum"),
+                            info=t("Lowest weight allowed on LoRA sliders (use negative values to subtract a LoRA)."),
                             value=settings.default_settings.get("lora_min", 0),
                         )
                         lora_max = gr.Number(
                             label=t("LoRA weight maximum"),
+                            info=t("Highest weight allowed on LoRA sliders."),
                             value=settings.default_settings.get("lora_max", 2),
                         )
                         add_setting("lora_min", lora_min)
@@ -295,6 +298,7 @@ def create_settings(*, models_in_settings=True):
                     with gr.Accordion(t("Advanced display settings"), open=False):
                         update_interval = gr.Number(
                             label=t("WebUI update interval"),
+                            info=t("Seconds between live preview and progress updates during generation."),
                             interactive=True,
                             value=settings.default_settings.get("update_interval", 0.1),
                             minimum=0.01,
@@ -413,6 +417,7 @@ def create_settings(*, models_in_settings=True):
                 with gr.Accordion(t("Image browser"), open=False):
                     images_per_page = gr.Number(
                         label=t("Images per page"),
+                        info=t("Number of thumbnails shown per page in Gallery."),
                         value=settings.default_settings.get("images_per_page", 100),
                         minimum=1,
                         maximum=1000,
@@ -610,6 +615,7 @@ def create_settings(*, models_in_settings=True):
                     saved_preset = settings.default_settings.get("OBP_preset", "Standard")
                     OBP_preset = gr.Dropdown(
                         label=t("OBP preset"),
+                        info=t("Default One Button Prompt preset used for random prompt generation."),
                         choices=preset_choices,
                         value=saved_preset if saved_preset in preset_choices else "Standard",
                         interactive=True,
@@ -617,6 +623,7 @@ def create_settings(*, models_in_settings=True):
                     add_setting("OBP_preset", OBP_preset)
                     hint_chance = gr.Number(
                         label=t("Hint chance"),
+                        info=t("Percentage chance (0–100) of showing a tip while generating."),
                         minimum=0,
                         maximum=100,
                         step=1,
@@ -637,6 +644,7 @@ def create_settings(*, models_in_settings=True):
                     add_setting("interrogator", interrogator)
                     save_metadata = gr.Checkbox(
                         label=t("Save metadata"),
+                        info=t("Embed generation prompt, model, and settings inside saved image files."),
                         value=settings.default_settings.get("save_metadata", True),
                     )
                     add_setting("save_metadata", save_metadata)
