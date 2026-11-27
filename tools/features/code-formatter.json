@@ -1,0 +1,8 @@
+{
+  "id": "code-formatter",
+  "subject": "Add a formatter command with pinned Ruff and Prettier",
+  "requires": [],
+  "tests": ["test_formatting.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
