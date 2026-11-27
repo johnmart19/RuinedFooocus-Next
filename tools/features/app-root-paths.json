@@ -1,0 +1,8 @@
+{
+  "id": "app-root-paths",
+  "subject": "Resolve application resources and writable data independent of the launch directory",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
