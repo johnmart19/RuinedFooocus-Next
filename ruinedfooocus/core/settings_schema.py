@@ -17,6 +17,7 @@ ONNX_BACKENDS = ("Auto", "CPU", "CUDA", "MIGraphX", "OpenVINO", "Windows GPU")
 # CUDA 12.8/13.2 (Win x64, Linux x64/ARM64), and ROCm 6.4/7.2 (Linux x64).
 XLLAMACPP_BACKENDS = ("Auto", "CPU", "Vulkan", "CUDA 12.8", "CUDA 13.2", "ROCm 6.4", "ROCm 7.2")
 RAG_EMBEDDING_DEVICES = ("Auto", "CPU")
+GGUF_DTYPE_CHOICES = ("default", "target", "float32", "float16", "bfloat16")
 RAG_EMBEDDING_MODELS = (
     "sentence-transformers/all-MiniLM-L6-v2",
     "sentence-transformers/all-MiniLM-L12-v2",
@@ -93,6 +94,7 @@ BOOLEAN_FIELDS = {
     "auto_negative_prompt",
     "local_model_metadata",
     "preload_image_model",
+    "gguf_patch_on_device",
     "cpu_everywhere",
     "llm_use_model_defaults",
     "save_metadata",
@@ -146,6 +148,8 @@ ENUM_FIELDS = {
     "rag_embedding_device": RAG_EMBEDDING_DEVICES,
     "rag_embedding_model": RAG_EMBEDDING_MODELS,
     "image_resize_mode": ("preserve", "pad", "crop"),
+    "gguf_dequant_dtype": GGUF_DTYPE_CHOICES,
+    "gguf_patch_dtype": GGUF_DTYPE_CHOICES,
 }
 STARTUP_CONTROLS = (
     (

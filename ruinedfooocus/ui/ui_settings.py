@@ -21,7 +21,7 @@ SETTINGS_INDEX = {
     "Appearance & language": "language, text size, theme, metadata, batch size, LoRA weights, update interval",
     "Profiles & storage": "Save, Save as profile, Use next launch, browser, port, offline, installed packages, paths, archive, library",
     "Hardware & backends": "GPU, CPU, Use CPU for everything, CUDA, ROCm, Vulkan, DirectML, Windows ML, PyTorch, Torch, llama.cpp, xllamacpp, Chat runtime, ONNX, background removal, install, main, default",
-    "Image runtime": "device, CPU, preview, dynamic VRAM, precision, attention, offload, deterministic, smart memory, pinned memory, mmap, allocator, compiler, CUDA graphs",
+    "Image runtime": "device, CPU, preview, dynamic VRAM, precision, attention, offload, deterministic, smart memory, pinned memory, mmap, allocator, compiler, CUDA graphs, gguf, dequant, patch",
     "Local Chat": "llama.cpp, sampling, context, GPU layers, history, rewrite reasoning, documents, RAG, embeddings, diagnostics, file presence, sampling recommendations",
     "Generation defaults": "presets, hints, metadata, framing, VAE tiles, MOSS, HiDream, LCM, sampling shifts",
     "Connections": "API, MCP, listen, authentication, guest",
@@ -543,6 +543,41 @@ def create_settings(*, models_in_settings=True):
                             info=t(info),
                         )
                         add_setting(key, control)
+
+                from ruinedfooocus.core.settings_schema import GGUF_DTYPE_CHOICES
+
+                with gr.Accordion(t("GGUF diffusion loader"), open=False):
+                    gr.Markdown(
+                        t(
+                            "Applies the next time a GGUF diffusion model is loaded. Leave at default to keep native loader precision."
+                        )
+                    )
+                    gguf_dequant_dtype = gr.Dropdown(
+                        label=t("GGUF dequantization precision"),
+                        choices=list(GGUF_DTYPE_CHOICES),
+                        value=settings.default_settings.get("gguf_dequant_dtype", "default"),
+                        info=t(
+                            "Precision used when dequantizing GGUF diffusion weights. 'target' matches the active compute dtype."
+                        ),
+                    )
+                    add_setting("gguf_dequant_dtype", gguf_dequant_dtype)
+                    gguf_patch_dtype = gr.Dropdown(
+                        label=t("GGUF LoRA patch precision"),
+                        choices=list(GGUF_DTYPE_CHOICES),
+                        value=settings.default_settings.get("gguf_patch_dtype", "default"),
+                        info=t(
+                            "Precision used when applying LoRA patches to GGUF diffusion weights."
+                        ),
+                    )
+                    add_setting("gguf_patch_dtype", gguf_patch_dtype)
+                    gguf_patch_on_device = gr.Checkbox(
+                        label=t("Keep GGUF LoRA patches on GPU"),
+                        value=settings.default_settings.get("gguf_patch_on_device", True),
+                        info=t(
+                            "Keep GGUF LoRA patch weights on the compute device for faster inference. Turn off to offload patches to CPU and reduce VRAM usage."
+                        ),
+                    )
+                    add_setting("gguf_patch_on_device", gguf_patch_on_device)
 
             with gr.Tab(t("Generation defaults")):
                 gr.Markdown(
