@@ -476,14 +476,14 @@ def checked_preview(current, original, proposed, *, append=False):
     try:
         return apply_preview(current, original, proposed, append=append)
     except ValueError as error:
-        raise gr.Error(str(error)) from error
+        raise gr.Error(str(error), print_exception=False) from error
 
 
 def checked_undo(current, previous):
     try:
         return undo_preview(current, previous)
     except ValueError as error:
-        raise gr.Error(str(error)) from error
+        raise gr.Error(str(error), print_exception=False) from error
 
 
 def add_quick_prompt_controls(prompt, checkpoint, *, register_prompt):
@@ -679,8 +679,17 @@ def ui_onebutton(
                     )
                     obp_preset_save = gr.Button(
                         value=translate_ui("Save as preset"),
+                        interactive=False,
                         visible=True,
                     )
+                obp_preset_name.change(
+                    lambda name: gr.update(interactive=bool((name or "").strip())),
+                    inputs=obp_preset_name,
+                    outputs=obp_preset_save,
+                    queue=False,
+                    show_progress="hidden",
+                    api_visibility="private",
+                )
 
                 # End of this part of presets
 
@@ -875,36 +884,36 @@ def ui_onebutton(
                 giventypeofimage,
                 antistring,
             ):
-                if obp_preset_name != "":
-                    obp_options = OBPresets.load_obp_presets()
-                    opts = {
-                        "insanitylevel": insanitylevel,
-                        "subject": subject,
-                        "artist": artist,
-                        "chosensubjectsubtypeobject": chosensubjectsubtypeobject,
-                        "chosensubjectsubtypehumanoid": chosensubjectsubtypehumanoid,
-                        "chosensubjectsubtypeconcept": chosensubjectsubtypeconcept,
-                        "chosengender": chosengender,
-                        "imagetype": imagetype,
-                        "imagemodechance": imagemodechance,
-                        "givensubject": givensubject,
-                        "smartsubject": smartsubject,
-                        "givenoutfit": givenoutfit,
-                        "prefixprompt": prefixprompt,
-                        "suffixprompt": suffixprompt,
-                        "giventypeofimage": giventypeofimage,
-                        "antistring": antistring,
-                    }
-                    obp_options[obp_preset_name] = opts
-                    OBPresets.save_obp_preset(obp_options)
-                    choices = (
-                        [OBPresets.RANDOM_PRESET_OBP]
-                        + list(obp_options.keys())
-                        + [OBPresets.CUSTOM_OBP]
-                    )
-                    return gr.update(choices=choices, value=obp_preset_name)
-                else:
-                    return gr.update()
+                obp_preset_name = (obp_preset_name or "").strip()
+                if not obp_preset_name:
+                    raise gr.Error("Enter a preset name before saving.", print_exception=False)
+                obp_options = OBPresets.load_obp_presets()
+                opts = {
+                    "insanitylevel": insanitylevel,
+                    "subject": subject,
+                    "artist": artist,
+                    "chosensubjectsubtypeobject": chosensubjectsubtypeobject,
+                    "chosensubjectsubtypehumanoid": chosensubjectsubtypehumanoid,
+                    "chosensubjectsubtypeconcept": chosensubjectsubtypeconcept,
+                    "chosengender": chosengender,
+                    "imagetype": imagetype,
+                    "imagemodechance": imagemodechance,
+                    "givensubject": givensubject,
+                    "smartsubject": smartsubject,
+                    "givenoutfit": givenoutfit,
+                    "prefixprompt": prefixprompt,
+                    "suffixprompt": suffixprompt,
+                    "giventypeofimage": giventypeofimage,
+                    "antistring": antistring,
+                }
+                obp_options[obp_preset_name] = opts
+                OBPresets.save_obp_preset(obp_options)
+                choices = (
+                    [OBPresets.RANDOM_PRESET_OBP]
+                    + list(obp_options.keys())
+                    + [OBPresets.CUSTOM_OBP]
+                )
+                return gr.update(choices=choices, value=obp_preset_name)
 
             obp_preset_save.click(
                 act_obp_preset_save,

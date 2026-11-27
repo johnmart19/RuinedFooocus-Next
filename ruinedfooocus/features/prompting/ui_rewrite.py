@@ -29,20 +29,25 @@ def safe_rewrite(original, proposed):
         if literal.startswith(("<", "__")):
             missing.append(literal)
         else:
-            raise gr.Error("The rewrite changed quoted text. Your original prompt is preserved.")
+            raise gr.Error(
+                "The rewrite changed quoted text. Your original prompt is preserved.",
+                print_exception=False,
+            )
     missing.extend(value for value in supplied if value not in proposed and value not in missing)
     result = " ".join([proposed.rstrip(), *missing]) if missing else proposed
     if not result.strip():
-        raise gr.Error("The rewrite is empty. Your original prompt is preserved.")
+        raise gr.Error(
+            "The rewrite is empty. Your original prompt is preserved.", print_exception=False
+        )
     return result
 
 
 def add_rewrite_controls(prompt):
     def suggest(system_file, current):
         if not current or not current.strip():
-            raise gr.Error("Enter a prompt before rewriting it.")
+            raise gr.Error("Enter a prompt before rewriting it.", print_exception=False)
         if not system_file:
-            raise gr.Error("Choose a rewrite preset first.")
+            raise gr.Error("Choose a rewrite preset first.", print_exception=False)
         try:
             proposed = run_prompt(current, system_file)
         except RuntimeError as error:
@@ -50,24 +55,27 @@ def add_rewrite_controls(prompt):
             detail = " ".join(str(error).split())[:240]
             raise gr.Error(
                 "The prompt could not be rewritten. Choose or download a model in Chat, "
-                "then preview again. " + detail
+                "then preview again. " + detail,
+                print_exception=False,
             ) from error
         result = safe_rewrite(current, proposed)
         if result.strip() == current.strip():
             # The chat runtime returns the prompt itself when it cannot run a model.
             raise gr.Error(
                 "The rewrite returned your prompt unchanged. Choose or download a model in "
-                "Chat, then preview again."
+                "Chat, then preview again.",
+                print_exception=False,
             )
         return gr.update(value=result, visible=True), current, gr.update(interactive=True)
 
     def apply_rewrite(current, original, proposed):
         if current != original:
             raise gr.Error(
-                "The prompt changed after this preview. Preview a new rewrite before applying it."
+                "The prompt changed after this preview. Preview a new rewrite before applying it.",
+                print_exception=False,
             )
         if not proposed or not proposed.strip():
-            raise gr.Error("The rewrite is empty.")
+            raise gr.Error("The rewrite is empty.", print_exception=False)
         return (
             proposed,
             (current, proposed),
@@ -80,7 +88,8 @@ def add_rewrite_controls(prompt):
             return gr.skip(), None, gr.update(interactive=False)
         if current != previous[1]:
             raise gr.Error(
-                "The prompt changed after applying the rewrite. Undo would overwrite your edits."
+                "The prompt changed after applying the rewrite. Undo would overwrite your edits.",
+                print_exception=False,
             )
         return gr.update(value=previous[0]), None, gr.update(interactive=False)
 
@@ -100,7 +109,11 @@ def add_rewrite_controls(prompt):
             show_label=True,
         )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-            llama_btn = gr.Button(value=translate_ui("Preview rewrite"), size="sm")
+            llama_btn = gr.Button(
+                value=translate_ui("Preview rewrite"),
+                size="sm",
+                interactive=bool((prompt.value or "").strip() and llama_select.value),
+            )
             refresh_btn = gr.Button(value=translate_ui("Refresh presets"), size="sm")
     previous_prompt = gr.JSON(None, visible=False)
     original_prompt = gr.State(None)
@@ -108,6 +121,15 @@ def add_rewrite_controls(prompt):
     with gr.Row(equal_height=True, elem_classes=["rf-actions", "rf-actions-compact"]):
         apply_btn = gr.Button(value=translate_ui("Apply rewrite"), size="sm", interactive=False)
         undo_btn = gr.Button(value=translate_ui("Undo rewrite"), size="sm", interactive=False)
+    gr.on(
+        triggers=[prompt.change, llama_select.change],
+        fn=lambda text, preset: gr.update(interactive=bool((text or "").strip() and preset)),
+        inputs=[prompt, llama_select],
+        outputs=llama_btn,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="private",
+    )
     llama_btn.click(
         suggest,
         api_visibility="undocumented",
@@ -229,7 +251,7 @@ def add_qwen_rewrite_controls(prompt, checkpoint):
                 result = rewrite_prompt(current or "", references, max_tokens=int(tokens))
                 suggested = safe_rewrite(current, result.prompt)
             except (ValueError, RuntimeError, OSError) as error:
-                raise gr.Error(str(error)) from error
+                raise gr.Error(str(error), print_exception=False) from error
             ratio = result.ratio
             if result.follow_reference is not None:
                 ratio = localize(
@@ -251,7 +273,7 @@ def add_qwen_rewrite_controls(prompt, checkpoint):
                     raise ValueError("The edit context changed. Preview a new Qwen rewrite first.")
                 updated, undo_value = apply_preview(current, saved[0], saved[3])
             except ValueError as error:
-                raise gr.Error(str(error)) from error
+                raise gr.Error(str(error), print_exception=False) from error
             return (
                 updated,
                 undo_value,
@@ -264,7 +286,7 @@ def add_qwen_rewrite_controls(prompt, checkpoint):
             try:
                 return undo_preview(current, saved), None, gr.update(interactive=False)
             except ValueError as error:
-                raise gr.Error(str(error)) from error
+                raise gr.Error(str(error), print_exception=False) from error
 
         preview_btn.click(
             preview_qwen,

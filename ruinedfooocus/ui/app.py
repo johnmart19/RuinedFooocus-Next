@@ -16,6 +16,8 @@ from ruinedfooocus.core.paths import asset_path
 import os
 
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
+if os.name == "nt":
+    os.environ.setdefault("HF_HUB_DISABLE_SYMLINKS_WARNING", "1")
 
 from ruinedfooocus.app.arguments import args
 from ruinedfooocus.backends.comfy.comfy_compat import initialize_backend
@@ -1723,17 +1725,28 @@ with shared.gradio_root as block:
                     auto_recommendations = gr.Checkbox(
                         label=translate_ui("Automatically refresh recommendations"), value=True
                     )
+                    has_initial_checkpoint = bool((initial_checkpoint or "").strip())
                     with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
                         recommendation_use = gr.Button(
-                            translate_ui("Use model defaults"), size="sm"
+                            translate_ui("Use model defaults"),
+                            size="sm",
+                            interactive=has_initial_checkpoint,
                         )
                         recommendation_save = gr.Button(
-                            translate_ui("Save sampling defaults"), size="sm"
+                            translate_ui("Save sampling defaults"),
+                            size="sm",
+                            interactive=has_initial_checkpoint,
                         )
                     with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-                        recommendation_refresh = gr.Button(translate_ui("Refresh"), size="sm")
+                        recommendation_refresh = gr.Button(
+                            translate_ui("Refresh"),
+                            size="sm",
+                            interactive=has_initial_checkpoint,
+                        )
                         recommendation_reset = gr.Button(
-                            translate_ui("Remove sampling override"), size="sm"
+                            translate_ui("Remove sampling override"),
+                            size="sm",
+                            interactive=has_initial_checkpoint,
                         )
 
                     performance_outputs = [
@@ -1915,7 +1928,16 @@ with shared.gradio_root as block:
                     ratio_save = gr.Button(
                         value=t("Save size"),
                         size="sm",
+                        interactive=False,
                         visible=custom_resolution,
+                    )
+                    ratio_name.change(
+                        lambda name: gr.update(interactive=bool((name or "").strip())),
+                        inputs=ratio_name,
+                        outputs=ratio_save,
+                        queue=False,
+                        show_progress="hidden",
+                        api_visibility="private",
                     )
                     for button, dimensions in (
                         (target_1080p, (1920, 1080)),
@@ -2020,20 +2042,21 @@ with shared.gradio_root as block:
                     def ratio_save_click(ratio_name, custom_width, custom_height, family):
                         # An untouched name field arrives as None.
                         ratio_name = (ratio_name or "").strip()
-                        if ratio_name != "":
-                            try:
-                                new_ratio_name = resolution_settings.save_custom(
-                                    ratio_name,
-                                    custom_width,
-                                    custom_height,
-                                    family,
-                                )
-                            except ValueError as error:
-                                raise gr.Error(str(error)) from None
-                            choices = resolution_settings.choices_for_model(family)
-                            return gr.update(choices=choices, value=new_ratio_name), False
-                        else:
-                            return gr.update(), gr.update()
+                        if not ratio_name:
+                            raise gr.Error(
+                                "Enter a name for the custom size first.", print_exception=False
+                            )
+                        try:
+                            new_ratio_name = resolution_settings.save_custom(
+                                ratio_name,
+                                custom_width,
+                                custom_height,
+                                family,
+                            )
+                        except ValueError as error:
+                            raise gr.Error(str(error), print_exception=False) from None
+                        choices = resolution_settings.choices_for_model(family)
+                        return gr.update(choices=choices, value=new_ratio_name), False
 
                     @ratio_delete.click(
                         inputs=[aspect_ratios_selection, model_family],
@@ -2041,6 +2064,10 @@ with shared.gradio_root as block:
                         api_visibility="undocumented",
                     )
                     def ratio_delete_click(selection, family):
+                        if not resolution_settings.is_custom(selection):
+                            raise gr.Error(
+                                "Select a saved custom size to remove.", print_exception=False
+                            )
                         resolution_settings.remove_custom(selection)
                         return gr.update(
                             choices=resolution_settings.choices_for_model(family),
@@ -3131,6 +3158,8 @@ with shared.gradio_root as block:
             def save_checkpoint_override(
                 checkpoint, family, steps, guidance, sampler, schedule, skip
             ):
+                if not (checkpoint or "").strip():
+                    raise gr.Error("Select an image model first.", print_exception=False)
                 performance_settings.model_recommendations.save_override(
                     checkpoint,
                     dict(
@@ -3174,8 +3203,26 @@ with shared.gradio_root as block:
             )
 
             def reset_checkpoint_override(checkpoint, family):
+                if not (checkpoint or "").strip():
+                    raise gr.Error("Select an image model first.", print_exception=False)
                 performance_settings.model_recommendations.reset_override(checkpoint)
                 return performance_settings.MODEL_PERFORMANCE
+
+            base_model.change(
+                lambda checkpoint: tuple(
+                    gr.update(interactive=bool((checkpoint or "").strip())) for _ in range(4)
+                ),
+                inputs=base_model,
+                outputs=[
+                    recommendation_use,
+                    recommendation_save,
+                    recommendation_refresh,
+                    recommendation_reset,
+                ],
+                queue=False,
+                show_progress="hidden",
+                api_visibility="private",
+            )
 
             recommendation_reset.click(
                 reset_checkpoint_override,
@@ -3633,7 +3680,7 @@ with shared.gradio_root as block:
         try:
             defaults = generation_defaults(dict(zip(default_controls, values)))
         except ValueError as error:
-            raise gr.Error(str(error)) from error
+            raise gr.Error(str(error), print_exception=False) from error
         shared.settings.default_settings.update(defaults)
         shared.settings.save_settings()
         gr.Info("Saved generation defaults to this profile for the next launch.")

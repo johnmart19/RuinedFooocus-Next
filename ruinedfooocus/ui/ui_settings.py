@@ -104,7 +104,7 @@ def save_clicked(*args, save_as=False, profile=..., base=None, return_snapshot=F
 
         settings.save_profile(new_settings, new_paths, profile=target, on_publish=publish_paths)
     except (ValueError, OSError) as error:
-        raise gr.Error(str(error)) from error
+        raise gr.Error(str(error), print_exception=False) from error
     from ruinedfooocus.app.arguments import args as launch_args
     import os
 
@@ -137,7 +137,7 @@ def use_next_launch_clicked(name):
     try:
         use_next_launch(name)
     except (ValueError, OSError) as error:
-        raise gr.Error(str(error)) from error
+        raise gr.Error(str(error), print_exception=False) from error
     return f"Next launch: {profile_name(name) or 'default'}. An explicit --settings remains authoritative."
 
 
@@ -282,7 +282,15 @@ def create_settings(*, models_in_settings=True):
                             label=t("Gradio theme ID"), placeholder="author/theme"
                         )
                         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-                            download_theme = gr.Button(t("Download theme"))
+                            download_theme = gr.Button(t("Download theme"), interactive=False)
+                        custom_theme.change(
+                            lambda value: gr.update(interactive=bool((value or "").strip())),
+                            inputs=custom_theme,
+                            outputs=download_theme,
+                            queue=False,
+                            show_progress="hidden",
+                            api_visibility="private",
+                        )
 
                     with gr.Accordion(t("Advanced display settings"), open=False):
                         update_interval = gr.Number(
@@ -310,13 +318,18 @@ def create_settings(*, models_in_settings=True):
                         from ruinedfooocus.app.arguments import args as launch_args
                         from ruinedfooocus.ui.themes import acquire_theme
 
+                        if not (value or "").strip():
+                            raise gr.Error(
+                                "Enter a Gradio theme ID (for example, author/theme) first.",
+                                print_exception=False,
+                            )
                         try:
                             value = acquire_theme(
                                 value,
                                 offline=launch_args.offline or os.environ.get("RF_OFFLINE") == "1",
                             )
                         except Exception as error:
-                            raise gr.Error(str(error)) from error
+                            raise gr.Error(str(error), print_exception=False) from error
                         return gr.update(choices=theme_choices(value), value=theme_id(value)), t(
                             "Theme cached and selected. Save to keep it."
                         )
@@ -999,8 +1012,18 @@ def create_settings(*, models_in_settings=True):
             )
             add_setting("ui_settings_name", ui_settings_name)
             save_btn = gr.Button(t("Save"), variant="primary", elem_id="settings-save")
-            save_as_btn = gr.Button(t("Save as profile"))
+            save_as_btn = gr.Button(
+                t("Save as profile"), interactive=bool((settings.name or "").strip())
+            )
             next_launch_btn = gr.Button(t("Use next launch"))
+        ui_settings_name.change(
+            lambda name: gr.update(interactive=bool((name or "").strip())),
+            inputs=ui_settings_name,
+            outputs=save_as_btn,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="private",
+        )
 
         setting_controls = state["setting_obj"]
         with profile_area:

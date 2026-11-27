@@ -187,14 +187,30 @@ def create_ui(settings):
     summary.value = initial_updates[0]["value"]
     for checkbox, update in zip(checkboxes, initial_updates[1:]):
         checkbox.value = update["value"]
+    def _has_clearable_styles(values):
+        return any(
+            name not in NEURAL_PROCESSORS and name != "LoRA keywords"
+            for name in normalize_selection(values)
+        )
+
     random_style = gr.Checkbox(
         label=translate_ui("Pick a random visual style per image"),
         value="Style: Pick Random" in initial,
     )
     bind_subset(selection, random_style, ("Style: Pick Random",))
     with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-        clear = gr.Button(translate_ui("Clear styles"), size="sm")
+        clear = gr.Button(
+            translate_ui("Clear styles"), size="sm", interactive=_has_clearable_styles(initial)
+        )
         preview = gr.Button(translate_ui("Preview styles"), size="sm")
+    selection.change(
+        lambda values: gr.update(interactive=_has_clearable_styles(values)),
+        inputs=selection,
+        outputs=clear,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="private",
+    )
     clear.click(
         lambda values: [
             name
@@ -301,10 +317,13 @@ def bind_actions(controls, prompt, negative, keywords):
 
     def publish_bake(current, negative, selected, words, pending):
         if pending is None:
-            raise gr.Error("Preview styles before baking.")
+            raise gr.Error("Preview styles before baking.", print_exception=False)
         record = pending[3]
         if (current, negative, selected, words) != (record[0], record[1], record[2], record[6]):
-            raise gr.Error("The prompt or styles changed. Bake again for the current draft.")
+            raise gr.Error(
+                "The prompt or styles changed. Bake again for the current draft.",
+                print_exception=False,
+            )
         return pending
 
     def undo(current, negative, selected, record):
@@ -312,7 +331,8 @@ def bind_actions(controls, prompt, negative, keywords):
             return gr.skip(), gr.skip(), gr.skip(), None, gr.update(interactive=False)
         if (current, negative, selected) != (record[3], record[4], record[5]):
             raise gr.Error(
-                "The prompt or styles changed after baking. Undo would overwrite your edits."
+                "The prompt or styles changed after baking. Undo would overwrite your edits.",
+                print_exception=False,
             )
         return record[0], record[1], record[2], None, gr.update(interactive=False)
 

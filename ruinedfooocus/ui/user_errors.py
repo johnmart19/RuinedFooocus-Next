@@ -17,7 +17,10 @@ USER_ERRORS = (ValueError, PermissionError, FileNotFoundError)
 
 
 def _user_error(error):
-    return gr.Error(str(error) or "This action could not be completed.")
+    return gr.Error(
+        str(error) or "This action could not be completed.",
+        print_exception=False,
+    )
 
 
 def as_user_errors(fn):

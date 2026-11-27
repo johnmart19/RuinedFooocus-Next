@@ -139,8 +139,12 @@ def add_evolve_controls(
         count = gr.Slider(
             1, 9, value=9, step=1, label=translate_ui("Candidate count (including parent)")
         )
+        has_initial_prompt = bool((prompt.value or "").strip())
         preview_button = gr.Button(
-            translate_ui("Preview variations"), variant="primary", size="sm"
+            translate_ui("Preview variations"),
+            variant="primary",
+            size="sm",
+            interactive=has_initial_prompt,
         )
         selected = gr.Dropdown(choices=[], label=translate_ui("Candidate index"), interactive=True)
         preview = gr.Textbox(
@@ -150,11 +154,16 @@ def add_evolve_controls(
             elem_classes=["rf-readonly-box"],
         )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
-            apply_button = gr.Button(translate_ui("Apply candidate to prompt"), size="sm")
-            undo_button = gr.Button(translate_ui("Undo prompt change"), size="sm")
+            apply_button = gr.Button(
+                translate_ui("Apply candidate to prompt"), size="sm", interactive=False
+            )
+            undo_button = gr.Button(
+                translate_ui("Undo prompt change"), size="sm", interactive=False
+            )
         generate = gr.Button(
             translate_ui("Generate reviewed candidates"),
             size="sm",
+            interactive=False,
             visible=run_event is not None and image_number is not None,
         )
         with gr.Accordion(translate_ui("Parent selection"), open=False):
@@ -166,10 +175,12 @@ def add_evolve_controls(
             )
             with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"]):
                 load_parents = gr.Button(
-                    translate_ui("Use current prompts as parents"), size="sm"
+                    translate_ui("Use current prompts as parents"),
+                    size="sm",
+                    interactive=has_initial_prompt,
                 )
                 use_candidates = gr.Button(
-                    translate_ui("Use preview as parents"), size="sm"
+                    translate_ui("Use preview as parents"), size="sm", interactive=False
                 )
             original = gr.Textbox(
                 label=translate_ui("Original prompt (preserved)"),
@@ -183,13 +194,15 @@ def add_evolve_controls(
                 interactive=False,
                 elem_classes=["rf-readonly-box"],
             )
-            copy_parent = gr.Button(translate_ui("Copy selected parent to prompt"), size="sm")
+            copy_parent = gr.Button(
+                translate_ui("Copy selected parent to prompt"), size="sm", interactive=False
+            )
 
         def checked(operation, *args, **kwargs):
             try:
                 return operation(*args, **kwargs)
             except ValueError as error:
-                raise gr.Error(str(error)) from error
+                raise gr.Error(str(error), print_exception=False) from error
 
         def load(text):
             session = checked(new_session, text)
@@ -197,7 +210,9 @@ def add_evolve_controls(
 
         def parents(current, session):
             if not session or current != session["source"] or not session["variants"]:
-                raise gr.Error("Preview variations for the current prompt first.")
+                raise gr.Error(
+                    "Preview variations for the current prompt first.", print_exception=False
+                )
             session = {**session, "parents": list(session["variants"]), "parent": 0, "variants": []}
             return session, 0, session["parents"][0], gr.update(choices=[], value=None), ""
 
@@ -230,13 +245,53 @@ def add_evolve_controls(
 
         def apply(current, session, index, parent_only=False):
             if not session:
-                raise gr.Error("Preview or load parent prompts first.")
+                raise gr.Error("Preview or load parent prompts first.", print_exception=False)
             values = session["parents"] if parent_only else session["variants"]
             proposed = checked(select_variant, values, index)
             return checked(apply_preview, current, session["source"], proposed)
 
         def undo(current, saved):
             return checked(undo_preview, current, saved), None
+
+        def sync_evolve_buttons(current, session):
+            has_prompt = bool((current or "").strip())
+            has_parents = bool(session and session.get("parents"))
+            has_variants = bool(
+                session and session.get("variants") and current == session.get("source")
+            )
+            return (
+                gr.update(interactive=has_prompt),
+                gr.update(interactive=has_prompt),
+                gr.update(interactive=has_variants),
+                gr.update(interactive=has_variants),
+                gr.update(interactive=has_parents),
+                gr.update(interactive=has_variants),
+            )
+
+        gr.on(
+            triggers=[prompt.change, state.change],
+            fn=sync_evolve_buttons,
+            inputs=[prompt, state],
+            outputs=[
+                preview_button,
+                load_parents,
+                apply_button,
+                use_candidates,
+                copy_parent,
+                generate,
+            ],
+            queue=False,
+            show_progress="hidden",
+            api_visibility="private",
+        )
+        previous.change(
+            lambda saved: gr.update(interactive=saved is not None),
+            inputs=previous,
+            outputs=undo_button,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="private",
+        )
 
         load_parents.click(
             load,

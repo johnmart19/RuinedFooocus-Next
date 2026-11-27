@@ -34,6 +34,38 @@ def _char_count_markdown(text):
     return f"*{count:,} characters*" if count else ""
 
 
+def _is_placeholder_path(image):
+    if not isinstance(image, (str, Path)):
+        return False
+    text = str(image).strip()
+    if not text:
+        return True
+    try:
+        path = Path(text)
+        placeholder = asset_path("init_image.png")
+        return path.resolve() == placeholder.resolve() or (
+            path.is_file()
+            and placeholder.is_file()
+            and path.stat().st_size == placeholder.stat().st_size
+            and hashlib.sha256(path.read_bytes()).digest()
+            == hashlib.sha256(placeholder.read_bytes()).digest()
+        )
+    except OSError:
+        return False
+
+
+def _has_describable_image(image, input_image=None, selected_kind=None, direct_upload=None):
+    if direct_upload is not None:
+        return True
+    if selected_kind == "input":
+        return input_image is not None
+    if isinstance(image, Image.Image):
+        return True
+    if isinstance(image, (str, Path)):
+        return bool(str(image).strip()) and not _is_placeholder_path(image)
+    return False
+
+
 def describe_image(
     current,
     image,
@@ -51,24 +83,18 @@ def describe_image(
     from ruinedfooocus.features.image_processing.interrogate import looks, queued_caption
 
     if not isinstance(image, (str, Path, Image.Image)):
-        raise gr.Error("Choose or upload an image to describe.")
+        raise gr.Error("Choose or upload an image to describe.", print_exception=False)
     record = None
     if isinstance(image, Image.Image):
         from ruinedfooocus.features.image_processing.native_image_formats import MAX_PIXELS
 
         if getattr(image, "n_frames", 1) != 1 or not 0 < image.width * image.height <= MAX_PIXELS:
-            raise gr.Error("Choose a single still image to describe.")
+            raise gr.Error("Choose a single still image to describe.", print_exception=False)
         pixels = ImageOps.exif_transpose(image).copy()
     else:
         path = Path(image)
-        placeholder = asset_path("init_image.png")
-        if path.resolve() == placeholder.resolve() or (
-            path.is_file()
-            and path.stat().st_size == placeholder.stat().st_size
-            and hashlib.sha256(path.read_bytes()).digest()
-            == hashlib.sha256(placeholder.read_bytes()).digest()
-        ):
-            raise gr.Error("Choose or upload an image to describe.")
+        if _is_placeholder_path(path):
+            raise gr.Error("Choose or upload an image to describe.", print_exception=False)
     if native_source is not None and not isinstance(image, Image.Image):
         from ruinedfooocus.features.image_processing.native_image_outputs import (
             capture_original_source,
@@ -76,14 +102,14 @@ def describe_image(
 
         captured = capture_original_source(dict(main_view=image, _native_main_source=native_source))
         if isinstance(captured.get("main_view"), (str, Path)):
-            raise gr.Error("The original image changed. Select it again.")
+            raise gr.Error("The original image changed. Select it again.", print_exception=False)
         record, pixels = native_source, captured["main_view"].copy()
     elif not isinstance(image, Image.Image):
         record = source_record(path)
         pixels, _ = working_source(record)
     kind = engine or settings.default_settings.get("interrogator", "florence")
     if kind not in looks:
-        raise gr.Error("Choose an image description engine in Settings.")
+        raise gr.Error("Choose an image description engine in Settings.", print_exception=False)
     extra_kwargs = {}
     if style is not None:
         extra_kwargs["style"] = style
@@ -97,7 +123,9 @@ def describe_image(
     if record is not None:
         source_path(record)
     if not isinstance(description, str) or not description.strip():
-        raise gr.Error("The image description was empty. Your prompt is unchanged.")
+        raise gr.Error(
+            "The image description was empty. Your prompt is unchanged.", print_exception=False
+        )
     return description, (current, description), gr.update(interactive=True)
 
 
@@ -189,11 +217,18 @@ def add_describe_controls(
                 elem_classes=["rf-chips"],
                 elem_id=f"{id_prefix}-vision-detail",
             )
+        initial_has_image = _has_describable_image(
+            getattr(image_source, "value", None),
+            getattr(input_source, "value", None) if input_source is not None else None,
+            getattr(source_kind, "value", None) if source_kind is not None else None,
+            getattr(describe_upload, "value", None) if describe_upload is not None else None,
+        )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
             describe = gr.Button(
                 translate_ui("Generate prompt"),
                 variant="primary",
                 size="sm",
+                interactive=initial_has_image,
                 elem_id=f"{id_prefix}-generate-prompt",
             )
             append_btn = gr.Button(
@@ -221,8 +256,15 @@ def add_describe_controls(
                 elem_id=f"{id_prefix}-generate-image",
             )
     else:
+        initial_has_image = _has_describable_image(
+            getattr(image_source, "value", None),
+            getattr(input_source, "value", None) if input_source is not None else None,
+            getattr(source_kind, "value", None) if source_kind is not None else None,
+        )
         with gr.Row(elem_classes=["rf-actions", "rf-actions-compact"], equal_height=True):
-            describe = gr.Button(translate_ui("Describe image"), size="sm")
+            describe = gr.Button(
+                translate_ui("Describe image"), size="sm", interactive=initial_has_image
+            )
             undo = gr.Button(translate_ui("Undo description"), size="sm", interactive=False)
 
     inputs = [prompt, image_source] + ([native_source] if native_source is not None else [])
@@ -311,11 +353,36 @@ def add_describe_controls(
             api_visibility="private",
         )
 
+    describe_sync_inputs = [image_source]
+    if input_source is not None:
+        describe_sync_inputs.append(input_source)
+    if source_kind is not None:
+        describe_sync_inputs.append(source_kind)
+    if describe_upload is not None:
+        describe_sync_inputs.append(describe_upload)
+
+    def sync_describe_button(image, *rest):
+        values = iter(rest)
+        uploaded = next(values) if input_source is not None else None
+        selected = next(values) if source_kind is not None else None
+        direct = next(values) if describe_upload is not None else None
+        return gr.update(interactive=_has_describable_image(image, uploaded, selected, direct))
+
+    gr.on(
+        triggers=[component.change for component in describe_sync_inputs],
+        fn=sync_describe_button,
+        inputs=describe_sync_inputs,
+        outputs=describe,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="private",
+    )
+
     def undo_description(current, saved):
         try:
             return undo_preview(current, saved), None, gr.update(interactive=False)
         except ValueError as error:
-            raise gr.Error(str(error)) from error
+            raise gr.Error(str(error), print_exception=False) from error
 
     fence_event(
         undo.click,
@@ -364,7 +431,7 @@ def add_describe_controls(
         def append_generated_prompt(current, generated):
             addition = (generated or "").strip()
             if not addition:
-                raise gr.Error("Generate a prompt first.")
+                raise gr.Error("Generate a prompt first.", print_exception=False)
             base = (current or "").strip()
             combined = f"{base}, {addition}" if base else addition
             return combined, (current, combined), gr.update(interactive=True)
@@ -383,7 +450,7 @@ def add_describe_controls(
             def apply_and_generate(current, generated, counter):
                 text = (generated or "").strip() or (current or "").strip()
                 if not text:
-                    raise gr.Error("Generate or enter a prompt first.")
+                    raise gr.Error("Generate or enter a prompt first.", print_exception=False)
                 if tool_selection is not None:
                     return text, "None", (counter or 0) + 1
                 return text, (counter or 0) + 1

@@ -96,8 +96,16 @@ def create_chat_prompt_action(prompt, *, owner_for_request, context_inputs=()):
         with gr.Row(elem_classes=["rf-prompt-actions"], equal_height=True):
             apply = gr.Button(translate_ui("Apply result"))
             dismiss = gr.Button(translate_ui("Dismiss result"))
-    undo = gr.Button(translate_ui("Undo"), size="sm")
+    undo = gr.Button(translate_ui("Undo"), size="sm", interactive=False)
     outputs = [prompt, previous, proposed, pending, ticket]
+    previous.change(
+        lambda saved: gr.update(interactive=saved is not None),
+        inputs=previous,
+        outputs=undo,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="private",
+    )
 
     def validate(result, policy, request):
         if (
@@ -105,10 +113,12 @@ def create_chat_prompt_action(prompt, *, owner_for_request, context_inputs=()):
             or policy.owner != owner_for_request(request)
             or not policy.update_create_prompt
         ):
-            raise gr.Error("Updating the Create prompt is Off for this turn.")
+            raise gr.Error("Updating the Create prompt is Off for this turn.", print_exception=False)
         policy.check()
         if not isinstance(result, list) or len(result) != 6 or result[5] != policy.turn_id:
-            raise gr.Error("The prompt proposal belongs to a different Chat turn.")
+            raise gr.Error(
+                "The prompt proposal belongs to a different Chat turn.", print_exception=False
+            )
 
     def retain(current, result, policy, *_contexts):
         if result is None:
@@ -192,7 +202,15 @@ def create_prompt_action(prompt, *, advanced=None, options_label=None):
     previous = gr.JSON(None, visible=False)
     with gr.Row(elem_classes=["rf-prompt-actions"], equal_height=True):
         generate = gr.Button(translate_ui("Generate prompt"), variant="primary")
-        undo = gr.Button(translate_ui("Undo"))
+        undo = gr.Button(translate_ui("Undo"), interactive=False)
+    previous.change(
+        lambda saved: gr.update(interactive=saved is not None),
+        inputs=previous,
+        outputs=undo,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="private",
+    )
     with gr.Group(visible=False) as pending:
         gr.Markdown(translate_ui("Your draft changed. Apply this result when ready."))
         proposed = gr.Textbox(label=translate_ui("Pending prompt"), lines=3, interactive=False)
@@ -221,7 +239,7 @@ def create_prompt_action(prompt, *, advanced=None, options_label=None):
         try:
             return undo_preview(current, saved), None
         except ValueError as error:
-            raise gr.Error(str(error)) from error
+            raise gr.Error(str(error), print_exception=False) from error
 
     fence_event(
         undo.click,
@@ -245,14 +263,14 @@ def create_prompt_action(prompt, *, advanced=None, options_label=None):
             *arguments, guard = values
             result = builder(*arguments)
             if not result or not result.strip():
-                raise gr.Error("The generated prompt is empty.")
+                raise gr.Error("The generated prompt is empty.", print_exception=False)
             return [current, version, result, append_mode, guard]
 
         def publish_prompt(current, version, result):
             try:
                 applied = prompt_result(current, version, result)
             except ValueError as error:
-                raise gr.Error(str(error)) from error
+                raise gr.Error(str(error), print_exception=False) from error
             if applied is None:
                 return (
                     gr.skip(),
@@ -268,7 +286,7 @@ def create_prompt_action(prompt, *, advanced=None, options_label=None):
             try:
                 applied = prompt_result(current, version, result, explicit=True)
             except ValueError as error:
-                raise gr.Error(str(error)) from error
+                raise gr.Error(str(error), print_exception=False) from error
             return *applied, "", gr.update(visible=False), None, *(False for _ in clear_controls)
 
         generation_inputs = [prompt, revision, append, *inputs]
