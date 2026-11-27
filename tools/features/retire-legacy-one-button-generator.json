@@ -1,0 +1,8 @@
+{
+  "id": "retire-legacy-one-button-generator",
+  "subject": "Retire the legacy One Button prompt generator module",
+  "requires": ["retire-legacy-web-ui"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
