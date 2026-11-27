@@ -1,0 +1,8 @@
+{
+  "id": "retire-legacy-prompt-expansion",
+  "subject": "Retire the GPT-2 prompt expansion wrapper and its tokenizer files",
+  "requires": ["retire-legacy-prompt-processing"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
