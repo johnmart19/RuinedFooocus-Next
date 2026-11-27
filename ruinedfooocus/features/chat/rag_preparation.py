@@ -39,7 +39,11 @@ class RagModel:
 @lru_cache(maxsize=1)
 def model_specs():
     """Finite bundled manifests only; no discovery, network or model imports."""
-    path = resource_path("rag_embedding_models.json")
+    from ruinedfooocus.core.model_catalogue import manifests_directory
+
+    path = manifests_directory() / "rag_embedding_models.json"
+    if not path.is_file():
+        path = resource_path("rag_embedding_models.json")
     if path.stat().st_size > 64 * 1024:
         raise ValueError("Bundled Chat embedding catalogue is too large.")
     data = json.loads(path.read_text(encoding="utf-8"))

@@ -1,0 +1,93 @@
+{
+  "diffusion_models/anima-preview3-base.safetensors": {
+    "url": "https://huggingface.co/circlestone-labs/Anima/resolve/6e0b2da2112573380abfb6a1435a60a994b254f2/split_files/diffusion_models/anima-preview3-base.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "anima-preview3-base.safetensors",
+    "size": 4182218360,
+    "sha256": "14fffe8ad5116cd73b9a4696f6a89d7e5f6efdd24b2e4785603aa891a9b2295b"
+  },
+  "loras/anima-turbo-lora-v0.2.safetensors": {
+    "url": "https://huggingface.co/circlestone-labs/Anima-Official-LoRAs/resolve/218b5466a07e8a79328dd8b73ff810706d73cb86/anima-turbo-lora-v0.2.safetensors",
+    "path": "path_loras",
+    "filename": "anima-turbo-lora-v0.2.safetensors",
+    "size": 148902616,
+    "sha256": "1b55e40bdb1d0e5a78cb498f245fccfdaae97823265db957d2aabdcf4cd3caf1"
+  },
+  "clip_vision/clip_vision_g.safetensors": {
+    "url": "https://huggingface.co/comfyanonymous/clip_vision_g/resolve/c716ef60d1b516d73b1bf56714bbd4f6214ac91d/clip_vision_g.safetensors",
+    "path": "path_clip_vision",
+    "filename": "clip_vision_g.safetensors",
+    "size": 3689911098,
+    "sha256": "9908329b3ead722a693ea400fab1d7c9ec91d6736fd194a94d20d793457f9c2e"
+  },
+  "loras/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors": {
+    "url": "https://huggingface.co/FireRedTeam/FireRed-Image-Edit-1.0-ComfyUI/resolve/f6823d41fe4f04d085f0bffa2e2505c75466909a/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors",
+    "path": "path_loras",
+    "filename": "FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors",
+    "size": 849542744,
+    "sha256": "dc65fec1f5b92aa160deca7947c637b3e0f6016c1a22f87e1dabba053841cc7a"
+  },
+  "diffusion_models/FireRed-Image-Edit-1.1-transformer.safetensors": {
+    "url": "https://huggingface.co/FireRedTeam/FireRed-Image-Edit-1.1-ComfyUI/resolve/8625b60ec52d4fa0d128d8a6ebc8adba296f8592/FireRed-Image-Edit-1.1-transformer.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "FireRed-Image-Edit-1.1-transformer.safetensors",
+    "size": 40861031488,
+    "sha256": "004b0326de38ffee22f104048d64670cfdf17c6f53a7349d9cd69d089505e219"
+  },
+  "vae/flux2-vae_small.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/2929efe3cdd506c0a430bcfca70a9a8d805cc095/vae/flux2-vae_small.safetensors",
+    "path": "path_vae",
+    "filename": "flux2-vae_small.safetensors",
+    "size": 249521340,
+    "sha256": "d8d52ba036475f5fb07c8b435e176d3d97ebfa82f0d1a1c317f9cc1e25bd013b"
+  },
+  "controlnet/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors": {
+    "url": "https://huggingface.co/alibaba-pai/Qwen-Image-2512-Fun-Controlnet-Union/resolve/c21dcc372f9f52a55a6d4984cb56a0f0ac0807bc/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors",
+    "path": "path_controlnet",
+    "filename": "Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors",
+    "size": 3512432536,
+    "sha256": "0d1ac366efaa27dec070b3a8ebe9a41b5ebc567913dee71ed992e7032f66dc37"
+  },
+  "loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors": {
+    "url": "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/107d238d68b8387e32843d0b4a2e24ceb0d3ad86/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+    "path": "path_loras",
+    "filename": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+    "size": 849608296,
+    "sha256": "22226e8d05d354bb356627d428809f5afd7819399b077238a2b70a82883a904f"
+  },
+  "loras/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors": {
+    "url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors",
+    "path": "path_loras",
+    "filename": "Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors",
+    "size": 849608296,
+    "sha256": "d8132c32e7df906603dd6b072ff2fb0af88ab15ef0f3ac697a2011c8b47bbeb1"
+  },
+  "controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/90cf72c3b0e4b11f9a0037727459dbdd03ae029b/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors",
+    "path": "path_controlnet",
+    "filename": "Qwen-Image-InstantX-ControlNet-Inpainting.safetensors",
+    "size": 4234599432,
+    "sha256": "49c01aafe6545c1f6e7627a724c8fb13357fe74efee235622158f0a8f30e5458"
+  },
+  "controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/90cf72c3b0e4b11f9a0037727459dbdd03ae029b/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors",
+    "path": "path_controlnet",
+    "filename": "Qwen-Image-InstantX-ControlNet-Union.safetensors",
+    "size": 3536027816,
+    "sha256": "d51dca0073366a675108d5b83c3b7ef941cf2214c9a1c95c23f1e9a228ddbdb0"
+  },
+  "loras/Qwen-Image-Lightning-4steps-V1.0.safetensors": {
+    "url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Lightning-4steps-V1.0.safetensors",
+    "path": "path_loras",
+    "filename": "Qwen-Image-Lightning-4steps-V1.0.safetensors",
+    "size": 1698951104,
+    "sha256": "9526e90d71c4290392feeccf3c2172cb77ab3a489f1faeb956637f97acb4c8b1"
+  },
+  "loras/Qwen-Image-Lightning-8steps-V1.0.safetensors": {
+    "url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Lightning-8steps-V1.0.safetensors",
+    "path": "path_loras",
+    "filename": "Qwen-Image-Lightning-8steps-V1.0.safetensors",
+    "size": 1698951104,
+    "sha256": "07b5a999881437f63124979844ba1949ce2438f65b6220628a196a7d30a4fff9"
+  }
+}

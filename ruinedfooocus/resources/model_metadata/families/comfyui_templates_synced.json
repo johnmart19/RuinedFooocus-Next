@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "comfyui_template:anima_preview3_base_safetensors": {
+      "display_name": "anima preview3 base",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_anima_preview.json).",
+      "source_url": "https://huggingface.co/circlestone-labs/Anima/resolve/6e0b2da2112573380abfb6a1435a60a994b254f2/split_files/diffusion_models/anima-preview3-base.safetensors",
+      "consumers": [
+        "Anima"
+      ],
+      "architecture": "Anima",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:anima_turbo_lora_v0_2_safetensors": {
+      "display_name": "anima turbo lora v0.2",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_anima_lllite_image_inpainting.json).",
+      "source_url": "https://huggingface.co/circlestone-labs/Anima-Official-LoRAs/resolve/218b5466a07e8a79328dd8b73ff810706d73cb86/anima-turbo-lora-v0.2.safetensors",
+      "consumers": [
+        "Anima"
+      ],
+      "architecture": "Anima",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:clip_vision_g_safetensors": {
+      "display_name": "clip vision g",
+      "purpose": "Official ComfyUI v0.46.3 template asset (sdxl_revision_text_prompts.json).",
+      "source_url": "https://huggingface.co/comfyanonymous/clip_vision_g/resolve/c716ef60d1b516d73b1bf56714bbd4f6214ac91d/clip_vision_g.safetensors",
+      "consumers": [
+        "SDXL"
+      ],
+      "architecture": "CLIPVision",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:firered_image_edit_1_0_lightning_8steps_v1_0_safetensors": {
+      "display_name": "FireRed Image Edit 1.0 Lightning 8steps v1.0",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_firered_image_edit1_1.json).",
+      "source_url": "https://huggingface.co/FireRedTeam/FireRed-Image-Edit-1.0-ComfyUI/resolve/f6823d41fe4f04d085f0bffa2e2505c75466909a/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:firered_image_edit_1_1_transformer_safetensors": {
+      "display_name": "FireRed Image Edit 1.1 transformer",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_firered_image_edit1_1.json).",
+      "source_url": "https://huggingface.co/FireRedTeam/FireRed-Image-Edit-1.1-ComfyUI/resolve/8625b60ec52d4fa0d128d8a6ebc8adba296f8592/FireRed-Image-Edit-1.1-transformer.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:flux2_vae_small_safetensors": {
+      "display_name": "flux2 vae small",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_moss_image_t2i_bboxes.json).",
+      "source_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/2929efe3cdd506c0a430bcfca70a9a8d805cc095/vae/flux2-vae_small.safetensors",
+      "consumers": [
+        "Flux2",
+        "MOSSImage"
+      ],
+      "architecture": "Flux2",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:qwen_image_2512_fun_controlnet_union_2602_safetensors": {
+      "display_name": "Qwen Image 2512 Fun Controlnet Union 2602",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_qwen_Image_2512_controlnet.json).",
+      "source_url": "https://huggingface.co/alibaba-pai/Qwen-Image-2512-Fun-Controlnet-Union/resolve/c21dcc372f9f52a55a6d4984cb56a0f0ac0807bc/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:qwen_image_edit_2511_lightning_4steps_v1_0_bf16_safetensors": {
+      "display_name": "Qwen Image Edit 2511 Lightning 4steps V1.0 bf16",
+      "purpose": "Official ComfyUI v0.46.3 template asset (templates-1_click_multiple_character_angles-v1.0.json).",
+      "source_url": "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/107d238d68b8387e32843d0b4a2e24ceb0d3ad86/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:qwen_image_edit_lightning_4steps_v1_0_bf16_safetensors": {
+      "display_name": "Qwen Image Edit Lightning 4steps V1.0 bf16",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_qwen_image_edit.json).",
+      "source_url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:qwen_image_instantx_controlnet_inpainting_safetensors": {
+      "display_name": "Qwen Image InstantX ControlNet Inpainting",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_qwen_image_instantx_inpainting_controlnet.json).",
+      "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/90cf72c3b0e4b11f9a0037727459dbdd03ae029b/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:qwen_image_instantx_controlnet_union_safetensors": {
+      "display_name": "Qwen Image InstantX ControlNet Union",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_qwen_image_instantx_controlnet.json).",
+      "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/90cf72c3b0e4b11f9a0037727459dbdd03ae029b/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:qwen_image_lightning_4steps_v1_0_safetensors": {
+      "display_name": "Qwen Image Lightning 4steps V1.0",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_qwen_image_union_control_lora.json).",
+      "source_url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Lightning-4steps-V1.0.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    },
+    "comfyui_template:qwen_image_lightning_8steps_v1_0_safetensors": {
+      "display_name": "Qwen Image Lightning 8steps V1.0",
+      "purpose": "Official ComfyUI v0.46.3 template asset (image_qwen_image.json).",
+      "source_url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Lightning-8steps-V1.0.safetensors",
+      "consumers": [
+        "QwenImage"
+      ],
+      "architecture": "QwenImage",
+      "sources": [
+        "comfyui_workflow_templates_v0_11_118"
+      ]
+    }
+  }
+}

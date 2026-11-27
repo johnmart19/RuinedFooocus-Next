@@ -3252,6 +3252,149 @@
         "sources",
         "hardware_notes"
       ]
+    },
+    "comfyui_template:anima_preview3_base_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:anima_turbo_lora_v0_2_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:clip_vision_g_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:firered_image_edit_1_0_lightning_8steps_v1_0_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:firered_image_edit_1_1_transformer_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:flux2_vae_small_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:qwen_image_2512_fun_controlnet_union_2602_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:qwen_image_edit_2511_lightning_4steps_v1_0_bf16_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:qwen_image_edit_lightning_4steps_v1_0_bf16_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:qwen_image_instantx_controlnet_inpainting_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:qwen_image_instantx_controlnet_union_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:qwen_image_lightning_4steps_v1_0_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
+    },
+    "comfyui_template:qwen_image_lightning_8steps_v1_0_safetensors": {
+      "path": "families/comfyui_templates_synced.json",
+      "keys": [
+        "display_name",
+        "purpose",
+        "source_url",
+        "consumers",
+        "architecture",
+        "sources"
+      ]
     }
   },
   "artifacts": {
@@ -6019,6 +6162,97 @@
       "state": "existing",
       "role": "language_model",
       "profile_id": "curated:internvl3_8b_instruct"
+    },
+    "existing:diffusion_models/anima-preview3-base.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "diffusion_models/anima-preview3-base.safetensors",
+      "state": "existing",
+      "role": "image_diffusion_checkpoint",
+      "profile_id": "comfyui_template:anima_preview3_base_safetensors"
+    },
+    "existing:loras/anima-turbo-lora-v0.2.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "loras/anima-turbo-lora-v0.2.safetensors",
+      "state": "existing",
+      "role": "acceleration_lora",
+      "profile_id": "comfyui_template:anima_turbo_lora_v0_2_safetensors"
+    },
+    "existing:clip_vision/clip_vision_g.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "clip_vision/clip_vision_g.safetensors",
+      "state": "existing",
+      "role": "conditioning_adapter",
+      "profile_id": "comfyui_template:clip_vision_g_safetensors"
+    },
+    "existing:loras/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "loras/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors",
+      "state": "existing",
+      "role": "acceleration_lora",
+      "profile_id": "comfyui_template:firered_image_edit_1_0_lightning_8steps_v1_0_safetensors"
+    },
+    "existing:diffusion_models/FireRed-Image-Edit-1.1-transformer.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "diffusion_models/FireRed-Image-Edit-1.1-transformer.safetensors",
+      "state": "existing",
+      "role": "image_diffusion_checkpoint",
+      "profile_id": "comfyui_template:firered_image_edit_1_1_transformer_safetensors"
+    },
+    "existing:vae/flux2-vae_small.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "vae/flux2-vae_small.safetensors",
+      "state": "existing",
+      "role": "latent_autoencoder",
+      "profile_id": "comfyui_template:flux2_vae_small_safetensors"
+    },
+    "existing:controlnet/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "controlnet/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors",
+      "state": "existing",
+      "role": "control_conditioning",
+      "profile_id": "comfyui_template:qwen_image_2512_fun_controlnet_union_2602_safetensors"
+    },
+    "existing:loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "state": "existing",
+      "role": "acceleration_lora",
+      "profile_id": "comfyui_template:qwen_image_edit_2511_lightning_4steps_v1_0_bf16_safetensors"
+    },
+    "existing:loras/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "loras/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors",
+      "state": "existing",
+      "role": "acceleration_lora",
+      "profile_id": "comfyui_template:qwen_image_edit_lightning_4steps_v1_0_bf16_safetensors"
+    },
+    "existing:controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors",
+      "state": "existing",
+      "role": "control_conditioning",
+      "profile_id": "comfyui_template:qwen_image_instantx_controlnet_inpainting_safetensors"
+    },
+    "existing:controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors",
+      "state": "existing",
+      "role": "control_conditioning",
+      "profile_id": "comfyui_template:qwen_image_instantx_controlnet_union_safetensors"
+    },
+    "existing:loras/Qwen-Image-Lightning-4steps-V1.0.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "loras/Qwen-Image-Lightning-4steps-V1.0.safetensors",
+      "state": "existing",
+      "role": "acceleration_lora",
+      "profile_id": "comfyui_template:qwen_image_lightning_4steps_v1_0_safetensors"
+    },
+    "existing:loras/Qwen-Image-Lightning-8steps-V1.0.safetensors": {
+      "path": "artifacts/comfyui_templates_synced.json",
+      "catalogue_key": "loras/Qwen-Image-Lightning-8steps-V1.0.safetensors",
+      "state": "existing",
+      "role": "acceleration_lora",
+      "profile_id": "comfyui_template:qwen_image_lightning_8steps_v1_0_safetensors"
     }
   },
   "qualification": {
@@ -6891,6 +7125,14 @@
     },
     "qualification/auxiliary_dat_4x_pth.json": {
       "sha256": "e2b441dc2b00bedd1634f8f2cb33e86a75226b8efb8be9b462a3aebfe6f8f0e0"
+    },
+    "artifacts/comfyui_templates_synced.json": {
+      "kind": "artifacts",
+      "sha256": "d6c54893e28e02e20a5a1b85cd220eb6259f25a95b425ac7d3b8d80609600e64"
+    },
+    "families/comfyui_templates_synced.json": {
+      "kind": "profiles",
+      "sha256": "9b906482f1e4b12a70b0f878b9307a050e0a64385e1173363d73c4f13895a13a"
     }
   },
   "benchmark_order": [
@@ -7057,7 +7299,7 @@
       ]
     }
   ],
-  "source_document_sha256": "fc83ec789a82376ba36c968561c004fa5c167a7f98e912f6aadcadbcad5d9979",
+  "source_document_sha256": "8baafe37bbbe119259fd035a305b46b8cfd37d274292a9a6368997d4e4dfd09c",
   "migration_baseline": {
     "profiles": [
       "language:qwen3_1_7b",
@@ -7867,5 +8109,5 @@
       "download_identities_sha256": "c2d454cd743cf7f338506a70d4d4230fdcde0b3324ebd73c4c571730d5f77455"
     }
   },
-  "download_identities_sha256": "618e55559ed8c5cf16e345060e67f0dc0297b651749f7676dee6f8f0c7ccf4fd"
+  "download_identities_sha256": "cd95b873b0f0c7f6a04003a934b2bce3a76285b4f362131fc534daf01a0e5d39"
 }

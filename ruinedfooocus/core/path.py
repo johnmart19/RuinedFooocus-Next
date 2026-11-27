@@ -120,20 +120,11 @@ class PathManager:
             self.model_paths["upscaler_path"], extensions=NATIVE_STATE_DICT_SUFFIXES
         )
 
-        pathdb_folder = resource_path("model_catalogue")
-        files = os.listdir(pathdb_folder)
-        for file in files:
-            # Check if the file has a .json extension
-            if file.endswith(".json"):
-                file_path = os.path.join(pathdb_folder, file)
+        from ruinedfooocus.core.model_catalogue import load_catalogue
 
-                try:
-                    # Open and read the JSON file
-                    with open(file_path, "r") as json_file:
-                        data = json.load(json_file)
-                        self.DOWNLOADABLE_FILES.update(data)
-                except Exception as e:
-                    print(f"Error reading {file}: {e}")
+        entries, provenance = load_catalogue()
+        self.DOWNLOADABLE_FILES.update(entries)
+        self.CATALOGUE_SOURCES = provenance
 
     def set_settings_path(self, subfolder=None):
         from ruinedfooocus.core.profile_store import ensure_profile_folder, profile_name
