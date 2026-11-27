@@ -171,6 +171,7 @@ class pipeline:
         keys = (
             "llm_runtime",
             "llama_backend",
+            "xllamacpp_backend",
             "cpu_everywhere",
             "llama_server_args",
             "llama_moe_cache_cpu_share_enabled",
@@ -507,17 +508,16 @@ class pipeline:
                 params = xlc.CommonParams()
                 params.prompt = ""
                 params.model.path = str(llm_path)
-                if projector:
-                    params.mmproj.path = str(projector)
-                predict = load_settings.get("llm_n_predict", -1)
-                params.n_predict = int(-1 if predict is None else predict)
-                params.n_ctx = int(load_settings.get("llm_n_ctx", 8192))
-                from ruinedfooocus.backends.llama.runtime_policy import configure_xllamacpp_offload
+                from ruinedfooocus.backends.llama.runtime_policy import configure_xllamacpp_params
 
-                configure_xllamacpp_offload(params, load_settings, cpu=cpu_offload)
-                params.ctx_shift = True
-                params.endpoint_metrics = False
-                params.use_jinja = True
+                configure_xllamacpp_params(
+                    params,
+                    load_settings,
+                    engine=xlc,
+                    cpu=cpu_offload,
+                    projector=projector,
+                    native_defaults=load_profile.native_defaults,
+                )
                 configure_embedded_profile(params, load_profile)
 
                 self.llm = xlc.Server(params)
@@ -596,6 +596,10 @@ class pipeline:
             "requested": {
                 "context": load_settings.get("llm_n_ctx", 8192),
                 "gpu_layers": load_settings.get("llm_n_gpu_layers", -1),
+                "flash_attn": load_settings.get("llm_flash_attn", "Auto"),
+                "kv_cache_type": load_settings.get("llm_kv_cache_type", "Auto"),
+                "batch_size": load_settings.get("llm_batch_size", 0),
+                "mmap": load_settings.get("llm_mmap", "Auto"),
             },
             "effective": {},
             "placement": parse_startup(""),
