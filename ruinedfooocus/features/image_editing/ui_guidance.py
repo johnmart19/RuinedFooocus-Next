@@ -246,6 +246,7 @@ def create_ui(
     kind_for=None,
 ):
     import ruinedfooocus.app.state as shared
+    from ruinedfooocus.features.image_processing.image_composition import handles
     from ruinedfooocus.features.image_processing.still_image_utilities import KINDS
 
     defaults = shared.settings.default_settings
@@ -256,13 +257,18 @@ def create_ui(
     )
 
     def generation_active(selection=None, kind=None):
-        return not tool_inputs or str(kind_for(selection, kind) or "").lower() not in (
+        if not tool_inputs:
+            return True
+        resolved = str(kind_for(selection, kind) or "").lower()
+        return not handles(resolved) and resolved not in (
             "upscale",
             "rembg",
             "detect",
             "segment",
             "depth-map",
             "restore-seedvr2",
+            "latent-compose",
+            "image-to-prompt",
             *KINDS,
         )
 

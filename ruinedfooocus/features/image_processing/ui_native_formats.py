@@ -85,6 +85,8 @@ def export_selection(record, kind, depth, color, crf, cache):
         write_image,
     )
 
+    if not record:
+        raise gr.Error(t("Select an image in the gallery before exporting."))
     try:
         source = source_path(record)
         imported = read_export_source(source)
@@ -131,9 +133,21 @@ def create_library_ui(selected, manager):
         upload = gr.File(
             label=t("Original still image"), file_types=[".png", ".exr", ".avif"], type="filepath"
         )
-        import_button = gr.Button(t("Import original copy"))
+        import_button = gr.Button(t("Import original copy"), interactive=False)
         status = gr.Markdown()
         imported = gr.File(visible=False)
+
+    def import_button_state(path):
+        return gr.update(interactive=bool(path))
+
+    upload.change(
+        import_button_state,
+        inputs=upload,
+        outputs=import_button,
+        queue=False,
+        show_progress="hidden",
+        api_visibility="undocumented",
+    )
     export.click(
         lambda record, *values: gr.update(
             value=export_selection(record, *values, cache), visible=True

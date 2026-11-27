@@ -185,9 +185,15 @@ def create_ui(selection, control_type, input_image, model_refresh, kind_for):
                 height="clamp(10rem, 26dvh, 20rem)",
             )
             with gr.Row():
-                undo_point = gr.Button(translate_ui("Undo last point"), size="sm", min_width=120)
+                undo_point = gr.Button(
+                    translate_ui("Undo last point"), size="sm", min_width=120, interactive=False
+                )
                 clear_points = gr.Button(
-                    translate_ui("Clear points"), size="sm", variant="stop", min_width=120
+                    translate_ui("Clear points"),
+                    size="sm",
+                    variant="stop",
+                    min_width=120,
+                    interactive=False,
                 )
             with gr.Row():
                 individual_masks = gr.Checkbox(
@@ -298,16 +304,27 @@ def create_ui(selection, control_type, input_image, model_refresh, kind_for):
         show_progress_on=[],
         **quiet,
     )
-    point_outputs = [positive_points, negative_points, history, point_summary, point_preview]
+    point_outputs = [
+        positive_points,
+        negative_points,
+        history,
+        point_summary,
+        point_preview,
+        undo_point,
+        clear_points,
+    ]
 
     def render(image, positive, negative, order, request):
         marked = preview(image, positive, negative)
+        has_points = bool(parse_points(positive) or parse_points(negative))
         return [
             positive,
             negative,
             order,
             summary(positive, negative, resolve_locale(request=request)),
             gr.update(value=marked, visible=marked is not None),
+            gr.update(interactive=has_points),
+            gr.update(interactive=has_points),
         ]
 
     def add_point(
@@ -395,7 +412,7 @@ def create_ui(selection, control_type, input_image, model_refresh, kind_for):
         triggers=[positive_points.input, negative_points.input],
         fn=edited,
         inputs=[input_image, positive_points, negative_points, history],
-        outputs=[history, point_summary, point_preview],
+        outputs=[history, point_summary, point_preview, undo_point, clear_points],
         **quiet,
     )
     return model

@@ -44,6 +44,7 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
     from ruinedfooocus.app import state as shared
     from ruinedfooocus.features.image_editing.ui_guidance import family_for_checkpoint
     from ruinedfooocus.features.models.image_components import ALIASES, IMAGE_COMPONENTS
+    from ruinedfooocus.features.image_processing.image_composition import handles
     from ruinedfooocus.features.image_processing.still_image_utilities import KINDS
 
     saved = lora_hooks.replay_values(shared.settings.default_settings)
@@ -53,14 +54,22 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
         return ALIASES.get(value, value)
 
     def applicable(current_family, selected, tool):
-        return current_family in IMAGE_COMPONENTS and kind_for(selected, tool) not in (
-            "rembg",
-            "upscale",
-            "detect",
-            "segment",
-            "depth-map",
-            "restore-seedvr2",
-            *KINDS,
+        resolved = kind_for(selected, tool)
+        return (
+            current_family in IMAGE_COMPONENTS
+            and not handles(resolved)
+            and resolved
+            not in (
+                "rembg",
+                "upscale",
+                "detect",
+                "segment",
+                "depth-map",
+                "restore-seedvr2",
+                "latent-compose",
+                "image-to-prompt",
+                *KINDS,
+            )
         )
 
     initial_family = family(base_model.value)
@@ -196,7 +205,21 @@ def create_ui(base_model, selection, tool_type, model_refresh, kind_for):
             selected = getattr(shared, "get_ctrl", lambda _: None)("loras")
             if selected is not None:
                 copy_selected = gr.Button(
-                    t("Copy selected LoRAs into scheduled sources"), size="sm"
+                    t("Copy selected LoRAs into scheduled sources"),
+                    size="sm",
+                    interactive=bool(getattr(selected, "value", None)),
+                )
+
+                def sync_copy_selected(loras):
+                    return gr.update(interactive=bool(loras))
+
+                selected.change(
+                    sync_copy_selected,
+                    inputs=selected,
+                    outputs=copy_selected,
+                    queue=False,
+                    show_progress="hidden",
+                    api_visibility="undocumented",
                 )
 
                 def copy_cards(loras, mode):

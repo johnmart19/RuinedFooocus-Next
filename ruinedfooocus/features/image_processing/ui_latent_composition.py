@@ -74,7 +74,7 @@ def create_ui(selection, control_type, kind_for):
                 "Original uploads and context receipts are required. Re-upload the same two originals and mask to repeat this operation; saved output records their hashes and exact parameters."
             )
         )
-        clear = gr.Button(t("Clear latent composition inputs"), size="sm")
+        clear = gr.Button(t("Clear latent composition inputs"), size="sm", interactive=False)
     controls = dict(zip(composition.INPUTS, (primary, secondary)))
     controls.update(
         latent_composition_mode=mode,
@@ -96,6 +96,18 @@ def create_ui(selection, control_type, kind_for):
         fn=lambda selected, kind: gr.update(visible=composition.handles(kind_for(selected, kind))),
         inputs=[selection, control_type],
         outputs=panel,
+        **quiet,
+    )
+    def clear_button_state(primary_file, secondary_file, mask_image):
+        return gr.update(
+            interactive=any(item is not None for item in (primary_file, secondary_file, mask_image))
+        )
+
+    gr.on(
+        triggers=[primary.change, secondary.change, mask.change],
+        fn=clear_button_state,
+        inputs=[primary, secondary, mask],
+        outputs=clear,
         **quiet,
     )
     clear.click(lambda: (None, None, None), outputs=[primary, secondary, mask], **quiet)

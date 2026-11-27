@@ -44,9 +44,9 @@ def create_ui(selection, tool_type, kind_for):
         )
         selected = gr.State(None)
         with gr.Row():
-            earlier = gr.Button(t("Move selected earlier"), size="sm")
-            later = gr.Button(t("Move selected later"), size="sm")
-            clear = gr.Button(t("Clear image inputs"), size="sm")
+            earlier = gr.Button(t("Move selected earlier"), size="sm", interactive=False)
+            later = gr.Button(t("Move selected later"), size="sm", interactive=False)
+            clear = gr.Button(t("Clear image inputs"), size="sm", interactive=False)
         with gr.Group(visible=kind == "image-grid") as grid:
             gr.Markdown(
                 t(
@@ -147,6 +147,26 @@ def create_ui(selection, tool_type, kind_for):
             gr.update(visible=active == "image-composite"),
         )
 
+    def button_states(images, index, mask=None):
+        count = len(images or [])
+        valid_index = type(index) is int and 0 <= index < count
+        return (
+            gr.update(interactive=valid_index and index > 0),
+            gr.update(interactive=valid_index and index < count - 1),
+            gr.update(interactive=count > 0 or mask is not None),
+        )
+
+    gr.on(
+        triggers=[
+            controls["composition_images"].change,
+            controls["composition_mask"].change,
+            selected.change,
+        ],
+        fn=button_states,
+        inputs=[controls["composition_images"], selected, controls["composition_mask"]],
+        outputs=[earlier, later, clear],
+        **quiet,
+    )
     gr.on(
         triggers=[selection.change, tool_type.change],
         fn=context,

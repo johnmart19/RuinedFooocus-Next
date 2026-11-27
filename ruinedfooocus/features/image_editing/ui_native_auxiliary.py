@@ -128,7 +128,10 @@ def create_ui(base_model, model_refresh, inpaint_toggle):
                 return None
             if isinstance(expected, (list, tuple)) and len(expected) == 4 and expected[0] == name:
                 return expected
-            return list(selected_asset(shared.path_manager, role, name).public_signature)
+            try:
+                return list(selected_asset(shared.path_manager, role, name).public_signature)
+            except (OSError, ValueError) as error:
+                raise gr.Error(str(error)) from None
 
         component.change(fn=identity, inputs=[component, state], outputs=state, **quiet)
 

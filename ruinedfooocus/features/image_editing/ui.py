@@ -135,6 +135,7 @@ def sd4x_output_info(
             "depth-map",
             "restore-seedvr2",
             "latent-compose",
+            "image-to-prompt",
             *DEPTH_UTILITIES,
         )
         and not (upscale_scale != "Off" and upscale_target == "Input image only")
@@ -260,7 +261,6 @@ def powerup_choices(
     qwen_union=False,
     minimax_image=False,
 ):
-    from ruinedfooocus.features.image_processing.image_composition import handles
     from ruinedfooocus.features.image_processing.still_image_utilities import (
         KINDS as DEPTH_UTILITIES,
     )
@@ -270,21 +270,40 @@ def powerup_choices(
         "edit": -1,
         "img2img": 0,
         "qwen-union": 1,
-        "canny": 1,
-        "depth": 2,
-        "sketch": 3,
-        "recolour": 4,
-        "upscale": 5,
-        "rembg": 6,
-        "detect": 7,
-        "segment": 7,
-        "depth-map": 7,
-        "restore-seedvr2": 7,
-        "latent-compose": 7,
+        "control": 1,
+        "canny": 2,
+        "depth": 3,
+        "sketch": 4,
+        "recolour": 5,
+        "upscale": 6,
+        "restore-seedvr2": 6,
+        "rembg": 7,
+        "detect": 8,
+        "segment": 8,
+        "wevisone-detect": 8,
+        "wevisone-matte": 8,
+        "depth-map": 9,
+        "lotus-depth": 9,
+        "moge-depth": 9,
+        "face-landmarks": 9,
+        "pose-map": 9,
+        "marigold-albedo": 9,
+        "image-transform": 10,
+        "image-mask": 10,
+        "image-color": 10,
+        "image-blur": 10,
+        "image-sharpen": 10,
+        "adjust-brightness": 10,
+        "adjust-contrast": 10,
+        "image-curves": 10,
+        "glsl-effect": 10,
+        "image-grid": 11,
+        "image-composite": 11,
+        "latent-compose": 11,
     }
     for name, options in sorted(
         controlnet.cn_options.items(),
-        key=lambda item: (order.get(item[1]["type"], 8), item[0].casefold()),
+        key=lambda item: (order.get(item[1]["type"], 12), item[0].casefold()),
     ):
         if name == "Image to image (preserve details)":
             continue  # Use the image-to-image denoise slider instead of a second preset.
@@ -447,6 +466,20 @@ def add_controlnet_tab(
         cn_save_btn = gr.Button(
             value=t("Save tool preset"),
             visible=False,
+            interactive=False,
+        )
+
+        def save_button_state(name):
+            return gr.update(interactive=bool((name or "").strip()))
+
+        gr.on(
+            triggers=[cn_name.input, cn_name.change],
+            fn=save_button_state,
+            inputs=cn_name,
+            outputs=cn_save_btn,
+            queue=False,
+            show_progress="hidden",
+            api_visibility="undocumented",
         )
 
         type_choices = control_types(initial_features)
@@ -677,8 +710,11 @@ def add_controlnet_tab(
                 return [gr.update(visible=False)] * len(cn_outputs) + updates
             else:
                 return (
-                    [gr.update(value="", visible=True)]
-                    + [gr.update(visible=True)] * (len(cn_outputs) - 1)
+                    [
+                        gr.update(value="", visible=True),
+                        gr.update(visible=True, interactive=False),
+                    ]
+                    + [gr.update(visible=True)] * (len(cn_outputs) - 2)
                     + cn_type_changed(
                         control_type, selection, checkpoint, moss_format, apply_values=apply_values
                     )
@@ -797,54 +833,54 @@ def add_controlnet_tab(
         ):
             if cn_type not in control_types(checkpoint_features(checkpoint, moss_format)):
                 raise gr.Error("This control type is not supported by the selected checkpoint.")
-            if cn_name != "":
-                cn_options = load_cnsettings()
-                opts = {
-                    "type": cn_type.lower(),
-                    "start": cn_start,
-                    "stop": cn_stop,
-                    "strength": cn_strength,
-                    "upscaler": upscale_model,
-                }
-                if cn_type.lower() in (*SDXL_CONTROLS, "control") and selected_control_model:
-                    from ruinedfooocus.features.image_editing.control_candidates import (
-                        selected_control,
-                    )
+            preset_name = (cn_name or "").strip()
+            if not preset_name:
+                raise gr.Error(t("Enter a tool preset name before saving."))
+            cn_options = load_cnsettings()
+            opts = {
+                "type": cn_type.lower(),
+                "start": cn_start,
+                "stop": cn_stop,
+                "strength": cn_strength,
+                "upscaler": upscale_model,
+            }
+            if cn_type.lower() in (*SDXL_CONTROLS, "control") and selected_control_model:
+                from ruinedfooocus.features.image_editing.control_candidates import (
+                    selected_control,
+                )
 
-                    try:
-                        selected_control(
-                            path_manager,
-                            selected_control_model,
-                            family_for_checkpoint(checkpoint),
-                            selected_control_signature,
-                        )
-                    except (ValueError, OSError) as error:
-                        raise gr.Error(str(error)) from None
-                    opts.update(
-                        model=selected_control_model, model_signature=selected_control_signature
+                try:
+                    selected_control(
+                        path_manager,
+                        selected_control_model,
+                        family_for_checkpoint(checkpoint),
+                        selected_control_signature,
                     )
-                if cn_type.lower() == "canny":
-                    opts.update(
-                        {
-                            "edge_low": cn_edge_low,
-                            "edge_high": cn_edge_high,
-                        }
-                    )
-                if cn_type.lower() == "depth":
-                    from ruinedfooocus.features.image_editing.depth_control import (
-                        DEPTH_DEFAULTS,
-                        depth_settings,
-                    )
+                except (ValueError, OSError) as error:
+                    raise gr.Error(str(error)) from None
+                opts.update(
+                    model=selected_control_model, model_signature=selected_control_signature
+                )
+            if cn_type.lower() == "canny":
+                opts.update(
+                    {
+                        "edge_low": cn_edge_low,
+                        "edge_high": cn_edge_high,
+                    }
+                )
+            if cn_type.lower() == "depth":
+                from ruinedfooocus.features.image_editing.depth_control import (
+                    DEPTH_DEFAULTS,
+                    depth_settings,
+                )
 
-                    opts.update(depth_settings(dict(zip(DEPTH_DEFAULTS, depth_values))))
-                if cn_type.lower() == "rembg":
-                    opts["force"] = rembg_force
-                cn_options[cn_name] = opts
-                save_cnsettings(cn_options)
-                choices = powerup_choices(**checkpoint_features(checkpoint, moss_format))
-                return gr.update(choices=choices, value=cn_name)
-            else:
-                return gr.update()
+                opts.update(depth_settings(dict(zip(DEPTH_DEFAULTS, depth_values))))
+            if cn_type.lower() == "rembg":
+                opts["force"] = rembg_force
+            cn_options[preset_name] = opts
+            save_cnsettings(cn_options)
+            choices = powerup_choices(**checkpoint_features(checkpoint, moss_format))
+            return gr.update(choices=choices, value=preset_name)
 
         from ruinedfooocus.features.image_editing.ui_qwen_union import create_ui as create_union_ui
 
@@ -852,8 +888,13 @@ def add_controlnet_tab(
             cn_selection, cn_type, base_model, model_refresh, tool_kind, checkpoint_features
         )
 
-        def source_status_text(selection, image, locale=None):
+        def source_status_text(selection, image, control_type=None, locale=None):
+            from ruinedfooocus.features.image_processing.image_composition import handles
+
             if not selection or selection == "None":
+                return gr.update(value="", visible=False)
+            kind = tool_kind(selection, control_type)
+            if handles(kind) or kind in ("qwen-union", "latent-compose"):
                 return gr.update(value="", visible=False)
             if image is None:
                 return gr.update(
@@ -886,19 +927,19 @@ def add_controlnet_tab(
         )
         add_ctrl("input_image", input_image)
         gr.on(
-            triggers=[cn_selection.change, input_image.change],
-            fn=lambda sel, img, request=None: source_status_text(
-                sel, img, locale=resolve_locale(request=request)
+            triggers=[cn_selection.change, cn_type.change, input_image.change],
+            fn=lambda sel, kind, img, request=None: source_status_text(
+                sel, img, kind, locale=resolve_locale(request=request)
             ),
-            inputs=[cn_selection, input_image],
+            inputs=[cn_selection, cn_type, input_image],
             outputs=[tool_source_status],
             queue=False,
             show_progress="hidden",
             api_visibility="undocumented",
         )
         localized_output(
-            lambda locale, sel, img: source_status_text(sel, img, locale=locale),
-            [cn_selection, input_image],
+            lambda locale, sel, kind, img: source_status_text(sel, img, kind, locale=locale),
+            [cn_selection, cn_type, input_image],
             [tool_source_status],
         )
         from ruinedfooocus.features.image_processing.ui_native_vision import (
@@ -938,7 +979,12 @@ def add_controlnet_tab(
             create_ui as histogram_ui,
         )
 
-        histogram_ui(input_image, tool_selection=cn_selection)
+        histogram_ui(
+            input_image,
+            tool_selection=cn_selection,
+            control_type=cn_type,
+            kind_for=tool_kind,
+        )
         from ruinedfooocus.features.image_processing.ui_image_composition import (
             create_ui as composition_ui,
         )
@@ -1361,9 +1407,10 @@ def add_controlnet_tab(
                 KINDS as DEPTH_UTILITIES,
             )
 
+            kind = tool_kind(selection, control_type)
             active = (
-                not handles(tool_kind(selection, control_type))
-                and tool_kind(selection, control_type)
+                not handles(kind)
+                and kind
                 not in (
                     "upscale",
                     "rembg",
@@ -1372,6 +1419,7 @@ def add_controlnet_tab(
                     "depth-map",
                     "restore-seedvr2",
                     "latent-compose",
+                    "image-to-prompt",
                     *DEPTH_UTILITIES,
                 )
                 and not (scale != "Off" and target == "Input image only")
