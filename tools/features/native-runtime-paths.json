@@ -1,0 +1,8 @@
+{
+  "id": "native-runtime-paths",
+  "subject": "Keep native runtime installations in persistent storage with explicit migration",
+  "requires": ["install-lock"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
