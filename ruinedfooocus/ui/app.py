@@ -610,14 +610,46 @@ def launch_app(args):
             outputs=popular["outputs"],
             **popular["options"],
         )
-        shell.models.select(
-            app_settings.acquisition.refresh_rows,
+        gr.on(
+            triggers=[shell.models.select, app_settings.models_tab.select],
+            fn=app_settings.acquisition.refresh_rows,
             inputs=app_settings.acquisition.refresh_inputs,
             outputs=app_settings.acquisition.refresh_outputs,
             show_progress="hidden",
             queue=False,
             trigger_mode="multiple",
             js=app_settings.acquisition.refresh_js,
+            api_visibility="undocumented",
+        )
+        from ruinedfooocus.core.download_sync import sync_version as _download_sync_version
+
+        chat_sync_seen = gr.State(_download_sync_version())
+
+        def sync_chat_on_open(seen, source, model, quant, session, request: gr.Request = None):
+            current = _download_sync_version()
+            if seen == current:
+                return (gr.skip(),) * (1 + len(app_llama_chat.refresh_browser_outputs))
+            result = app_llama_chat.refresh_model_browser(
+                source, model, quant, session, request=request
+            )
+            if isinstance(result, dict):
+                return (
+                    current,
+                    *(
+                        result.get(control, gr.skip())
+                        for control in app_llama_chat.refresh_browser_outputs
+                    ),
+                )
+            if result is gr.skip():
+                return (current, *(gr.skip() for _ in app_llama_chat.refresh_browser_outputs))
+            return (current, *result)
+
+        shell.chat.select(
+            sync_chat_on_open,
+            inputs=[chat_sync_seen, *app_llama_chat.refresh_browser_inputs],
+            outputs=[chat_sync_seen, *app_llama_chat.refresh_browser_outputs],
+            show_progress="hidden",
+            queue=False,
             api_visibility="undocumented",
         )
         model_catalogue_button.click(

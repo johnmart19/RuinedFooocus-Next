@@ -150,6 +150,39 @@ class PreparationService:
         self._transport = transport or transfer_file
         self._staging_root = Path(staging_root).resolve() if staging_root is not None else None
         self._closed = False
+        self._completion_listeners = []
+
+    def add_completion_listener(self, listener):
+        """Register a callback invoked as ``listener(request, destination, verified_signature)``."""
+        with self._condition:
+            if listener not in self._completion_listeners:
+                self._completion_listeners.append(listener)
+
+    def remove_completion_listener(self, listener):
+        """Remove a previously registered completion listener."""
+        with self._condition:
+            try:
+                self._completion_listeners.remove(listener)
+            except ValueError:
+                pass
+
+    def active_transfers(self):
+        """Nonblocking snapshot of all currently queued or running transfers."""
+        with self._condition:
+            items = []
+            for job in self._jobs.values():
+                received, total, speed = job.progress
+                items.append(
+                    dict(
+                        destination=str(job.request.destination),
+                        url=job.request.url,
+                        state="cancelling" if job.cancelled.is_set() else "running",
+                        received_bytes=received,
+                        total_bytes=total or job.request.expected_size,
+                        speed_bytes=speed,
+                    )
+                )
+            return items
 
     @staticmethod
     def _key(destination):
@@ -381,6 +414,7 @@ class PreparationService:
 
     def _run(self, key, job):
         result = error = None
+        published = False
         try:
             request = job.request
             destination = request.destination
@@ -413,6 +447,7 @@ class PreparationService:
                     try:
                         verify_file(prepared, request, job.cancelled)
                         self._publish(prepared, request, job.cancelled)
+                        published = True
                     finally:
                         # Complete transfers have separate paths from resumable partials.
                         # Remove rejected and published staged files.
@@ -429,6 +464,13 @@ class PreparationService:
             if self._jobs.get(key) is job:
                 self._jobs.pop(key)
             subscribers = list(job.subscribers.values())
+            listeners = tuple(self._completion_listeners) if error is None and published else ()
+        for listener in listeners:
+            try:
+                listener(job.request, result, job.verified_signature)
+            except Exception:
+                # A sync/UI observer cannot fail a completed verified transfer.
+                pass
         for subscriber in subscribers:
             with subscriber._callback_lock:
                 if not subscriber._future.done():
@@ -571,3 +613,7 @@ def transfer_file(request, staging, progress, cancelled):
 
 # No threads are started until the first submission.
 preparation_service = PreparationService()
+
+from ruinedfooocus.core.download_sync import install_default_sync as _install_default_sync
+
+_install_default_sync(preparation_service)

@@ -148,24 +148,33 @@ def load_file_from_url(
 ) -> str:
     """Download a file from `url` into `model_dir`, using the file present if possible.
 
-    Returns the path to the downloaded file.
+    Routes transfers through ``preparation_service`` for atomic staging,
+    single-flight deduplication, offline enforcement, and inventory sync.
     """
-    Path(model_dir).mkdir(parents=True, exist_ok=True)
+    target_dir = Path(model_dir)
+    target_dir.mkdir(parents=True, exist_ok=True)
     if not file_name:
         parts = urlparse(url)
-        file_name = Path(parts.path).stem
+        file_name = Path(parts.path).name or Path(parts.path).stem
 
-    for file in Path(model_dir).glob("**/*"):
-        if file.name == file_name:
-            cached_file = file
-            return str(cached_file)
+    for file in target_dir.glob("**/*"):
+        if file.is_file() and file.name == file_name:
+            return str(file)
 
-    cached_file = Path(model_dir) / file_name
+    cached_file = target_dir / file_name
     if not cached_file.exists():
-        print(f'Downloading: "{url}" to {cached_file}\n')
-        from torch.hub import download_url_to_file
+        from ruinedfooocus.features.models.ui_model_components import offline
 
-        download_url_to_file(url, cached_file, progress=progress)
+        if offline():
+            raise RuntimeError(
+                f"Offline mode: cannot download {file_name}. Place it in {target_dir} or restart online."
+            )
+        from ruinedfooocus.core.preparation import PreparationRequest, preparation_service
+
+        print(f'Downloading: "{url}" to {cached_file}\n')
+        request = PreparationRequest(url, cached_file, model_root=target_dir)
+        prepared = preparation_service.submit(request).result()
+        return str(prepared)
     return str(cached_file)
 
 

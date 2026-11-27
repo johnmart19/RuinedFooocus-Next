@@ -496,9 +496,19 @@ def start_download(entry, manager, *, progress=None, service=None):
         return destination, None
     destination.parent.mkdir(parents=True, exist_ok=True)
     service = preparation_service if service is None else service
+    raw_bytes = entry.get("bytes")
+    expected_size = (
+        int(raw_bytes)
+        if isinstance(raw_bytes, int) and not isinstance(raw_bytes, bool) and raw_bytes > 0
+        else None
+    )
     return destination, service.submit(
         PreparationRequest(
-            entry["url"], destination, sha256=entry["sha256"], model_root=destination.parent
+            entry["url"],
+            destination,
+            expected_size=expected_size,
+            sha256=entry["sha256"],
+            model_root=destination.parent,
         ),
         progress=progress,
     )

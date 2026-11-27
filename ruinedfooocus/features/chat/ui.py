@@ -2831,4 +2831,12 @@ def create_chat(image_controls=None, *, editor_workspace=None, prompt_control=No
     app_llama_chat.select_catalogue_file = select_catalogue_file
     app_llama_chat.catalogue_selection_inputs = [model_session]
     app_llama_chat.catalogue_selection_outputs = [llama_source, model_query, *model_outputs]
+    app_llama_chat.refresh_model_browser = refresh_model_browser
+    app_llama_chat.refresh_browser_inputs = [
+        llama_source,
+        llama_selection,
+        llama_selected_quant,
+        model_session,
+    ]
+    app_llama_chat.refresh_browser_outputs = model_outputs
     return app_llama_chat

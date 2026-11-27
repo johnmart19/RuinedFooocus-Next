@@ -232,6 +232,8 @@ def download_selected(name, overrides, scope, request: gr.Request, progress=gr.P
                     handle.cancel()
             handle.result()
             files.append(row["filename"])
+        if files:
+            shared.models.update_all_models()
         return refresh(
             name,
             choices,

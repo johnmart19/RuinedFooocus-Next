@@ -12,7 +12,8 @@ from ruinedfooocus.features.generation.defaults import STARTUP_DEFAULTS
 def download_default(progress=gr.Progress()):
     if offline():
         raise gr.Error(
-            "Offline mode: add a checkpoint locally or restart online to download the default model."
+            "Offline mode: add a checkpoint locally or restart online to download the default model.",
+            print_exception=False,
         )
     from ruinedfooocus.app import state as shared
 
@@ -25,7 +26,8 @@ def download_default(progress=gr.Progress()):
         shared.path_manager.get_folder_file_path("checkpoints", name, progress=report)
     except (OSError, ValueError, RuntimeError) as error:
         raise gr.Error(
-            f"Could not download the default image model ({name}): {error}"
+            f"Could not download the default image model ({name}): {error}",
+            print_exception=False,
         ) from None
     shared.models.update_all_models()
     return gr.update(

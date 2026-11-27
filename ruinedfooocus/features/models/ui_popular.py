@@ -353,11 +353,12 @@ def create_ui(manager, models):
                 localize(
                     "Offline mode: downloads are disabled. Restart online to download models.",
                     locale,
-                )
+                ),
+                print_exception=False,
             )
         entry = find(rows, key)
         if entry is None:
-            raise gr.Error(localize("Select a model first.", locale))
+            raise gr.Error(localize("Select a model first.", locale), print_exception=False)
         state = {}
         busy = gr.update(interactive=False), gr.update(visible=True)
         idle = gr.update(visible=False)

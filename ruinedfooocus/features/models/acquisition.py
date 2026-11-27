@@ -158,6 +158,7 @@ class Catalogue:
         self._snapshot = None
         self._snapshot_lock = threading.Lock()
         self._snapshot_version = 0
+        self._sync_version = -1
 
     def invalidate(self):
         with self._snapshot_lock:
@@ -317,12 +318,19 @@ class Catalogue:
         include_local=True,
         cancelled=None,
     ):
+        from ruinedfooocus.core.download_sync import sync_version
+
+        current_sync = sync_version()
         with self._snapshot_lock:
+            if self._sync_version != current_sync:
+                self._snapshot = None
+                self._sync_version = current_sync
+                self._snapshot_version += 1
             version, snapshot = self._snapshot_version, self._snapshot
         if snapshot is None:
             scanned = self._scan(cancelled=cancelled)
             with self._snapshot_lock:
-                if version == self._snapshot_version:
+                if version == self._snapshot_version and current_sync == sync_version():
                     if self._snapshot is None:
                         self._snapshot = scanned
                     snapshot = self._snapshot

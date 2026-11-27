@@ -23,7 +23,7 @@ from ruinedfooocus.features.chat.llama_vision import (
 from ruinedfooocus.features.chat.chat_tools import IMAGE_TOOL_GUIDANCE
 from ruinedfooocus.core.util import TimeIt
 from pathlib import Path
-from ruinedfooocus.core.util import url_to_filename, load_file_from_url
+from ruinedfooocus.core.util import url_to_filename
 from ruinedfooocus.app.state import settings
 import json
 import ruinedfooocus.app.async_worker as worker
