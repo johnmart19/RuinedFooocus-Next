@@ -1,0 +1,14 @@
+{
+  "id": "automatic-upscale",
+  "subject": "Add optional model-based enlargement after VAE decoding",
+  "requires": [
+    "generation-size-plan",
+    "model-registry",
+    "launch-arguments",
+    "amd-fsr-versions",
+    "image-preparation"
+  ],
+  "tests": ["test_automatic_upscale_fsr.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
