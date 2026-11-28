@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_ideogram4_unconditional_companion": {
+      "title": "Ideogram4 unconditional-companion",
+      "consumers": ["Ideogram4"],
+      "native_class": "Ideogram4",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Ideogram-4/blob/2aa6c75ce6d5fabded0ca4d0f76abbfaf8edc87d/README.md"
+      },
+      "settings": {
+        "default_recipe_id": null,
+        "auto_recipe_supported": false,
+        "source_recipe": "image_ideogram4_t2i.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

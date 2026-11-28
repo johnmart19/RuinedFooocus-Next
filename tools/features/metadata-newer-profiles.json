@@ -1,0 +1,8 @@
+{
+  "id": "metadata-newer-profiles",
+  "subject": "Add metadata profiles for ERNIE, FIBO, Ideogram, Krea, Lens, MOSS and related",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
