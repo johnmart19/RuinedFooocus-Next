@@ -1,0 +1,8 @@
+{
+  "id": "qualification-image-models",
+  "subject": "Add qualification results for image and utility models",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
