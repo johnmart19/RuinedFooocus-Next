@@ -1,0 +1,1581 @@
+/* Application shell: one sidebar, one surface scale, one control geometry.
+   Loaded after ui.css. Colours live in palette.css so a chosen theme keeps its own. */
+html {
+  scrollbar-gutter: stable;
+}
+.gradio-container {
+  --rf-sidebar: 14.5rem;
+  --rf-radius: 0.625rem;
+  --rf-radius-sm: 0.5rem;
+  --rf-control: max(44px, 2.75rem);
+  --block-radius: var(--rf-radius);
+  --container-radius: var(--rf-radius);
+  --input-radius: var(--rf-radius-sm);
+  --button-large-radius: var(--rf-radius-sm);
+  --button-medium-radius: var(--rf-radius-sm);
+  --button-small-radius: var(--rf-radius-sm);
+  --block-label-radius: var(--rf-radius-sm);
+  --block-shadow: none;
+  --shadow-drop: none;
+  --shadow-drop-lg: none;
+  --button-primary-shadow: none;
+  --button-secondary-shadow: none;
+  --block-title-text-weight: 500;
+  --block-label-text-weight: 500;
+  --button-large-text-weight: 600;
+  --font:
+    "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
+    sans-serif;
+  font-family: var(--font);
+}
+.rf-off {
+  display: none !important;
+}
+
+/* ---- Sidebar navigation ---- */
+#app-tabs > .tab-wrapper {
+  padding: 0;
+  margin: 0 0 1rem;
+}
+#app-tabs > .tab-wrapper .tab-container::after,
+#app-tabs > .tab-wrapper [role="tab"]::after {
+  display: none;
+}
+#app-tabs > .tab-wrapper [role="tab"] {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 0;
+  border-radius: var(--rf-radius-sm);
+  padding: 0 0.75rem;
+  min-height: var(--rf-control);
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--body-text-color-subdued);
+  background: transparent;
+  text-align: start;
+}
+#app-tabs > .tab-wrapper [role="tab"]::before {
+  content: "";
+  flex: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  background: currentColor;
+  -webkit-mask: var(--rf-icon) center / contain no-repeat;
+  mask: var(--rf-icon) center / contain no-repeat;
+}
+#app-tabs > .tab-wrapper [role="tab"]:hover {
+  color: var(--body-text-color);
+  background: var(--rf-hover, var(--background-fill-secondary));
+}
+#app-tabs > .tab-wrapper [role="tab"].selected {
+  color: var(--body-text-color);
+  background: var(--rf-selected, var(--block-background-fill));
+}
+#app-tabs > .tab-wrapper [role="tab"]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+#app-tabs [data-tab-id="create"] {
+  --rf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0L14.06 8.5A2 2 0 0 0 15.5 9.94l6.14 1.58a.5.5 0 0 1 0 .96L15.5 14.06a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0zM20 3v4M22 5h-4'/%3E%3C/svg%3E");
+}
+#app-tabs [data-tab-id="editor"] {
+  --rf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3ZM9 8c-2 3-4 3.5-7 4l8 10c2-1 6-5 6-7M14.5 17.5 4.5 15'/%3E%3C/svg%3E");
+}
+#app-tabs [data-tab-id="library"] {
+  --rf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM21 15l-3.09-3.09a2 2 0 0 0-2.82 0L6 21M7 9a2 2 0 1 0 4 0a2 2 0 1 0-4 0'/%3E%3C/svg%3E");
+}
+#app-tabs [data-tab-id="models"] {
+  --rf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16ZM3.3 7l8.7 5 8.7-5M12 22V12'/%3E%3C/svg%3E");
+}
+#app-tabs [data-tab-id="chat"] {
+  --rf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7.9 20A9 9 0 1 0 4 16.1L2 22Z'/%3E%3C/svg%3E");
+}
+#app-tabs [data-tab-id="settings"] {
+  --rf-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M2 14h4M10 8h4M18 16h4'/%3E%3C/svg%3E");
+}
+
+@media (min-width: 1001px) {
+  #app-tabs > .tab-wrapper {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--rf-sidebar);
+    display: block;
+    block-size: auto;
+    margin: 0;
+    padding: 4.75rem 0.75rem 1rem;
+    overflow-y: auto;
+    z-index: 20;
+    background: var(--rf-sidebar-fill, var(--background-fill-secondary));
+    border-inline-end: 1px solid var(--border-color-primary);
+  }
+  #app-tabs > .tab-wrapper::before {
+    content: "RuinedFooocus";
+    position: absolute;
+    inset-block-start: 1.25rem;
+    inset-inline: 1.25rem 0.75rem;
+    block-size: 2.25rem;
+    display: flex;
+    align-items: center;
+    padding-inline-start: 3rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--body-text-color);
+    /* The original RuinedFooocus mark (logo.ico). */
+    background: url("data:image/png;base64,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")
+      left center / 2.25rem 2.25rem no-repeat;
+  }
+  #app-tabs > .tab-wrapper .tab-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0.25rem;
+    block-size: auto;
+    overflow: visible;
+  }
+  #app-tabs > .tab-wrapper [role="tab"] {
+    inline-size: 100%;
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 1000px) {
+  #app-tabs > .tab-wrapper .tab-container {
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    block-size: auto;
+  }
+  #app-tabs > .tab-wrapper [role="tab"] {
+    padding: 0 0.625rem;
+  }
+}
+
+/* ---- Page headings ---- */
+.rf-page-head {
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 0 0.25rem;
+}
+.rf-page-head h1 {
+  margin: 0;
+  font-size: 1.625rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: var(--body-text-color);
+}
+.rf-page-head p {
+  margin: 0.125rem 0 0;
+  font-size: var(--text-md);
+  color: var(--body-text-color-subdued);
+}
+#image-stage .rf-when-editor,
+#image-stage.rf-editor .rf-when-create {
+  display: none;
+}
+#image-stage.rf-editor .rf-when-editor {
+  display: block;
+}
+/* The stage's Group only supplies block spacing; it draws no card of its own.
+   Gradio nests two .gr-group elements around the styler. */
+#image-stage > .gr-group,
+#image-stage > .gr-group > .gr-group {
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+#image-stage > .gr-group > .gr-group > .styler {
+  background: transparent;
+  gap: var(--layout-gap);
+  overflow: visible;
+}
+
+/* ---- Section tabs become one segmented control ---- */
+:is(#app-tabs .tabitem, #image-stage) .tab-wrapper {
+  padding: 0;
+  margin-block-end: 0.75rem;
+}
+:is(#app-tabs .tabitem, #image-stage) .tab-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  block-size: auto;
+  padding: 0.25rem;
+  border-radius: var(--rf-radius);
+  background: var(--rf-track, var(--background-fill-secondary));
+  border: 1px solid var(--border-color-primary);
+  max-inline-size: 100%;
+}
+:is(#app-tabs .tabitem, #image-stage) .tab-container::after,
+:is(#app-tabs .tabitem, #image-stage) .tab-container [role="tab"]::after {
+  display: none;
+}
+:is(#app-tabs .tabitem, #image-stage) .tab-container [role="tab"] {
+  border: 0;
+  border-radius: var(--rf-radius-sm);
+  padding: 0 0.875rem;
+  min-height: 2.25rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--body-text-color-subdued);
+  background: transparent;
+}
+:is(#app-tabs .tabitem, #image-stage) .tab-container [role="tab"]:hover {
+  color: var(--body-text-color);
+}
+:is(#app-tabs .tabitem, #image-stage) .tab-container [role="tab"].selected {
+  color: var(--body-text-color);
+  background: var(--rf-selected, var(--block-background-fill));
+}
+:is(#app-tabs, #image-stage) .tabitem {
+  padding: 0;
+  border: 0;
+}
+
+/* ---- Controls share one geometry ---- */
+:is(#app-tabs, #image-stage) button:is(.lg, .md, .primary, .secondary, .stop):not([role="tab"]) {
+  min-height: var(--rf-control);
+  border-radius: var(--rf-radius-sm);
+  font-weight: 600;
+  line-height: 1.25;
+}
+:is(#app-tabs, #image-stage) button.sm:not([role="tab"]) {
+  min-height: 2.25rem;
+  border-radius: var(--rf-radius-sm);
+}
+:is(#app-tabs, #image-stage)
+  :is(input[type="text"], input[type="number"], input[type="password"], textarea, .wrap-inner) {
+  border-radius: var(--rf-radius-sm);
+}
+:is(#app-tabs, #image-stage) :is(input[type="text"], input[type="number"], input[type="password"]) {
+  min-height: var(--rf-control);
+}
+/* Section headers have one size on every page. */
+:is(#app-tabs, #image-stage) .label-wrap {
+  font-weight: 600;
+  padding: 0.625rem 0.25rem;
+  font-size: var(--text-md);
+}
+:is(#app-tabs, #image-stage) :is(.prose, .md) p {
+  line-height: 1.5;
+}
+
+/* ---- Refinements ---- */
+#app-tabs > .tab-wrapper [role="tab"] {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+:is(#app-tabs .tabitem, #image-stage) .tab-wrapper {
+  display: block;
+  block-size: auto;
+}
+:is(#app-tabs .tabitem, #image-stage) .tab-container {
+  inline-size: fit-content;
+}
+/* The Create/Editor side-column tab bar spans its column. Tabs share each row's free
+   space, so a bar that wraps (Editor has four tabs) keeps justified rows, not ragged
+   ones. Two IDs outrank the segmented rule above, which ui.css cannot (it loads first). */
+#image-stage #generation-controls .tab-container {
+  display: flex;
+  inline-size: 100%;
+}
+#image-stage #generation-controls .tab-container > [role="tab"] {
+  flex: 1 1 auto;
+  justify-content: center;
+  text-align: center;
+}
+/* A phone column fits Editor's four tabs on one row once their padding is tighter. */
+@media (max-width: 640px) {
+  #image-stage #generation-controls .tab-container > [role="tab"] {
+    padding-inline: 0.375rem;
+  }
+}
+/* Choice chips: every option stays visible and equally sized. */
+.rf-chips .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+.rf-chips .wrap > label {
+  min-height: 2.25rem;
+  padding: 0 0.875rem;
+  border-radius: var(--rf-radius-sm);
+  font-size: var(--text-sm);
+}
+.rf-chips .wrap > label input {
+  position: absolute;
+  opacity: 0;
+  inline-size: 0;
+  block-size: 0;
+  margin: 0;
+}
+.rf-chips .wrap > label:has(input:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+/* Gallery actions form one even two-column grid. */
+#browser-controls .rf-actions,
+#browser-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  /* A wrapped label makes its whole grid taller, never one uneven row. */
+  grid-auto-rows: 1fr;
+}
+#browser-controls .rf-actions > :is(button, a),
+#browser-actions > :is(button, a) {
+  inline-size: 100%;
+  min-inline-size: 0 !important;
+  /* Narrow two-column cells keep labels on one line where they can; a label that
+     still wraps to two lines fits the standard control height instead of raising
+     its whole grid to 48px. */
+  padding: 0.25rem 0.5rem !important;
+  line-height: 1.2 !important;
+}
+#browser-controls .rf-actions > :is(button, a):last-child:nth-child(odd),
+#browser-actions > :is(button, a):last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+#main_view,
+#output-browser,
+#inpaint_view {
+  border-radius: var(--rf-radius);
+}
+
+/* ---- Create inspector: one card with flat, divided sections ---- */
+#generation-controls .tabitem {
+  background: var(--block-background-fill);
+  border: 1px solid var(--border-color-primary) !important;
+  border-radius: var(--rf-radius);
+  padding: 0.75rem !important;
+}
+#generation-controls .tabitem .block {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0;
+}
+#generation-controls .tabitem :is(.form, .gr-group, .styler) {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#generation-controls .tabitem .block:has(> .label-wrap) {
+  border-top: 1px solid var(--border-color-primary) !important;
+  padding: 0.25rem 0 !important;
+}
+#generation-controls .tabitem .block .block:has(> .label-wrap) {
+  border-top: 0 !important;
+  padding-inline: 0 !important;
+}
+#generation-controls .label-wrap {
+  padding: 0.625rem 0.25rem;
+  font-size: var(--text-md);
+}
+#generation-controls .label-wrap .icon {
+  opacity: 0.6;
+  scale: 0.8;
+}
+#generation-controls .block.padded {
+  padding: 0.375rem 0.25rem !important;
+}
+#generation-controls :is(.wrap-inner, input[type="text"], input[type="number"], textarea) {
+  background: var(--input-background-fill);
+}
+/* The sidebar and the Download tab already lead to these places. */
+#create-open-models,
+#model-catalogue-open {
+  display: none;
+}
+/* ---- Canvas and prompt ---- */
+#main_view,
+#inpaint_view {
+  border: 1px solid var(--border-color-primary);
+  background: var(--block-background-fill);
+  overflow: hidden;
+}
+/* ---- Status notes read as quiet hints, not content ---- */
+#chat-conversation-context,
+.apply-timing {
+  font-size: var(--text-sm);
+  color: var(--body-text-color-subdued);
+}
+#chat-conversation-context p {
+  margin: 0 0 0.25rem;
+}
+#chat-conversation-context p:first-child {
+  color: var(--body-text-color);
+}
+/* ---- Picture grids crop to fill their tiles ---- */
+#generation-controls .thumbnail-item img,
+#models-panel .thumbnail-item img {
+  object-fit: cover;
+  object-position: center 20%;
+}
+#models-panel .refresh_button {
+  inline-size: auto;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+#image-stage .rf-page-head:has(p) {
+  margin-block: -0.5rem 0.25rem;
+}
+
+/* ---- Fit the working area to the window on desktop ---- */
+.rf-page-head,
+.rf-page-head .html-container {
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+#image-stage .rf-page-head {
+  margin: 0;
+}
+#image-stage .rf-page-head:has(p) {
+  margin-block: 0.5rem;
+}
+.rf-page-head p {
+  margin: 0 !important;
+}
+.rf-page-head h1 {
+  font-size: 1.375rem;
+}
+/* Editor tools follow the prompt, so the prompt sits where Create has it. */
+#editor-workspace {
+  order: 10;
+}
+@media (min-width: 1001px) {
+  :is(#app-tabs, #image-stage) {
+    /* Status, messages, input and Send share one window height. */
+    --rf-chat-height: max(16rem, calc(100dvh - 36rem));
+    --rf-gallery-height: max(18rem, calc(100dvh - 10.5rem));
+  }
+  /* Side panels scroll on their own; the page itself stays put. */
+  #generation-controls,
+  #browser-controls,
+  #chat-controls {
+    /* A height limit must scroll this vertical stack, not wrap it into columns. */
+    flex-wrap: nowrap;
+    position: sticky;
+    inset-block-start: 1.5rem;
+    max-block-size: calc(100dvh - 10rem);
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding-inline-end: 0.25rem;
+  }
+  :is(#generation-controls, #browser-controls, #chat-controls) > * {
+    /* Native form wrappers otherwise shrink their controls inside the height limit. */
+    flex: 0 0 auto !important;
+  }
+  #models-panel .adapter-card-grid,
+  #app-tabs .adapter-card-grid {
+    max-height: max(16rem, calc(100dvh - 21rem));
+  }
+}
+/* A wrapped inspector follows the image in the page's natural scroll flow. */
+#generation-layout.rf-image-stacked > #generation-controls {
+  position: static;
+  max-block-size: none;
+  overflow: visible;
+  padding-inline-end: 0;
+}
+
+/* ---- Every choice group is a row of equal chips ---- */
+:is(#app-tabs, #image-stage) label:has(> input[type="radio"]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 !important;
+  text-align: center;
+  min-height: 2.25rem;
+  padding: 0.25rem 0.875rem;
+  border-radius: var(--rf-radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  box-shadow: none;
+}
+:is(#app-tabs, #image-stage) label:has(> input[type="radio"]) > span {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+:is(#app-tabs, #image-stage) label:has(> input[type="radio"]) > input {
+  position: absolute;
+  opacity: 0;
+  inline-size: 0;
+  block-size: 0;
+  margin: 0;
+}
+:is(#app-tabs, #image-stage) label:has(> input[type="radio"]:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+:is(#app-tabs, #image-stage) .wrap:has(> label > input[type="radio"]) {
+  gap: 0.375rem;
+}
+/* One primary action per row keeps its colour; the rest stay neutral. */
+:is(#app-tabs, #image-stage) button.stop:not([role="tab"]) {
+  border: 1px solid var(--button-cancel-border-color);
+}
+
+/* ---- Chat ---- */
+#chat-conversation .gr-group {
+  position: relative;
+}
+#chat-conversation-context {
+  padding: 0.625rem 11rem 0.5rem 0.75rem !important;
+  min-height: 3rem;
+}
+#chat-controls {
+  gap: 0.5rem;
+  overflow-x: hidden;
+}
+#chat-controls > .block:not(:has(*:not(:empty))),
+#chat-controls .prose:empty {
+  display: none;
+}
+#chat-controls :is(.block, .form, .gr-group) {
+  margin: 0;
+}
+#chat-attachment-picker,
+#chat-attachment-list,
+#chat-attachment-sources {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+:is(#chat-attachment-picker, #chat-attachment-list, #chat-attachment-sources) .html-container {
+  min-height: 0;
+  padding: 0;
+}
+#chat-attachment-list:not(:has(li)):not(:has([role="status"]:not(:empty))),
+#chat-attachment-sources:not(:has(p, li)) {
+  display: none;
+}
+#chat-attachment-picker button,
+#chat-attachment-list button {
+  min-height: var(--rf-action-height);
+  border-radius: var(--rf-radius-sm);
+  white-space: normal;
+}
+#chat-attachment-picker [role="status"]:empty {
+  display: none;
+}
+#chat-conversation .rf-chat-permission .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rf-space);
+}
+#chat-conversation .rf-chat-permission .wrap > label {
+  min-height: var(--rf-inline-control-height);
+  padding: 0.25rem 0.875rem;
+  white-space: normal;
+}
+@media (max-width: 1000px) {
+  #chat-conversation-context {
+    padding-inline-end: 0.75rem !important;
+  }
+}
+
+/* ---- Settings: profile actions stay reachable at the end of the page ---- */
+#settings-actions {
+  padding: 0.625rem 0;
+  background: var(--body-background-fill);
+  border-top: 1px solid var(--border-color-primary);
+}
+:is(#app-tabs, #image-stage) label:has(> input[type="radio"]) {
+  background: transparent !important;
+  border: 1px solid var(--border-color-primary) !important;
+  color: var(--body-text-color-subdued) !important;
+}
+:is(#app-tabs, #image-stage) label:has(> input[type="radio"]:checked) {
+  background: var(--rf-selected, var(--background-fill-secondary)) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--body-text-color) !important;
+}
+
+/* ---- Folder picker: the in-page browser reads as one panel ---- */
+.rf-folder-browser {
+  margin-block-start: 0.5rem;
+  border: 1px solid var(--color-accent) !important;
+  border-radius: var(--rf-radius) !important;
+  overflow: hidden;
+}
+.rf-folder-picker .row {
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  padding: 0.375rem;
+}
+.rf-folder-picker .row > button {
+  flex: 1 1 8rem;
+  border-radius: var(--rf-radius-sm) !important;
+}
+
+/* ---- Optional control help: native keyboard/touch disclosure ---- */
+:is(#app-tabs, #image-stage) .rf-help-host {
+  position: relative;
+  min-block-size: calc(max(24px, 1.5rem) + 0.75rem);
+  overflow: visible;
+}
+:is(#app-tabs, #image-stage) .rf-help-host > :is(label, .head, [data-testid="block-info"]),
+:is(#app-tabs, #image-stage) .rf-help-host > .wrap > .head {
+  /* A slider's value box sits in .wrap > .head; keep it clear of the help icon. */
+  padding-inline-end: 2rem;
+}
+:is(#app-tabs, #image-stage) .rf-control-help {
+  position: absolute;
+  inset-block-start: 0.375rem;
+  inset-inline-end: 0.5rem;
+  z-index: 2;
+}
+:is(#app-tabs, #image-stage) .rf-control-help > summary {
+  display: grid;
+  place-items: center;
+  inline-size: max(24px, 1.5rem);
+  block-size: max(24px, 1.5rem);
+  padding: 0;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 50%;
+  color: var(--body-text-color-subdued);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  list-style: none;
+}
+:is(#app-tabs, #image-stage) .rf-control-help > summary::-webkit-details-marker {
+  display: none;
+}
+:is(#app-tabs, #image-stage) .rf-control-help > summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+:is(#app-tabs, #image-stage) .rf-help-host .info-text {
+  display: none;
+  position: static;
+  margin-block: 0.375rem;
+  overflow-wrap: anywhere;
+}
+:is(#app-tabs, #image-stage) .rf-help-host:has(> .rf-control-help[open]) .info-text {
+  display: block;
+}
+/* ---- One action height everywhere ---- */
+:is(#app-tabs, #image-stage) {
+  --rf-action-height: var(--rf-control);
+}
+#generation-controls .wrap-inner {
+  padding-inline: 0.5rem;
+}
+
+/* Chat's three per-turn switches share one row instead of a tall stack. */
+#chat-conversation .form:has(> .rf-chat-permission) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+}
+#chat-conversation .form > .rf-chat-permission {
+  flex: 1 1 9rem;
+  min-width: 0;
+}
+
+/* Secondary buttons keep an outline, so they stay visible on any panel colour. */
+:is(#app-tabs, #image-stage) button.secondary:not([role="tab"]):not(.label-wrap) {
+  border: 1px solid var(--border-color-primary) !important;
+}
+/* Chat's conversation column uses the page surface; its fields keep their own. */
+#chat-conversation :is(.gr-group, .styler),
+#chat-conversation .form:has(> .rf-chat-permission) {
+  background: transparent !important;
+}
+#chat-conversation .rf-chat-permission {
+  background: var(--block-background-fill) !important;
+  border: 1px solid var(--border-color-primary) !important;
+  border-radius: var(--rf-radius-sm);
+}
+/* Single follow-up actions (Undo, Open / Edit image) are buttons, not full-width bars. */
+#chat-conversation :is(.styler, .gr-group) > button.sm {
+  align-self: flex-start;
+  inline-size: auto !important;
+  min-inline-size: 10rem;
+}
+
+/* ---- Settings profile summary and actions ---- */
+#settings-profile-state [role="status"],
+#settings-profile-state .apply-timing {
+  margin: 0.375rem 0 0 !important;
+  font-size: var(--text-sm);
+  color: var(--body-text-color-subdued);
+}
+#settings-actions {
+  align-items: flex-end !important;
+}
+/* The profile name is a plain field beside its buttons, not a card. */
+#settings-actions > .form,
+#settings-actions > .form .block {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+#settings-actions textarea {
+  resize: none;
+}
+
+/* One button text size: small and large buttons often share a row. */
+:is(#app-tabs, #image-stage) button:is(.sm, .md, .lg):not([role="tab"]):not(.label-wrap),
+:is(#app-tabs, #image-stage) a:is(.sm, .md, .lg) {
+  font-size: var(--text-sm);
+}
+/* Single-line search and name fields are not resizable boxes. */
+:is(#app-tabs, #image-stage) textarea[rows="1"] {
+  resize: none;
+}
+
+/* Gallery tile names sit on a readable strip that fits one whole line. */
+#output-browser .caption-label {
+  box-sizing: border-box;
+  inset-inline: 0;
+  inset-block-end: 0;
+  margin: 0;
+  border-radius: 0;
+  padding: 0.25rem 0.5rem !important;
+  line-height: 1.4 !important;
+  max-height: calc(1.4em + 0.5rem) !important;
+  font-size: var(--text-xs);
+  color: #fff !important;
+  background: rgb(0 0 0 / 0.62) !important;
+}
+
+/* Dropdowns are as tall as text fields and buttons (Gradio adds 22px of margins). */
+:is(#app-tabs, #image-stage) .wrap-inner {
+  padding-block: 0 !important;
+  min-height: var(--rf-control);
+  align-items: center;
+}
+:is(#app-tabs, #image-stage) .wrap-inner .secondary-wrap > input {
+  margin-block: 0 !important;
+  min-height: calc(var(--rf-control) - 2px) !important;
+  height: calc(var(--rf-control) - 2px) !important;
+}
+
+/* ---- Grouped side panels ---- */
+/* A section is one quiet card; nothing inside it draws another card. */
+:is(#app-tabs, #image-stage) .rf-section {
+  padding: 0.75rem !important;
+  gap: 0.5rem !important;
+  border: 1px solid var(--border-color-primary) !important;
+  border-radius: var(--rf-radius) !important;
+  background: var(--block-background-fill) !important;
+}
+:is(#app-tabs, #image-stage) .rf-section :is(.styler, .form, .block, .gr-group) {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#browser-search {
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+#browser-search > button {
+  flex: 0 0 auto !important;
+}
+/* The field's block adds a 1px border around the one-row textarea; without this the
+   row, and the Search button stretched to it, is 2px taller than every other control. */
+#browser-search textarea {
+  padding-block: calc(0.625rem - 1px);
+}
+
+/* ---- Chat assistant ---- */
+#chat-assistant-head {
+  flex-wrap: nowrap;
+  gap: var(--rf-space);
+}
+#chat-avatar {
+  inline-size: 100% !important;
+  max-inline-size: 100%;
+  flex: 0 0 auto !important;
+  border-radius: var(--rf-radius-sm);
+  overflow: hidden;
+}
+#chat-avatar img {
+  object-fit: contain;
+}
+
+/* Native scroll areas follow the active theme, including nested side panels. */
+:is(#app-tabs, #image-stage),
+:is(#app-tabs, #image-stage) * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color-primary) transparent;
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar-track {
+  background: transparent;
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar-thumb {
+  background: var(--border-color-primary);
+  border-radius: var(--rf-radius-sm);
+}
+:is(#app-tabs, #image-stage) ::-webkit-scrollbar-thumb:hover {
+  background: var(--body-text-color-subdued);
+}
+#chat-controls #chat-assistant-actions {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.375rem !important;
+}
+#chat-assistant-actions > button {
+  inline-size: 100%;
+  min-inline-size: 0 !important;
+}
+#chat-assistant-actions > button:last-child {
+  grid-column: span 2;
+}
+
+/* ---- Settings: sections are flat lists inside one card, like Create's inspector ---- */
+#settings-layout .gr-accordion :is(.form, .gr-group, .styler) {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#settings-layout .gr-accordion .gr-accordion {
+  border: 0 !important;
+  border-top: 1px solid var(--border-color-primary) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/* A wrapper that only holds a closed confirmation dialog takes no room. */
+:is(#app-tabs, #image-stage)
+  .block:has(dialog):not(:has(dialog[open])):not(
+    :has(
+      :not(
+        dialog,
+        dialog *,
+        .html-container,
+        .prose,
+        [data-testid="status-tracker"],
+        [data-testid="status-tracker"] *
+      )
+    )
+  ) {
+  min-height: 0 !important;
+  block-size: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: visible;
+}
+#chat-model-library .gr-accordion :is(.form, .block, .styler),
+#chat-model-library > div :is(.form, .block, .styler) {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+/* Separate a second button group (e.g. Undo/Redo after the source buttons). */
+:is(#app-tabs, #image-stage) .rf-actions > .rf-group-start {
+  margin-inline-start: auto;
+}
+
+/* ==== One visual system for every page ====
+   Cards: one surface, border and radius; nothing inside a card draws another card.
+   Type: page title > section header (16px/600) > field label (14px/500) > help text (14px, muted). */
+:is(#app-tabs, #image-stage) .form {
+  background: var(--block-background-fill) !important;
+  border-radius: var(--rf-radius) !important;
+}
+:is(#app-tabs, #image-stage) .form > .block:not(.gr-accordion) {
+  background: transparent !important;
+}
+:is(#app-tabs, #image-stage) button.label-wrap > span:first-child {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--body-text-color);
+}
+:is(#app-tabs, #image-stage) [data-testid="block-info"],
+:is(#app-tabs, #image-stage) fieldset > span:first-child {
+  font-size: var(--text-sm) !important;
+  font-weight: 500 !important;
+}
+/* Explanations and status lines are secondary to the controls they describe. */
+:is(#app-tabs, #image-stage)
+  .block:not(.rf-page-head):not(#chat-messages *)
+  .prose
+  :is(p, li, td, th) {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+:is(#app-tabs, #image-stage)
+  :is(.gr-accordion, .form, #settings-content, #models-panel)
+  .prose:not(#chat-messages .prose)
+  :is(p, li) {
+  color: var(--body-text-color-subdued);
+}
+:is(#app-tabs, #image-stage) .block:not(.rf-page-head) .prose :is(h1, h2, h3, h4) {
+  font-size: var(--text-md);
+  font-weight: 600;
+  margin: 0.25rem 0;
+}
+/* Number fields match text fields and dropdowns. */
+:is(#app-tabs, #image-stage) input[type="number"] {
+  box-sizing: border-box;
+  min-height: var(--rf-control);
+  height: var(--rf-control);
+}
+/* Custom HTML pagers use the same button text as native buttons. */
+:is(#app-tabs, #image-stage) .adapter-card-pager button {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--rf-radius-sm);
+}
+/* Model cards: two-line names keep every card in a row the same height. */
+:is(#app-tabs, #image-stage) .adapter-card {
+  font-size: var(--text-sm);
+  border-radius: var(--rf-radius);
+}
+:is(#app-tabs, #image-stage) .adapter-card-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+#model-catalogue-actions {
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+}
+#model-catalogue-actions > #model-catalogue-count {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+}
+#adapter-filters,
+#model-browser-head {
+  gap: 0.75rem;
+  align-items: end;
+}
+/* Groups use the same card surface as sections and grouped fields. */
+:is(#app-tabs, #image-stage) .gr-group:not(.rf-section) {
+  background: var(--block-background-fill) !important;
+  border-radius: var(--rf-radius) !important;
+}
+:is(#app-tabs, #image-stage) .gr-group:not(.rf-section) > .styler {
+  background: transparent !important;
+}
+/* The profile name stays a plain field beside its buttons (overrides the card rule). */
+#settings-content #settings-actions > .form {
+  background: transparent !important;
+}
+/* Folder pickers: a responsive grid of compact cards instead of one long column. */
+#settings-path-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+#settings-path-grid > .rf-folder-picker {
+  margin: 0 !important;
+}
+#settings-path-grid .rf-folder-picker .row:has(> button) {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+/* Keep prose blocks slightly inset and unclipped at every viewport width so
+   leading glyphs ("Installed", "installs") are never clipped on the left edge. */
+:is(#app-tabs, #image-stage) .block:not(.rf-page-head) .prose {
+  padding-inline: 0.125rem;
+  overflow: visible;
+}
+@media (max-width: 640px) {
+  /* Narrow screens keep short labels on one line instead of 24px side padding. */
+  :is(#app-tabs, #image-stage) :is(button.lg, button.md, button.sm) {
+    padding-inline: 0.625rem;
+  }
+}
+/* An empty folder status line takes no space until it has a message. */
+.rf-folder-picker .block:has(> [data-testid="markdown-wrapper"] .md:empty) {
+  display: none !important;
+}
+/* Enlarged text: the image area yields to the source toolbar's real height
+   instead of Gradio's fixed 40px allowance, so the toolbar stays inside. */
+:is(#main_view, #inpaint_view) .image-container {
+  display: flex;
+  flex-direction: column;
+}
+:is(#main_view, #inpaint_view) .image-container > .upload-container {
+  flex: 1 1 auto;
+  min-height: 0 !important;
+  height: auto !important;
+}
+:is(#main_view, #inpaint_view) .image-container > .source-selection {
+  flex: none;
+}
+/* Settings category pills grow with a wrapped label instead of clipping it. */
+[id^="rf-settings-section-"][id$="-button"] {
+  height: auto !important;
+  line-height: 1.25;
+}
+/* One-line fields keep a full line of text inside their padding at any text size. */
+:is(#app-tabs, #image-stage) :is(input[type="number"], input[type="text"], input:not([type])) {
+  line-height: 1.25;
+}
+/* Messages from events that skip the queue (see error_messages.js). */
+#rf-error-messages {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: grid;
+  gap: 0.5rem;
+  max-inline-size: min(26rem, calc(100vw - 2rem));
+}
+.rf-error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--error-border-color, var(--color-red-500, #ef4444));
+  border-radius: var(--rf-radius-sm);
+  background: var(--block-background-fill);
+  color: var(--body-text-color);
+  font-size: var(--text-sm);
+  box-shadow: 0 4px 16px #0004;
+}
+.rf-error-message span {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.rf-error-message button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+}
+/* Page titles sit on the page like Gallery, Models and Settings: a group that
+   holds the page heading draws no card of its own (its sections keep theirs). */
+:is(#app-tabs, #image-stage) .gr-group:has(.rf-page-head),
+.gr-group:has(.rf-page-head) {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+/* On Create and Editor the empty page-tabs row above the stage would add one
+   layout gap; start the stage where other pages start their heading. */
+#app-tabs + #image-stage {
+  margin-top: calc(-1 * var(--layout-gap));
+}
+/* Section cards space their rows like their button grids (Gradio's group
+   wrapper otherwise leaves 1px between a choice and the actions under it). */
+.rf-section > .styler {
+  gap: 0.5rem;
+}
+/* The Gallery page counter is centered beside its 44px buttons. */
+#browser-page-total {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+#browser-page-total :is(.prose, p) {
+  margin: 0;
+}
+/* Chat attach row: the button and its accepted formats line up on one row. */
+#chat-attachment-picker .prose {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+}
+/* Radio labels keep one spacing whether their help text is inline or behind "?". */
+:is(#app-tabs, #image-stage) fieldset > span:not(.rf-control-help) {
+  margin-bottom: 0.5rem !important;
+}
+/* Chat's per-turn switches: three cards on the page surface (not cards inside a
+   card), with the follow-up actions spaced below them. */
+#app-tabs #chat-conversation .form:has(> .rf-chat-permission) {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin-bottom: 0.5rem;
+}
+#app-tabs #chat-conversation .form > .rf-chat-permission {
+  background: var(--block-background-fill) !important;
+  border: 1px solid var(--border-color-primary) !important;
+  border-radius: var(--rf-radius) !important;
+  padding: 0.75rem 0.875rem !important;
+}
+/* Chat's conversation column stays on the page surface: its groups (the prompt
+   actions around Undo included) draw no card; fields and switches keep theirs. */
+#app-tabs #chat-conversation :is(.gr-group, .styler):not(.rf-chat-permission) {
+  background: transparent !important;
+}
+/* ---- Release polish: one radius, type and spacing scale for Gradio's inner parts ---- */
+/* Choice chips, slider number boxes, reset buttons and tables use the small radius. */
+:is(#app-tabs, #image-stage) fieldset label,
+:is(#app-tabs, #image-stage) .tab-like-container,
+:is(#app-tabs, #image-stage) .table-wrap,
+:is(#app-tabs, #image-stage) .table-wrap .upload-container {
+  border-radius: var(--rf-radius-sm) !important;
+}
+:is(#app-tabs, #image-stage) .tab-like-container {
+  overflow: hidden;
+}
+:is(#app-tabs, #image-stage) .tab-like-container .reset-button {
+  border-radius: 0 !important;
+}
+:is(#app-tabs, #image-stage) fieldset label {
+  font-size: var(--text-sm) !important;
+}
+/* Small captions use the 12px step of the type scale. */
+:is(#app-tabs, #image-stage) .thumbnail-item .caption-label {
+  font-size: 12px !important;
+}
+/* Dropdown values end with an ellipsis before the arrow instead of running under it. */
+:is(#app-tabs, #image-stage) .wrap-inner input {
+  text-overflow: ellipsis;
+  min-inline-size: 0;
+}
+/* Fields stacked inside a card (accordion or group) sit on the card itself and are
+   spaced like every other stack, rather than drawing a second card with 0px gaps. */
+:is(#app-tabs, #image-stage) .gr-accordion .form {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  gap: 0.5rem !important;
+}
+:is(#app-tabs, #image-stage) .gr-accordion .gr-accordion {
+  border: 0 !important;
+  border-top: 1px solid var(--border-color-primary) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+/* An empty status message takes no room (its row would add a blank gap). */
+:is(#app-tabs, #image-stage) .block:has(> [data-testid="markdown-wrapper"] .md:empty) {
+  display: none !important;
+}
+/* An empty download slot shows only its label, not a tall drop area. */
+:is(#app-tabs, #image-stage) .block:has(> .file-preview-holder:empty),
+:is(#app-tabs, #image-stage) .block:has([data-testid="file"] .empty) {
+  min-height: 0 !important;
+}
+/* Editor's workspace column and Chat's conversation stack space their rows by
+   0.5rem like the other pages (Gradio's wrappers otherwise leave 1px). */
+#editor-workspace .column,
+#generation-workspace,
+#app-tabs #chat-conversation .styler {
+  gap: 0.5rem !important;
+}
+/* Image source buttons (upload, webcam, paste) are full-height in their bar;
+   Gradio's 12px margin would push them below the image card's edge. */
+:is(#app-tabs, #image-stage) .source-selection .icon {
+  margin-block: 0 !important;
+}
+/* Tables use the app's text font and size; Gradio's default is a monospace face. */
+:is(#app-tabs, #image-stage) .table-wrap :is(th, td, .virtual-row, .cell-wrap) {
+  font-family: var(--font) !important;
+  font-size: var(--text-sm) !important;
+}
+
+/* ---- Layout consistency pass (2026-11-20) ---- */
+/* The Create/Editor inspector keeps a readable width on desktop instead of a fixed
+   2/7 share (about 270px at 1280px), which split label and value rows and wrapped
+   its tab bar. The image column takes the rest. */
+@media (min-width: 1001px) {
+  #generation-layout > #generation-workspace {
+    flex: 1 1 0 !important;
+  }
+  #generation-layout > #generation-controls {
+    flex: 0 0 clamp(20rem, 32%, 28rem) !important;
+  }
+}
+/* Section headers start at the left edge when a long title wraps. */
+:is(#app-tabs, #image-stage) .label-wrap {
+  text-align: start;
+}
+/* Generate fills the prompt box's height beside it; wrapped below, it keeps its own. */
+:is(#app-tabs, #image-stage) #prompt-actions > button:not(.hidden) {
+  flex: 1 1 auto;
+}
+/* Paired actions in the inspector share a line (Generate prompt | Undo) instead of
+   stacking full width; Gradio's 160px child minimum otherwise forces a wrap. */
+#generation-controls .row > button {
+  flex: 1 1 0 !important;
+  min-inline-size: min(6.5rem, 100%) !important;
+}
+/* Choice chips form an even grid: equal cells, no ragged one-per-line column. */
+.rf-chips .wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(7.5rem, 100%), 1fr));
+  /* Each row takes its taller chip's height; both chips in a row match. */
+  align-items: stretch;
+}
+.rf-chips .wrap > label {
+  justify-content: center;
+  text-align: center;
+  min-inline-size: 0;
+  padding: 0.25rem 0.625rem;
+  line-height: 1.25;
+}
+/* The Gallery grid holds its height while the first thumbnails load instead of
+   starting as a small empty box and pushing the page down. */
+@media (min-width: 1001px) {
+  #browser-images {
+    min-block-size: min(var(--rf-gallery-height), 70dvh);
+  }
+}
+
+/* ---- Six-view polish pass ---- */
+/* Standalone utility/action buttons keep natural button width instead of full-column bars. */
+:is(#app-tabs, #image-stage) button.rf-inline-action {
+  flex: 0 0 auto !important;
+  align-self: flex-start;
+  inline-size: auto !important;
+  min-inline-size: 9rem;
+  padding-inline: 1.125rem;
+}
+/* Settings' eight category tabs form a balanced 4x2 grid (no 6+2 orphans) on desktop. */
+#app-tabs #settings-layout > .tab-wrapper .tab-container {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  inline-size: 100% !important;
+  gap: 0.25rem;
+}
+#app-tabs #settings-layout > .tab-wrapper .tab-container [role="tab"] {
+  justify-content: center;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+}
+@media (max-width: 640px) {
+  #app-tabs #settings-layout > .tab-wrapper .tab-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+/* Hardware & runtime status readouts use a single compact inset surface (no nested border). */
+:is(#app-tabs, #image-stage) .block.rf-status-card {
+  min-height: 0 !important;
+  background: var(--background-fill-secondary) !important;
+  border: 1px solid var(--border-color-primary) !important;
+  border-radius: var(--rf-radius-sm) !important;
+  padding: 0.625rem 0.875rem !important;
+}
+:is(#app-tabs, #image-stage) .block.rf-status-card .rf-status-card,
+:is(#app-tabs, #image-stage) .block.rf-status-card .prose {
+  min-height: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+:is(#app-tabs, #image-stage) .block.rf-status-card .prose :is(p, li) {
+  margin: 0.2rem 0 !important;
+  line-height: 1.45;
+  color: var(--body-text-color) !important;
+}
+:is(#app-tabs, #image-stage) .block.rf-status-card .prose > :first-child {
+  margin-top: 0 !important;
+}
+:is(#app-tabs, #image-stage) .block.rf-status-card .prose > :last-child {
+  margin-bottom: 0 !important;
+}
+/* Editor workspace buttons form a clean 2-column grid (Undo & Redo paired side-by-side). */
+#editor-workspace .rf-actions-compact {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem !important;
+}
+#editor-workspace .rf-actions-compact > button:not(.hidden) {
+  inline-size: 100% !important;
+  min-inline-size: 0 !important;
+  padding: 0.25rem 0.5rem !important;
+}
+#editor-workspace .rf-actions-compact > button:not(.hidden):last-of-type:nth-of-type(odd) {
+  grid-column: 1 / -1;
+}
+/* Editor's multi-word action cards keep uniform height, centered labels and no trailing orphan. */
+#editor-image-action .wrap {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 0.375rem;
+  align-items: stretch;
+}
+#editor-image-action .wrap > label {
+  border-radius: var(--rf-radius-sm) !important;
+  min-height: 2.75rem;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.78rem !important;
+  line-height: 1.2;
+}
+#editor-image-action .wrap > label:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+/* Chat permission cards align their headers and Off/On pills to identical heights and baselines. */
+#chat-conversation .form:has(> .rf-chat-permission) {
+  align-items: stretch;
+}
+#chat-conversation .form > .rf-chat-permission > fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  block-size: 100%;
+}
+#chat-conversation .rf-chat-permission .wrap {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+#chat-conversation .rf-chat-permission .wrap > label {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.5rem;
+}
+/* Chat follow-up actions (Undo + Open / Edit image) share one compact row above the fold. */
+#chat-followup-actions {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+#chat-followup-actions > #chat-prompt-action-group {
+  flex: 0 1 auto !important;
+  min-inline-size: 0 !important;
+  inline-size: auto !important;
+}
+#chat-followup-actions > #chat-prompt-action-group:has(> .styler > .gr-group:not(.hidden)) {
+  flex: 1 1 100% !important;
+}
+#chat-followup-actions > button {
+  flex: 0 0 auto !important;
+  inline-size: auto !important;
+  min-inline-size: 10rem;
+}
+/* Chat Model library keeps compact spacing without oversized empty vertical gaps. */
+#chat-model-library > div > .column,
+#chat-model-library > div > .styler,
+#chat-model-library .form {
+  gap: 0.5rem !important;
+}
+#chat-model-library .block.hidden {
+  display: none !important;
+}
+#chat-model-library .block.padded {
+  padding: 0.125rem 0 !important;
+}
+#chat-model-source .wrap {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+#chat-model-source .wrap > label {
+  min-height: 2.375rem;
+}
+/* Models Download & Popular filters align labels and controls cleanly from the top baseline. */
+:is(#model-acquisition, #popular-models) .rf-filters {
+  align-items: flex-start !important;
+  gap: 0.625rem 0.75rem !important;
+}
+:is(#model-acquisition, #popular-models) .rf-filters label:has(> input[type="radio"]) {
+  min-height: var(--rf-control);
+  padding: 0 1rem;
+}
+#model-acquisition .rf-filters:first-of-type > *:first-child {
+  flex: 2 1 18rem !important;
+}
+#model-acquisition .rf-filters:first-of-type > *:last-child {
+  flex: 0 0 auto !important;
+  min-inline-size: max-content !important;
+}
+/* Markdown tables and links match the dark rounded theme (no harsh white borders or raw yellow links). */
+:is(#app-tabs, #image-stage) .prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border-color-primary) !important;
+  border-radius: var(--rf-radius-sm);
+  overflow: hidden;
+  background: var(--background-fill-secondary);
+  margin: 0.5rem 0 0 !important;
+}
+:is(#app-tabs, #image-stage) .prose :is(th, td) {
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color-primary) 70%, transparent) !important;
+  padding: 0.3rem 0.375rem !important;
+  text-align: start;
+  font-size: 0.75rem !important;
+  line-height: 1.35;
+  color: var(--body-text-color);
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+:is(#app-tabs, #image-stage) .prose th {
+  background: var(--block-background-fill);
+  color: var(--body-text-color-subdued);
+  font-weight: 600;
+}
+:is(#app-tabs, #image-stage) .prose tr:last-child td {
+  border-bottom: 0 !important;
+}
+:is(#app-tabs, #image-stage) .prose a {
+  color: color-mix(in srgb, var(--color-accent) 75%, var(--body-text-color)) !important;
+  text-decoration: none;
+}
+:is(#app-tabs, #image-stage) .prose a:hover {
+  text-decoration: underline;
+}
+#generation-controls
+  .tabitem
+  :is(#sampling-table, #aspect-ratio-picker, #style-cards, #model-component-cards),
+#generation-controls
+  .tabitem
+  :is(#sampling-table, #aspect-ratio-picker, #style-cards, #model-component-cards)
+  > .wrap,
+#generation-controls
+  .tabitem
+  :is(#sampling-table, #aspect-ratio-picker, #style-cards, #model-component-cards)
+  .html-container,
+#generation-controls
+  .tabitem
+  :is(#sampling-table, #aspect-ratio-picker, #style-cards, #model-component-cards)
+  .prose {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.rf-two-col {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem !important;
+}
+.rf-readonly-box textarea {
+  resize: none !important;
+  overflow-wrap: anywhere !important;
+  font-size: 0.78rem !important;
+  line-height: 1.45 !important;
+  color: var(--body-text-color-subdued) !important;
+  background: var(--background-fill-secondary) !important;
+}
+.rf-compact-file .upload-container,
+.rf-compact-file .wrap {
+  min-height: 68px !important;
+  padding: 8px !important;
+}
+.rf-compact-file .upload-container svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+#editor-quick-tools .wrap {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+#editor-quick-tools .wrap > label {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+}
+#editor-framing .wrap {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+#editor-framing .wrap > label {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.375rem;
+  text-align: center;
+  white-space: nowrap;
+}
+/* Ensure Gradio visible="hidden" controls never leak into layout. */
+:is(#app-tabs, #image-stage) :is(.block, .gr-group, .form, .styler, button, fieldset).hidden {
+  display: none !important;
+}
+/* Keep Power-ups & Describe image dropzone labels and bottom source icons crisp and unclipped. */
+:is(#image-tool-input, #describe-image-input) {
+  height: auto !important;
+  min-height: 210px !important;
+}
+:is(#image-tool-input, #describe-image-input) .upload-container {
+  padding-top: 2.5rem !important;
+  padding-bottom: 0.75rem !important;
+}
+:is(#image-tool-input, #describe-image-input) .source-selection {
+  min-height: 2.25rem !important;
+  padding: 0.25rem 0 !important;
+}
+:is(#image-tool-input, #describe-image-input) .source-selection > button {
+  min-height: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  width: 32px !important;
+  padding: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+:is(#image-tool-input, #describe-image-input) .source-selection > button svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+/* Prompt tools 4-mode segmented selector. */
+#prompt-tools-mode .wrap {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+#prompt-tools-mode .wrap > label {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+}
+:is(#app-tabs, #image-stage) #sampling-table .prose table {
+  margin: 0 !important;
+}
+:is(#app-tabs, #image-stage) #sampling-table .prose a.rf-st-badge-network {
+  color: #93c5fd !important;
+  text-decoration: none !important;
+}
+:is(#app-tabs, #image-stage) #sampling-table .prose a.rf-st-badge-network:hover {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+/* Sampling mode segmented toggle spans 2 balanced equal-width columns. */
+#sampling-mode .wrap {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+#sampling-mode .wrap > label {
+  min-height: 2.375rem;
+  padding: 0.25rem 0.5rem;
+}
+#generation-controls .rf-actions-compact {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem !important;
+  margin-block: 0.375rem !important;
+}
+#generation-controls .rf-actions-compact > button {
+  inline-size: 100% !important;
+  min-inline-size: 0 !important;
+  padding: 0.375rem 0.625rem !important;
+}
+#generation-controls .rf-actions-compact + button,
+#generation-controls button + .rf-actions-compact {
+  margin-top: 0.5rem !important;
+}
+/* Prevent slider min/max labels (e.g. -10 ... 10) from clipping past narrow panel edges. */
+#generation-controls .range_slider,
+#generation-controls .slider_input_container {
+  box-sizing: border-box !important;
+  padding-inline: 0.25rem !important;
+}
+.rf-size-dims {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.375rem !important;
+}
+.rf-size-dims:not(:has(.block:not(.hidden))) {
+  display: none !important;
+}
