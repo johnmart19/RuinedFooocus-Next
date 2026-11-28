@@ -1,0 +1,16 @@
+{
+  "id": "llama-prebuilt-installer",
+  "subject": "Install official llama.cpp binaries outside the disposable cache",
+  "requires": [
+    "child-process-ownership",
+    "native-runtime-paths",
+    "llama-runtime-policy",
+    "startup-install-options",
+    "onnx-amd-provider-recipes",
+    "comfy-backend-initialization",
+    "onnx-acquisition-processes"
+  ],
+  "tests": ["test_installer_child_environment.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
