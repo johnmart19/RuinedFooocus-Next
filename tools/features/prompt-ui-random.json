@@ -1,0 +1,13 @@
+{
+  "id": "prompt-ui-random",
+  "subject": "Add the random prompt panel",
+  "requires": [
+    "model-handler",
+    "one-button-prompt-formats",
+    "one-button-generator",
+    "prompt-preview"
+  ],
+  "tests": ["test_prompt_formats.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
