@@ -1,0 +1,32 @@
+{
+  "id": "cascade-guidance",
+  "subject": "Add Cascade super-resolution and CLIP vision guidance",
+  "requires": [
+    "utility-output-choices-ui",
+    "sdpose-utility",
+    "generation-pipeline-utils",
+    "native-vision-ui",
+    "depth-utilities-ui",
+    "seedvr2-restoration-ui",
+    "depth-controlnet-preparation",
+    "minimax-h3-image"
+  ],
+  "tests": [
+    "test_distinct_image_architectures.py",
+    "test_image_color_device_policy.py",
+    "test_image_color_finishing.py",
+    "test_image_color_tools.py",
+    "test_image_crop_to_mask.py",
+    "test_image_geometry_tools.py",
+    "test_image_mask_tools.py",
+    "test_image_preparation.py",
+    "test_native_pixel_sources.py",
+    "test_native_sampling_preparation_boundary.py",
+    "test_utility_defaults.py",
+    "test_wevisone.py",
+    "test_wevisone_identity.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
