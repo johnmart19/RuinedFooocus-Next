@@ -1,0 +1,8 @@
+{
+  "id": "llama-runtime-info",
+  "subject": "Inspect installed chat runtimes without downloading or loading models",
+  "requires": ["bounded-subprocess", "rocm-installer", "llama-wsl-rocm-bridge"],
+  "tests": ["test_sdk_discovery.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
