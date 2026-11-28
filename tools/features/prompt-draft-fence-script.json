@@ -1,0 +1,8 @@
+{
+  "id": "prompt-draft-fence-script",
+  "subject": "Add the browser guard that keeps prompt drafts from being overwritten",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
