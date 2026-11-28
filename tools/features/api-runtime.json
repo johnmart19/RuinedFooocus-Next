@@ -1,0 +1,31 @@
+{
+  "id": "api-runtime",
+  "subject": "Run owned API jobs for chat, images and image tools on the shared worker",
+  "requires": [
+    "api-activity",
+    "sd4x-upscaler-conditioning",
+    "chat-image-tool-guidance",
+    "api-guided-edits",
+    "cascade-guidance",
+    "library-editing-workflow",
+    "settings-api-activity"
+  ],
+  "tests": [
+    "test_api_activity.py",
+    "test_api_image_edits.py",
+    "test_api_preview_dispatch.py",
+    "test_api_upscale_metadata.py",
+    "test_atomic_lfm3_default.py",
+    "test_chat_turn_permissions.py",
+    "test_gguf_lora_admission.py",
+    "test_image_geometry.py",
+    "test_image_plan_callers.py",
+    "test_plan_acquisition_transport.py",
+    "test_prompt_helper_preparation.py",
+    "test_vision_transport.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": true,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638",
+  "native_gguf_revision": "35da9968d8eeb0a3c03a1e468203ffd2f6f48348"
+}
