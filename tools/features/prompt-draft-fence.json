@@ -1,0 +1,8 @@
+{
+  "id": "prompt-draft-fence",
+  "subject": "Guard prompt edits against stale browser drafts",
+  "requires": ["translation-manager", "ui-user-error-messages", "prompt-draft-fence-script"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
