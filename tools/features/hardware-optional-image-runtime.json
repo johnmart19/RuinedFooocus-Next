@@ -1,0 +1,8 @@
+{
+  "id": "hardware-optional-image-runtime",
+  "subject": "Present the optional stable-diffusion.cpp image runtime and its actions",
+  "requires": ["generation-size-plan", "translation-manager", "sdcpp-image-pipeline"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
