@@ -1,0 +1,8 @@
+{
+  "id": "settings-api-workspace",
+  "subject": "Add the API status and client examples panel",
+  "requires": ["openai-compatible-api"],
+  "tests": ["test_ui_api_workspace.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
