@@ -1,0 +1,8 @@
+{
+  "id": "docs-settings-guide",
+  "subject": "Document settings, profiles and their storage",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
