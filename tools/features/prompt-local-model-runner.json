@@ -1,0 +1,13 @@
+{
+  "id": "prompt-local-model-runner",
+  "subject": "Run prompt assistance through the shared local chat model",
+  "requires": [
+    "wildcards-cyberpunk",
+    "wildcards-lovecraft",
+    "wildcards-onebuttonprompt",
+    "prompt-wildcards"
+  ],
+  "tests": ["test_wildcard_catalog.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
