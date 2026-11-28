@@ -1,0 +1,8 @@
+{
+  "id": "image-tool-type-dropdown",
+  "subject": "Keep the image tool type valid across checkpoint changes",
+  "requires": ["generation-size-plan", "image-preparation"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
