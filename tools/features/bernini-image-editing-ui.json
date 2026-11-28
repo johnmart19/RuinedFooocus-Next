@@ -1,0 +1,14 @@
+{
+  "id": "bernini-image-editing-ui",
+  "subject": "Add still-image controls for Bernini-R",
+  "requires": [
+    "qwen-image21-local-edit",
+    "launch-arguments",
+    "native-auxiliary-assets",
+    "bernini-image-editing",
+    "advanced-guidance-ui"
+  ],
+  "tests": ["test_bernini_image_ui.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
