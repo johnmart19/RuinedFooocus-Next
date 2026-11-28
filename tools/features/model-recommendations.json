@@ -1,0 +1,23 @@
+{
+  "id": "model-recommendations",
+  "subject": "Add checkpoint recipes from public version metadata",
+  "requires": [
+    "presets-sd",
+    "presets-sd3",
+    "presets-dit",
+    "presets-flux",
+    "presets-chroma",
+    "presets-qwen",
+    "presets-anima",
+    "presets-hidream",
+    "presets-lumina",
+    "presets-newer",
+    "presets-edit",
+    "presets-utility",
+    "presets-index",
+    "resource-defaults"
+  ],
+  "tests": ["test_model_default_resources.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
