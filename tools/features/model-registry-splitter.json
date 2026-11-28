@@ -1,0 +1,8 @@
+{
+  "id": "model-registry-splitter",
+  "subject": "Add a tool that splits and verifies the model registry shards",
+  "requires": ["model-registry"],
+  "tests": ["test_model_registry_resources.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
