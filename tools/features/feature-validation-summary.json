@@ -1,0 +1,8 @@
+{
+  "id": "feature-validation-summary",
+  "subject": "Add a summary and contact sheet for image validation reports",
+  "requires": [],
+  "tests": ["test_feature_validation_summary.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
