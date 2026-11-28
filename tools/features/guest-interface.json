@@ -1,0 +1,8 @@
+{
+  "id": "guest-interface",
+  "subject": "Add the generation-only guest interface for LAN users",
+  "requires": ["gradio-upload-guard", "ui-themes", "ui-page-head-and-scripts"],
+  "tests": ["test_guest_localization.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
