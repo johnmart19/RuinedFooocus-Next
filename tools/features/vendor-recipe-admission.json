@@ -1,0 +1,8 @@
+{
+  "id": "vendor-recipe-admission",
+  "subject": "Collect driver evidence for the pinned ROCm and Intel XPU recipes",
+  "requires": ["install-lock"],
+  "tests": ["test_vendor_admission.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
