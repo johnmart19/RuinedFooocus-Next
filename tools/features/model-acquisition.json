@@ -1,0 +1,8 @@
+{
+  "id": "model-acquisition",
+  "subject": "Add the model acquisition projection",
+  "requires": ["utility-model-roles", "image-components", "path-manager"],
+  "tests": ["test_bernini_image_resources.py", "test_krea_style_resources.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
