@@ -1,0 +1,2286 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:clip/qwen_2.5_vl_fp16.safetensors": {
+      "id": "existing:clip/qwen_2.5_vl_fp16.safetensors",
+      "catalogue_key": "clip/qwen_2.5_vl_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:omnigen2_encoder",
+      "label": "OmniGen2 native Qwen2.5-VL 3B FP16 encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Qwen2.5-VL 3B with native OmniGen2 conditioning",
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "training": "unspecified_original",
+        "source": "publisher_artifact_name_not_local_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "278ed4ea9d32a5f2c0d72e3ba831f0aaf9531554bd45649451a8e9ccf8ac3c8e",
+      "artifact": {
+        "bytes": 7509337224,
+        "sha256": "ba05dd266ad6a6aa90f7b2936e4e775d801fb233540585b43933647f8bc4fbc3",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/OmniGen-2/resolve/babe908cd4ed58efc7359e9e35b426cd73071949/split_files/text_encoders/qwen_2.5_vl_fp16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-09",
+        "evidence_scope": "Official workflow and repository LFS metadata; no payload download, local integrity or model execution."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:omnigen2_encoder"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      }
+    },
+    "existing:clip/qwen3vl_8b_joyimage_edit_int8_convrot.safetensors": {
+      "id": "existing:clip/qwen3vl_8b_joyimage_edit_int8_convrot.safetensors",
+      "catalogue_key": "clip/qwen3vl_8b_joyimage_edit_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:joyimage_encoder",
+      "label": "JoyImage native Qwen3-VL 8B INT8 ConvRot encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Qwen3-VL 8B with native JoyImage conditioning",
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 ConvRot",
+        "training": "unspecified_or_post_training",
+        "source": "publisher_artifact_name_not_local_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "0b76fc753f5b0945c6173fccfbe4bceb928c18710dfdbc2498caa8e75832866c",
+      "artifact": {
+        "bytes": 10064089100,
+        "sha256": "683de3ab15337afb9dcf19caaabb683a5ce53eb311eb302ff8eeaf4f553ad1a8",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/JoyAI-Image-Edit/resolve/8010e7b4c2ac3f762d33775ac5d6a011eea4166c/text_encoders/qwen3vl_8b_joyimage_edit_int8_convrot.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-09",
+        "evidence_scope": "Official workflow and repository LFS metadata; no payload download, local integrity or model execution."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:joyimage_encoder"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      }
+    },
+    "existing:clip/clip_aura.safetensors": {
+      "id": "existing:clip/clip_aura.safetensors",
+      "catalogue_key": "clip/clip_aura.safetensors",
+      "state": "existing",
+      "profile_id": "generation:auraflow_encoder",
+      "label": "AuraFlow v0.3 text encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "fc624be8e65947b1cc40f74f4ded41338e9516e95b064966e911acb7bde44b9c",
+      "artifact": {
+        "bytes": 2950448704,
+        "sha256": "decf9b70814ed5e9965bfca9fbd0483462e2bf743790663025b7742f8c014c72",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/fal/AuraFlow-v0.3/resolve/2cd8588f04c886002be4571697d84654a50e3af3/text_encoder/model.fp16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:auraflow_encoder"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/sd4x_clip_h.safetensors": {
+      "id": "existing:clip/sd4x_clip_h.safetensors",
+      "catalogue_key": "clip/sd4x_clip_h.safetensors",
+      "state": "existing",
+      "profile_id": "generation:sd4x_clip",
+      "label": "SD4x CLIP-H text encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "CLIP-H1024 SD2 text",
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP32",
+        "training": "unspecified_original",
+        "source": "publisher_config_not_local_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "df644b93c87973ef4131212b94db45cc47c8d61dbb408918e3bf894aaf81d3c7",
+      "artifact": {
+        "bytes": 1361597018,
+        "sha256": "cce6febb0b6d876ee5eb24af35e27e764eb4f9b1d0b7c026c8c3333d4cfc916c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler/resolve/572c99286543a273bfd17fac263db5a77be12c4c/text_encoder/model.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-09",
+        "evidence_scope": "Official JSON configs and repository LFS metadata only; no payload or real-model execution."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:sd4x_clip"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      }
+    },
+    "existing:clip/clip_g.safetensors": {
+      "id": "existing:clip/clip_g.safetensors",
+      "catalogue_key": "clip/clip_g.safetensors",
+      "state": "existing",
+      "profile_id": "generation:clip_g",
+      "label": "OpenCLIP-G conditioning encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "00d791d9b3db2146c1d000f4d7489416629ce0eabcb28113049124ebf51c1843",
+      "artifact": {
+        "bytes": 1389382176,
+        "sha256": "ec310df2af79c318e24d20511b601a591ca8cd4f1fce1d8dff822a356bcdb1f4",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/462165984030d82259a11f4367a4eed129e94a7b/text_encoder_2/model.fp16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:clip_g"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "openrail++"
+      }
+    },
+    "existing:clip/clip_g_hidream.gguf": {
+      "id": "existing:clip/clip_g_hidream.gguf",
+      "catalogue_key": "clip/clip_g_hidream.gguf",
+      "state": "existing",
+      "profile_id": "generation:clip_g",
+      "label": "OpenCLIP-G conditioning encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "77a095f67094f9f3bf5ef620846b1cd319e2e21786372b453f90b25dd065734c",
+      "artifact": {
+        "bytes": 1390793440,
+        "sha256": "c67fd35b53ed123df6ff271e952e0b160e7661c80a90c0dfe5199f904d6b5871",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/hidream-gguf/resolve/236df9d1b6b1de1b5340853636650e30bed4c059/clip_g_hidream_fp32-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:clip_g"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:clip/clip_l.safetensors": {
+      "id": "existing:clip/clip_l.safetensors",
+      "catalogue_key": "clip/clip_l.safetensors",
+      "state": "existing",
+      "profile_id": "generation:clip_l",
+      "label": "CLIP-L conditioning encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "21f3297eb706a973aa997597d629c8c9dec6f8c546fd785444a8536d62a4e206",
+      "artifact": {
+        "bytes": 246144152,
+        "sha256": "660c6f5b1abae9dc498ac2d21e1347d2abdb0cf6c0c0c8576cd796491d9a6cdd",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/6af2a98e3f615bdfa612fbd85da93d1ed5f69ef5/clip_l.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:clip_l"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/clip_l_hidream.gguf": {
+      "id": "existing:clip/clip_l_hidream.gguf",
+      "catalogue_key": "clip/clip_l_hidream.gguf",
+      "state": "existing",
+      "profile_id": "generation:clip_l",
+      "label": "CLIP-L conditioning encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "327539b3229ee714611d70f0a153f8163343bd503fac85b512c483a641f4e618",
+      "artifact": {
+        "bytes": 247822208,
+        "sha256": "73d086f6de67aeea4dba48c1c8387269fe7c35c4286f73dc0dd9bd0a8998e57a",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/hidream-gguf/resolve/236df9d1b6b1de1b5340853636650e30bed4c059/clip_l_hidream_fp32-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:clip_l"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:clip/cow-mistral3-small-q2_k.gguf": {
+      "id": "existing:clip/cow-mistral3-small-q2_k.gguf",
+      "catalogue_key": "clip/cow-mistral3-small-q2_k.gguf",
+      "state": "existing",
+      "profile_id": "generation:flux2_mistral_encoder",
+      "label": "FLUX.2 Mistral Small conditioning encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q2_K",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": true
+      },
+      "download_identity": "3441bb87166403f7c4f343aad281f9664f246f13af71019844f9466eaddaadaf",
+      "artifact": {
+        "bytes": 7732108992,
+        "sha256": "6a84882f5bfe8cdd7a73ca3ae0c523b46228bb089f70e29195322f7afebe7eab",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/chatpig/flux2-dev-gguf/resolve/d8a7b1885ef216df68720cbeeec4e5bd76015263/cow-mistral3-small-q2_k.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:flux2_mistral_encoder"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "flux-dev-non-commercial-license",
+        "license_link": "https://huggingface.co/black-forest-labs/FLUX.2-dev/blob/main/LICENSE.txt"
+      }
+    },
+    "existing:clip/gemma_2_2b_fp16.safetensors": {
+      "id": "existing:clip/gemma_2_2b_fp16.safetensors",
+      "catalogue_key": "clip/gemma_2_2b_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:gemma2_base_lumina",
+      "label": "Gemma 2 2B base for Lumina 2",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "28488ac35d9dfd04f02dccde0777505d2103787c82fb01c0a4cf124dc13efe7c",
+      "artifact": {
+        "bytes": 5232958283,
+        "sha256": "29761442862f8d064d3f854bb6fabf4379dcff511a7f6ba9405a00bd0f7e2dbd",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/lumina-gguf/resolve/7e594eee76ffffdcc7240c81eb9686b73751481a/gemma_2_2b_fp16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:gemma2_base_lumina"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/gemma_2_2b_it_elm_bf16.safetensors": {
+      "id": "existing:clip/gemma_2_2b_it_elm_bf16.safetensors",
+      "catalogue_key": "clip/gemma_2_2b_it_elm_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:pixeldit_gemma2_elm",
+      "label": "PixelDiT Gemma 2 2B IT ELM encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "df1b02390386360d24f825703014991dfd77fcd5ae33434d3dd6f2006513bf10",
+      "artifact": {
+        "bytes": 5232958571,
+        "sha256": "e7ae59c203c392db4aa4e27783e924ec3225eb563392260cf747e1130ffcdb88",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/PixelDiT/resolve/f1aa9118da0a0b53a4433e5de9a4de2e9aae2193/text_encoders/gemma_2_2b_it_elm_bf16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:pixeldit_gemma2_elm"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "nsclv1"
+      }
+    },
+    "existing:clip/gemma_2_2b_it_elm_fp8_scaled.safetensors": {
+      "id": "existing:clip/gemma_2_2b_it_elm_fp8_scaled.safetensors",
+      "catalogue_key": "clip/gemma_2_2b_it_elm_fp8_scaled.safetensors",
+      "state": "existing",
+      "profile_id": "generation:pixeldit_gemma2_elm",
+      "label": "PixelDiT Gemma 2 2B IT ELM encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP8 scaled",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "d6a893ecb3ade7429635b8ae2a54b74b091b0a1d909e30c523889e183602b187",
+      "artifact": {
+        "bytes": 2618902308,
+        "sha256": "87692b2ab1714028e29910ea645d96db656505ca0805051048d2298b225c02d1",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/PixelDiT/resolve/f1aa9118da0a0b53a4433e5de9a4de2e9aae2193/text_encoders/gemma_2_2b_it_elm_fp8_scaled.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:pixeldit_gemma2_elm"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "nsclv1"
+      }
+    },
+    "existing:clip/gemma-3-4b-it-Q5_K_M.gguf": {
+      "id": "existing:clip/gemma-3-4b-it-Q5_K_M.gguf",
+      "catalogue_key": "clip/gemma-3-4b-it-Q5_K_M.gguf",
+      "state": "existing",
+      "profile_id": "generation:gemma3_4b_newbie",
+      "label": "Gemma 3 4B for NewBieImage",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q5_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "46fcdfd908a30ad0ff93c921a1cfed66b9700921300a768d12d0a2519414ca80",
+      "artifact": {
+        "bytes": 2829698176,
+        "sha256": "974e5c2f13c321fc3258b6fbf2ce326a09d8ace511aa6846df1db62baf7df7d4",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/gemma-3-4b-it-GGUF/resolve/5a3566e716d80f709ed7b79817eaf7733d2a1fce/gemma-3-4b-it-Q5_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:gemma3_4b_newbie"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "gemma"
+      }
+    },
+    "existing:clip/gemma_3_4b_it_bf16.safetensors": {
+      "id": "existing:clip/gemma_3_4b_it_bf16.safetensors",
+      "catalogue_key": "clip/gemma_3_4b_it_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:gemma3_4b_newbie",
+      "label": "Gemma 3 4B for NewBieImage",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "ced8d922f606e58a58bdd5e6ed11d3f506c56c045a0b3cd366c292714378955a",
+      "artifact": {
+        "bytes": 7765267250,
+        "sha256": "9ca0ed0c8b0093357c044fc528f439d369fb1029200dcd8011328771e8af8d6e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/woctordho/comfyui-gemma-3-4b-it/resolve/c8c628fa655016102f5c4432f3d78868ccd70949/gemma_3_4b_it_bf16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:gemma3_4b_newbie"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:clip/qwen3vl_4b_bf16.safetensors": {
+      "id": "existing:clip/qwen3vl_4b_bf16.safetensors",
+      "catalogue_key": "clip/qwen3vl_4b_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen3vl4_generic",
+      "label": "Qwen3-VL 4B BF16 conditioning encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "6bb0a6f60675bcc047a48d21a498805afd9b86b1936f59b180efe862e7d9427b",
+      "artifact": {
+        "bytes": 8875719384,
+        "sha256": "36f3ff447ef59201722e8f9ce6020c9819fdcfba6aa2608c4e09b1c0ce114e34",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/02f0d3eefb59528799653d16735818801177ef1f/text_encoders/qwen3vl_4b_bf16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3vl4_generic"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/qwen3vl_4b_fp8_scaled.safetensors": {
+      "id": "existing:clip/qwen3vl_4b_fp8_scaled.safetensors",
+      "catalogue_key": "clip/qwen3vl_4b_fp8_scaled.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen3vl4_krea",
+      "label": "Krea 2 Qwen3-VL 4B FP8 scaled encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP8 scaled",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "471c445de23b6de6591b58191c8b83b347134a662f2fbda303f6a31f7df43f13",
+      "artifact": {
+        "bytes": 5242467968,
+        "sha256": "54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/588feaf955b08b9ac4723eeb751752ab045dba71/text_encoders/qwen3vl_4b_fp8_scaled.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3vl4_krea"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "krea-2-community-license",
+        "license_link": "https://huggingface.co/krea/Krea-2-Turbo/blob/main/LICENSE.pdf"
+      }
+    },
+    "existing:clip/qwen3vl_8b_fp8_scaled.safetensors": {
+      "id": "existing:clip/qwen3vl_8b_fp8_scaled.safetensors",
+      "catalogue_key": "clip/qwen3vl_8b_fp8_scaled.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen3vl8_boogu_ideogram",
+      "label": "Qwen3-VL 8B FP8 scaled for Boogu / Ideogram",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP8 scaled",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a8f8de44bf22f5fcec3082c38e624d725030c6feed1d9957a3ef4c5206392289",
+      "artifact": {
+        "bytes": 10588637512,
+        "sha256": "4ba424cf62e51392e4d1a39933e803706f4e823c1065f36aaf149c6453f66bcd",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Boogu-Image/resolve/8606e7df2f5389282617b8b534db290e1f5d7811/text_encoders/qwen3vl_8b_fp8_scaled.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3vl8_boogu_ideogram"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/qwen3.5_9b_w4a8_gptq.safetensors": {
+      "id": "existing:clip/qwen3.5_9b_w4a8_gptq.safetensors",
+      "catalogue_key": "clip/qwen3.5_9b_w4a8_gptq.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen35_moss",
+      "label": "MOSS Image Qwen3.5 9B encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "28399bdee21c75de4d2f955a9dceceaa117bcde5a990552615517fce3125731f",
+      "artifact": {
+        "bytes": 7343591088,
+        "sha256": "4cc6a1543ad2061806da46f35f90cadb4801dcba246c44782cf42ec0feb6407c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/2929efe3cdd506c0a430bcfca70a9a8d805cc095/text_encoders/qwen3.5_9b_w4a8_gptq.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen35_moss"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/qwen3.5_9b_int8_convrot.safetensors": {
+      "id": "existing:clip/qwen3.5_9b_int8_convrot.safetensors",
+      "catalogue_key": "clip/qwen3.5_9b_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen35_moss",
+      "label": "MOSS Image Qwen3.5 9B encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 ConvRot",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "affb5505ddf706e5b49d5b63bc352b325d46a16825d576db3f5d12a428be8b62",
+      "artifact": {
+        "bytes": 9748121532,
+        "sha256": "32e3787472f708fa5f83624acbf5ef23f7fc89c439e05065ea57cfe5a97f025a",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/2929efe3cdd506c0a430bcfca70a9a8d805cc095/text_encoders/qwen3.5_9b_int8_convrot.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen35_moss"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/jina_clip_v2_bf16.safetensors": {
+      "id": "existing:clip/jina_clip_v2_bf16.safetensors",
+      "catalogue_key": "clip/jina_clip_v2_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:jina_newbie_text",
+      "label": "Jina CLIP v2 text-only tower for NewBieImage",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a27e7a7a4870a0504141957a21911ce80e68c1ef9223f6c29ab8c6790471b4ed",
+      "artifact": {
+        "bytes": 1121730691,
+        "sha256": "149c302aecd9cda9985f16f1330611925f1f7875dcdbe57df296f210e6ab0d73",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/woctordho/comfyui-jina-clip-v2/resolve/e864905e181a9244ec54e42437adec8b10708ecf/jina_clip_v2_bf16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:jina_newbie_text"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:clip/llama_q2.gguf": {
+      "id": "existing:clip/llama_q2.gguf",
+      "catalogue_key": "clip/llama_q2.gguf",
+      "state": "existing",
+      "profile_id": "generation:hidream_llama",
+      "label": "HiDream Llama 3.1 8B low-bit encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q2",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": true
+      },
+      "download_identity": "fa0828922c877b809c4f31192f6e7f88466c0b017b685e59672f1502dd4a0ba9",
+      "artifact": {
+        "bytes": 3179434016,
+        "sha256": "c5e30598b39cd02f9e2687d038da4bac6cd3b2965b28d289ce8f50c8506c214d",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/hidream-gguf/resolve/236df9d1b6b1de1b5340853636650e30bed4c059/llama-q2_k.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:hidream_llama"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:clip/mistral_3_small_flux2_fp8.safetensors": {
+      "id": "existing:clip/mistral_3_small_flux2_fp8.safetensors",
+      "catalogue_key": "clip/mistral_3_small_flux2_fp8.safetensors",
+      "state": "existing",
+      "profile_id": "generation:flux2_mistral_encoder",
+      "label": "FLUX.2 Mistral Small conditioning encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP8",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "992be6c7581eeafe77888410667952edfa98a58ed9598bc83240e204dc252bd1",
+      "artifact": {
+        "bytes": 18034640095,
+        "sha256": "e3467b7d912a234fb929cdf215dc08efdb011810b44bc21081c4234cc75b370e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/flux2-dev/resolve/9630c1b4b6e690497ae0c19bb6b1b35d4ebedcb7/split_files/text_encoders/mistral_3_small_flux2_fp8.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:flux2_mistral_encoder"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "flux-1-dev-non-commercial-license",
+        "license_link": "https://huggingface.co/black-forest-labs/FLUX.1-Krea-dev/blob/main/LICENSE.md"
+      }
+    },
+    "existing:clip/ministral-3-3b.safetensors": {
+      "id": "existing:clip/ministral-3-3b.safetensors",
+      "catalogue_key": "clip/ministral-3-3b.safetensors",
+      "state": "existing",
+      "profile_id": "generation:ernie_ministral",
+      "label": "ERNIE Image Ministral 3 3B encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "853e7a01edbad2471e020777e781d85accec2595f560f37bae1e552bad3a3e42",
+      "artifact": {
+        "bytes": 7717637511,
+        "sha256": "49a750a128863854eac7d85e1a277a7b44bf6ec3646405b84686dfeeca3708ca",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/ERNIE-Image/resolve/50509a88bc4fb9e89583a98605f4c81dc221eb8c/text_encoders/ministral-3-3b.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:ernie_ministral"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/qwen_3_06b_base.safetensors": {
+      "id": "existing:clip/qwen_3_06b_base.safetensors",
+      "catalogue_key": "clip/qwen_3_06b_base.safetensors",
+      "state": "existing",
+      "profile_id": "generation:anima_qwen06",
+      "label": "Anima Qwen3 0.6B base encoder",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "01769f6675456c89c7c8ab46c24eeec5a5eb272ff8ba0c6eefaff8ff4a542618",
+      "artifact": {
+        "bytes": 1192135096,
+        "sha256": "cd2a512003e2f9f3cd3c32a9c3573f820bb28c940f73c57b1ddaa983d9223eba",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/circlestone-labs/Anima/resolve/f973fc41ec7545364ac9776c2440285f43ff2a30/split_files/text_encoders/qwen_3_06b_base.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:anima_qwen06"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "circlestone-labs-non-commercial-license",
+        "license_link": "LICENSE.md"
+      }
+    },
+    "existing:clip/qwen_3_4b.safetensors": {
+      "id": "existing:clip/qwen_3_4b.safetensors",
+      "catalogue_key": "clip/qwen_3_4b.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen3_4b_generation",
+      "label": "Qwen3 4B for Z-Image / FLUX.2 Klein 4B",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "e160b41a926aa2bd597a486bb70d0b0ea8d54f0bb0782eae934be2e17ca07c74",
+      "artifact": {
+        "bytes": 8044982048,
+        "sha256": "6c671498573ac2f7a5501502ccce8d2b08ea6ca2f661c458e708f36b36edfc5a",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/6fc90a3b1b653e935a0d175e260736de25b84df5/split_files/text_encoders/qwen_3_4b.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference.",
+        "source_repair": {
+          "previous_url": "https://huggingface.co/Comfy-Org/z_image_turbo/blob/main/split_files/text_encoders/qwen_3_4b.safetensors",
+          "checked_date_utc": "2026-11-08",
+          "scope": "Pinned source repair; existing installed files remain unchanged."
+        }
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3_4b_generation"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/Qwen3-4B-Q2_K.gguf": {
+      "id": "existing:clip/Qwen3-4B-Q2_K.gguf",
+      "catalogue_key": "clip/Qwen3-4B-Q2_K.gguf",
+      "state": "existing",
+      "profile_id": "generation:qwen3_4b_generation",
+      "label": "Qwen3 4B for Z-Image / FLUX.2 Klein 4B",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q2_K",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": true
+      },
+      "download_identity": "6e5ad91d1da862a32c3046a00f5a9d871de303bd9c625988f86587eaf962f4fc",
+      "artifact": {
+        "bytes": 1669500192,
+        "sha256": "a5f2398927fa06fe12074aa39086004300185b82de53a1d2623b0f015e3881b0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Qwen3-4B-GGUF/resolve/22c9fc8a8c7700b76a1789366280a6a5a1ad1120/Qwen3-4B-Q2_K.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3_4b_generation"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3-4B/blob/main/LICENSE"
+      }
+    },
+    "existing:clip/Qwen3-4B-Q4_K_M.gguf": {
+      "id": "existing:clip/Qwen3-4B-Q4_K_M.gguf",
+      "catalogue_key": "clip/Qwen3-4B-Q4_K_M.gguf",
+      "state": "existing",
+      "profile_id": "generation:qwen3_4b_generation",
+      "label": "Qwen3 4B for Z-Image / FLUX.2 Klein 4B",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q4_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "4c27e7473ffed924ce0057d2bcb6eae9c836e15839e0c7f0053a359ac693aa89",
+      "artifact": {
+        "bytes": 2497281312,
+        "sha256": "f6f851777709861056efcdad3af01da38b31223a3ba26e61a4f8bf3a2195813a",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Qwen3-4B-GGUF/resolve/22c9fc8a8c7700b76a1789366280a6a5a1ad1120/Qwen3-4B-Q4_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3_4b_generation"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3-4B/blob/main/LICENSE"
+      }
+    },
+    "existing:clip/Qwen3-4B-Q8_0.gguf": {
+      "id": "existing:clip/Qwen3-4B-Q8_0.gguf",
+      "catalogue_key": "clip/Qwen3-4B-Q8_0.gguf",
+      "state": "existing",
+      "profile_id": "generation:qwen3_4b_generation",
+      "label": "Qwen3 4B for Z-Image / FLUX.2 Klein 4B",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q8_0",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "052e386de6ff6a65db26acd2c7e8a323d619c820eb371d4a9e198763fab4c2be",
+      "artifact": {
+        "bytes": 4280405792,
+        "sha256": "eed555233267a33c7e8ee31682762cc7751b3f6d224039086e0e846f05fffa5d",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/unsloth/Qwen3-4B-GGUF/resolve/22c9fc8a8c7700b76a1789366280a6a5a1ad1120/Qwen3-4B-Q8_0.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3_4b_generation"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3-4B/blob/main/LICENSE"
+      }
+    },
+    "existing:clip/Qwen3-8B-Q8_0.gguf": {
+      "id": "existing:clip/Qwen3-8B-Q8_0.gguf",
+      "catalogue_key": "clip/Qwen3-8B-Q8_0.gguf",
+      "state": "existing",
+      "profile_id": "generation:qwen3_8b_generation",
+      "label": "Qwen3 8B for FLUX.2 Klein 9B",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q8_0",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "afd1b3361be14571f5145500a58c041a15378d97540b44ca82f256bcae873a18",
+      "artifact": {
+        "bytes": 8709518112,
+        "sha256": "408b955510e196121c1c375201744783b5c9a43c7956d73fc78df54c66e883d6",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/resolve/7c41481f57cb95916b40956ab2f0b139b296d974/Qwen3-8B-Q8_0.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3_8b_generation"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/LICENSE"
+      }
+    },
+    "existing:clip/Qwen3-8B-Q4_K_M.gguf": {
+      "id": "existing:clip/Qwen3-8B-Q4_K_M.gguf",
+      "catalogue_key": "clip/Qwen3-8B-Q4_K_M.gguf",
+      "state": "existing",
+      "profile_id": "generation:qwen3_8b_generation",
+      "label": "Qwen3 8B for FLUX.2 Klein 9B",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q4_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "1c0f2567980958ebac3816f6ee9394003660c7697ec2f54342a3d2b984e27eda",
+      "artifact": {
+        "bytes": 5027783488,
+        "sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/resolve/7c41481f57cb95916b40956ab2f0b139b296d974/Qwen3-8B-Q4_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen3_8b_generation"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0",
+        "license_link": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/LICENSE"
+      }
+    },
+    "existing:clip/t5xxl_old_fp32-q4_0.gguf": {
+      "id": "existing:clip/t5xxl_old_fp32-q4_0.gguf",
+      "catalogue_key": "clip/t5xxl_old_fp32-q4_0.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_old_cosmos",
+      "label": "Older T5 XXL encoder for Cosmos Predict2",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q4_0",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "06799ba082c8b295615144f7ed09a6de82b7cfe9df9cec42d2900c5ec62416d0",
+      "artifact": {
+        "bytes": 2736634208,
+        "sha256": "ab25f6d2f15aed6fa9a2f8f7f3b829f7f350355f502e32f938fa55a34aab4bb1",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/cosmos-predict2-gguf/resolve/e4394169c5df131f23d547d0aa72f7b53943211d/t5xxl_old_fp32-q4_0.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_old_cosmos"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "nvidia-open-model-license",
+        "license_link": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q3_K_L.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q3_K_L.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q3_K_L.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q3_K_L",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "2250440330bf3087ad2d65c2f901697147528d3942c5c3a23b87b32f7b3cc702",
+      "artifact": {
+        "bytes": 2462799040,
+        "sha256": "8f5ab879234384235d56732f0cda07bf8801f30a49645248c5bfdeeb1665f64b",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q3_K_L.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q3_K_M.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q3_K_M.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q3_K_M.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q3_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "2ec42694def4982cd43f5b7ec4842a5f7c0e0427cbc51563ed64ac89793f961b",
+      "artifact": {
+        "bytes": 2296075456,
+        "sha256": "f28631189911f8d7931e8fe642a4cb2a3c51f50da7cabbfa06b89bafc19c00d0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q3_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q3_K_S.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q3_K_S.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q3_K_S.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q3_K_S",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "7993fd7f8b3af0eb6494ec874f4eb4bcd4e78fae367c201fcff16cfb2bae2595",
+      "artifact": {
+        "bytes": 2099467456,
+        "sha256": "31ebe18e901bfb6e5709a20ec1c95fce29bce2b9545073231e0f909a53239f5c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q3_K_S.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q4_K_M.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q4_K_M.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q4_K_M.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q4_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "516df39a4e6e7a4ea9d6be0cb1254a5d79044e4be09049ab42cf2cf5c8e163f4",
+      "artifact": {
+        "bytes": 2896123072,
+        "sha256": "6be2b0b7e2de7cf2919340c88cb802a103a997ce46c53131cec91958c1db1af4",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q4_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q4_K_S.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q4_K_S.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q4_K_S.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q4_K_S",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "397add886bea0487148d9b8318c0e301d44e4722b8eee4546d2affab212e4ece",
+      "artifact": {
+        "bytes": 2738574528,
+        "sha256": "88b696cfae098f03bb078cc5944ef03aec1e91ec020a6b016b723a0f0532558c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q4_K_S.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q5_K_M.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q5_K_M.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q5_K_M.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q5_K_M",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "6d6e03168f2f7baf1b7da8aa69ded3de9f3ba51176270308ef4a39af5898793e",
+      "artifact": {
+        "bytes": 3386856640,
+        "sha256": "b51cbb10b1a7aac6dd1c3b62f0ed908bfd06e0b42d2f3577d43e061361f51dae",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q5_K_M.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q5_K_S.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q5_K_S.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q5_K_S.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q5_K_S",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "c931d1ac603353452a6b57f8d52edf50f226d6b9aaa269693cb50f6cd4d01543",
+      "artifact": {
+        "bytes": 3293271232,
+        "sha256": "86427a1f4dba48940e45bf78d6db5bf0d48fce8b4656f5aba27955f06af9628e",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q5_K_S.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q6_K.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q6_K.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q6_K.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q6_K",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "28f56994961a30dad22f388e4d77c10c69a55d8ef3c63427123e2129ac8162ed",
+      "artifact": {
+        "bytes": 3908261056,
+        "sha256": "d80116f6fc39801e4eef425a584e7a7a41cbe5119797bef2dad67299909fe2ae",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q6_K.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-Q8_0.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-Q8_0.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-Q8_0.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "Q8_0",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "021d9244ad5a13aa7183b22ef67c95c3a0a9b82e3390f09c0841aba5bbd6ae0d",
+      "artifact": {
+        "bytes": 5061584064,
+        "sha256": "9ec60f6028534b7fe5af439fcb535d75a68592a9ca3fcdeb175ef89e3ee99825",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-Q8_0.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-f16.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-f16.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-f16.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "48dc35e86bfc46af8764288ddea6781bb155b68f88eee2fc4dc6c9053d9f8638",
+      "artifact": {
+        "bytes": 9526060224,
+        "sha256": "1dc600961d3c5ed081f6700485cdc7ed9cfb4631f2dc385b7ac6bd3c80846d0d",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/t5-v1_1-xxl-encoder-f32.gguf": {
+      "id": "existing:clip/t5-v1_1-xxl-encoder-f32.gguf",
+      "catalogue_key": "clip/t5-v1_1-xxl-encoder-f32.gguf",
+      "state": "existing",
+      "profile_id": "generation:t5_v11_xxl",
+      "label": "T5 v1.1 XXL encoder-only GGUF quantization family",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "F32",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "6d868109c39d485d3932de7ed15a605c5c3bd73dec7e70cf1c7e08bb72dcb02c",
+      "artifact": {
+        "bytes": 19050276032,
+        "sha256": "de9dfdd19d7ba6859993cadec5100665dc7a4fb71e1c6c8970959cbdaf4366e3",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/005a6ea51a7d0b84d677b3e633bb52a8c85a83d9/t5-v1_1-xxl-encoder-f32.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:t5_v11_xxl"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:clip/gpt_oss_20b_nvfp4.safetensors": {
+      "id": "existing:clip/gpt_oss_20b_nvfp4.safetensors",
+      "catalogue_key": "clip/gpt_oss_20b_nvfp4.safetensors",
+      "state": "existing",
+      "profile_id": "generation:lens_clip",
+      "label": "gpt_oss_20b_nvfp4.safetensors",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Lens",
+      "format": "safetensors",
+      "quantization": {
+        "label": "NVFP4",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": true
+      },
+      "download_identity": "f694bf840930519926f3bc92538a1bcd4351e1abe5a7aa442d346e3b2f8a0d64",
+      "artifact": {
+        "bytes": 13236981318,
+        "sha256": "103d7759c720627e5ffdcb0d885595695085dad4201fa6a522a84d4b86335ca0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Lens/resolve/393618fd7db3e370509f84390b9162b8fd839a25/text_encoders/gpt_oss_20b_nvfp4.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/Comfy-Org/docs/blob/305f5bdb758493bc1d97cc57cd32868ce105fba4/tutorials/image/lens/lens.mdx"
+      }
+    },
+    "existing:clip/ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors": {
+      "id": "existing:clip/ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors",
+      "catalogue_key": "clip/ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:ming_image_clip",
+      "label": "ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors",
+      "role": "text_conditioning_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "MingImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 ConvRot",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "9566496c106ef8048b00ab5b09a70f8b81295681aa1cc52feb2714e562d03ca4",
+      "artifact": {
+        "bytes": 19507670525,
+        "sha256": "9d9f31cfce37c24ae1589287f5c33bd9dda80e14ddf773b5e17a0bb69c8cc4b1",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Ming-Image/resolve/93804ff3747517a318969c5f61b25a57daefe09f/text_encoders/ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/Comfy-Org/docs/blob/305f5bdb758493bc1d97cc57cd32868ce105fba4/tutorials/image/ming-image/ming-image-0-1-design.mdx"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "metadata-text-encoder-artifacts",
+  "subject": "Add artifact records for text encoders and prompt enhancers",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

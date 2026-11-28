@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:clip/qwen3vl_8b_int8_convrot.safetensors": {
+      "id": "existing:clip/qwen3vl_8b_int8_convrot.safetensors",
+      "catalogue_key": "clip/qwen3vl_8b_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_clip",
+      "label": "qwen3vl_8b_int8_convrot.safetensors",
+      "role": "image_text_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 ConvRot",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "eadbb0d306df4b9894277de4bc2374c425015a24e016914de2243ea9328d1cb0",
+      "artifact": {
+        "bytes": 9350798360,
+        "sha256": "8bfd0f6e12abf2d2d697ecc888e5e90b0d6741d6708f05799f53afa560452e8f",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/text_encoders/qwen3vl_8b_int8_convrot.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/Comfy-Org/docs/blob/305f5bdb758493bc1d97cc57cd32868ce105fba4/tutorials/image/qwen/qwen-image-2-1.mdx"
+      }
+    },
+    "existing:clip/byt5_small_glyphxl_fp16.safetensors": {
+      "id": "existing:clip/byt5_small_glyphxl_fp16.safetensors",
+      "catalogue_key": "clip/byt5_small_glyphxl_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:hunyuan_image21_clip",
+      "label": "byt5_small_glyphxl_fp16.safetensors",
+      "role": "image_text_encoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "HunyuanImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5db24cc0f8b35cf0ea0ff209f9faffb8a8b59005decbac7a42648d4e9edf5375",
+      "artifact": {
+        "bytes": 438643184,
+        "sha256": "516910bb4c9b225370290e40585d1b0e6c8cd3583690f7eec2f7fb593990fb48",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/resolve/78cfe74376b50a2f52995c4800f792f99ab575b2/split_files/text_encoders/byt5_small_glyphxl_fp16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/comfyanonymous/ComfyUI_examples/blob/f9431bb000ce792094ff345446e22cac1ea6cef3/hunyuan_image/README.md"
+      }
+    }
+  }
+}

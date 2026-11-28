@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:clip/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors": {
+      "id": "existing:clip/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+      "catalogue_key": "clip/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_checkpoints",
+      "label": "Qwen Image 2.1 Prompt Enhancer for Create",
+      "role": "prompt_enhancer",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 ConvRot",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "5f2d741796efa6eead568ad1475f92fb22940735fd38629aea43ef220673fef5",
+      "artifact": {
+        "bytes": 9471072252,
+        "sha256": "9182abae56fe05459840a86d22abd21f972061c92fce032630af680c8c5178d3",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple. Local and device qualification are recorded separately."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1",
+        "license": "qwen-research"
+      }
+    },
+    "existing:clip/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors": {
+      "id": "existing:clip/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+      "catalogue_key": "clip/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_checkpoints",
+      "label": "Qwen Image 2.1 Prompt Enhancer for Edit",
+      "role": "prompt_enhancer",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 ConvRot",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a4d170f06c75973c0d4d7aaac80033be3614239df4ab66b497b5d6663de86b34",
+      "artifact": {
+        "bytes": 9471072252,
+        "sha256": "32707d01b427e488af252b95c551989aad59f9fec611a694f5db6bde7f0f1f6c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple. Local and device qualification are recorded separately."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1",
+        "license": "qwen-research"
+      }
+    }
+  }
+}
