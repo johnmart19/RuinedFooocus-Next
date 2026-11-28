@@ -1,0 +1,22 @@
+{
+  "id": "editor-workspace-ui",
+  "subject": "Add the Editor workspace",
+  "requires": [
+    "editor-guided-results-ui",
+    "ui-model-acquisition",
+    "ui-page-head-and-scripts",
+    "settings-navigation",
+    "image-adjustments-ui",
+    "prompt-ui-rewrite",
+    "library-ui"
+  ],
+  "tests": [
+    "test_editor_button_guards.py",
+    "test_editor_workspace_actions.py",
+    "test_image_residual_ui_api.py",
+    "test_ui_audit_fixes.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
