@@ -1,0 +1,16 @@
+{
+  "diffusion_models/ernie-image.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/ERNIE-Image/resolve/50509a88bc4fb9e89583a98605f4c81dc221eb8c/diffusion_models/ernie-image.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "ernie-image.safetensors",
+    "size": 16067025480,
+    "sha256": "94a35abaa0899cccc34d2e37310abf74a0a714256526117bba782c7eb4eb91c7"
+  },
+  "diffusion_models/ernie-image-turbo.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/ERNIE-Image/resolve/50509a88bc4fb9e89583a98605f4c81dc221eb8c/diffusion_models/ernie-image-turbo.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "ernie-image-turbo.safetensors",
+    "size": 16067025480,
+    "sha256": "741a4cc0467d4b9f04490d7faa9a5869ff4aa97eb2914927a1df9abb070e8e52"
+  }
+}

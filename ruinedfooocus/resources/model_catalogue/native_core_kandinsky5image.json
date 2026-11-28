@@ -1,0 +1,9 @@
+{
+  "diffusion_models/kandinsky5lite_t2i.safetensors": {
+    "url": "https://huggingface.co/kandinskylab/Kandinsky-5.0-T2I-Lite/resolve/d6414890042e02db49d9822b995eb36b475fd127/model/kandinsky5lite_t2i.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "kandinsky5lite_t2i.safetensors",
+    "size": 12044328816,
+    "sha256": "be7a9e1f002f3aded7bed95dfe664a762e66ce766876f137444aab13ba48b63f"
+  }
+}

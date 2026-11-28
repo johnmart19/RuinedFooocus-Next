@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-newer",
+  "subject": "Add the ERNIE, FIBO, Ideogram, Krea, Lens, MOSS and related download catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
