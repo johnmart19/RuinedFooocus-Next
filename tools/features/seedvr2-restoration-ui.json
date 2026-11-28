@@ -1,0 +1,33 @@
+{
+  "id": "seedvr2-restoration-ui",
+  "subject": "Add SeedVR2 controls to the Image tools panel",
+  "requires": [
+    "generation-size-plan",
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "model-registry",
+    "launch-arguments",
+    "image-preparation",
+    "utility-defaults",
+    "seedvr2-restoration",
+    "wevisone-ui"
+  ],
+  "tests": ["test_utility_saved_selections.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
