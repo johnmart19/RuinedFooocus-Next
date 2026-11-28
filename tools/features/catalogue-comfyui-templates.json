@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-comfyui-templates",
+  "subject": "Add the catalogue synced from official ComfyUI templates",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
