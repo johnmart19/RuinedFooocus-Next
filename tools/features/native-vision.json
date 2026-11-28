@@ -1,0 +1,8 @@
+{
+  "id": "native-vision",
+  "subject": "Add native detection, SAM 3 segmentation and monocular depth",
+  "requires": ["model-identity", "native-image-formats"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
