@@ -1,0 +1,8 @@
+{
+  "id": "chat-splitter",
+  "subject": "Add the draggable splitter between the chat and its model controls",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
