@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_chroma_base": {
+      "title": "Chroma base",
+      "consumers": ["Chroma"],
+      "native_class": "Chroma",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Chroma1-HD_repackaged/blob/595f6c4194ea076c87f2d88f753f331edc221644/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-chroma-base",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_chroma_text_to_image.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

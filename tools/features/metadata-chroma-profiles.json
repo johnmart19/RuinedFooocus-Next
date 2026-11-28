@@ -1,0 +1,8 @@
+{
+  "id": "metadata-chroma-profiles",
+  "subject": "Add metadata profiles for Chroma",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
