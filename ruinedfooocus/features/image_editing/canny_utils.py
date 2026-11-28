@@ -42,4 +42,3 @@ def sanitize_canny_thresholds(low: float, high: float) -> Tuple[float, float]:
             high = min(max_val, low + eps)
 
     return float(low), float(high)
-
