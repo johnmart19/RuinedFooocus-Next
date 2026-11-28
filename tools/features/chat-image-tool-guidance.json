@@ -1,0 +1,14 @@
+{
+  "id": "chat-image-tool-guidance",
+  "subject": "Share image tool guidance between local chat and API clients",
+  "requires": [
+    "llama-prebuilt-installer",
+    "model-capabilities",
+    "chat-model-profiles",
+    "chat-sampling-sources",
+    "chat-image-tool-requests"
+  ],
+  "tests": ["test_chat_image_tools.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
