@@ -1,0 +1,8 @@
+{
+  "id": "depth-utility-pipeline",
+  "subject": "Run still depth utilities on the serial image compute lane",
+  "requires": ["app-root-paths", "native-image-formats", "native-vision-pipeline"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
