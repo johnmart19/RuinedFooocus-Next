@@ -1,0 +1,8 @@
+{
+  "id": "adapter-card-component",
+  "subject": "Add the adapter card grid component assets",
+  "requires": [],
+  "tests": ["test_card_preview_badge.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
