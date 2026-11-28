@@ -1,0 +1,13 @@
+{
+  "id": "depth-utilities-ui",
+  "subject": "Add Image tools controls for depth, pose, faces and albedo",
+  "requires": [
+    "native-image-formats",
+    "translation-manager",
+    "utility-defaults",
+    "depth-utility-contracts"
+  ],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
