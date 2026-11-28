@@ -1,0 +1,30 @@
+{
+  "id": "native-vision-ui",
+  "subject": "Add Image tools controls for detection and SAM 3 segmentation",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translation-manager",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "launch-arguments",
+    "utility-defaults",
+    "native-vision"
+  ],
+  "tests": ["test_native_vision_ui.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
