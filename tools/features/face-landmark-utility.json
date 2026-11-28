@@ -1,0 +1,8 @@
+{
+  "id": "face-landmark-utility",
+  "subject": "Add MediaPipe face landmark overlays and region masks",
+  "requires": ["native-vision", "depth-utility-contracts"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
