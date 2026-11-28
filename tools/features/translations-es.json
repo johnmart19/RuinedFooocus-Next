@@ -1,0 +1,8 @@
+{
+  "id": "translations-es",
+  "subject": "Add the Spanish interface translation",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
