@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "profile_id": "language:lfm25_1_2b",
+  "qualification": {
+    "status": "candidate_not_default",
+    "prior_semantic_failures_retained": true,
+    "evidence": "docs/integrations/local-llm-qualification.md",
+    "memory_caveat": "Buffer logs do not prove peak VRAM, physical3GB/6GB devices or concurrent image residency.",
+    "quality_outcome": "failed_declared_criteria",
+    "default_decision": "pending_no_existing_compact_candidate_passes_declared_criteria",
+    "source_head": "15469969ff17c4bddfa6809609ef16026744fa21",
+    "cases": {
+      "total": 28,
+      "passed": 12,
+      "failed": 16
+    },
+    "failed_gates": [
+      "unsolicited_image_tool_during_no_image_conversation",
+      "incorrect_arithmetic_13_instead_of_7",
+      "persona_constraints",
+      "external_review_details_and_uncertainty"
+    ],
+    "runtime_execution": {
+      "outcome": "passed_bounded_vulkan_run_both_engines",
+      "native_build": "b12110",
+      "embedded_build": "b11870",
+      "offloaded_layers": "17/17",
+      "context_tokens": 2048,
+      "slots": 1,
+      "native_selection": "explicit_existing_LLAMA_SERVER_binary",
+      "owned_shutdown_verified": true,
+      "source_runtime_model_unchanged": true
+    },
+    "small_vram_acceptance": {
+      "outcome": "blocked_hardware_unavailable",
+      "physical_3gb_6gb_verified": false,
+      "peak_physical_vram_bytes": null
+    },
+    "receipts": [
+      {
+        "path": "cache/default-llm-20261109/final-lfm25-20261109T181004Z-e61be049/manifest.json",
+        "sha256": "b8859b2d67eb34301c63c5bafd05eb67822ac55e83f66a28342ee742274859fc"
+      },
+      {
+        "path": "cache/default-llm-20261109/final-lfm25-20261109T181004Z-e61be049/semantic-verdict.json",
+        "sha256": "412416417faa29b4a1982276932af04e7a6f97ba143aed3c795d6ee1f1676505"
+      }
+    ]
+  }
+}

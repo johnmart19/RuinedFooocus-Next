@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "profile_id": "language:qwen3_1_7b",
+  "qualification": {
+    "status": "candidate_not_default",
+    "prior_semantic_failures_retained": true,
+    "evidence": "docs/integrations/local-llm-qualification.md",
+    "quality_outcome": "failed_declared_criteria",
+    "default_decision": "pending_no_existing_compact_candidate_passes_declared_criteria",
+    "source_head": "46c9995e18b905cb0bdf433de7071d9c8af8a63d",
+    "cases": {
+      "total": 28,
+      "passed": 14,
+      "failed": 14
+    },
+    "failed_gates": [
+      "exact_number_only_format_despite_correct_arithmetic",
+      "megumin_sentence_action_limits",
+      "zug_self_reference",
+      "external_review_text_and_uncertainty"
+    ],
+    "runtime_execution": {
+      "outcome": "passed_bounded_vulkan_run_both_engines",
+      "native_build": "b12110",
+      "embedded_build": "b11870",
+      "offloaded_layers": "29/29",
+      "context_tokens": 2048,
+      "slots": 1,
+      "reasoning": "production_initialized_off",
+      "owned_shutdown_verified": true,
+      "source_runtime_model_unchanged": true
+    },
+    "small_vram_acceptance": {
+      "outcome": "blocked_hardware_unavailable",
+      "physical_3gb_6gb_verified": false,
+      "peak_physical_vram_bytes": null
+    },
+    "receipts": [
+      {
+        "path": "cache/default-llm-20261109/final-qwen3-20261109T182856Z-7feadc86/manifest.json",
+        "sha256": "a78c3e14268a6380e0a58038c92f5f7debb42436d67edd67ee79c1ac01c6763b"
+      },
+      {
+        "path": "cache/default-llm-20261109/final-qwen3-20261109T182856Z-7feadc86/semantic-verdict.json",
+        "sha256": "6e7dbe582e54e5433150527468b4fd1cb3ee8dcfb745cd9c0f6a551e62954b6f"
+      }
+    ]
+  }
+}
