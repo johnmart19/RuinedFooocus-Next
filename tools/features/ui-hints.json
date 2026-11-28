@@ -1,0 +1,8 @@
+{
+  "id": "ui-hints",
+  "subject": "Move the random usage hint into the UI package",
+  "requires": ["app-root-paths", "hints-resources"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
