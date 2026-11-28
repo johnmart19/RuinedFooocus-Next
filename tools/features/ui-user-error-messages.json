@@ -1,0 +1,8 @@
+{
+  "id": "ui-user-error-messages",
+  "subject": "Show application error messages to the person who triggered an event",
+  "requires": ["app-root-paths"],
+  "tests": ["test_user_errors.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
