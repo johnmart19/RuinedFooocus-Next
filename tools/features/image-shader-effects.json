@@ -1,0 +1,8 @@
+{
+  "id": "image-shader-effects",
+  "subject": "Add curve and named-effect recipes for the native GLSL image node",
+  "requires": ["image-histogram", "native-vision"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
