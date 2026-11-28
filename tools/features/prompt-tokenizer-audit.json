@@ -1,0 +1,8 @@
+{
+  "id": "prompt-tokenizer-audit",
+  "subject": "Add a CPU audit of native prompt tokenizers",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
