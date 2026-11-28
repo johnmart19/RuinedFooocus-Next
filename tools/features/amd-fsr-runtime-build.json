@@ -1,0 +1,8 @@
+{
+  "id": "amd-fsr-runtime-build",
+  "subject": "Add a command that builds the AMD FSR runtime ahead of first use",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
