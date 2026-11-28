@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_qwenimage_edit_2509": {
+      "title": "QwenImage edit-2509",
+      "consumers": ["QwenImage"],
+      "native_class": "QwenImage",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/blob/f68ace85e60b4a02a323e394253731947657b7d2/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-qwenimage-edit-2509",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_qwen_image_edit_2509.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}
