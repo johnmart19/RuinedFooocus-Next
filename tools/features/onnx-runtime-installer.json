@@ -1,0 +1,15 @@
+{
+  "id": "onnx-runtime-installer",
+  "subject": "Install the isolated ONNX Runtime used for GPU mask inference",
+  "requires": [
+    "child-process-ownership",
+    "native-runtime-paths",
+    "startup-install-options",
+    "onnx-amd-provider-recipes",
+    "comfy-backend-initialization",
+    "onnx-acquisition-processes"
+  ],
+  "tests": ["test_onnx_installer.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
