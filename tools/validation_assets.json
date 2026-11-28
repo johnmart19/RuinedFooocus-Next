@@ -1,0 +1,69 @@
+{
+  "provenance": "Pinned still-image validation fixtures from the 2026-10-25 review. Revisions and LFS SHA256 identify exact files; acquisition and execution remain explicit. Historical removed media fixture identities remain in Git history.",
+  "assets": [
+    {
+      "repo": "stabilityai/control-lora",
+      "revision": "75590eb0e7868d3d0f1581b5126d487b33c7fdb4",
+      "file": "control-LoRAs-rank128/control-lora-canny-rank128.safetensors",
+      "destination": "models/controlnet/control-lora-canny-rank128.safetensors",
+      "bytes": 395733680,
+      "sha256": "56389dbb245ca44de91d662529bd4298abc55ce2318f60bc19454fb72ff68247"
+    },
+    {
+      "repo": "stabilityai/control-lora",
+      "revision": "75590eb0e7868d3d0f1581b5126d487b33c7fdb4",
+      "file": "control-LoRAs-rank128/control-lora-depth-rank128.safetensors",
+      "destination": "models/controlnet/control-lora-depth-rank128.safetensors",
+      "bytes": 395729267,
+      "sha256": "37e391757e6c0042faa3795174acbe11a31992252058cfb8bbaccf11073567b4"
+    },
+    {
+      "repo": "stabilityai/control-lora",
+      "revision": "75590eb0e7868d3d0f1581b5126d487b33c7fdb4",
+      "file": "control-LoRAs-rank128/control-lora-recolor-rank128.safetensors",
+      "destination": "models/controlnet/control-lora-recolor-rank128.safetensors",
+      "bytes": 395730106,
+      "sha256": "d6c01d588550d41ab47ff2534ae135441ed8e614b72b316787e8b7916ce08e61"
+    },
+    {
+      "repo": "stabilityai/control-lora",
+      "revision": "75590eb0e7868d3d0f1581b5126d487b33c7fdb4",
+      "file": "control-LoRAs-rank128/control-lora-sketch-rank128-metadata.safetensors",
+      "destination": "models/controlnet/control-lora-sketch-rank128-metadata.safetensors",
+      "bytes": 395738399,
+      "sha256": "679c616807aec73c47bb7281a24a76ddfe52fa5b5d68532f542ab813347b2eae"
+    },
+    {
+      "repo": "Comfy-Org/Mage-Flow",
+      "revision": "6ff68fbf3c667325e961d551691b246791d5eec0",
+      "file": "diffusion_models/mage_flow_edit_turbo_int8_convrot.safetensors",
+      "destination": "models/checkpoints/mage_flow_edit_turbo_int8_convrot.safetensors",
+      "bytes": 4159146840,
+      "sha256": "345dd8a3376306624912dc46e1db18a6457d692053afe21c9822ed6719f79937"
+    },
+    {
+      "repo": "PedroMarinhoDev/Moss-Image-Edit-ComfyUI",
+      "revision": "a0e1af10e651d299e63c746eec65e14dcc96d249",
+      "file": "moss_image_edit_lora_bf16.safetensors",
+      "destination": "models/loras/moss_image_edit_lora_bf16.safetensors",
+      "bytes": 297419000,
+      "sha256": "f4bf2905dd40ae490ffda37d6be717f3361a4a723225cf0bf1f3b941eb03315d"
+    },
+    {
+      "repo": "akhaliq/MOSS-Image-Edit-HQ",
+      "revision": "7e1e9a1787b253c471ff30128a7ba838911d1911",
+      "file": "weights/armV2-lo/armV2-lo.safetensors",
+      "destination": "models/loras/armV2-lo.safetensors",
+      "bytes": 495514936,
+      "sha256": "82d6f14e6626f54e889515a64f12ad0e16a6df0d07ab2528ced174196b54310f"
+    },
+    {
+      "repo": "Comfy-Org/Qwen-Image-Edit",
+      "revision": "f68ace85e60b4a02a323e394253731947657b7d2",
+      "file": "split_files/diffusion_models/qwen_image_edit_fp8_e4m3fn.safetensors",
+      "destination": "models/checkpoints/qwen_image_edit_fp8_e4m3fn.safetensors",
+      "bytes": 20430635136,
+      "sha256": "393c6743d1de2e9031b5197027b36116f2096958ccc0223526d34e1860266021"
+    }
+  ]
+}
