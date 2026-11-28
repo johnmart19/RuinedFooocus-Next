@@ -1,0 +1,8 @@
+{
+  "id": "docs-user-guide",
+  "subject": "Add a user guide for creating, editing and browsing images",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
