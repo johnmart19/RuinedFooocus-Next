@@ -1,0 +1,8 @@
+{
+  "id": "prompt-enhancement",
+  "subject": "Enhance image prompts with the local chat model",
+  "requires": ["prompt-local-model-runner"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
