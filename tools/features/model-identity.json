@@ -1,0 +1,8 @@
+{
+  "id": "model-identity",
+  "subject": "Add exact local model identity and hashing",
+  "requires": ["model-format-suffixes", "preparation-service"],
+  "tests": ["test_cache_contract.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
