@@ -1,0 +1,8 @@
+{
+  "id": "prompt-ui-image-to-prompt",
+  "subject": "Add the Image-to-Prompt studio",
+  "requires": ["prompt-image-to-prompt", "library-editing-workflow", "image-captioning"],
+  "tests": ["test_image_to_prompt.py", "test_prompt_caption.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
