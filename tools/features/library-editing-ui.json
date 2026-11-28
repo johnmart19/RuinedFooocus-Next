@@ -1,0 +1,8 @@
+{
+  "id": "library-editing-ui",
+  "subject": "Add direct edits from the Library",
+  "requires": ["library-editing-workflow"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
