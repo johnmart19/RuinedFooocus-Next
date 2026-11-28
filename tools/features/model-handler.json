@@ -1,0 +1,33 @@
+{
+  "id": "model-handler",
+  "subject": "Rework the model handler onto exact identities and scoped scans",
+  "requires": [
+    "comfy-cpu-startup",
+    "gguf-metadata-reader",
+    "local-diffusers-bundles",
+    "sensenova-bundle",
+    "lora-name-resolution",
+    "native-workflow-admission",
+    "component-candidates",
+    "comfy-component-selection",
+    "native-component-layout",
+    "performance-presets",
+    "approximate-codecs",
+    "settings-manager",
+    "checkpoint-tools",
+    "resource-lifecycle",
+    "embedding-browser",
+    "resolution-settings",
+    "startup-defaults"
+  ],
+  "tests": [
+    "test_embedding_metadata.py",
+    "test_gguf_metadata.py",
+    "test_model_file_formats.py",
+    "test_model_header_detection.py",
+    "test_model_headers.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
