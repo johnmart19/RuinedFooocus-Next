@@ -1,0 +1,33 @@
+{
+  "id": "minimax-h3-image",
+  "subject": "Add the MiniMax H3 still-image workflow",
+  "requires": [
+    "native-text-identity",
+    "yaml-recipes",
+    "native-tensor-io",
+    "component-card-component",
+    "gligen-layout",
+    "native-hypernetworks",
+    "qwen-image21-union-control",
+    "ui-component-overrides",
+    "ordered-edit-references",
+    "reference-adapters",
+    "guide-handoffs",
+    "generation-worker",
+    "automatic-upscale",
+    "image-composition"
+  ],
+  "tests": [
+    "test_component_candidates.py",
+    "test_component_capture_boundaries.py",
+    "test_component_compatibility_capture.py",
+    "test_component_family_contracts.py",
+    "test_component_overrides.py",
+    "test_component_profiles.py",
+    "test_native_extended_catalogue.py",
+    "test_native_model_containers.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
