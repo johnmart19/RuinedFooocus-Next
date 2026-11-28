@@ -1,0 +1,8 @@
+{
+  "id": "ui-event-coalescing",
+  "subject": "Run consecutive listeners of one component event as a single request",
+  "requires": ["ui-user-error-messages"],
+  "tests": ["test_event_coalescing.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
