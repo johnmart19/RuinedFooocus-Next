@@ -1,0 +1,8 @@
+{
+  "id": "style-previews-photo",
+  "subject": "Add preview thumbnails for the photography styles",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
