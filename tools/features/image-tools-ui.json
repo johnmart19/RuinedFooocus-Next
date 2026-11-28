@@ -1,0 +1,35 @@
+{
+  "id": "image-tools-ui",
+  "subject": "Add the Image tools panel",
+  "requires": [
+    "model-acquisition-actions",
+    "image-tool-type-dropdown",
+    "depth-control-ui",
+    "image-composition-ui",
+    "latent-composition-ui",
+    "control-model-ui",
+    "lora-hook-schedules-ui",
+    "pipeline-selection",
+    "openai-compatible-api"
+  ],
+  "tests": [
+    "test_control_model_ui.py",
+    "test_image_depth.py",
+    "test_image_rembg_options.py",
+    "test_image_tool_registry.py",
+    "test_image_tool_startup.py",
+    "test_image_tool_transitions.py",
+    "test_instruct_pix2pix.py",
+    "test_native_image_conditioning.py",
+    "test_native_lora_hooks_ui.py",
+    "test_native_sd_inpaint.py",
+    "test_powerup_family_controls.py",
+    "test_powerups_button_guards.py",
+    "test_qwen_image21_local_edit.py",
+    "test_tool_activation.py",
+    "test_tool_activation_choices.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
