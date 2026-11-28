@@ -1,0 +1,8 @@
+{
+  "id": "marigold-albedo-utility",
+  "subject": "Add the official Marigold V2 albedo recipe",
+  "requires": ["native-image-formats", "depth-utility-contracts"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
