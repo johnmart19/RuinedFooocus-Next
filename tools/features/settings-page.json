@@ -1,0 +1,31 @@
+{
+  "id": "settings-page",
+  "subject": "Add the Settings page",
+  "requires": [
+    "source-distribution",
+    "chat-template-lfm25",
+    "chat-ui-moe-cache",
+    "ui-themes",
+    "ui-model-acquisition",
+    "ui-page-head-and-scripts",
+    "settings-navigation",
+    "settings-path-picker",
+    "image-captioning",
+    "openai-compatible-api"
+  ],
+  "tests": [
+    "test_compact_candidate.py",
+    "test_compact_model_profile_controls.py",
+    "test_gguf_integration_update.py",
+    "test_image_settings.py",
+    "test_moe_cache_settings_ui.py",
+    "test_path_picker.py",
+    "test_profile_transactions.py",
+    "test_reasoning_settings.py",
+    "test_settings_navigation.py",
+    "test_text_size_events.py",
+    "test_ui_runtime.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
