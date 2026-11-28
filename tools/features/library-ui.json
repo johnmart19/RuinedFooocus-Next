@@ -1,0 +1,12 @@
+{
+  "id": "library-ui",
+  "subject": "Add the Library tab",
+  "requires": ["seed-control-visibility", "seedvr2-replay", "image-tools-ui"],
+  "tests": [
+    "test_gallery_scheduling.py",
+    "test_image_ui_audit.py",
+    "test_image_upscale_metadata.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
