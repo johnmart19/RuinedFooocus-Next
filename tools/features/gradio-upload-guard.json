@@ -1,0 +1,8 @@
+{
+  "id": "gradio-upload-guard",
+  "subject": "Handle duplicate and interrupted Gradio uploads without leftovers",
+  "requires": ["web-access-controls"],
+  "tests": ["test_gradio_uploads.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
