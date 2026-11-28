@@ -1,0 +1,8 @@
+{
+  "id": "comfy-runtime-info",
+  "subject": "Describe the initialized image runtime without probing devices",
+  "requires": ["app-root-paths", "comfy-pinned-arguments"],
+  "tests": ["test_image_runtime_info.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
