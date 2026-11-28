@@ -1,0 +1,9 @@
+{
+  "cn_union_sdxl": {
+    "url": "https://huggingface.co/xinsir/controlnet-union-sdxl-1.0/resolve/801a4a3fa3d4c936f4feea95b98607bc6726f80c/diffusion_pytorch_model.safetensors",
+    "path": "path_controlnet",
+    "filename": "xinsir_controlnet_union_sdxl_1.0.safetensors",
+    "size": 2512030408,
+    "sha256": "a9e13fd61f3193887791c8a0dd07a07202174dc47d5ddaea94ea1344f07c7467"
+  }
+}
