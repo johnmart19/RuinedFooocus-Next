@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-reviewed-language-models",
+  "subject": "Add the reviewed and curated popular LLM catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
