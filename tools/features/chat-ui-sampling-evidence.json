@@ -1,0 +1,8 @@
+{
+  "id": "chat-ui-sampling-evidence",
+  "subject": "Show the sampling values and their source for the selected chat model",
+  "requires": ["chat-model-profiles", "chat-sampling-sources"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
