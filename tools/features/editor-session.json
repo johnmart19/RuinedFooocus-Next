@@ -1,0 +1,8 @@
+{
+  "id": "editor-session",
+  "subject": "Add artifact-backed image history for the Editor",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
