@@ -1,0 +1,8 @@
+{
+  "id": "onnx-amd-provider-recipes",
+  "subject": "Add exact AMD ONNX provider routes for MIGraphX and HIP",
+  "requires": ["torch-runtime-probe"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
