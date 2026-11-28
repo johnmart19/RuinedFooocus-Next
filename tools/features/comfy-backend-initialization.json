@@ -1,0 +1,15 @@
+{
+  "id": "comfy-backend-initialization",
+  "subject": "Initialize the pinned ComfyUI backend with device and memory setup",
+  "requires": [
+    "cpu-fallback-warning",
+    "cuda-runtime-selection",
+    "comfy-cpu-startup",
+    "hardware-inventory",
+    "comfy-saved-compute-options"
+  ],
+  "tests": ["test_comfy_runtime.py", "test_cpu_startup.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
