@@ -1,0 +1,8 @@
+{
+  "id": "one-button-prompt-formats",
+  "subject": "Shape One Button prompts for the target model family",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
