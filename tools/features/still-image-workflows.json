@@ -1,0 +1,8 @@
+{
+  "id": "still-image-workflows",
+  "subject": "Add explicit still-image handoffs over editor history",
+  "requires": ["app-root-paths", "image-working-size-geometry", "selection-mask-handoffs"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
