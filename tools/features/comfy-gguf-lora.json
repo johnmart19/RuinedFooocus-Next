@@ -1,0 +1,9 @@
+{
+  "id": "comfy-gguf-lora",
+  "subject": "Apply LoRA adapters stored as GGUF through the native importer",
+  "requires": ["model-identity"],
+  "tests": ["test_gguf_lora_factor_contract.py"],
+  "native_comfy": false,
+  "native_gguf": true,
+  "native_gguf_revision": "35da9968d8eeb0a3c03a1e468203ffd2f6f48348"
+}
