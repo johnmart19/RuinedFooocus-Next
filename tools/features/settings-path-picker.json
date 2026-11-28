@@ -1,0 +1,8 @@
+{
+  "id": "settings-path-picker",
+  "subject": "Add an owner-only folder picker for path settings",
+  "requires": ["translation-manager"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
