@@ -1,0 +1,8 @@
+{
+  "id": "metadata-sd3-profiles",
+  "subject": "Add metadata profiles for Stable Diffusion 3.5 and Stable Cascade",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_sd3_3.5_large": {
+      "title": "SD3 3.5-large",
+      "consumers": ["SD3"],
+      "native_class": "SD3",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/stable-diffusion-3.5-fp8/blob/934251d1e6168bcb45a069abc5bd5cdd5f8fea00/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-sd3-3.5-large",
+        "auto_recipe_supported": true,
+        "source_workflow": "sd3.5_simple_example.json"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}
