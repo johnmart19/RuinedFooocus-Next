@@ -1,0 +1,8 @@
+{
+  "id": "llama-release-manifests",
+  "subject": "Pin llama.cpp release manifests with asset sizes and digests",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
