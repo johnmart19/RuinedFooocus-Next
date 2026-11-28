@@ -1,0 +1,31 @@
+{
+  "id": "ui-adapter-browser",
+  "subject": "Add one card browser for LoRAs and prompt embeddings",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translation-manager",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "media-paths",
+    "web-access-controls",
+    "adapter-card-component",
+    "embedding-browser"
+  ],
+  "tests": ["test_adapter_browser.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
