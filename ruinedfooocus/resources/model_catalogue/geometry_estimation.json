@@ -1,0 +1,12 @@
+{
+  "geometry_estimation/depth_anything_3_small.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Depth-Anything-3/resolve/8265be070134dc7459217308cdc03109bde199b0/geometry_estimation/depth_anything_3_small.safetensors",
+    "path": "path_geometry_estimation",
+    "filename": "depth_anything_3_small.safetensors"
+  },
+  "geometry_estimation/depth_anything_3_base.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Depth-Anything-3/resolve/8265be070134dc7459217308cdc03109bde199b0/geometry_estimation/depth_anything_3_base.safetensors",
+    "path": "path_geometry_estimation",
+    "filename": "depth_anything_3_base.safetensors"
+  }
+}

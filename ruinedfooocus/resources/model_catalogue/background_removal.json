@@ -1,0 +1,9 @@
+{
+  "background_removal/birefnet.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/BiRefNet/resolve/884af709e9b795d89dafbf97f29c8d6a2386f5c6/background_removal/birefnet.safetensors",
+    "path": "path_background_removal",
+    "filename": "birefnet.safetensors",
+    "size": 444473596,
+    "sha256": "9ab37426bf4de0567af6b5d21b16151357149139362e6e8992021b8ce356a154"
+  }
+}

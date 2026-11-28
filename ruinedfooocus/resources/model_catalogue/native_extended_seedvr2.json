@@ -1,0 +1,16 @@
+{
+  "diffusion_models/seedvr2_3b_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/SeedVR2/resolve/df48879708206a403d2a61acd55578c2e80fd233/diffusion_models/seedvr2_3b_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "seedvr2_3b_int8_convrot.safetensors",
+    "size": 3458259704,
+    "sha256": "c3dec8bcc5916843a8a858572970597462e1f2dc598d6dfd818f6cd40f53a157"
+  },
+  "diffusion_models/seedvr2_7b_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/SeedVR2/resolve/df48879708206a403d2a61acd55578c2e80fd233/diffusion_models/seedvr2_7b_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "seedvr2_7b_int8_convrot.safetensors",
+    "size": 8334897976,
+    "sha256": "5aa0d25fc9d35e449b659d0c9a5dcb22e2a4fa04032101b95a39da42b32c1be6"
+  }
+}
