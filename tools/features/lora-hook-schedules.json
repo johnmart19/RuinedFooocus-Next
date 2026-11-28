@@ -1,0 +1,8 @@
+{
+  "id": "lora-hook-schedules",
+  "subject": "Add scheduled native LoRA hooks",
+  "requires": ["model-identity", "image-working-size-geometry"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
