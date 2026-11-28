@@ -1,0 +1,8 @@
+{
+  "id": "wevisone-ui",
+  "subject": "Add standalone WeVisOne object and subject controls",
+  "requires": ["translation-manager", "wevisone-matting"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
