@@ -1,0 +1,8 @@
+{
+  "id": "ordered-edit-references-ui",
+  "subject": "Add controls for named native reference recipes",
+  "requires": ["image-working-size-geometry", "translation-manager", "ordered-edit-references"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
