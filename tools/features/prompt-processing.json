@@ -1,0 +1,35 @@
+{
+  "id": "prompt-processing",
+  "subject": "Process prompts for generation",
+  "requires": [
+    "image-sampling-options",
+    "qwen-image21-local-edit",
+    "style-previews-sai",
+    "style-previews-ads",
+    "style-previews-artstyle",
+    "style-previews-futuristic",
+    "style-previews-game",
+    "style-previews-misc",
+    "style-previews-papercraft",
+    "style-previews-photo",
+    "advanced-image-guidance",
+    "style-card-component",
+    "native-auxiliary-assets",
+    "model-handler",
+    "prompt-style-application",
+    "prompt-ui-styles",
+    "prompt-ui-evolve",
+    "still-image-workflows",
+    "editor-edit-prompt",
+    "request-metadata"
+  ],
+  "tests": [
+    "test_metadata_guidance_replay.py",
+    "test_prompt_processing.py",
+    "test_prompt_wildcards.py",
+    "test_sampling_replay_capture.py",
+    "test_style_workflow.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
