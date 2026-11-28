@@ -1,0 +1,8 @@
+{
+  "id": "krea-style-lora",
+  "subject": "Add the model-only Krea2 style LoRA option",
+  "requires": ["generation-size-plan", "model-acquisition", "image-preparation"],
+  "tests": ["test_krea_style_asset_capture.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
