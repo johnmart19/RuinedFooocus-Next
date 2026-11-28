@@ -1,0 +1,12 @@
+{
+  "id": "component-support-matrix",
+  "subject": "Report what each component can use on this PC and what is installed",
+  "requires": ["chat-llama-pipeline"],
+  "tests": [
+    "test_gpu_support_matrix.py",
+    "test_runtime_support.py",
+    "test_xllamacpp_integration_update.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
