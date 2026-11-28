@@ -1,0 +1,18 @@
+{
+  "id": "native-sampling-schedules",
+  "subject": "Add typed native schedules and guiders for still images",
+  "requires": ["qwen-layered", "model-handler", "sdxl-refiner"],
+  "tests": [
+    "test_compatible_family_defaults.py",
+    "test_layered_native_admission.py",
+    "test_model_recommendations.py",
+    "test_native_recipe_contracts.py",
+    "test_native_variant_defaults.py",
+    "test_prepared_native_source.py",
+    "test_quantized_model_contracts.py",
+    "test_release_model_defaults.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
