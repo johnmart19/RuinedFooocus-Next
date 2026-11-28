@@ -1,0 +1,15 @@
+{
+  "id": "chat-model-resolution",
+  "subject": "Add chat model choices with local-first resolution",
+  "requires": [
+    "gguf-lora-admission",
+    "chat-gguf-metadata",
+    "chat-model-profiles",
+    "chat-model-browser",
+    "model-handler"
+  ],
+  "tests": ["test_chat_model_identity.py", "test_preparation_service.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
