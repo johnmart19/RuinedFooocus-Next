@@ -1,0 +1,31 @@
+{
+  "id": "image-adjustments-ui",
+  "subject": "Add one adjustment panel over transform, mask and colour tools",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "utility-output-choices-ui",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "launch-arguments",
+    "still-image-utility-dispatch",
+    "color-finishing-ui",
+    "translation-checker"
+  ],
+  "tests": ["test_image_tools_localization.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
