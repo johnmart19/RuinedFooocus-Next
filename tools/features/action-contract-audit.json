@@ -1,0 +1,39 @@
+{
+  "id": "action-contract-audit",
+  "subject": "Add an audit of UI event bindings and API routes against reviewed ownership",
+  "requires": [
+    "code-formatter",
+    "retire-conda-and-setup-helpers",
+    "api-client-examples",
+    "validation-asset-downloader",
+    "download-link-audit",
+    "comfyui-catalogue-sync",
+    "app-benchmark",
+    "source-archive-builder",
+    "cpu-check-runner",
+    "qwen-state-control-comparison",
+    "feature-validation-summary",
+    "prompt-tokenizer-audit",
+    "style-preview-generator",
+    "rag-model-migration",
+    "amd-fsr-runtime-build",
+    "tool-index",
+    "docs-architecture-map",
+    "docs-development-guide",
+    "docs-runtime-troubleshooting",
+    "docs-wsl-model-acceptance",
+    "docs-deferred-findings",
+    "docs-integration-index",
+    "docs-index",
+    "concurrency-fixture",
+    "ui-event-checker"
+  ],
+  "tests": [
+    "test_action_contract_audit.py",
+    "test_action_contract_custom_events.py",
+    "test_action_contract_owner_boundaries.py",
+    "test_tool_contracts.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
