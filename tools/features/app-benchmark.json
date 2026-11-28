@@ -1,0 +1,8 @@
+{
+  "id": "app-benchmark",
+  "subject": "Add a benchmark for startup time, generation speed and GPU use",
+  "requires": [],
+  "tests": ["test_benchmark_app.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
