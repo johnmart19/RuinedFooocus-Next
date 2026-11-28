@@ -1,0 +1,232 @@
+{
+  "clip/clip_aura.safetensors": {
+    "url": "https://huggingface.co/fal/AuraFlow-v0.3/resolve/main/text_encoder/model.fp16.safetensors",
+    "path": "path_clip",
+    "filename": "clip_aura.safetensors"
+  },
+  "clip/clip_g.safetensors": {
+    "url": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/text_encoder_2/model.fp16.safetensors",
+    "path": "path_clip",
+    "filename": "clip_g.safetensors"
+  },
+  "clip/clip_g_hidream.gguf": {
+    "url": "https://huggingface.co/calcuis/hidream-gguf/resolve/main/clip_g_hidream_fp32-f16.gguf",
+    "path": "path_clip",
+    "filename": "clip_g_hidream.gguf"
+  },
+  "clip/clip_l.safetensors": {
+    "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors",
+    "path": "path_clip",
+    "filename": "clip_l.safetensors"
+  },
+  "clip/clip_l_hidream.gguf": {
+    "url": "https://huggingface.co/calcuis/hidream-gguf/resolve/main/clip_l_hidream_fp32-f16.gguf",
+    "path": "path_clip",
+    "filename": "clip_l_hidream.gguf"
+  },
+  "clip/cow-mistral3-small-q2_k.gguf": {
+    "url": "https://huggingface.co/chatpig/flux2-dev-gguf/resolve/main/cow-mistral3-small-q2_k.gguf",
+    "path": "path_clip",
+    "filename": "cow-mistral3-small-q2_k.gguf"
+  },
+  "clip/gemma_2_2b_fp16.safetensors": {
+    "url": "https://huggingface.co/calcuis/lumina-gguf/resolve/main/gemma_2_2b_fp16.safetensors",
+    "path": "path_clip",
+    "filename": "gemma_2_2b_fp16.safetensors"
+  },
+  "clip/gemma_2_2b_it_elm_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/PixelDiT/resolve/main/text_encoders/gemma_2_2b_it_elm_bf16.safetensors",
+    "path": "path_clip",
+    "filename": "gemma_2_2b_it_elm_bf16.safetensors"
+  },
+  "clip/gemma_2_2b_it_elm_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/PixelDiT/resolve/main/text_encoders/gemma_2_2b_it_elm_fp8_scaled.safetensors",
+    "path": "path_clip",
+    "filename": "gemma_2_2b_it_elm_fp8_scaled.safetensors"
+  },
+  "clip/gemma-3-4b-it-Q5_K_M.gguf": {
+    "url": "https://huggingface.co/unsloth/gemma-3-4b-it-GGUF/resolve/main/gemma-3-4b-it-Q5_K_M.gguf",
+    "path": "path_clip",
+    "filename": "gemma-3-4b-it-Q5_K_M.gguf"
+  },
+  "clip/gemma_3_4b_it_bf16.safetensors": {
+    "url": "https://huggingface.co/woctordho/comfyui-gemma-3-4b-it/resolve/main/gemma_3_4b_it_bf16.safetensors",
+    "path": "path_clip",
+    "filename": "gemma_3_4b_it_bf16.safetensors"
+  },
+  "clip/qwen3vl_4b_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen3-VL/resolve/main/text_encoders/qwen3vl_4b_bf16.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3vl_4b_bf16.safetensors"
+  },
+  "clip/qwen3vl_4b_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3vl_4b_fp8_scaled.safetensors"
+  },
+  "clip/qwen3vl_8b_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Boogu-Image/resolve/main/text_encoders/qwen3vl_8b_fp8_scaled.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3vl_8b_fp8_scaled.safetensors"
+  },
+  "clip/Qwen3-VL-8B-Instruct-Q5_K_M.gguf": {
+    "url": "https://huggingface.co/unsloth/Qwen3-VL-8B-Instruct-GGUF/resolve/main/Qwen3-VL-8B-Instruct-Q5_K_M.gguf",
+    "path": "path_clip",
+    "filename": "Qwen3-VL-8B-Instruct-Q5_K_M.gguf"
+  },
+  "clip/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive-Q6_K.gguf": {
+    "url": "https://huggingface.co/HauhauCS/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive/resolve/main/Qwen3VL-8B-Uncensored-HauhauCS-Aggressive-Q6_K.gguf",
+    "path": "path_clip",
+    "filename": "Qwen3VL-8B-Uncensored-HauhauCS-Aggressive-Q6_K.gguf"
+  },
+  "clip/qwen3vl_32b_minimax_h3_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors"
+  },
+  "clip/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+  },
+  "clip/qwen3.5_9b_w4a8_gptq.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/text_encoders/qwen3.5_9b_w4a8_gptq.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3.5_9b_w4a8_gptq.safetensors"
+  },
+  "clip/qwen3.5_9b_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/text_encoders/qwen3.5_9b_int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3.5_9b_int8_convrot.safetensors"
+  },
+  "clip/jina_clip_v2_bf16.safetensors": {
+    "url": "https://huggingface.co/woctordho/comfyui-jina-clip-v2/resolve/main/jina_clip_v2_bf16.safetensors",
+    "path": "path_clip",
+    "filename": "jina_clip_v2_bf16.safetensors"
+  },
+  "clip/llama_q2.gguf": {
+    "url": "https://huggingface.co/calcuis/hidream-gguf/resolve/main/llama-q2_k.gguf",
+    "path": "path_clip",
+    "filename": "llama_q2.gguf"
+  },
+  "clip/mistral_3_small_flux2_fp8.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/text_encoders/mistral_3_small_flux2_fp8.safetensors",
+    "path": "path_clip",
+    "filename": "mistral_3_small_flux2_fp8.safetensors"
+  },
+  "clip/ministral-3-3b.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/ERNIE-Image/resolve/main/text_encoders/ministral-3-3b.safetensors",
+    "path": "path_clip",
+    "filename": "ministral-3-3b.safetensors"
+  },
+  "clip/Qwen2.5-VL-7B-Instruct-Q4_K_S.gguf": {
+    "url": "https://huggingface.co/unsloth/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-Q4_K_S.gguf",
+    "path": "path_clip",
+    "filename": "Qwen2.5-VL-7B-Instruct-Q4_K_S.gguf"
+  },
+  "clip/qwen_2.5_vl_7b_edit-q2_k.gguf": {
+    "url": "https://huggingface.co/calcuis/pig-encoder/resolve/main/qwen_2.5_vl_7b_edit-q2_k.gguf",
+    "path": "path_clip",
+    "filename": "qwen_2.5_vl_7b_edit-q2_k.gguf"
+  },
+  "clip/qwen_2.5_vl_7b_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    "path": "path_clip",
+    "filename": "qwen_2.5_vl_7b_fp8_scaled.safetensors"
+  },
+  "clip/qwen_3_06b_base.safetensors": {
+    "url": "https://huggingface.co/circlestone-labs/Anima/resolve/main/split_files/text_encoders/qwen_3_06b_base.safetensors",
+    "path": "path_clip",
+    "filename": "qwen_3_06b_base.safetensors"
+  },
+  "clip/qwen_3_4b.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/6fc90a3b1b653e935a0d175e260736de25b84df5/split_files/text_encoders/qwen_3_4b.safetensors",
+    "path": "path_clip",
+    "filename": "qwen_3_4b.safetensors"
+  },
+  "clip/Qwen3-4B-Q2_K.gguf": {
+    "url": "https://huggingface.co/unsloth/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q2_K.gguf",
+    "path": "path_clip",
+    "filename": "Qwen3-4B-Q2_K.gguf"
+  },
+  "clip/Qwen3-4B-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/unsloth/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q4_K_M.gguf",
+    "path": "path_clip",
+    "filename": "Qwen3-4B-Q4_K_M.gguf"
+  },
+  "clip/Qwen3-4B-Q8_0.gguf": {
+    "url": "https://huggingface.co/unsloth/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q8_0.gguf",
+    "path": "path_clip",
+    "filename": "Qwen3-4B-Q8_0.gguf"
+  },
+  "clip/Qwen3-8B-Q8_0.gguf": {
+    "url": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/resolve/main/Qwen3-8B-Q8_0.gguf",
+    "path": "path_clip",
+    "filename": "Qwen3-8B-Q8_0.gguf"
+  },
+  "clip/Qwen3-8B-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/Qwen/Qwen3-8B-GGUF/resolve/main/Qwen3-8B-Q4_K_M.gguf",
+    "path": "path_clip",
+    "filename": "Qwen3-8B-Q4_K_M.gguf"
+  },
+  "clip/t5xxl_old_fp32-q4_0.gguf": {
+    "url": "https://huggingface.co/calcuis/cosmos-predict2-gguf/resolve/main/t5xxl_old_fp32-q4_0.gguf",
+    "path": "path_clip",
+    "filename": "t5xxl_old_fp32-q4_0.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q3_K_L.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q3_K_L.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q3_K_L.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q3_K_M.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q3_K_M.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q3_K_M.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q3_K_S.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q3_K_S.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q3_K_S.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q4_K_M.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q4_K_M.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q4_K_M.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q4_K_S.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q4_K_S.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q4_K_S.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q5_K_M.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q5_K_M.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q5_K_M.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q5_K_S.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q5_K_S.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q5_K_S.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q6_K.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q6_K.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q6_K.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-Q8_0.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-Q8_0.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-Q8_0.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-f16.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-f16.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-f16.gguf"
+  },
+  "clip/t5-v1_1-xxl-encoder-f32.gguf": {
+    "url": "https://huggingface.co/city96/t5-v1_1-xxl-encoder-gguf/resolve/main/t5-v1_1-xxl-encoder-f32.gguf",
+    "path": "path_clip",
+    "filename": "t5-v1_1-xxl-encoder-f32.gguf"
+  }
+}
