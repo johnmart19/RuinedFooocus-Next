@@ -1,0 +1,8 @@
+{
+  "id": "control-model-ui",
+  "subject": "Add a selector for installed compatible control models",
+  "requires": ["image-working-size-geometry", "translation-manager", "control-model-candidates"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
