@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:qwen25_7b_abliterated_v2": {
+      "label": "Qwen2.5-7B-Instruct-abliterated-v2 (huihui-ai)",
+      "identity": {
+        "checkpoint_repo_requested": "huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2",
+        "checkpoint_repo_resolved": "huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2",
+        "checkpoint_revision_observed": "447ff10df7c9b7031f28eec54b9042a362d09696",
+        "artifact_repo_requested": "mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF",
+        "gguf_architecture": "qwen2"
+      },
+      "release": {
+        "announced_release_date": null,
+        "release_date_status": "no_dated_release_announcement_verified",
+        "release_source_url": null,
+        "paper_publication_date": null,
+        "checkpoint_repository_created_at": "2024-09-22T19:02:37.000Z",
+        "checkpoint_repository_last_modified_at": "2025-04-28T12:55:47.000Z",
+        "repository_created_at_is_model_release_date": false,
+        "quantization_publication_date": null,
+        "quantization_publication_date_status": "per_artifact_publication_not_verified; repository_creation_is_not_file_release",
+        "metadata_source_url": "https://huggingface.co/api/models/huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2"
+      },
+      "architecture": {
+        "gguf_architecture": "qwen2",
+        "parameter_count_hf_safetensors_reported": 7615616512,
+        "parameter_count_caveat": "HF serialized-tensor count; tied/duplicated tensors and multimodal components may differ from advertised unique parameter count.",
+        "geometry": {
+          "status": "upstream_config_verified",
+          "hf_architectures": ["Qwen2ForCausalLM"],
+          "hf_model_type": "qwen2",
+          "hf_text_model_type": "qwen2",
+          "layers": 28,
+          "hidden_size": 3584,
+          "attention_heads": 28,
+          "kv_heads": 4,
+          "head_dim": 128,
+          "head_dim_basis": "hidden_size / num_attention_heads",
+          "native_context_tokens": 32768,
+          "sliding_window_tokens": null,
+          "layer_counts": {
+            "full_attention": 28
+          },
+          "tie_word_embeddings": false,
+          "rope_scaling": null,
+          "kv_estimate_4k": {
+            "kind": "analytical_component_not_measured_peak_memory",
+            "cache_dtype": "F16 K + F16 V",
+            "sequences": 1,
+            "context_tokens": 4096,
+            "formula": "2(K,V) * 2 bytes * kv_heads * head_dim * cached_tokens * relevant_layers",
+            "full_attention_bytes": 234881024,
+            "sliding_window_bounded_bytes": 0,
+            "full_plus_bounded_sliding_bytes": 234881024,
+            "attention_cache_all_attention_layers_at_4k_bytes": 234881024,
+            "recurrent_or_convolution_state_bytes": 0,
+            "extra_state_unknown": false,
+            "excludes": [
+              "weights",
+              "projector",
+              "image encoder activations",
+              "compute buffers",
+              "allocator overhead",
+              "additional slots/sequences"
+            ],
+            "sliding_cache_caveat": "Actual runtime may allocate differently from an ideal bounded sliding cache; use conservative reservation and observed peak memory."
+          }
+        },
+        "context_note": "Saved config max_position_embeddings=32768 and no RoPE scaling. Its sliding_window=131072 is disabled and is not evidence of an active131K context."
+      },
+      "license": {
+        "declared_upstream": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_urls": [
+          "https://huggingface.co/huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2/blob/447ff10df7c9b7031f28eec54b9042a362d09696/README.md"
+        ]
+      },
+      "publisher_settings": {
+        "generation_config": {
+          "bos_token_id": 151643,
+          "pad_token_id": 151643,
+          "do_sample": true,
+          "eos_token_id": [151645, 151643],
+          "repetition_penalty": 1.05,
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "top_k": 20,
+          "transformers_version": "4.37.0"
+        },
+        "generation_config_scope": "upstream HF configuration; not automatically read by either GGUF runtime",
+        "recommendations": []
+      },
+      "app_profile_proposals": [
+        {
+          "id": "general_candidate",
+          "status": "proposal_not_applied_or_benchmarked",
+          "request": {
+            "temperature": 0.7,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0,
+            "repeat_penalty": 1.05,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0,
+            "max_tokens": 2048
+          },
+          "load": {
+            "context_tokens": 4096,
+            "n_batch": 512,
+            "n_ubatch": 512
+          },
+          "provenance": "Publisher settings where stated, with explicitly chosen application budgets and neutral unspecified samplers."
+        }
+      ],
+      "capabilities": {
+        "eligible_tasks": [
+          "general_chat",
+          "creative_writing",
+          "roleplay",
+          "prompt_writing",
+          "tool_routing"
+        ],
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "system_prompt": "System role retained; derivative-specific publisher IFEval available but exact score aggregation is unspecified.",
+        "thinking": {
+          "kind": "standard_instruct",
+          "control": null
+        },
+        "tools": {
+          "template": "Qwen2/Hermes JSON tool tags",
+          "format_evidence": "upstream tokenizer template",
+          "quality_evidence": "no exact-derivative function-calling benchmark verified",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_measured",
+        "roleplay_app_evaluation": "not_measured",
+        "generate_image_tool_app_evaluation": "not_measured"
+      },
+      "benchmark_caveats": [
+        "Published checkpoint results are not a measurement of these GGUF conversions. No quantitative score is inferred for a quantization."
+      ],
+      "source_urls": {
+        "checkpoint": "https://huggingface.co/huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2/tree/447ff10df7c9b7031f28eec54b9042a362d09696",
+        "checkpoint_card": "https://huggingface.co/huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2/blob/447ff10df7c9b7031f28eec54b9042a362d09696/README.md",
+        "config": "https://huggingface.co/huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2/blob/447ff10df7c9b7031f28eec54b9042a362d09696/config.json",
+        "generation_config": "https://huggingface.co/huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2/blob/447ff10df7c9b7031f28eec54b9042a362d09696/generation_config.json",
+        "artifact_card": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF/blob/547a4a51bed92fbf03d9ccadb88820d3eac3aef4/README.md",
+        "artifact_repository": "https://huggingface.co/mradermacher/Qwen2.5-7B-Instruct-abliterated-v2-GGUF",
+        "chat_template": "https://huggingface.co/huihui-ai/Qwen2.5-7B-Instruct-abliterated-v2/blob/447ff10df7c9b7031f28eec54b9042a362d09696/tokenizer_config.json"
+      },
+      "lineage": ["Qwen/Qwen2.5-7B-Instruct", "huihui-ai abliteration v2"],
+      "runtime_status": {
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b11870",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/models/qwen2.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/common/chat.cpp"
+          ]
+        },
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "llama_cpp_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+          "architecture_source_supported": true,
+          "projector_source_supported": null,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b12110",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/qwen2.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/common/chat.cpp"
+          ]
+        }
+      },
+      "hardware_notes": {
+        "cpu_speed_measured": false,
+        "gpu_speed_measured": false,
+        "planning_context_tokens": 4096,
+        "weight_bytes_are_not_peak_RAM_or_VRAM": true,
+        "gpu_backend_caveat": "Availability of a CPU/Vulkan/HIP/CUDA build is distinct from this exact model/quant working correctly and quickly on the user's hardware. No ROCm/Vulkan model benchmark was run.",
+        "tier_assignment": "Use exact per-artifact bytes plus matching projector, KV components, conservative compute/state overhead, OS reserve and image budget. This research intentionally does not pretend a parameter label is a VRAM minimum."
+      },
+      "template_validation_note": "Template inspection uses upstream HF evidence; check the effective embedded GGUF template and adapter behavior before advertising tool capability for every quantization."
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:qwen3_1_7b": {
+      "label": "Qwen3 1.7B Q8 compact candidate",
+      "identity": {
+        "checkpoint_repo_resolved": "Qwen/Qwen3-1.7B",
+        "checkpoint_revision_observed": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+        "artifact_repo_requested": "Qwen/Qwen3-1.7B-GGUF",
+        "artifact_revision": "90862c4b9d2787eaed51d12237eafdfe7c5f6077",
+        "gguf_architecture": "qwen3"
+      },
+      "license": {
+        "declared_upstream": "Apache-2.0",
+        "status": "publisher_declared",
+        "source_urls": [
+          "https://huggingface.co/Qwen/Qwen3-1.7B-GGUF/blob/90862c4b9d2787eaed51d12237eafdfe7c5f6077/README.md"
+        ]
+      },
+      "publisher_settings": {
+        "recommendations": [
+          {
+            "task": "general/chat nonthinking",
+            "temperature": 0.7,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0
+          },
+          {
+            "task": "general/chat thinking",
+            "temperature": 0.6,
+            "top_p": 0.95,
+            "top_k": 20,
+            "min_p": 0
+          }
+        ],
+        "source_url": "https://huggingface.co/Qwen/Qwen3-1.7B/blob/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/README.md"
+      },
+      "capabilities": {
+        "input_modalities": ["text"],
+        "output_modalities": ["text"],
+        "thinking": {
+          "control": {
+            "enable_thinking": true
+          },
+          "effort_levels": false
+        },
+        "tools": {
+          "template": "artifact-embedded publisher template",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "failed_fixed_rubric_2026_11_09",
+        "roleplay_app_evaluation": "failed_fixed_rubric_2026_11_09"
+      },
+      "chat_template": {
+        "source": "tokenizer.chat_template in exact official pinned GGUF",
+        "sha256": "57f1fd00f0013a2be96aa79b857391f27e23df5b5f847072b524c897e24d0361",
+        "source_url": "https://huggingface.co/Qwen/Qwen3-1.7B-GGUF/blob/90862c4b9d2787eaed51d12237eafdfe7c5f6077/Qwen3-1.7B-Q8_0.gguf",
+        "current_base_template_differs": true,
+        "scope": "Preserve the exact artifact-embedded publisher template; no replacement from current base tokenizer metadata."
+      },
+      "app_load_defaults": {
+        "context_tokens": 2048,
+        "n_predict": 256,
+        "n_batch": 256,
+        "n_ubatch": 128,
+        "parallel_sequences": 1
+      }
+    }
+  }
+}

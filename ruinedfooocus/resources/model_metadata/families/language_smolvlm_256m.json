@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "language:smolvlm_256m": {
+      "label": "SmolVLM-256M-Instruct",
+      "identity": {
+        "checkpoint_repo_requested": "HuggingFaceTB/SmolVLM-256M-Instruct",
+        "checkpoint_repo_resolved": "HuggingFaceTB/SmolVLM-256M-Instruct",
+        "checkpoint_revision_observed": "7e3e67edbbed1bf9888184d9df282b700a323964",
+        "artifact_repo_requested": "ggml-org/SmolVLM-256M-Instruct-GGUF",
+        "gguf_architecture": "llama"
+      },
+      "release": {
+        "announced_release_date": "2025-01-23",
+        "release_date_status": "publisher_announcement",
+        "release_source_url": "https://huggingface.co/blog/smolervlm",
+        "paper_publication_date": null,
+        "checkpoint_repository_created_at": "2025-01-17T15:40:24.000Z",
+        "checkpoint_repository_last_modified_at": "2025-04-08T21:39:50.000Z",
+        "repository_created_at_is_model_release_date": false,
+        "quantization_publication_date": null,
+        "quantization_publication_date_status": "per_artifact_publication_not_verified; repository_creation_is_not_file_release",
+        "metadata_source_url": "https://huggingface.co/api/models/HuggingFaceTB/SmolVLM-256M-Instruct"
+      },
+      "architecture": {
+        "gguf_architecture": "llama",
+        "parameter_count_hf_safetensors_reported": 256484928,
+        "parameter_count_caveat": "HF serialized-tensor count; tied/duplicated tensors and multimodal components may differ from advertised unique parameter count.",
+        "geometry": {
+          "status": "upstream_config_verified",
+          "hf_architectures": ["Idefics3ForConditionalGeneration"],
+          "hf_model_type": "idefics3",
+          "hf_text_model_type": "llama",
+          "layers": 30,
+          "hidden_size": 576,
+          "attention_heads": 9,
+          "kv_heads": 3,
+          "head_dim": 64,
+          "head_dim_basis": "explicit_config",
+          "native_context_tokens": 8192,
+          "sliding_window_tokens": null,
+          "layer_counts": {
+            "full_attention": 30
+          },
+          "tie_word_embeddings": false,
+          "rope_scaling": null,
+          "kv_estimate_4k": {
+            "kind": "analytical_component_not_measured_peak_memory",
+            "cache_dtype": "F16 K + F16 V",
+            "sequences": 1,
+            "context_tokens": 4096,
+            "formula": "2(K,V) * 2 bytes * kv_heads * head_dim * cached_tokens * relevant_layers",
+            "full_attention_bytes": 94371840,
+            "sliding_window_bounded_bytes": 0,
+            "full_plus_bounded_sliding_bytes": 94371840,
+            "attention_cache_all_attention_layers_at_4k_bytes": 94371840,
+            "recurrent_or_convolution_state_bytes": 0,
+            "extra_state_unknown": false,
+            "excludes": [
+              "weights",
+              "projector",
+              "image encoder activations",
+              "compute buffers",
+              "allocator overhead",
+              "additional slots/sequences"
+            ],
+            "sliding_cache_caveat": "Actual runtime may allocate differently from an ideal bounded sliding cache; use conservative reservation and observed peak memory."
+          }
+        },
+        "projector_type": "IDEFICS3"
+      },
+      "license": {
+        "declared_upstream": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_urls": [
+          "https://huggingface.co/HuggingFaceTB/SmolVLM-256M-Instruct/blob/7e3e67edbbed1bf9888184d9df282b700a323964/README.md"
+        ]
+      },
+      "publisher_settings": {
+        "generation_config": {
+          "_from_model_config": true,
+          "bos_token_id": 0,
+          "eos_token_id": 49279,
+          "pad_token_id": 2,
+          "transformers_version": "4.46.0"
+        },
+        "generation_config_scope": "upstream HF configuration; not automatically read by either GGUF runtime",
+        "recommendations": [
+          {
+            "decoding": "greedy",
+            "max_new_tokens": 64,
+            "scope": "publisher usage example"
+          }
+        ]
+      },
+      "app_profile_proposals": [
+        {
+          "id": "caption_small_cpu_candidate",
+          "status": "proposal_not_applied_or_benchmarked",
+          "request": {
+            "temperature": 0,
+            "top_p": 1.0,
+            "top_k": 0,
+            "min_p": 0.0,
+            "repeat_penalty": 1.0,
+            "presence_penalty": 0.0,
+            "frequency_penalty": 0.0,
+            "max_tokens": 128
+          },
+          "load": {
+            "context_tokens": 2048,
+            "n_batch": 512,
+            "n_ubatch": 256
+          },
+          "provenance": "Publisher settings where stated, with explicitly chosen application budgets and neutral unspecified samplers.",
+          "preprocess": {
+            "image_longest_edge": 512,
+            "image_count": 1
+          }
+        }
+      ],
+      "capabilities": {
+        "eligible_tasks": ["image_captioning", "image_question_answering"],
+        "input_modalities": ["text", "image"],
+        "output_modalities": ["text"],
+        "system_prompt": "No strong hierarchy claim established by the sources or tiny image smoke.",
+        "thinking": {
+          "kind": "standard_vision_instruct",
+          "control": null
+        },
+        "tools": {
+          "template": "SmolVLM image/text chat",
+          "format_evidence": "image protocol smoke completed",
+          "quality_evidence": "no native function-calling benchmark verified",
+          "quantized_app_quality_verified": false
+        },
+        "instruction_adherence_app_evaluation": "not_measured",
+        "roleplay_app_evaluation": "not_measured",
+        "generate_image_tool_app_evaluation": "not_measured"
+      },
+      "benchmark_caveats": [
+        "Published checkpoint results are not a measurement of these GGUF conversions. No quantitative score is inferred for a quantization."
+      ],
+      "source_urls": {
+        "checkpoint": "https://huggingface.co/HuggingFaceTB/SmolVLM-256M-Instruct/tree/7e3e67edbbed1bf9888184d9df282b700a323964",
+        "checkpoint_card": "https://huggingface.co/HuggingFaceTB/SmolVLM-256M-Instruct/blob/7e3e67edbbed1bf9888184d9df282b700a323964/README.md",
+        "config": "https://huggingface.co/HuggingFaceTB/SmolVLM-256M-Instruct/blob/7e3e67edbbed1bf9888184d9df282b700a323964/config.json",
+        "generation_config": "https://huggingface.co/HuggingFaceTB/SmolVLM-256M-Instruct/blob/7e3e67edbbed1bf9888184d9df282b700a323964/generation_config.json",
+        "artifact_card": "https://huggingface.co/ggml-org/SmolVLM-256M-Instruct-GGUF/blob/b9e4379657e1450d04d02eec8e345667265b0a00/README.md",
+        "artifact_repository": "https://huggingface.co/ggml-org/SmolVLM-256M-Instruct-GGUF",
+        "chat_template": null
+      },
+      "runtime_status": {
+        "xllamacpp": {
+          "runtime": "2026.10.11870",
+          "llama_cpp_baseline": "b11870",
+          "architecture_source_supported": true,
+          "projector_source_supported": true,
+          "status": "exact_CPU_image_smoke_completed_quality_failed",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": true,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b11870",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/src/models/llama.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/common/chat.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/tools/mtmd/clip.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/74bca3950054eed1795f525cb9cf06bfe796492d/tools/mtmd/mtmd.cpp"
+          ],
+          "single_fixture_quality_status": "failed; not a benchmark",
+          "first_source_tag": "b5169",
+          "first_source_commit": "dc39a5e7a84815a90fa0c515ed8927870cf858c9"
+        },
+        "native_llama_cpp": {
+          "runtime": "b12110",
+          "llama_cpp_commit": "cd959bae99ff4bed22bef2604f45241c09bbb8c8",
+          "architecture_source_supported": true,
+          "projector_source_supported": true,
+          "status": "source_supported_not_full_artifact_tested",
+          "cpu_execution_status": "source_supported",
+          "gpu_execution_status": "source_path_available_backend_hardware_unverified",
+          "exact_gpu_artifact_tested": false,
+          "exact_cpu_artifact_tested": false,
+          "quality_tested": false,
+          "minimum_verified_baseline": "b12110",
+          "baseline_is_introduction_version": false,
+          "source_urls": [
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/llama-arch.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/src/models/llama.cpp",
+            "https://github.com/ggml-org/llama.cpp/blob/cd959bae99ff4bed22bef2604f45241c09bbb8c8/common/chat.cpp"
+          ]
+        }
+      },
+      "hardware_notes": {
+        "cpu_speed_measured": false,
+        "gpu_speed_measured": false,
+        "planning_context_tokens": 4096,
+        "weight_bytes_are_not_peak_RAM_or_VRAM": true,
+        "gpu_backend_caveat": "Availability of a CPU/Vulkan/HIP/CUDA build is distinct from this exact model/quant working correctly and quickly on the user's hardware. No ROCm/Vulkan model benchmark was run.",
+        "tier_assignment": "Use exact per-artifact bytes plus matching projector, KV components, conservative compute/state overhead, OS reserve and image budget. This research intentionally does not pretend a parameter label is a VRAM minimum."
+      },
+      "template_validation_note": "Template inspection uses upstream HF evidence; check the effective embedded GGUF template and adapter behavior before advertising tool capability for every quantization."
+    }
+  }
+}
