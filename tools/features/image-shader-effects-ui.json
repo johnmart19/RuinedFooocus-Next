@@ -1,0 +1,8 @@
+{
+  "id": "image-shader-effects-ui",
+  "subject": "Add a curve point table and named effect selector",
+  "requires": ["translation-manager", "image-shader-effects"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
