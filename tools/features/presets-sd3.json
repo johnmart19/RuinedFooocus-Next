@@ -1,0 +1,8 @@
+{
+  "id": "presets-sd3",
+  "subject": "Add default image recipes for Stable Diffusion 3.5 and Stable Cascade",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
