@@ -1,0 +1,8 @@
+{
+  "id": "web-access-controls",
+  "subject": "Add access controls shared by the owner UI and the guest server",
+  "requires": ["preparation-admission", "resource-lifecycle"],
+  "tests": ["test_ui_request_fencing.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
