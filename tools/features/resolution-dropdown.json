@@ -1,0 +1,8 @@
+{
+  "id": "resolution-dropdown",
+  "subject": "Keep image dimensions stable across recommendation labels",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
