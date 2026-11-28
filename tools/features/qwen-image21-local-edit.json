@@ -1,0 +1,8 @@
+{
+  "id": "qwen-image21-local-edit",
+  "subject": "Add localized Qwen Image 2.1 editing by painting on the reference",
+  "requires": ["inpaint-image-preparation"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
