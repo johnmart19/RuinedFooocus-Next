@@ -1,0 +1,18 @@
+{
+  "id": "startup-defaults",
+  "subject": "Save chosen startup defaults without uploads or generation state",
+  "requires": [
+    "llama-runtime-policy",
+    "llama-moe-cache-policy",
+    "latent-composition",
+    "still-image-utility-dispatch",
+    "native-model-patches",
+    "native-control-recipes",
+    "lora-hook-schedules",
+    "krea-style-lora",
+    "bernini-image-editing"
+  ],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
