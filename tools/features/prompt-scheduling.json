@@ -1,0 +1,9 @@
+{
+  "id": "prompt-scheduling",
+  "subject": "Resolve explicit prompt schedules per step",
+  "requires": ["prompt-local-model-runner"],
+  "tests": ["test_prompt_schedule_sigmas.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
