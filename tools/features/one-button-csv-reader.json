@@ -1,0 +1,8 @@
+{
+  "id": "one-button-csv-reader",
+  "subject": "Port the One Button CSV reader to the cached data store",
+  "requires": ["one-button-data-store", "prompt-local-model-runner"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
