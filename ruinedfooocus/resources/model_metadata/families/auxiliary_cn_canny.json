@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:cn_canny": {
+      "display_name": "Control-LoRA Canny rank128",
+      "purpose": "Edge-conditioned SDXL generation.",
+      "native_scale": null,
+      "source_url": "https://huggingface.co/stabilityai/control-lora/resolve/main/control-LoRAs-rank128/control-lora-canny-rank128.safetensors",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": "Stability AI Control-LoRA Community License Agreement",
+        "status": "publisher_specific_custom_license",
+        "sources": ["control_license"],
+        "summary": "Redistribution requires agreement and applicable notices. Additional commercial authorization applies above 1 million monthly active users; this is not the current Stability revenue-threshold license."
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "Publisher provides demonstrations and file-size comparisons, not a standardized score for these exact rank128 artifacts.",
+      "sources": [
+        "control_card",
+        "control_license",
+        "project_pipeline",
+        "project_presets",
+        "comfy_canny"
+      ],
+      "architecture": "SDXL Control-LoRA",
+      "app_preset_defaults": {
+        "type": "canny",
+        "edge_low": 0.2,
+        "edge_high": 0.8,
+        "strength": 0.5,
+        "start": 0.0,
+        "stop": 0.5
+      },
+      "alternative_high_preset": {
+        "strength": 1.0,
+        "start": 0.0,
+        "stop": 0.99
+      },
+      "preprocessing": "Native Comfy Canny (Kornia-based), no neural edge-model weight required."
+    }
+  }
+}
