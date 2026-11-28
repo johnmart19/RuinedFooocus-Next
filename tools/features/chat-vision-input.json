@@ -1,0 +1,8 @@
+{
+  "id": "chat-vision-input",
+  "subject": "Add local image input for vision chat models",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
