@@ -1,0 +1,8 @@
+{
+  "id": "qwen-layered-ui",
+  "subject": "Add Qwen Layered controls",
+  "requires": ["translation-manager", "qwen-layered"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
