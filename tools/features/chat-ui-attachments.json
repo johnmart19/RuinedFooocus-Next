@@ -1,0 +1,28 @@
+{
+  "id": "chat-ui-attachments",
+  "subject": "Add chat attachment controls with source display",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "web-access-controls",
+    "chat-attachments"
+  ],
+  "tests": ["test_rag_manifest.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
