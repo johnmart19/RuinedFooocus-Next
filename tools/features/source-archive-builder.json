@@ -1,0 +1,8 @@
+{
+  "id": "source-archive-builder",
+  "subject": "Add a command that builds a source ZIP from an exact revision",
+  "requires": ["source-distribution"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
