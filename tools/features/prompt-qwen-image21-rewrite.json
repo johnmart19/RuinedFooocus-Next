@@ -1,0 +1,13 @@
+{
+  "id": "prompt-qwen-image21-rewrite",
+  "subject": "Add the official Qwen Image 2.1 prompt rewrite",
+  "requires": [
+    "comfy-per-node-cleanup",
+    "comfy-vae-decode",
+    "image-model-lifecycle",
+    "generation-worker"
+  ],
+  "tests": ["test_native_step.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
