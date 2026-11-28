@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "native-config-omnigen2",
+  "family": "Omnigen2",
+  "media": "image",
+  "variant": "base",
+  "aliases": ["Omnigen2"],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 5,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "existing_qualified_native_configuration_baseline",
+    "component_contract": {
+      "native_family": "Omnigen2",
+      "text_encoder_roles": ["clip_omnigen2_3b"],
+      "vae_role": "vae_flux",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Omnigen2 template",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_omnigen2_t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "61d97a1ac1d74f28ee6672273d6fc0c7a57cabe72522e81e133e198f5eef8680",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T05:42:41.530160+00:00"
+  },
+  "legacy": null
+}

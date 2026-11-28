@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "native-longcatimage-base",
+  "family": "LongCatImage",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 4,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "LongCatImage",
+    "architecture": "LongCatImage",
+    "native_config": {
+      "image_model": "flux",
+      "in_channels": 16,
+      "hidden_size": 3072,
+      "patch_size": 2,
+      "depth": 10,
+      "depth_single_blocks": 20
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "LongCatImage",
+      "text_encoder_roles": ["clip_qwen25"],
+      "vae_role": "vae_flux",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI LongCatImage base workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_longcat_text_to_image.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "0df9cfdf378e68b3776879f548bfa8653ead129ad1e70f689bbd03a7f17d55bf",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "FluxGuidance",
+      "mode": 0,
+      "values": [4]
+    },
+    {
+      "node": "FluxGuidance",
+      "mode": 0,
+      "values": [4]
+    }
+  ],
+  "legacy": null
+}

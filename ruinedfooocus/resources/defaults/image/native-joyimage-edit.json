@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "native-joyimage-edit",
+  "family": "JoyImage",
+  "media": "image",
+  "variant": "edit",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 40,
+    "cfg": 4,
+    "sampler_name": "euler",
+    "scheduler": "normal",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "JoyImage",
+    "architecture": "JoyImage",
+    "native_config": {
+      "image_model": "joyimage",
+      "in_channels": 16,
+      "hidden_size": 4096,
+      "patch_size": [1, 2, 2],
+      "num_layers": 40
+    },
+    "behavioral_variants": ["edit"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "JoyImage",
+      "text_encoder_roles": ["clip_joyimage_8b"],
+      "vae_role": "vae_wan",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI JoyImage edit workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_joyai_image_edit.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "934bd42dfa6cc578bcec843337ce2c095063e2613534cc3fba08f73f5dc40244",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}
