@@ -1,0 +1,8 @@
+{
+  "id": "native-image-formats-ui",
+  "subject": "Add native export choices and original-preserving Library import",
+  "requires": ["native-image-formats", "translation-manager"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
