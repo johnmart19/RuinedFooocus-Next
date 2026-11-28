@@ -1,0 +1,97 @@
+{
+  "clip/qwen_2.5_vl_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/OmniGen-2/resolve/babe908cd4ed58efc7359e9e35b426cd73071949/split_files/text_encoders/qwen_2.5_vl_fp16.safetensors",
+    "path": "path_clip",
+    "filename": "qwen_2.5_vl_fp16.safetensors"
+  },
+  "clip/qwen3vl_8b_joyimage_edit_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/JoyAI-Image-Edit/resolve/8010e7b4c2ac3f762d33775ac5d6a011eea4166c/text_encoders/qwen3vl_8b_joyimage_edit_int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3vl_8b_joyimage_edit_int8_convrot.safetensors"
+  },
+  "checkpoints/x4-upscaler-ema.ckpt": {
+    "url": "https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler/resolve/572c99286543a273bfd17fac263db5a77be12c4c/x4-upscaler-ema.ckpt",
+    "path": "path_checkpoints",
+    "filename": "x4-upscaler-ema.ckpt"
+  },
+  "clip/sd4x_clip_h.safetensors": {
+    "url": "https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler/resolve/572c99286543a273bfd17fac263db5a77be12c4c/text_encoder/model.safetensors",
+    "path": "path_clip",
+    "filename": "sd4x_clip_h.safetensors"
+  },
+  "vae/sd4x_vae.safetensors": {
+    "url": "https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler/resolve/572c99286543a273bfd17fac263db5a77be12c4c/vae/diffusion_pytorch_model.safetensors",
+    "path": "path_vae",
+    "filename": "sd4x_vae.safetensors"
+  },
+  "checkpoints/hunyuan_dit_1.2.safetensors": {
+    "url": "https://huggingface.co/comfyanonymous/hunyuan_dit_comfyui/resolve/ffdcfdc13da97c04769ead9ea1ea45c9e852d503/hunyuan_dit_1.2.safetensors",
+    "path": "path_checkpoints",
+    "filename": "hunyuan_dit_1.2.safetensors"
+  },
+  "checkpoints/lens_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Lens/resolve/393618fd7db3e370509f84390b9162b8fd839a25/diffusion_models/lens_bf16.safetensors",
+    "path": "path_checkpoints",
+    "filename": "lens_bf16.safetensors"
+  },
+  "clip/gpt_oss_20b_nvfp4.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Lens/resolve/393618fd7db3e370509f84390b9162b8fd839a25/text_encoders/gpt_oss_20b_nvfp4.safetensors",
+    "path": "path_clip",
+    "filename": "gpt_oss_20b_nvfp4.safetensors"
+  },
+  "checkpoints/ming_image_0.1_design_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Ming-Image/resolve/93804ff3747517a318969c5f61b25a57daefe09f/diffusion_models/ming_image_0.1_design_int8_convrot.safetensors",
+    "path": "path_checkpoints",
+    "filename": "ming_image_0.1_design_int8_convrot.safetensors"
+  },
+  "clip/ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Ming-Image/resolve/93804ff3747517a318969c5f61b25a57daefe09f/text_encoders/ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "ming_image_0.1_ling_mini_2.0_int8_convrot.safetensors"
+  },
+  "vae/ming_image_vae_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Ming-Image/resolve/93804ff3747517a318969c5f61b25a57daefe09f/vae/ming_image_vae_bf16.safetensors",
+    "path": "path_vae",
+    "filename": "ming_image_vae_bf16.safetensors"
+  },
+  "checkpoints/qwen_image_2.1_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/diffusion_models/qwen_image_2.1_int8_convrot.safetensors",
+    "path": "path_checkpoints",
+    "filename": "qwen_image_2.1_int8_convrot.safetensors"
+  },
+  "clip/qwen3vl_8b_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/text_encoders/qwen3vl_8b_int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3vl_8b_int8_convrot.safetensors"
+  },
+  "vae/qwen_image_2.1_vae_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/vae/qwen_image_2.1_vae_bf16.safetensors",
+    "path": "path_vae",
+    "filename": "qwen_image_2.1_vae_bf16.safetensors"
+  },
+  "clip/byt5_small_glyphxl_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/resolve/78cfe74376b50a2f52995c4800f792f99ab575b2/split_files/text_encoders/byt5_small_glyphxl_fp16.safetensors",
+    "path": "path_clip",
+    "filename": "byt5_small_glyphxl_fp16.safetensors"
+  },
+  "vae/hunyuan_image_2.1_vae_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/resolve/78cfe74376b50a2f52995c4800f792f99ab575b2/split_files/vae/hunyuan_image_2.1_vae_fp16.safetensors",
+    "path": "path_vae",
+    "filename": "hunyuan_image_2.1_vae_fp16.safetensors"
+  },
+  "checkpoints/stable_cascade_stage_b.safetensors": {
+    "url": "https://huggingface.co/stabilityai/stable-cascade/resolve/a89f66d459ae653e3b4d4f992a7c3789d0dc4d16/comfyui_checkpoints/stable_cascade_stage_b.safetensors",
+    "path": "path_checkpoints",
+    "filename": "stable_cascade_stage_b.safetensors"
+  },
+  "checkpoints/stable_cascade_stage_c.safetensors": {
+    "url": "https://huggingface.co/stabilityai/stable-cascade/resolve/a89f66d459ae653e3b4d4f992a7c3789d0dc4d16/comfyui_checkpoints/stable_cascade_stage_c.safetensors",
+    "path": "path_checkpoints",
+    "filename": "stable_cascade_stage_c.safetensors"
+  },
+  "vae/hunyuan_image_refiner_vae_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/resolve/78cfe74376b50a2f52995c4800f792f99ab575b2/split_files/vae/hunyuan_image_refiner_vae_fp16.safetensors",
+    "path": "path_vae",
+    "filename": "hunyuan_image_refiner_vae_fp16.safetensors"
+  }
+}
