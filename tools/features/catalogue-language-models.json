@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-language-models",
+  "subject": "Add the chat and vision language model catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
