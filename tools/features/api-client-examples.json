@@ -1,0 +1,8 @@
+{
+  "id": "api-client-examples",
+  "subject": "Rewrite the API examples on the Gradio client with real arguments",
+  "requires": ["gradio-api-endpoints"],
+  "tests": ["test_api_examples.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
