@@ -1,0 +1,8 @@
+{
+  "id": "seedvr2-restoration",
+  "subject": "Add one-frame SeedVR2 restoration",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
