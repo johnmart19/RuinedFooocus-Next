@@ -1,0 +1,8 @@
+{
+  "id": "chat-model-browser",
+  "subject": "Add catalogue projections for browsing chat models",
+  "requires": ["model-capabilities"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
