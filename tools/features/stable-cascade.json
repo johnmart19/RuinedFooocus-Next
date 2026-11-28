@@ -1,0 +1,8 @@
+{
+  "id": "stable-cascade",
+  "subject": "Add the native Stable Cascade workflow",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
