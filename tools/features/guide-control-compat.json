@@ -1,0 +1,13 @@
+{
+  "id": "guide-control-compat",
+  "subject": "Match geometry guides to compatible control consumers",
+  "requires": [
+    "image-working-size-geometry",
+    "control-model-candidates",
+    "model-acquisition",
+    "native-control-recipes"
+  ],
+  "tests": ["test_guide_control_compat.py", "test_guide_control_resources.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
