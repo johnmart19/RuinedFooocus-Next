@@ -1,0 +1,8 @@
+{
+  "id": "chat-sampling-sources",
+  "subject": "Add bounded sampling hints read from local chat model sources",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
