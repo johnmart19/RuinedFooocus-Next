@@ -1,0 +1,14 @@
+{
+  "id": "amd-fsr-versions",
+  "subject": "Add AMD FSR 2, 3 and 4 still-image upscaling behind one option",
+  "requires": [
+    "preparation-service",
+    "comfy-pinned-arguments",
+    "amd-fsr-still-helper",
+    "native-image-formats",
+    "amd-fsr-runtime-acquisition"
+  ],
+  "tests": ["test_amd_fsr_runtime.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
