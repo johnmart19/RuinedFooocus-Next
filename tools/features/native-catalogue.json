@@ -1,0 +1,19 @@
+{
+  "id": "native-catalogue",
+  "subject": "Add the native capability catalogue",
+  "requires": [
+    "native-coverage-data",
+    "native-coverage-index",
+    "presets-flux",
+    "presets-chroma",
+    "presets-qwen",
+    "presets-lumina",
+    "presets-newer",
+    "presets-edit",
+    "presets-index",
+    "resource-defaults"
+  ],
+  "tests": ["test_native_modern_catalogue.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
