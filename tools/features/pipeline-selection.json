@@ -1,0 +1,14 @@
+{
+  "id": "pipeline-selection",
+  "subject": "Select the worker pipeline for each request",
+  "requires": [
+    "automation-hashbang-pipeline",
+    "native-vision-pipeline",
+    "rembg-pipeline",
+    "gradio-api-endpoints",
+    "image-pipeline"
+  ],
+  "tests": ["test_chat_boundaries.py", "test_sdcpp_caller.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
