@@ -1,0 +1,8 @@
+{
+  "id": "document-parser-manifest",
+  "subject": "Bundle the pinned document parser package manifest",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
