@@ -1,0 +1,8 @@
+{
+  "id": "ui-default-model-download",
+  "subject": "Add the default model download prompt",
+  "requires": ["model-selection-names", "startup-defaults", "ui-model-components"],
+  "tests": ["test_model_selection.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
