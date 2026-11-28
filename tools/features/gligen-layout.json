@@ -1,0 +1,8 @@
+{
+  "id": "gligen-layout",
+  "subject": "Add GLIGEN text box layout conditioning",
+  "requires": ["image-working-size-geometry", "native-auxiliary-assets"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
