@@ -1,0 +1,9 @@
+{
+  "diffusion_models/omnigen2_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Omnigen2_ComfyUI_repackaged/resolve/babe908cd4ed58efc7359e9e35b426cd73071949/split_files/diffusion_models/omnigen2_fp16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "omnigen2_fp16.safetensors",
+    "size": 7934384176,
+    "sha256": "60dbde45107762d164bac463e1cf365e074b377fa843dc90cb2985fb211cd4de"
+  }
+}

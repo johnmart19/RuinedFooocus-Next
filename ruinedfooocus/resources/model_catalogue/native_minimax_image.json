@@ -1,0 +1,16 @@
+{
+  "diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MiniMax-H3-Image/resolve/0bb149f51e3156ed4b90dd45d5620346bfe1df8f/diffusion_models/minimax_h3_image_pruned_int8_convrot.safetensors",
+    "path": "path_checkpoints",
+    "filename": "minimax_h3_image_pruned_int8_convrot.safetensors",
+    "size": 20979314802,
+    "sha256": "83eb140f1ff95c068f8a6886e6d3f3d0d4ab2e07bb2fe6d2ef992a51146ee622"
+  },
+  "vae/minimax_h3_image_vae_fp16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/MiniMax-H3-Image/resolve/0bb149f51e3156ed4b90dd45d5620346bfe1df8f/vae/minimax_h3_image_vae_fp16.safetensors",
+    "path": "path_vae",
+    "filename": "minimax_h3_image_vae_fp16.safetensors",
+    "size": 1168505312,
+    "sha256": "d80e9c2e5cfc9844869961ff5a58c9a9e52182df6bfb30b26018dd7f348721af"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "diffusion_models/boogu_image_edit_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Boogu-Image/resolve/8606e7df2f5389282617b8b534db290e1f5d7811/diffusion_models/boogu_image_edit_fp8_scaled.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "boogu_image_edit_fp8_scaled.safetensors",
+    "size": 10313835784,
+    "sha256": "1b9da944fdde5fdee4bbae874da68682bf9787e59fc90a473664547e342f8575"
+  },
+  "diffusion_models/boogu_image_turbo_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Boogu-Image/resolve/8606e7df2f5389282617b8b534db290e1f5d7811/diffusion_models/boogu_image_turbo_fp8_scaled.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "boogu_image_turbo_fp8_scaled.safetensors",
+    "size": 10313835784,
+    "sha256": "a97ccbf40f0e607fb5727fe6568335bf3d2b81c32c704a521d2f129aa428a20b"
+  }
+}

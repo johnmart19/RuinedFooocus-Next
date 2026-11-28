@@ -1,0 +1,16 @@
+{
+  "diffusion_models/longcat_image_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/LongCat-Image/resolve/d49457a376940fa670ac73f4e21763c56638f19c/split_files/diffusion_models/longcat_image_bf16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "longcat_image_bf16.safetensors",
+    "size": 12541383144,
+    "sha256": "7c83c314a3d879d43e5700072033256000f46a56900ae48b209a77ac1921488b"
+  },
+  "diffusion_models/longcat_image_edit_bf16.safetensors": {
+    "url": "https://huggingface.co/TalmajM/LongCat-Image-Edit_ComfyUI_repackaged/resolve/312bb02464c69b5ef17a49b9277016dba569c61b/split_files/diffusion_models/longcat_image_edit_bf16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "longcat_image_edit_bf16.safetensors",
+    "size": 12541383144,
+    "sha256": "8e65ba6ab2f6b323c1619347cd681e4ff78a017b608c82c7bf30f1d125925fab"
+  }
+}
