@@ -1,0 +1,8 @@
+{
+  "id": "still-image-utility-dispatch",
+  "subject": "Add the dispatcher for generation-independent still-image utilities",
+  "requires": ["wevisone-matting", "image-filters", "image-mask-tools", "image-color-tools"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
