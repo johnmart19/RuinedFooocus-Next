@@ -1,0 +1,35 @@
+{
+  "id": "app-bootstrap",
+  "subject": "Bootstrap the environment and start the UI from app.bootstrap",
+  "requires": [
+    "hub-download",
+    "safe-source-updates",
+    "linux-gpu-jit-toolchain",
+    "comfy-qwen-attention",
+    "backends-vendor-package",
+    "startup-port",
+    "ui-event-coalescing",
+    "settings-runtime-summary",
+    "settings-cache-maintenance",
+    "aspect-picker-component",
+    "settings-api-workspace",
+    "native-snapshot-updater",
+    "native-latent-composition-io"
+  ],
+  "tests": [
+    "test_bootstrap_package_contract.py",
+    "test_comfy045_release.py",
+    "test_comfy_integration_update.py",
+    "test_local_model_refresh.py",
+    "test_localization.py",
+    "test_native_catalogue_dispositions.py",
+    "test_native_image_snapshot.py",
+    "test_package_plan.py",
+    "test_session_content_locations.py",
+    "test_ui_workflows.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": true,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638",
+  "native_gguf_revision": "35da9968d8eeb0a3c03a1e468203ffd2f6f48348"
+}
