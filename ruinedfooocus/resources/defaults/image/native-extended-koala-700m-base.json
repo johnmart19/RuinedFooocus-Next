@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-koala-700m-base",
+  "family": "KOALA_700M",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 7,
+    "sampler_name": "dpmpp_2m",
+    "scheduler": "karras",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "KOALA_700M",
+    "architecture": "KOALA_700M",
+    "native_config": {
+      "in_channels": 4
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "KOALA_700M",
+      "text_encoder_roles": ["clip_l", "clip_g"],
+      "vae_role": "vae_sdxl",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": true,
+    "runtime_requirements": []
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Compatible KOALA_700M baseline from the documented SDXL family recipe",
+    "source_url": "https://github.com/johnmart19/RuinedFooocus-Next/blob/ad6d015f3fd9843e9d427b010d11b336545dbff0/ruinedfooocus/resources/defaults/performance.default",
+    "source_revision": "ad6d015f3fd9843e9d427b010d11b336545dbff0",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

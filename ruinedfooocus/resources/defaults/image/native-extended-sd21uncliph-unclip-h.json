@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-sd21uncliph-unclip-h",
+  "family": "SD21UnclipH",
+  "media": "image",
+  "variant": "unclip-h",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 26,
+    "cfg": 8.0,
+    "sampler_name": "uni_pc_bh2",
+    "scheduler": "normal",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[768, 768]],
+  "default_size": [768, 768],
+  "applicability": {
+    "native_class": "SD21UnclipH",
+    "architecture": "SD21UnclipH",
+    "native_config": {
+      "in_channels": 4
+    },
+    "behavioral_variants": ["unclip-h"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SD21UnclipH",
+      "text_encoder_roles": ["clip_sd4x_h"],
+      "vae_role": "vae_sd",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Compatible SD21UnclipH native family example",
+    "source_url": "https://raw.githubusercontent.com/comfyanonymous/ComfyUI_examples/f9431bb000ce792094ff345446e22cac1ea6cef3/unclip/unclip_example.png",
+    "source_revision": "f9431bb000ce792094ff345446e22cac1ea6cef3",
+    "resource_sha256": "44d70861657045d5e848f3722e107fb4966be1419b438e784c0a9c538ba58305",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "KSampler",
+      "inputs": {
+        "steps": 26,
+        "cfg": 8.0,
+        "sampler_name": "uni_pc_bh2",
+        "scheduler": "normal"
+      }
+    },
+    {
+      "node": "unCLIPConditioning",
+      "inputs": {}
+    }
+  ],
+  "legacy": null
+}

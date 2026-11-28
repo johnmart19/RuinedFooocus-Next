@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-sdxl-instructpix2pix-base",
+  "family": "SDXL_instructpix2pix",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {},
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "SDXL_instructpix2pix",
+    "architecture": "SDXL_instructpix2pix",
+    "native_config": {
+      "in_channels": 8
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SDXL_instructpix2pix",
+      "text_encoder_roles": ["clip_l", "clip_g"],
+      "vae_role": "vae_sdxl",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
+    ]
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "SDXL_instructpix2pix provisional working canvas; native sampling review pending",
+    "source_url": "https://huggingface.co/diffusers/sdxl-instructpix2pix-768/blob/06653d47f8d22f2c2205a5884d6a24c5e76d2ca7/README.md",
+    "source_revision": "06653d47f8d22f2c2205a5884d6a24c5e76d2ca7",
+    "geometry_evidence": "Unqualified working canvas, not a publisher dimension recommendation.",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

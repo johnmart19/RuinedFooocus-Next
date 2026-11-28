@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-sd15-instructpix2pix-base",
+  "family": "SD15_instructpix2pix",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {},
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "SD15_instructpix2pix",
+    "architecture": "SD15_instructpix2pix",
+    "native_config": {
+      "in_channels": 8
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SD15_instructpix2pix",
+      "text_encoder_roles": ["clip_l"],
+      "vae_role": "vae_sd",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
+    ]
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "SD15_instructpix2pix provisional working canvas; native sampling review pending",
+    "source_url": "https://huggingface.co/timbrooks/instruct-pix2pix/blob/31519b5cb02a7fd89b906d88731cd4d6a7bbf88d/README.md",
+    "source_revision": "31519b5cb02a7fd89b906d88731cd4d6a7bbf88d",
+    "geometry_evidence": "Unqualified working canvas, not a publisher dimension recommendation.",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}
