@@ -1,0 +1,13 @@
+{
+  "id": "comfy-comparison-harness",
+  "subject": "Add a harness that compares application output with direct ComfyUI nodes",
+  "requires": [],
+  "tests": [
+    "test_validation_fail_fast.py",
+    "test_validation_provenance.py",
+    "test_validation_runner.py",
+    "test_workflow_comparison.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
