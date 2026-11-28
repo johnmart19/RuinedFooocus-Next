@@ -1,0 +1,8 @@
+{
+  "id": "model-folder-readme",
+  "subject": "Describe the model folders in place of bundled placement markers",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
