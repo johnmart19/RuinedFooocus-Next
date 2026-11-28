@@ -1,0 +1,8 @@
+{
+  "id": "comfy-qwen-attention",
+  "subject": "Select Qwen attention while keeping Windows ROCm workspace protection",
+  "requires": ["app-root-paths", "comfy-pinned-arguments"],
+  "tests": ["test_qwen_attention_policy.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
