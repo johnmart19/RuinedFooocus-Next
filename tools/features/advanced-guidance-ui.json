@@ -1,0 +1,15 @@
+{
+  "id": "advanced-guidance-ui",
+  "subject": "Add advanced guidance controls per model family",
+  "requires": [
+    "library-index-store",
+    "translation-manager",
+    "image-sampling-options",
+    "advanced-image-guidance",
+    "library-image-metadata"
+  ],
+  "tests": ["test_image_sampling_replay.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
