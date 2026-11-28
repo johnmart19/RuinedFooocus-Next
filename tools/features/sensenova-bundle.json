@@ -1,0 +1,8 @@
+{
+  "id": "sensenova-bundle",
+  "subject": "Capture the SenseNova U1.5 safetensors index",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
