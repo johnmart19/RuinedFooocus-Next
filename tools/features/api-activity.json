@@ -1,0 +1,8 @@
+{
+  "id": "api-activity",
+  "subject": "Record bounded in-memory API job facts",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
