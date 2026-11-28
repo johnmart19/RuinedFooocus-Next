@@ -1,0 +1,8 @@
+{
+  "id": "translations-nl",
+  "subject": "Add the Dutch interface translation",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
