@@ -1,0 +1,8 @@
+{
+  "id": "git-transport-timeouts",
+  "subject": "Bound optional Git network operations with timeouts",
+  "requires": ["install-lock"],
+  "tests": ["test_git_transport.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
