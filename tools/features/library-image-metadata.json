@@ -1,0 +1,13 @@
+{
+  "id": "library-image-metadata",
+  "subject": "Read saved rendering settings from images",
+  "requires": [
+    "still-image-utility-dispatch",
+    "native-model-patches",
+    "native-control-recipes",
+    "lora-hook-schedules"
+  ],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
