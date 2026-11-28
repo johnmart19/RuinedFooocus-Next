@@ -1,0 +1,8 @@
+{
+  "id": "native-image-conditioning",
+  "subject": "Add operation-specific native image conditioning",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
