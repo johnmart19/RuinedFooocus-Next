@@ -1,0 +1,15 @@
+{
+  "id": "ui-model-browser",
+  "subject": "Add the checkpoint card browser",
+  "requires": ["ui-model-acquisition", "ui-checkpoint-tools"],
+  "tests": [
+    "test_checkpoint_card_work.py",
+    "test_checkpoint_cards.py",
+    "test_hf_preview_reliability.py",
+    "test_model_resource_ui.py",
+    "test_model_ui_requests.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
