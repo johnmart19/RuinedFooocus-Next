@@ -1,0 +1,13 @@
+{
+  "id": "chat-attachment-retrieval",
+  "subject": "Retrieve relevant attachment passages for chat requests",
+  "requires": [
+    "preparation-admission",
+    "model-catalogue-loader",
+    "chat-attachments",
+    "chat-rag-embedding-preparation"
+  ],
+  "tests": ["test_document_attachments.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
