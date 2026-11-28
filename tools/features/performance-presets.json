@@ -1,0 +1,8 @@
+{
+  "id": "performance-presets",
+  "subject": "Add per-family performance presets",
+  "requires": ["native-catalogue", "model-recommendations"],
+  "tests": ["test_native_core_catalogue.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
