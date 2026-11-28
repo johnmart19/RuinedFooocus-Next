@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "native-lumina2-netayume-v3.5",
+  "family": "Lumina2",
+  "media": "image",
+  "variant": "netayume-v3.5",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 4,
+    "sampler_name": "res_multistep",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "Lumina2",
+    "architecture": "Lumina2",
+    "native_config": {
+      "image_model": "lumina2",
+      "patch_size": 2,
+      "in_channels": 16
+    },
+    "behavioral_variants": ["netayume-v3.5"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "Lumina2",
+      "text_encoder_roles": ["clip_gemma"],
+      "vae_role": "vae_lumina2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Lumina2 netayume-v3.5 workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_netayume_lumina_t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "988b37618599a5bdbbef776f438d64c5f3c5e205800d337cc1280e5e817ca2eb",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [4]
+    }
+  ],
+  "legacy": null
+}

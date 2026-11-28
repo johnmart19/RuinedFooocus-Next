@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "native-newbieimage-exp0.1",
+  "family": "NewBieImage",
+  "media": "image",
+  "variant": "exp0.1",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 5.5,
+    "sampler_name": "res_multistep",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1536]],
+  "default_size": [1024, 1536],
+  "applicability": {
+    "native_class": "Lumina2",
+    "architecture": "NewBieImage",
+    "native_config": {
+      "image_model": "lumina2",
+      "patch_size": 2,
+      "in_channels": 16
+    },
+    "behavioral_variants": ["exp0.1"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "NewBieImage",
+      "text_encoder_roles": ["clip_gemma3", "clip_jina"],
+      "vae_role": "vae_flux",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI NewBieImage exp0.1 workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_newbieimage_exp0_1-t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "7bd2979e303896d5b50503d7ae278922612c01aab11017312b71a7bf17567e22",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [6]
+    }
+  ],
+  "legacy": null
+}
