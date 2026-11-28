@@ -1,0 +1,8 @@
+{
+  "id": "prompt-style-application",
+  "subject": "Apply styles to prompts through the style catalogue",
+  "requires": ["prompt-style-catalog", "one-button-generator"],
+  "tests": ["test_style_catalog.py", "test_style_encoding.py", "test_style_prompt_payloads.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
