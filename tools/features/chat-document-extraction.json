@@ -1,0 +1,8 @@
+{
+  "id": "chat-document-extraction",
+  "subject": "Extract text from chat documents in an isolated parser process",
+  "requires": ["bounded-subprocess", "document-parser-manifest"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
