@@ -1,0 +1,22 @@
+{
+  "id": "ui-model-acquisition",
+  "subject": "Add the Models acquisition view",
+  "requires": [
+    "media-paths",
+    "catalogue-artwork",
+    "model-acquisition-actions",
+    "web-access-controls",
+    "model-ui-requests",
+    "adapter-card-component",
+    "image-composition",
+    "image-tool-activation"
+  ],
+  "tests": [
+    "test_catalogue_listing.py",
+    "test_media_paths.py",
+    "test_model_acquisition.py",
+    "test_popular_llm_vision_catalogue.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
