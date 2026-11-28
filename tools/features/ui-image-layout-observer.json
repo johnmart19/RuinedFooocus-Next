@@ -1,0 +1,8 @@
+{
+  "id": "ui-image-layout-observer",
+  "subject": "Keep the shared Create and Editor image row laid out",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
