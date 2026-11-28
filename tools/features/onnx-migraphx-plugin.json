@@ -1,0 +1,8 @@
+{
+  "id": "onnx-migraphx-plugin",
+  "subject": "Register the MIGraphX plugin provider inside the ONNX worker only",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
