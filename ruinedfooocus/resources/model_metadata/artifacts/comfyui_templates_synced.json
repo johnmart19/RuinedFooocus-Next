@@ -1,0 +1,542 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:diffusion_models/anima-preview3-base.safetensors": {
+      "id": "existing:diffusion_models/anima-preview3-base.safetensors",
+      "catalogue_key": "diffusion_models/anima-preview3-base.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:anima_preview3_base_safetensors",
+      "label": "anima preview3 base",
+      "role": "image_diffusion_checkpoint",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Anima",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "a79d515dae3386817d1ecb65a654ad8de5d3d2983fb6cdce03376f67dfbf4cb3",
+      "artifact": {
+        "bytes": 4182218360,
+        "sha256": "14fffe8ad5116cd73b9a4696f6a89d7e5f6efdd24b2e4785603aa891a9b2295b",
+        "pinned_url": "https://huggingface.co/circlestone-labs/Anima/resolve/6e0b2da2112573380abfb6a1435a60a994b254f2/split_files/diffusion_models/anima-preview3-base.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      },
+      "native_class": "Anima",
+      "native_family": "Anima"
+    },
+    "existing:loras/anima-turbo-lora-v0.2.safetensors": {
+      "id": "existing:loras/anima-turbo-lora-v0.2.safetensors",
+      "catalogue_key": "loras/anima-turbo-lora-v0.2.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:anima_turbo_lora_v0_2_safetensors",
+      "label": "anima turbo lora v0.2",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Anima",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8e54675df8f6911528554418024e7b2ff21794bad1eb3877fc25134a2ea496d5",
+      "artifact": {
+        "bytes": 148902616,
+        "sha256": "1b55e40bdb1d0e5a78cb498f245fccfdaae97823265db957d2aabdcf4cd3caf1",
+        "pinned_url": "https://huggingface.co/circlestone-labs/Anima-Official-LoRAs/resolve/218b5466a07e8a79328dd8b73ff810706d73cb86/anima-turbo-lora-v0.2.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:clip_vision/clip_vision_g.safetensors": {
+      "id": "existing:clip_vision/clip_vision_g.safetensors",
+      "catalogue_key": "clip_vision/clip_vision_g.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:clip_vision_g_safetensors",
+      "label": "clip vision g",
+      "role": "conditioning_adapter",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "CLIPVision",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8bd7910141da25a591e71c77b7c4542e496b9e3ebe31d2e35f20e7c52b4f6ebd",
+      "artifact": {
+        "bytes": 3689911098,
+        "sha256": "9908329b3ead722a693ea400fab1d7c9ec91d6736fd194a94d20d793457f9c2e",
+        "pinned_url": "https://huggingface.co/comfyanonymous/clip_vision_g/resolve/c716ef60d1b516d73b1bf56714bbd4f6214ac91d/clip_vision_g.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:loras/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors": {
+      "id": "existing:loras/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors",
+      "catalogue_key": "loras/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:firered_image_edit_1_0_lightning_8steps_v1_0_safetensors",
+      "label": "FireRed Image Edit 1.0 Lightning 8steps v1.0",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "01a08e62f2b1bddc1154744654a851f25d1abb9d3e2af9d026982a6ef2cfee24",
+      "artifact": {
+        "bytes": 849542744,
+        "sha256": "dc65fec1f5b92aa160deca7947c637b3e0f6016c1a22f87e1dabba053841cc7a",
+        "pinned_url": "https://huggingface.co/FireRedTeam/FireRed-Image-Edit-1.0-ComfyUI/resolve/f6823d41fe4f04d085f0bffa2e2505c75466909a/FireRed-Image-Edit-1.0-Lightning-8steps-v1.0.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:diffusion_models/FireRed-Image-Edit-1.1-transformer.safetensors": {
+      "id": "existing:diffusion_models/FireRed-Image-Edit-1.1-transformer.safetensors",
+      "catalogue_key": "diffusion_models/FireRed-Image-Edit-1.1-transformer.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:firered_image_edit_1_1_transformer_safetensors",
+      "label": "FireRed Image Edit 1.1 transformer",
+      "role": "image_diffusion_checkpoint",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "bb6d6167fc2ec5c22cfccda5afff3f699aafd8cc7312386bec6c7dcc588807c3",
+      "artifact": {
+        "bytes": 40861031488,
+        "sha256": "004b0326de38ffee22f104048d64670cfdf17c6f53a7349d9cd69d089505e219",
+        "pinned_url": "https://huggingface.co/FireRedTeam/FireRed-Image-Edit-1.1-ComfyUI/resolve/8625b60ec52d4fa0d128d8a6ebc8adba296f8592/FireRed-Image-Edit-1.1-transformer.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      },
+      "native_class": "QwenImage",
+      "native_family": "QwenImage"
+    },
+    "existing:vae/flux2-vae_small.safetensors": {
+      "id": "existing:vae/flux2-vae_small.safetensors",
+      "catalogue_key": "vae/flux2-vae_small.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:flux2_vae_small_safetensors",
+      "label": "flux2 vae small",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Flux2",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "50d3b869514a832a3b592751dea096f2ac560e0138fb1c934bb9207c280ce938",
+      "artifact": {
+        "bytes": 249521340,
+        "sha256": "d8d52ba036475f5fb07c8b435e176d3d97ebfa82f0d1a1c317f9cc1e25bd013b",
+        "pinned_url": "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/2929efe3cdd506c0a430bcfca70a9a8d805cc095/vae/flux2-vae_small.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:controlnet/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors": {
+      "id": "existing:controlnet/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors",
+      "catalogue_key": "controlnet/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:qwen_image_2512_fun_controlnet_union_2602_safetensors",
+      "label": "Qwen Image 2512 Fun Controlnet Union 2602",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "63509b0a6597f3443cd859869838a2742672bbf839a1e325ba2cf84f6eecd63c",
+      "artifact": {
+        "bytes": 3512432536,
+        "sha256": "0d1ac366efaa27dec070b3a8ebe9a41b5ebc567913dee71ed992e7032f66dc37",
+        "pinned_url": "https://huggingface.co/alibaba-pai/Qwen-Image-2512-Fun-Controlnet-Union/resolve/c21dcc372f9f52a55a6d4984cb56a0f0ac0807bc/Qwen-Image-2512-Fun-Controlnet-Union-2602.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors": {
+      "id": "existing:loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "catalogue_key": "loras/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:qwen_image_edit_2511_lightning_4steps_v1_0_bf16_safetensors",
+      "label": "Qwen Image Edit 2511 Lightning 4steps V1.0 bf16",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "1c612cef33a3269cfc40051d235cebe89a907b6ba9a2ddceaff8e68a85854dc0",
+      "artifact": {
+        "bytes": 849608296,
+        "sha256": "22226e8d05d354bb356627d428809f5afd7819399b077238a2b70a82883a904f",
+        "pinned_url": "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/107d238d68b8387e32843d0b4a2e24ceb0d3ad86/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:loras/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors": {
+      "id": "existing:loras/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors",
+      "catalogue_key": "loras/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:qwen_image_edit_lightning_4steps_v1_0_bf16_safetensors",
+      "label": "Qwen Image Edit Lightning 4steps V1.0 bf16",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "cd358c9d312a31515a7960220d206b70b5f63fb22609a390200979d6d30755a7",
+      "artifact": {
+        "bytes": 849608296,
+        "sha256": "d8132c32e7df906603dd6b072ff2fb0af88ab15ef0f3ac697a2011c8b47bbeb1",
+        "pinned_url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Edit-Lightning-4steps-V1.0-bf16.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors": {
+      "id": "existing:controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors",
+      "catalogue_key": "controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:qwen_image_instantx_controlnet_inpainting_safetensors",
+      "label": "Qwen Image InstantX ControlNet Inpainting",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "c1710625e952861204dba8e2e7cd222af3d4ad44f09612878a658e64b5b35e53",
+      "artifact": {
+        "bytes": 4234599432,
+        "sha256": "49c01aafe6545c1f6e7627a724c8fb13357fe74efee235622158f0a8f30e5458",
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/90cf72c3b0e4b11f9a0037727459dbdd03ae029b/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Inpainting.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors": {
+      "id": "existing:controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors",
+      "catalogue_key": "controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:qwen_image_instantx_controlnet_union_safetensors",
+      "label": "Qwen Image InstantX ControlNet Union",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8bd201923b4d7a3151765ea799984eabb7ee6cbcf625cb25b81bd386a5ad1dfa",
+      "artifact": {
+        "bytes": 3536027816,
+        "sha256": "d51dca0073366a675108d5b83c3b7ef941cf2214c9a1c95c23f1e9a228ddbdb0",
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-InstantX-ControlNets/resolve/90cf72c3b0e4b11f9a0037727459dbdd03ae029b/split_files/controlnet/Qwen-Image-InstantX-ControlNet-Union.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:loras/Qwen-Image-Lightning-4steps-V1.0.safetensors": {
+      "id": "existing:loras/Qwen-Image-Lightning-4steps-V1.0.safetensors",
+      "catalogue_key": "loras/Qwen-Image-Lightning-4steps-V1.0.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:qwen_image_lightning_4steps_v1_0_safetensors",
+      "label": "Qwen Image Lightning 4steps V1.0",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "02957c34f29f945bd1fecd2f349ee0d3df0549847464a38772a83cb419b5654d",
+      "artifact": {
+        "bytes": 1698951104,
+        "sha256": "9526e90d71c4290392feeccf3c2172cb77ab3a489f1faeb956637f97acb4c8b1",
+        "pinned_url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Lightning-4steps-V1.0.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    },
+    "existing:loras/Qwen-Image-Lightning-8steps-V1.0.safetensors": {
+      "id": "existing:loras/Qwen-Image-Lightning-8steps-V1.0.safetensors",
+      "catalogue_key": "loras/Qwen-Image-Lightning-8steps-V1.0.safetensors",
+      "state": "existing",
+      "profile_id": "comfyui_template:qwen_image_lightning_8steps_v1_0_safetensors",
+      "label": "Qwen Image Lightning 8steps V1.0",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Unknown",
+        "source": "publisher filename",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "4034b7d4982b349402908753ac6b610193fa4b6bdb4114c110b5242676f9028d",
+      "artifact": {
+        "bytes": 1698951104,
+        "sha256": "07b5a999881437f63124979844ba1949ce2438f65b6220628a196a7d30a4fff9",
+        "pinned_url": "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/d468c534b360e0754c6bf9e38ed49e1e09cd2e2a/Qwen-Image-Lightning-8steps-V1.0.safetensors",
+        "availability": "verified_public_payload",
+        "checked_date_utc": "2026-11-27"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "runtime": {
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "cab5f4e13b83c58482cd514afb22ca925e117638"
+        },
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        }
+      }
+    }
+  }
+}
