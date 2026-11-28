@@ -1,0 +1,8 @@
+{
+  "id": "native-workflow-admission",
+  "subject": "Keep newly detected native families apart from app workflows",
+  "requires": ["utility-model-roles"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
