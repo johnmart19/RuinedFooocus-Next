@@ -1,0 +1,18 @@
+{
+  "id": "hash-locked-package-plan",
+  "subject": "Resolve and execute hash-locked base and overlay package plans",
+  "requires": [
+    "application-requirement-pins",
+    "document-parser-manifest",
+    "startup-install-options",
+    "rocm-installer",
+    "torch-runtime-probe"
+  ],
+  "tests": [
+    "test_document_parser_dependency.py",
+    "test_installer_rocm.py",
+    "test_package_plan_direct_wheels.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
