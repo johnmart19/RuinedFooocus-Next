@@ -1,0 +1,8 @@
+{
+  "id": "image-effect-shaders",
+  "subject": "Bundle GLSL fragment shaders for the named image effects",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
