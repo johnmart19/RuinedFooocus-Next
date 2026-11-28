@@ -1,0 +1,22 @@
+{
+  "id": "one-button-generator",
+  "subject": "Port the One Button dynamic prompt generator",
+  "requires": [
+    "one-button-csv-people",
+    "one-button-csv-outfits",
+    "one-button-csv-nature",
+    "one-button-csv-places",
+    "one-button-csv-objects",
+    "one-button-csv-art",
+    "one-button-csv-filler",
+    "one-button-csv-special-lists",
+    "one-button-csv-templates",
+    "one-button-userfiles",
+    "one-button-random-functions",
+    "prompt-enhancement",
+    "one-button-presets"
+  ],
+  "tests": ["test_prompt_engine_controls.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
