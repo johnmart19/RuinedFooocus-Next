@@ -1,0 +1,8 @@
+{
+  "id": "rocm-installer",
+  "subject": "Select and install AMD ROCm wheels automatically",
+  "requires": ["install-lock", "runtime-bundles"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
