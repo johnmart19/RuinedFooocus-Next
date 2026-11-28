@@ -1,0 +1,8 @@
+{
+  "id": "model-selection-names",
+  "subject": "Add model display names separate from selection identity",
+  "requires": ["utility-model-roles", "image-scope"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
