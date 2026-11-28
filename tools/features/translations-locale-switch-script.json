@@ -1,0 +1,8 @@
+{
+  "id": "translations-locale-switch-script",
+  "subject": "Add the browser script that switches the interface language",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
