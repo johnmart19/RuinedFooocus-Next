@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "fallback": "en",
+  "review_note": "Draft translations have not received native-language review. Untranslated messages use English.",
+  "locales": {
+    "en": {
+      "name": "English (US)",
+      "review": "source"
+    },
+    "sv": {
+      "name": "Svenska (SE)",
+      "review": "draft"
+    },
+    "de": {
+      "name": "Deutsch (DE)",
+      "review": "draft"
+    },
+    "fr": {
+      "name": "Français (FR)",
+      "review": "draft"
+    },
+    "es": {
+      "name": "Español (ES)",
+      "review": "draft"
+    },
+    "pt-BR": {
+      "name": "Português (BR)",
+      "review": "draft"
+    },
+    "uk": {
+      "name": "Українська (UA)",
+      "review": "draft"
+    },
+    "ru": {
+      "name": "Русский (RU)",
+      "review": "draft"
+    },
+    "ja": {
+      "name": "日本語 (JP)",
+      "review": "draft"
+    },
+    "zh-CN": {
+      "name": "简体中文 (CN)",
+      "review": "draft"
+    },
+    "zh-TW": {
+      "name": "繁體中文 (TW)",
+      "review": "draft"
+    },
+    "ko": {
+      "name": "한국어 (KR)",
+      "review": "draft"
+    },
+    "it": {
+      "name": "Italiano (IT)",
+      "review": "draft"
+    },
+    "pl": {
+      "name": "Polski (PL)",
+      "review": "draft"
+    },
+    "nl": {
+      "name": "Nederlands (NL)",
+      "review": "draft"
+    },
+    "tr": {
+      "name": "Türkçe (TR)",
+      "review": "draft"
+    }
+  },
+  "staged": []
+}
