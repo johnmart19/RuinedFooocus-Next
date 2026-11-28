@@ -1,0 +1,28 @@
+{
+  "id": "chat-llama-pipeline",
+  "subject": "Add the chat pipeline over the native and embedded llama.cpp runtimes",
+  "requires": [
+    "chat-ui-attachments",
+    "chat-attachment-retrieval",
+    "one-button-prompt-formats",
+    "api-runtime",
+    "llama-managed-server"
+  ],
+  "tests": [
+    "test_chat_attachments.py",
+    "test_chat_image_tool_continuation.py",
+    "test_chat_runtime_load.py",
+    "test_chat_vision_modes.py",
+    "test_execution_feature_entrypoints.py",
+    "test_llama_moe_cache_share.py",
+    "test_llama_rewrite.py",
+    "test_local_prompt_enhancement.py",
+    "test_model_capabilities.py",
+    "test_qwen3_candidate.py",
+    "test_rag_preparation.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": true,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638",
+  "native_gguf_revision": "35da9968d8eeb0a3c03a1e468203ffd2f6f48348"
+}
