@@ -1,0 +1,20 @@
+{
+  "id": "onnx-windows-ml",
+  "subject": "Add explicit Windows ML provider acquisition and device selection",
+  "requires": [
+    "onnx-bria-qualification",
+    "onnx-migraphx-plugin",
+    "llama-linux-cuda-build",
+    "onnx-runtime-installer",
+    "sdcpp-activation"
+  ],
+  "tests": [
+    "test_hardware_inventory.py",
+    "test_native_runtime_paths.py",
+    "test_onnx_install_transactions.py",
+    "test_onnx_provider_recipes.py",
+    "test_windows_ml_qualification.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
