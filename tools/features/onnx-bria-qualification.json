@@ -1,0 +1,8 @@
+{
+  "id": "onnx-bria-qualification",
+  "subject": "Bind ONNX qualification records to exact model, runtime and driver",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
