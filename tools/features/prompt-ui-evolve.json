@@ -1,0 +1,29 @@
+{
+  "id": "prompt-ui-evolve",
+  "subject": "Add prompt evolution with previews",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "prompt-token-variation",
+    "one-button-generator",
+    "prompt-preview"
+  ],
+  "tests": ["test_prompt_variations.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
