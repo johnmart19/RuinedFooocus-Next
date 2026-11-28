@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-rt-detr-v4-sdpose-detect",
+  "family": "RT_DETR_v4",
+  "media": "image",
+  "variant": "sdpose-detect",
+  "aliases": [],
+  "sampling": {},
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "RT_DETR_v4",
+    "architecture": "RT_DETR_v4",
+    "native_config": {
+      "image_model": "RT_DETR_v4"
+    },
+    "behavioral_variants": ["sdpose-detect"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "RT_DETR_v4",
+      "text_encoder_roles": [],
+      "vae_role": null,
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "RT_DETR_v4 specialized native workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/utility_sdpose_multi_person.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "7c0c2da013e5a18c22c871cb4b44418a80d297fbcc4385ffd4ebaf4303ac96fa",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-seedvr2-7b-int8",
+  "family": "SeedVR2",
+  "media": "image",
+  "variant": "7b-int8",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 1,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "SeedVR2",
+    "architecture": "SeedVR2",
+    "native_config": {
+      "image_model": "seedvr2",
+      "num_layers": 36
+    },
+    "behavioral_variants": ["7b-int8"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "SeedVR2",
+      "text_encoder_roles": [],
+      "vae_role": "native_seedvr2_vae",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Explicit native image utility/workflow settings; ordinary Auto admission is not qualified."
+    ]
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "SeedVR2 specialized native workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/utility_seedvr2_7b_int8_upscale_image.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "09d9850e590ffb286373157c558d8202b622fca39f0928d2a514981d58b3b28a",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [
+    {
+      "node": "KSampler",
+      "mode": 0,
+      "values": [959948902156062, "fixed", 1, 1, "euler", "simple", 1]
+    },
+    {
+      "node": "SeedVR2Conditioning",
+      "mode": 0,
+      "values": []
+    }
+  ],
+  "legacy": null
+}

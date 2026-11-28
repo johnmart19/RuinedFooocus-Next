@@ -1,0 +1,8 @@
+{
+  "id": "presets-utility",
+  "subject": "Add default recipes for native utility models",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
