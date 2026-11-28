@@ -1,0 +1,8 @@
+{
+  "id": "chat-model-profiles",
+  "subject": "Add shared request profiles for chat models",
+  "requires": ["model-registry", "chat-assistants"],
+  "tests": ["test_assistant_cards.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
