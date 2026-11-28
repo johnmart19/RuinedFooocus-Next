@@ -1,0 +1,8 @@
+{
+  "id": "comfy-per-node-cleanup",
+  "subject": "Run the ComfyUI per-node cleanup when calling native nodes directly",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
