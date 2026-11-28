@@ -1,0 +1,8 @@
+{
+  "id": "utility-defaults",
+  "subject": "Add passive defaults for the ready-to-run still-image tools",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
