@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:top5_v1": {
+      "title": "Top5 v1.0 SDXL checkpoint",
+      "provenance": {
+        "upstream": "Civitai model 560819, version 624591, file 539540",
+        "remote_filename": "top5-20240706.safetensors",
+        "local_alias": "SDXL 1.0/top5_v10.safetensors",
+        "declared_base": "SDXL 1.0",
+        "sha256": "3dc9076fabe5c17115f6725993b94db96005e7a7911ac1df35f648ace25b9da3"
+      },
+      "consumers": ["SDXL"],
+      "release": {
+        "date": "2024-07-06",
+        "date_precision": "day",
+        "scope": "specific_model_version_published",
+        "source": "https://civitai.com/api/v1/model-versions/624591",
+        "artifact_conversion_release_date": null,
+        "note": "publishedAt 2024-07-06T16:53:41.445Z; createdAt is a separate timestamp."
+      },
+      "license": {
+        "value": null,
+        "status": "not_established_from_version_metadata",
+        "note": "Version metadata establishes SDXL base but does not provide a complete licensing grant for the merge; do not infer one from file extension or absence of gating."
+      },
+      "dependencies": [
+        "SDXL CLIP-L + CLIP-G + VAE, normally embedded; optional acceleration LoRA must use its own sampler recipe"
+      ],
+      "settings": {
+        "scope": "publisher_example_metadata_not_universal_recommendation",
+        "example": {
+          "steps": 30,
+          "cfg": 8,
+          "sampler": "dpmpp_2m_sde_gpu",
+          "scheduler": "karras",
+          "width": 832,
+          "height": 1216
+        },
+        "fallback": {
+          "custom_steps": 30,
+          "cfg": 7,
+          "sampler_name": "dpmpp_2m",
+          "scheduler": "karras",
+          "clip_skip": 1,
+          "recommended_resolutions": "1024x1024, 832x1216, 1216x832"
+        }
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://civitai.com/api/v1/model-versions/624591",
+        "https://civitai.com/models/560819?modelVersionId=624591"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

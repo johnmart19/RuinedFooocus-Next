@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:sd4x_checkpoint": {
+      "title": "Native SD4x full checkpoint",
+      "provenance": {
+        "upstream": "stabilityai/stable-diffusion-x4-upscaler",
+        "revision": "572c99286543a273bfd17fac263db5a77be12c4c"
+      },
+      "consumers": ["SD_X4Upscaler"],
+      "dependencies": ["Bundled CLIP-H and four-times VAE"],
+      "settings": {
+        "scope": "checkpoint",
+        "standalone_sampling": "Explicit complete recipe or Own settings; source image required"
+      },
+      "sources": [
+        "https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler/tree/572c99286543a273bfd17fac263db5a77be12c4c"
+      ],
+      "standalone_vram_status": "workload_dependent"
+    }
+  }
+}

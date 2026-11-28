@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_segmind_vega_base": {
+      "title": "Segmind_Vega base",
+      "consumers": ["Segmind_Vega"],
+      "native_class": "Segmind_Vega",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/segmind/Segmind-Vega/blob/7714c4363e5856ff974a4f4b068e8691f26d0b40/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-segmind-vega-base",
+        "auto_recipe_supported": true,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

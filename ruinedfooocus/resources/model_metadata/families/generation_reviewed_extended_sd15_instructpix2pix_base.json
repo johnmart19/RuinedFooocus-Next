@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_sd15_instructpix2pix_base": {
+      "title": "SD15_instructpix2pix base",
+      "consumers": ["SD15_instructpix2pix"],
+      "native_class": "SD15_instructpix2pix",
+      "license": {
+        "value": "mit",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/timbrooks/instruct-pix2pix/blob/31519b5cb02a7fd89b906d88731cd4d6a7bbf88d/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-sd15-instructpix2pix-base",
+        "auto_recipe_supported": false,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}
