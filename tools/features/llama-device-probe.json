@@ -1,0 +1,8 @@
+{
+  "id": "llama-device-probe",
+  "subject": "Add one bounded, cancellable llama device probe",
+  "requires": ["bounded-subprocess", "llama-runtime-policy"],
+  "tests": ["test_llama_runtime_probe.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
