@@ -1,0 +1,8 @@
+{
+  "id": "chat-ui-rag-settings",
+  "subject": "Add owner controls for the chat embedding model",
+  "requires": ["chat-rag-embedding-preparation"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
