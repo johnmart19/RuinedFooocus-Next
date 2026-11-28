@@ -1,0 +1,19 @@
+{
+  "id": "image-components",
+  "subject": "Add the image component inventory",
+  "requires": [
+    "model-folder-roots",
+    "bernini-component-manifest",
+    "presets-sd",
+    "presets-sd3",
+    "presets-dit",
+    "presets-anima",
+    "presets-hidream",
+    "presets-utility",
+    "image-scope",
+    "native-catalogue"
+  ],
+  "tests": ["test_image_chat_resource_scope.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
