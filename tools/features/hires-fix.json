@@ -1,0 +1,8 @@
+{
+  "id": "hires-fix",
+  "subject": "Add native two-pass Hires Fix",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
