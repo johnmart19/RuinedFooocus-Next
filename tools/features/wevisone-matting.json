@@ -1,0 +1,8 @@
+{
+  "id": "wevisone-matting",
+  "subject": "Add native WeVisOne object detection and matting",
+  "requires": ["native-image-formats", "depth-utility-contracts"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
