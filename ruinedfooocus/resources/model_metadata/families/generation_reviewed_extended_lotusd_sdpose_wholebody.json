@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_lotusd_sdpose_wholebody": {
+      "title": "SDPose sdpose-wholebody",
+      "consumers": ["SDPose"],
+      "native_class": "LotusD",
+      "license": {
+        "value": "mit",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/SDPose/blob/acb43fbe8142b54d9ebd52b720b81dd4e14c8d81/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-lotusd-sdpose-wholebody",
+        "auto_recipe_supported": false,
+        "source_workflow": "utility_sdpose_ood_image_to_pose.json"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

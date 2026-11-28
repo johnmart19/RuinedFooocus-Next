@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:geometry_estimation_depth_anything_3_base_safetensors": {
+      "display_name": "Depth Anything3 BASE",
+      "purpose": "Relative monocular depth map for image control; original model also supports any-view geometry.",
+      "native_scale": null,
+      "source_url": "https://huggingface.co/Comfy-Org/Depth-Anything-3/resolve/8265be070134dc7459217308cdc03109bde199b0/geometry_estimation/depth_anything_3_base.safetensors",
+      "release": {
+        "date": "2025-11-14",
+        "status": "known",
+        "kind": "publisher_main_series_release",
+        "sources": ["da3_readme"],
+        "note": "Original SMALL/BASE series release, not the later Comfy safetensors packaging date."
+      },
+      "license": {
+        "identifier": "Apache-2.0",
+        "status": "original_and_repack_publisher_declared",
+        "sources": ["da3_base", "da3_card"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "Inspected official benchmark documentation reports DA3-GIANT. Family improvements and giant scores do not establish scores for these SMALL/BASE Comfy repacks.",
+      "sources": [
+        "da3_base",
+        "da3_readme",
+        "da3_card",
+        "project_depth",
+        "comfy_depth",
+        "da3_bench"
+      ],
+      "architecture": "DA3-BASE",
+      "cpu_feasibility": {
+        "supported_by_loader": true,
+        "practicality": "possible_slower",
+        "status": "source_audit_not_measured"
+      }
+    }
+  }
+}

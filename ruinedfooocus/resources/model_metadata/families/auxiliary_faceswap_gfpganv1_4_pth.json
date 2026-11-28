@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:faceswap_gfpganv1_4_pth": {
+      "display_name": "GFPGAN v1.4 (cropped-face restoration)",
+      "purpose": "Restore an already cropped/aligned face, rather than swap identity.",
+      "native_scale": 1,
+      "source_url": "https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth",
+      "release": {
+        "date": "2022-09-04",
+        "status": "known",
+        "kind": "exact_asset_upload",
+        "sources": ["gfpg_releases"],
+        "note": "Asset upload date; container release may predate this model file."
+      },
+      "license": {
+        "identifier": "Apache-2.0 with third-party notices",
+        "status": "publisher_declared",
+        "sources": ["gfpg_license"],
+        "note": "Publisher LICENSE includes third-party components under their own terms; do not replace it with an unqualified mirror license."
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "Original GFPGAN paper evaluates different models; publisher v1.4 description is qualitative and not a numeric benchmark for this file.",
+      "sources": [
+        "project_upscale",
+        "gfpg_releases",
+        "gfpg_readme",
+        "gfpg_license",
+        "spandrel_GFPGAN",
+        "project_presets"
+      ],
+      "architecture": "GFPGANv1Clean",
+      "model_settings": {
+        "native_scale": 1,
+        "input_channels": 3,
+        "output_channels": 3,
+        "minimum_input_size": 512,
+        "intended_face_crop_px": 512,
+        "fp16_supported": false,
+        "bfloat16_supported": true,
+        "app_input_dtype": "float32"
+      },
+      "cpu_feasibility": {
+        "supported_by_loader": true,
+        "practicality": "single_512face_crop",
+        "status": "source_audit_not_measured"
+      }
+    }
+  }
+}
