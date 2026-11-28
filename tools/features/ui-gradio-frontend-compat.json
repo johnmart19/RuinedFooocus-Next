@@ -1,0 +1,8 @@
+{
+  "id": "ui-gradio-frontend-compat",
+  "subject": "Correct the pinned Gradio frontend for streamed events without vendor writes",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
