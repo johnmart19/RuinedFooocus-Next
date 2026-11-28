@@ -1,0 +1,8 @@
+{
+  "id": "translations-tr",
+  "subject": "Add the Turkish interface translation",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
