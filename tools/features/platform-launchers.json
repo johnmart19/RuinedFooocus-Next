@@ -1,0 +1,8 @@
+{
+  "id": "platform-launchers",
+  "subject": "Add one-step Windows and Linux launchers that create the environment",
+  "requires": [],
+  "tests": ["test_launchers.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
