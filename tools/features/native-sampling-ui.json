@@ -1,0 +1,8 @@
+{
+  "id": "native-sampling-ui",
+  "subject": "Add contextual controls for native schedules and dual-model guidance",
+  "requires": ["native-sampling-schedules"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
