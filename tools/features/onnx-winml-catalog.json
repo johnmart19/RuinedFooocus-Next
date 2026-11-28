@@ -1,0 +1,8 @@
+{
+  "id": "onnx-winml-catalog",
+  "subject": "Acquire certified Windows ML providers through the publisher bridge",
+  "requires": ["onnx-windows-ml"],
+  "tests": ["test_windows_ml_catalog_ui.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
