@@ -1,0 +1,8 @@
+{
+  "id": "native-component-layout",
+  "subject": "Add source-bound component roles for layered models",
+  "requires": ["native-recipes"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
