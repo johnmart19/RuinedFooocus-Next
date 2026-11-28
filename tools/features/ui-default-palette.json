@@ -1,0 +1,8 @@
+{
+  "id": "ui-default-palette",
+  "subject": "Add the neutral light and dark palette of the Default theme",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
