@@ -1,0 +1,8 @@
+{
+  "id": "qwen-layered",
+  "subject": "Add the Qwen Layered workflow returning ordered RGBA layers",
+  "requires": ["generation-size-plan", "image-output-batches"],
+  "tests": ["test_layered_native_imports.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
