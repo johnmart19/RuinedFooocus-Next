@@ -1,0 +1,8 @@
+{
+  "id": "chat-avatar-label",
+  "subject": "Give the Chat portrait button an accessible name",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
