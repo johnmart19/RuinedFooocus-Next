@@ -1,0 +1,8 @@
+{
+  "id": "llama-runtime-policy",
+  "subject": "Add LLM backend preference and explicit xllamacpp parameter controls",
+  "requires": ["app-root-paths", "comfy-pinned-arguments"],
+  "tests": ["test_llama_runtime_policy.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
