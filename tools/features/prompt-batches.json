@@ -1,0 +1,8 @@
+{
+  "id": "prompt-batches",
+  "subject": "Split explicit prompt batches without breaking quoted text",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
