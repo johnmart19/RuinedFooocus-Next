@@ -1,0 +1,8 @@
+{
+  "id": "model-capabilities",
+  "subject": "Add source-qualified model task eligibility",
+  "requires": ["gguf-metadata-reader", "model-registry"],
+  "tests": ["test_gguf_streaming_metadata.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
