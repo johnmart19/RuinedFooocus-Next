@@ -1,0 +1,8 @@
+{
+  "id": "ordered-edit-references",
+  "subject": "Add ordered edit-reference adapters for native image nodes",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
