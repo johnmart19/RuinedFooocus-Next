@@ -1,0 +1,33 @@
+{
+  "id": "settings-cache-maintenance",
+  "subject": "Add targeted cache clearing to Settings",
+  "requires": [
+    "cache-maintenance",
+    "preparation-admission",
+    "model-identity",
+    "library-index-store",
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translation-manager",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "ui-user-error-messages",
+    "launch-arguments"
+  ],
+  "tests": ["test_cache_maintenance.py", "test_cache_maintenance_ui.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
