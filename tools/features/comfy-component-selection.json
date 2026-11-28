@@ -1,0 +1,8 @@
+{
+  "id": "comfy-component-selection",
+  "subject": "Resolve per-request component overrides at the native loader",
+  "requires": ["resource-defaults"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
