@@ -1,0 +1,17 @@
+{
+  "id": "generation-pipeline-utils",
+  "subject": "Add shared diffusion model loading and previewer helpers",
+  "requires": [
+    "comfy-cpu-startup",
+    "local-diffusers-bundles",
+    "generation-size-plan",
+    "resource-lifecycle",
+    "comfy-sensenova-loading",
+    "comfy-gguf-diffusion-loader",
+    "ui-model-components"
+  ],
+  "tests": ["test_sensenova_bundle.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
