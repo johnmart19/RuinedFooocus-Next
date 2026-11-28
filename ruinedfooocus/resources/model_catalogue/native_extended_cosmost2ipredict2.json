@@ -1,0 +1,9 @@
+{
+  "diffusion_models/cosmos_predict2_2B_t2i.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Cosmos-Predict2/resolve/bc1946fd79f358326a8ce898f718fd1e88b1a5de/cosmos_predict2_2B_t2i.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "cosmos_predict2_2B_t2i.safetensors",
+    "size": 3912894213,
+    "sha256": "76a8b3c6c45289b9c11f74e3067a597a3832a2977fef0d6ea46f2ff7f0895173"
+  }
+}

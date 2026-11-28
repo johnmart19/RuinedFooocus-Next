@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-dit",
+  "subject": "Add the AuraFlow, Cosmos, Hunyuan and PixArt download catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

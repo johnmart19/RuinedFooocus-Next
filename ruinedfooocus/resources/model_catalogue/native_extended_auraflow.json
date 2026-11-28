@@ -1,0 +1,9 @@
+{
+  "diffusion_models/aura_flow_0.3.safetensors": {
+    "url": "https://huggingface.co/fal/AuraFlow-v0.3/resolve/2cd8588f04c886002be4571697d84654a50e3af3/aura_flow_0.3.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "aura_flow_0.3.safetensors",
+    "size": 16463323066,
+    "sha256": "526be97cf581c89ad87c6b19c1f7c2378851137698f7ec436596d061a382d37b"
+  }
+}
