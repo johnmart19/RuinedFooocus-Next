@@ -1,0 +1,8 @@
+{
+  "id": "chat-model-remove-dialog",
+  "subject": "Add the confirmation dialog for removing a local chat model",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

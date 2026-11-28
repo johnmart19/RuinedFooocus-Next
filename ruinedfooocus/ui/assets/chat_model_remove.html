@@ -1,0 +1,13 @@
+<dialog aria-labelledby="remove-model-title">
+  <h2 id="remove-model-title">Remove local model?</h2>
+  <label for="remove-quant">Local file</label>
+  <select id="remove-quant"></select>
+  <p>This affects the selected quantization only.</p>
+  <p class="model-path"></p>
+  <p>Remove from list keeps the file. Delete file too permanently deletes the GGUF.</p>
+  <div class="actions">
+    <button type="button" data-action="cancel">Cancel</button>
+    <button type="button" data-action="hide">Remove from list</button>
+    <button type="button" data-action="delete">Delete file too</button>
+  </div>
+</dialog>
