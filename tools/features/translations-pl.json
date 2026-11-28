@@ -1,0 +1,8 @@
+{
+  "id": "translations-pl",
+  "subject": "Add the Polish interface translation",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
