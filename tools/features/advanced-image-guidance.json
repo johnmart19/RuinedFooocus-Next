@@ -1,0 +1,8 @@
+{
+  "id": "advanced-image-guidance",
+  "subject": "Add the image guidance schema with request-scoped model patches",
+  "requires": ["generation-size-plan", "image-components", "hires-fix"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
