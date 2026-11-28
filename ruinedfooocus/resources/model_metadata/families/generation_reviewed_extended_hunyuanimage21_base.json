@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_hunyuanimage21_base": {
+      "title": "HunyuanImage21 base",
+      "consumers": ["HunyuanImage21"],
+      "native_class": "HunyuanImage21",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/blob/78cfe74376b50a2f52995c4800f792f99ab575b2/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-hunyuanimage21-base",
+        "auto_recipe_supported": false,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}

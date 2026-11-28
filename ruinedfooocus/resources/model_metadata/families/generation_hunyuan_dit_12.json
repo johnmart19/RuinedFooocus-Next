@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:hunyuan_dit_12": {
+      "title": "Native HunyuanDiT 1.2 bundled checkpoint",
+      "provenance": {
+        "upstream": "comfyanonymous/hunyuan_dit_comfyui",
+        "revision": "ffdcfdc13da97c04769ead9ea1ea45c9e852d503"
+      },
+      "consumers": ["HunyuanDiT"],
+      "dependencies": ["Bundled Chinese RoBERTa, MT5-XL with tokenizer and SDXL-format VAE"],
+      "settings": {
+        "scope": "checkpoint",
+        "standalone_sampling": "Exact official1.2 payload:30steps,CFG6,Euler,sgm_uniform; other variants need a complete recipe or Own settings"
+      },
+      "sources": [
+        "https://huggingface.co/comfyanonymous/hunyuan_dit_comfyui/resolve/ffdcfdc13da97c04769ead9ea1ea45c9e852d503/hunyuan_dit_1.2.safetensors"
+      ],
+      "standalone_vram_status": "workload_dependent"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_extended_pixartalpha_xl_2_1024_ms": {
+      "title": "PixArt xl-2-1024-ms",
+      "consumers": ["PixArt"],
+      "native_class": "PixArtAlpha",
+      "license": {
+        "value": "openrail++",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/PixArt-alpha/PixArt-XL-2-1024-MS/blob/b89adadeccd9ead2adcb9fa2825d3fabec48d404/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-extended-pixartalpha-xl-2-1024-ms",
+        "auto_recipe_supported": false,
+        "source_workflow": "publisher"
+      },
+      "evidence_scope": "Exact immutable tuple and bounded native-classified header; no weight values or hardware execution."
+    }
+  }
+}
