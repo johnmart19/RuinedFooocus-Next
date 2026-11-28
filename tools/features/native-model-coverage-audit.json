@@ -1,0 +1,8 @@
+{
+  "id": "native-model-coverage-audit",
+  "subject": "Add an audit comparing pinned ComfyUI registrations with application routes",
+  "requires": [],
+  "tests": ["test_native_capability_inventory.py", "test_native_model_coverage_audit.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
