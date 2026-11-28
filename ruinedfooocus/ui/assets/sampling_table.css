@@ -1,0 +1,245 @@
+.rf-sampling-table-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.rf-sampling-notice {
+  margin: 0 !important;
+  padding: 6px 9px;
+  border-radius: var(--rf-radius-sm, 8px);
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--color-accent, #f97316) 55%,
+      var(--border-color-primary, rgba(255, 255, 255, 0.14))
+    );
+  background: color-mix(
+    in srgb,
+    var(--color-accent, #f97316) 10%,
+    var(--background-fill-secondary, rgba(255, 255, 255, 0.04))
+  );
+  color: var(--body-text-color, #e5e7eb);
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+.rf-sampling-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 !important;
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.12)) !important;
+  border-radius: var(--rf-radius-sm, 8px);
+  background: var(--background-fill-secondary, rgba(255, 255, 255, 0.03));
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.rf-sampling-table th {
+  margin: 0 !important;
+  padding: 6px 8px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.12)) !important;
+  background: var(--block-background-fill, rgba(255, 255, 255, 0.04));
+  color: var(--body-text-color-subdued, #9ca3af);
+  font-size: 0.7rem !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: start;
+  line-height: 1.2;
+}
+
+.rf-st-col-setting {
+  width: 23%;
+}
+
+.rf-st-col-value {
+  width: 58%;
+}
+
+.rf-st-col-source {
+  width: 19%;
+  text-align: end !important;
+}
+
+.rf-sampling-table td {
+  margin: 0 !important;
+  padding: 5px 6px !important;
+  border: 0 !important;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--border-color-primary, rgba(255, 255, 255, 0.12)) 65%, transparent) !important;
+  vertical-align: middle;
+  font-size: 0.78rem !important;
+  line-height: 1.25;
+  color: var(--body-text-color, #e5e7eb);
+}
+
+.rf-sampling-table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.rf-st-label {
+  font-weight: 500;
+  color: var(--body-text-color, #e5e7eb);
+  white-space: nowrap;
+  padding-inline-start: 2px;
+}
+
+.rf-st-control-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 !important;
+  min-width: 0;
+}
+
+.rf-st-input,
+.rf-st-select {
+  box-sizing: border-box !important;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 32px !important;
+  min-height: 32px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.16)) !important;
+  background-color: var(--input-background-fill, #1f1f23) !important;
+  color: var(--body-text-color, #f3f4f6) !important;
+  font-family: var(--font, inherit);
+  font-size: 0.8rem !important;
+  font-weight: 500;
+  line-height: 30px !important;
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+.rf-st-input {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.rf-st-input::-webkit-inner-spin-button,
+.rf-st-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.rf-st-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  padding-inline: 10px 28px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 9px center !important;
+  background-size: 12px 12px !important;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.rf-st-select option {
+  background: var(--block-background-fill, #18181b);
+  color: var(--body-text-color, #f3f4f6);
+}
+
+.rf-st-input:hover,
+.rf-st-select:hover,
+.rf-st-input:focus,
+.rf-st-select:focus {
+  border-color: var(--color-accent, #f97316) !important;
+}
+
+.rf-st-static {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 6px;
+  color: var(--body-text-color, #e5e7eb);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.rf-st-reset {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  min-height: 24px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 5px;
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.16));
+  background: transparent;
+  color: var(--body-text-color-subdued, #9ca3af);
+  font-size: 0.78rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.rf-st-reset:hover {
+  color: var(--body-text-color, #ffffff);
+  border-color: var(--color-accent, #f97316);
+}
+
+.rf-st-source-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0 !important;
+}
+
+.rf-st-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  padding: 3px 6px;
+  border-radius: 5px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none !important;
+  border: 1px solid var(--border-color-primary, rgba(255, 255, 255, 0.14));
+  background: color-mix(in srgb, var(--body-text-color, #ffffff) 5%, transparent);
+  color: var(--body-text-color-subdued, #9ca3af) !important;
+}
+
+a.rf-st-badge:hover {
+  border-color: var(--color-accent, #f97316);
+  color: var(--body-text-color, #ffffff) !important;
+}
+
+.rf-st-badge-custom {
+  border-color: color-mix(in srgb, var(--color-accent, #f97316) 70%, transparent);
+  background: color-mix(in srgb, var(--color-accent, #f97316) 16%, transparent);
+  color: color-mix(
+    in srgb,
+    var(--color-accent, #f97316) 65%,
+    var(--body-text-color, #ffffff)
+  ) !important;
+}
+
+.rf-st-badge-override {
+  border-color: rgba(74, 222, 128, 0.4);
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80 !important;
+}
+
+.rf-st-badge-network {
+  border-color: rgba(96, 165, 250, 0.35);
+  background: rgba(96, 165, 250, 0.1);
+  color: #93c5fd !important;
+}

@@ -1,0 +1,8 @@
+{
+  "id": "sampling-table",
+  "subject": "Add the inline-editable Sampling table",
+  "requires": ["native-sampling-schedules"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
