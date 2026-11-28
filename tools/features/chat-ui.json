@@ -1,0 +1,40 @@
+{
+  "id": "chat-ui",
+  "subject": "Add the Chat tab",
+  "requires": [
+    "chat-gguf-file-picker",
+    "chat-ui-load-state",
+    "ui-layout-stylesheet",
+    "ui-shell-stylesheet",
+    "ui-default-model-download",
+    "chat-ui-runtime-info",
+    "chat-ui-model-diagnostics",
+    "ui-popular-models",
+    "ui-model-acquisition",
+    "chat-local-model-picker",
+    "chat-model-remove-dialog",
+    "chat-assistant-remove-dialog",
+    "chat-splitter",
+    "chat-avatar-label",
+    "ui-checkpoint-tools",
+    "library-ui",
+    "project-readme"
+  ],
+  "tests": [
+    "test_chat_image_ui_events.py",
+    "test_chat_model_browser.py",
+    "test_chat_model_browser_race.py",
+    "test_chat_model_browser_work.py",
+    "test_chat_models_guards.py",
+    "test_chat_preparation.py",
+    "test_chat_presentation.py",
+    "test_chat_reasoning.py",
+    "test_chat_resources.py",
+    "test_chat_sampling_sources.py",
+    "test_chat_ui_acceptance.py",
+    "test_chatbots.py",
+    "test_responsive_ui_layout.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
