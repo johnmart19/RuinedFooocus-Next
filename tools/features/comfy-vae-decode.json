@@ -1,0 +1,8 @@
+{
+  "id": "comfy-vae-decode",
+  "subject": "Decode image VAEs through native nodes and their memory estimates",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
