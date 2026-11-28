@@ -1,0 +1,8 @@
+{
+  "id": "model-public-sources",
+  "subject": "Add Civitai and Hugging Face public metadata lookups",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
