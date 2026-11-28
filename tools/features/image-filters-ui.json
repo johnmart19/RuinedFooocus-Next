@@ -1,0 +1,8 @@
+{
+  "id": "image-filters-ui",
+  "subject": "Add contextual controls for still-image filters",
+  "requires": ["translation-manager", "image-filters"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
