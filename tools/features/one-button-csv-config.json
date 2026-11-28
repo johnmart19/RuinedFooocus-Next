@@ -1,0 +1,8 @@
+{
+  "id": "one-button-csv-config",
+  "subject": "Move the One Button default configuration into the prompting package",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
