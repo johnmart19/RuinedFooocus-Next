@@ -1,0 +1,8 @@
+{
+  "id": "image-filters",
+  "subject": "Add blur, sharpen, brightness and contrast filters for still images",
+  "requires": ["image-histogram", "native-vision"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
