@@ -1,0 +1,13 @@
+{
+  "id": "chat-assistants",
+  "subject": "Load bundled and user chat assistants",
+  "requires": [
+    "atomic-config-io",
+    "translation-manager",
+    "ui-placeholder-images",
+    "chat-default-portrait"
+  ],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
