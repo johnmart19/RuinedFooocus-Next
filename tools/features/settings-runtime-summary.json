@@ -1,0 +1,8 @@
+{
+  "id": "settings-runtime-summary",
+  "subject": "Summarize the active image runtime in Settings",
+  "requires": ["comfy-runtime-info", "translation-manager", "ui-user-error-messages"],
+  "tests": ["test_settings_presentation.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
