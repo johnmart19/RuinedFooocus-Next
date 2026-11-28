@@ -1,0 +1,9 @@
+{
+  "id": "ui-checkpoint-tools",
+  "subject": "Add the checkpoint tools panel",
+  "requires": ["model-ui-requests", "image-pipeline"],
+  "tests": ["test_checkpoint_selection_lane.py", "test_checkpoint_source_identity.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
