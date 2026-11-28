@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "native-config-kandinsky5image",
+  "family": "Kandinsky5Image",
+  "media": "image",
+  "variant": "base",
+  "aliases": ["Kandinsky5Image"],
+  "sampling": {
+    "custom_steps": 50,
+    "cfg": 3.5,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "existing_qualified_native_configuration_baseline",
+    "component_contract": {
+      "native_family": "Kandinsky5Image",
+      "text_encoder_roles": ["clip_qwen25", "clip_l"],
+      "vae_role": "vae_flux",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Kandinsky5Image template",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_kandinsky5_t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "f542cd9150f8b2e0506c53a6eb095e7526049dd58dadddf8d950321a68cb6fad",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T05:42:41.535161+00:00"
+  },
+  "legacy": null
+}

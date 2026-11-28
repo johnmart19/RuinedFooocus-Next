@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "native-ideogram4-conditional",
+  "family": "Ideogram4",
+  "media": "image",
+  "variant": "conditional",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 20,
+    "cfg": 7,
+    "sampler_name": "euler",
+    "scheduler": "Ideogram4Scheduler",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "Ideogram4",
+    "architecture": "Ideogram4",
+    "native_config": {
+      "image_model": "ideogram4",
+      "in_channels": 128,
+      "num_layers": 34
+    },
+    "behavioral_variants": ["conditional"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "Ideogram4",
+      "text_encoder_roles": ["clip_qwen3vl_8b"],
+      "vae_role": "vae_flux2",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": ["DualModelGuider", "Ideogram4Scheduler"],
+    "default_for_native_configuration": false
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Ideogram4 conditional workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_ideogram4_t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "3137e5d520fbb721d5ad6c40e6e68e41e3369d11b0ad5ff7ee4e8687a50b15f2",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "Ideogram4Scheduler",
+      "mode": 0,
+      "values": [20, 1024, 1024, 0.5, 1.75]
+    },
+    {
+      "node": "DualModelGuider",
+      "mode": 0,
+      "values": [7]
+    }
+  ],
+  "legacy": null
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "native-pixelditt2i-t2i",
+  "family": "PixelDiTT2I",
+  "media": "image",
+  "variant": "t2i",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 4,
+    "sampler_name": "er_sde",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "PixelDiTT2I",
+    "architecture": "PixelDiTT2I",
+    "native_config": {
+      "image_model": "pixeldit_t2i"
+    },
+    "behavioral_variants": ["t2i"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "PixelDiTT2I",
+      "text_encoder_roles": ["clip_gemma2_it_elm"],
+      "vae_role": "pixel_space",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": [],
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI PixelDiTT2I t2i workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_pixeldit_t2i.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "ef4a37f4125b2acf015f892815c745c06d6fcb5724ca6c3897ef435fc23df984",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}

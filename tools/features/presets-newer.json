@@ -1,0 +1,8 @@
+{
+  "id": "presets-newer",
+  "subject": "Add default image recipes for ERNIE, FIBO, Ideogram, Krea, Lens, MOSS and related",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
