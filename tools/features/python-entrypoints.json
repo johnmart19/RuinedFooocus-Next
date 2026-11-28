@@ -1,0 +1,8 @@
+{
+  "id": "python-entrypoints",
+  "subject": "Start the packaged application from launch.py and the updating entry point",
+  "requires": ["app-bootstrap"],
+  "tests": ["test_startup_options.py", "test_startup_updates.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
