@@ -1,0 +1,9 @@
+{
+  "id": "latent-composition",
+  "subject": "Add a standalone operation over saved latents",
+  "requires": ["model-identity", "native-image-formats", "generation-size-plan"],
+  "tests": ["test_latent_composition.py", "test_latent_composition_native.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
