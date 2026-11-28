@@ -1,0 +1,8 @@
+{
+  "id": "model-catalogue-loader",
+  "subject": "Load and validate the bundled model catalogue manifests",
+  "requires": ["app-root-paths", "catalogue-checkpoints", "catalogue-rag-embedding-manifest"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
