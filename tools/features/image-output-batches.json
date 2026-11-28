@@ -1,0 +1,8 @@
+{
+  "id": "image-output-batches",
+  "subject": "Describe native output groups separately from repeated requests",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
