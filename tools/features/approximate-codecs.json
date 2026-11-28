@@ -1,0 +1,8 @@
+{
+  "id": "approximate-codecs",
+  "subject": "Add explicit approximate native codecs",
+  "requires": ["model-folder-roots", "approximate-codec-shapes", "model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
