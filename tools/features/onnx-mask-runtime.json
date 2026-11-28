@@ -1,0 +1,21 @@
+{
+  "id": "onnx-mask-runtime",
+  "subject": "Run mask inference in the isolated GPU worker with a CPU fallback",
+  "requires": [
+    "onnx-execution-evidence",
+    "native-image-formats",
+    "auxiliary-gpu-release",
+    "resource-lifecycle",
+    "onnx-mask-model-contracts",
+    "onnx-windows-ml",
+    "onnx-mask-worker"
+  ],
+  "tests": [
+    "test_child_process_reaping.py",
+    "test_onnx_diagnostics.py",
+    "test_onnx_execution.py",
+    "test_onnx_runtime.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
