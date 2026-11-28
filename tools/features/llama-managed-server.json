@@ -1,0 +1,20 @@
+{
+  "id": "llama-managed-server",
+  "subject": "Add the managed local llama-server used by Chat bots",
+  "requires": [
+    "llama-device-probe",
+    "llama-load-events",
+    "chat-ui-reasoning-settings",
+    "chat-ui-sampling-evidence",
+    "image-composition",
+    "checkpoint-gpu-optimizer"
+  ],
+  "tests": [
+    "test_llama_runtime_events.py",
+    "test_llama_server.py",
+    "test_llamacpp_integration_update.py",
+    "test_runtime_optimizations_and_models.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
