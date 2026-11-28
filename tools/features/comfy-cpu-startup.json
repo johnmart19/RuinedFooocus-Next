@@ -1,0 +1,9 @@
+{
+  "id": "comfy-cpu-startup",
+  "subject": "Suppress accelerator discovery during native CPU startup",
+  "requires": ["app-root-paths", "comfy-pinned-arguments"],
+  "tests": ["test_comfy_upstream_contract.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
