@@ -1,0 +1,8 @@
+{
+  "id": "qwen-image21-union-ui",
+  "subject": "Add Image tools controls for the Qwen Image 2.1 Union patch",
+  "requires": ["image-working-size-geometry", "translation-manager", "qwen-image21-union-control"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
