@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "native-chromaradiance-radiance-x0",
+  "family": "ChromaRadiance",
+  "media": "image",
+  "variant": "radiance-x0",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 3.5,
+    "sampler_name": "euler",
+    "scheduler": "BetaSamplingScheduler",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "ChromaRadiance",
+    "architecture": "ChromaRadiance",
+    "native_config": {
+      "image_model": "chroma_radiance",
+      "in_channels": 3,
+      "hidden_size": 3072,
+      "patch_size": 16,
+      "depth": 19,
+      "depth_single_blocks": 38
+    },
+    "behavioral_variants": ["radiance-x0"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_explicit_behavioral_variant",
+    "component_contract": {
+      "native_family": "ChromaRadiance",
+      "text_encoder_roles": ["clip_t5"],
+      "vae_role": "pixel_space",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "runtime_requirements": ["BetaSamplingScheduler(alpha=0.4,beta=0.4)"],
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI ChromaRadiance radiance-x0 workflow",
+    "source_url": "https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_chroma1_radiance_text_to_image.json",
+    "source_revision": "comfyui_workflow_templates_json==0.1.129",
+    "resource_sha256": "5ca1c9c0c67c051a9c9762824ed270702ccb717320a146ae15c1f19355cdf66a",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "CFGGuider",
+      "mode": 0,
+      "values": [3.5]
+    },
+    {
+      "node": "ModelSamplingAuraFlow",
+      "mode": 0,
+      "values": [1]
+    },
+    {
+      "node": "BetaSamplingScheduler",
+      "mode": 0,
+      "values": [30, 0.4, 0.4]
+    }
+  ],
+  "legacy": null
+}

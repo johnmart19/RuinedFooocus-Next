@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "native-zeta-pixel-unqualified",
+  "family": "ZImagePixelSpace",
+  "media": "image",
+  "variant": "x0-pixel",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": null,
+    "cfg": null,
+    "sampler_name": null,
+    "scheduler": null,
+    "clip_skip": null
+  },
+  "recommended_sizes": [],
+  "default_size": null,
+  "applicability": {
+    "native_class": "ZImagePixelSpace",
+    "architecture": "ZImagePixelSpace",
+    "native_config": {
+      "image_model": "zimage_pixel",
+      "patch_size": 32,
+      "in_channels": 3,
+      "decoder_in_channels": 3072,
+      "decoder_hidden_size": 3840,
+      "decoder_num_res_blocks": 4,
+      "decoder_max_freqs": 8,
+      "use_x0": true
+    },
+    "behavioral_variants": ["x0-pixel", "no-dino-1024", "no-dino", "dino-distance"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_without_sampling_qualification",
+    "component_contract": {
+      "native_family": "ZImagePixelSpace",
+      "text_encoder_roles": ["clip_qwen3_4b"],
+      "vae_role": "pixel_space",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "runtime_requirements": [],
+    "default_for_native_configuration": true
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "Native Zeta pixel-space components; sampling unqualified",
+    "source_url": "https://huggingface.co/lodestones/Zeta-Chroma/tree/38ddc5f3e26fbbcb0ee4ff374b3f5cc384376d4b",
+    "source_revision": "38ddc5f3e26fbbcb0ee4ff374b3f5cc384376d4b",
+    "resource_sha256": "369a607fe9480b5523b89910618bf0221ebead4f5fdfe5f444e446cf3ca3e16e",
+    "inspected_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}
