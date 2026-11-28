@@ -1,0 +1,8 @@
+{
+  "id": "project-readme",
+  "subject": "Rewrite the readme for the current image and Chat application",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
