@@ -1,0 +1,8 @@
+{
+  "id": "model-preview-files",
+  "subject": "Add local model preview validation and cache writing",
+  "requires": ["app-root-paths", "ui-placeholder-images"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
