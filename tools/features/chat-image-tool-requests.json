@@ -1,0 +1,8 @@
+{
+  "id": "chat-image-tool-requests",
+  "subject": "Validate image tool requests emitted by chat models",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
