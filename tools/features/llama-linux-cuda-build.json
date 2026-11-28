@@ -1,0 +1,19 @@
+{
+  "id": "llama-linux-cuda-build",
+  "subject": "Add an optional isolated Linux CUDA build of the pinned llama.cpp",
+  "requires": [
+    "bounded-subprocess",
+    "llama-release-manifests",
+    "backend-preferences",
+    "gpu-package-installer",
+    "llama-prebuilt-updates"
+  ],
+  "tests": [
+    "test_cached_llama_runtime.py",
+    "test_installer_llama.py",
+    "test_intel_support.py",
+    "test_llama_acquisition.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
