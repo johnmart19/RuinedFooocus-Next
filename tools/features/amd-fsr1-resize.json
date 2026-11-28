@@ -1,0 +1,8 @@
+{
+  "id": "amd-fsr1-resize",
+  "subject": "Add AMD FSR 1 upscaling and sharpening for still images",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
