@@ -1,0 +1,8 @@
+{
+  "id": "control-model-candidates",
+  "subject": "List local control models by their loader header",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
