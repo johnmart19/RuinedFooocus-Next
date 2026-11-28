@@ -1,0 +1,8 @@
+{
+  "id": "translations-it",
+  "subject": "Add the Italian interface translation",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
