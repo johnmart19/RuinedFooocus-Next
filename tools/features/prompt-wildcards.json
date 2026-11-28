@@ -1,0 +1,8 @@
+{
+  "id": "prompt-wildcards",
+  "subject": "Discover wildcards from user and bundled folders",
+  "requires": ["app-root-paths", "wildcards-general"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
