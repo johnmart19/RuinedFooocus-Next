@@ -1,0 +1,15 @@
+{
+  "id": "guide-handoffs",
+  "subject": "Add handoffs of precomputed guide maps to edits",
+  "requires": [
+    "library-index-store",
+    "resource-lifecycle",
+    "image-mask-tools",
+    "guide-control-compat",
+    "editor-session"
+  ],
+  "tests": ["test_uploaded_guide_handoffs.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
