@@ -1,0 +1,8 @@
+{
+  "id": "bernini-image-editing",
+  "subject": "Add source-bound Bernini-R still editing",
+  "requires": ["bernini-component-manifest", "model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
