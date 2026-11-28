@@ -1,0 +1,7 @@
+{
+  "lcm_lora": {
+    "url": "https://huggingface.co/latent-consistency/lcm-lora-sdxl/resolve/main/pytorch_lora_weights.safetensors",
+    "path": "path_loras",
+    "filename": "lcm-lora-sdxl.safetensors"
+  }
+}

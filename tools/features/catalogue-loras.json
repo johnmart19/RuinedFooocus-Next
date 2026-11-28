@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-loras",
+  "subject": "Add the LoRA and LCM download catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
