@@ -1,0 +1,8 @@
+{
+  "id": "presets-index",
+  "subject": "Add the default recipe index",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
