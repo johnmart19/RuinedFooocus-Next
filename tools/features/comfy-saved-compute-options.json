@@ -1,0 +1,8 @@
+{
+  "id": "comfy-saved-compute-options",
+  "subject": "Apply saved image compute options before the backend initializes",
+  "requires": ["app-root-paths", "settings-schema"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
