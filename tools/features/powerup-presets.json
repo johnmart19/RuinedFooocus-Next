@@ -1,0 +1,8 @@
+{
+  "id": "powerup-presets",
+  "subject": "Move the PowerUp presets into bundled defaults",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
