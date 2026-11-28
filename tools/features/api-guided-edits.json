@@ -1,0 +1,8 @@
+{
+  "id": "api-guided-edits",
+  "subject": "Accept explicit guide media through the API",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
