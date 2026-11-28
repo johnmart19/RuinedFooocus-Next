@@ -1,0 +1,30 @@
+{
+  "id": "model-patches-ui",
+  "subject": "Add controls for named model patches and ControlNet recipes",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "inpaint-image-preparation",
+    "control-model-candidates",
+    "launch-arguments",
+    "advanced-guidance-ui"
+  ],
+  "tests": ["test_native_model_patches_ui.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
