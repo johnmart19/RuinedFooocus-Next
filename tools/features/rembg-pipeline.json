@@ -1,0 +1,8 @@
+{
+  "id": "rembg-pipeline",
+  "subject": "Add the ONNX background removal pipeline",
+  "requires": ["onnx-mask-runtime", "generation-worker"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
