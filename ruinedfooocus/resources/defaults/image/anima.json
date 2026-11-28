@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "anima",
+  "family": "Anima",
+  "media": "image",
+  "variant": "base",
+  "aliases": ["Anima"],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 4,
+    "sampler_name": "er_sde",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "recognized_native_architecture_and_current_variant_not_filename",
+    "component_contract": {
+      "native_family": "Anima",
+      "text_encoder_roles": ["clip_qwen3_06b"],
+      "vae_role": "vae_qwen_image",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    }
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Native ComfyUI Anima blueprint",
+    "source_url": "https://github.com/Comfy-Org/ComfyUI/blob/989d93d0d968e704c589ce0146bb18c77f6b50cc/blueprints/Text%20to%20Image%20(Anima%20Base%201.0).json",
+    "source_revision": "989d93d0d968e704c589ce0146bb18c77f6b50cc",
+    "fetched_at_utc": null,
+    "inspected_at_utc": "2026-11-11T04:45:07.601597Z"
+  },
+  "legacy": {
+    "custom_steps": 30,
+    "cfg": 4,
+    "sampler_name": "er_sde",
+    "scheduler": "simple",
+    "clip_skip": 1,
+    "recommended_resolutions": "1024x1024"
+  }
+}

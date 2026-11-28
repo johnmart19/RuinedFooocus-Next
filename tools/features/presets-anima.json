@@ -1,0 +1,8 @@
+{
+  "id": "presets-anima",
+  "subject": "Add default image recipes for Anima",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
