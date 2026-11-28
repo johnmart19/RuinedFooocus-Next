@@ -1,0 +1,8 @@
+{
+  "id": "ui-community-link-icons",
+  "subject": "Move the Discord and GitHub link icons into the UI assets",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
