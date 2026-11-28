@@ -1,0 +1,9 @@
+{
+  "id": "image-mask-tools",
+  "subject": "Add frame-bound mask editing using the native mask nodes",
+  "requires": ["utility-device-policy", "image-geometry-tools"],
+  "tests": ["test_geometry_mask_devices.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
