@@ -15,7 +15,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Build one coherent scene around the main subject, with a clear action or pose, a compatible setting and one lighting setup."
     },
     "Consistent results": {
       "insanitylevel": 2,
@@ -33,7 +34,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Keep one focal subject, a simple background and a stable composition. Turn abstract concepts into visible details rather than adding more concepts."
     },
     "Unique People Portraits": {
       "insanitylevel": 3,
@@ -51,7 +53,8 @@
       "prefixprompt": "photograph",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Describe an expressive photographic portrait with believable skin, a clear gaze and flattering directional light. Keep background detail secondary to the face."
     },
     "Artful People Portraits": {
       "insanitylevel": 5,
@@ -69,7 +72,8 @@
       "prefixprompt": "",
       "suffixprompt": "portrait art by -artist-",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Make the face and expression the focal point. Keep the requested artistic medium coherent, using a restrained palette and purposeful brushwork or linework."
     },
     "D&D Style Portraits": {
       "insanitylevel": 2,
@@ -87,7 +91,8 @@
       "prefixprompt": "D&D style portrait, fantasy",
       "suffixprompt": "detailed face",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Show a readable fantasy character portrait. Make clothing, equipment and posture fit the character role; keep any weapon or prop secondary to the face."
     },
     "Cybernetic Animals": {
       "insanitylevel": 3,
@@ -105,7 +110,8 @@
       "prefixprompt": "sci-fi",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Keep the animal species recognizable. Integrate mechanical joints, plating and sensors with its anatomy instead of turning it into a human robot."
     },
     "Greg mode - The Preset": {
       "insanitylevel": 3,
@@ -123,7 +129,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Develop the supplied fantasy scene with readable silhouettes, atmospheric depth and coordinated lighting. Retain supplied artist references without adding others."
     },
     "Cyberpunk Characters": {
       "insanitylevel": 3,
@@ -141,7 +148,8 @@
       "prefixprompt": "cyberpunk",
       "suffixprompt": "neon hue, shadowrun",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Keep the character dominant, with functional clothing and integrated cybernetics. Use a believable urban setting and restrained neon accents rather than covering everything in glow."
     },
     "Waifu's": {
       "insanitylevel": 7,
@@ -156,10 +164,11 @@
       "givensubject": "-basicbitchdescriptor- 1girl, solo,",
       "smartsubject": true,
       "givenoutfit": "",
-      "prefixprompt": "(((masterpiece))), (((best quality))), anime style, 2d,",
-      "suffixprompt": "key visual",
+      "prefixprompt": "anime illustration, 2d,",
+      "suffixprompt": "illustration",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Create one coherent anime character scene, retaining 1girl and solo when supplied. Keep hairstyle, expression, outfit and pose consistent; give the background a supporting role."
     },
     "Husbando's": {
       "insanitylevel": 7,
@@ -174,10 +183,11 @@
       "givensubject": "-basicbitchdescriptor- 1boy, solo,",
       "smartsubject": true,
       "givenoutfit": "",
-      "prefixprompt": "(((masterpiece))), (((best quality))), anime style, 2d,",
-      "suffixprompt": "key visual",
+      "prefixprompt": "anime illustration, 2d,",
+      "suffixprompt": "illustration",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Create one coherent anime character scene, retaining 1boy and solo when supplied. Keep hairstyle, expression, outfit and pose consistent; give the background a supporting role."
     },
     "Fashion Models": {
       "insanitylevel": 3,
@@ -195,9 +205,10 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "Fashion photography",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Make the outfit the focus of a fashion photograph. Describe fabric, cut and silhouette, with a pose and framing that show the garment clearly."
     },
-    "WIERD HATS": {
+    "Weird Hats": {
       "insanitylevel": 4,
       "subject": "human - generic",
       "artist": "none",
@@ -213,7 +224,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Make the unusual hat the focal point. Describe its shape and material, keep the wearer recognizable, and frame the entire headwear without unnecessary competing props."
     },
     "Wallpaper art": {
       "insanitylevel": 3,
@@ -231,7 +243,8 @@
       "prefixprompt": "small centered composition, product shot, plain background",
       "suffixprompt": "",
       "giventypeofimage": "wallpaper art, in the center is an image",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Build a balanced desktop composition with a clear focal area and quieter space for icons. Respect the supplied framing and background rather than adding typography or interface graphics."
     },
     "The Cauldron": {
       "insanitylevel": 5,
@@ -249,7 +262,8 @@
       "prefixprompt": "",
       "suffixprompt": "-quality-, -fluff-, -fluff-, -quality-, -fluff-",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Combine the supplied ideas into one intentionally surreal scene. Establish a dominant subject and clear spatial relationships instead of listing unrelated objects."
     },
     "The Connaisseur": {
       "insanitylevel": 5,
@@ -267,7 +281,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Translate the supplied poetic idea into visible imagery using one coherent artistic medium. Convey the mood through light, color and composition rather than quoting a poem on the image."
     },
     "Interesting Landscapes": {
       "insanitylevel": 5,
@@ -285,7 +300,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Establish foreground, middle distance and background with believable scale, terrain and a consistent time of day. Keep the landscape as the subject."
     },
     "Videogame Landscapes": {
       "insanitylevel": 4,
@@ -303,7 +319,8 @@
       "prefixprompt": "video game concept art, 2d game art",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Describe readable environment concept art with a focal landmark, traversable space and clear depth. Convey the game setting without adding HUD elements or menus."
     },
     "Relaxing Seascapes": {
       "insanitylevel": 4,
@@ -321,7 +338,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Keep a calm coastal mood with coherent horizon, wave direction and reflected light. Use gentle contrast and uncluttered composition while respecting the supplied weather."
     },
     "Architecture": {
       "insanitylevel": 3,
@@ -339,7 +357,8 @@
       "prefixprompt": "building",
       "suffixprompt": "",
       "giventypeofimage": "architecture",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Make the building structure and materials readable, with coherent perspective, scale and surroundings. Preserve the requested architectural type and viewpoint."
     },
     "Nature": {
       "insanitylevel": 4,
@@ -357,7 +376,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Keep the named plant or natural subject recognizable. Use plausible growth, textures and habitat with lighting appropriate to the scene."
     },
     "Let the CFG sort it out": {
       "insanitylevel": 2,
@@ -375,7 +395,8 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Preserve the experimental mixture but turn it into visible elements with a clear focal point. Do not add rendering instructions, CFG values or extra slogans."
     },
     "Now this is podracing": {
       "insanitylevel": 9,
@@ -393,6 +414,7 @@
       "prefixprompt": "",
       "suffixprompt": "",
       "giventypeofimage": "",
-      "antistring": ""
+      "antistring": "",
+      "enhancement_focus": "Preserve the energetic surreal concept while giving it a readable focal subject, consistent perspective and intentional motion. Avoid unrelated additional scenes."
     }
   }
