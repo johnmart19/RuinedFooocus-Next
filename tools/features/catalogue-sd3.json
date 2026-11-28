@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-sd3",
+  "subject": "Add the Stable Diffusion 3.5 and Stable Cascade download catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
