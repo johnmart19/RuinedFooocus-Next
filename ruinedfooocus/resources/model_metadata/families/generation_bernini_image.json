@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:bernini_image": {
+      "title": "Bernini-R one-frame image edit",
+      "consumers": ["BerniniImage"],
+      "native_class": "WAN21_T2V",
+      "settings": {
+        "default_recipe_id": "native-bernini-image",
+        "auto_recipe_supported": true
+      },
+      "license": {
+        "status": "publisher_terms_apply",
+        "source_url": "https://huggingface.co/Comfy-Org/Bernini-R"
+      },
+      "evidence_scope": "Image recipe/header/source identity only; GPU memory, quality and runtime stability unqualified."
+    }
+  }
+}

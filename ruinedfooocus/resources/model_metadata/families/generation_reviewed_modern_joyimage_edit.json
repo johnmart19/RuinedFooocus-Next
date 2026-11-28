@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_joyimage_edit": {
+      "title": "JoyImage edit",
+      "consumers": ["JoyImage"],
+      "native_class": "JoyImage",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/JoyAI-Image-Edit/blob/8010e7b4c2ac3f762d33775ac5d6a011eea4166c/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-joyimage-edit",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_joyai_image_edit.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}

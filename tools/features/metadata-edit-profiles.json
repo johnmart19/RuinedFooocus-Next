@@ -1,0 +1,8 @@
+{
+  "id": "metadata-edit-profiles",
+  "subject": "Add metadata profiles for Bernini, Boogu, JoyImage, LongCat, MiniMax and OmniGen2",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

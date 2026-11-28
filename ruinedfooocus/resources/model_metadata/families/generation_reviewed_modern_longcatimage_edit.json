@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_longcatimage_edit": {
+      "title": "LongCatImage edit",
+      "consumers": ["LongCatImage"],
+      "native_class": "LongCatImage",
+      "license": {
+        "value": "apache-2.0",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/TalmajM/LongCat-Image-Edit_ComfyUI_repackaged/blob/312bb02464c69b5ef17a49b9277016dba569c61b/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-longcatimage-edit",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_longcat_image_edit.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}
