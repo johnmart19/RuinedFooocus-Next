@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:swiftsr_2x_pth": {
+      "display_name": "Swift-SRGAN x2",
+      "purpose": "Speed-oriented general enlargement.",
+      "native_scale": 2,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/SwiftSR-2x.pth",
+      "release": {
+        "date": "2021-12-31",
+        "status": "known",
+        "kind": "original_publisher_release",
+        "sources": ["swift_release"]
+      },
+      "license": {
+        "identifier": "CC0-1.0",
+        "status": "publisher_declared",
+        "sources": ["swift_license"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "Paper measured the 4x architecture; it does not establish a current CPU/ROCm app timing or a score for the 2x file.",
+      "sources": [
+        "project_upscale",
+        "omdb_2x-Swift-SRGAN",
+        "mirror_card",
+        "mirror_names",
+        "swift_release",
+        "swift_readme",
+        "swift_paper"
+      ],
+      "architecture": "swift-srgan"
+    }
+  }
+}

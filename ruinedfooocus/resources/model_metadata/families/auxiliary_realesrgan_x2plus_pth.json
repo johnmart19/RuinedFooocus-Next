@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:realesrgan_x2plus_pth": {
+      "display_name": "Real-ESRGAN x2plus",
+      "purpose": "General real-world image restoration/enlargement.",
+      "native_scale": 2,
+      "source_url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth",
+      "release": {
+        "date": "2021-08-08",
+        "status": "known",
+        "kind": "exact_asset_upload",
+        "sources": ["real_releases"],
+        "note": "Asset upload date; container release may predate this model file."
+      },
+      "license": {
+        "identifier": "BSD-3-Clause",
+        "status": "publisher_declared",
+        "sources": ["real_license"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "Do not assign paper aggregate perceptual scores or other Real-ESRGAN variants to these checkpoints without exact protocol matching.",
+      "sources": ["project_upscale", "real_releases", "real_readme", "real_zoo", "real_inference"],
+      "architecture": "RRDBNet",
+      "features": 64,
+      "publisher_cli_defaults": {
+        "tile": 0,
+        "tile_pad": 10,
+        "pre_pad": 0,
+        "fp32": false,
+        "face_enhance": false,
+        "note": "Reference CLI settings; current app uses its separate shared float32 tiled profile."
+      }
+    }
+  }
+}

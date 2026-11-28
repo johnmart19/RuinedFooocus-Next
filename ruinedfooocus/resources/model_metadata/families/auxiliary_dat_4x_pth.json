@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:dat_4x_pth": {
+      "display_name": "DAT x4",
+      "purpose": "Classical bicubic super-resolution, official DAT checkpoint.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/DAT-4x.pth",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": "Apache-2.0",
+        "status": "model_registry_declared",
+        "sources": ["omdb_4x-DAT"]
+      },
+      "benchmark_status": "publisher_model_score_with_protocol_scope",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "omdb_4x-DAT", "mirror_card", "mirror_names", "dat_readme"],
+      "architecture": "dat",
+      "family_release": {
+        "date": "2023-07-16",
+        "kind": "publisher_repository_and_models_release",
+        "sources": ["dat_readme"]
+      }
+    }
+  }
+}

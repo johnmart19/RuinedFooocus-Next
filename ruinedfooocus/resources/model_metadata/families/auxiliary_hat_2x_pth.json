@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:hat_2x_pth": {
+      "display_name": "HAT x2",
+      "purpose": "Classical super-resolution; exact training/pretraining variant unresolved.",
+      "native_scale": 2,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/HAT-2x.pth",
+      "release": {
+        "date": null,
+        "status": "unknown",
+        "reason": "Exact original release is not established by the mirror filename or upload date."
+      },
+      "license": {
+        "identifier": "Apache-2.0",
+        "status": "intended_publisher_family_license_exact_checkpoint_chain_incomplete",
+        "sources": ["hat_readme"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "mirror_card", "mirror_names", "hat_readme"],
+      "family_release": {
+        "date": "2022-05-20",
+        "kind": "HAT_initial_code_models_release",
+        "is_exact_checkpoint_date": false,
+        "sources": ["hat_readme"]
+      }
+    }
+  }
+}

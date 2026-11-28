@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "auxiliary:realhat_sharper_4x_pth": {
+      "display_name": "Real HAT GAN Sharper",
+      "purpose": "Real-world HAT restoration, publisher emphasizes perceptual sharpness.",
+      "native_scale": 4,
+      "source_url": "https://huggingface.co/vladmandic/sdnext-upscalers/resolve/main/RealHAT-Sharper-4x.pth",
+      "release": {
+        "date": "2023-08-01",
+        "status": "known",
+        "kind": "publisher_named_model_release_identity_by_mirror_name",
+        "sources": ["hat_readme"]
+      },
+      "license": {
+        "identifier": "Apache-2.0",
+        "status": "intended_publisher_family_license_exact_checkpoint_chain_incomplete",
+        "sources": ["hat_readme"]
+      },
+      "benchmark_status": "unknown_for_exact_model",
+      "benchmark_reason": "No quantitative benchmark tied to this exact checkpoint was found in the inspected creator sources.",
+      "sources": ["project_upscale", "mirror_card", "mirror_names", "hat_readme"],
+      "family_release": {
+        "date": "2022-05-20",
+        "kind": "HAT_initial_code_models_release",
+        "is_exact_checkpoint_date": false,
+        "sources": ["hat_readme"]
+      }
+    }
+  }
+}
