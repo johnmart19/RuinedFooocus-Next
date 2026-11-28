@@ -1,0 +1,8 @@
+{
+  "id": "wildcards-onebuttonprompt",
+  "subject": "Move the One Button Prompt wildcard collection into resources/wildcards",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
