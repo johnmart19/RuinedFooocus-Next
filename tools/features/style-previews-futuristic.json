@@ -1,0 +1,8 @@
+{
+  "id": "style-previews-futuristic",
+  "subject": "Add preview thumbnails for the futuristic styles",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
