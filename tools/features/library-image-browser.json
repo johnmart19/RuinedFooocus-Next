@@ -1,0 +1,27 @@
+{
+  "id": "library-image-browser",
+  "subject": "Add Library browsing with paging and search",
+  "requires": [
+    "cache-maintenance",
+    "dependency-check-cache",
+    "style-defaults",
+    "one-button-csv-templates",
+    "prompt-preset-resources",
+    "assistant-resources",
+    "prompt-rewrite-presets",
+    "library-thumbnails",
+    "chat-model-profiles",
+    "model-handler",
+    "one-button-presets",
+    "library-actions"
+  ],
+  "tests": [
+    "test_gallery_media_diagnostics.py",
+    "test_gallery_page_work.py",
+    "test_gallery_scan.py",
+    "test_gallery_thumbnails.py",
+    "test_resource_paths.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
