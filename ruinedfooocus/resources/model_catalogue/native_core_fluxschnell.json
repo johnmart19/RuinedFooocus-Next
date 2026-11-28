@@ -1,0 +1,9 @@
+{
+  "checkpoints/flux1-schnell-fp8.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/flux1-schnell/resolve/d31e04067066d92c55ece2b01748dcc337725d7a/flux1-schnell-fp8.safetensors",
+    "path": "path_checkpoints",
+    "filename": "flux1-schnell-fp8.safetensors",
+    "size": 17236328572,
+    "sha256": "ead426278b49030e9da5df862994f25ce94ab2ee4df38b556ddddb3db093bf72"
+  }
+}

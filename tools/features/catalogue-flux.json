@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-flux",
+  "subject": "Add the Flux download catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

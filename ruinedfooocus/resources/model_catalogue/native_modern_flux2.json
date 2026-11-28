@@ -1,0 +1,30 @@
+{
+  "diffusion_models/flux-2-klein-base-4b-fp8.safetensors": {
+    "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-base-4b-fp8/resolve/103db268c10d4d3921101b46057671f9ac460da6/flux-2-klein-base-4b-fp8.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "flux-2-klein-base-4b-fp8.safetensors",
+    "size": 4089498488,
+    "sha256": "44bab3a86fe98b85d21dd2a4729ebdc3ae51fb8a39f76e457e18c724219e6840"
+  },
+  "diffusion_models/flux-2-klein-4b-fp8.safetensors": {
+    "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/5b4408e59397a4a37ccb46afe426d8ed86379441/flux-2-klein-4b-fp8.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "flux-2-klein-4b-fp8.safetensors",
+    "size": 4070624520,
+    "sha256": "97ed34fe0567e436200f2faee3939b88f2b5d99f8af2a4dc16532c4245c0ccb6"
+  },
+  "diffusion_models/flux-2-klein-9b-kv-fp8.safetensors": {
+    "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-kv-fp8/resolve/8430c03ee457ea86907ed31a009cd56280df003d/flux-2-klein-9b-kv-fp8.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "flux-2-klein-9b-kv-fp8.safetensors",
+    "size": 9818935984,
+    "sha256": "33f7da5625a00798349a719742999d3c7dd20c1a7eda14663922c363640728f1"
+  },
+  "diffusion_models/flux2_dev_fp8mixed.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/flux2-dev/resolve/9630c1b4b6e690497ae0c19bb6b1b35d4ebedcb7/split_files/diffusion_models/flux2_dev_fp8mixed.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "flux2_dev_fp8mixed.safetensors",
+    "size": 35455599592,
+    "sha256": "863a82e4ff950a42a6b0e80bea824828f129eb1a8fbbdbd9e8cb29859127b486"
+  }
+}
