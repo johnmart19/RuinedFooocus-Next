@@ -1,0 +1,8 @@
+{
+  "id": "ui-component-overrides",
+  "subject": "Add the component override controls",
+  "requires": ["model-handler"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
