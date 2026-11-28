@@ -1,0 +1,8 @@
+{
+  "id": "translations-uk",
+  "subject": "Add the Ukrainian interface translation",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
