@@ -1,0 +1,8 @@
+{
+  "id": "image-tool-activation",
+  "subject": "Add atomic handoffs to installed image tools",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
