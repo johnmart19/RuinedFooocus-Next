@@ -1,0 +1,8 @@
+{
+  "id": "torch-runtime-probe",
+  "subject": "Select the PyTorch platform and probe installed runtimes out of process",
+  "requires": ["install-lock", "ui-user-error-messages", "ui-gradio-frontend-compat"],
+  "tests": ["test_startup_speed.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
