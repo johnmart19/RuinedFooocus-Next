@@ -1,0 +1,8 @@
+{
+  "id": "metadata-vae-artifacts",
+  "subject": "Add artifact records for VAEs and image codecs",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

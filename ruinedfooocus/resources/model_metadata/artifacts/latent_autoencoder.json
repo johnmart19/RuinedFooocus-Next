@@ -1,0 +1,1145 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:vae/ae.safetensors": {
+      "id": "existing:vae/ae.safetensors",
+      "catalogue_key": "vae/ae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:flux1_vae",
+      "label": "FLUX.1 autoencoder",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "2137fdb4ec60e6309259ec0d5f37c6a276a1be4ee690d95b08679cea2b424936",
+      "artifact": {
+        "bytes": 335304388,
+        "sha256": "afc8e28272cd15db3919bacdb6918ce9c1ed22e96cb12c4d5ed0fba823529e38",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/camenduru/FLUX.1-dev/resolve/acc5d352efc38461e459305e423b266cfff1d191/ae.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:flux1_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:vae/auraflow_vae_fp32.safetensors": {
+      "id": "existing:vae/auraflow_vae_fp32.safetensors",
+      "catalogue_key": "vae/auraflow_vae_fp32.safetensors",
+      "state": "existing",
+      "profile_id": "generation:auraflow_vae",
+      "label": "AuraFlow v0.3 VAE",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP32",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "60116e6ff3c48f52d31c33329d45a5672c4603f22db90267ae12e8c656587321",
+      "artifact": {
+        "bytes": 334643268,
+        "sha256": "1598f3d24932bcfe6634e8b618ea1e30ab1d57f5aad13a6d2de446d2199f2341",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/fal/AuraFlow-v0.3/resolve/2cd8588f04c886002be4571697d84654a50e3af3/vae/diffusion_pytorch_model.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:auraflow_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vae/flux-vae.safetensors": {
+      "id": "existing:vae/flux-vae.safetensors",
+      "catalogue_key": "vae/flux-vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:flux1_vae",
+      "label": "FLUX.1 autoencoder",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "7ae66feb26488eae07f21e87ed2872c8080004026899ab2e76b3eb6218ae31ed",
+      "artifact": {
+        "bytes": 167666902,
+        "sha256": "f5b59a26851551b67ae1fe58d32e76486e1e812def4696a4bea97f16604d40a3",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/diffusers/FLUX.1-vae/resolve/da548cfb003bdeebaff6da0211fc8fbc67cb563a/diffusion_pytorch_model.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:flux1_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {}
+    },
+    "existing:vae/pig_flux2_vae_fp32-f16.gguf": {
+      "id": "existing:vae/pig_flux2_vae_fp32-f16.gguf",
+      "catalogue_key": "vae/pig_flux2_vae_fp32-f16.gguf",
+      "state": "existing",
+      "profile_id": "generation:flux2_vae",
+      "label": "FLUX.2 autoencoder",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "e9ceab1aa1a359afa3b5c7dc9a2d428972fcd797fbf691325afe7ec0c5ed4184",
+      "artifact": {
+        "bytes": 168247360,
+        "sha256": "dfc696edac476d71018c900176b4929294061141859ffbe3102948c15fed8b45",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/chatpig/flux2-dev-gguf/resolve/d8a7b1885ef216df68720cbeeec4e5bd76015263/pig_flux2_vae_fp32-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:flux2_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "flux-dev-non-commercial-license",
+        "license_link": "https://huggingface.co/black-forest-labs/FLUX.2-dev/blob/main/LICENSE.txt"
+      }
+    },
+    "existing:vae/flux2-vae.safetensors": {
+      "id": "existing:vae/flux2-vae.safetensors",
+      "catalogue_key": "vae/flux2-vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:flux2_vae",
+      "label": "FLUX.2 autoencoder",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "b7532f6bf6e9e490fde292cc77456e8bb677cce107fe03394275695425f8dc11",
+      "artifact": {
+        "bytes": 336213556,
+        "sha256": "d64f3a68e1cc4f9f4e29b6e0da38a0204fe9a49f2d4053f0ec1fa1ca02f9c4b5",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/flux2-dev/resolve/9630c1b4b6e690497ae0c19bb6b1b35d4ebedcb7/split_files/vae/flux2-vae.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:flux2_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "flux-1-dev-non-commercial-license",
+        "license_link": "https://huggingface.co/black-forest-labs/FLUX.1-Krea-dev/blob/main/LICENSE.md"
+      }
+    },
+    "existing:vae/sdxl_vae.safetensors": {
+      "id": "existing:vae/sdxl_vae.safetensors",
+      "catalogue_key": "vae/sdxl_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:sdxl_vae",
+      "label": "SDXL VAE",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "fbd28eb98bd44d3e792569859389062c3dc4f3b090314c2f3869a3fcdbe00cd7",
+      "artifact": {
+        "bytes": 334643268,
+        "sha256": "1598f3d24932bcfe6634e8b618ea1e30ab1d57f5aad13a6d2de446d2199f2341",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/462165984030d82259a11f4367a4eed129e94a7b/vae/diffusion_pytorch_model.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:sdxl_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "openrail++"
+      }
+    },
+    "existing:vae/sd3_vae.safetensors": {
+      "id": "existing:vae/sd3_vae.safetensors",
+      "catalogue_key": "vae/sd3_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:sd3_vae",
+      "label": "SD3 / SD3.5 VAE",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "8976d5ce0c8256065bc89d0d7f265f08219bf48b88d66c63afc072f144de149a",
+      "artifact": {
+        "bytes": 167666902,
+        "sha256": "8f53304a79335b55e13ec50f63e5157fee4deb2f30d5fae0654e2b2653c109dc",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/sd3.5-large-gguf/resolve/8ee01e325c280ae89852a234ca5949fb7f756cc6/diffusion_pytorch_model.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:sd3_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "stabilityai-ai-community",
+        "license_link": "LICENSE"
+      }
+    },
+    "existing:vae/lumina2_vae_fp8.safetensors": {
+      "id": "existing:vae/lumina2_vae_fp8.safetensors",
+      "catalogue_key": "vae/lumina2_vae_fp8.safetensors",
+      "state": "existing",
+      "profile_id": "generation:lumina2_vae",
+      "label": "Lumina2 / Z-Image VAE precision variants",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP8",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "fd293ace071bbdd284997b7c6046441984ba5a0a7775ca97016d86d017d59d65",
+      "artifact": {
+        "bytes": 83845507,
+        "sha256": "0de8081eef15f02492ab9037090f81640371c6503c58d0d237841c231491c255",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/lumina-gguf/resolve/7e594eee76ffffdcc7240c81eb9686b73751481a/lumina2_vae_fp8.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:lumina2_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vae/lumina2_vae_fp16.safetensors": {
+      "id": "existing:vae/lumina2_vae_fp16.safetensors",
+      "catalogue_key": "vae/lumina2_vae_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:lumina2_vae",
+      "label": "Lumina2 / Z-Image VAE precision variants",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "599fe0c4caaee4509906931a9d0550e565608799c8f0583505dfd7ca84dc0fb4",
+      "artifact": {
+        "bytes": 167673814,
+        "sha256": "732e7732d95534932dca68b16663200b1ceb684136a22dcce1743a759f15a7e9",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/lumina-gguf/resolve/7e594eee76ffffdcc7240c81eb9686b73751481a/lumina2_vae_fp16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:lumina2_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vae/lumina2_vae_fp32.safetensors": {
+      "id": "existing:vae/lumina2_vae_fp32.safetensors",
+      "catalogue_key": "vae/lumina2_vae_fp32.safetensors",
+      "state": "existing",
+      "profile_id": "generation:lumina2_vae",
+      "label": "Lumina2 / Z-Image VAE precision variants",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP32",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "f1eeaf95ad6892abca67adf3f4c1fc6b7e180884055beb3f572088483ab4da1e",
+      "artifact": {
+        "bytes": 335304388,
+        "sha256": "afc8e28272cd15db3919bacdb6918ce9c1ed22e96cb12c4d5ed0fba823529e38",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/lumina-gguf/resolve/7e594eee76ffffdcc7240c81eb9686b73751481a/lumina2_vae_fp32.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:lumina2_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vae/mage_flow_vae.safetensors": {
+      "id": "existing:vae/mage_flow_vae.safetensors",
+      "catalogue_key": "vae/mage_flow_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:mage_flow_vae",
+      "label": "Mage-Flow VAE (two aliases)",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "35512df9d4928b5bf0dfc062820d63b9c7a208908f058b1c621685b6feff25ed",
+      "artifact": {
+        "bytes": 345053056,
+        "sha256": "34e076dc1e8a15321e1e07be5111d59cf16dd10b804b7c7e20b4de29013427e0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Mage-Flow/resolve/6ff68fbf3c667325e961d551691b246791d5eec0/vae/mage_flow_vae_bf16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:mage_flow_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:vae/mage_flow_vae_bf16.safetensors": {
+      "id": "existing:vae/mage_flow_vae_bf16.safetensors",
+      "catalogue_key": "vae/mage_flow_vae_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:mage_flow_vae",
+      "label": "Mage-Flow VAE (two aliases)",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "42c0cf8d41267b39a859459a4d71b47e51337bbd812751c8839c889c1f033d7b",
+      "artifact": {
+        "bytes": 345053056,
+        "sha256": "34e076dc1e8a15321e1e07be5111d59cf16dd10b804b7c7e20b4de29013427e0",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Mage-Flow/resolve/6ff68fbf3c667325e961d551691b246791d5eec0/vae/mage_flow_vae_bf16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:mage_flow_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "mit"
+      }
+    },
+    "existing:vae/wan_2.1_vae.safetensors": {
+      "id": "existing:vae/wan_2.1_vae.safetensors",
+      "catalogue_key": "vae/wan_2.1_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:wan21_vae",
+      "label": "Wan2.1 VAE and Cosmos conversion",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "b5c52150b3db4694807d4fbc38ef8e793c849bd94ee89d4846e3e1b9e58ebbee",
+      "artifact": {
+        "bytes": 253815318,
+        "sha256": "2fc39d31359a4b0a64f55876d8ff7fa8d780956ae2cb13463b0223e15148976b",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/123acf1cc74bccbb9bfff8ac1ee72edc08c2341d/split_files/vae/wan_2.1_vae.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:wan21_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vae/pixart_sigma_vae_fp16.safetensors": {
+      "id": "existing:vae/pixart_sigma_vae_fp16.safetensors",
+      "catalogue_key": "vae/pixart_sigma_vae_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:pixart_vaes",
+      "label": "PixArt Alpha / Sigma VAE conversions",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "6503f7952e047148e8927f61ddcc066400e80b4e0dbdebcad2293de7ac16328d",
+      "artifact": {
+        "bytes": 167335342,
+        "sha256": "6353737672c94b96174cb590f711eac6edf2fcce5b6e91aa9d73c5adc589ee48",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/pixart/resolve/9b5034586cb04a9b3eafd39b5f2f4c82018a7cbd/pixart_sigma_vae_fp16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:pixart_vaes"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "openrail++"
+      }
+    },
+    "existing:vae/pixart_vae_fp16.safetensors": {
+      "id": "existing:vae/pixart_vae_fp16.safetensors",
+      "catalogue_key": "vae/pixart_vae_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:pixart_vaes",
+      "label": "PixArt Alpha / Sigma VAE conversions",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "826f9c72c2a0853529f69eaf196693542f13da1237cfaedfef72e89e5d07aaa7",
+      "artifact": {
+        "bytes": 334643268,
+        "sha256": "703abdcd7c389316b5128faa9b750a530ea1680b453170b27afebac5e4db30c4",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/pixart/resolve/9b5034586cb04a9b3eafd39b5f2f4c82018a7cbd/pixart_vae_fp16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:pixart_vaes"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "openrail++"
+      }
+    },
+    "existing:vae/qwen_image_vae.safetensors": {
+      "id": "existing:vae/qwen_image_vae.safetensors",
+      "catalogue_key": "vae/qwen_image_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image_vae",
+      "label": "Qwen-Image VAE",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "aa1e875e70bacafd6f01802e54231459ed863ce38693e8f44f271e30cdf1f5f7",
+      "artifact": {
+        "bytes": 253806246,
+        "sha256": "a70580f0213e67967ee9c95f05bb400e8fb08307e017a924bf3441223e023d1f",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/1f12b17be14c89b026c51a91d67c32f84bb047bc/split_files/vae/qwen_image_vae.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:qwen_image_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "apache-2.0"
+      }
+    },
+    "existing:vae/pig_wan_vae_fp32-f16.gguf": {
+      "id": "existing:vae/pig_wan_vae_fp32-f16.gguf",
+      "catalogue_key": "vae/pig_wan_vae_fp32-f16.gguf",
+      "state": "existing",
+      "profile_id": "generation:wan21_vae",
+      "label": "Wan2.1 VAE and Cosmos conversion",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "gguf",
+      "quantization": {
+        "label": "F16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "cc1e73b625084caadbbd74a9fe352cfa54d771fd654c3a6de232ac9e63ab6b3a",
+      "artifact": {
+        "bytes": 253875904,
+        "sha256": "290e463b9d6680146cfd06e5740adb918b239ac8aef1f64f9d4d35fa11747bcd",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/calcuis/cosmos-predict2-gguf/resolve/e4394169c5df131f23d547d0aa72f7b53943211d/pig_wan_vae_fp32-f16.gguf",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:wan21_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other",
+        "license_name": "nvidia-open-model-license",
+        "license_link": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/"
+      }
+    },
+    "existing:vae/sd15_vae.safetensors": {
+      "id": "existing:vae/sd15_vae.safetensors",
+      "catalogue_key": "vae/sd15_vae.safetensors",
+      "state": "existing",
+      "profile_id": "generation:sd15_vae",
+      "label": "Stable Diffusion 1.5 VAE",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "98864e1593aa99e9f6d04b57c323b85c760dc3b9ab07ba9cf9385a9aaf6191f1",
+      "artifact": {
+        "bytes": 334643276,
+        "sha256": "a2b5134f4dbc140d9c11f11cba3233099e00af40f262f136c691fb7d38d2194c",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/vae/diffusion_pytorch_model.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:sd15_vae"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "creativeml-openrail-m"
+      }
+    },
+    "existing:vae/ming_image_vae_bf16.safetensors": {
+      "id": "existing:vae/ming_image_vae_bf16.safetensors",
+      "catalogue_key": "vae/ming_image_vae_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:ming_image_vae",
+      "label": "ming_image_vae_bf16.safetensors",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "MingImage",
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "59059ad05d527c0629d4409fd8a3642ce546c7ba93028bf5b4c56807cd693c50",
+      "artifact": {
+        "bytes": 253816696,
+        "sha256": "7f5bed402dc8c77dc2e0ab1929a85d4df433b7cf7b599dfa8c353da98db0b90a",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Ming-Image/resolve/93804ff3747517a318969c5f61b25a57daefe09f/vae/ming_image_vae_bf16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/Comfy-Org/docs/blob/305f5bdb758493bc1d97cc57cd32868ce105fba4/tutorials/image/ming-image/ming-image-0-1-design.mdx"
+      }
+    },
+    "existing:vae/qwen_image_2.1_vae_bf16.safetensors": {
+      "id": "existing:vae/qwen_image_2.1_vae_bf16.safetensors",
+      "catalogue_key": "vae/qwen_image_2.1_vae_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_vae",
+      "label": "qwen_image_2.1_vae_bf16.safetensors",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "94355579dfd1a26e676a0dd9ec68ddc579a7f0553061810c40ffbe03e652bf71",
+      "artifact": {
+        "bytes": 675509688,
+        "sha256": "bb21f7473051e1ac368515dd3f2e15cd44d7a11748ee8823e1ddca3e4876b7c9",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/vae/qwen_image_2.1_vae_bf16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/Comfy-Org/docs/blob/305f5bdb758493bc1d97cc57cd32868ce105fba4/tutorials/image/qwen/qwen-image-2-1.mdx"
+      }
+    },
+    "existing:vae/hunyuan_image_2.1_vae_fp16.safetensors": {
+      "id": "existing:vae/hunyuan_image_2.1_vae_fp16.safetensors",
+      "catalogue_key": "vae/hunyuan_image_2.1_vae_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:hunyuan_image21_vae",
+      "label": "hunyuan_image_2.1_vae_fp16.safetensors",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "HunyuanImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "479e9309e71085ece7bbfa69036ba4dd54f8e8aace1421c84bc54b3bc89e99a1",
+      "artifact": {
+        "bytes": 811184822,
+        "sha256": "f2ae19863609206196b5e3a86bfd94f67bd3866f5042004e3994f07e3c93b2f9",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/resolve/78cfe74376b50a2f52995c4800f792f99ab575b2/split_files/vae/hunyuan_image_2.1_vae_fp16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/comfyanonymous/ComfyUI_examples/blob/f9431bb000ce792094ff345446e22cac1ea6cef3/hunyuan_image/README.md"
+      }
+    },
+    "existing:vae/hunyuan_image_refiner_vae_fp16.safetensors": {
+      "id": "existing:vae/hunyuan_image_refiner_vae_fp16.safetensors",
+      "catalogue_key": "vae/hunyuan_image_refiner_vae_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:hunyuan_refiner_vae",
+      "label": "hunyuan_image_refiner_vae_fp16.safetensors",
+      "role": "latent_autoencoder",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "HunyuanImage21Refiner",
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "88aca684b9d525605334558a6238b202c43b8b396629a86ddb5634e22d52ed2e",
+      "artifact": {
+        "bytes": 2521292694,
+        "sha256": "e1b74e85d61b65e18cc05ca390e387d93cfadf161e737de229ebb800ea3db769",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/resolve/78cfe74376b50a2f52995c4800f792f99ab575b2/split_files/vae/hunyuan_image_refiner_vae_fp16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-10",
+        "evidence_scope": "Existing immutable publisher tuple; local/model/device acceptance remains separate"
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://github.com/comfyanonymous/ComfyUI_examples/blob/f9431bb000ce792094ff345446e22cac1ea6cef3/hunyuan_image/README.md"
+      }
+    }
+  }
+}
