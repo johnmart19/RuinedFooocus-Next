@@ -1,0 +1,8 @@
+{
+  "id": "settings-manager",
+  "subject": "Bind application settings to the selected profile",
+  "requires": ["profile-store"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
