@@ -1,0 +1,8 @@
+{
+  "id": "chat-gguf-metadata",
+  "subject": "Read cached GGUF role metadata for the chat model inventory",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
