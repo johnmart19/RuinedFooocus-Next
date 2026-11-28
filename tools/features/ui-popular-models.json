@@ -1,0 +1,14 @@
+{
+  "id": "ui-popular-models",
+  "subject": "Add the Popular now tab",
+  "requires": [
+    "media-paths",
+    "catalogue-artwork",
+    "web-access-controls",
+    "adapter-card-component",
+    "image-composition"
+  ],
+  "tests": ["test_artwork_loading.py", "test_popular_models.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
