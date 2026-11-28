@@ -1,0 +1,8 @@
+{
+  "id": "translation-checker",
+  "subject": "Add a checker for UI message extraction and shipped translations",
+  "requires": ["translation-manager"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
