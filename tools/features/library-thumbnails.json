@@ -1,0 +1,8 @@
+{
+  "id": "library-thumbnails",
+  "subject": "Add a bounded thumbnail cache for the Library grid",
+  "requires": ["preparation-service"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
