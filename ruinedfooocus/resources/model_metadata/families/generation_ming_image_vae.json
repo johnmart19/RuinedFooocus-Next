@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:ming_image_vae": {
+      "kind": "image_generation",
+      "display_name": "MingImage vae",
+      "evidence_scope": "Native source/CPU only; runtime fit and real model execution unqualified"
+    }
+  }
+}
