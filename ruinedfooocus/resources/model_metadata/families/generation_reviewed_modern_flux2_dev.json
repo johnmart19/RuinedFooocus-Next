@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:reviewed_modern_flux2_dev": {
+      "title": "Flux2 dev",
+      "consumers": ["Flux2"],
+      "native_class": "Flux2",
+      "license": {
+        "value": "other",
+        "status": "publisher_metadata",
+        "source_url": "https://huggingface.co/Comfy-Org/flux2-dev/blob/9630c1b4b6e690497ae0c19bb6b1b35d4ebedcb7/README.md"
+      },
+      "settings": {
+        "default_recipe_id": "native-flux2-dev",
+        "auto_recipe_supported": true,
+        "source_recipe": "image_flux2.json",
+        "source_template_package": "comfyui_workflow_templates_json==0.1.129"
+      },
+      "evidence_scope": "Published manifest and native-classified bounded header only; runtime requirements and hardware qualification remain separate."
+    }
+  }
+}
