@@ -1,0 +1,9 @@
+{
+  "id": "image-composition-ui",
+  "subject": "Add ordered upload controls for the composition tools",
+  "requires": ["image-composition"],
+  "tests": ["test_image_composition_ui.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
