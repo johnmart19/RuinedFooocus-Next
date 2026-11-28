@@ -1,0 +1,8 @@
+{
+  "id": "style-previews-game",
+  "subject": "Add preview thumbnails for the game styles",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
