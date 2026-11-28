@@ -1,0 +1,8 @@
+{
+  "id": "one-button-presets",
+  "subject": "Port the One Button preset store",
+  "requires": ["atomic-config-io", "one-button-default-presets", "one-button-csv-reader"],
+  "tests": ["test_prompt_data.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
