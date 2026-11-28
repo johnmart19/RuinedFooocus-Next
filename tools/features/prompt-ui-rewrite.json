@@ -1,0 +1,8 @@
+{
+  "id": "prompt-ui-rewrite",
+  "subject": "Add the prompt rewrite tool",
+  "requires": ["advanced-guidance-ui", "api-runtime", "prompt-qwen-image21-rewrite"],
+  "tests": ["test_qwen_image21_enhancement.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
