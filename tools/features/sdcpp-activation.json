@@ -1,0 +1,8 @@
+{
+  "id": "sdcpp-activation",
+  "subject": "Add explicit activation and workload receipts for stable-diffusion.cpp",
+  "requires": ["native-runtime-paths", "sdcpp-cli-runtime"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
