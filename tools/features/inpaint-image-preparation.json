@@ -1,0 +1,8 @@
+{
+  "id": "inpaint-image-preparation",
+  "subject": "Add image preparation shared by the inpaint editor and pipeline",
+  "requires": ["app-root-paths", "image-working-size-geometry"],
+  "tests": ["test_startup_native_imports.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
