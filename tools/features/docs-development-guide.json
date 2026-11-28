@@ -1,0 +1,8 @@
+{
+  "id": "docs-development-guide",
+  "subject": "Document the development workflow, focused checks and feature commits",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
