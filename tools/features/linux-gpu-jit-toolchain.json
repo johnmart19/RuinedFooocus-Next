@@ -1,0 +1,8 @@
+{
+  "id": "linux-gpu-jit-toolchain",
+  "subject": "Check host prerequisites for GPU JIT kernels on Linux",
+  "requires": ["install-lock"],
+  "tests": ["test_linux_gpu_prerequisites.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
