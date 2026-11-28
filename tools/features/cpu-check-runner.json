@@ -1,0 +1,8 @@
+{
+  "id": "cpu-check-runner",
+  "subject": "Add a CPU test runner with private data and GPU guards",
+  "requires": ["feature-replay-validator"],
+  "tests": ["test_cpu_check_runner.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
