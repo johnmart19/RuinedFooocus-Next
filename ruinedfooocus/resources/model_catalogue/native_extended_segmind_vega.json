@@ -1,0 +1,9 @@
+{
+  "diffusion_models/segmind-vega.safetensors": {
+    "url": "https://huggingface.co/segmind/Segmind-Vega/resolve/7714c4363e5856ff974a4f4b068e8691f26d0b40/segmind-vega.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "segmind-vega.safetensors",
+    "size": 3293395670,
+    "sha256": "94762e983e5942056be73c5c1d4464b8ffa1ada500b4fef1267550e2447953ce"
+  }
+}

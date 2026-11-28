@@ -1,0 +1,9 @@
+{
+  "checkpoints/wd-1-5-beta2-aesthetic-fp16.safetensors": {
+    "url": "https://huggingface.co/waifu-diffusion/wd-1-5-beta2/resolve/e21f3ff25b90018dedfaf0ec5de3467811073df9/checkpoints/wd-1-5-beta2-aesthetic-fp16.safetensors",
+    "path": "path_checkpoints",
+    "filename": "wd-1-5-beta2-aesthetic-fp16.safetensors",
+    "size": 2580068692,
+    "sha256": "96fc8b5de4ea310ac42680dc122485ba3a3cb029913052c9d09a92fea877ce57"
+  }
+}

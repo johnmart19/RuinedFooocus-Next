@@ -1,0 +1,9 @@
+{
+  "diffusion_models/sd15_unet_fp16.safetensors": {
+    "url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/451f4fe16113bff5a5d2269ed5ad43b0592e9a14/unet/diffusion_pytorch_model.fp16.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "sd15_unet_fp16.safetensors",
+    "size": 1719125304,
+    "sha256": "c83908253f9a64d08c25fc90874c9c8aef9a329ce1ca5fb909d73b0c83d1ea21"
+  }
+}
