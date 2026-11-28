@@ -1,0 +1,15 @@
+{
+  "id": "model-inbox",
+  "subject": "Sort identifiable model files from the inbox",
+  "requires": [
+    "gguf-metadata-reader",
+    "model-public-sources",
+    "model-architecture",
+    "native-workflow-admission",
+    "model-registry"
+  ],
+  "tests": ["test_model_inbox.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
