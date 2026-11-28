@@ -1,0 +1,8 @@
+{
+  "id": "native-auxiliary-assets",
+  "subject": "Add signature-bound local files for layout and attention guidance",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
