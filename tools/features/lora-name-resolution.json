@@ -1,0 +1,8 @@
+{
+  "id": "lora-name-resolution",
+  "subject": "Resolve short LoRA names typed in prompts",
+  "requires": ["model-identity"],
+  "tests": ["test_lora_names.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
