@@ -1,0 +1,21 @@
+{
+  "id": "library-editing-workflow",
+  "subject": "Add Library editing over the Create request path",
+  "requires": [
+    "prompt-resource-tokens",
+    "guide-handoffs",
+    "prompt-processing",
+    "automatic-upscale",
+    "image-composition",
+    "image-tool-activation"
+  ],
+  "tests": [
+    "test_editor_prompt_routing.py",
+    "test_editor_session.py",
+    "test_guide_handoffs.py",
+    "test_image_workflow_handoffs.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
