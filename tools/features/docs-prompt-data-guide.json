@@ -1,0 +1,8 @@
+{
+  "id": "docs-prompt-data-guide",
+  "subject": "Document prompt data and how to customise it",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
