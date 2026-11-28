@@ -1,0 +1,42 @@
+{
+  "diffusion_models/qwen_image_2.1_turbo_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/diffusion_models/qwen_image_2.1_turbo_int8_convrot.safetensors",
+    "path": "path_diffusion_models",
+    "filename": "qwen_image_2.1_turbo_int8_convrot.safetensors"
+  },
+  "diffusion_models/qwen_image_2.1_Q4_K_M.gguf": {
+    "url": "https://huggingface.co/Abiray/Qwen-Image-2.1-GGUF/resolve/c9dd12108f53974cd1e0abd708df042d6df0ca8d/qwen_image_2.1_Q4_K_M.gguf",
+    "path": "path_diffusion_models",
+    "filename": "qwen_image_2.1_Q4_K_M.gguf"
+  },
+  "loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors",
+    "path": "path_loras",
+    "filename": "qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors"
+  },
+  "loras/Qwen2.1_Anything2RealCharacters.safetensors": {
+    "url": "https://huggingface.co/WarmBloodAban/Qwen-Image-2.1-LoRAs/resolve/c4ab5473bfdf585fc19cfd1e280f79d2b0c79947/Qwen2.1_Anything2RealCharacters.safetensors",
+    "path": "path_loras",
+    "filename": "Qwen2.1_Anything2RealCharacters.safetensors"
+  },
+  "model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors",
+    "path": "path_model_patches",
+    "filename": "qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors"
+  },
+  "model_patches/qwen_image_2.1_fun_controlnet_union_bf16.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/model_patches/qwen_image_2.1_fun_controlnet_union_bf16.safetensors",
+    "path": "path_model_patches",
+    "filename": "qwen_image_2.1_fun_controlnet_union_bf16.safetensors"
+  },
+  "clip/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3.5_9b_qwen_image_2.1_pe_t2i.int8_convrot.safetensors"
+  },
+  "clip/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/text_encoders/qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+    "path": "path_clip",
+    "filename": "qwen3.5_9b_qwen_image_2.1_pe_i2i.int8_convrot.safetensors"
+  }
+}

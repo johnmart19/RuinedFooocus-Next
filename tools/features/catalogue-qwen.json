@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-qwen",
+  "subject": "Add the Qwen Image download catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
