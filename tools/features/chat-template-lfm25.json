@@ -1,0 +1,8 @@
+{
+  "id": "chat-template-lfm25",
+  "subject": "Bundle the LFM2.5 publisher chat template with its license notice",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
