@@ -1,0 +1,9 @@
+{
+  "checkpoints/hidream_o1_image_dev_fp8_scaled.safetensors": {
+    "url": "https://huggingface.co/Comfy-Org/HiDream-O1-Image/resolve/7b75f4cd7e757d55d9bd1d30fb40375fb446f38c/checkpoints/hidream_o1_image_dev_fp8_scaled.safetensors",
+    "path": "path_checkpoints",
+    "filename": "hidream_o1_image_dev_fp8_scaled.safetensors",
+    "size": 8067535296,
+    "sha256": "7cbf53a475e0a13f92f2ec08bcffdb9b9de4305ef3b6f35cdd784d09dcd8d0cc"
+  }
+}
