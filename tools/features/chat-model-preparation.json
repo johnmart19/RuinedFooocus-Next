@@ -1,0 +1,8 @@
+{
+  "id": "chat-model-preparation",
+  "subject": "Prepare and capture chat model artifacts before compute",
+  "requires": ["chat-model-resolution"],
+  "tests": ["test_chat_catalogue.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
