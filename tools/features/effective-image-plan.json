@@ -1,0 +1,8 @@
+{
+  "id": "effective-image-plan",
+  "subject": "Add one immutable view of the image request captures",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
