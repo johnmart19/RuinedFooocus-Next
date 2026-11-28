@@ -1,0 +1,8 @@
+{
+  "id": "comfy-approximate-codecs",
+  "subject": "Load approximate codecs from a frozen local file namespace",
+  "requires": ["approximate-codecs"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
