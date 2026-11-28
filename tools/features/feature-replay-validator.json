@@ -1,0 +1,15 @@
+{
+  "id": "feature-replay-validator",
+  "subject": "Add a validator that replays features and their prerequisites onto upstream",
+  "requires": ["image-pipeline", "comfy-comparison-harness", "comfy-comparison-adapters"],
+  "tests": [
+    "test_feature_cherry_pick_manifest.py",
+    "test_feature_output_encoding.py",
+    "test_feature_validation_reuse.py",
+    "test_workflow_tool_entrypoints.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": true,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638",
+  "native_gguf_revision": "35da9968d8eeb0a3c03a1e468203ffd2f6f48348"
+}
