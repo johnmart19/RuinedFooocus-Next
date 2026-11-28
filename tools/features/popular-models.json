@@ -1,0 +1,8 @@
+{
+  "id": "popular-models",
+  "subject": "Add live lists of popular Civitai and Hugging Face models",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
