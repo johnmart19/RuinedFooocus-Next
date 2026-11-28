@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:ministral3_8b": {
+      "display_name": "Ministral 3 8B Instruct 2512",
+      "architecture": "mistral3",
+      "release": {
+        "date": "2025-12-02",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://mistral.ai/news/mistral-3/",
+          "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/generation_config.json",
+          "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/README.md",
+          "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "ministral3_8b",
+        "base_repo": "mistralai/Ministral-3-8B-Instruct-2512",
+        "base_revision": "5b26027e7b19eeb4b7352e1fed3926375dd2cb4d",
+        "publisher_recommended": {
+          "temperature": "below 0.1 for daily-driver/production; higher values may be explored creatively"
+        },
+        "publisher_generation_config": {
+          "bos_token_id": 1,
+          "eos_token_id": 2,
+          "max_length": 262144,
+          "pad_token_id": 11,
+          "transformers_version": "5.0.0.dev0"
+        },
+        "publisher_unspecified_sampling_fields": [
+          "top_p",
+          "top_k",
+          "min_p",
+          "presence_penalty",
+          "frequency_penalty",
+          "repetition_penalty"
+        ],
+        "proposed_app_request": {
+          "temperature": 0.05,
+          "top_p": 1,
+          "top_k": 0,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/generation_config.json",
+          "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/README.md",
+          "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/chat_template.jinja"
+        ],
+        "publisher_evidence": "Explicit recommended-settings section specifies only a temperature bound. Example scripts use TEMP=.15, so examples are not identical to the recommendation. top_p/top_k/min_p/penalties are unspecified by this publisher.",
+        "optional_app_creative_override": {
+          "temperature": 0.7,
+          "evidence": "Application proposal, not a publisher numeric recommendation."
+        },
+        "reasoning_note": "Instruct checkpoint, not the distinct Reasoning model. No thinking toggle or reasoning effort should be synthesized. Keep genuine app system instructions and Mistral tool IDs.",
+        "required_files_note": "Main GGUF for text. Matching BF16 mmproj for images; near-square crops are publisher advice, not a reason to distort image aspect ratio."
+      },
+      "vision_profile": {},
+      "license": {
+        "identifier": "Apache-2.0"
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/generation_config.json",
+        "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/README.md",
+        "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512/resolve/5b26027e7b19eeb4b7352e1fed3926375dd2cb4d/chat_template.jinja"
+      ],
+      "task_limits": null,
+      "benchmark_note": "Only the Instruct rows apply. Do not attach the card's separate Reasoning or Base model scores to this checkpoint."
+    }
+  }
+}

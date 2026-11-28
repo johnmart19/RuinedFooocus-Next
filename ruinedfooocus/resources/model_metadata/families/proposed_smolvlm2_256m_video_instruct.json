@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:smolvlm2_256m_video_instruct": {
+      "display_name": "SmolVLM2-256M-Video-Instruct",
+      "architecture": "llama",
+      "release": {
+        "date": "2025-02-20",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/HuggingFaceTB/SmolVLM2-256M-Video-Instruct",
+          "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF",
+          "https://huggingface.co/blog/smolvlm2"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 8192,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {},
+      "vision_profile": {
+        "model": "SmolVLM2-256M-Video-Instruct",
+        "base_repo": "HuggingFaceTB/SmolVLM2-256M-Video-Instruct",
+        "base_revision": "067788b187b95ebe7b2e040b3e4299e342e5b8fd",
+        "base_private": false,
+        "base_gated": false,
+        "license": "apache-2.0",
+        "priority": "optional_absolute_minimum",
+        "role": "Smallest-download fallback if Smol500 is still too large; quality-limited.",
+        "suggested_vram_tier_gb": [0, 2],
+        "vram_tier_evidence": "Planning estimate only, not a measured guarantee. CPU operation needs sufficient host RAM. Disk bytes exclude context, vision and compute buffers.",
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "ggml-org/SmolVLM2-256M-Video-Instruct-GGUF",
+            "revision": "a8383113a70b406f088ac936e5f1918ed08e620d",
+            "filename": "SmolVLM2-256M-Video-Instruct-Q8_0.gguf",
+            "local_filename": "SmolVLM2-256M-Video-Instruct-Q8_0.gguf",
+            "bytes": 175056256,
+            "sha256": "1202d1c54493bddff5b0ecbc36fcb7520ff720b9fa3d7224aeb293581f90529a",
+            "url": "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF/resolve/main/SmolVLM2-256M-Video-Instruct-Q8_0.gguf",
+            "pinned_url": "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF/resolve/a8383113a70b406f088ac936e5f1918ed08e620d/SmolVLM2-256M-Video-Instruct-Q8_0.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "ggml-org/SmolVLM2-256M-Video-Instruct-GGUF",
+            "revision": "a8383113a70b406f088ac936e5f1918ed08e620d",
+            "filename": "mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf",
+            "local_filename": "mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf",
+            "bytes": 190033440,
+            "sha256": "819d4b38743fcf57f2a26af0ebfa6e23a7a8849e3c47e63f6ab8a61acb7c245a",
+            "url": "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF/resolve/main/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf",
+            "pinned_url": "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF/resolve/a8383113a70b406f088ac936e5f1918ed08e620d/mmproj-SmolVLM2-256M-Video-Instruct-f16.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ],
+        "combined_disk_bytes": 365089696,
+        "combined_disk_gb_decimal": 0.365089696,
+        "combined_disk_gib_binary": 0.34001627564430237,
+        "quant_choice_note": "Q8 weight costs only 43,822,080 bytes more than Q4_K_M. Prefer Q8 for this tiny model unless the absolute minimum download is essential; no local Q4/Q8 accuracy comparison was run.",
+        "sources": [
+          "https://huggingface.co/HuggingFaceTB/SmolVLM2-256M-Video-Instruct",
+          "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF",
+          "https://huggingface.co/blog/smolvlm2"
+        ],
+        "release_date": "2025-02-20",
+        "architecture": "SmolVLM2 / Idefics3-style SigLIP vision + SmolLM2 decoder",
+        "context_native_tokens": 8192,
+        "context_exact_gguf_tokens": 8192,
+        "native_tools": "Not established in reviewed official documentation; use caption/VQA output rather than assigning it tool orchestration.",
+        "reasoning_control": "No documented native thinking switch; do not inject Qwen or LFM reasoning flags.",
+        "publisher_generation_example": {
+          "do_sample": false,
+          "max_new_tokens": 64
+        },
+        "image_budget": {
+          "publisher_image_longest_edge": 2048,
+          "publisher_tile_longest_edge": 512,
+          "image_splitting_default": true,
+          "note": "For a minimal caption profile start with a single 512px image. Increasing resolution may split into more image crops, so account for the encoder and token cost."
+        },
+        "app_profile_suggestion": {
+          "context_tokens": 2048,
+          "parallel_requests": 1,
+          "temperature": 0,
+          "max_output_tokens": 128,
+          "images_per_request": 1
+        },
+        "task_limits": "English model for basic captioning and VQA. Its small size is an advantage for CPU/minimum download, not evidence of parity with newer 1B\u20134B vision models.",
+        "alternative_artifacts": [
+          {
+            "kind": "alternative_minimum_weight",
+            "repo_id": "ggml-org/SmolVLM2-256M-Video-Instruct-GGUF",
+            "revision": "a8383113a70b406f088ac936e5f1918ed08e620d",
+            "filename": "SmolVLM2-256M-Video-Instruct-Q4_K_M.gguf",
+            "local_filename": "SmolVLM2-256M-Video-Instruct-Q4_K_M.gguf",
+            "bytes": 131234176,
+            "sha256": "1d86050bd8ef9b4404ba682dcbf0f37a3144070c32e8825402c0b99a8e89f48e",
+            "url": "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF/resolve/main/SmolVLM2-256M-Video-Instruct-Q4_K_M.gguf",
+            "pinned_url": "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF/resolve/a8383113a70b406f088ac936e5f1918ed08e620d/SmolVLM2-256M-Video-Instruct-Q4_K_M.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ]
+      },
+      "license": {
+        "identifier": "apache-2.0",
+        "note": null,
+        "url": null
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/HuggingFaceTB/SmolVLM2-256M-Video-Instruct",
+        "https://huggingface.co/ggml-org/SmolVLM2-256M-Video-Instruct-GGUF",
+        "https://huggingface.co/blog/smolvlm2"
+      ],
+      "task_limits": "English model for basic captioning and VQA. Its small size is an advantage for CPU/minimum download, not evidence of parity with newer 1B\u20134B vision models."
+    }
+  }
+}

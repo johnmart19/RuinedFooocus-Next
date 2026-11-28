@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:granite_vision_4_1_4b": {
+      "display_name": "Granite-Vision-4.1-4B",
+      "architecture": "granite",
+      "release": {
+        "date": "2026-04-29",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b",
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF",
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b/blob/37d591f06319e8f1638b5adcf58bdf50e0f84f7a/generation_config.json",
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b/blob/37d591f06319e8f1638b5adcf58bdf50e0f84f7a/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 131072,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {},
+      "vision_profile": {
+        "model": "Granite-Vision-4.1-4B",
+        "base_repo": "ibm-granite/granite-vision-4.1-4b",
+        "base_revision": "37d591f06319e8f1638b5adcf58bdf50e0f84f7a",
+        "base_private": false,
+        "base_gated": false,
+        "license": "apache-2.0",
+        "priority": "optional_document_specialist",
+        "role": "Optional structured chart/table/key-value extraction; separate from the core art-description workflow.",
+        "suggested_vram_tier_gb": [6, 8],
+        "vram_tier_evidence": "Planning estimate only, not a measured guarantee. CPU operation needs sufficient host RAM. Disk bytes exclude context, vision and compute buffers.",
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "ibm-granite/granite-vision-4.1-4b-GGUF",
+            "revision": "b1fa14294b0f5cac04c43076d1c4574091abf117",
+            "filename": "granite-vision-4.1-4b-Q4_K_M.gguf",
+            "local_filename": "granite-vision-4.1-4b-Q4_K_M.gguf",
+            "bytes": 2099510240,
+            "sha256": "973a58c4cfc2b3f58dedc515a89f73c372fe0910da515ecefcebe966131f769f",
+            "url": "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF/resolve/main/granite-vision-4.1-4b-Q4_K_M.gguf",
+            "pinned_url": "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF/resolve/b1fa14294b0f5cac04c43076d1c4574091abf117/granite-vision-4.1-4b-Q4_K_M.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "ibm-granite/granite-vision-4.1-4b-GGUF",
+            "revision": "b1fa14294b0f5cac04c43076d1c4574091abf117",
+            "filename": "mmproj-model-f16.gguf",
+            "local_filename": "mmproj-granite-vision-4.1-4b-f16.gguf",
+            "bytes": 1162347936,
+            "sha256": "573dd2579f6043649299f0b2225000a5691d92f320aabe909fb4c6e75450cad2",
+            "url": "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF/resolve/main/mmproj-model-f16.gguf",
+            "pinned_url": "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF/resolve/b1fa14294b0f5cac04c43076d1c4574091abf117/mmproj-model-f16.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ],
+        "combined_disk_bytes": 3261858176,
+        "combined_disk_gb_decimal": 3.261858176,
+        "combined_disk_gib_binary": 3.0378421545028687,
+        "release_date": "2026-04-29",
+        "context_native_tokens": 131072,
+        "context_exact_gguf_tokens": 131072,
+        "settings_status": "Verified publisher deterministic API example; complete independent document profile proposed below. Sampling fields omitted by the publisher are explicitly application choices.",
+        "publisher_generation_example": {
+          "temperature": 0,
+          "max_tokens": 4096,
+          "framework": "OpenAI-compatible vLLM client in official README"
+        },
+        "publisher_transformers_example": {
+          "max_new_tokens": 4096,
+          "use_cache": true
+        },
+        "publisher_generation_config": {
+          "_from_model_config": true,
+          "bos_token_id": 100257,
+          "eos_token_id": 100257,
+          "pad_token_id": 100256,
+          "transformers_version": "4.57.3"
+        },
+        "publisher_unspecified_sampling_fields": [
+          "top_p",
+          "top_k",
+          "min_p",
+          "repetition_penalty",
+          "presence_penalty",
+          "frequency_penalty"
+        ],
+        "app_profile_suggestion": {
+          "context_tokens": 8192,
+          "parallel_requests": 1,
+          "max_output_tokens": 2048,
+          "extended_document_max_output_tokens": 4096,
+          "images_per_request": 1,
+          "sampling": {
+            "temperature": 0,
+            "top_p": 1,
+            "top_k": 0,
+            "min_p": 0,
+            "repeat_penalty": 1,
+            "presence_penalty": 0,
+            "frequency_penalty": 0
+          },
+          "note": "T0 follows the publisher API example. Other sampler values are neutral application choices; top_k0 disables that filter. 8K context/2K output are proposed local caps, not publisher defaults. Allow4K output when a table/document is truncated and context budget permits."
+        },
+        "reasoning_control": "No thinking toggle occurs in this checkpoint template. Do not inherit Granite4.2 enable_thinking, low_effort or Qwen3-Coder tool formatting.",
+        "native_tools": "Template supports Granite-style JSON tool objects inside tool_call tags, but document profile need not expose tools and no tool quality claim is made.",
+        "task_profile": {
+          "chart_csv": "<chart2csv>",
+          "chart_summary": "<chart2summary>",
+          "chart_code": "<chart2code>",
+          "table_json": "<tables_json>",
+          "table_html": "<tables_html>",
+          "table_otsl": "<tables_otsl>",
+          "key_value_extraction": "Supply the requested JSON Schema, ask for an extracted JSON instance, null for unavailable values, and JSON only. No special KVP task tag is documented."
+        },
+        "integration_notes": [
+          "Keep the checkpoint-specific embedded template: it expands six chart/table task tags. A recognized tag replaces the rest of that user text, while preserving the image position; do not append critical per-task instructions after a tag expecting them to survive.",
+          "For KVP, provide an ordinary full text instruction with the JSON Schema and no chart/table task tag. Preserve the real image content.",
+          "The verified main GGUF plus its F16 projector is sufficient for direct inference. Docling and external OCR models are optional integrations, not required downloads.",
+          "Use one document image per request initially. The app current1024px thumbnail limits fine-text detail; do not advertise untested full-page OCR fidelity or silently enlarge the input budget.",
+          "Source support and public downloads are established; end-to-end document extraction quality on this app/backend remains unbenchmarked."
+        ],
+        "task_limits": "IBM explicitly describes specialization in document extraction and possible weak generalization to open-ended vision tasks; English instructions only.",
+        "prompt_constraints": "Use the native chat template: task tags such as <chart2csv>, <tables_json> and <chart2summary> expand into task instructions. Preserve those semantics if this optional document workflow is added.",
+        "sources": [
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b",
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF",
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b/blob/37d591f06319e8f1638b5adcf58bdf50e0f84f7a/generation_config.json",
+          "https://huggingface.co/ibm-granite/granite-vision-4.1-4b/blob/37d591f06319e8f1638b5adcf58bdf50e0f84f7a/chat_template.jinja"
+        ]
+      },
+      "license": {
+        "identifier": "apache-2.0",
+        "note": null,
+        "url": null
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/ibm-granite/granite-vision-4.1-4b",
+        "https://huggingface.co/ibm-granite/granite-vision-4.1-4b-GGUF",
+        "https://huggingface.co/ibm-granite/granite-vision-4.1-4b/blob/37d591f06319e8f1638b5adcf58bdf50e0f84f7a/generation_config.json",
+        "https://huggingface.co/ibm-granite/granite-vision-4.1-4b/blob/37d591f06319e8f1638b5adcf58bdf50e0f84f7a/chat_template.jinja"
+      ],
+      "task_limits": "IBM explicitly describes specialization in document extraction and possible weak generalization to open-ended vision tasks; English instructions only."
+    }
+  }
+}

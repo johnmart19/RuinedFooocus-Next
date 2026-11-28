@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:bolt": {
+      "display_name": "NVIDIA Nemotron 3.5 Bolt E4B 4GB",
+      "architecture": "gemma4",
+      "release": {
+        "date": "2026-10-23",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": ["https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB"]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 65536,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "bolt",
+        "base_repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+        "base_revision": "49843eed8db1f1c616c47af75cfd36e07aec0667",
+        "publisher_recommended": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 64
+        },
+        "publisher_generation_config": {
+          "bos_token_id": 2,
+          "do_sample": true,
+          "eos_token_id": [1, 106, 50],
+          "pad_token_id": 0,
+          "temperature": 1.0,
+          "top_k": 64,
+          "top_p": 0.95,
+          "transformers_version": "5.5.0.dev0"
+        },
+        "publisher_unspecified_sampling_fields": [
+          "min_p",
+          "presence_penalty",
+          "frequency_penalty",
+          "repetition_penalty"
+        ],
+        "proposed_app_request": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 64,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16/resolve/49843eed8db1f1c616c47af75cfd36e07aec0667/generation_config.json",
+          "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16/resolve/49843eed8db1f1c616c47af75cfd36e07aec0667/README.md",
+          "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16/resolve/49843eed8db1f1c616c47af75cfd36e07aec0667/chat_template.jinja"
+        ],
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false,
+          "conversational_mode": false,
+          "preserve_thinking": false
+        },
+        "publisher_evidence": "Card recommends T1/P.95 in both modes; publisher generation_config and selected Q4_K_M GGUF prefix metadata additionally specify top_k64.",
+        "reasoning_note": "Card describes default thinking on, but the pinned BF16 Jinja defaults enable_thinking=false. Serving engines may inject their own default; set the intended behavior explicitly. conversational_mode defaults false and appends a brevity/spoken-response instruction when true, so leave false for general roleplay.",
+        "required_files_note": "Selected NVIDIA 4GB GGUF is text-only. No projector or drafter is required."
+      },
+      "vision_profile": {},
+      "license": {
+        "identifier": "OpenMDW-1.1",
+        "note": "Gemma4 parent is Apache-2.0; NVIDIA derivative is governed by OpenMDW1.1.",
+        "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB"
+      },
+      "benchmark_status": "publisher_evidence_for_selected_quantization",
+      "sources": [
+        "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16/resolve/49843eed8db1f1c616c47af75cfd36e07aec0667/generation_config.json",
+        "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16/resolve/49843eed8db1f1c616c47af75cfd36e07aec0667/README.md",
+        "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16/resolve/49843eed8db1f1c616c47af75cfd36e07aec0667/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}

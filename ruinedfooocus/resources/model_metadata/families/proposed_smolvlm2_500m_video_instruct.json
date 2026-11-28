@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:smolvlm2_500m_video_instruct": {
+      "display_name": "SmolVLM2-500M-Video-Instruct",
+      "architecture": "llama",
+      "release": {
+        "date": "2025-02-20",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+          "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+          "https://huggingface.co/blog/smolvlm2",
+          "https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct/blob/main/preprocessor_config.json"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 8192,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {},
+      "vision_profile": {
+        "model": "SmolVLM2-500M-Video-Instruct",
+        "base_repo": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+        "base_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+        "base_private": false,
+        "base_gated": false,
+        "license": "apache-2.0",
+        "priority": "core_cpu_minimum_download",
+        "role": "Tiny CPU/basic-caption fallback using an official llama.cpp maintainer conversion.",
+        "suggested_vram_tier_gb": [0, 2, 4],
+        "vram_tier_evidence": "Planning estimate only, not a measured guarantee. CPU operation needs sufficient host RAM. Disk bytes exclude context, vision and compute buffers.",
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+            "revision": "ccd7aae53bcb1997355c2f094959e72b3642ce17",
+            "filename": "SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+            "local_filename": "SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+            "bytes": 436808704,
+            "sha256": "6f67b8036b2469fcd71728702720c6b51aebd759b78137a8120733b4d66438bc",
+            "url": "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF/resolve/main/SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+            "pinned_url": "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF/resolve/ccd7aae53bcb1997355c2f094959e72b3642ce17/SmolVLM2-500M-Video-Instruct-Q8_0.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+            "revision": "ccd7aae53bcb1997355c2f094959e72b3642ce17",
+            "filename": "mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf",
+            "local_filename": "mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf",
+            "bytes": 199470624,
+            "sha256": "b5dc8ebe7cbeab66a5369693960a52515d7824f13d4063ceca78431f2a6b59b0",
+            "url": "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF/resolve/main/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf",
+            "pinned_url": "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF/resolve/ccd7aae53bcb1997355c2f094959e72b3642ce17/mmproj-SmolVLM2-500M-Video-Instruct-f16.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ],
+        "combined_disk_bytes": 636279328,
+        "combined_disk_gb_decimal": 0.636279328,
+        "combined_disk_gib_binary": 0.5925813019275665,
+        "sources": [
+          "https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+          "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+          "https://huggingface.co/blog/smolvlm2",
+          "https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct/blob/main/preprocessor_config.json"
+        ],
+        "release_date": "2025-02-20",
+        "architecture": "SmolVLM2 / Idefics3-style SigLIP vision + SmolLM2 decoder",
+        "context_native_tokens": 8192,
+        "context_exact_gguf_tokens": 8192,
+        "native_tools": "Not established in reviewed official documentation; use caption/VQA output rather than assigning it tool orchestration.",
+        "reasoning_control": "No documented native thinking switch; do not inject Qwen or LFM reasoning flags.",
+        "publisher_generation_example": {
+          "do_sample": false,
+          "max_new_tokens": 64
+        },
+        "image_budget": {
+          "publisher_image_longest_edge": 2048,
+          "publisher_tile_longest_edge": 512,
+          "image_splitting_default": true,
+          "note": "For a minimal caption profile start with a single 512px image. Increasing resolution may split into more image crops, so account for the encoder and token cost."
+        },
+        "app_profile_suggestion": {
+          "context_tokens": 2048,
+          "parallel_requests": 1,
+          "temperature": 0,
+          "max_output_tokens": 128,
+          "images_per_request": 1
+        },
+        "task_limits": "English model for basic captioning and VQA. Its small size is an advantage for CPU/minimum download, not evidence of parity with newer 1B\u20134B vision models."
+      },
+      "license": {
+        "identifier": "apache-2.0",
+        "note": null,
+        "url": null
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+        "https://huggingface.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF",
+        "https://huggingface.co/blog/smolvlm2",
+        "https://huggingface.co/HuggingFaceTB/SmolVLM2-500M-Video-Instruct/blob/main/preprocessor_config.json"
+      ],
+      "task_limits": "English model for basic captioning and VQA. Its small size is an advantage for CPU/minimum download, not evidence of parity with newer 1B\u20134B vision models."
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "metadata-proposed-language-profiles",
+  "subject": "Add metadata profiles for proposed and popular language models",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:granite42_8b": {
+      "display_name": "Granite 4.2 8B",
+      "architecture": "granite",
+      "release": {
+        "date": "2026-08-25",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/generation_config.json",
+          "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/README.md",
+          "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 131072,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "granite42_8b",
+        "base_repo": "ibm-granite/granite-4.2-8b",
+        "base_revision": "a7042144125ce5ae64f89610e8289647fc000b9a",
+        "publisher_recommended": {
+          "temperature": 1,
+          "top_p": 0.95
+        },
+        "publisher_generation_config": {
+          "_from_model_config": true,
+          "do_sample": true,
+          "bos_token_id": 100283,
+          "eos_token_id": 100257,
+          "pad_token_id": 100257,
+          "temperature": 1.0,
+          "top_p": 0.95,
+          "transformers_version": "4.57.1"
+        },
+        "publisher_unspecified_sampling_fields": [
+          "top_k",
+          "min_p",
+          "presence_penalty",
+          "frequency_penalty",
+          "repetition_penalty"
+        ],
+        "proposed_app_request": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 0,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/generation_config.json",
+          "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/README.md",
+          "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/chat_template.jinja"
+        ],
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false,
+          "low_effort": false,
+          "truncate_history_thinking": true
+        },
+        "publisher_evidence": "Card explicitly requires T1/P.95 for every task/backend; generation_config agrees. Nonthinking max_new_tokens2048, thinking8192, low-effort/tool examples4096. top_k/min_p/penalties unspecified.",
+        "publisher_output_caps": {
+          "nonthinking": 2048,
+          "thinking": 8192,
+          "low_effort_example": 4096
+        },
+        "reasoning_note": "Template defaults thinking=true, low_effort=false, history truncation=true. If reasoning_effort is supplied, template sets low_effort=(reasoning_effort==low), overriding the low_effort kwarg. Do not send contradictory duplicate controls. For shorter reasoning use enable_thinking=true plus low_effort=true without a conflicting generic effort.",
+        "required_files_note": "Text GGUF only. No projector or speculative drafter required."
+      },
+      "vision_profile": {},
+      "license": {
+        "identifier": "Apache-2.0"
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/generation_config.json",
+        "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/README.md",
+        "https://huggingface.co/ibm-granite/granite-4.2-8b/resolve/a7042144125ce5ae64f89610e8289647fc000b9a/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}

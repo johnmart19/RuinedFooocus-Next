@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:minicpm_v_4_7_1b": {
+      "display_name": "MiniCPM-V-4.7-1B",
+      "architecture": "qwen35",
+      "release": {
+        "date": null,
+        "precision": "month",
+        "month": "2026-10",
+        "kind": "checkpoint_release",
+        "status": "exact_day_unverified",
+        "sources": [
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B",
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf",
+          "https://huggingface.co/docs/transformers/model_doc/minicpmv4_7",
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B/blob/main/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {},
+      "vision_profile": {
+        "model": "MiniCPM-V-4.7-1B",
+        "base_repo": "openbmb/MiniCPM-V-4.7-1B",
+        "base_revision": "ad9bf379feb71204c888b22923d63322452407f9",
+        "base_private": false,
+        "base_gated": false,
+        "license": "apache-2.0",
+        "priority": "core_small_apache_alternative",
+        "role": "Fresh compact Apache-2.0 vision alternative with native tools; evaluate against LFM3-VL for image description and review.",
+        "suggested_vram_tier_gb": [4, 6, 8],
+        "vram_tier_evidence": "Planning estimate only, not a measured guarantee. CPU operation needs sufficient host RAM. Disk bytes exclude context, vision and compute buffers.",
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "openbmb/MiniCPM-V-4.7-1B-gguf",
+            "revision": "345adbfa02c4a4671e61b7c75502dc9bf24fa93d",
+            "filename": "MiniCPM-V-4_7-1B-Q4_K_M.gguf",
+            "local_filename": "MiniCPM-V-4_7-1B-Q4_K_M.gguf",
+            "bytes": 672003680,
+            "sha256": "f18f594747e5317ab490cff9c06339c9cfb89acbe2f02ebc48a4e167bc23576d",
+            "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf/resolve/main/MiniCPM-V-4_7-1B-Q4_K_M.gguf",
+            "pinned_url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf/resolve/345adbfa02c4a4671e61b7c75502dc9bf24fa93d/MiniCPM-V-4_7-1B-Q4_K_M.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "openbmb/MiniCPM-V-4.7-1B-gguf",
+            "revision": "345adbfa02c4a4671e61b7c75502dc9bf24fa93d",
+            "filename": "mmproj-model-f16.gguf",
+            "local_filename": "mmproj-MiniCPM-V-4_7-1B-f16-16x.gguf",
+            "bytes": 1110117984,
+            "sha256": "fb9cc047a3cdad5317fd8433a4aeda2d22f00f02ca4bd93b34ad84165b25a900",
+            "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf/resolve/main/mmproj-model-f16.gguf",
+            "pinned_url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf/resolve/345adbfa02c4a4671e61b7c75502dc9bf24fa93d/mmproj-model-f16.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ],
+        "combined_disk_bytes": 1782121664,
+        "combined_disk_gb_decimal": 1.782121664,
+        "combined_disk_gib_binary": 1.6597301363945007,
+        "parameter_count_hf_safetensors": 1554476272,
+        "app_profile_suggestion": {
+          "context_tokens": 4096,
+          "parallel_requests": 1,
+          "enable_thinking": false,
+          "max_output_tokens": 512,
+          "images_per_request": 1
+        },
+        "sources": [
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B",
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf",
+          "https://huggingface.co/docs/transformers/model_doc/minicpmv4_7",
+          "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B/blob/main/chat_template.jinja"
+        ],
+        "release_month": "2026-10",
+        "architecture": "MiniCPM-V 4.7: SigLIP visual encoder, early token compression and Qwen3.5 backbone with Canvas-MRoPE",
+        "context_native_tokens": 262144,
+        "context_exact_gguf_tokens": 262144,
+        "native_tools": true,
+        "reasoning_control": "Selected root GGUF hard-disables reasoning in its embedded template. This is the publisher-recommended default because the checkpoint is not trained as a reasoning model. Optional thinking/ files carry the same tensors with a different template and emit [Start thinking] / [End thinking]; they are not needed.",
+        "publisher_sampling_nonthinking": {
+          "temperature": 0.7,
+          "top_p": 0.95,
+          "top_k": 100,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "repetition_penalty": 1.03
+        },
+        "image_budget": {
+          "downsample_mode": "16x",
+          "publisher_default_max_slice_nums": 9,
+          "publisher_recommended_image_max_slice_nums": 36,
+          "note": "Keep 16x for a compact profile. Optional 4x mode produces four times the visual tokens despite its smaller projector file. Do not adopt 36 high-resolution slices by default on 2\u20134GB devices. Runtime-specific slice control must actually be wired before exposing it."
+        },
+        "integration_notes": [
+          "The official GGUF repository name ends in lowercase -gguf. Pair each language variant with its own matching projector; 1B and 35B projectors are different files/hashes.",
+          "Runtime source audit found MiniCPM-V4.7 support at b11551, already before the released xllamacpp b11870 snapshot. This establishes source support, not successful local inference with every quant/projector.",
+          "Root nonthinking and thinking/ weight files are alternative templates, not two required downloads. DSpark drafts are also optional and out of scope for baseline support.",
+          "The base card documents function schemas through the OpenAI-compatible tools API, and the upstream template serializes tools. Wrapper parsing still requires a live round-trip test.",
+          "In Transformers, downsample_mode must be passed to both apply_chat_template and generate. GGUF projector selection and runtime controls are different; do not copy a Transformers keyword into an inert config field.",
+          "Images/videos belong in user messages; the template rejects them in system messages."
+        ],
+        "alternative_artifacts": [
+          {
+            "kind": "alternative_high_detail_mmproj",
+            "repo_id": "openbmb/MiniCPM-V-4.7-1B-gguf",
+            "revision": "345adbfa02c4a4671e61b7c75502dc9bf24fa93d",
+            "filename": "mmproj-model-f16-4x.gguf",
+            "local_filename": "mmproj-MiniCPM-V-4_7-1B-f16-4x.gguf",
+            "bytes": 901033888,
+            "sha256": "1e0ab439877e6896ded59ff24cdd242fdffb236394f6fc4a5b019cbd60bb5f4a",
+            "url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf/resolve/main/mmproj-model-f16-4x.gguf",
+            "pinned_url": "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf/resolve/345adbfa02c4a4671e61b7c75502dc9bf24fa93d/mmproj-model-f16-4x.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200,
+            "integrity_evidence": "Publisher HF LFS metadata; full payload checksum has not been recomputed."
+          }
+        ]
+      },
+      "license": {
+        "identifier": "apache-2.0",
+        "note": null,
+        "url": null
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B",
+        "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B-gguf",
+        "https://huggingface.co/docs/transformers/model_doc/minicpmv4_7",
+        "https://huggingface.co/openbmb/MiniCPM-V-4.7-1B/blob/main/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}

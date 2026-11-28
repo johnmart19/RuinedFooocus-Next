@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:gemma_4_26b_a4b_it_qat": {
+      "display_name": "Gemma 4 26B-A4B IT QAT",
+      "architecture": "gemma4",
+      "release": {
+        "date": "2026-06-05",
+        "precision": "day",
+        "month": null,
+        "kind": "quantization_aware_checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/google/gemma-4-26B-A4B-it",
+          "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf",
+          "https://github.com/google-gemma/docs/blob/main/docs/get-started/qat.md",
+          "https://blog.google/innovation-and-ai/technology/developers-tools/quantization-aware-training-gemma-4/",
+          "https://ai.google.dev/gemma/docs/core/prompt-formatting-gemma4"
+        ]
+      },
+      "parent_family_release_date": "2026-04-02",
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "publisher_recommended": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 64
+        },
+        "publisher_generation_config": {
+          "bos_token_id": 2,
+          "do_sample": true,
+          "eos_token_id": [1, 106, 50],
+          "pad_token_id": 0,
+          "suppress_tokens": [258883, 258882],
+          "temperature": 1.0,
+          "top_k": 64,
+          "top_p": 0.95,
+          "transformers_version": "5.10.0.dev0"
+        },
+        "publisher_unspecified_sampling_fields": [
+          "min_p",
+          "presence_penalty",
+          "frequency_penalty",
+          "repetition_penalty"
+        ],
+        "proposed_app_request": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 64,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false,
+          "preserve_thinking": false
+        },
+        "publisher_evidence": "Official card recommends this triple across all use cases; generation_config confirms it.",
+        "reasoning_note": "Pinned upstream template defaults enable_thinking=false and preserve_thinking=false. Use template controls and keep native turn/tool boundaries. Existing native EOS/suppressed-token behavior should be respected; do not blindly copy HF numeric token IDs into a different tokenizer.",
+        "model_id": "gemma_4_26b_a4b_it_qat",
+        "base_repo": "google/gemma-4-26B-A4B-it",
+        "base_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+        "sources": [
+          "https://huggingface.co/google/gemma-4-26B-A4B-it",
+          "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf",
+          "https://github.com/google-gemma/docs/blob/main/docs/get-started/qat.md",
+          "https://blog.google/innovation-and-ai/technology/developers-tools/quantization-aware-training-gemma-4/",
+          "https://ai.google.dev/gemma/docs/core/prompt-formatting-gemma4"
+        ],
+        "required_files_note": "Use this exact QAT language weight and its paired projector from the manifest; do not mix a different Gemma size or a generic PTQ provider."
+      },
+      "vision_profile": {
+        "model": "Gemma 4 26B-A4B IT QAT",
+        "base_repo": "google/gemma-4-26B-A4B-it",
+        "base_revision": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+        "base_private": false,
+        "base_gated": false,
+        "qat_training_source_repo": "google/gemma-4-26B-A4B-it-qat-q4_0-unquantized",
+        "qat_training_source_access_checked": false,
+        "license": "Apache-2.0",
+        "release_date": "2026-06-05",
+        "model_family_release_date": "2026-04-02",
+        "role": "Large sparse model to evaluate when faster decoding matters;24GB recommended",
+        "priority": "optional_large_speed",
+        "quant": "QAT Q4_0",
+        "suggested_vram_tier_gb": [24],
+        "vram_tier_evidence": "Planning guidance from exact artifact bytes plus runtime overhead allowance, not measured peak VRAM or a guaranteed fit.",
+        "context_native_tokens": 262144,
+        "architecture": "gemma4",
+        "architecture_note": "HF class; GGUF language-model architecture may be gemma4 even for Unified. Correct projector metadata distinguishes multimodal path.",
+        "reasoning_control": "Use embedded Gemma4 Jinja template; enable_thinking=false for fast caption/review if runtime supports the template control. Raw format enables reasoning with <|think|> in system. Empty thought delimiters may remain on 12B/26B/31B.",
+        "publisher_sampling": {
+          "temperature": 1.0,
+          "top_p": 0.95,
+          "top_k": 64
+        },
+        "image_budget": {
+          "publisher_default_soft_tokens": 280,
+          "publisher_supported_soft_tokens": [70, 140, 280, 560, 1120],
+          "suggested_caption_soft_tokens": 560,
+          "suggested_ocr_soft_tokens": 1120,
+          "note": "Proposed budgets, not measured quality guarantees. Both native llama.cpp b12110 and xllamacpp b11870 cap these noncausal Gemma image budgets to n_ubatch; default 512 is below 560/1120. Size n_batch and n_ubatch consistently, with n_batch >= n_ubatch, and account for added buffers. Gemma E2B/E4B are causal exceptions and do not share this requirement. The app 1024px thumbnail step may already discard small OCR text.",
+          "suggested_caption_n_ubatch": 1024,
+          "suggested_ocr_n_ubatch": 2048,
+          "noncausal_image_ubatch_cap_applies": true
+        },
+        "app_profile_suggestion": {
+          "context_tokens": 8192,
+          "parallel_requests": 1,
+          "enable_thinking": false,
+          "caption_max_output_tokens": 512,
+          "review_max_output_tokens": 768,
+          "ocr_max_output_tokens": 2048,
+          "sampling": "Start from publisher sampling; lower-temperature deterministic extraction is an app-specific option to evaluate, not a publisher quality guarantee."
+        },
+        "benchmarks_vendor_reported": {
+          "MMMU_Pro": 73.8,
+          "OmniDocBench_1_5_average_edit_distance_lower_is_better": 0.149,
+          "MATH_Vision": 82.4
+        },
+        "benchmark_caveat": "Family card results are instruction-tuned model scores, not a fresh local QAT GGUF benchmark. Google says QAT preserves similar BF16 quality; no per-task local measured guarantee.",
+        "sources": [
+          "https://huggingface.co/google/gemma-4-26B-A4B-it",
+          "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf",
+          "https://github.com/google-gemma/docs/blob/main/docs/get-started/qat.md",
+          "https://blog.google/innovation-and-ai/technology/developers-tools/quantization-aware-training-gemma-4/",
+          "https://ai.google.dev/gemma/docs/core/prompt-formatting-gemma4"
+        ],
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "google/gemma-4-26B-A4B-it-qat-q4_0-gguf",
+            "revision": "d1c082be9cf3c8a514acf63b8761f4b41935842e",
+            "filename": "gemma-4-26B_q4_0-it.gguf",
+            "local_filename": "gemma-4-26B-A4B-it-QAT-Q4_0.gguf",
+            "bytes": 14439363584,
+            "sha256": "3eca3b8f6d7baf218a7dd6bba5fb59a56ee25fe2d567b6f5f589b4f697eca51d",
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf/resolve/main/gemma-4-26B_q4_0-it.gguf",
+            "pinned_url": "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf/resolve/d1c082be9cf3c8a514acf63b8761f4b41935842e/gemma-4-26B_q4_0-it.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "google/gemma-4-26B-A4B-it-qat-q4_0-gguf",
+            "revision": "d1c082be9cf3c8a514acf63b8761f4b41935842e",
+            "filename": "gemma-4-26B-it-mmproj.gguf",
+            "local_filename": "mmproj-gemma-4-26B-A4B-it-QAT.gguf",
+            "bytes": 1194828160,
+            "sha256": "a359953a076b877db30c31dbbb4c6d93b4a6e017ee5db5784247e4d4c0dd4f3b",
+            "url": "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf/resolve/main/gemma-4-26B-it-mmproj.gguf",
+            "pinned_url": "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf/resolve/d1c082be9cf3c8a514acf63b8761f4b41935842e/gemma-4-26B-it-mmproj.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200
+          }
+        ],
+        "combined_disk_bytes": 15634191744,
+        "combined_disk_gb_decimal": 15.634191744,
+        "parameter_note": "26B total; approximately3.8B active. All expert weights still occupy storage/memory; sparse active count does not imply4B download."
+      },
+      "license": {
+        "identifier": "Apache-2.0",
+        "note": null,
+        "url": null
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/google/gemma-4-26B-A4B-it",
+        "https://huggingface.co/google/gemma-4-26B-A4B-it-qat-q4_0-gguf",
+        "https://github.com/google-gemma/docs/blob/main/docs/get-started/qat.md",
+        "https://blog.google/innovation-and-ai/technology/developers-tools/quantization-aware-training-gemma-4/",
+        "https://ai.google.dev/gemma/docs/core/prompt-formatting-gemma4"
+      ],
+      "task_limits": null
+    }
+  }
+}

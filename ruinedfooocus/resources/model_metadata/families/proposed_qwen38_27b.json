@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "proposed:qwen38_27b": {
+      "display_name": "Qwen3.8-27B",
+      "architecture": "qwen35",
+      "release": {
+        "date": "2026-08-14",
+        "precision": "day",
+        "month": null,
+        "kind": "checkpoint_release",
+        "status": "publisher_reported",
+        "sources": [
+          "https://huggingface.co/Qwen/Qwen3.8-27B",
+          "https://huggingface.co/Qwen/Qwen3.8-27B/blob/main/preprocessor_config.json",
+          "https://github.com/QwenLM/Qwen3.8",
+          "https://huggingface.co/docs/transformers/main/tasks/image_text_to_text",
+          "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/generation_config.json",
+          "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/README.md",
+          "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/chat_template.jinja"
+        ]
+      },
+      "parent_family_release_date": null,
+      "context_native_tokens": 262144,
+      "context_note": "Native context is a model limit, not a suggested allocation. Qwen extensions and Granite 512K need separate validated long-context profiles.",
+      "settings": {
+        "model_id": "qwen38_27b",
+        "base_repo": "Qwen/Qwen3.8-27B",
+        "base_revision": "37561816e66b5b9153b1b64c10968c18c1e6f4a0",
+        "publisher_recommended": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 1.5,
+          "repetition_penalty": 1
+        },
+        "publisher_generation_config": {
+          "bos_token_id": 248044,
+          "do_sample": true,
+          "eos_token_id": [248046, 248044],
+          "pad_token_id": 248044,
+          "temperature": 1.0,
+          "top_k": 20,
+          "top_p": 0.95
+        },
+        "publisher_unspecified_sampling_fields": ["frequency_penalty"],
+        "proposed_app_request": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 1.5,
+          "frequency_penalty": 0,
+          "repeat_penalty": 1
+        },
+        "proposed_chat_context_tokens": 8192,
+        "proposed_chat_max_tokens": 2048,
+        "proposed_rewrite_max_tokens": 512,
+        "sources": [
+          "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/generation_config.json",
+          "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/README.md",
+          "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/chat_template.jinja"
+        ],
+        "proposed_chat_template_kwargs": {
+          "enable_thinking": false,
+          "preserve_thinking": false
+        },
+        "publisher_evidence": "API and Best Practices both specify this nonthinking preset. Optional thinking has presence_penalty0, unlike Qwen3.5 general thinking PP1.5.",
+        "optional_thinking_publisher": {
+          "temperature": 1,
+          "top_p": 0.95,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 0,
+          "repetition_penalty": 1
+        },
+        "reasoning_note": "Publisher defaults thinking=true, reasoning_effort=xhigh and preserve_thinking=true. Proposed no-thinking/history trimming is an app latency/context choice. When thinking is enabled, only low/medium/xhigh are accepted by Jinja; high raises an error. Do not confuse preserve_thinking=false with disabling new thinking.",
+        "required_files_note": "Main UD-Q4_K_M for text. Matched F16 projector only for actual images."
+      },
+      "vision_profile": {
+        "model": "Qwen3.8-27B",
+        "base_repo": "Qwen/Qwen3.8-27B",
+        "base_revision": "37561816e66b5b9153b1b64c10968c18c1e6f4a0",
+        "base_private": false,
+        "base_gated": false,
+        "license": "Apache-2.0",
+        "release_date": "2026-08-14",
+        "role": "First large quality candidate for complex image reasoning and document interpretation",
+        "priority": "core_high_quality",
+        "quant": "UD-Q4_K_M",
+        "suggested_vram_tier_gb": [24],
+        "vram_tier_evidence": "Planning guidance only; 8GB is constrained for Qwen9 and depends on image/context/buffers. 12GB or16GB is more comfortable; 24GB suggested for27B. Exact disk bytes are not peak VRAM.",
+        "context_native_tokens": 262144,
+        "architecture": "qwen3_5",
+        "architecture_note": "Dense FFN with hybrid Gated DeltaNet/full attention, plus separate vision encoder. Vision preprocessing uses Qwen3VLProcessor,16px patches,merge2.",
+        "reasoning_control": "Explicit chat_template_kwargs.enable_thinking=false for fast caption/review; /nothink is not supported. Qwen3.8 additionally has low/medium/xhigh effort (default xhigh) and preserve_thinking history control; preserve_thinking=false does not disable reasoning.",
+        "publisher_sampling_nonthinking": {
+          "temperature": 0.7,
+          "top_p": 0.8,
+          "top_k": 20,
+          "min_p": 0,
+          "presence_penalty": 1.5,
+          "repetition_penalty": 1
+        },
+        "image_budget": {
+          "publisher_default_min_pixels": 65536,
+          "publisher_default_max_pixels": 16777216,
+          "patch_size": 16,
+          "spatial_merge_size": 2,
+          "approx_pixels_per_visual_token": 1024,
+          "suggested_caption_max_pixels": 1048576,
+          "suggested_caption_max_visual_tokens": 1024,
+          "suggested_ocr_max_pixels": 2097152,
+          "suggested_ocr_max_visual_tokens": 2048,
+          "note": "These are per-image proposed budgets. The app currently thumbnails to1024x1024; OCR high-detail path needs retaining more source detail before model preprocessing. Avoid inheriting 16MP processor ceiling as routine local profile."
+        },
+        "app_profile_suggestion": {
+          "context_tokens": 8192,
+          "parallel_requests": 1,
+          "enable_thinking": false,
+          "caption_max_output_tokens": 512,
+          "review_max_output_tokens": 768,
+          "ocr_max_output_tokens": 2048,
+          "sampling": "Start from publisher nonthinking preset; evaluate reduced temperature/presence penalty for exact OCR copying separately."
+        },
+        "benchmarks_vendor_reported": {
+          "OmniDocBench_1_5": 91.1,
+          "RealWorldQA": 85.9,
+          "MathVision_without_code_interpreter": 90.0,
+          "CharXiv_RQ_without_code_interpreter": 83.7
+        },
+        "benchmark_caveat": "Publisher benchmarks use their full-precision/evaluation configuration and often reasoning. Not guaranteed nonthinking Q4 scores. Do not numerically equate Qwen OmniDocBench overall score with Google average-edit-distance metric.",
+        "sources": [
+          "https://huggingface.co/Qwen/Qwen3.8-27B",
+          "https://huggingface.co/Qwen/Qwen3.8-27B/blob/main/preprocessor_config.json",
+          "https://github.com/QwenLM/Qwen3.8",
+          "https://huggingface.co/docs/transformers/main/tasks/image_text_to_text"
+        ],
+        "artifacts": [
+          {
+            "kind": "weight",
+            "repo_id": "unsloth/Qwen3.8-27B-GGUF",
+            "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+            "filename": "Qwen3.8-27B-UD-Q4_K_M.gguf",
+            "local_filename": "Qwen3.8-27B-UD-Q4_K_M.gguf",
+            "bytes": 16464440224,
+            "sha256": "322e194ff79741c7baa497c240f677f54b201b0efab44ca8e50f122b39123482",
+            "url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF/resolve/main/Qwen3.8-27B-UD-Q4_K_M.gguf",
+            "pinned_url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF/resolve/4ca720788d1e01f1bff70c033e0d0028fd02e502/Qwen3.8-27B-UD-Q4_K_M.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200
+          },
+          {
+            "kind": "mmproj",
+            "repo_id": "unsloth/Qwen3.8-27B-GGUF",
+            "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+            "filename": "mmproj-F16.gguf",
+            "local_filename": "mmproj-Qwen3.8-27B-F16.gguf",
+            "bytes": 927607488,
+            "sha256": "cbb841a9ee0636b2ec172f5bb8df2ea8dfeb01e90fe7c6126581d662a0b4e43e",
+            "url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF/resolve/main/mmproj-F16.gguf",
+            "pinned_url": "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF/resolve/4ca720788d1e01f1bff70c033e0d0028fd02e502/mmproj-F16.gguf",
+            "private": false,
+            "gated": false,
+            "anonymous_metadata_http_status": 200
+          }
+        ],
+        "combined_disk_bytes": 17392047712,
+        "combined_disk_gb_decimal": 17.392047712
+      },
+      "license": {
+        "identifier": "Apache-2.0",
+        "note": null,
+        "url": null
+      },
+      "benchmark_status": "no_exact_selected_quant_benchmark_verified",
+      "sources": [
+        "https://huggingface.co/Qwen/Qwen3.8-27B",
+        "https://huggingface.co/Qwen/Qwen3.8-27B/blob/main/preprocessor_config.json",
+        "https://github.com/QwenLM/Qwen3.8",
+        "https://huggingface.co/docs/transformers/main/tasks/image_text_to_text",
+        "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/generation_config.json",
+        "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/README.md",
+        "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/37561816e66b5b9153b1b64c10968c18c1e6f4a0/chat_template.jinja"
+      ],
+      "task_limits": null
+    }
+  }
+}
