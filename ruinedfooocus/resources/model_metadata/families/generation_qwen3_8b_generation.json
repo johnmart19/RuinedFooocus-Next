@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:qwen3_8b_generation": {
+      "title": "Qwen3 8B for FLUX.2 Klein 9B",
+      "provenance": {
+        "upstream": "Qwen/Qwen3-8B-GGUF"
+      },
+      "consumers": ["Flux2Klein9B"],
+      "release": {
+        "date": "2025-04-29",
+        "date_precision": "day",
+        "scope": "base_family",
+        "source": "https://qwenlm.github.io/blog/qwen3/",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "Apache-2.0",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/Qwen/Qwen3-8B-GGUF",
+        "note": null
+      },
+      "dependencies": ["FLUX2Klein9B checkpoint + FLUX2 VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Qwen/Qwen3-8B-GGUF",
+        "https://qwenlm.github.io/blog/qwen3/",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/resource_defaults.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

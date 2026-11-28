@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:clip_g": {
+      "title": "OpenCLIP-G conditioning encoder",
+      "provenance": {
+        "upstream": "SDXL text_encoder_2; calcuis HiDream GGUF conversion is a separate artifact"
+      },
+      "consumers": ["SDXL", "SD3", "HiDream"],
+      "release": {
+        "date": "2023-07-26",
+        "date_precision": "day",
+        "scope": "SDXL_bundle_release",
+        "source": "https://stability.ai/news-updates/stable-diffusion-sdxl-1-announcement",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "status": "upstream_and_conversion_terms_need_per_artifact_resolution"
+      },
+      "dependencies": ["Matching diffusion checkpoint, other required text encoders and VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0",
+        "https://huggingface.co/calcuis/hidream-gguf"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

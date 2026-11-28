@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:minimax_official_encoder": {
+      "title": "MiniMax H3 Image Qwen3-VL 32B conditioning encoder",
+      "provenance": {
+        "upstream": "Qwen3-VL-32B-Instruct adapted/repackaged for MiniMax H3",
+        "NVFP4_source": "cybermotaz/Qwen3-VL-32B-Instruct-NVFP4"
+      },
+      "consumers": ["MiniMaxH3Image"],
+      "release": {
+        "date": "2025-10-21",
+        "date_precision": "day",
+        "scope": "base_size_release",
+        "source": "https://github.com/QwenLM/Qwen3-VL",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "MiniMax H3 repository terms; Qwen upstream Apache-2.0",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/Comfy-Org/MiniMax-H3",
+        "note": null
+      },
+      "dependencies": ["MiniMax H3 Image checkpoint and its dedicated 24-channel image VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3",
+        "https://huggingface.co/SearchingMan/MiniMax-H3-Text-Encoders/blob/cf43b8ca36dc3a98f88f50ceafa40913f1e87c1e/README.md",
+        "https://github.com/QwenLM/Qwen3-VL"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

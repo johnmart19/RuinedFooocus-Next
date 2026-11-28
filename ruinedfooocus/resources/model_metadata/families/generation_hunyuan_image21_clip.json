@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:hunyuan_image21_clip": {
+      "kind": "image_generation",
+      "display_name": "HunyuanImage21 clip",
+      "evidence_scope": "Native source/CPU only; real-model/device acceptance unqualified"
+    }
+  }
+}

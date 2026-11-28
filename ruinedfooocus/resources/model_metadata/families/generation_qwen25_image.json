@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:qwen25_image": {
+      "title": "Qwen2.5-VL 7B conditioning choices for Qwen-Image",
+      "provenance": {
+        "upstream": "Qwen2.5-VL-7B; Comfy-Org Qwen-Image repack, Unsloth GGUF, and calcuis edit conversion"
+      },
+      "consumers": ["QwenImage"],
+      "release": {
+        "date": null,
+        "date_precision": null,
+        "scope": "upstream_Qwen2.5VL_release",
+        "source": "https://qwenlm.github.io/blog/qwen2.5-vl/",
+        "artifact_conversion_release_date": null,
+        "note": "Official blog carries 2025-01-26; official repository release news says 2025-01-28. Preserve source dates; exact conversion date unknown."
+      },
+      "license": {
+        "value": "Apache-2.0 upstream/Comfy; pig-encoder card metadata says MIT",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI",
+        "note": null
+      },
+      "dependencies": ["QwenImage checkpoint + Qwen-Image VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI",
+        "https://huggingface.co/calcuis/pig-encoder",
+        "https://huggingface.co/unsloth/Qwen2.5-VL-7B-Instruct-GGUF",
+        "https://qwenlm.github.io/blog/qwen2.5-vl/"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

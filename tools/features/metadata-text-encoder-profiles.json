@@ -1,0 +1,8 @@
+{
+  "id": "metadata-text-encoder-profiles",
+  "subject": "Add metadata profiles for image text encoders",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:qwen3vl8_boogu_ideogram": {
+      "title": "Qwen3-VL 8B FP8 scaled for Boogu / Ideogram",
+      "provenance": {
+        "upstream": "Comfy-Org/Boogu-Image text encoder",
+        "app_aliases": ["clip_qwen3vl_8b", "clip_qwen3vl_8b_scaled"]
+      },
+      "consumers": ["Boogu", "Ideogram4"],
+      "release": {
+        "date": "2025-10-15",
+        "date_precision": "day",
+        "scope": "base_size_release",
+        "source": "https://github.com/QwenLM/Qwen3-VL",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "Apache-2.0",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/Comfy-Org/Boogu-Image",
+        "note": null
+      },
+      "dependencies": ["Selected family checkpoint and corresponding VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Boogu-Image",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/resource_defaults.py",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py",
+        "https://github.com/QwenLM/Qwen3-VL"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

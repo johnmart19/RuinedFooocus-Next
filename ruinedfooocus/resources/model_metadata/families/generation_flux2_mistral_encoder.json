@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:flux2_mistral_encoder": {
+      "title": "FLUX.2 Mistral Small conditioning encoder",
+      "provenance": {
+        "pipeline": "FLUX.2-dev",
+        "source": "Comfy-Org split encoder or chatpig low-bit conversion",
+        "exact_decoder_variant": "Do not infer an exact Mistral revision from cow filename; conversion card links several alternatives."
+      },
+      "consumers": ["Flux2"],
+      "release": {
+        "date": "2025-11-25",
+        "date_precision": "day",
+        "scope": "FLUX2_pipeline_release",
+        "source": "https://bfl.ai/blog/flux-2",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "status": "source_metadata_conflict",
+        "upstream_pipeline": "FLUX non-commercial license",
+        "note": "Comfy-Org/flux2-dev header links FLUX.1-Krea license while its base is FLUX.2. Resolve actual component/upstream terms; do not copy mismatched header as definitive."
+      },
+      "dependencies": ["FLUX.2 checkpoint + FLUX.2 VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/Comfy-Org/flux2-dev",
+        "https://huggingface.co/chatpig/flux2-dev-gguf",
+        "https://huggingface.co/black-forest-labs/FLUX.2-dev",
+        "https://bfl.ai/blog/flux-2"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generation:anima_qwen06": {
+      "title": "Anima Qwen3 0.6B base encoder",
+      "provenance": {
+        "source": "circlestone-labs/Anima split encoder; Qwen3 0.6B base"
+      },
+      "consumers": ["Anima"],
+      "release": {
+        "date": "2025-04-29",
+        "date_precision": "day",
+        "scope": "Qwen3_base_family_release",
+        "source": "https://qwenlm.github.io/blog/qwen3/",
+        "artifact_conversion_release_date": null,
+        "note": "Exact release of this conversion is not established; upstream release is not its upload date."
+      },
+      "license": {
+        "value": "Anima repository CircleStone non-commercial terms; Qwen base Apache-2.0. Resolve scope for component distribution.",
+        "evidence_scope": "publisher_or_conversion_card_declaration",
+        "source": "https://huggingface.co/circlestone-labs/Anima",
+        "note": null
+      },
+      "dependencies": ["Anima checkpoint + Qwen-Image VAE"],
+      "settings": {
+        "scope": "component",
+        "standalone_sampling": null,
+        "note": "Use the selected generation checkpoint and its matching pipeline settings. Chat temperature/top-p and LLM benchmark presets do not apply to this conditioning/decoder component."
+      },
+      "hardware_notes": [
+        "Component file bytes are not peak pipeline VRAM. Include other required components, activation/workspace memory, target resolution/frame count and stage offloading. No measured CPU/GPU tier is established for this exact artifact."
+      ],
+      "sources": [
+        "https://huggingface.co/circlestone-labs/Anima",
+        "https://qwenlm.github.io/blog/qwen3/",
+        "https://github.com/johnmart19/RuinedFooocus-ROCm/blob/85285a4a0076391d7c6b1dec8d2355c01ccaec10/ruinedfooocus/features/models/image_components.py"
+      ],
+      "standalone_vram_status": "bundle_and_workload_dependent"
+    }
+  }
+}
