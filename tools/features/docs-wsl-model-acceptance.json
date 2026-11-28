@@ -1,0 +1,8 @@
+{
+  "id": "docs-wsl-model-acceptance",
+  "subject": "Record WSL model execution results on AMD ROCm",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
