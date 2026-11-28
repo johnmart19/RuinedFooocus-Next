@@ -1,0 +1,28 @@
+{
+  "id": "ui-image-viewer",
+  "subject": "Add client-side fit, zoom and pan controls for the image preview",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translation-manager",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "ui-user-error-messages"
+  ],
+  "tests": ["test_image_viewer.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
