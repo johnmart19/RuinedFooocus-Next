@@ -1,0 +1,8 @@
+{
+  "id": "depth-control-ui",
+  "subject": "Add depth source controls for depth guidance",
+  "requires": ["lotus-depth", "depth-controlnet-preparation", "controlnet-settings"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
