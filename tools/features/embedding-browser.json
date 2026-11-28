@@ -1,0 +1,9 @@
+{
+  "id": "embedding-browser",
+  "subject": "Discover textual inversion embeddings offline",
+  "requires": ["resource-cards"],
+  "tests": ["test_embedding_browser.py", "test_embedding_triggers.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
