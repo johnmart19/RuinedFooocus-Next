@@ -1,0 +1,8 @@
+{
+  "id": "native-workflows-ui",
+  "subject": "Add controls for multi-stage and source-image workflows",
+  "requires": ["stable-cascade", "cascade-guidance"],
+  "tests": ["test_cascade_stage_b_selection.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
