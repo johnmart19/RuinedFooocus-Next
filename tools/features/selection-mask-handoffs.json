@@ -1,0 +1,8 @@
+{
+  "id": "selection-mask-handoffs",
+  "subject": "Add exact-frame selection masks for the inpaint route",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
