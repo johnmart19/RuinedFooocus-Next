@@ -1,0 +1,8 @@
+{
+  "id": "image-scope",
+  "subject": "Reject retired media types at image admission",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
