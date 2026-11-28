@@ -1,0 +1,8 @@
+{
+  "id": "moge-depth-utility",
+  "subject": "Add MoGe perspective depth, normals and panorama depth",
+  "requires": ["native-vision", "depth-utility-contracts"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
