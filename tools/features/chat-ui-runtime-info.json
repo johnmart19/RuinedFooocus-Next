@@ -1,0 +1,31 @@
+{
+  "id": "chat-ui-runtime-info",
+  "subject": "Show llama.cpp runtime diagnostics per browser session",
+  "requires": [
+    "preparation-admission",
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "backend-preferences",
+    "launch-arguments",
+    "chat-model-profiles",
+    "llama-runtime-info"
+  ],
+  "tests": ["test_runtime_info_refresh.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
