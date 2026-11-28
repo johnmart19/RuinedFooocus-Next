@@ -1,0 +1,13 @@
+{
+  "id": "model-acquisition-actions",
+  "subject": "Add actions for a selected catalogue resource",
+  "requires": [
+    "local-diffusers-bundles",
+    "sensenova-bundle",
+    "component-candidates",
+    "component-profiles"
+  ],
+  "tests": ["test_acquisition_actions.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
