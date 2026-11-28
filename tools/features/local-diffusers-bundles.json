@@ -1,0 +1,8 @@
+{
+  "id": "local-diffusers-bundles",
+  "subject": "Capture local Diffusers weight bundles as data",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
