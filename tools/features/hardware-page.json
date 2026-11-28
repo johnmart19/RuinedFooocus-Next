@@ -1,0 +1,14 @@
+{
+  "id": "hardware-page",
+  "subject": "Add the Hardware and backends page",
+  "requires": ["component-support-matrix", "hardware-optional-image-runtime"],
+  "tests": [
+    "test_background_runtime_ui.py",
+    "test_hardware_provider_ui.py",
+    "test_llama_update.py",
+    "test_optional_image_runtime_ui.py",
+    "test_release_status_wording.py"
+  ],
+  "native_comfy": false,
+  "native_gguf": false
+}
