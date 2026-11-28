@@ -1,0 +1,31 @@
+{
+  "id": "native-auxiliary-ui",
+  "subject": "Add opt-in GLIGEN and hypernetwork controls",
+  "requires": [
+    "translations-english-catalogue",
+    "translations-legacy-keys",
+    "translation-manager",
+    "translations-sv",
+    "translations-de",
+    "translations-fr",
+    "translations-es",
+    "translations-pt-br",
+    "translations-uk",
+    "translations-ru",
+    "translations-ja",
+    "translations-zh-cn",
+    "translations-zh-tw",
+    "translations-ko",
+    "translations-it",
+    "translations-pl",
+    "translations-nl",
+    "translations-tr",
+    "image-components",
+    "launch-arguments",
+    "gligen-layout",
+    "native-hypernetworks"
+  ],
+  "tests": ["test_native_auxiliary_ui.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
