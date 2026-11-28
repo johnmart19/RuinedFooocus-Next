@@ -1,0 +1,8 @@
+{
+  "id": "style-card-component",
+  "subject": "Add the style browser card assets",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
