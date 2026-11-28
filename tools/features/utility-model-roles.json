@@ -1,0 +1,8 @@
+{
+  "id": "utility-model-roles",
+  "subject": "Add intrinsic utility model roles and stage companions",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
