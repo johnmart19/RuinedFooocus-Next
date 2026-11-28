@@ -1,0 +1,8 @@
+{
+  "id": "lora-hook-schedules-ui",
+  "subject": "Add advanced controls for a scheduled LoRA",
+  "requires": ["translation-manager", "lora-hook-schedules"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
