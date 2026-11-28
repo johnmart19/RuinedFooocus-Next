@@ -1,0 +1,14 @@
+{
+  "id": "gpu-package-installer",
+  "subject": "Select PyTorch and llama.cpp packages for the chosen device",
+  "requires": [
+    "native-runtime-paths",
+    "launch-utilities",
+    "cuda-runtime-selection",
+    "llama-runtime-policy",
+    "hash-locked-package-plan"
+  ],
+  "tests": ["test_installer_gpu.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
