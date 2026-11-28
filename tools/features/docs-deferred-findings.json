@@ -1,0 +1,8 @@
+{
+  "id": "docs-deferred-findings",
+  "subject": "Add deferred finding cards with an index and a template",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
