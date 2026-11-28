@@ -1,0 +1,8 @@
+{
+  "id": "chat-assistant-remove-dialog",
+  "subject": "Add the confirmation dialog for deleting an assistant",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
