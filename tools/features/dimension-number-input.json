@@ -1,0 +1,8 @@
+{
+  "id": "dimension-number-input",
+  "subject": "Add a size input that validates bounds without logging crashes",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
