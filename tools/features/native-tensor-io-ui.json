@@ -1,0 +1,8 @@
+{
+  "id": "native-tensor-io-ui",
+  "subject": "Add Create controls for native tensor inputs and exports",
+  "requires": ["generation-size-plan", "translation-manager", "native-tensor-io"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
