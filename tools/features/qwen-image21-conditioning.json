@@ -1,0 +1,8 @@
+{
+  "id": "qwen-image21-conditioning",
+  "subject": "Add Qwen Image 2.1 paired conditioning",
+  "requires": ["comfy-text-encoder-warmup", "image-working-size-geometry"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
