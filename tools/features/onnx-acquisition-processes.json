@@ -1,0 +1,8 @@
+{
+  "id": "onnx-acquisition-processes",
+  "subject": "Run optional ONNX acquisition in owned, cancellable child processes",
+  "requires": ["vendor-recipe-admission"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
