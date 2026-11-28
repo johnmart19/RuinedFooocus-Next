@@ -1,0 +1,17 @@
+{
+  "id": "ui-page-head-and-scripts",
+  "subject": "Assemble the page stylesheet, head and startup scripts",
+  "requires": [
+    "ui-layout-stylesheet",
+    "ui-shell-stylesheet",
+    "ui-default-palette",
+    "ui-control-help-disclosures",
+    "ui-dimension-paste",
+    "ui-image-layout-observer",
+    "ui-image-viewer",
+    "image-composition"
+  ],
+  "tests": ["test_error_messages_script.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
