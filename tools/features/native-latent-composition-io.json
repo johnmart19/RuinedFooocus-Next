@@ -1,0 +1,9 @@
+{
+  "id": "native-latent-composition-io",
+  "subject": "Add numeric file transport for standalone latent composition",
+  "requires": ["app-composition"],
+  "tests": ["test_latent_composition_integration.py", "test_native_latent_composition_io.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
