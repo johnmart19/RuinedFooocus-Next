@@ -1,0 +1,8 @@
+{
+  "id": "image-preparation",
+  "subject": "Prepare captured image assets before the compute queue",
+  "requires": ["model-identity"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
