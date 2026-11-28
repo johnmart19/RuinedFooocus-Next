@@ -1,0 +1,195 @@
+# Native still-image geometry
+
+The `image-transform` still utility implements **Transform image** as one
+operation family: resize, crop, crop to selection mask, pad, rotate and flip. It requires one source and
+no generation model, prompt, sampling recipe or download. Its caller uses the
+existing serialized image utility worker, output writer and cancellation policy.
+The adapter is in `features/image_processing/image_geometry_tools.py`.
+
+`transform_operation` chooses the contextual controls. Resize defaults to zero
+width and height, preserving the original frame. One nonzero dimension derives
+the other with the original proportions. Two nonzero dimensions default to
+**contain**, producing the largest proportion-preserving image inside that box.
+Stretch and centered crop require the corresponding explicit `transform_fit`.
+Crop uses `transform_x`, `transform_y`, width and height; a zero crop dimension
+uses the remaining source extent. The full crop must stay inside the source.
+Rotation uses native quarter turns, and flip selects horizontal or vertical.
+
+`transform_operation="crop-to-mask"` also accepts the existing `mask_image`
+input. The selection must be an opaque grayscale image in exactly the oriented
+source frame. Nonzero mask samples select pixels; the smallest rectangle
+containing every selected pixel determines the output dimensions. An empty mask,
+colored or translucent mask, invalid sample range or different frame is rejected
+before processing. No resize, threshold, inversion, square framing or padding is
+implicit. The whole source rectangle is cropped, including its original alpha
+and pixels outside a nonrectangular selection. The mask does not replace alpha.
+
+Padding accepts explicit left, top, right and bottom pixel counts. Its default
+transparent style retains source pixels and alpha and adds zero-alpha borders.
+Color style uses the selected opaque RGB border, while mirror style reflects
+all native channels, including alpha. Optional native feathering blends the
+source edge into the selected fill; it is an explicit change to edge pixels.
+Source alpha and color channels undergo the same native resize geometry.
+
+## Native computation and immutable requests
+
+The reviewed source is ComfyUI
+`989d93d0d968e704c589ce0146bb18c77f6b50cc`. `geometry_native.py` selects the
+unchanged pure bodies of native `ResizeImageMaskNode.execute`,
+`BoundingBox.execute`, `ImageCropV2.execute`, `PadImageNode.execute`, `ImageRotate.execute` and
+`ImageFlip.execute`, together with their native geometry and color helpers.
+The bridge follows the existing composition adapter pattern. It avoids importing
+the native server and model loaders. The native crop's graph
+preview transport is suppressed because RF owns artifact publication; its pixel
+body is unchanged. No separate resize, reflection, cropping or feathering math
+is implemented in RF.
+
+Selection cropping uses the captured mask's nonzero bounds to construct the native
+`PrimitiveBoundingBox`, then runs `ImageCropV2` on all source channels. The pinned
+`ImageCropToMask` is deliberately excluded from this precision-preserving route:
+its documented purpose is fixed-frame 3D input preparation, and it discards alpha,
+clamps/composites RGB, pads out-of-bounds bounds and forces a byte-based Lanczos
+resize. Those semantics do not implement an exact 2D selection crop.
+
+Capture freezes oriented source bytes, dtype/channels, color space, source
+digest, validated scalars, final output dimensions and canonical native source
+signatures. Normalized export format, depth, color space and quality also belong
+to that immutable request; worker capture, processing, metadata and replay reuse
+the frozen choice. Processing creates float32 tensors in inference mode. Later
+source/control changes cannot alter that request. A native source change before
+or during processing invalidates it. Cancellation is checked before and after
+the native operation; a single tensor operation finishes between checks.
+Inputs and outputs are limited to 16,777,216 pixels and 16384 pixels per side.
+Output bounds are checked before allocating the transformed image.
+Selection cropping also freezes mask bytes, dtype, digest and the exact crop
+rectangle. Its metadata records mask identity and bounds; replay clears the mask
+and requires a fresh exact-frame selection.
+
+Compute selection happens in the serialized worker through the shared
+`utility_device.run_utility` policy. Auto uses the configured native Comfy compute
+device; an explicitly applied CPU mode stays on CPU without accelerator probes.
+Geometry tensors move to that device before native Torch operations. Source/mask
+capture, bounding-box discovery and final image encoding remain host operations.
+A device failure can restart the entire operation on CPU from the frozen source;
+the native pixel algorithms and float32 precision are unchanged. Validation and
+the final host transfer run inside the attempt so deferred device failures also
+reach that fallback boundary. Cancellation is checked before any retry and before
+metadata publication. The recorded `image_utility_source.compute` describes the
+actual device, backend and fallback reason. Replay does not force an old device.
+
+The adapter accepts byte PIL images and internal NumPy/native `ImportedImage`
+pixels with uint8, uint16, float16 or float32 samples. It does not accept arbitrary
+paths. Native precision originals must reach capture without an earlier byte
+conversion: supplied working-copy provenance is rejected explicitly. Integer
+samples normalize to float32 without an 8-bit intermediate. RGB, RGBA and one
+grayscale channel are supported; ordinary byte PIL inputs use oriented RGBA.
+There is no ICC conversion or implicit transfer/color-space conversion.
+
+**Straighten** rotates by any angle from −180° to 180° (positive is clockwise) with
+bicubic sampling and crops to the largest upright rectangle inside the rotated
+image, so the result has no empty corners and gains no alpha. It is application
+arithmetic over `torch.grid_sample`, not a native node.
+
+Nearest-exact, bilinear, area and bicubic use native interpolation.
+**AMD FSR** (`amd-fsr`) enlarges with AMD FidelityFX Super Resolution, in the
+version chosen by **FSR version** (`transform_fsr_version`: `fsr4` by default,
+`fsr3`, `fsr2` or `fsr1`). The facade `amd_fsr.py` validates the choice before
+queueing and dispatches it.
+
+**FSR 4, 3 and 2** run AMD's own upscalers through the AMD FSR API and DirectX 12.
+They are temporal: they expect a moving camera, motion vectors and depth. A still
+has none, so the native helper `ruinedfooocus/backends/amd_fsr/fsr_still.cpp` presents the
+image as a static camera sequence of three jitter cycles: each frame is the source
+resampled (Catmull-Rom) at that frame's sub-pixel jitter, with zero motion
+vectors, a flat depth buffer and FSR's sharpening pass at full strength. The
+result is a clean, well anti-aliased enlargement. It does not invent detail: in
+the 2026-11-19 comparison on one 512 px illustration FSR 4 had cleaner edges than
+bicubic and FSR 3.1, while RealESRGAN reconstructed more drawn detail.
+
+Requirements for these three: Windows, a GPU and driver for which the AMD FSR API
+offers the chosen provider (for 4.x the SDK lists RX 9000, 7000 and 6000 series
+and some Ryzen integrated graphics), and the runtime folder `runtime/amd-fsr`
+under the data root, or `RF_AMD_FSR_DIR`.
+
+The runtime is acquired on first use (`backends/amd_fsr/runtime.py`). When the
+folder is incomplete and FSR 2, 3 or 4 is requested, the application downloads
+eight files of the AMD FidelityFX SDK 2.4.0 from
+<https://github.com/GPUOpen-LibrariesAndSDKs/FidelityFX-SDK> at one pinned commit
+(four headers, the loader import library, AMD's two signed DLLs and the licence;
+about 58 MB), verifies each by size and SHA256, and keeps them in
+`cache/amd-fsr-sdk/<commit>`. It then compiles the helper with the Visual Studio
+C++ build tools already on the machine and places it beside AMD's signed
+`amd_fidelityfx_loader_dx12.dll` and `amd_fidelityfx_upscaler_dx12.dll`. Later
+requests reuse the folder. No binary comes from anywhere but AMD's repository,
+no build tool is installed, and the binaries are not in this repository. AMD's
+licence requires its notice to accompany any redistribution of the signed DLLs,
+so the SDK's licence file is placed with them.
+
+The request is refused before queueing, with the reason, when the runtime is
+missing and cannot be acquired: in offline mode, or without the C++ build tools
+(Visual Studio workload "Desktop development with C++"). FSR 1 needs neither.
+`python tools/native/amd_fsr/build.py [--sdk <folder>] [--output <dir>]` does the
+same without starting the application, for example to prepare an offline
+machine; with `--sdk` it uses an unpacked SDK folder and downloads nothing.
+
+The adapter `amd_fsr4.py` runs the helper as a bounded, cancellable subprocess
+outside Torch, in passes of at most 2x per axis, with colour in 8-bit sRGB and
+bicubic alpha. It refuses before queueing, with the reason, when the runtime is
+missing, in CPU mode, for a non-8-bit or non-sRGB source, or for a target smaller
+than the source. The helper asks the AMD FSR API for exactly the chosen major
+version; if the driver does not offer it the helper stops and the user is told
+so. It never silently substitutes another version. Passes after the first sharpen
+less for FSR 3 (0.8) and FSR 2 (0.65): at full strength a second pass turned
+their jitter residue into a checkerboard along edges in the 4x check.
+
+**FSR 1** is the spatial pair EASU (edge-adaptive upsampling) and RCAS
+(sharpening), a tensor port of AMD's MIT-licensed `ffx_fsr1.h` in `amd_fsr1.py`.
+It needs no runtime and no GPU, runs in CPU mode, and accepts 8-bit and 16-bit
+sRGB sources, also in passes of at most 2x per axis.
+
+With **center-crop** every version enlarges to cover the target and trims the
+excess. Verified on an RX 7900 XTX on 2026-11-19: one 512 to 1024 run of each
+version (providers 4.1.2, 3.1.6 and 2.3.4, and FSR 1 on the same device). Other
+GPUs, other scales and long sessions are not qualified. The pinned
+native Lanczos helper converts through Pillow uint8 and is intentionally omitted
+from this precision-preserving surface. The adapter does not substitute a new
+Lanczos implementation.
+
+Precision inputs require PNG16 or EXR output. Output color space must match the
+captured source; linear/HDR inputs require EXR, and out-of-range floating samples
+require EXR. Marked Editor requests derive this color space from the captured
+source while retaining the selected supported container/precision and the global
+format draft. Direct API requests still reject a mismatched color space.
+Scene-linear Rec.2020 EXR keeps its samples and native Rec.2020 chromaticities;
+the HDR transfer function is not applied again. The existing encoder owns transfer tags and quantization. Native
+AVIF cannot export RGBA. Original uploads remain unchanged. Utility metadata
+records operation/scalars, source digest, dtype, dimensions, color/alpha policy
+and native revision; it contains no local paths or invented generation recipe.
+Replay restores scalars and asks for a fresh source.
+
+## Caller contract and verification
+
+The adapter exports `KINDS`, `LABELS`, `DEFAULTS`, `FIELDS`, `capture_assets`,
+`worker_data`, `process`, `output_metadata` and `replay_values`, matching the
+existing still utility owners. `capture_assets` accepts the normal `input_image`
+and returns an immutable request with no preparation assets. Its worker data
+retains one output with the actual transformed dimensions and strips sampling
+and model intent. The bounded source-generation recipe is retained separately
+for derived-image lineage; source handles, paths and uploaded pixels are omitted
+from that recipe. UI/API admission and rendered user reachability are separate
+caller-owned integration checks.
+
+```sh
+python tools/check_cpu.py test_image_geometry_tools.py test_image_crop_to_mask.py test_geometry_mask_devices.py test_image_geometry.py test_image_filters.py test_image_composition.py
+```
+
+The new tests execute actual pinned native pure pixel bodies, rather than only
+mocking output. They cover asymmetric RGBA crop/rotation/flip, proportion-preserving
+and explicit changed-aspect resize, all padding styles, uint16 and float precision,
+source immutability, strict bounds, color/format rejection, cancellation, source
+changes, worker metadata and replay. These are source/CPU contracts; rendered
+browser behavior, real codec execution, image quality, throughput and GPU
+stability require separate evidence.
+The selection-crop checks additionally cover nonrectangular and one-pixel edge
+selections, unchanged transparent alpha, uint16 and signed/HDR float samples,
+immutable mask capture, strict frame/range rejection and late cancellation.

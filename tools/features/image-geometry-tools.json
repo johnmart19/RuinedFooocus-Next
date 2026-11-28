@@ -1,0 +1,9 @@
+{
+  "id": "image-geometry-tools",
+  "subject": "Add model-free still-image transforms using native nodes",
+  "requires": ["amd-fsr1-resize", "amd-fsr-versions", "image-shader-effects"],
+  "tests": ["test_amd_fsr1.py"],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
