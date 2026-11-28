@@ -1,0 +1,8 @@
+{
+  "id": "catalogue-lumina",
+  "subject": "Add the Lumina 2, NewBie and Z-Image download catalogues",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
