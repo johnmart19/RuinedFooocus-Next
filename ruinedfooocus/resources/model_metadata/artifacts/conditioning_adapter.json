@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:loras/Qwen2.1_Anything2RealCharacters.safetensors": {
+      "id": "existing:loras/Qwen2.1_Anything2RealCharacters.safetensors",
+      "catalogue_key": "loras/Qwen2.1_Anything2RealCharacters.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_community_lora",
+      "label": "Anything to Real Characters for Qwen Image 2.1",
+      "role": "conditioning_adapter",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "Publisher unspecified",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "ad24ab700d2f01bbe8a74e4dd18c0313bed14f8fa1de170fabb1acb5872ca4b9",
+      "artifact": {
+        "bytes": 318820200,
+        "sha256": "5db4dd2376e6017812bf1189b2fc46e52aaa2c0b7e688faac75e83e1c4dce849",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/WarmBloodAban/Qwen-Image-2.1-LoRAs/resolve/c4ab5473bfdf585fc19cfd1e280f79d2b0c79947/Qwen2.1_Anything2RealCharacters.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple. Local and device qualification are recorded separately."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/WarmBloodAban/Qwen-Image-2.1-LoRAs",
+        "license": "apache-2.0"
+      }
+    },
+    "existing:loras/krea2_style_reference.safetensors": {
+      "id": "existing:loras/krea2_style_reference.safetensors",
+      "catalogue_key": "loras/krea2_style_reference.safetensors",
+      "state": "existing",
+      "profile_id": "generation:reviewed_krea2_turbo",
+      "label": "Krea2 style reference LoRA",
+      "role": "conditioning_adapter",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "Krea2",
+      "format": "safetensors",
+      "download_identity": "344e8de97cd00df35a5b1699f4b7f81ac5fbb2b91a334723a8b3c3908b089847",
+      "artifact": {
+        "bytes": 457111760,
+        "sha256": "f50df5a9e62e4be8aa926a63dd5bb1a64770c4004f763c1208007ae13daa82b8",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/588feaf955b08b9ac4723eeb751752ab045dba71/loras/krea2_style_reference.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-12",
+        "evidence_scope": "Immutable publisher tuple; source/caller support only, no local-weight or hardware qualification."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "989d93d0d968e704c589ce0146bb18c77f6b50cc"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Krea-2/tree/588feaf955b08b9ac4723eeb751752ab045dba71",
+        "native_blueprint": "blueprints/Image Style Reference (Krea-2 Turbo).json"
+      }
+    }
+  }
+}

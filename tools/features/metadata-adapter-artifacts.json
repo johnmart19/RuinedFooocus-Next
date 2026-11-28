@@ -1,0 +1,8 @@
+{
+  "id": "metadata-adapter-artifacts",
+  "subject": "Add artifact records for LoRAs, adapters and ControlNets",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}

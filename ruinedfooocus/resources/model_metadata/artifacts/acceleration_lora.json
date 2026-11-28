@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors": {
+      "id": "existing:loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors",
+      "catalogue_key": "loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_checkpoints",
+      "label": "Qwen Image 2.1 Turbo LoRA",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "821e94d07080c63ef67b6b1ed3941a9f9a4bbf7ec872347189dbc8defa952e94",
+      "artifact": {
+        "bytes": 913314512,
+        "sha256": "208dd43250e1e01467ba190572ae2e7107a7870ec1ff026bc65f791fa1e80e95",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/loras/qwen_image_2.1_turbo_lora_avg_rank_178_bf16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple. Local and device qualification are recorded separately."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1",
+        "license": "qwen-research"
+      }
+    },
+    "existing:lcm_lora": {
+      "id": "existing:lcm_lora",
+      "catalogue_key": "lcm_lora",
+      "state": "existing",
+      "profile_id": "generation:lcm_sdxl_lora",
+      "label": "LCM-LoRA SDXL acceleration adapter",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "9bde4c720d2f92f3d61ffb02f8271f8b5b10ca6f4b40b1338d8265e66ed705a9",
+      "artifact": {
+        "bytes": 393855224,
+        "sha256": "a764e6859b6e04047cd761c08ff0cee96413a8e004c9f07707530cd776b19141",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/latent-consistency/lcm-lora-sdxl/resolve/a18548dd4956b174ec5b0d78d340c8dae0a129cd/pytorch_lora_weights.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:lcm_sdxl_lora"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "openrail++"
+      }
+    },
+    "existing:loras/SDXL 1.0/dmd2_sdxl_4step_lora.safetensors": {
+      "id": "existing:loras/SDXL 1.0/dmd2_sdxl_4step_lora.safetensors",
+      "catalogue_key": "loras/SDXL 1.0/dmd2_sdxl_4step_lora.safetensors",
+      "state": "existing",
+      "profile_id": "generation:dmd2_sdxl_lora",
+      "label": "DMD2 SDXL four-step LoRA (two precisions)",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "785803642250812827989149bcd94a46ebcdfb7c6aa487098638891842fef3d8",
+      "artifact": {
+        "bytes": 787359616,
+        "sha256": "a374289e9446d7f14d2037c4b3770756b7b52c292142a691377c3c755010a1bb",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/tianweiy/DMD2/resolve/be22767697a1f3ca656b73c776e15fa335c86c6c/dmd2_sdxl_4step_lora.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:dmd2_sdxl_lora"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "cc-by-nc-4.0"
+      }
+    },
+    "existing:loras/SDXL 1.0/dmd2_sdxl_4step_lora_fp16.safetensors": {
+      "id": "existing:loras/SDXL 1.0/dmd2_sdxl_4step_lora_fp16.safetensors",
+      "catalogue_key": "loras/SDXL 1.0/dmd2_sdxl_4step_lora_fp16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:dmd2_sdxl_lora",
+      "label": "DMD2 SDXL four-step LoRA (two precisions)",
+      "role": "acceleration_lora",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": null,
+      "format": "safetensors",
+      "quantization": {
+        "label": "FP16",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "4b9a9a020973b800fc272c34f12780da0d504d0bc2fbfa5889f3403de531f4b9",
+      "artifact": {
+        "bytes": 393854592,
+        "sha256": "b3d9173815a4b595991c3a7a0e0e63ad821080f314a0b2a3cc31ecd7fcf2cbb8",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/tianweiy/DMD2/resolve/be22767697a1f3ca656b73c776e15fa335c86c6c/dmd2_sdxl_4step_lora_fp16.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "generation:dmd2_sdxl_lora"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "cc-by-nc-4.0"
+      }
+    }
+  }
+}

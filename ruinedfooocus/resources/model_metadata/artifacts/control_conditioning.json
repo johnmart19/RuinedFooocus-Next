@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "artifacts": {
+    "existing:model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors": {
+      "id": "existing:model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors",
+      "catalogue_key": "model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_checkpoints",
+      "label": "Qwen Image 2.1 Fun ControlNet Union",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "INT8 ConvRot",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "2e24a30349d1ebcf48de2e28c77cb594ef4a97b22ab5df9ded5e891ca85bae60",
+      "artifact": {
+        "bytes": 3779298944,
+        "sha256": "07aa961570ac0e03d4ca936aecd76854d077a33cde69b5092399afba01b3715d",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/model_patches/qwen_image_2.1_fun_controlnet_union_int8_convrot.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple. Local and device qualification are recorded separately."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1",
+        "license": "qwen-research"
+      }
+    },
+    "existing:model_patches/qwen_image_2.1_fun_controlnet_union_bf16.safetensors": {
+      "id": "existing:model_patches/qwen_image_2.1_fun_controlnet_union_bf16.safetensors",
+      "catalogue_key": "model_patches/qwen_image_2.1_fun_controlnet_union_bf16.safetensors",
+      "state": "existing",
+      "profile_id": "generation:qwen_image21_checkpoints",
+      "label": "Qwen Image 2.1 Fun ControlNet Union",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "QwenImage21",
+      "format": "safetensors",
+      "quantization": {
+        "label": "BF16",
+        "source": "publisher_artifact_metadata_not_local_payload_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "b0ff6659853900ed153735a2753f7357197552c9f9cdebe5ee1276fc25312d65",
+      "artifact": {
+        "bytes": 7550977992,
+        "sha256": "1f9dea8384ba167084f39f624908f1dbf2ea8a223bb4a8108a77dafa9b55bfe1",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/aacf31a6d48e707f352ecba714cee0680da3479b/model_patches/qwen_image_2.1_fun_controlnet_union_bf16.safetensors",
+        "availability": "publisher_metadata_only",
+        "checked_date_utc": "2026-11-11",
+        "evidence_scope": "Immutable publisher tuple. Local and device qualification are recorded separately."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "comfy": {
+          "status": "native_loader_source_supported",
+          "pin": "fca60fe70e5b84c5c6b058263653d15cb3401e44"
+        }
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "evidence": {
+        "source_url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1",
+        "license": "qwen-research"
+      }
+    },
+    "existing:cn_canny": {
+      "id": "existing:cn_canny",
+      "catalogue_key": "cn_canny",
+      "state": "existing",
+      "profile_id": "auxiliary:cn_canny",
+      "label": "Control-LoRA Canny rank128",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SDXL Control-LoRA",
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "de8c8ce866030419b640386e369c2272ad37fcdd557d82458fba77e705c50e87",
+      "artifact": {
+        "bytes": 395733680,
+        "sha256": "56389dbb245ca44de91d662529bd4298abc55ce2318f60bc19454fb72ff68247",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/control-lora/resolve/75590eb0e7868d3d0f1581b5126d487b33c7fdb4/control-LoRAs-rank128/control-lora-canny-rank128.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:cn_canny"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other"
+      }
+    },
+    "existing:cn_depth": {
+      "id": "existing:cn_depth",
+      "catalogue_key": "cn_depth",
+      "state": "existing",
+      "profile_id": "auxiliary:cn_depth",
+      "label": "Control-LoRA Depth rank128",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SDXL Control-LoRA",
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "c59ddedeeff11ad1e53bac7c3fc00844dd8ee3cfed4744eed200821d4a79cf24",
+      "artifact": {
+        "bytes": 395729267,
+        "sha256": "37e391757e6c0042faa3795174acbe11a31992252058cfb8bbaccf11073567b4",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/control-lora/resolve/75590eb0e7868d3d0f1581b5126d487b33c7fdb4/control-LoRAs-rank128/control-lora-depth-rank128.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:cn_depth"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other"
+      }
+    },
+    "existing:cn_recolour": {
+      "id": "existing:cn_recolour",
+      "catalogue_key": "cn_recolour",
+      "state": "existing",
+      "profile_id": "auxiliary:cn_recolour",
+      "label": "Control-LoRA Recolor rank128",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SDXL Control-LoRA",
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "419d4fecc5c91fb740e7794bf1d5e4183dc377096a010a53da50bfe16b2aefcf",
+      "artifact": {
+        "bytes": 395730106,
+        "sha256": "d6c01d588550d41ab47ff2534ae135441ed8e614b72b316787e8b7916ce08e61",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/control-lora/resolve/75590eb0e7868d3d0f1581b5126d487b33c7fdb4/control-LoRAs-rank128/control-lora-recolor-rank128.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:cn_recolour"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other"
+      }
+    },
+    "existing:cn_sketch": {
+      "id": "existing:cn_sketch",
+      "catalogue_key": "cn_sketch",
+      "state": "existing",
+      "profile_id": "auxiliary:cn_sketch",
+      "label": "Control-LoRA Sketch rank128",
+      "role": "control_conditioning",
+      "chat_weight": false,
+      "uses_chat_runtime": false,
+      "architecture": "SDXL Control-LoRA",
+      "format": "safetensors",
+      "quantization": {
+        "label": "unspecified_original",
+        "training": "unspecified_or_post_training",
+        "source": "filename_label_not_tensor_audit",
+        "aggressive_low_bit": false
+      },
+      "download_identity": "f68399221d743811bce7f94c64a98286a3ff579efee1c5a5b4287df51c4e6f1f",
+      "artifact": {
+        "bytes": 395738399,
+        "sha256": "679c616807aec73c47bb7281a24a76ddfe52fa5b5d68532f542ab813347b2eae",
+        "hash_evidence": "publisher_hf_lfs",
+        "full_file_hash_recomputed": false,
+        "pinned_url": "https://huggingface.co/stabilityai/control-lora/resolve/75590eb0e7868d3d0f1581b5126d487b33c7fdb4/control-LoRAs-rank128/control-lora-sketch-rank128-metadata.safetensors",
+        "availability": "payload_reachable_bounded",
+        "checked_utc": "2026-11-07T23:55:46.647834+00:00",
+        "evidence_scope": "Remote metadata and bounded prefix; not local file integrity or inference."
+      },
+      "runtime": {
+        "native_llama_cpp": {
+          "status": "not_applicable"
+        },
+        "xllamacpp": {
+          "status": "not_applicable"
+        },
+        "loader_profile_id": "auxiliary:cn_sketch"
+      },
+      "companions": {
+        "text": [],
+        "image": []
+      },
+      "hardware": {
+        "standalone_vram_status": "profile_or_workflow_dependent"
+      },
+      "artifact_publication": {
+        "date": null,
+        "status": "not_established"
+      },
+      "repository_license_declaration": {
+        "license": "other"
+      }
+    }
+  }
+}
