@@ -1,0 +1,8 @@
+{
+  "id": "prompt-resource-tokens",
+  "subject": "Share the prompt resource-token grammar",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
