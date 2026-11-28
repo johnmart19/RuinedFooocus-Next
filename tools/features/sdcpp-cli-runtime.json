@@ -1,0 +1,12 @@
+{
+  "id": "sdcpp-cli-runtime",
+  "subject": "Run stable-diffusion.cpp generations as owned CLI requests",
+  "requires": [
+    "child-process-ownership",
+    "sdcpp-runtime-artifacts",
+    "comfy-backend-initialization"
+  ],
+  "tests": ["test_sdcpp.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
