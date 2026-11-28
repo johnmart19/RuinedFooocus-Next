@@ -1,0 +1,8 @@
+{
+  "id": "translation-manager",
+  "subject": "Load validated UI translation catalogues with Gradio frontend metadata",
+  "requires": ["app-root-paths", "translations-locale-switch-script"],
+  "tests": ["test_core_resources.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
