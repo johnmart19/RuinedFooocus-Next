@@ -1,0 +1,13 @@
+{
+  "id": "sdcpp-runtime-artifacts",
+  "subject": "Prepare pinned stable-diffusion.cpp artifacts as an immutable runtime",
+  "requires": [
+    "install-lock",
+    "comfy-pinned-arguments",
+    "model-identity",
+    "sdcpp-request-contracts"
+  ],
+  "tests": ["test_sdcpp_installer.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
