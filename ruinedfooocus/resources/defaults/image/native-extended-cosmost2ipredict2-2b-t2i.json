@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-cosmost2ipredict2-2b-t2i",
+  "family": "CosmosPredict2",
+  "media": "image",
+  "variant": "2b-t2i",
+  "aliases": [],
+  "sampling": {
+    "custom_steps": 30,
+    "cfg": 4.0,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "clip_skip": 1
+  },
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "CosmosT2IPredict2",
+    "architecture": "CosmosT2IPredict2",
+    "native_config": {
+      "image_model": "cosmos_predict2",
+      "in_channels": 16
+    },
+    "behavioral_variants": ["2b-t2i"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "CosmosPredict2",
+      "text_encoder_roles": ["clip_oldt5"],
+      "vae_role": "vae_wan",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": true,
+    "default_for_native_configuration": true,
+    "runtime_requirements": []
+  },
+  "provenance": {
+    "kind": "native_workflow",
+    "label": "Compatible CosmosPredict2 native family example",
+    "source_url": "https://raw.githubusercontent.com/comfyanonymous/ComfyUI_examples/f9431bb000ce792094ff345446e22cac1ea6cef3/cosmos_predict2/cosmos_predict2_2b_t2i_example.png",
+    "source_revision": "f9431bb000ce792094ff345446e22cac1ea6cef3",
+    "resource_sha256": "d15a892af13a70bcb6c4e58b086dcef914f2b7746ad6743a72f7410d462bf3b7",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": "2026-11-11"
+  },
+  "source_workflow_controls": [
+    {
+      "node": "KSampler",
+      "inputs": {
+        "steps": 30,
+        "cfg": 4.0,
+        "sampler_name": "euler",
+        "scheduler": "simple"
+      }
+    }
+  ],
+  "legacy": null
+}

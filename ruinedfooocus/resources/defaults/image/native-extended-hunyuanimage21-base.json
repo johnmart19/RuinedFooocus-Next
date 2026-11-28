@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "native-extended-hunyuanimage21-base",
+  "family": "HunyuanImage21",
+  "media": "image",
+  "variant": "base",
+  "aliases": [],
+  "sampling": {},
+  "recommended_sizes": [[1024, 1024]],
+  "default_size": [1024, 1024],
+  "applicability": {
+    "native_class": "HunyuanImage21",
+    "architecture": "HunyuanImage21",
+    "native_config": {
+      "image_model": "hunyuan_video",
+      "in_channels": 64,
+      "patch_size": [1, 1],
+      "hidden_size": 3584,
+      "depth": 20,
+      "depth_single_blocks": 40
+    },
+    "behavioral_variants": ["base"],
+    "quantization_independent": true,
+    "identity_basis": "current_native_configuration_and_source_workflow",
+    "component_contract": {
+      "native_family": "HunyuanImage21",
+      "text_encoder_roles": ["clip_qwen25", "clip_hunyuan_byt5"],
+      "vae_role": "vae_hunyuan_image21",
+      "embedded_components_first": true,
+      "vae_gguf_image_supported": false
+    },
+    "auto_recipe_supported": false,
+    "default_for_native_configuration": false,
+    "runtime_requirements": [
+      "Specialized native conditioning/staging or a reviewed native sampling baseline is required."
+    ]
+  },
+  "provenance": {
+    "kind": "local_family_recipe",
+    "label": "HunyuanImage21 provisional working canvas; native sampling review pending",
+    "source_url": "https://huggingface.co/Comfy-Org/Hunyuan-Image-2.1/blob/78cfe74376b50a2f52995c4800f792f99ab575b2/README.md",
+    "source_revision": "78cfe74376b50a2f52995c4800f792f99ab575b2",
+    "geometry_evidence": "Unqualified working canvas, not a publisher dimension recommendation.",
+    "inspected_at_utc": "2026-11-11",
+    "fetched_at_utc": null
+  },
+  "source_workflow_controls": [],
+  "legacy": null
+}
