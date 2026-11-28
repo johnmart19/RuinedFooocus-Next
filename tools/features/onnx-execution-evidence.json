@@ -1,0 +1,8 @@
+{
+  "id": "onnx-execution-evidence",
+  "subject": "Collect evidence of which ONNX provider executed the graph nodes",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
