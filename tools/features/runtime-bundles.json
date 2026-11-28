@@ -1,0 +1,8 @@
+{
+  "id": "runtime-bundles",
+  "subject": "Declare the qualified PyTorch package bundles per runtime",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
