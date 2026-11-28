@@ -1,0 +1,8 @@
+{
+  "id": "startup-port",
+  "subject": "Resolve listen-port conflicts before models load",
+  "requires": ["launch-arguments"],
+  "tests": ["test_startup_port.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
