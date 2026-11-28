@@ -1,0 +1,8 @@
+{
+  "id": "concurrency-fixture",
+  "subject": "Add a localhost fixture for request overlap and rollback acceptance",
+  "requires": ["app-composition"],
+  "tests": ["test_concurrency_fixture_provenance.py", "test_concurrency_service.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
