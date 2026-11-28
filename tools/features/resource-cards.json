@@ -1,0 +1,8 @@
+{
+  "id": "resource-cards",
+  "subject": "Add offline cards for scanned adapters",
+  "requires": ["model-selection-names", "model-category-artwork", "model-acquisition"],
+  "tests": ["test_resource_cards.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
