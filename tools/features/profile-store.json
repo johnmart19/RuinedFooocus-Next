@@ -1,0 +1,8 @@
+{
+  "id": "profile-store",
+  "subject": "Store settings profiles with recoverable paired-document saves",
+  "requires": ["app-root-paths", "atomic-config-io"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
