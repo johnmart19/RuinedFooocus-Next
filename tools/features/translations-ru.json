@@ -1,0 +1,8 @@
+{
+  "id": "translations-ru",
+  "subject": "Add the Russian interface translation",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
