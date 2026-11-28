@@ -1,0 +1,8 @@
+{
+  "id": "ui-model-components",
+  "subject": "Add the model components panel",
+  "requires": ["translation-manager", "component-profiles"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
