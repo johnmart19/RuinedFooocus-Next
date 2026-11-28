@@ -1,0 +1,8 @@
+{
+  "id": "utility-device-policy",
+  "subject": "Add the worker device policy for native image utilities",
+  "requires": ["app-root-paths", "cpu-fallback-warning", "native-image-formats"],
+  "tests": ["test_utility_device_policy.py"],
+  "native_comfy": false,
+  "native_gguf": false
+}
