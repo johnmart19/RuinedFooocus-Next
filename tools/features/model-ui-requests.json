@@ -1,0 +1,8 @@
+{
+  "id": "model-ui-requests",
+  "subject": "Add bounded latest-result requests for model panels",
+  "requires": ["preparation-admission", "translation-manager", "resource-lifecycle"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
