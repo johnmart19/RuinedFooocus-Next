@@ -1,0 +1,8 @@
+{
+  "id": "native-vision-pipeline",
+  "subject": "Run single-image vision utilities on the image compute lane",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
