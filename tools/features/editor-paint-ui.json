@@ -1,0 +1,8 @@
+{
+  "id": "editor-paint-ui",
+  "subject": "Add paint, layers and drag-crop to the Editor",
+  "requires": ["translation-manager", "resource-lifecycle"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
