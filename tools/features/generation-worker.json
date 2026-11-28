@@ -1,0 +1,32 @@
+{
+  "id": "generation-worker",
+  "subject": "Run generation, editing and chat jobs on the serial compute worker",
+  "requires": [
+    "task-error-descriptions",
+    "preparation-admission",
+    "auxiliary-gpu-release",
+    "prompt-shift-attention",
+    "component-profiles",
+    "effective-image-plan",
+    "sdcpp-image-pipeline",
+    "core-utilities",
+    "chat-model-preparation",
+    "controlnet-settings",
+    "library-actions",
+    "precision-image-outputs",
+    "native-sampling-schedules",
+    "editor-session",
+    "prompt-processing"
+  ],
+  "tests": [
+    "test_live_preview_and_stop_recovery.py",
+    "test_optional_image_defaults.py",
+    "test_utility_source_provenance.py",
+    "test_worker_cleanup.py",
+    "test_worker_multitasking.py",
+    "test_worker_routing.py"
+  ],
+  "native_comfy": true,
+  "native_gguf": false,
+  "native_comfy_revision": "cab5f4e13b83c58482cd514afb22ca925e117638"
+}
