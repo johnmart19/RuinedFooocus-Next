@@ -1,0 +1,8 @@
+{
+  "id": "prompt-rewrite-presets",
+  "subject": "Discover prompt rewrite presets from bundled and user folders",
+  "requires": ["app-root-paths"],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
