@@ -1,0 +1,8 @@
+{
+  "id": "one-button-csv-objects",
+  "subject": "Move the One Button object and concept lists into the prompting package",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
