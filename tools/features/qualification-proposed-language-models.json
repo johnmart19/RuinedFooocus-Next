@@ -1,0 +1,8 @@
+{
+  "id": "qualification-proposed-language-models",
+  "subject": "Add qualification results for proposed language models",
+  "requires": [],
+  "tests": [],
+  "native_comfy": false,
+  "native_gguf": false
+}
